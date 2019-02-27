@@ -19,4 +19,5 @@
 
 ###> acmarche/grr ###
 /.idea
+/*.sql
 ###< acmarche/grr ###

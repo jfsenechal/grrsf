@@ -5,6 +5,8 @@
 {% block body %}
     <h1>GrrEntry index</h1>
 
+    {% include 'search/entry.html.twig' %}
+
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -16,41 +18,35 @@
             <th>RoomId</th>
             <th>Timestamp</th>
             <th>CreateBy</th>
-            <th>BeneficiaireExt</th>
             <th>Beneficiaire</th>
             <th>Name</th>
             <th>Type</th>
-            <th>Description</th>
             <th>StatutEntry</th>
-            <th>OptionReservation</th>
-            <th>OverloadDesc</th>
             <th>Moderate</th>
             <th>Jours</th>
         </tr>
         </thead>
         <tbody>
-        {% for grr_entry in grr_entries %}
+        {% for grr_entry in entries %}
             <tr>
                 <td>{{ grr_entry.id }}</td>
                 <td>
-                    <a href="{{ path('grr_entry_show', {'id': grr_entry.id}) }}">{{ grr_entry.startTime }}</a>
+                    <a href="{{ path('grr_entry_show', {'id': grr_entry.id}) }}">{{ grr_entry.startTime|date('Y-m-d H:i:s') }}</a>
                 </td>
-                <td>{{ grr_entry.endTime }}</td>
+                <td>{{ grr_entry.endTime|date('Y-m-d H:i:s') }}</td>
                 <td>{{ grr_entry.entryType }}</td>
-                <td>{{ grr_entry.repeatId }}</td>
-                <td>{{ grr_entry.roomId }}</td>
+                <td>
+                    <a href="{{ path('grr_repeat_show', {'id': grr_entry.repeatId}) }}">{{ grr_entry.repeatId }}</a>
+                </td>
+                <td>{{ grr_entry.roomId | room_getName }}</td>
                 <td>{{ grr_entry.timestamp ? grr_entry.timestamp|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ grr_entry.createBy }}</td>
-                <td>{{ grr_entry.beneficiaireExt }}</td>
                 <td>{{ grr_entry.beneficiaire }}</td>
                 <td>{{ grr_entry.name }}</td>
-                <td>{{ grr_entry.type }}</td>
-                <td>{{ grr_entry.description }}</td>
+                <td>{{ grr_entry.type|entryTypeGetName }}</td>
                 <td>{{ grr_entry.statutEntry }}</td>
-                <td>{{ grr_entry.optionReservation }}</td>
-                <td>{{ grr_entry.overloadDesc }}</td>
-                <td>{{ grr_entry.moderate ? 'Yes' : 'No' }}</td>
-                <td>{{ grr_entry.jours ? 'Yes' : 'No' }}</td>
+                <td>{{ grr_entry.moderate }}</td>
+                <td>{{ grr_entry.jours }}</td>
             </tr>
         {% else %}
             <tr>

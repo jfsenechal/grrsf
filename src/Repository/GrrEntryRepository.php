@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\GrrEntry;
+use App\Entity\GrrRoom;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -20,13 +21,38 @@ class GrrEntryRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param array $args
      * @return GrrEntry[] Returns an array of GrrEntry objects
      */
-    public function search()
+    public function search(array $args = [])
     {
-        return $this->createQueryBuilder('grr_entry')
+        $name = $args['name'] ?? null;
+        $room = $args['room'] ?? null;
+        $entryType = $args['entry_type'] ?? null;
+        $type = $args['type'] ?? null;
+
+        $qb = $this->createQueryBuilder('grr_entry');
+
+        if ($name) {
+            $qb->andWhere('grr_entry.name LIKE :name')
+                ->setParameter('name', '%'.$name.'%');
+        }
+        if ($room instanceof GrrRoom) {
+            $qb->andWhere('grr_entry.roomId = :room')
+                ->setParameter('room', $room->getId());
+        }
+        if ($entryType) {
+            $qb->andWhere('grr_entry.entryType = :entryType')
+                ->setParameter('entryType', $entryType);
+        }
+        if ($type) {
+            $qb->andWhere('grr_entry.type = :type')
+                ->setParameter('type', $type);
+        }
+
+      return  $qb
             ->orderBy('grr_entry.startTime', 'DESC')
-            ->setMaxResults(100)
+            ->setMaxResults(500)
             ->getQuery()
             ->getResult();
     }

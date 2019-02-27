@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\GrrEntry;
 use App\Form\GrrEntryType;
+use App\Form\SearchEntryType;
 use App\Repository\GrrEntryRepository;
+use App\Repository\GrrRepeatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +18,43 @@ use Symfony\Component\Routing\Annotation\Route;
 class GrrEntryController extends AbstractController
 {
     /**
-     * @Route("/", name="grr_entry_index", methods={"GET"})
+     * @var GrrEntryRepository
      */
-    public function index(GrrEntryRepository $grrEntryRepository): Response
+    private $grrEntryRepository;
+    /**
+     * @var GrrRepeatRepository
+     */
+    private $grrRepeatRepository;
+
+    public function __construct(GrrEntryRepository $grrEntryRepository, GrrRepeatRepository $grrRepeatRepository)
     {
-        return $this->render('grr_entry/index.html.twig', [
-            'grr_entries' => $grrEntryRepository->search(),
-        ]);
+        $this->grrEntryRepository = $grrEntryRepository;
+        $this->grrRepeatRepository = $grrRepeatRepository;
+    }
+
+    /**
+     * @Route("/", name="grr_entry_index", methods={"GET","POST"})
+     */
+    public function index(Request $request): Response
+    {
+        $args = [];
+        $form = $this->createForm(SearchEntryType::class, $args);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $args = $form->getData();
+        }
+
+        $entries = $this->grrEntryRepository->search($args);
+
+        return $this->render(
+            'grr_entry/index.html.twig',
+            [
+                'entries' => $entries,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -42,10 +74,13 @@ class GrrEntryController extends AbstractController
             return $this->redirectToRoute('grr_entry_index');
         }
 
-        return $this->render('grr_entry/new.html.twig', [
-            'grr_entry' => $grrEntry,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'grr_entry/new.html.twig',
+            [
+                'grr_entry' => $grrEntry,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -53,9 +88,15 @@ class GrrEntryController extends AbstractController
      */
     public function show(GrrEntry $grrEntry): Response
     {
-        return $this->render('grr_entry/show.html.twig', [
-            'grr_entry' => $grrEntry,
-        ]);
+        $grr_repeat = $this->grrRepeatRepository->find($grrEntry->getRepeatId());
+
+        return $this->render(
+            'grr_entry/show.html.twig',
+            [
+                'grr_entry' => $grrEntry,
+                'grr_repeat' => $grr_repeat,
+            ]
+        );
     }
 
     /**
@@ -69,15 +110,21 @@ class GrrEntryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('grr_entry_index', [
-                'id' => $grrEntry->getId(),
-            ]);
+            return $this->redirectToRoute(
+                'grr_entry_index',
+                [
+                    'id' => $grrEntry->getId(),
+                ]
+            );
         }
 
-        return $this->render('grr_entry/edit.html.twig', [
-            'grr_entry' => $grrEntry,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'grr_entry/edit.html.twig',
+            [
+                'grr_entry' => $grrEntry,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**

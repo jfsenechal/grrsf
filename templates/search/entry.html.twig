@@ -1,0 +1,21 @@
+<div class="hidden-print hidden-xs">
+
+    {{ form_start(form, { 'attr': {'class': 'form-inline'}}) }}
+    {{ form_errors(form) }}
+
+    {{ form_widget(form.name) }}
+
+    {{ form_widget(form.room) }}
+
+    {{ form_widget(form.entry_type) }}
+
+    {{ form_widget(form.type) }}
+
+    <br clear="all" />
+    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+
+</div>
+
+{{ form_end(form) }}
+
+<br/>

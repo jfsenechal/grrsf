@@ -17,13 +17,10 @@
                 <th>RoomId</th>
                 <th>Timestamp</th>
                 <th>CreateBy</th>
-                <th>BeneficiaireExt</th>
                 <th>Beneficiaire</th>
                 <th>Name</th>
                 <th>Type</th>
-                <th>Description</th>
                 <th>RepNumWeeks</th>
-                <th>OverloadDesc</th>
                 <th>Jours</th>
             </tr>
         </thead>
@@ -32,23 +29,22 @@
             <tr>
                 <td>{{ grr_repeat.id }}</td>
                 <td>
-                    <a href="{{ path('grr_repeat_show', {'id': grr_repeat.id}) }}">{{ grr_repeat.startTime }}</a>
+                    <a href="{{ path('grr_repeat_show', {'id': grr_repeat.id}) }}">
+                        {{ grr_repeat.startTime|date('Y-m-d H:i:s') }}
+                    </a>
                     </td>
-                <td>{{ grr_repeat.endTime }}</td>
-                <td>{{ grr_repeat.repType }}</td>
-                <td>{{ grr_repeat.endDate }}</td>
+                <td>{{ grr_repeat.endTime|date('Y-m-d H:i:s') }}</td>
+                <td>{{ grr_repeat.repType|periodiciteName }}</td>
+                <td>{{ grr_repeat.endDate|date('Y-m-d H:i:s') }}</td>
                 <td>{{ grr_repeat.repOpt }}</td>
-                <td>{{ grr_repeat.roomId }}</td>
+                <td>{{ grr_repeat.roomId | room_getName }}</td>
                 <td>{{ grr_repeat.timestamp ? grr_repeat.timestamp|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ grr_repeat.createBy }}</td>
-                <td>{{ grr_repeat.beneficiaireExt }}</td>
                 <td>{{ grr_repeat.beneficiaire }}</td>
                 <td>{{ grr_repeat.name }}</td>
-                <td>{{ grr_repeat.type }}</td>
-                <td>{{ grr_repeat.description }}</td>
-                <td>{{ grr_repeat.repNumWeeks ? 'Yes' : 'No' }}</td>
-                <td>{{ grr_repeat.overloadDesc }}</td>
-                <td>{{ grr_repeat.jours ? 'Yes' : 'No' }}</td>
+                <td>{{ grr_repeat.type|entryTypeGetName }}</td>
+                <td>{{ grr_repeat.repNumWeeks | getNumWeeks }}</td>
+                <td>{{ grr_repeat.jours }}</td>
 
             </tr>
         {% else %}

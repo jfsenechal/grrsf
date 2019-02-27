@@ -19,6 +19,12 @@ class GrrRoomRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrRoom::class);
     }
 
+    public function getForSearch()
+    {
+        return $this->createQueryBuilder('grr_room')
+            ->orderBy('grr_room.roomName', 'ASC');
+    }
+
     // /**
     //  * @return GrrRoom[] Returns an array of GrrRoom objects
     //  */

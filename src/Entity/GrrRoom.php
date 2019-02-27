@@ -168,6 +168,11 @@ class GrrRoom
      */
     private $whoCanSee = '0';
 
+    public function __toString()
+    {
+        return $this->roomName;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
