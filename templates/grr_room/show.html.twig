@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrrRoom{% endblock %}
+
+{% block body %}
+    <h1>GrrRoom</h1>
+
+    <a href="{{ path('grr_room_edit', {'id': grr_room.id}) }}">edit</a>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ grr_room.id }}</td>
+            </tr>
+            <tr>
+                <th>AreaId</th>
+                <td>{{ grr_room.areaId }}</td>
+            </tr>
+            <tr>
+                <th>RoomName</th>
+                <td>{{ grr_room.roomName }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ grr_room.description }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ grr_room.capacity }}</td>
+            </tr>
+            <tr>
+                <th>MaxBooking</th>
+                <td>{{ grr_room.maxBooking }}</td>
+            </tr>
+            <tr>
+                <th>StatutRoom</th>
+                <td>{{ grr_room.statutRoom }}</td>
+            </tr>
+            <tr>
+                <th>ShowFicRoom</th>
+                <td>{{ grr_room.showFicRoom }}</td>
+            </tr>
+            <tr>
+                <th>PictureRoom</th>
+                <td>{{ grr_room.pictureRoom }}</td>
+            </tr>
+            <tr>
+                <th>CommentRoom</th>
+                <td>{{ grr_room.commentRoom }}</td>
+            </tr>
+            <tr>
+                <th>ShowComment</th>
+                <td>{{ grr_room.showComment }}</td>
+            </tr>
+            <tr>
+                <th>DelaisMaxResaRoom</th>
+                <td>{{ grr_room.delaisMaxResaRoom }}</td>
+            </tr>
+            <tr>
+                <th>DelaisMinResaRoom</th>
+                <td>{{ grr_room.delaisMinResaRoom }}</td>
+            </tr>
+            <tr>
+                <th>AllowActionInPast</th>
+                <td>{{ grr_room.allowActionInPast }}</td>
+            </tr>
+            <tr>
+                <th>OrderDisplay</th>
+                <td>{{ grr_room.orderDisplay }}</td>
+            </tr>
+            <tr>
+                <th>DelaisOptionReservation</th>
+                <td>{{ grr_room.delaisOptionReservation }}</td>
+            </tr>
+            <tr>
+                <th>DontAllowModify</th>
+                <td>{{ grr_room.dontAllowModify }}</td>
+            </tr>
+            <tr>
+                <th>TypeAffichageReser</th>
+                <td>{{ grr_room.typeAffichageReser }}</td>
+            </tr>
+            <tr>
+                <th>Moderate</th>
+                <td>{{ grr_room.moderate ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>QuiPeutReserverPour</th>
+                <td>{{ grr_room.quiPeutReserverPour }}</td>
+            </tr>
+            <tr>
+                <th>ActiveRessourceEmpruntee</th>
+                <td>{{ grr_room.activeRessourceEmpruntee }}</td>
+            </tr>
+            <tr>
+                <th>WhoCanSee</th>
+                <td>{{ grr_room.whoCanSee }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_room_index') }}">back to list</a>
+
+    <a href="{{ path('grr_room_edit', {'id': grr_room.id}) }}">edit</a>
+
+    {{ include('grr_room/_delete_form.html.twig') }}
+{% endblock %}

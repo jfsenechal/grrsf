@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit GrrSetting{% endblock %}
+
+{% block body %}
+    <h1>Edit GrrSetting</h1>
+
+    {{ include('grr_setting/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('grr_setting_index') }}">back to list</a>
+
+    {{ include('grr_setting/_delete_form.html.twig') }}
+{% endblock %}

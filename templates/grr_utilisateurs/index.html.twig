@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrrUtilisateurs index{% endblock %}
+
+{% block body %}
+    <h1>GrrUtilisateurs index</h1>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Login</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>Statut</th>
+            <th>Etat</th>
+            <th>DefaultSite</th>
+            <th>DefaultArea</th>
+            <th>DefaultRoom</th>
+            <th>DefaultStyle</th>
+            <th>DefaultListType</th>
+            <th>DefaultLanguage</th>
+            <th>Source</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for grr_utilisateur in grr_utilisateurs %}
+            <tr>
+                <td>
+                    <a href="{{ path('grr_utilisateurs_show', {'login': grr_utilisateur.login}) }}">{{ grr_utilisateur.login }}</a>
+                </td>
+                <td>{{ grr_utilisateur.nom }}</td>
+                <td>{{ grr_utilisateur.prenom }}</td>
+                <td>{{ grr_utilisateur.password }}</td>
+                <td>{{ grr_utilisateur.email }}</td>
+                <td>{{ grr_utilisateur.statut }}</td>
+                <td>{{ grr_utilisateur.etat }}</td>
+                <td>{{ grr_utilisateur.defaultSite }}</td>
+                <td>{{ grr_utilisateur.defaultArea }}</td>
+                <td>{{ grr_utilisateur.defaultRoom }}</td>
+                <td>{{ grr_utilisateur.defaultStyle }}</td>
+                <td>{{ grr_utilisateur.defaultListType }}</td>
+                <td>{{ grr_utilisateur.defaultLanguage }}</td>
+                <td>{{ grr_utilisateur.source }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_utilisateurs_new') }}">Create new</a>
+{% endblock %}

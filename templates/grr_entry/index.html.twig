@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrrEntry index{% endblock %}
+
+{% block body %}
+    <h1>GrrEntry index</h1>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>StartTime</th>
+            <th>EndTime</th>
+            <th>EntryType</th>
+            <th>RepeatId</th>
+            <th>RoomId</th>
+            <th>Timestamp</th>
+            <th>CreateBy</th>
+            <th>BeneficiaireExt</th>
+            <th>Beneficiaire</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>StatutEntry</th>
+            <th>OptionReservation</th>
+            <th>OverloadDesc</th>
+            <th>Moderate</th>
+            <th>Jours</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for grr_entry in grr_entries %}
+            <tr>
+                <td>{{ grr_entry.id }}</td>
+                <td>
+                    <a href="{{ path('grr_entry_show', {'id': grr_entry.id}) }}">{{ grr_entry.startTime }}</a>
+                </td>
+                <td>{{ grr_entry.endTime }}</td>
+                <td>{{ grr_entry.entryType }}</td>
+                <td>{{ grr_entry.repeatId }}</td>
+                <td>{{ grr_entry.roomId }}</td>
+                <td>{{ grr_entry.timestamp ? grr_entry.timestamp|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ grr_entry.createBy }}</td>
+                <td>{{ grr_entry.beneficiaireExt }}</td>
+                <td>{{ grr_entry.beneficiaire }}</td>
+                <td>{{ grr_entry.name }}</td>
+                <td>{{ grr_entry.type }}</td>
+                <td>{{ grr_entry.description }}</td>
+                <td>{{ grr_entry.statutEntry }}</td>
+                <td>{{ grr_entry.optionReservation }}</td>
+                <td>{{ grr_entry.overloadDesc }}</td>
+                <td>{{ grr_entry.moderate ? 'Yes' : 'No' }}</td>
+                <td>{{ grr_entry.jours ? 'Yes' : 'No' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="19">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_entry_new') }}">Create new</a>
+{% endblock %}

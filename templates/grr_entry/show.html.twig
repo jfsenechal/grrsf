@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrrEntry{% endblock %}
+
+{% block body %}
+    <h1>GrrEntry</h1>
+
+    <a href="{{ path('grr_entry_edit', {'id': grr_entry.id}) }}">edit</a>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ grr_entry.id }}</td>
+        </tr>
+        <tr>
+            <th>StartTime</th>
+            <td>{{ grr_entry.startTime }}</td>
+        </tr>
+        <tr>
+            <th>EndTime</th>
+            <td>{{ grr_entry.endTime }}</td>
+        </tr>
+        <tr>
+            <th>EntryType</th>
+            <td>{{ grr_entry.entryType }}</td>
+        </tr>
+        <tr>
+            <th>RepeatId</th>
+            <td>{{ grr_entry.repeatId }}</td>
+        </tr>
+        <tr>
+            <th>RoomId</th>
+            <td>{{ grr_entry.roomId }}</td>
+        </tr>
+        <tr>
+            <th>Timestamp</th>
+            <td>{{ grr_entry.timestamp ? grr_entry.timestamp|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>CreateBy</th>
+            <td>{{ grr_entry.createBy }}</td>
+        </tr>
+        <tr>
+            <th>BeneficiaireExt</th>
+            <td>{{ grr_entry.beneficiaireExt }}</td>
+        </tr>
+        <tr>
+            <th>Beneficiaire</th>
+            <td>{{ grr_entry.beneficiaire }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ grr_entry.name }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ grr_entry.type }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ grr_entry.description }}</td>
+        </tr>
+        <tr>
+            <th>StatutEntry</th>
+            <td>{{ grr_entry.statutEntry }}</td>
+        </tr>
+        <tr>
+            <th>OptionReservation</th>
+            <td>{{ grr_entry.optionReservation }}</td>
+        </tr>
+        <tr>
+            <th>OverloadDesc</th>
+            <td>{{ grr_entry.overloadDesc }}</td>
+        </tr>
+        <tr>
+            <th>Moderate</th>
+            <td>{{ grr_entry.moderate ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>Jours</th>
+            <td>{{ grr_entry.jours ? 'Yes' : 'No' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_entry_index') }}">back to list</a>
+
+    <a href="{{ path('grr_entry_edit', {'id': grr_entry.id}) }}">edit</a>
+
+    {{ include('grr_entry/_delete_form.html.twig') }}
+{% endblock %}

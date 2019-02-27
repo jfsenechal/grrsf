@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrrArea index{% endblock %}
+
+{% block body %}
+    <h1>GrrArea index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>AreaName</th>
+                <th>Access</th>
+                <th>OrderDisplay</th>
+                <th>IpAdr</th>
+                <th>MorningstartsArea</th>
+                <th>EveningendsArea</th>
+                <th>ResolutionArea</th>
+                <th>EveningendsMinutesArea</th>
+                <th>WeekstartsArea</th>
+                <th>TwentyfourhourFormatArea</th>
+                <th>CalendarDefaultValues</th>
+                <th>EnablePeriods</th>
+                <th>DisplayDays</th>
+                <th>IdTypeParDefaut</th>
+                <th>DureeMaxResaArea</th>
+                <th>DureeParDefautReservationArea</th>
+                <th>MaxBooking</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for grr_area in grr_areas %}
+            <tr>
+                <td>{{ grr_area.id }}</td>
+                <td>
+                    <a href="{{ path('grr_area_show', {'id': grr_area.id}) }}">{{ grr_area.areaName }}</a>
+                </td>
+                <td>{{ grr_area.access }}</td>
+                <td>{{ grr_area.orderDisplay }}</td>
+                <td>{{ grr_area.ipAdr }}</td>
+                <td>{{ grr_area.morningstartsArea }}</td>
+                <td>{{ grr_area.eveningendsArea }}</td>
+                <td>{{ grr_area.resolutionArea }}</td>
+                <td>{{ grr_area.eveningendsMinutesArea }}</td>
+                <td>{{ grr_area.weekstartsArea }}</td>
+                <td>{{ grr_area.twentyfourhourFormatArea }}</td>
+                <td>{{ grr_area.calendarDefaultValues }}</td>
+                <td>{{ grr_area.enablePeriods }}</td>
+                <td>{{ grr_area.displayDays }}</td>
+                <td>{{ grr_area.idTypeParDefaut }}</td>
+                <td>{{ grr_area.dureeMaxResaArea }}</td>
+                <td>{{ grr_area.dureeParDefautReservationArea }}</td>
+                <td>{{ grr_area.maxBooking }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="19">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_area_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New GrrRepeat{% endblock %}
+
+{% block body %}
+    <h1>Create new GrrRepeat</h1>
+
+    {{ include('grr_repeat/_form.html.twig') }}
+
+    <a href="{{ path('grr_repeat_index') }}">back to list</a>
+{% endblock %}

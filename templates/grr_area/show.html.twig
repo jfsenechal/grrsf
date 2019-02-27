@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrrArea{% endblock %}
+
+{% block body %}
+    <h1>GrrArea</h1>
+
+
+    <a href="{{ path('grr_area_edit', {'id': grr_area.id}) }}">edit</a>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ grr_area.id }}</td>
+            </tr>
+            <tr>
+                <th>AreaName</th>
+                <td>{{ grr_area.areaName }}</td>
+            </tr>
+            <tr>
+                <th>Access</th>
+                <td>{{ grr_area.access }}</td>
+            </tr>
+            <tr>
+                <th>OrderDisplay</th>
+                <td>{{ grr_area.orderDisplay }}</td>
+            </tr>
+            <tr>
+                <th>IpAdr</th>
+                <td>{{ grr_area.ipAdr }}</td>
+            </tr>
+            <tr>
+                <th>MorningstartsArea</th>
+                <td>{{ grr_area.morningstartsArea }}</td>
+            </tr>
+            <tr>
+                <th>EveningendsArea</th>
+                <td>{{ grr_area.eveningendsArea }}</td>
+            </tr>
+            <tr>
+                <th>ResolutionArea</th>
+                <td>{{ grr_area.resolutionArea }}</td>
+            </tr>
+            <tr>
+                <th>EveningendsMinutesArea</th>
+                <td>{{ grr_area.eveningendsMinutesArea }}</td>
+            </tr>
+            <tr>
+                <th>WeekstartsArea</th>
+                <td>{{ grr_area.weekstartsArea }}</td>
+            </tr>
+            <tr>
+                <th>TwentyfourhourFormatArea</th>
+                <td>{{ grr_area.twentyfourhourFormatArea }}</td>
+            </tr>
+            <tr>
+                <th>CalendarDefaultValues</th>
+                <td>{{ grr_area.calendarDefaultValues }}</td>
+            </tr>
+            <tr>
+                <th>EnablePeriods</th>
+                <td>{{ grr_area.enablePeriods }}</td>
+            </tr>
+            <tr>
+                <th>DisplayDays</th>
+                <td>{{ grr_area.displayDays }}</td>
+            </tr>
+            <tr>
+                <th>IdTypeParDefaut</th>
+                <td>{{ grr_area.idTypeParDefaut }}</td>
+            </tr>
+            <tr>
+                <th>DureeMaxResaArea</th>
+                <td>{{ grr_area.dureeMaxResaArea }}</td>
+            </tr>
+            <tr>
+                <th>DureeParDefautReservationArea</th>
+                <td>{{ grr_area.dureeParDefautReservationArea }}</td>
+            </tr>
+            <tr>
+                <th>MaxBooking</th>
+                <td>{{ grr_area.maxBooking }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_area_index') }}">back to list</a>
+
+    <a href="{{ path('grr_area_edit', {'id': grr_area.id}) }}">edit</a>
+
+    {{ include('grr_area/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrrRepeat index{% endblock %}
+
+{% block body %}
+    <h1>GrrRepeat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>StartTime</th>
+                <th>EndTime</th>
+                <th>RepType</th>
+                <th>EndDate</th>
+                <th>RepOpt</th>
+                <th>RoomId</th>
+                <th>Timestamp</th>
+                <th>CreateBy</th>
+                <th>BeneficiaireExt</th>
+                <th>Beneficiaire</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>RepNumWeeks</th>
+                <th>OverloadDesc</th>
+                <th>Jours</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for grr_repeat in grr_repeats %}
+            <tr>
+                <td>{{ grr_repeat.id }}</td>
+                <td>
+                    <a href="{{ path('grr_repeat_show', {'id': grr_repeat.id}) }}">{{ grr_repeat.startTime }}</a>
+                    </td>
+                <td>{{ grr_repeat.endTime }}</td>
+                <td>{{ grr_repeat.repType }}</td>
+                <td>{{ grr_repeat.endDate }}</td>
+                <td>{{ grr_repeat.repOpt }}</td>
+                <td>{{ grr_repeat.roomId }}</td>
+                <td>{{ grr_repeat.timestamp ? grr_repeat.timestamp|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ grr_repeat.createBy }}</td>
+                <td>{{ grr_repeat.beneficiaireExt }}</td>
+                <td>{{ grr_repeat.beneficiaire }}</td>
+                <td>{{ grr_repeat.name }}</td>
+                <td>{{ grr_repeat.type }}</td>
+                <td>{{ grr_repeat.description }}</td>
+                <td>{{ grr_repeat.repNumWeeks ? 'Yes' : 'No' }}</td>
+                <td>{{ grr_repeat.overloadDesc }}</td>
+                <td>{{ grr_repeat.jours ? 'Yes' : 'No' }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="18">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_repeat_new') }}">Create new</a>
+{% endblock %}
