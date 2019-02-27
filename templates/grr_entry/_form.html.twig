@@ -1,4 +1,70 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.name) }}
+        {{ form_row(form.type) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.startTime) }}
+        {{ form_row(form.endTime) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.area) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.roomId) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.timestamp) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.createBy) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.beneficiaire) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.beneficiaireExt) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.description) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.overloadDesc) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2">
+        {{ form_row(form.entryType) }}
+    </div>
+    <div class="col-2">
+        {{ form_row(form.repeatId) }}
+    </div>
+    <div class="col-2">
+        {{ form_row(form.moderate) }}
+    </div>
+    <div class="col-2">
+        {{ form_row(form.jours) }}
+    </div>
+    <div class="col-2">
+        {{ form_row(form.optionReservation) }}
+    </div>
+    <div class="col-2">
+        {{ form_row(form.statutEntry) }}
+    </div>
+</div>
+
+<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

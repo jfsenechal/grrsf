@@ -55,9 +55,9 @@ class SearchEntryType extends AbstractType
                 EntityType::class,
                 [
                     'required' => false,
-                    'placeholder' => 'Salle',
+                    'placeholder' => 'Room',
                     'class' => GrrRoom::class,
-                    'query_builder' => $this->grrRoomRepository->getForSearch(),
+                    'query_builder' => $this->grrRoomRepository->getQueryBuilder(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )

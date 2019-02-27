@@ -19,6 +19,12 @@ class GrrAreaRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrArea::class);
     }
 
+    public function getQueryBuilder()
+    {
+        return $this->createQueryBuilder('grr_area')
+            ->orderBy('grr_area.areaName', 'ASC');
+    }
+
     // /**
     //  * @return GrrArea[] Returns an array of GrrArea objects
     //  */

@@ -19,7 +19,7 @@ class GrrRoomRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrRoom::class);
     }
 
-    public function getForSearch()
+    public function getQueryBuilder()
     {
         return $this->createQueryBuilder('grr_room')
             ->orderBy('grr_room.roomName', 'ASC');

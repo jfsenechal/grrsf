@@ -140,6 +140,11 @@ class GrrArea
      */
     private $maxBooking = '-1';
 
+    public function __toString()
+    {
+        return $this->areaName;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

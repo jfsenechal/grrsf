@@ -56,6 +56,11 @@ class GrrTypeArea
      */
     private $disponible = '2';
 
+    public function __toString()
+    {
+        return $this->typeName;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
