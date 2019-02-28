@@ -140,6 +140,12 @@ class GrrEntry
      */
     private $jours = '0';
 
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $booking;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -345,6 +351,18 @@ class GrrEntry
     public function setJours(bool $jours): self
     {
         $this->jours = $jours;
+
+        return $this;
+    }
+
+    public function getBooking(): ?int
+    {
+        return $this->booking;
+    }
+
+    public function setBooking(?int $booking): self
+    {
+        $this->booking = $booking;
 
         return $this;
     }

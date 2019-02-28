@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
+    booking_url: "%env(BOOKING_URL)%"
+    booking_token: "%env(BOOKING_TOKEN)%"
 
 services:
     # default configuration for services in *this* file

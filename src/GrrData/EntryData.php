@@ -59,6 +59,7 @@ class EntryData
 
     /**
      * field:entry_type
+     * Type de periode : aucune, chaque jour, chaque semaine, chaque mois
      */
     public function getEntryTypes()
     {
