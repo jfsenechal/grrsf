@@ -44,6 +44,10 @@
                     <th>StatutEntry</th>
                     <td>{{ grr_entry.statutEntry }}</td>
                 </tr>
+                <tr>
+                    <th>BookingId</th>
+                    <td>{{ grr_entry.booking }}</td>
+                </tr>
                 </tbody>
             </table>
 
@@ -102,9 +106,10 @@
         </div>
     </div>
 
-    <h3>Repeat</h3>
-    {% include 'grr_repeat/_detail.html.twig' %}
-
+    {% if grr_repeat %}
+        <h3>Repeat</h3>
+        {% include 'grr_repeat/_detail.html.twig' %}
+    {% endif %}
 
     <a href="{{ path('grr_entry_index') }}">back to list</a>
 

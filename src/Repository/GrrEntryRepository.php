@@ -20,6 +20,22 @@ class GrrEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrEntry::class);
     }
 
+    public function insert(GrrEntry $grrEntry)
+    {
+        $this->persist($grrEntry);
+        $this->save();
+    }
+
+    private function persist(GrrEntry $grrEntry)
+    {
+        $this->_em->persist($grrEntry);
+    }
+
+    private function save()
+    {
+        $this->_em->flush();
+    }
+
     /**
      * @param array $args
      * @return GrrEntry[] Returns an array of GrrEntry objects
@@ -56,6 +72,7 @@ class GrrEntryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 
     /*
     public function findOneBySomeField($value): ?GrrEntry
