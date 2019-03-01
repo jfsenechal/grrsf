@@ -6,10 +6,12 @@
  * Time: 13:35
  */
 
-namespace App\Service;
+namespace App\Booking;
 
 
 use App\Entity\GrrEntry;
+use App\Factory\GrrEntryFactory;
+use App\Manager\GrrEntryManager;
 use App\Repository\GrrEntryRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -56,11 +58,31 @@ class Booking
      * @var GrrEntryRepository
      */
     private $grrEntryRepository;
+    /**
+     * @var GrrEntryFactory
+     */
+    private $grrEntryFactory;
+    /**
+     * @var GrrEntryManager
+     */
+    private $grrEntryManager;
+    /**
+     * @var Repeat
+     */
+    private $repeat;
 
-    public function __construct(ParameterBagInterface $parameterBag, GrrEntryRepository $grrEntryRepository)
-    {
+    public function __construct(
+        ParameterBagInterface $parameterBag,
+        GrrEntryRepository $grrEntryRepository,
+        GrrEntryFactory $grrEntryFactory,
+        GrrEntryManager $grrEntryManager,
+        Repeat $repeat
+    ) {
         $this->parameterBag = $parameterBag;
         $this->grrEntryRepository = $grrEntryRepository;
+        $this->grrEntryFactory = $grrEntryFactory;
+        $this->grrEntryManager = $grrEntryManager;
+        $this->repeat = $repeat;
     }
 
     public function getData()
@@ -114,7 +136,7 @@ class Booking
     {
         $grrEntry = $this->grrEntryRepository->findOneBy(['booking' => $bookingId]);
         if (!$grrEntry) {
-            $grrEntry = new GrrEntry();
+            $this->grrEntryFactory->createNew();
         }
 
         return $grrEntry;
@@ -130,19 +152,9 @@ class Booking
 
         foreach ($dates as $date) {
             $grrEntryClone = clone($grrEntry);
-            $dateTimeDebut = $this->getDate($date->booking_date);
-            $dateTimeFin = clone($dateTimeDebut);
-            $heure = $dateTimeDebut->format('H:i:s');
-            if ($heure === '00:00:00') {
-                //toute la journee de 8h a 23h
-                $dateTimeDebut->setTime(8, 00);
-                $dateTimeFin->setTime(23, 00);
-            } else {
-                $dateTimeFin->setTime(23, 00);
-            }
-            $grrEntryClone->setStartTime($dateTimeDebut->getTimestamp());
-            $grrEntryClone->setEndTime($dateTimeFin->getTimestamp());
-            $this->grrEntryRepository->insert($grrEntryClone);
+            $dateTime = $this->getDate($date->booking_date);
+            $this->repeat->create($grrEntry, $dateTime);
+            $this->grrEntryManager->insert($grrEntryClone);
         }
     }
 
@@ -154,7 +166,7 @@ class Booking
         $grrEntry->setStartTime($dateTimeDebut->getTimestamp());
         $grrEntry->setEndTime($dateTimeFin->getTimestamp());
 
-        $this->grrEntryRepository->insert($grrEntry);
+        $this->grrEntryManager->insert($grrEntry);
     }
 
     private function setDefaultFields(GrrEntry $grrEntry)

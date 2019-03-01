@@ -31,9 +31,9 @@ class GrrArea
     /**
      * @var string
      *
-     * @ORM\Column(name="access", type="string", length=1, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="access", type="boolean", nullable=false)
      */
-    private $access = '';
+    private $access = false;
 
     /**
      * @var int
@@ -108,9 +108,9 @@ class GrrArea
     /**
      * @var string
      *
-     * @ORM\Column(name="display_days", type="string", length=7, nullable=false, options={"default"="yyyyyyy"})
+     * @ORM\Column(name="display_days", type="array", nullable=false)
      */
-    private $displayDays = 'yyyyyyy';
+    private $displayDays;
 
     /**
      * @var int
@@ -158,18 +158,6 @@ class GrrArea
     public function setAreaName(string $areaName): self
     {
         $this->areaName = $areaName;
-
-        return $this;
-    }
-
-    public function getAccess(): ?string
-    {
-        return $this->access;
-    }
-
-    public function setAccess(string $access): self
-    {
-        $this->access = $access;
 
         return $this;
     }
@@ -294,18 +282,6 @@ class GrrArea
         return $this;
     }
 
-    public function getDisplayDays(): ?string
-    {
-        return $this->displayDays;
-    }
-
-    public function setDisplayDays(string $displayDays): self
-    {
-        $this->displayDays = $displayDays;
-
-        return $this;
-    }
-
     public function getIdTypeParDefaut(): ?int
     {
         return $this->idTypeParDefaut;
@@ -350,6 +326,30 @@ class GrrArea
     public function setMaxBooking(int $maxBooking): self
     {
         $this->maxBooking = $maxBooking;
+
+        return $this;
+    }
+
+    public function getAccess(): ?bool
+    {
+        return $this->access;
+    }
+
+    public function setAccess(bool $access): self
+    {
+        $this->access = $access;
+
+        return $this;
+    }
+
+    public function getDisplayDays(): ?array
+    {
+        return $this->displayDays;
+    }
+
+    public function setDisplayDays(array $displayDays): self
+    {
+        $this->displayDays = $displayDays;
 
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Booking\BookingTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrEntry
 {
+    use BookingTrait;
+
     /**
      * @var int
      *
@@ -139,12 +142,6 @@ class GrrEntry
      * @ORM\Column(name="jours", type="boolean", nullable=false)
      */
     private $jours = '0';
-
-    /**
-     * @var integer
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $booking;
 
     public function getId(): ?int
     {
@@ -354,18 +351,4 @@ class GrrEntry
 
         return $this;
     }
-
-    public function getBooking(): ?int
-    {
-        return $this->booking;
-    }
-
-    public function setBooking(?int $booking): self
-    {
-        $this->booking = $booking;
-
-        return $this;
-    }
-
-
 }

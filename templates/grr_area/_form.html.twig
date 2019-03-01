@@ -1,4 +1,57 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.areaName) }}
+        {{ form_row(form.orderDisplay) }}
+        {{ form_row(form.access) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.resolutionArea) }}
+        {{ form_row(form.dureeParDefautReservationArea) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.morningstartsArea) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.eveningendsArea) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.weekstartsArea) }}
+        {{ form_row(form.twentyfourhourFormatArea) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.displayDays) }}
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.maxBooking) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.dureeMaxResaArea) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.idTypeParDefaut) }}
+        {{ form_row(form.ipAdr) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.calendarDefaultValues) }}
+        {{ form_row(form.enablePeriods) }}
+        {{ form_row(form.eveningendsMinutesArea) }}
+    </div>
+</div>
+
+<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

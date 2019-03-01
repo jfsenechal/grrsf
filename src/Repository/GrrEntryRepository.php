@@ -20,20 +20,26 @@ class GrrEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrEntry::class);
     }
 
-    public function insert(GrrEntry $grrEntry)
+
+    public function flush()
     {
-        $this->persist($grrEntry);
-        $this->save();
+        $this->_em->flush();
     }
 
-    private function persist(GrrEntry $grrEntry)
+    public function remove(GrrEntry $grrEntry)
+    {
+        $this->_em->remove($grrEntry);
+    }
+
+    public function persist(GrrEntry $grrEntry)
     {
         $this->_em->persist($grrEntry);
     }
 
-    private function save()
+    public function insert(GrrEntry $grrEntry)
     {
-        $this->_em->flush();
+        $this->persist($grrEntry);
+        $this->flush();
     }
 
     /**
@@ -66,7 +72,7 @@ class GrrEntryRepository extends ServiceEntityRepository
                 ->setParameter('type', $type);
         }
 
-      return  $qb
+        return $qb
             ->orderBy('grr_entry.startTime', 'DESC')
             ->setMaxResults(500)
             ->getQuery()

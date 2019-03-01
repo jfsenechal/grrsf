@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\GrrArea;
+use App\Factory\AreaFactory;
 use App\Form\GrrAreaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class GrrAreaController extends AbstractController
 {
+    /**
+     * @var AreaFactory
+     */
+    private $areaFactory;
+
+    public function __construct(AreaFactory $areaFactory)
+    {
+        $this->areaFactory = $areaFactory;
+    }
+
     /**
      * @Route("/", name="grr_area_index", methods={"GET"})
      */
@@ -33,7 +44,9 @@ class GrrAreaController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $grrArea = new GrrArea();
+        $grrArea = $this->areaFactory->createNew();
+        $this->areaFactory->setDefaultValues($grrArea);
+
         $form = $this->createForm(GrrAreaType::class, $grrArea);
         $form->handleRequest($request);
 

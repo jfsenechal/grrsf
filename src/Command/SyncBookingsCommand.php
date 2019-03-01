@@ -2,8 +2,8 @@
 
 namespace App\Command;
 
+use App\Booking\Booking;
 use App\Factory\GrrEntryFactory;
-use App\Service\Booking;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -46,7 +46,7 @@ class SyncBookingsCommand extends Command
             die();
         }
 
-      $t =  $this->grrEntryFactory->createNew();
+        $t = $this->grrEntryFactory->createNew();
         var_dump($t);
 
         $resources = $data->resources;

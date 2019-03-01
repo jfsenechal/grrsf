@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Booking\BookingTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrRepeat
 {
+    use BookingTrait;
+
     /**
      * @var int
      *

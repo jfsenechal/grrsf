@@ -8,15 +8,11 @@
 
 namespace App\Factory;
 
-
 use App\Entity\GrrEntry;
 
-class MonFactory implements FactoryInterface
+class EntryFactory implements FactoryInterface
 {
-    /**
-     * @return object
-     */
-    public function createNew()
+    public function createNew():GrrEntry
     {
         return new GrrEntry();
     }

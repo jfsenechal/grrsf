@@ -1,3 +1,4 @@
-grr_repeat
-rep_type
-$vocab['rep_type'] = "Type de périodicité :";
+Form areaType
+
+$access String => to Boolean for checkbox
+$displayDays String to array 
