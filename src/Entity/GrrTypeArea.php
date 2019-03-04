@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrTypeArea
 {
-    use UidTrait;
+    //use UidTrait;
 
     /**
      * @var string
