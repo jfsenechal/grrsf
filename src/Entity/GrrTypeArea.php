@@ -12,14 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrTypeArea
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    use UidTrait;
 
     /**
      * @var string
@@ -59,11 +52,6 @@ class GrrTypeArea
     public function __toString()
     {
         return $this->typeName;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getTypeName(): ?string

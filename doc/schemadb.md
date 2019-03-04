@@ -1,5 +1,6 @@
 Form areaType
 
+GrrTypeArea
 $access String: => to Boolean for checkbox
 $displayDays: String to array 
 

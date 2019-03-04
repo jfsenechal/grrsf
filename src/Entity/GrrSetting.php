@@ -12,12 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrSetting
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    use UidTrait;
 
     /**
      * @var string
@@ -50,11 +45,6 @@ class GrrSetting
         $this->value = $value;
 
         return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function setName(string $name): self
