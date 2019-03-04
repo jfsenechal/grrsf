@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrUtilisateurs
 {
-    use UidTrait;
+    //use UidTrait;
 
     /**
      * @var string
      *
      * @ORM\Column(name="login", type="string", length=20, nullable=false)
-     * ORM\Id
-     * ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $login;
 

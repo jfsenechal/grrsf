@@ -76,7 +76,7 @@ class SyncBookingsCommand extends Command
 
     protected function purge(Output $output)
     {
-        $entries = $this->grrEntryRepository->findAll();
+        $entries = $this->grrEntryRepository->getBookings();
 
         foreach ($entries as $entry) {
             if (!in_array($entry->getBooking(), $this->bookingService->bookingsFromFlux)) {

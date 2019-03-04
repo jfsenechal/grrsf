@@ -79,16 +79,12 @@ class GrrEntryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
-    /*
-    public function findOneBySomeField($value): ?GrrEntry
+    public function getBookings()
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('grr_entry')
+            ->andWhere('grr_entry.booking IS NOT NULL')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
 }
