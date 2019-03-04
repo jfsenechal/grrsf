@@ -14,37 +14,27 @@ use Doctrine\ORM\Mapping as ORM;
 trait BookingTrait
 {
     /**
-     * @var integer
-     * @ORM\Column(type="integer", nullable=true)
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
      */
     private $booking;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string",length=25, nullable=true)
+     * @return string|null
      */
-    private $booking_repeat;
-
-    public function getBooking(): ?int
+    public function getBooking(): ?string
     {
         return $this->booking;
     }
 
-    public function setBooking(?int $booking): self
+    /**
+     * @param string|null $booking
+     * @return self
+     */
+    public function setBooking(?string $booking): self
     {
         $this->booking = $booking;
-
         return $this;
-    }
-
-    public function getBookingRepeat(): ?string
-    {
-        return $this->booking_repeat;
-    }
-
-    public function setBookingRepeat(?string $booking_repeat): self
-    {
-        $this->booking_repeat = $booking_repeat;
     }
 
 }

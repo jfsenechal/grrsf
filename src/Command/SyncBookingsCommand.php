@@ -2,10 +2,13 @@
 
 namespace App\Command;
 
-use App\Booking\Booking;
+use App\Booking\BookingService;
 use App\Factory\GrrEntryFactory;
+use App\Manager\GrrEntryManager;
+use App\Repository\GrrEntryRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -14,19 +17,34 @@ class SyncBookingsCommand extends Command
     protected static $defaultName = 'SyncBookings';
 
     /**
-     * @var Booking
+     * @var BookingService
      */
-    private $booking;
+    private $bookingService;
     /**
      * @var GrrEntryFactory
      */
     private $grrEntryFactory;
+    /**
+     * @var GrrEntryRepository
+     */
+    private $grrEntryRepository;
+    /**
+     * @var GrrEntryManager
+     */
+    private $grrEntryManager;
 
-    public function __construct(?string $name = null, Booking $booking, GrrEntryFactory $grrEntryFactory)
-    {
+    public function __construct(
+        ?string $name = null,
+        BookingService $bookingService,
+        GrrEntryFactory $grrEntryFactory,
+        GrrEntryRepository $grrEntryRepository,
+        GrrEntryManager $grrEntryManager
+    ) {
         parent::__construct($name);
-        $this->booking = $booking;
+        $this->bookingService = $bookingService;
         $this->grrEntryFactory = $grrEntryFactory;
+        $this->grrEntryRepository = $grrEntryRepository;
+        $this->grrEntryManager = $grrEntryManager;
     }
 
     protected function configure()
@@ -39,24 +57,34 @@ class SyncBookingsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         try {
-            //print_r($this->booking->getData());
-            $data = json_decode($this->booking->getData());
+            $data = json_decode($this->bookingService->getData());
         } catch (\Exception $exception) {
             $io->error("Erreur obtention data: ".$exception->getMessage());
             die();
         }
 
-        $t = $this->grrEntryFactory->createNew();
-        var_dump($t);
+        $this->bookingService->output = $output;
 
         $resources = $data->resources;
         $bookings = $data->bookings;
         foreach ($bookings as $booking) {
-            //     $this->booking->traitementBooking($booking);
+            $this->bookingService->traitementByDates($booking);
         }
 
-        //  $io->success('ok');
+        $this->purge($output);
     }
 
+    protected function purge(Output $output)
+    {
+        $entries = $this->grrEntryRepository->findAll();
+
+        foreach ($entries as $entry) {
+            if (!in_array($entry->getBooking(), $this->bookingService->bookingsFromFlux)) {
+                $this->grrEntryManager->remove($entry);
+                echo $output->writeln("remove : ".$entry->getBooking());
+            }
+        }
+        $this->grrEntryManager->flush();
+    }
 
 }

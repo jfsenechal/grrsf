@@ -8,14 +8,14 @@
 
 namespace App\Booking;
 
-
 use App\Entity\GrrEntry;
 use App\Factory\GrrEntryFactory;
 use App\Manager\GrrEntryManager;
 use App\Repository\GrrEntryRepository;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class Booking
+class BookingService
 {
 
     protected $sallesGrr = [
@@ -67,23 +67,28 @@ class Booking
      */
     private $grrEntryManager;
     /**
-     * @var Repeat
+     * @var OutputInterface
      */
-    private $repeat;
+    public $output;
+
+    /**
+     * @var array
+     */
+    public $bookingsFromFlux;
 
     public function __construct(
         ParameterBagInterface $parameterBag,
         GrrEntryRepository $grrEntryRepository,
         GrrEntryFactory $grrEntryFactory,
-        GrrEntryManager $grrEntryManager,
-        Repeat $repeat
+        GrrEntryManager $grrEntryManager
     ) {
         $this->parameterBag = $parameterBag;
         $this->grrEntryRepository = $grrEntryRepository;
         $this->grrEntryFactory = $grrEntryFactory;
         $this->grrEntryManager = $grrEntryManager;
-        $this->repeat = $repeat;
+        $this->bookingsFromFlux = [];
     }
+
 
     public function getData()
     {
@@ -103,70 +108,76 @@ class Booking
         return $server_output;
     }
 
-    public function traitementBooking($booking)
+    public function traitementByDates($booking)
     {
-        $form_data = $booking->form_data;
-        //13:00 - 18:00
-        $rangetime = $form_data->rangetime;
-        $fields = $form_data->_all_fields_;
-        $this->createGrrEntry($booking, $fields, $booking->dates);
-
-    }
-
-    /**
-     * @param $booking
-     * @param $fields
-     * @param $date 2019-03-19 18:00:02
-     */
-    public function createGrrEntry($booking, $fields, $dates)
-    {
-        $grrEntry = $this->getInstance($booking->booking_id);
-        $grrEntry->setName($this->removeAccents($fields->name).' '.$this->removeAccents($fields->secondname));
-        $grrEntry->setTimestamp($this->getDate($booking->modification_date));
-        $grrEntry->setBooking($booking->booking_id);
-        $grrEntry->setRoomId($this->getCorrespondanceRoom($booking->booking_type));
-        $grrEntry->setDescription($this->getDescriptionString($fields));
-        $grrEntry->setBeneficiaire('esquare');
-        $grrEntry->setCreateBy('esquare');
-        $this->setDefaultFields($grrEntry);
-        $this->traitementDates($grrEntry, $dates);
-    }
-
-    public function getInstance(int $bookingId): GrrEntry
-    {
-        $grrEntry = $this->grrEntryRepository->findOneBy(['booking' => $bookingId]);
-        if (!$grrEntry) {
-            $this->grrEntryFactory->createNew();
-        }
-
-        return $grrEntry;
-    }
-
-    protected function traitementDates(GrrEntry $grrEntry, $dates)
-    {
-        if (count($dates) == 2) {
-            $this->traitement2Dates($grrEntry, $dates);
-
-            return;
-        }
-
-        foreach ($dates as $date) {
-            $grrEntryClone = clone($grrEntry);
-            $dateTime = $this->getDate($date->booking_date);
-            $this->repeat->create($grrEntry, $dateTime);
-            $this->grrEntryManager->insert($grrEntryClone);
+        if (count($booking->dates) === 2) {
+            $this->traitement2Dates($booking);
+        } else {
+            foreach ($booking->dates as $date) {
+                $firstDate = $date->booking_date;
+                $grrEntry = $this->createGrrEntry($booking, $firstDate);
+                $dateTime = $this->convertToDateTime($firstDate);
+                $grrEntry->setStartTime($dateTime->getTimestamp());
+                $grrEntry->setEndTime($dateTime->getTimestamp());
+                $this->grrEntryManager->insert($grrEntry);
+            }
         }
     }
 
-    private function traitement2Dates(GrrEntry $grrEntry, $dates)
+    private function traitement2Dates($booking)
     {
-        $dateTimeDebut = $this->getDate($dates[0]->booking_date);
-        $dateTimeFin = $this->getDate($dates[1]->booking_date);
+        $firstDate = $booking->dates[0]->booking_date;
+        $secondDate = $booking->dates[1]->booking_date;
+        $grrEntry = $this->createGrrEntry($booking, $firstDate);
+        $dateTimeDebut = $this->convertToDateTime($firstDate);
+        $dateTimeFin = $this->convertToDateTime($secondDate);
 
         $grrEntry->setStartTime($dateTimeDebut->getTimestamp());
         $grrEntry->setEndTime($dateTimeFin->getTimestamp());
 
         $this->grrEntryManager->insert($grrEntry);
+    }
+
+
+    /**
+     * @param $booking
+     * @return GrrEntry
+     */
+    public function createGrrEntry($booking, string $date): GrrEntry
+    {
+        $form_data = $booking->form_data;
+        //13:00 - 18:00
+        $rangetime = $form_data->rangetime;
+        $fields = $form_data->_all_fields_;
+        $grrEntry = $this->getInstance($booking, $date);
+        $grrEntry->setName($this->removeAccents($fields->name).' '.$this->removeAccents($fields->secondname));
+        $grrEntry->setTimestamp($this->convertToDateTime($booking->modification_date));
+        $grrEntry->setRoomId($this->getCorrespondanceRoom($booking->booking_type));
+        $grrEntry->setDescription($this->getDescriptionString($fields));
+        $grrEntry->setBeneficiaire('esquare');
+        $grrEntry->setCreateBy('esquare');
+        $this->setDefaultFields($grrEntry);
+
+        return $grrEntry;
+    }
+
+    public function getInstance($booking, string $date): GrrEntry
+    {
+        $key = $this->getKeyBooking($booking, $date);
+        $this->bookingsFromFlux[] = $key;
+        $grrEntry = $this->grrEntryRepository->findOneBy(['booking' => $key]);
+        if (!$grrEntry) {
+            echo $this->output->writeln("nouveau : $date => $key");
+            $grrEntry = $this->grrEntryFactory->createNew();
+            $grrEntry->setBooking($key);
+        }
+
+        return $grrEntry;
+    }
+
+    protected function getKeyBooking($booking, $date)
+    {
+        return $booking->booking_id.'_'.$this->convertToDateTime($date)->format('Y-m-d');
     }
 
     private function setDefaultFields(GrrEntry $grrEntry)
@@ -180,12 +191,13 @@ class Booking
         $grrEntry->setStatutEntry('-');
     }
 
-    public function getDate(string $date)
+    public function convertToDateTime(string $date)
     {
         try {
             return \DateTime::createFromFormat('Y-m-d H:i:s', $date);
         } catch (\Exception $exception) {
-            return null;
+            var_dump($exception->getMessage());
+            die();
         }
     }
 
@@ -203,7 +215,8 @@ class Booking
 
     public function getCorrespondanceRoom($room)
     {
-        return $this->salles[$room];
+        return $this->sallesGrrProd[$room];
+        //return $this->salles[$room];
     }
 
     public function removeAccents(string $string)
