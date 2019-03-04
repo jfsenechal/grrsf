@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrUtilisateurs
 {
-    //use UidTrait;
+    use IdTrait;
 
     /**
      * @var string

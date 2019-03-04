@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrEntry
 {
-  //  use BookingTrait;
+    use BookingTrait;
 
     /**
      * @var int
