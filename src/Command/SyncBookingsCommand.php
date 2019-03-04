@@ -65,6 +65,8 @@ class SyncBookingsCommand extends Command
 
         $this->bookingService->output = $output;
 
+        echo $output->writeln("sync : ".date('Y-m-d H:i'));
+
         $resources = $data->resources;
         $bookings = $data->bookings;
         foreach ($bookings as $booking) {
