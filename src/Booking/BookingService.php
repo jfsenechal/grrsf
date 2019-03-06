@@ -42,6 +42,14 @@ class BookingService
         5 => 115,
     ];
 
+    /**
+     * @var array
+     * LA BOX
+     * LA CREATIVE
+     * DIGITAL ROOM
+     * RELAX ROOM
+     * La MEETING
+     */
     protected $salles = [
         1 => 1,
         2 => 2,
@@ -89,7 +97,6 @@ class BookingService
         $this->bookingsFromFlux = [];
     }
 
-
     public function getData()
     {
         $ch = curl_init();
@@ -115,10 +122,21 @@ class BookingService
         } else {
             foreach ($booking->dates as $date) {
                 $firstDate = $date->booking_date;
+
                 $grrEntry = $this->createGrrEntry($booking, $firstDate);
-                $dateTime = $this->convertToDateTime($firstDate);
-                $grrEntry->setStartTime($dateTime->getTimestamp());
-                $grrEntry->setEndTime($dateTime->getTimestamp());
+                $dateTimeDebut = $this->convertToDateTime($firstDate);
+                $dateTimeFin = $this->convertToDateTime($firstDate);
+
+                $this->output->write($firstDate.' ==> ');
+
+                $this->setHeureDebut($dateTimeDebut);
+                $this->setHeureFin($dateTimeFin, true);
+
+                $this->output->write($dateTimeDebut->format('Y-m-d H:i:s').' , ');
+                $this->output->writeln($dateTimeFin->format('Y-m-d H:i:s'));
+
+                $grrEntry->setStartTime($dateTimeDebut->getTimestamp());
+                $grrEntry->setEndTime($dateTimeFin->getTimestamp());
                 $this->grrEntryManager->insert($grrEntry);
             }
         }
@@ -132,10 +150,37 @@ class BookingService
         $dateTimeDebut = $this->convertToDateTime($firstDate);
         $dateTimeFin = $this->convertToDateTime($secondDate);
 
+        $this->output->write($firstDate.'|'.$secondDate.' ==> ');
+
+        $this->setHeureDebut($dateTimeDebut);
+        $this->setHeureFin($dateTimeFin);
+
+        $this->output->write($dateTimeDebut->format('Y-m-d H:i:s').' , ');
+        $this->output->writeln($dateTimeFin->format('Y-m-d H:i:s'));
+
         $grrEntry->setStartTime($dateTimeDebut->getTimestamp());
         $grrEntry->setEndTime($dateTimeFin->getTimestamp());
 
         $this->grrEntryManager->insert($grrEntry);
+    }
+
+    private function setHeureDebut(\DateTime $dateTime)
+    {
+        $heure = $dateTime->format('H:i');
+        if ($heure === '00:00') {
+            $dateTime->setTime(8, 00);
+        }
+    }
+
+    private function setHeureFin(\DateTime $dateTime, bool $force = false)
+    {
+        $heure = $dateTime->format('H:i');
+
+        if ($force == true) {
+            $dateTime->setTime(23, 00);
+        } elseif ($heure === '00:00') {
+            $dateTime->setTime(23, 00);
+        }
     }
 
 
@@ -191,7 +236,7 @@ class BookingService
         $grrEntry->setStatutEntry('-');
     }
 
-    public function convertToDateTime(string $date)
+    public function convertToDateTime(string $date): \DateTime
     {
         try {
             return \DateTime::createFromFormat('Y-m-d H:i:s', $date);
