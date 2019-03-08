@@ -15,10 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class GrrSettingController extends AbstractController
 {
+    public function __construct(GrrSettingRepository $grrSettingRepository)
+    {
+
+    }
+
     /**
      * @Route("/", name="grr_setting_index", methods={"GET"})
      */
-    public function index(GrrSettingRepository $grrSettingRepository): Response
+    public function index(): Response
     {
         return $this->render('grr_setting/index.html.twig', [
             'grr_settings' => $grrSettingRepository->findAll(),

@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\GrrRoom;
+use App\Factory\GrrRoomFactory;
 use App\Form\GrrRoomType;
+use App\Manager\GrrRoomManager;
+use App\Repository\GrrRoomRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,17 +18,41 @@ use Symfony\Component\Routing\Annotation\Route;
 class GrrRoomController extends AbstractController
 {
     /**
+     * @var GrrRoomFactory
+     */
+    private $grrRoomFactory;
+    /**
+     * @var GrrRoomRepository
+     */
+    private $grrRoomRepository;
+    /**
+     * @var GrrRoomManager
+     */
+    private $grrRoomManager;
+
+    public function __construct(
+        GrrRoomFactory $grrRoomFactory,
+        GrrRoomRepository $grrRoomRepository,
+        GrrRoomManager $grrRoomManager
+    ) {
+        $this->grrRoomFactory = $grrRoomFactory;
+        $this->grrRoomRepository = $grrRoomRepository;
+        $this->grrRoomManager = $grrRoomManager;
+    }
+
+    /**
      * @Route("/", name="grr_room_index", methods={"GET"})
      */
     public function index(): Response
     {
-        $grrRooms = $this->getDoctrine()
-            ->getRepository(GrrRoom::class)
-            ->findAll();
+        $grrRooms = $this->grrRoomRepository->findAll();
 
-        return $this->render('grr_room/index.html.twig', [
-            'grr_rooms' => $grrRooms,
-        ]);
+        return $this->render(
+            'grr_room/index.html.twig',
+            [
+                'grr_rooms' => $grrRooms,
+            ]
+        );
     }
 
     /**
@@ -38,17 +65,18 @@ class GrrRoomController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($grrRoom);
-            $entityManager->flush();
+            $this->grrRoomManager->insert($grrRoom);
 
             return $this->redirectToRoute('grr_room_index');
         }
 
-        return $this->render('grr_room/new.html.twig', [
-            'grr_room' => $grrRoom,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'grr_room/new.html.twig',
+            [
+                'grr_room' => $grrRoom,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -56,9 +84,12 @@ class GrrRoomController extends AbstractController
      */
     public function show(GrrRoom $grrRoom): Response
     {
-        return $this->render('grr_room/show.html.twig', [
-            'grr_room' => $grrRoom,
-        ]);
+        return $this->render(
+            'grr_room/show.html.twig',
+            [
+                'grr_room' => $grrRoom,
+            ]
+        );
     }
 
     /**
@@ -70,17 +101,23 @@ class GrrRoomController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->grrRoomManager->flush();
 
-            return $this->redirectToRoute('grr_room_index', [
-                'id' => $grrRoom->getId(),
-            ]);
+            return $this->redirectToRoute(
+                'grr_room_index',
+                [
+                    'id' => $grrRoom->getId(),
+                ]
+            );
         }
 
-        return $this->render('grr_room/edit.html.twig', [
-            'grr_room' => $grrRoom,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'grr_room/edit.html.twig',
+            [
+                'grr_room' => $grrRoom,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -89,9 +126,10 @@ class GrrRoomController extends AbstractController
     public function delete(Request $request, GrrRoom $grrRoom): Response
     {
         if ($this->isCsrfTokenValid('delete'.$grrRoom->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($grrRoom);
-            $entityManager->flush();
+
+            $this->grrRoomManager->remove($grrRoom);
+            $this->grrRoomManager->flush();
+
         }
 
         return $this->redirectToRoute('grr_room_index');

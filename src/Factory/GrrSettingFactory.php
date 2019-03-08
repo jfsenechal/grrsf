@@ -9,13 +9,14 @@
 namespace App\Factory;
 
 use App\Entity\GrrArea;
+use App\Entity\GrrSetting;
 use App\GrrData\DateUtils;
 
-class AreaFactory
+class GrrSettingFactory
 {
-    public function createNew(): GrrArea
+    public function createNew(): GrrSetting
     {
-        return new GrrArea();
+        return new GrrSetting();
     }
 
     public function setDefaultValues(GrrArea $grrArea)

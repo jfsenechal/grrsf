@@ -19,16 +19,6 @@ class GrrRepeatRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrRepeat::class);
     }
 
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
-    public function remove(GrrRepeat $grrRepeat)
-    {
-        $this->_em->remove($grrRepeat);
-    }
-
     public function persist(GrrRepeat $grrRepeat)
     {
         $this->_em->persist($grrRepeat);
@@ -39,6 +29,17 @@ class GrrRepeatRepository extends ServiceEntityRepository
         $this->persist($grrRepeat);
         $this->flush();
     }
+
+    public function remove(GrrRepeat $grrRepeat)
+    {
+        $this->_em->remove($grrRepeat);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
     
     /**
      * @return GrrRepeat[] Returns an array of GrrRepeat objects

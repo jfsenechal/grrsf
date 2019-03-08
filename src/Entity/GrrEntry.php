@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * GrrEntry
  *
  * @ORM\Table(name="grr_entry", indexes={@ORM\Index(name="idxEndTime", columns={"end_time"}), @ORM\Index(name="idxStartTime", columns={"start_time"})})
- * @ORM\Entity(repositoryClass="App\Repository\GrrEntryRepository")
+ * @ORM\Entity(repositoryClass="GrrEntryRepository")
  */
 class GrrEntry
 {

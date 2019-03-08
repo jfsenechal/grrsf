@@ -25,6 +25,27 @@ class GrrRoomRepository extends ServiceEntityRepository
             ->orderBy('grr_room.roomName', 'ASC');
     }
 
+    public function persist(GrrRoom $grrRoom)
+    {
+        $this->_em->persist($grrRoom);
+    }
+
+    public function insert(GrrRoom $grrRoom)
+    {
+        $this->persist($grrRoom);
+        $this->flush();
+    }
+
+    public function remove(GrrRoom $grrRoom)
+    {
+        $this->_em->remove($grrRoom);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
     // /**
     //  * @return GrrRoom[] Returns an array of GrrRoom objects
     //  */

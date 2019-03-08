@@ -25,6 +25,29 @@ class GrrAreaRepository extends ServiceEntityRepository
             ->orderBy('grr_area.areaName', 'ASC');
     }
 
+    public function persist(GrrArea $grrArea)
+    {
+        $this->_em->persist($grrArea);
+    }
+
+    public function insert(GrrArea $grrArea)
+    {
+        $this->persist($grrArea);
+        $this->flush();
+    }
+
+    public function remove(GrrArea $grrArea)
+    {
+        $this->_em->remove($grrArea);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
+
+
     // /**
     //  * @return GrrArea[] Returns an array of GrrArea objects
     //  */

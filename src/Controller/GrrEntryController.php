@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\GrrEntry;
+use App\Factory\GrrEntryFactory;
 use App\Form\GrrEntryType;
 use App\Form\SearchEntryType;
+use App\Manager\GrrEntryManager;
 use App\Repository\GrrEntryRepository;
 use App\Repository\GrrRepeatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,11 +27,25 @@ class GrrEntryController extends AbstractController
      * @var GrrRepeatRepository
      */
     private $grrRepeatRepository;
+    /**
+     * @var GrrEntryManager
+     */
+    private $grrEntryManager;
+    /**
+     * @var GrrEntryFactory
+     */
+    private $grrEntryFactory;
 
-    public function __construct(GrrEntryRepository $grrEntryRepository, GrrRepeatRepository $grrRepeatRepository)
-    {
+    public function __construct(
+        GrrEntryFactory $grrEntryFactory,
+        GrrEntryRepository $grrEntryRepository,
+        GrrEntryManager $grrEntryManager,
+        GrrRepeatRepository $grrRepeatRepository
+    ) {
         $this->grrEntryRepository = $grrEntryRepository;
         $this->grrRepeatRepository = $grrRepeatRepository;
+        $this->grrEntryManager = $grrEntryManager;
+        $this->grrEntryFactory = $grrEntryFactory;
     }
 
     /**
@@ -62,14 +78,12 @@ class GrrEntryController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $grrEntry = new GrrEntry();
+        $grrEntry = $this->grrEntryFactory->createNew();
         $form = $this->createForm(GrrEntryType::class, $grrEntry);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($grrEntry);
-            $entityManager->flush();
+            $this->grrEntryManager->insert($grrEntry);
 
             return $this->redirectToRoute('grr_entry_index');
         }
@@ -108,7 +122,7 @@ class GrrEntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->grrEntryManager->flush();
 
             return $this->redirectToRoute(
                 'grr_entry_index',
@@ -133,9 +147,8 @@ class GrrEntryController extends AbstractController
     public function delete(Request $request, GrrEntry $grrEntry): Response
     {
         if ($this->isCsrfTokenValid('delete'.$grrEntry->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($grrEntry);
-            $entityManager->flush();
+            $this->grrEntryManager->remove($grrEntry);
+            $this->grrEntryManager->flush();
         }
 
         return $this->redirectToRoute('grr_entry_index');

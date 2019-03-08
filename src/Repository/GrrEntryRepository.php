@@ -20,17 +20,6 @@ class GrrEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrEntry::class);
     }
 
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
-    public function remove(GrrEntry $grrEntry)
-    {
-        $this->_em->remove($grrEntry);
-    }
-
     public function persist(GrrEntry $grrEntry)
     {
         $this->_em->persist($grrEntry);
@@ -40,6 +29,16 @@ class GrrEntryRepository extends ServiceEntityRepository
     {
         $this->persist($grrEntry);
         $this->flush();
+    }
+
+    public function remove(GrrEntry $grrEntry)
+    {
+        $this->_em->remove($grrEntry);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
     }
 
     /**

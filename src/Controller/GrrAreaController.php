@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\GrrArea;
-use App\Factory\AreaFactory;
+use App\Factory\GrrAreaFactory;
 use App\Form\GrrAreaType;
+use App\Manager\GrrAreaManager;
+use App\Repository\GrrAreaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +18,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class GrrAreaController extends AbstractController
 {
     /**
-     * @var AreaFactory
+     * @var GrrAreaFactory
      */
     private $areaFactory;
+    /**
+     * @var GrrAreaManager
+     */
+    private $areaManager;
+    /**
+     * @var GrrAreaRepository
+     */
+    private $grrAreaRepository;
 
-    public function __construct(AreaFactory $areaFactory)
-    {
+    public function __construct(
+        GrrAreaFactory $areaFactory,
+        GrrAreaRepository $grrAreaRepository,
+        GrrAreaManager $areaManager
+    ) {
         $this->areaFactory = $areaFactory;
+        $this->areaManager = $areaManager;
+        $this->grrAreaRepository = $grrAreaRepository;
     }
 
     /**
@@ -30,13 +45,14 @@ class GrrAreaController extends AbstractController
      */
     public function index(): Response
     {
-        $grrAreas = $this->getDoctrine()
-            ->getRepository(GrrArea::class)
-            ->findAll();
+        $grrAreas = $this->grrAreaRepository->findAll();
 
-        return $this->render('grr_area/index.html.twig', [
-            'grr_areas' => $grrAreas,
-        ]);
+        return $this->render(
+            'grr_area/index.html.twig',
+            [
+                'grr_areas' => $grrAreas,
+            ]
+        );
     }
 
     /**
@@ -51,17 +67,19 @@ class GrrAreaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($grrArea);
-            $entityManager->flush();
+
+            $this->areaManager->insert($grrArea);
 
             return $this->redirectToRoute('grr_area_index');
         }
 
-        return $this->render('grr_area/new.html.twig', [
-            'grr_area' => $grrArea,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'grr_area/new.html.twig',
+            [
+                'grr_area' => $grrArea,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -69,9 +87,12 @@ class GrrAreaController extends AbstractController
      */
     public function show(GrrArea $grrArea): Response
     {
-        return $this->render('grr_area/show.html.twig', [
-            'grr_area' => $grrArea,
-        ]);
+        return $this->render(
+            'grr_area/show.html.twig',
+            [
+                'grr_area' => $grrArea,
+            ]
+        );
     }
 
     /**
@@ -83,17 +104,23 @@ class GrrAreaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->areaManager->flush();
 
-            return $this->redirectToRoute('grr_area_index', [
-                'id' => $grrArea->getId(),
-            ]);
+            return $this->redirectToRoute(
+                'grr_area_index',
+                [
+                    'id' => $grrArea->getId(),
+                ]
+            );
         }
 
-        return $this->render('grr_area/edit.html.twig', [
-            'grr_area' => $grrArea,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'grr_area/edit.html.twig',
+            [
+                'grr_area' => $grrArea,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -102,9 +129,8 @@ class GrrAreaController extends AbstractController
     public function delete(Request $request, GrrArea $grrArea): Response
     {
         if ($this->isCsrfTokenValid('delete'.$grrArea->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($grrArea);
-            $entityManager->flush();
+            $this->areaManager->remove($grrArea);
+            $this->areaManager->flush();
         }
 
         return $this->redirectToRoute('grr_area_index');
