@@ -6,10 +6,9 @@
  * Time: 14:45
  */
 
-namespace App\Entity;
+namespace App\Doctrine;
 
-
-trait IdTrait
+trait IdEntityTrait
 {
     /**
      * @ORM\Id

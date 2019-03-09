@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Doctrine\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrTypeArea
 {
-    use IdTrait;
+    use IdEntityTrait;
 
     /**
      * @var string

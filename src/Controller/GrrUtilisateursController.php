@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\GrrUtilisateurs;
+use App\Entity\GrrUtilisateur;
 use App\Form\GrrUtilisateursType;
-use App\Repository\GrrUtilisateursRepository;
+use App\Repository\GrrUtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ class GrrUtilisateursController extends AbstractController
     /**
      * @Route("/", name="grr_utilisateurs_index", methods={"GET"})
      */
-    public function index(GrrUtilisateursRepository $grrUtilisateursRepository): Response
+    public function index(GrrUtilisateurRepository $grrUtilisateursRepository): Response
     {
         return $this->render('grr_utilisateurs/index.html.twig', [
             'grr_utilisateurs' => $grrUtilisateursRepository->findAll(),
@@ -30,7 +30,7 @@ class GrrUtilisateursController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $grrUtilisateur = new GrrUtilisateurs();
+        $grrUtilisateur = new GrrUtilisateur();
         $form = $this->createForm(GrrUtilisateursType::class, $grrUtilisateur);
         $form->handleRequest($request);
 
@@ -51,7 +51,7 @@ class GrrUtilisateursController extends AbstractController
     /**
      * @Route("/{login}", name="grr_utilisateurs_show", methods={"GET"})
      */
-    public function show(GrrUtilisateurs $grrUtilisateur): Response
+    public function show(GrrUtilisateur $grrUtilisateur): Response
     {
         return $this->render('grr_utilisateurs/show.html.twig', [
             'grr_utilisateur' => $grrUtilisateur,
@@ -61,7 +61,7 @@ class GrrUtilisateursController extends AbstractController
     /**
      * @Route("/{login}/edit", name="grr_utilisateurs_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, GrrUtilisateurs $grrUtilisateur): Response
+    public function edit(Request $request, GrrUtilisateur $grrUtilisateur): Response
     {
         $form = $this->createForm(GrrUtilisateursType::class, $grrUtilisateur);
         $form->handleRequest($request);
@@ -83,7 +83,7 @@ class GrrUtilisateursController extends AbstractController
     /**
      * @Route("/{login}", name="grr_utilisateurs_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, GrrUtilisateurs $grrUtilisateur): Response
+    public function delete(Request $request, GrrUtilisateur $grrUtilisateur): Response
     {
         if ($this->isCsrfTokenValid('delete'.$grrUtilisateur->getLogin(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

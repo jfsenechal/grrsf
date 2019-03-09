@@ -11,6 +11,12 @@ namespace App\Form\DataTransformer;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\DataTransformer\BaseDateTimeTransformer;
 
+/**
+ * Class TimestampToDateTimeTransformer
+ * Converti un timestamp en datetime et inversement
+ * Utile pour la saisie dans les formulaires
+ * @package App\Form\DataTransformer
+ */
 class TimestampToDateTimeTransformer extends BaseDateTimeTransformer
 {
     /**

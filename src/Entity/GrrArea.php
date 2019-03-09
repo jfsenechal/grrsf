@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * GrrArea
  *
  * @ORM\Table(name="grr_area")
- * @ORM\Entity(repositoryClass="GrrAreaRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\GrrAreaRepository")
  */
 class GrrArea
 {
@@ -31,7 +31,14 @@ class GrrArea
     /**
      * @var string
      *
-     * @ORM\Column(name="access", type="boolean", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $access_back;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="access",type="boolean", nullable=false)
      */
     private $access = false;
 
@@ -108,7 +115,14 @@ class GrrArea
     /**
      * @var string
      *
-     * @ORM\Column(name="display_days", type="array", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $displayDays_back;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="array", nullable=false)
      */
     private $displayDays;
 
@@ -330,6 +344,18 @@ class GrrArea
         return $this;
     }
 
+    public function getAccessBack(): ?string
+    {
+        return $this->access_back;
+    }
+
+    public function setAccessBack(string $access_back): self
+    {
+        $this->access_back = $access_back;
+
+        return $this;
+    }
+
     public function getAccess(): ?bool
     {
         return $this->access;
@@ -338,6 +364,18 @@ class GrrArea
     public function setAccess(bool $access): self
     {
         $this->access = $access;
+
+        return $this;
+    }
+
+    public function getDisplayDaysBack(): ?string
+    {
+        return $this->displayDays_back;
+    }
+
+    public function setDisplayDaysBack(string $displayDays_back): self
+    {
+        $this->displayDays_back = $displayDays_back;
 
         return $this;
     }
@@ -353,6 +391,5 @@ class GrrArea
 
         return $this;
     }
-
 
 }

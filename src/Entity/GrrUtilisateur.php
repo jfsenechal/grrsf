@@ -8,11 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
  * GrrUtilisateurs
  *
  * @ORM\Table(name="grr_utilisateurs")
- * @ORM\Entity(repositoryClass="App\Repository\GrrUtilisateursRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\GrrUtilisateurRepository")
  */
-class GrrUtilisateurs
+class GrrUtilisateur
 {
- //   use IdTrait;
+    //   use IdTrait;
 
     /**
      * @var string

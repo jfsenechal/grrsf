@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Doctrine\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GrrLog
 {
+    use IdEntityTrait;
+
     /**
      * @var string
      *
@@ -22,9 +25,9 @@ class GrrLog
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="START", type="datetime", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(name="START", type="datetime", nullable=false, options={"default": "CURRENT_TIMESTAMP"})
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="NONE")
      */
     private $start;
 
@@ -32,10 +35,10 @@ class GrrLog
      * @var string
      *
      * @ORM\Column(name="SESSION_ID", type="string", length=64, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="NONE")
      */
-    private $sessionId = '';
+    private $sessionId;
 
     /**
      * @var string
@@ -68,9 +71,15 @@ class GrrLog
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="END", type="datetime", nullable=false)
+     * @ORM\Column(name="END", type="datetime", nullable=false, options={"default": "CURRENT_TIMESTAMP"})
      */
     private $end;
+
+    public function __construct()
+    {
+        $this->start = new \DateTime();
+        $this->end = new \DateTime();
+    }
 
     public function getLogin(): ?string
     {

@@ -19,32 +19,17 @@ class GrrSettingRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrSetting::class);
     }
 
-    // /**
-    //  * @return GrrSetting[] Returns an array of GrrSetting objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param string $name
+     * @return GrrSetting|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getValueByName(string $name)
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('grr_setting')
+            ->andWhere('grr_setting.name = :name')
+            ->setParameter('name', $name)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?GrrSetting
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

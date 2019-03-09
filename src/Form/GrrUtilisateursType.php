@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\GrrUtilisateurs;
+use App\Entity\GrrUtilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,7 +31,7 @@ class GrrUtilisateursType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => GrrUtilisateurs::class,
+            'data_class' => GrrUtilisateur::class,
         ]);
     }
 }
