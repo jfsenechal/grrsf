@@ -163,5 +163,19 @@ class GrrLog
         return $this;
     }
 
+    public function setStart(\DateTimeInterface $start): self
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    public function setSessionId(string $sessionId): self
+    {
+        $this->sessionId = $sessionId;
+
+        return $this;
+    }
+
 
 }

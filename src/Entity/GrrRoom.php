@@ -59,21 +59,21 @@ class GrrRoom
     /**
      * @var string
      *
-     * @ORM\Column(name="statut_room", type="string", length=1, nullable=false, options={"default"="1","fixed"=true})
+     * @ORM\Column(name="statut_room", type="boolean")
      */
-    private $statutRoom = '1';
+    private $statutRoom = false;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="show_fic_room", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
+     * @ORM\Column(name="show_fic_room", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $showFicRoom = 'n';
+    private $showFicRoom = false;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="picture_room", type="string", length=50, nullable=false)
+     * @ORM\Column(name="picture_room", type="string", length=50, nullable=true)
      */
     private $pictureRoom = '';
 
@@ -87,9 +87,9 @@ class GrrRoom
     /**
      * @var string
      *
-     * @ORM\Column(name="show_comment", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
+     * @ORM\Column(name="show_comment", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $showComment = 'n';
+    private $showComment = false;
 
     /**
      * @var int
@@ -108,9 +108,9 @@ class GrrRoom
     /**
      * @var string
      *
-     * @ORM\Column(name="allow_action_in_past", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
+     * @ORM\Column(name="allow_action_in_past", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $allowActionInPast = 'n';
+    private $allowActionInPast = false;
 
     /**
      * @var int
@@ -129,9 +129,9 @@ class GrrRoom
     /**
      * @var string
      *
-     * @ORM\Column(name="dont_allow_modify", type="string", length=1, nullable=false, options={"default"="n"})
+     * @ORM\Column(name="dont_allow_modify", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $dontAllowModify = 'n';
+    private $dontAllowModify = false;
 
     /**
      * @var int
@@ -157,9 +157,9 @@ class GrrRoom
     /**
      * @var string
      *
-     * @ORM\Column(name="active_ressource_empruntee", type="string", length=1, nullable=false, options={"default"="y","fixed"=true})
+     * @ORM\Column(name="active_ressource_empruntee", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $activeRessourceEmpruntee = 'y';
+    private $activeRessourceEmpruntee = true;
 
     /**
      * @var int
@@ -238,24 +238,24 @@ class GrrRoom
         return $this;
     }
 
-    public function getStatutRoom(): ?string
+    public function getStatutRoom(): ?bool
     {
         return $this->statutRoom;
     }
 
-    public function setStatutRoom(string $statutRoom): self
+    public function setStatutRoom(bool $statutRoom): self
     {
         $this->statutRoom = $statutRoom;
 
         return $this;
     }
 
-    public function getShowFicRoom(): ?string
+    public function getShowFicRoom(): ?bool
     {
         return $this->showFicRoom;
     }
 
-    public function setShowFicRoom(string $showFicRoom): self
+    public function setShowFicRoom(bool $showFicRoom): self
     {
         $this->showFicRoom = $showFicRoom;
 
@@ -286,12 +286,12 @@ class GrrRoom
         return $this;
     }
 
-    public function getShowComment(): ?string
+    public function getShowComment(): ?bool
     {
         return $this->showComment;
     }
 
-    public function setShowComment(string $showComment): self
+    public function setShowComment(bool $showComment): self
     {
         $this->showComment = $showComment;
 
@@ -322,18 +322,6 @@ class GrrRoom
         return $this;
     }
 
-    public function getAllowActionInPast(): ?string
-    {
-        return $this->allowActionInPast;
-    }
-
-    public function setAllowActionInPast(string $allowActionInPast): self
-    {
-        $this->allowActionInPast = $allowActionInPast;
-
-        return $this;
-    }
-
     public function getOrderDisplay(): ?int
     {
         return $this->orderDisplay;
@@ -354,18 +342,6 @@ class GrrRoom
     public function setDelaisOptionReservation(int $delaisOptionReservation): self
     {
         $this->delaisOptionReservation = $delaisOptionReservation;
-
-        return $this;
-    }
-
-    public function getDontAllowModify(): ?string
-    {
-        return $this->dontAllowModify;
-    }
-
-    public function setDontAllowModify(string $dontAllowModify): self
-    {
-        $this->dontAllowModify = $dontAllowModify;
 
         return $this;
     }
@@ -406,18 +382,6 @@ class GrrRoom
         return $this;
     }
 
-    public function getActiveRessourceEmpruntee(): ?string
-    {
-        return $this->activeRessourceEmpruntee;
-    }
-
-    public function setActiveRessourceEmpruntee(string $activeRessourceEmpruntee): self
-    {
-        $this->activeRessourceEmpruntee = $activeRessourceEmpruntee;
-
-        return $this;
-    }
-
     public function getWhoCanSee(): ?int
     {
         return $this->whoCanSee;
@@ -430,5 +394,40 @@ class GrrRoom
         return $this;
     }
 
+    public function getAllowActionInPast(): ?bool
+    {
+        return $this->allowActionInPast;
+    }
+
+    public function setAllowActionInPast(bool $allowActionInPast): self
+    {
+        $this->allowActionInPast = $allowActionInPast;
+
+        return $this;
+    }
+
+    public function getDontAllowModify(): ?bool
+    {
+        return $this->dontAllowModify;
+    }
+
+    public function setDontAllowModify(bool $dontAllowModify): self
+    {
+        $this->dontAllowModify = $dontAllowModify;
+
+        return $this;
+    }
+
+    public function getActiveRessourceEmpruntee(): ?bool
+    {
+        return $this->activeRessourceEmpruntee;
+    }
+
+    public function setActiveRessourceEmpruntee(bool $activeRessourceEmpruntee): self
+    {
+        $this->activeRessourceEmpruntee = $activeRessourceEmpruntee;
+
+        return $this;
+    }
 
 }

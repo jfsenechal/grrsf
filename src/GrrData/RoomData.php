@@ -23,4 +23,22 @@ class RoomData
             "Il faut obligatoirement être connecté et être administrateur général",
         ];
     }
+
+    public static function typeAffichageReser()
+    {
+        return [
+            "la durée de la réservation",
+            "la date/heure de fin de réservation",
+        ];
+    }
+
+    public static function qui_peut_reserver_pour()
+    {
+        return [
+            5 => "personne",
+            4 => "uniquement les administrateurs restreints",
+            3 => "les gestionnaires de la ressource",
+            2 => "tous les utilisateurs",
+        ];
+    }
 }

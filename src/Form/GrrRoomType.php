@@ -7,6 +7,7 @@ use App\GrrData\RoomData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,8 +33,18 @@ class GrrRoomType extends AbstractType
                     'attr' => ['cols' => 5],
                 ]
             )
-            ->add('capacity')
-            ->add('maxBooking')
+            ->add(
+                'capacity',
+                IntegerType::class,
+                ['help' => "Nombre de personnes maximum autorisé dans la salle (0 s'il ne s'agit pas d'une salle)"]
+            )
+            ->add(
+                'maxBooking',
+                IntegerType::class,
+                [
+                    'help' => "Nombre max. de réservations par utilisateur (-1 si pas de restriction)",
+                ]
+            )
             ->add(
                 'statutRoom',
                 CheckboxType::class,
@@ -52,7 +63,7 @@ class GrrRoomType extends AbstractType
             )
             ->add(
                 'pictureRoom',
-                CheckboxType::class,
+                FileType::class,
                 [
                     'label' => 'Image',
                     'help' => "Supprimer l'image actuelle de la ressource : (aucun)",
@@ -66,9 +77,27 @@ class GrrRoomType extends AbstractType
                     'help' => "Afficher la description complète dans le titre des plannings.",
                 ]
             )
-            ->add('delaisMaxResaRoom')
-            ->add('delaisMinResaRoom')
-            ->add('allowActionInPast')
+            ->add(
+                'delaisMaxResaRoom',
+                IntegerType::class,
+                [
+                    'help' => "Nombre max. de réservations par utilisateur (-1 si pas de restriction) ",
+                ]
+            )
+            ->add(
+                'delaisMinResaRoom',
+                IntegerType::class,
+                [
+                    'help' => "Temps en minutes en-deçà duquel l'utilisateur ne peut pas réserver ou modifier une réservation (0 si pas de restriction).",
+                ]
+            )
+            ->add(
+                'allowActionInPast',
+                CheckboxType::class,
+                [
+                    'help' => "Permettre les réservations dans le passé ainsi que les modifications/suppressions de réservations passées.",
+                ]
+            )
             ->add(
                 'orderDisplay',
                 IntegerType::class,
@@ -77,11 +106,42 @@ class GrrRoomType extends AbstractType
                 ]
             )
             ->add('delaisOptionReservation')
-            ->add('dontAllowModify')
-            ->add('typeAffichageReser')
-            ->add('moderate')
-            ->add('quiPeutReserverPour')
-            ->add('activeRessourceEmpruntee')
+            ->add(
+                'dontAllowModify',
+                CheckboxType::class,
+                [
+                    'help' => "Ne pas permettre aux utilisateurs de modifier ou de supprimer leurs propres réservations.",
+                ]
+            )
+            ->add(
+                'typeAffichageReser',
+                ChoiceType::class,
+                [
+                    'choices' => RoomData::typeAffichageReser(),
+                ]
+            )
+            ->add(
+                'moderate',
+                CheckboxType::class,
+                [
+                    'label' => "Modérer les réservations de cette ressource",
+                    'help' => "Une réservation n'est effective qu'après validation par un administrateur du domaine ou un gestionnaire de la ressource.",
+                ]
+            )
+            ->add(
+                'quiPeutReserverPour',
+                ChoiceType::class,
+                [
+                    'choices' => array_flip(RoomData::qui_peut_reserver_pour()),
+                ]
+            )
+            ->add(
+                'activeRessourceEmpruntee',
+                CheckboxType::class,
+                [
+                    'help' => "(activer fonctionalite ressource empruntee restituee)",
+                ]
+            )
             ->add(
                 'whoCanSee',
                 ChoiceType::class,

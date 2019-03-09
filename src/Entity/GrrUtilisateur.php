@@ -17,7 +17,7 @@ class GrrUtilisateur
     /**
      * @var string
      *
-     * @ORM\Column(name="login", type="string", length=20, nullable=false)
+     * @ORM\Column(name="login", type="string", length=20, nullable=false, unique=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
