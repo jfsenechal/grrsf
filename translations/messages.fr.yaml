@@ -1,0 +1,55 @@
+room:
+  form:
+    nom:
+      label: Nom
+    description:
+      label: Description courte
+    capacity:
+      label: Capacité
+      help: Nombre de personnes maximum autorisé dans la salle (0 s'il ne s'agit pas d'une salle)
+    maxBooking:
+      help: Nombre max. de réservations par utilisateur (-1 si pas de restriction)
+    statutRoom:
+      label: Déclarer cette ressource temporairement indisponible
+      help:  Les réservations sont alors impossibles. La restriction ne s'applique pas aux gestionnaires de la ressource
+    showFicRoom:
+      label: Fiche de présentation
+      help: Rendre visible la fiche de présentation de la ressource dans l'interface publique
+    pictureRoom:
+      label: Image
+      help: Choisir une image de la ressource pour la fiche de présentation (png, jpg et gif uniquement)
+    commentRoom:
+      label: Description complète
+    showComment:
+      label: Afficher la description complète dans le titre des plannings
+    delaisMaxResaRoom:
+      label: Nombre max. de réservations par utilisateur
+      comment: -1 si pas de restriction
+    delaisMinResaRoom:
+      label: Temps en minutes en-deçà duquel l'utilisateur ne peut pas réserver ou modifier une réservation
+      comment: 0 si pas de restriction
+    allowActionInPast:
+      label: Permettre les réservations dans le passé
+      help: Ainsi que les modifications/suppressions de réservations passées
+    orderDisplay:
+      label: Ordre d'affichage
+    delaisOptionReservation:
+      label: Poser des réservations "sous réserve"
+      help: Indiquer une valeur différente de 0 pour activer cette fonctionnalité. La valeur ci-contre désigne le nombre maximal de jours dont dispose le réservant pour confirmer une réservation.
+    dontAllowModify:
+      label: Ne pas modifier
+      help: Ne pas permettre aux utilisateurs de modifier ou de supprimer leurs propres réservations
+    typeAffichageReser:
+      label: Pour une nouvelle réservation ou modification d'une réservation
+      help: L'utilisateur spécifie la date/heure de début de réservation et
+    moderate:
+      label: Modérer les réservations de cette ressource
+      help: Une réservation n'est effective qu'après validation par un administrateur du domaine ou un gestionnaire de la ressource
+    quiPeutReserverPour:
+      label: Qui peut réserver pour
+      help: Hormis les administrateurs, précisez ci-contre quels types d'utilisateurs ont le droit de faire des réservations au nom d'autres utilisateurs.
+    activeRessourceEmpruntee:
+      label: Activer fonctionalite ressource empruntee restituee
+    whoCanSee:
+      label: Qui peut voir cette ressource ?
+      help: Et éventuellement réserver selon les droits attribués

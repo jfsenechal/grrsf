@@ -23,100 +23,123 @@ class GrrRoomType extends AbstractType
                 'roomName',
                 TextType::class,
                 [
-                    'label' => 'Nom',
+                    'label' => 'room.form.nom.label',
                 ]
             )
             ->add(
                 'description',
-                TextareaType::class,
+                TextType::class,
                 [
-                    'attr' => ['cols' => 5],
+                    'label' => 'room.form.description.label',
                 ]
             )
             ->add(
                 'capacity',
                 IntegerType::class,
-                ['help' => "Nombre de personnes maximum autorisé dans la salle (0 s'il ne s'agit pas d'une salle)"]
+                [
+                    'label' => 'room.form.capacity.label',
+                    'help' => 'room.form.capacity.help',
+                ]
             )
             ->add(
                 'maxBooking',
                 IntegerType::class,
                 [
-                    'help' => "Nombre max. de réservations par utilisateur (-1 si pas de restriction)",
+                    'help' => 'room.form.maxBooking.help',
                 ]
             )
             ->add(
                 'statutRoom',
                 CheckboxType::class,
                 [
-                    'label' => "Déclarer cette ressource temporairement indisponible",
-                    'help' => "Les réservations sont alors impossibles. La restriction ne s'applique pas aux gestionnaires de la ressource.",
+                    'label' => 'room.form.statutRoom.label',
+                    'help' => 'room.form.statutRoom.help',
                 ]
             )
             ->add(
                 'showFicRoom',
                 CheckboxType::class,
                 [
-                    'label' => "Fiche de présentation",
-                    'help' => "Rendre visible la fiche de présentation de la ressource dans l'interface publique.",
+                    'label' => 'room.form.showFicRoom.label',
+                    'help' => 'room.form.showFicRoom.help',
                 ]
             )
             ->add(
                 'pictureRoom',
                 FileType::class,
                 [
-                    'label' => 'Image',
-                    'help' => "Supprimer l'image actuelle de la ressource : (aucun)",
+                    'label' => 'room.form.pictureRoom.label',
+                    'help' => 'room.form.pictureRoom.help',
                 ]
             )
-            ->add('commentRoom')
+            ->add(
+                'commentRoom',
+                TextareaType::class,
+                [
+                    'label' => 'room.form.commentRoom.label',
+                    'attr' => ['height' => '80px'],
+                ]
+            )
             ->add(
                 'showComment',
                 CheckboxType::class,
                 [
-                    'help' => "Afficher la description complète dans le titre des plannings.",
+                    'label' => 'room.form.showComment.label',
                 ]
             )
             ->add(
                 'delaisMaxResaRoom',
                 IntegerType::class,
                 [
-                    'help' => "Nombre max. de réservations par utilisateur (-1 si pas de restriction) ",
+                    'label' => 'room.form.delaisMaxResaRoom.label',
+                    'help' => 'room.form.delaisMaxResaRoom.help',
                 ]
             )
             ->add(
                 'delaisMinResaRoom',
                 IntegerType::class,
                 [
-                    'help' => "Temps en minutes en-deçà duquel l'utilisateur ne peut pas réserver ou modifier une réservation (0 si pas de restriction).",
+                    'label' => 'room.form.delaisMinResaRoom.label',
+                    'help' => 'room.form.delaisMinResaRoom.help',
                 ]
             )
             ->add(
                 'allowActionInPast',
                 CheckboxType::class,
                 [
-                    'help' => "Permettre les réservations dans le passé ainsi que les modifications/suppressions de réservations passées.",
+                    'label' => 'room.form.allowActionInPast.label',
+                    'help' => 'room.form.allowActionInPast.help',
                 ]
             )
             ->add(
                 'orderDisplay',
                 IntegerType::class,
                 [
-                    'label' => 'Ordre d\'affichage',
+                    'label' => 'room.form.orderDisplay.label',
                 ]
             )
-            ->add('delaisOptionReservation')
+            ->add(
+                'delaisOptionReservation',
+                IntegerType::class,
+                [
+                    'label' => 'room.form.delaisOptionReservation.label',
+                    'help' => 'room.form.delaisOptionReservation.help',
+                ]
+            )
             ->add(
                 'dontAllowModify',
                 CheckboxType::class,
                 [
-                    'help' => "Ne pas permettre aux utilisateurs de modifier ou de supprimer leurs propres réservations.",
+                    'label' => 'room.form.dontAllowModify.label',
+                    'help' => 'room.form.dontAllowModify.help',
                 ]
             )
             ->add(
                 'typeAffichageReser',
                 ChoiceType::class,
                 [
+                    'label' => 'room.form.typeAffichageReser.label',
+                    'help' => 'room.form.typeAffichageReser.help',
                     'choices' => RoomData::typeAffichageReser(),
                 ]
             )
@@ -124,14 +147,15 @@ class GrrRoomType extends AbstractType
                 'moderate',
                 CheckboxType::class,
                 [
-                    'label' => "Modérer les réservations de cette ressource",
-                    'help' => "Une réservation n'est effective qu'après validation par un administrateur du domaine ou un gestionnaire de la ressource.",
+                    'label' => 'room.form.moderate.label',
+                    'help' => 'room.form.moderate.help',
                 ]
             )
             ->add(
                 'quiPeutReserverPour',
                 ChoiceType::class,
                 [
+                    'label' => 'room.form.quiPeutReserverPour.label',
                     'choices' => array_flip(RoomData::qui_peut_reserver_pour()),
                 ]
             )
@@ -139,13 +163,14 @@ class GrrRoomType extends AbstractType
                 'activeRessourceEmpruntee',
                 CheckboxType::class,
                 [
-                    'help' => "(activer fonctionalite ressource empruntee restituee)",
+                    'label' => 'room.form.activeRessourceEmpruntee.label',
                 ]
             )
             ->add(
                 'whoCanSee',
                 ChoiceType::class,
                 [
+                    'label' => 'room.form.whoCanSee.label',
                     'choices' => array_flip(RoomData::whoCanSee()),
                 ]
             );
