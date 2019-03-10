@@ -8,7 +8,8 @@ room:
       label: Capacité
       help: Nombre de personnes maximum autorisé dans la salle (0 s'il ne s'agit pas d'une salle)
     maxBooking:
-      help: Nombre max. de réservations par utilisateur (-1 si pas de restriction)
+      label: Nombre max. de réservations par utilisateur
+      help: -1 si pas de restriction
     statutRoom:
       label: Déclarer cette ressource temporairement indisponible
       help:  Les réservations sont alors impossibles. La restriction ne s'applique pas aux gestionnaires de la ressource
@@ -53,3 +54,40 @@ room:
     whoCanSee:
       label: Qui peut voir cette ressource ?
       help: Et éventuellement réserver selon les droits attribués
+area:
+  form:
+    name:
+      label: Nom
+    access:
+      label: Accès restreint
+    orderDisplay:
+      label: Ordre d'affichage
+    ipAdr:
+      label: Domaine par défaut pour l'adresse IP client suivante
+      help: Domaine par défaut pour l'adresse IP client suivante
+    weekstartsArea:
+      label: Début de la semaine
+    displayDays:
+      label: Afficher les jours
+    enablePeriods:
+      label: Configuration du type de créneaux
+    morningstartsArea:
+      label: Heure de début de journée
+    eveningendsArea:
+      label: Heure de fin de journée
+    eveningendsMinutesArea:
+      label: Nombre de minutes à ajouter à l'heure de fin de journée pour avoir la fin réelle d'une journée
+    resolutionArea:
+      label: Plus petit bloc réservable
+      help: En secondes (1800 secondes = 1/2 heure)
+    dureeParDefautReservationArea:
+      label: Durée par défaut d'une réservation
+      help: En secondes, doit être un multiple de la valeur précédente
+    twentyfourhourFormatArea:
+      label: Format d'affichage du temps
+    dureeMaxResaArea:
+      label: Durée maximale en minutes
+      help: Une journée = 1440 minutes) pour une réservation (-1 si pas de restriction)
+    maxBooking:
+      label: Nombre max. de réservations par utilisateur
+      help: -1 si pas de restriction - Pour toutes les ressources du domaine

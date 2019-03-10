@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New GrrRoom{% endblock %}
+{% block title %}{{ 'New GrrRoom'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>Create new GrrRoom</h1>
+    <h1>{{ 'New GrrRoom'|trans}}</h1>
 
     {{ include('grr_room/_form.html.twig') }}
 

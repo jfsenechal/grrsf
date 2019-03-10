@@ -1,1 +1,6 @@
-save: Sauvegarder
+Save: Sauvegarder
+New GrrRoom: 'Nouvelle ressource'
+Create new: 'Ajouter un nouveau'
+GrrArea index: 'Les domaines'
+no records found: 'Aucun éléments trouvés'
+GrrRoom index: 'Liste des ressources'

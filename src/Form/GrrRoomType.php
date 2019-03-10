@@ -45,6 +45,7 @@ class GrrRoomType extends AbstractType
                 'maxBooking',
                 IntegerType::class,
                 [
+                    'label' => 'room.form.maxBooking.label',
                     'help' => 'room.form.maxBooking.help',
                 ]
             )
@@ -140,7 +141,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.typeAffichageReser.label',
                     'help' => 'room.form.typeAffichageReser.help',
-                    'choices' => RoomData::typeAffichageReser(),
+                    'choices' => array_flip(RoomData::typeAffichageReser()),
                 ]
             )
             ->add(

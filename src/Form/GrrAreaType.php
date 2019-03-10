@@ -22,28 +22,29 @@ class GrrAreaType extends AbstractType
                 'areaName',
                 TextType::class,
                 [
-                    'label' => 'Nom',
+                    'label' => 'area.form.name.label',
                 ]
             )
             ->add(
                 'access',
                 CheckboxType::class,
                 [
-                    'label' => 'Accès restreint',
+                    'label' => 'area.form.access.label',
                 ]
             )
             ->add(
                 'orderDisplay',
                 IntegerType::class,
                 [
-                    'label' => 'Ordre d\'affichage',
+                    'label' => 'area.form.orderDisplay.label',
                 ]
             )
             ->add(
                 'ipAdr',
                 TextType::class,
                 [
-                    'help' => 'Domaine par défaut pour l\'adresse IP client suivante :	',
+                    'label' => 'area.form.ipAdr.label',
+                    'help' => 'area.form.ipAdr.help',
                 ]
             )
             ->add(
@@ -51,13 +52,14 @@ class GrrAreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'choices' => array_flip(DateUtils::getJoursSemaine()),
-                    'label' => 'Début de la semaine',
+                    'label' => 'area.form.weekstartsArea.label',
                 ]
             )
             ->add(
                 'displayDays',
                 ChoiceType::class,
                 [
+                    'label' => 'area.form.displayDays.label',
                     'choices' => array_flip(DateUtils::getJoursSemaine()),
                     'multiple' => true,
                     'expanded' => true,
@@ -67,7 +69,7 @@ class GrrAreaType extends AbstractType
                 'enablePeriods',
                 ChoiceType::class,
                 [
-                    'label' => 'Configuration du type de créneaux Help',
+                    'label' => 'area.form.enablePeriods.label',
                     'choices' => GrrConstants::PERIOD,
                     'multiple' => false,
                     'expanded' => true,
@@ -77,61 +79,65 @@ class GrrAreaType extends AbstractType
                 'morningstartsArea',
                 ChoiceType::class,
                 [
+                    'label' => 'area.form.morningstartsArea.label',
                     'choices' => DateUtils::getHeures(),
-                    'label' => "Heure de début de journée",
                 ]
             )
             ->add(
                 'eveningendsArea',
                 ChoiceType::class,
                 [
+                    'label' => 'area.form.eveningendsArea.label',
                     'choices' => DateUtils::getHeures(),
-                    'label' => "Heure de fin de journée",
                 ]
             )
             ->add(
                 'eveningendsMinutesArea',
                 IntegerType::class,
                 [
-                    'help' => "Nombre de minutes à ajouter à l'heure de fin de journée pour avoir la fin réelle d'une journée.",
+                    'label' => 'area.form.eveningendsMinutesArea.label',
                 ]
             )
             ->add(
                 'resolutionArea',
                 IntegerType::class,
                 [
-                    'help' => "Plus petit bloc réservable, en secondes (1800 secondes = 1/2 heure)",
+                    'label' => 'area.form.resolutionArea.label',
+                    'help' => 'area.form.resolutionArea.help',
                 ]
             )
             ->add(
                 'dureeParDefautReservationArea',
                 IntegerType::class,
                 [
-                    'help' => "Durée par défaut d'une réservation, en secondes (doit être un multiple de la valeur précédente)",
+                    'label' => 'area.form.dureeParDefautReservationArea.label',
+                    'help' => 'area.form.dureeParDefautReservationArea.help',
                 ]
             )
             ->add(
                 'twentyfourhourFormatArea',
                 ChoiceType::class,
                 [
+                    'label' => 'area.form.twentyfourhourFormatArea.label',
                     'choices' => array_flip(DateUtils::getAffichageFormat()),
                     'multiple' => false,
                     'expanded' => true,
-                    'help' => "Format d'affichage du temps",
                 ]
             )
             ->add(
                 'dureeMaxResaArea',
                 IntegerType::class,
                 [
-                    'help' => "Durée maximale en minutes (une journée = 1440 minutes) pour une réservation (-1 si pas de restriction)",
+                    'label' => 'area.form.dureeMaxResaArea.label',
+                    'help' => 'area.form.dureeMaxResaArea.help',
                 ]
             )
             ->add(
                 'maxBooking',
                 IntegerType::class,
                 [
-                    'help' => "Nombre max. de réservations par utilisateur (-1 si pas de restriction) - Pour toutes les ressources du domaine :	",
+                    'label' => 'area.form.maxBooking.label',
+                    'help' => 'area.form.maxBooking.help',
                 ]
             )->add('calendarDefaultValues')
             ->add('idTypeParDefaut');

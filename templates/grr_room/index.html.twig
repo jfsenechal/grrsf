@@ -1,70 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GrrRoom index{% endblock %}
+{% block title %}{{ 'GrrRoom index'|trans({}, 'actions') }}{% endblock %}
 
 {% block body %}
-    <h1>GrrRoom index</h1>
+    <h1>{{ 'GrrRoom index'|trans({}, 'actions') }}</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Id</th>
             <th>AreaId</th>
             <th>RoomName</th>
-            <th>Description</th>
-            <th>Capacity</th>
-            <th>MaxBooking</th>
-            <th>StatutRoom</th>
-            <th>ShowFicRoom</th>
-            <th>PictureRoom</th>
-            <th>CommentRoom</th>
-            <th>ShowComment</th>
-            <th>DelaisMaxResaRoom</th>
-            <th>DelaisMinResaRoom</th>
-            <th>AllowActionInPast</th>
             <th>OrderDisplay</th>
-            <th>DelaisOptionReservation</th>
-            <th>DontAllowModify</th>
-            <th>TypeAffichageReser</th>
-            <th>Moderate</th>
-            <th>QuiPeutReserverPour</th>
-            <th>ActiveRessourceEmpruntee</th>
-            <th>WhoCanSee</th>
         </tr>
         </thead>
         <tbody>
         {% for grr_room in grr_rooms %}
             <tr>
-                <td>{{ grr_room.id }}</td>
                 <td>{{ grr_room.areaId }}</td>
                 <td><a href="{{ path('grr_room_show', {'id': grr_room.id}) }}">{{ grr_room.roomName }}</a></td>
-                <td>{{ grr_room.description }}</td>
-                <td>{{ grr_room.capacity }}</td>
-                <td>{{ grr_room.maxBooking }}</td>
-                <td>{{ grr_room.statutRoom }}</td>
-                <td>{{ grr_room.showFicRoom }}</td>
-                <td>{{ grr_room.pictureRoom }}</td>
-                <td>{{ grr_room.commentRoom }}</td>
-                <td>{{ grr_room.showComment }}</td>
-                <td>{{ grr_room.delaisMaxResaRoom }}</td>
-                <td>{{ grr_room.delaisMinResaRoom }}</td>
-                <td>{{ grr_room.allowActionInPast }}</td>
                 <td>{{ grr_room.orderDisplay }}</td>
-                <td>{{ grr_room.delaisOptionReservation }}</td>
-                <td>{{ grr_room.dontAllowModify }}</td>
-                <td>{{ grr_room.typeAffichageReser }}</td>
-                <td>{{ grr_room.moderate ? 'Yes' : 'No' }}</td>
-                <td>{{ grr_room.quiPeutReserverPour }}</td>
-                <td>{{ grr_room.activeRessourceEmpruntee }}</td>
-                <td>{{ grr_room.whoCanSee }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="23">no records found</td>
+                <td colspan="3">{{ 'no records found'| trans({}, 'actions') }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('grr_room_new') }}">Create new</a>
+    <a href="{{ path('grr_room_new') }}">{{ 'Create new'| trans({}, 'actions') }}</a>
 {% endblock %}
