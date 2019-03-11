@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New GrrTypeArea{% endblock %}
+
+{% block body %}
+    <h1>Create new GrrTypeArea</h1>
+
+    {{ include('grr_type_area/_form.html.twig') }}
+
+    <a href="{{ path('grr_area_index') }}">{{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+{% endblock %}

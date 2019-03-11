@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit GrrTypeArea{% endblock %}
+
+{% block body %}
+    <h1>Edit GrrTypeArea</h1>
+
+    {{ include('grr_type_area/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('grr_area_index') }}">{{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+
+    {{ include('grr_type_area/_delete_form.html.twig') }}
+{% endblock %}

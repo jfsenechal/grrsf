@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrrTypeArea{% endblock %}
+
+{% block body %}
+    <h1>GrrTypeArea</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>TypeName</th>
+                <td>{{ grr_type_area.typeName }}</td>
+            </tr>
+            <tr>
+                <th>OrderDisplay</th>
+                <td>{{ grr_type_area.orderDisplay }}</td>
+            </tr>
+            <tr>
+                <th>Couleur</th>
+                <td>{{ grr_type_area.couleur }}</td>
+            </tr>
+            <tr>
+                <th>TypeLetter</th>
+                <td>{{ grr_type_area.typeLetter }}</td>
+            </tr>
+            <tr>
+                <th>Disponible</th>
+                <td>{{ grr_type_area.disponible }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ grr_type_area.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_type_area_index') }}">back to list</a>
+
+    <a href="{{ path('grr_type_area_edit', {'id': grr_type_area.id}) }}">edit</a>
+
+    {{ include('grr_type_area/_delete_form.html.twig') }}
+{% endblock %}

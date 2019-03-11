@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrrTypeArea index{% endblock %}
+
+{% block body %}
+    <h1>GrrTypeArea index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>TypeName</th>
+                <th>OrderDisplay</th>
+                <th>Couleur</th>
+                <th>TypeLetter</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for grr_type_area in grr_type_areas %}
+            <tr>
+                <td>{{ grr_type_area.typeName }}</td>
+                <td>{{ grr_type_area.orderDisplay }}</td>
+                <td>{{ grr_type_area.couleur }}</td>
+                <td>{{ grr_type_area.typeLetter }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_type_area_new') }}">Create new</a>
+{% endblock %}
