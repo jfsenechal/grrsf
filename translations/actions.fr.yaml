@@ -22,6 +22,8 @@ area:
     confirm: Êtes vous sur de supprimer le domaine %name%
   index:
     title: Les domaines
+  rooms:
+    title: Ressources
 room:
   new:
     title: Nouvelle ressource

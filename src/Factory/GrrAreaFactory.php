@@ -37,7 +37,6 @@ class GrrAreaFactory
             ->setResolutionArea(900)
             ->setDureeParDefautReservationArea(900)
             ->setDureeMaxResaArea(-1)
-            ->setDureeParDefautReservationArea(0)
             ->setIdTypeParDefaut(-1)
             ->setMaxBooking(-1)
             ->setEnablePeriods(false)
@@ -45,9 +44,6 @@ class GrrAreaFactory
             ->setTwentyfourhourFormatArea(0)
             ->setWeekstartsArea(0)
             ->setEveningendsMinutesArea(0)
-            ->setResolutionArea(0)
-            ->setEveningendsArea(0)
-            ->setMorningstartsArea(0)
             ->setOrderDisplay(0)
             ->setAccess(false);
     }

@@ -4,7 +4,7 @@
 <a href="{{ path('grr_room_edit', { 'id': grr_room.id }) }}" role="button"
    class="btn btn-primary" target="apercu"><i class="far fa-eye"></i> {{ 'form.btn.see'|trans({}, 'actions') }}</a>
 
-<a href="{{ path('grr_room_index') }}" class="btn btn-primary" role='button'><i class="fas fa-list"></i>
+<a href="{{ path('grr_area_show',{'id': grr_room.areaId}) }}" class="btn btn-primary" role='button'><i class="fas fa-list"></i>
     {{ 'room.back.toarea'|trans({}, 'actions') }}
 </a>
 

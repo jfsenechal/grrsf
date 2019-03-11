@@ -12,8 +12,8 @@ namespace App\GrrData;
 class GrrConstants
 {
     const PERIOD = [
-        'n' => 'Les créneaux de réservation sont basés sur le temps',
-        'y' => 'Les créneaux de réservation sont basés sur des intitulés pré-définis.',
+        0 => 'Les créneaux de réservation sont basés sur le temps',
+        1 => 'Les créneaux de réservation sont basés sur des intitulés pré-définis.',
     ];
 
 }
