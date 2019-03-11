@@ -16,4 +16,25 @@ class GrrRoomFactory implements FactoryInterface
     {
         return new GrrRoom();
     }
+
+    public function setDefaultValues(GrrRoom $grrRoom)
+    {
+        $grrRoom
+            ->setCapacity(0)
+            ->setMaxBooking(-1)
+            ->setStatutRoom(false)
+            ->setShowFicRoom(false)
+            ->setShowComment(false)
+            ->setDelaisMaxResaRoom(-1)
+            ->setDelaisMinResaRoom(0)
+            ->setAllowActionInPast(false)
+            ->setOrderDisplay(0)
+            ->setDelaisOptionReservation(0)
+            ->setDontAllowModify(false)
+            ->setTypeAffichageReser(0)
+            ->setModerate(0)
+            ->setQuiPeutReserverPour(5)
+            ->setActiveRessourceEmpruntee(0)
+            ->setWhoCanSee(0);
+    }
 }

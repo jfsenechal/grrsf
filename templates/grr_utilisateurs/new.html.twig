@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New GrrUtilisateurs{% endblock %}
+{% block title %}{{ 'user.new.title'|trans({},'actions') }}{% endblock %}
 
 {% block body %}
-    <h1>Create new GrrUtilisateurs</h1>
+    <h1>{{ 'user.new.title'|trans({},'actions') }}</h1>
 
     {{ include('grr_utilisateurs/_form.html.twig') }}
 
-    <a href="{{ path('grr_utilisateurs_index') }}">back to list</a>
+    <br />
+    <a href="{{ path('grr_user_index') }}">{{ 'form.btn.cancel'|trans({},'actions') }}</a>
 {% endblock %}

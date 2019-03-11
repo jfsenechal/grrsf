@@ -16,20 +16,20 @@ class DateUtils
     /**
      * @var TranslatorInterface
      */
-    private static $translator;
+    private $translator;
 
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    public static function getJoursSemaine()
+    public function getJoursSemaine()
     {
         $data = [];
         $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 
         foreach ($days as $day) {
-            $data[] = self::$translator->trans($day);
+            $data[] = $this->translator->trans($day);
         }
 
         return $data;
@@ -40,8 +40,8 @@ class DateUtils
         return range(0, 23);
     }
 
-    public static function getAffichageFormat()
+    public function getAffichageFormat()
     {
-        return [self::$translator->trans('twentyfourhourFormat12'), self::$translator->trans('twentyfourhourFormat24')];
+        return [$this->translator->trans('twentyfourhourFormat12'), $this->translator->trans('twentyfourhourFormat24')];
     }
 }

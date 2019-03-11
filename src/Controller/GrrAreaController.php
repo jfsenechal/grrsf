@@ -7,6 +7,7 @@ use App\Factory\GrrAreaFactory;
 use App\Form\GrrAreaType;
 use App\Manager\GrrAreaManager;
 use App\Repository\GrrAreaRepository;
+use App\Repository\GrrRoomRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,15 +30,21 @@ class GrrAreaController extends AbstractController
      * @var GrrAreaRepository
      */
     private $grrAreaRepository;
+    /**
+     * @var GrrRoomRepository
+     */
+    private $grrRoomRepository;
 
     public function __construct(
         GrrAreaFactory $areaFactory,
         GrrAreaRepository $grrAreaRepository,
-        GrrAreaManager $areaManager
+        GrrAreaManager $areaManager,
+        GrrRoomRepository $grrRoomRepository
     ) {
         $this->areaFactory = $areaFactory;
         $this->areaManager = $areaManager;
         $this->grrAreaRepository = $grrAreaRepository;
+        $this->grrRoomRepository = $grrRoomRepository;
     }
 
     /**
@@ -87,10 +94,13 @@ class GrrAreaController extends AbstractController
      */
     public function show(GrrArea $grrArea): Response
     {
+        $rooms = $this->grrRoomRepository->findBy(['areaId' => $grrArea->getId()]);
+
         return $this->render(
             'grr_area/show.html.twig',
             [
                 'grr_area' => $grrArea,
+                'rooms' => $rooms,
             ]
         );
     }

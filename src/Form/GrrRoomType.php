@@ -31,6 +31,7 @@ class GrrRoomType extends AbstractType
                 TextType::class,
                 [
                     'label' => 'room.form.description.label',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -39,6 +40,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.capacity.label',
                     'help' => 'room.form.capacity.help',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -47,6 +49,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.maxBooking.label',
                     'help' => 'room.form.maxBooking.help',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -55,6 +58,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.statutRoom.label',
                     'help' => 'room.form.statutRoom.help',
+                    'required'=>false
                 ]
             )
             ->add(
@@ -63,6 +67,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.showFicRoom.label',
                     'help' => 'room.form.showFicRoom.help',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -71,6 +76,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.pictureRoom.label',
                     'help' => 'room.form.pictureRoom.help',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -79,6 +85,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.commentRoom.label',
                     'attr' => ['height' => '80px'],
+                    'required' => false,
                 ]
             )
             ->add(
@@ -86,6 +93,7 @@ class GrrRoomType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => 'room.form.showComment.label',
+                    'required'=>false
                 ]
             )
             ->add(
@@ -110,6 +118,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.allowActionInPast.label',
                     'help' => 'room.form.allowActionInPast.help',
+                    'required'=>false
                 ]
             )
             ->add(
@@ -133,6 +142,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.dontAllowModify.label',
                     'help' => 'room.form.dontAllowModify.help',
+                    'required'=>false
                 ]
             )
             ->add(
@@ -150,6 +160,7 @@ class GrrRoomType extends AbstractType
                 [
                     'label' => 'room.form.moderate.label',
                     'help' => 'room.form.moderate.help',
+                    'required'=>false
                 ]
             )
             ->add(
@@ -165,6 +176,7 @@ class GrrRoomType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => 'room.form.activeRessourceEmpruntee.label',
+                    'required'=>false
                 ]
             )
             ->add(

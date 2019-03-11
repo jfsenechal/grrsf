@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Manager\GrrUtilisateurManager;
+use App\Manager\GrrUserManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,11 +14,11 @@ class CreateuserCommand extends Command
 {
     protected static $defaultName = 'app:createuser';
     /**
-     * @var GrrUtilisateurManager
+     * @var GrrUserManager
      */
     private $grrUtilisateurManager;
 
-    public function __construct(?string $name = null, GrrUtilisateurManager $grrUtilisateurManager)
+    public function __construct(?string $name = null, GrrUserManager $grrUtilisateurManager)
     {
         parent::__construct($name);
         $this->grrUtilisateurManager = $grrUtilisateurManager;

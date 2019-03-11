@@ -11,7 +11,9 @@
     <table class="table table-bordered">
         <tbody>
         <tr>
-            <th>{{ 'area.form.access.label'|trans }}</th>
+            <th>
+                {{ 'area.form.access.label'|trans }}
+            </th>
             <td>{{ grr_area.access }}</td>
         </tr>
         <tr>
@@ -19,7 +21,10 @@
             <td>{{ grr_area.orderDisplay }}</td>
         </tr>
         <tr>
-            <th>{{ 'area.form.ipAdr.label'|trans }}</th>
+            <th>
+                {{ 'area.form.ipAdr.label'|trans }}<br/>
+                <span class="text-muted">{{ 'area.form.ipAdr.help'|trans }}</span>
+            </th>
             <td>{{ grr_area.ipAdr }}</td>
         </tr>
         <tr>
@@ -31,7 +36,10 @@
             <td>{{ grr_area.eveningendsArea }}</td>
         </tr>
         <tr>
-            <th>{{ 'area.form.resolutionArea.label'|trans }}</th>
+            <th>
+                {{ 'area.form.resolutionArea.label'|trans }}<br/>
+                <span class="text-muted">  {{ 'area.form.resolutionArea.help'|trans }}</span>
+            </th>
             <td>{{ grr_area.resolutionArea }}</td>
         </tr>
         <tr>
@@ -55,15 +63,24 @@
             <td>{{ grr_area.displayDays|join(',') }}</td>
         </tr>
         <tr>
-            <th>{{ 'area.form.dureeMaxResaArea.label'|trans }}</th>
+            <th>
+                {{ 'area.form.dureeMaxResaArea.label'|trans }}<br/>
+                <span class="text-muted">{{ 'area.form.dureeMaxResaArea.help'|trans }}</span>
+            </th>
             <td>{{ grr_area.dureeMaxResaArea }}</td>
         </tr>
         <tr>
-            <th>{{ 'area.form.dureeParDefautReservationArea.label'|trans }}</th>
+            <th>
+                {{ 'area.form.dureeParDefautReservationArea.label'|trans }}<br/>
+                <span class="text-muted">{{ 'area.form.dureeParDefautReservationArea.help'|trans }}</span>
+            </th>
             <td>{{ grr_area.dureeParDefautReservationArea }}</td>
         </tr>
         <tr>
-            <th>{{ 'area.form.maxBooking.label'|trans }}</th>
+            <th>
+                {{ 'area.form.maxBooking.label'|trans }}<br/>
+                <span class="text-muted">{{ 'area.form.maxBooking.help'|trans }}</span>
+            </th>
             <td>{{ grr_area.maxBooking }}</td>
         </tr>
         <tr>

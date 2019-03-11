@@ -8,9 +8,20 @@
 
 namespace App\GrrData;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EntryData
 {
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * clef de type rep_type_0,rep_type_1,...
      * @return array
@@ -18,13 +29,13 @@ class EntryData
     public function getTypesPeriodicite()
     {
         $vocab = [];
-        $vocab[0] = "Aucune";
-        $vocab[1] = "Chaque jour";
-        $vocab[2] = "Chaque semaine";
-        $vocab[3] = "Chaque mois, la même date";
-        $vocab[4] = "Chaque année, même date";
-        $vocab[5] = "Chaque mois, même jour de la semaine";
-        $vocab[6] = "Jours Cycle";
+        $vocab[0] = $this->translator->trans('periodicity.type.none');
+        $vocab[1] = $this->translator->trans('periodicity.type.everyday');
+        $vocab[2] = $this->translator->trans('periodicity.type.everyweek');
+        $vocab[3] = $this->translator->trans('periodicity.type.everymonth.sameday');
+        $vocab[4] =$this->translator->trans('periodicity.type.everyyear');
+        $vocab[5] =$this->translator->trans('periodicity.type.everymonth.sameweek');
+        $vocab[6] = $this->translator->trans('periodicity.type.cycle.days');
 
         return $vocab;
     }

@@ -2,35 +2,35 @@
 
 namespace App\Repository;
 
-use App\Entity\GrrUtilisateur;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method GrrUtilisateur|null find($id, $lockMode = null, $lockVersion = null)
- * @method GrrUtilisateur|null findOneBy(array $criteria, array $orderBy = null)
- * @method GrrUtilisateur[]    findAll()
- * @method GrrUtilisateur[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method User|null find($id, $lockMode = null, $lockVersion = null)
+ * @method User|null findOneBy(array $criteria, array $orderBy = null)
+ * @method User[]    findAll()
+ * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class GrrUtilisateurRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, GrrUtilisateur::class);
+        parent::__construct($registry, User::class);
     }
 
-    public function persist(GrrUtilisateur $grrUtilisateur)
+    public function persist(User $grrUtilisateur)
     {
         $this->_em->persist($grrUtilisateur);
     }
 
-    public function insert(GrrUtilisateur $grrUtilisateur)
+    public function insert(User $grrUtilisateur)
     {
         $this->persist($grrUtilisateur);
         $this->flush();
     }
 
-    public function remove(GrrUtilisateur $grrUtilisateur)
+    public function remove(User $grrUtilisateur)
     {
         $this->_em->remove($grrUtilisateur);
     }
@@ -41,7 +41,7 @@ class GrrUtilisateurRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return GrrUtilisateurs[] Returns an array of GrrUtilisateurs objects
+    //  * @return User[] Returns an array of User objects
     //  */
     /*
     public function findByExampleField($value)
@@ -58,7 +58,7 @@ class GrrUtilisateurRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?GrrUtilisateurs
+    public function findOneBySomeField($value): ?User
     {
         return $this->createQueryBuilder('g')
             ->andWhere('g.exampleField = :val')

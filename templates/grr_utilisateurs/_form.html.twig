@@ -1,4 +1,41 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.nom) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.prenom) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.login) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.email) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.password.first) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.password.second) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.statut) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.etat) }}
+    </div>
+</div>
+
+<button class="btn btn-primary">{{ button_label|default('form.btn.save') | trans({},'actions') }}</button>
+
 {{ form_end(form) }}

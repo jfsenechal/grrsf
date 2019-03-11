@@ -1,9 +1,3 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}{{ 'room.index.title'|trans({}, 'actions') }}{% endblock %}
-
-{% block body %}
-    <h1>{{ 'room.index.title'|trans({}, 'actions') }}</h1>
 
     <table class="table table-bordered">
         <thead>
@@ -13,7 +7,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for grr_room in grr_rooms %}
+        {% for grr_room in rooms %}
             <tr>
                 <td>{{ grr_room.areaId }}</td>
                 <td><a href="{{ path('grr_room_show', {'id': grr_room.id}) }}">{{ grr_room.roomName }}</a></td>
@@ -26,5 +20,3 @@
         {% endfor %}
         </tbody>
     </table>
-
-{% endblock %}

@@ -6,9 +6,9 @@ form:
     delete: Supprimer
     cancel: Annuler
     see: Visualiser
-    search: 'actions'
+    search: Rechercher
   search:
-    placeholder: 'actions'
+    placeholder: Rechercher
 records:
   notfound: Aucun élément trouvé
 back.to.list: Retour à la liste
@@ -38,4 +38,13 @@ menu:
   area: Domaine
   settings: Paramètres
   users: Utilisateurs
-  entries: Entries
+  entries: Réservations
+  reservation:
+    type: Type de réservations
+user:
+  index:
+    title: Liste des utilisateurs
+  delete:
+    confirm: Êtes vous sur de supprimer l'utilisateur %name%
+  new:
+    title: Nouvelle utilisateur

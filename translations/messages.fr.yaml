@@ -103,3 +103,45 @@ Saturday: Samedi
 twentyfourhourFormat12: Affichage 12 h
 twentyfourhourFormat24: Affichage 24h
 name: Nom
+periodicity:
+  type:
+    cycle:
+      days: Jours Cycle
+    everymonth:
+      sameweek: Chaque mois, même jour de la semaine
+      sameday: Chaque mois, la même date
+    everyyear: Chaque année, même date
+    everyweek: Chaque semaine
+    everyday: Chaque jour
+    none: Aucune
+login:
+  form:
+    password:
+      placeholder: Mot de passe
+      label: Mot de passe
+    username:
+      label: Nom d'utilisateur
+  password: Mot de passe
+  title: S'identifier
+btn:
+  login: S'identifier
+user:
+  index:
+    title: Liste des utilisateurs
+  form:
+    nom:
+      label: Nom
+    prenom:
+      label: Prénom
+    username:
+      label: Nom d'utilisateur
+    password:
+      label: Mot de passe
+    passwordrepeat:
+      label: Répétez le mot de passe
+    email:
+      label: Email
+    statut:
+      label: Role
+    etat:
+      label: Etat

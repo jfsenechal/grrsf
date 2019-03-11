@@ -11,7 +11,7 @@ namespace App\Manager;
 use App\Repository\GrrUtilisateurRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class GrrUtilisateurManager
+class GrrUserManager
 {
     /**
      * @var GrrUtilisateurRepository

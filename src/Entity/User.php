@@ -2,121 +2,198 @@
 
 namespace App\Entity;
 
+use App\Doctrine\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * GrrUtilisateurs
+ * User
  *
  * @ORM\Table(name="grr_utilisateurs")
- * @ORM\Entity(repositoryClass="App\Repository\GrrUtilisateurRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class GrrUtilisateur
+class User implements UserInterface
 {
-    //   use IdTrait;
+    use IdEntityTrait;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="login", type="string", length=20, nullable=false, unique=true)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $login;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=30, nullable=false)
+     * @ORM\Column(type="string", length=30, nullable=false)
      */
-    private $nom = '';
+    private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=30, nullable=false)
+     * @ORM\Column(type="string", length=30, nullable=false)
      */
-    private $prenom = '';
+    private $prenom;
+
+    /**
+     * @var string The hashed password
+     *
+     * @ORM\Column(type="string", length=32, nullable=false)
+     */
+    private $password;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=32, nullable=false)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
-    private $password = '';
+    private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=30, nullable=false)
      */
-    private $email = '';
+    private $statut;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="statut", type="string", length=30, nullable=false)
+     * @ORM\Column(type="string", length=20, nullable=false)
      */
-    private $statut = '';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="etat", type="string", length=20, nullable=false)
-     */
-    private $etat = '';
+    private $etat;
 
     /**
      * @var int
      *
      * @ORM\Column(name="default_site", type="smallint", nullable=false)
      */
-    private $defaultSite = '0';
+    private $defaultSite;
 
     /**
      * @var int
      *
      * @ORM\Column(name="default_area", type="smallint", nullable=false)
      */
-    private $defaultArea = '0';
+    private $defaultArea;
 
     /**
      * @var int
      *
      * @ORM\Column(name="default_room", type="smallint", nullable=false)
      */
-    private $defaultRoom = '0';
+    private $defaultRoom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="default_style", type="string", length=50, nullable=false)
      */
-    private $defaultStyle = '';
+    private $defaultStyle;
 
     /**
      * @var string
      *
      * @ORM\Column(name="default_list_type", type="string", length=50, nullable=false)
      */
-    private $defaultListType = '';
+    private $defaultListType;
 
     /**
      * @var string
      *
      * @ORM\Column(name="default_language", type="string", length=3, nullable=false, options={"fixed"=true})
      */
-    private $defaultLanguage = '';
+    private $defaultLanguage;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="source", type="string", length=10, nullable=false, options={"default"="local"})
+     * @ORM\Column(type="string", length=10, nullable=false, options={"default"="local"})
      */
-    private $source = 'local';
+    private $source;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return ['ROLE_USER'];
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername(): string
+    {
+        return $this->login;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
 
     public function getLogin(): ?string
     {
         return $this->login;
+    }
+
+    public function setLogin(string $login): self
+    {
+        $this->login = $login;
+
+        return $this;
     }
 
     public function getNom(): ?string
@@ -141,11 +218,6 @@ class GrrUtilisateur
         $this->prenom = $prenom;
 
         return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -275,5 +347,10 @@ class GrrUtilisateur
         return $this;
     }
 
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
+        return $this;
+    }
 }

@@ -26,61 +26,61 @@ class GrrRoom
      *
      * @ORM\Column(name="area_id", type="integer", nullable=false)
      */
-    private $areaId = '0';
+    private $areaId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="room_name", type="string", length=60, nullable=false)
      */
-    private $roomName = '';
+    private $roomName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=60, nullable=false)
+     * @ORM\Column(name="description", type="string", length=60, nullable=true)
      */
-    private $description = '';
+    private $description;
 
     /**
      * @var int
      *
      * @ORM\Column(name="capacity", type="integer", nullable=false)
      */
-    private $capacity = '0';
+    private $capacity;
 
     /**
      * @var int
      *
      * @ORM\Column(name="max_booking", type="smallint", nullable=false, options={"default"="-1"})
      */
-    private $maxBooking = '-1';
+    private $maxBooking;
 
     /**
      * @var string
      *
      * @ORM\Column(name="statut_room", type="boolean")
      */
-    private $statutRoom = false;
+    private $statutRoom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="show_fic_room", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $showFicRoom = false;
+    private $showFicRoom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="picture_room", type="string", length=50, nullable=true)
      */
-    private $pictureRoom = '';
+    private $pictureRoom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment_room", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="comment_room", type="text", length=65535, nullable=true)
      */
     private $commentRoom;
 
@@ -89,84 +89,84 @@ class GrrRoom
      *
      * @ORM\Column(name="show_comment", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $showComment = false;
+    private $showComment;
 
     /**
      * @var int
      *
      * @ORM\Column(name="delais_max_resa_room", type="smallint", nullable=false, options={"default"="-1"})
      */
-    private $delaisMaxResaRoom = '-1';
+    private $delaisMaxResaRoom;
 
     /**
      * @var int
      *
      * @ORM\Column(name="delais_min_resa_room", type="smallint", nullable=false)
      */
-    private $delaisMinResaRoom = '0';
+    private $delaisMinResaRoom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="allow_action_in_past", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $allowActionInPast = false;
+    private $allowActionInPast;
 
     /**
      * @var int
      *
      * @ORM\Column(name="order_display", type="smallint", nullable=false)
      */
-    private $orderDisplay = '0';
+    private $orderDisplay;
 
     /**
      * @var int
      *
      * @ORM\Column(name="delais_option_reservation", type="smallint", nullable=false)
      */
-    private $delaisOptionReservation = '0';
+    private $delaisOptionReservation;
 
     /**
      * @var string
      *
      * @ORM\Column(name="dont_allow_modify", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $dontAllowModify = false;
+    private $dontAllowModify;
 
     /**
      * @var int
      *
      * @ORM\Column(name="type_affichage_reser", type="smallint", nullable=false)
      */
-    private $typeAffichageReser = '0';
+    private $typeAffichageReser;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="moderate", type="boolean", nullable=true)
      */
-    private $moderate = '0';
+    private $moderate;
 
     /**
      * @var string
      *
      * @ORM\Column(name="qui_peut_reserver_pour", type="string", length=1, nullable=false, options={"default"="5"})
      */
-    private $quiPeutReserverPour = '5';
+    private $quiPeutReserverPour;
 
     /**
      * @var string
      *
      * @ORM\Column(name="active_ressource_empruntee", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $activeRessourceEmpruntee = true;
+    private $activeRessourceEmpruntee;
 
     /**
      * @var int
      *
      * @ORM\Column(name="who_can_see", type="smallint", nullable=false)
      */
-    private $whoCanSee = '0';
+    private $whoCanSee;
 
     public function __toString()
     {

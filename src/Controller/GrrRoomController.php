@@ -62,6 +62,7 @@ class GrrRoomController extends AbstractController
     public function new(Request $request, GrrArea $grrArea): Response
     {
         $grrRoom = $this->grrRoomFactory->createNew();
+        $this->grrRoomFactory->setDefaultValues($grrRoom);
         $grrRoom->setAreaId($grrArea->getId());
 
         $form = $this->createForm(GrrRoomType::class, $grrRoom);
@@ -70,7 +71,7 @@ class GrrRoomController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->grrRoomManager->insert($grrRoom);
 
-            return $this->redirectToRoute('grr_room_index');
+            return $this->redirectToRoute('grr_room_show', ['id' => $grrRoom->getId()]);
         }
 
         return $this->render(
@@ -107,10 +108,8 @@ class GrrRoomController extends AbstractController
             $this->grrRoomManager->flush();
 
             return $this->redirectToRoute(
-                'grr_room_index',
-                [
-                    'id' => $grrRoom->getId(),
-                ]
+                'grr_room_show',
+                ['id' => $grrRoom->getId()]
             );
         }
 
@@ -129,10 +128,8 @@ class GrrRoomController extends AbstractController
     public function delete(Request $request, GrrRoom $grrRoom): Response
     {
         if ($this->isCsrfTokenValid('delete'.$grrRoom->getId(), $request->request->get('_token'))) {
-
             $this->grrRoomManager->remove($grrRoom);
             $this->grrRoomManager->flush();
-
         }
 
         return $this->redirectToRoute('grr_room_index');

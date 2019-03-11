@@ -13,6 +13,16 @@ use App\GrrData\DateUtils;
 
 class GrrAreaFactory
 {
+    /**
+     * @var DateUtils
+     */
+    private $dateUtils;
+
+    public function __construct(DateUtils $dateUtils)
+    {
+        $this->dateUtils = $dateUtils;
+    }
+
     public function createNew(): GrrArea
     {
         return new GrrArea();
@@ -21,7 +31,7 @@ class GrrAreaFactory
     public function setDefaultValues(GrrArea $grrArea)
     {
         $grrArea
-            ->setDisplayDays(array_flip(DateUtils::getJoursSemaine()))
+            ->setDisplayDays(array_flip($this->dateUtils->getJoursSemaine()))
             ->setMorningstartsArea(8)
             ->setEveningendsArea(19)
             ->setResolutionArea(900)

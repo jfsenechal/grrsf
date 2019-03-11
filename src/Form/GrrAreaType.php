@@ -15,6 +15,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GrrAreaType extends AbstractType
 {
+    /**
+     * @var DateUtils
+     */
+    private $dateUtils;
+
+    public function __construct(DateUtils $dateUtils)
+    {
+        $this->dateUtils = $dateUtils;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -53,7 +63,7 @@ class GrrAreaType extends AbstractType
                 'weekstartsArea',
                 ChoiceType::class,
                 [
-                    'choices' => array_flip(DateUtils::getJoursSemaine()),
+                    'choices' => array_flip($this->dateUtils->getJoursSemaine()),
                     'label' => 'area.form.weekstartsArea.label',
                 ]
             )
@@ -62,7 +72,7 @@ class GrrAreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.displayDays.label',
-                    'choices' => array_flip(DateUtils::getJoursSemaine()),
+                    'choices' => array_flip($this->dateUtils->getJoursSemaine()),
                     'multiple' => true,
                     'expanded' => true,
                 ]
@@ -121,7 +131,7 @@ class GrrAreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.twentyfourhourFormatArea.label',
-                    'choices' => array_flip(DateUtils::getAffichageFormat()),
+                    'choices' => array_flip($this->dateUtils->getAffichageFormat()),
                     'multiple' => false,
                     'expanded' => true,
                 ]
