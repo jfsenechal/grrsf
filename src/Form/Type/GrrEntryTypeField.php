@@ -8,7 +8,6 @@
 
 namespace App\Form\Type;
 
-
 use App\Entity\GrrTypeArea;
 use App\Repository\GrrTypeAreaRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

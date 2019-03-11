@@ -19,6 +19,27 @@ class GrrTypeAreaRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrTypeArea::class);
     }
 
+    public function persist(GrrTypeArea $typeArea)
+    {
+        $this->_em->persist($typeArea);
+    }
+
+    public function insert(GrrTypeArea $typeArea)
+    {
+        $this->persist($typeArea);
+        $this->flush();
+    }
+
+    public function remove(GrrTypeArea $typeArea)
+    {
+        $this->_em->remove($typeArea);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
     // /**
     //  * @return GrrTypeArea[] Returns an array of GrrTypeArea objects
     //  */

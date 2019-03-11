@@ -20,35 +20,35 @@ class GrrTypeArea
      *
      * @ORM\Column(name="type_name", type="string", length=30, nullable=false)
      */
-    private $typeName = '';
+    private $typeName;
 
     /**
      * @var int
      *
      * @ORM\Column(name="order_display", type="smallint", nullable=false)
      */
-    private $orderDisplay = '0';
+    private $orderDisplay;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="couleur", type="string", nullable=true)
+     */
+    private $couleur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type_letter", type="string", length=2, nullable=false)
+     */
+    private $typeLetter;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="couleur", type="smallint", nullable=false)
+     * @ORM\Column(name="disponible", type="smallint", nullable=false)
      */
-    private $couleur = '0';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type_letter", type="string", length=2, nullable=false, options={"fixed"=true})
-     */
-    private $typeLetter = '';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="disponible", type="string", length=1, nullable=false, options={"default"="2"})
-     */
-    private $disponible = '2';
+    private $disponible;
 
     public function __toString()
     {
@@ -79,12 +79,12 @@ class GrrTypeArea
         return $this;
     }
 
-    public function getCouleur(): ?int
+    public function getCouleur(): ?string
     {
         return $this->couleur;
     }
 
-    public function setCouleur(int $couleur): self
+    public function setCouleur(?string $couleur): self
     {
         $this->couleur = $couleur;
 
@@ -103,17 +103,15 @@ class GrrTypeArea
         return $this;
     }
 
-    public function getDisponible(): ?string
+    public function getDisponible(): ?int
     {
         return $this->disponible;
     }
 
-    public function setDisponible(string $disponible): self
+    public function setDisponible(int $disponible): self
     {
         $this->disponible = $disponible;
 
         return $this;
     }
-
-
 }
