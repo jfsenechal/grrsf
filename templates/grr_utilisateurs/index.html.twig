@@ -17,26 +17,22 @@
             <th>Email</th>
             <th>Statut</th>
             <th>Etat</th>
-            <th>DefaultListType</th>
-            <th>Source</th>
         </tr>
         </thead>
         <tbody>
         {% for grr_utilisateur in grr_utilisateurs %}
             <tr>
                 <td>
-                    <a href="{{ path('grr_user_show', {'login': grr_utilisateur.login}) }}">{{ grr_utilisateur.login }}</a>
+                    <a href="{{ path('grr_user_show', {'id': grr_utilisateur.id}) }}">{{ grr_utilisateur.login }}</a>
                 </td>
                 <td>{{ grr_utilisateur.nom }} {{ grr_utilisateur.prenom }}</td>
                 <td>{{ grr_utilisateur.email }}</td>
                 <td>{{ grr_utilisateur.statut }}</td>
                 <td>{{ grr_utilisateur.etat }}</td>
-                <td>{{ grr_utilisateur.defaultListType }}</td>
-                <td>{{ grr_utilisateur.source }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">{{ 'records.notfound'|trans({}, 'actions') }}</td>
+                <td colspan="6">{{ 'records.notfound'|trans({}, 'actions') }}</td>
             </tr>
         {% endfor %}
         </tbody>

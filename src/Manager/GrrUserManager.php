@@ -8,19 +8,28 @@
 
 namespace App\Manager;
 
-use App\Repository\GrrUtilisateurRepository;
+use App\Entity\User;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class GrrUserManager
 {
     /**
-     * @var GrrUtilisateurRepository
+     * @var UserRepository
      */
     private $grrUtilisateurRepository;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $userPasswordEncoder;
 
-    public function __construct(GrrUtilisateurRepository $grrUtilisateurRepository)
-    {
+    public function __construct(
+        UserRepository $grrUtilisateurRepository,
+        UserPasswordEncoderInterface $userPasswordEncoder
+    ) {
         $this->grrUtilisateurRepository = $grrUtilisateurRepository;
+        $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
     public function persist(UserInterface $user)
@@ -42,5 +51,11 @@ class GrrUserManager
     {
         $this->grrUtilisateurRepository->insert($user);
     }
+
+    public function encodePassword(User $user, string $clearPassword)
+    {
+        $user->setPassword($this->userPasswordEncoder->encodePassword($user, $clearPassword));
+    }
+
 
 }

@@ -38,7 +38,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      *
-     * @ORM\Column(type="string", length=32, nullable=false)
+     * @ORM\Column(type="string", length=150, nullable=false)
      */
     private $password;
 
@@ -66,49 +66,49 @@ class User implements UserInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="default_site", type="smallint", nullable=false)
+     * @ORM\Column(name="default_site", type="smallint", nullable=true)
      */
     private $defaultSite;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="default_area", type="smallint", nullable=false)
+     * @ORM\Column(name="default_area", type="smallint", nullable=true)
      */
     private $defaultArea;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="default_room", type="smallint", nullable=false)
+     * @ORM\Column(name="default_room", type="smallint", nullable=true)
      */
     private $defaultRoom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="default_style", type="string", length=50, nullable=false)
+     * @ORM\Column(name="default_style", type="string", length=50, nullable=true)
      */
     private $defaultStyle;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="default_list_type", type="string", length=50, nullable=false)
+     * @ORM\Column(name="default_list_type", type="string", length=50, nullable=true)
      */
     private $defaultListType;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="default_language", type="string", length=3, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="default_language", type="string", length=3, nullable=true)
      */
     private $defaultLanguage;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=10, nullable=false, options={"default"="local"})
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $source;
 

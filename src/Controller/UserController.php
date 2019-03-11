@@ -4,9 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Factory\UserFactory;
+use App\Form\UserEditType;
 use App\Form\UserType;
 use App\Manager\GrrUserManager;
-use App\Repository\GrrUtilisateurRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @var GrrUtilisateurRepository
+     * @var UserRepository
      */
     private $grrUtilisateurRepository;
 
@@ -32,7 +33,7 @@ class UserController extends AbstractController
     private $userFactory;
 
     public function __construct(
-        GrrUtilisateurRepository $grrUtilisateurRepository,
+        UserRepository $grrUtilisateurRepository,
         UserFactory $userFactory,
         GrrUserManager $grrUtilisateurManager
     ) {
@@ -64,9 +65,11 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->grrUtilisateurManager->encodePassword($grrUtilisateur, $grrUtilisateur->getPassword());
             $this->grrUtilisateurRepository->insert($grrUtilisateur);
 
-            return $this->redirectToRoute('grr_user_index');
+            return $this->redirectToRoute('grr_user_show', ['id' => $grrUtilisateur->getId()]);
         }
 
         return $this->render(
@@ -79,7 +82,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{login}", name="grr_user_show", methods={"GET"})
+     * @Route("/{id}", name="grr_user_show", methods={"GET"})
      */
     public function show(User $grrUtilisateur): Response
     {
@@ -92,21 +95,19 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{login}/edit", name="grr_user_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="grr_user_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, User $grrUtilisateur): Response
     {
-        $form = $this->createForm(UserType::class, $grrUtilisateur);
+        $form = $this->createForm(UserEditType::class, $grrUtilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->grrUtilisateurRepository->flush();
 
             return $this->redirectToRoute(
-                'grr_user_index',
-                [
-                    'login' => $grrUtilisateur->getLogin(),
-                ]
+                'grr_user_show',
+                ['id' => $grrUtilisateur->getId()]
             );
         }
 
@@ -120,7 +121,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{login}", name="grr_user_delete", methods={"DELETE"})
+     * @Route("/{id}", name="grr_user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $grrUtilisateur): Response
     {

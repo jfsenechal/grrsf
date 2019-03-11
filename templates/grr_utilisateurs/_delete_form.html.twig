@@ -13,7 +13,7 @@
                 {{ 'user.delete.confirm'|trans({'name':grr_utilisateur.login}, 'actions') }}
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{ path('grr_user_delete', {'login': grr_utilisateur.login}) }}">
+                <form method="post" action="{{ path('grr_user_delete', {'id': grr_utilisateur.id}) }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ grr_utilisateur.login) }}">
                     <button type="button" class="btn btn-secondary"
