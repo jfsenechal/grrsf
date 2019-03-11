@@ -11,27 +11,24 @@
                 <a class="nav-link" href="{{ path('grr_home') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('grr_entry_index') }}">Entries</a>
-            </li>
-           <li class="nav-item">
-                <a class="nav-link" href="{{ path('grr_repeat_index') }}">Repeat</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('grr_utilisateurs_index') }}">Users</a>
+                <a class="nav-link" href="{{ path('grr_entry_index') }}">{{ 'menu.entries'|trans({}, 'actions') }}</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">Dropdown</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="{{ path('grr_area_index') }}">Area</a>
-                    <a class="dropdown-item" href="{{ path('grr_room_index') }}">Room</a>
-                    <a class="dropdown-item" href="{{ path('grr_setting_index') }}">Settings</a>
+                    <a class="dropdown-item"
+                       href="{{ path('grr_area_index') }}">{{ 'menu.area'|trans({}, 'actions') }}</a>
+                    <a class="dropdown-item"
+                       href="{{ path('grr_setting_index') }}">{{ 'menu.settings'|trans({}, 'actions') }}</a>
+                    <a class="dropdown-item"
+                       href="{{ path('grr_utilisateurs_index') }}">{{ 'menu.users'|trans({}, 'actions') }}</a>
                 </div>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control mr-sm-2" type="text" placeholder="{{ 'form.search.placeholder'|trans({}, 'actions') }}" aria-label="Search">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">{{ 'form.btn.search'|trans({}, 'actions') }}</button>
         </form>
     </div>
 </nav>

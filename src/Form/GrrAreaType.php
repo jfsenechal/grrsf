@@ -30,6 +30,7 @@ class GrrAreaType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => 'area.form.access.label',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -45,6 +46,7 @@ class GrrAreaType extends AbstractType
                 [
                     'label' => 'area.form.ipAdr.label',
                     'help' => 'area.form.ipAdr.help',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -70,7 +72,7 @@ class GrrAreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.enablePeriods.label',
-                    'choices' => GrrConstants::PERIOD,
+                    'choices' => array_flip(GrrConstants::PERIOD),
                     'multiple' => false,
                     'expanded' => true,
                 ]
@@ -139,8 +141,9 @@ class GrrAreaType extends AbstractType
                     'label' => 'area.form.maxBooking.label',
                     'help' => 'area.form.maxBooking.help',
                 ]
-            )->add('calendarDefaultValues')
-            ->add('idTypeParDefaut');
+            );
+        //->add('calendarDefaultValues')
+        // ->add('idTypeParDefaut');
     }
 
     public function configureOptions(OptionsResolver $resolver)

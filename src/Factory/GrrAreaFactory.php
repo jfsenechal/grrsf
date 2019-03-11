@@ -20,10 +20,25 @@ class GrrAreaFactory
 
     public function setDefaultValues(GrrArea $grrArea)
     {
-        $grrArea->setDisplayDays(array_flip(DateUtils::getJoursSemaine()));
-        $grrArea->setMorningstartsArea(8);
-        $grrArea->setEveningendsArea(19);
-        $grrArea->setResolutionArea(900);
-        $grrArea->setDureeParDefautReservationArea(900);
+        $grrArea
+            ->setDisplayDays(array_flip(DateUtils::getJoursSemaine()))
+            ->setMorningstartsArea(8)
+            ->setEveningendsArea(19)
+            ->setResolutionArea(900)
+            ->setDureeParDefautReservationArea(900)
+            ->setDureeMaxResaArea(-1)
+            ->setDureeParDefautReservationArea(0)
+            ->setIdTypeParDefaut(-1)
+            ->setMaxBooking(-1)
+            ->setEnablePeriods(false)
+            ->setCalendarDefaultValues(true)
+            ->setTwentyfourhourFormatArea(0)
+            ->setWeekstartsArea(0)
+            ->setEveningendsMinutesArea(0)
+            ->setResolutionArea(0)
+            ->setEveningendsArea(0)
+            ->setMorningstartsArea(0)
+            ->setOrderDisplay(0)
+            ->setAccess(false);
     }
 }

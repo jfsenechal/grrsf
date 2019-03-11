@@ -9,11 +9,30 @@
 namespace App\GrrData;
 
 
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 class DateUtils
 {
+    /**
+     * @var TranslatorInterface
+     */
+    private static $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public static function getJoursSemaine()
     {
-        return ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+        $data = [];
+        $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+
+        foreach ($days as $day) {
+            $data[] = self::$translator->trans($day);
+        }
+
+        return $data;
     }
 
     public static function getHeures()
@@ -23,6 +42,6 @@ class DateUtils
 
     public static function getAffichageFormat()
     {
-        return ['Affichage 12 h', 'Affichage 24h'];
+        return [self::$translator->trans('twentyfourhourFormat12'), self::$translator->trans('twentyfourhourFormat24')];
     }
 }

@@ -3,11 +3,11 @@
 {% block title %}Edit GrrArea{% endblock %}
 
 {% block body %}
-    <h1>Edit GrrArea</h1>
+    <h1>{{ grr_area.areaName }}</h1>
 
     {{ include('grr_area/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('grr_area_index') }}">back to list</a>
+    <a href="{{ path('grr_area_index') }}">{{ 'back.to.list'|trans({}, 'actions') }}</a>
 
     {{ include('grr_area/_delete_form.html.twig') }}
 {% endblock %}

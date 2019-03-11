@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\GrrArea;
 use App\Entity\GrrRoom;
 use App\Factory\GrrRoomFactory;
 use App\Form\GrrRoomType;
@@ -56,11 +57,13 @@ class GrrRoomController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="grr_room_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="grr_room_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, GrrArea $grrArea): Response
     {
-        $grrRoom = new GrrRoom();
+        $grrRoom = $this->grrRoomFactory->createNew();
+        $grrRoom->setAreaId($grrArea->getId());
+
         $form = $this->createForm(GrrRoomType::class, $grrRoom);
         $form->handleRequest($request);
 

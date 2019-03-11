@@ -26,17 +26,10 @@ class GrrArea
      *
      * @ORM\Column(name="area_name", type="string", length=30, nullable=false)
      */
-    private $areaName = '';
+    private $areaName;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=false)
-     */
-    private $access_back;
-
-    /**
-     * @var string
+     * @var boolean
      *
      * @ORM\Column(name="access",type="boolean", nullable=false)
      */
@@ -47,80 +40,73 @@ class GrrArea
      *
      * @ORM\Column(name="order_display", type="smallint", nullable=false)
      */
-    private $orderDisplay = '0';
+    private $orderDisplay;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ip_adr", type="string", length=15, nullable=false)
+     * @ORM\Column(name="ip_adr", type="string", length=15, nullable=true)
      */
-    private $ipAdr = '';
+    private $ipAdr;
 
     /**
      * @var int
      *
      * @ORM\Column(name="morningstarts_area", type="smallint", nullable=false)
      */
-    private $morningstartsArea = '0';
+    private $morningstartsArea;
 
     /**
      * @var int
      *
      * @ORM\Column(name="eveningends_area", type="smallint", nullable=false)
      */
-    private $eveningendsArea = '0';
+    private $eveningendsArea;
 
     /**
      * @var int
      *
      * @ORM\Column(name="resolution_area", type="integer", nullable=false)
      */
-    private $resolutionArea = '0';
+    private $resolutionArea;
 
     /**
      * @var int
      *
      * @ORM\Column(name="eveningends_minutes_area", type="smallint", nullable=false)
      */
-    private $eveningendsMinutesArea = '0';
+    private $eveningendsMinutesArea;
 
     /**
      * @var int
      *
      * @ORM\Column(name="weekstarts_area", type="smallint", nullable=false)
      */
-    private $weekstartsArea = '0';
+    private $weekstartsArea;
 
     /**
      * @var int
      *
      * @ORM\Column(name="twentyfourhour_format_area", type="smallint", nullable=false)
      */
-    private $twentyfourhourFormatArea = '0';
+    private $twentyfourhourFormatArea;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="calendar_default_values", type="string", length=1, nullable=false, options={"default"="y","fixed"=true})
+     * @ORM\Column(name="calendar_default_values", type="boolean", nullable=false, options={"default"="1"})
      */
-    private $calendarDefaultValues = 'y';
+    private $calendarDefaultValues;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="enable_periods", type="string", length=1, nullable=false, options={"default"="n"})
+     * @ORM\Column(name="enable_periods", type="boolean", nullable=false, options={"default"="0"})
      */
-    private $enablePeriods = 'n';
+    private $enablePeriods;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=false)
-     */
-    private $displayDays_back;
-
-    /**
-     * @var string
+     * @var array
      *
      * @ORM\Column(type="array", nullable=false)
      */
@@ -131,28 +117,28 @@ class GrrArea
      *
      * @ORM\Column(name="id_type_par_defaut", type="integer", nullable=false, options={"default"="-1"})
      */
-    private $idTypeParDefaut = '-1';
+    private $idTypeParDefaut;
 
     /**
      * @var int
      *
      * @ORM\Column(name="duree_max_resa_area", type="integer", nullable=false, options={"default"="-1"})
      */
-    private $dureeMaxResaArea = '-1';
+    private $dureeMaxResaArea;
 
     /**
      * @var int
      *
      * @ORM\Column(name="duree_par_defaut_reservation_area", type="integer", nullable=false)
      */
-    private $dureeParDefautReservationArea = '0';
+    private $dureeParDefautReservationArea;
 
     /**
      * @var int
      *
      * @ORM\Column(name="max_booking", type="smallint", nullable=false, options={"default"="-1"})
      */
-    private $maxBooking = '-1';
+    private $maxBooking ;
 
     public function __toString()
     {
@@ -176,6 +162,18 @@ class GrrArea
         return $this;
     }
 
+    public function getAccess(): ?bool
+    {
+        return $this->access;
+    }
+
+    public function setAccess(bool $access): self
+    {
+        $this->access = $access;
+
+        return $this;
+    }
+
     public function getOrderDisplay(): ?int
     {
         return $this->orderDisplay;
@@ -193,7 +191,7 @@ class GrrArea
         return $this->ipAdr;
     }
 
-    public function setIpAdr(string $ipAdr): self
+    public function setIpAdr(?string $ipAdr): self
     {
         $this->ipAdr = $ipAdr;
 
@@ -272,26 +270,38 @@ class GrrArea
         return $this;
     }
 
-    public function getCalendarDefaultValues(): ?string
+    public function getCalendarDefaultValues(): ?bool
     {
         return $this->calendarDefaultValues;
     }
 
-    public function setCalendarDefaultValues(string $calendarDefaultValues): self
+    public function setCalendarDefaultValues(bool $calendarDefaultValues): self
     {
         $this->calendarDefaultValues = $calendarDefaultValues;
 
         return $this;
     }
 
-    public function getEnablePeriods(): ?string
+    public function getEnablePeriods(): ?bool
     {
         return $this->enablePeriods;
     }
 
-    public function setEnablePeriods(string $enablePeriods): self
+    public function setEnablePeriods(bool $enablePeriods): self
     {
         $this->enablePeriods = $enablePeriods;
+
+        return $this;
+    }
+
+    public function getDisplayDays(): ?array
+    {
+        return $this->displayDays;
+    }
+
+    public function setDisplayDays(array $displayDays): self
+    {
+        $this->displayDays = $displayDays;
 
         return $this;
     }
@@ -343,53 +353,4 @@ class GrrArea
 
         return $this;
     }
-
-    public function getAccessBack(): ?string
-    {
-        return $this->access_back;
-    }
-
-    public function setAccessBack(string $access_back): self
-    {
-        $this->access_back = $access_back;
-
-        return $this;
-    }
-
-    public function getAccess(): ?bool
-    {
-        return $this->access;
-    }
-
-    public function setAccess(bool $access): self
-    {
-        $this->access = $access;
-
-        return $this;
-    }
-
-    public function getDisplayDaysBack(): ?string
-    {
-        return $this->displayDays_back;
-    }
-
-    public function setDisplayDaysBack(string $displayDays_back): self
-    {
-        $this->displayDays_back = $displayDays_back;
-
-        return $this;
-    }
-
-    public function getDisplayDays(): ?array
-    {
-        return $this->displayDays;
-    }
-
-    public function setDisplayDays(array $displayDays): self
-    {
-        $this->displayDays = $displayDays;
-
-        return $this;
-    }
-
 }

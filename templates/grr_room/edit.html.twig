@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit GrrRoom{% endblock %}
+{% block title %}{{ grr_room.roomName }}{% endblock %}
 
 {% block body %}
-    <h1>Edit GrrRoom</h1>
+    <h1>{{ grr_room.roomName }}</h1>
 
     {{ include('grr_room/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('grr_room_index') }}">back to list</a>
+    <a href="{{ path('grr_room_index') }}">{{ 'back to list'|trans({}, 'actions') }}</a>
 
     {{ include('grr_room/_delete_form.html.twig') }}
 {% endblock %}

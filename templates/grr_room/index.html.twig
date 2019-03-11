@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'GrrRoom index'|trans({}, 'actions') }}{% endblock %}
+{% block title %}{{ 'room.index.title'|trans({}, 'actions') }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'GrrRoom index'|trans({}, 'actions') }}</h1>
+    <h1>{{ 'room.index.title'|trans({}, 'actions') }}</h1>
+
+    <a class="btn btn-primary" href="{{ path('grr_room_new') }}">{{ 'room.new.title'| trans({}, 'actions') }}</a>
 
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>AreaId</th>
-            <th>RoomName</th>
-            <th>OrderDisplay</th>
+            <th>{{ 'room.form.nom.label'|trans }}</th>
+            <th>{{ 'room.form.orderDisplay.label'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -22,11 +23,10 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">{{ 'no records found'| trans({}, 'actions') }}</td>
+                <td colspan="3">{{ 'records.notfound'| trans({}, 'actions') }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('grr_room_new') }}">{{ 'Create new'| trans({}, 'actions') }}</a>
 {% endblock %}

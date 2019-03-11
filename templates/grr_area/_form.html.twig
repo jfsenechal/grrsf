@@ -4,7 +4,6 @@
     <div class="col-6">
         {{ form_row(form.areaName) }}
         {{ form_row(form.orderDisplay) }}
-        {{ form_row(form.access) }}
     </div>
     <div class="col-6">
         {{ form_row(form.resolutionArea) }}
@@ -43,15 +42,14 @@
 
 <div class="row">
     <div class="col-6">
-        {{ form_row(form.idTypeParDefaut) }}
         {{ form_row(form.ipAdr) }}
+        {{ form_row(form.access) }}
     </div>
     <div class="col-6">
-        {{ form_row(form.calendarDefaultValues) }}
         {{ form_row(form.enablePeriods) }}
         {{ form_row(form.eveningendsMinutesArea) }}
     </div>
 </div>
 
-<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+<button class="btn btn-primary">{{ button_label|default('Save')|trans({}, 'actions') }}</button>
 {{ form_end(form) }}

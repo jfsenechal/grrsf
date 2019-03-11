@@ -91,3 +91,15 @@ area:
     maxBooking:
       label: Nombre max. de réservations par utilisateur
       help: -1 si pas de restriction - Pour toutes les ressources du domaine
+  rooms:
+    title: Nombre de ressources
+Sunday: Dimanche
+Monday: Lundi
+Tuesday: Mardi
+Wednesday: Mercredi
+Thursday: Jeudi
+Friday: Vendredi
+Saturday: Samedi
+twentyfourhourFormat12: Affichage 12 h
+twentyfourhourFormat24: Affichage 24h
+name: Nom

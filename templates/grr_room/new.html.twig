@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'New GrrRoom'|trans}}{% endblock %}
+{% block title %}{{ 'room.new.title'|trans({}, 'actions')}}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'New GrrRoom'|trans}}</h1>
+    <h1>{{ 'room.new.title'|trans({}, 'actions')}}</h1>
 
     {{ include('grr_room/_form.html.twig') }}
 
-    <a href="{{ path('grr_room_index') }}">back to list</a>
+    <a href="{{ path('grr_room_index') }}">{{ 'back.to.list'|trans({}, 'actions') }}</a>
 {% endblock %}

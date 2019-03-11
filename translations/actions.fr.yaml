@@ -1,6 +1,41 @@
-Save: Sauvegarder
-New GrrRoom: 'Nouvelle ressource'
-Create new: 'Ajouter un nouveau'
-GrrArea index: 'Les domaines'
-no records found: 'Aucun éléments trouvés'
-GrrRoom index: 'Liste des ressources'
+form:
+  btn:
+    save: Sauvegarder
+    update: Sauvegarder
+    edit: Modifier
+    delete: Supprimer
+    cancel: Annuler
+    see: Visualiser
+    search: 'actions'
+  search:
+    placeholder: 'actions'
+records:
+  notfound: Aucun élément trouvé
+back.to.list: Retour à la liste
+see.on.site: Voir
+modal.delete.title: Confirmer la suppression
+area:
+  new:
+    title: Nouveau domaine
+  delete:
+    confirm: Êtes vous sur de supprimer le domaine %name%
+  index:
+    title: Les domaines
+room:
+  new:
+    title: Nouvelle ressource
+  index:
+    title: Liste des ressources
+  back:
+    toarea: Retour au domaine
+  delete:
+    confirm: Êtes vous sur de supprimer la ressource %name%
+  fonctions:
+    title: Configuration des fonctionnalités
+  informations:
+    title: Informations
+menu:
+  area: Domaine
+  settings: Paramètres
+  users: Utilisateurs
+  entries: Entries

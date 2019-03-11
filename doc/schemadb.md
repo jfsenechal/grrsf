@@ -4,6 +4,9 @@ GrrTypeArea
 $access String: => to Boolean for checkbox
 non car valeur a dans champ
 $displayDays: String to array 
+$enablePeriods : String to boolean
+calendar_default_values : String to boolean
+ipAdr: Nullable
 
 Settings:
 Ajout d'un champ id

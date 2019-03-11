@@ -70,7 +70,7 @@ class GrrAreaController extends AbstractController
 
             $this->areaManager->insert($grrArea);
 
-            return $this->redirectToRoute('grr_area_index');
+            return $this->redirectToRoute('grr_area_show', ['id' => $grrArea->getId()]);
         }
 
         return $this->render(

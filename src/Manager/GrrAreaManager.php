@@ -9,34 +9,38 @@
 namespace App\Manager;
 
 use App\Entity\GrrArea;
-use App\Factory\GrrAreaFactory;
-use App\Repository\GrrRoomRepository;
+use App\Repository\GrrAreaRepository;
 
 class GrrAreaManager
 {
+    /**
+     * @var GrrAreaRepository
+     */
+    private $grrAreaRepository;
 
-    public function __construct(GrrAreaFactory $areaFactory)
+    public function __construct(GrrAreaRepository $grrAreaRepository)
     {
+        $this->grrAreaRepository = $grrAreaRepository;
     }
 
     public function persist(GrrArea $grrArea)
     {
-        $this->grrRoomFactory->persist($grrArea);
+        $this->grrAreaRepository->persist($grrArea);
     }
 
     public function remove(GrrArea $grrArea)
     {
-        $this->grrRoomFactory->remove($grrArea);
+        $this->grrAreaRepository->remove($grrArea);
     }
 
     public function flush()
     {
-        $this->grrRoomFactory->flush();
+        $this->grrAreaRepository->flush();
     }
 
     public function insert(GrrArea $grrArea)
     {
-        $this->grrRoomFactory->insert($grrArea);
+        $this->grrAreaRepository->insert($grrArea);
     }
 
 }
