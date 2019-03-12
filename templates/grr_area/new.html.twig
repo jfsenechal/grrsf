@@ -7,5 +7,7 @@
 
     {{ include('grr_area/_form.html.twig') }}
 
-    <a href="{{ path('grr_area_index') }}">{{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+    <br/>
+    <a href="{{ path('grr_area_index') }}"><i
+                class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
 {% endblock %}

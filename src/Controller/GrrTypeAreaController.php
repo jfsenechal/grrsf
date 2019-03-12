@@ -59,6 +59,7 @@ class GrrTypeAreaController extends AbstractController
     public function new(Request $request): Response
     {
         $grrTypeArea = $this->typeAreaFactory->createNew();
+        $this->typeAreaFactory->setDefaultValues($grrTypeArea);
 
         $form = $this->createForm(GrrTypeAreaType::class, $grrTypeArea);
         $form->handleRequest($request);

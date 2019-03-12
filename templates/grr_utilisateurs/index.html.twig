@@ -6,17 +6,17 @@
 
     <h1>{{ 'user.index.title'|trans({}, 'actions')}}</h1>
 
-    <a class="btn btn-primary" href="{{ path('grr_user_new') }}">{{ 'user.new.title'| trans({}, 'actions') }}</a>
+    <a class="btn btn-primary" href="{{ path('grr_user_new') }}"><i class="fas fa-plus"></i> {{ 'user.new.title'| trans({}, 'actions') }}</a>
     <br/> <br/>
 
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Login</th>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Statut</th>
-            <th>Etat</th>
+            <th>{{ 'login.form.username.label'| trans }}</th>
+            <th>{{ 'user.form.nom.label'| trans }}</th>
+            <th>{{ 'user.form.email.label'| trans }}</th>
+            <th>{{ 'room.form.statutRoom.label'| trans }}</th>
+            <th>{{ 'user.form.etat.label'| trans }}</th>
         </tr>
         </thead>
         <tbody>

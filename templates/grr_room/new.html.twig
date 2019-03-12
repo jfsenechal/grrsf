@@ -7,5 +7,6 @@
 
     {{ include('grr_room/_form.html.twig') }}
 
-    <a href="{{ path('grr_room_index') }}">{{ 'back.to.list'|trans({}, 'actions') }}</a>
+    <br />
+    <a href="{{ path('grr_room_index') }}"><i class="fas fa-arrow-left"></i> {{ 'back.to.list'|trans({}, 'actions') }}</a>
 {% endblock %}

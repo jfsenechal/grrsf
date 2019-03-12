@@ -117,7 +117,7 @@ class GrrAreaController extends AbstractController
             $this->areaManager->flush();
 
             return $this->redirectToRoute(
-                'grr_area_index',
+                'grr_area_show',
                 [
                     'id' => $grrArea->getId(),
                 ]

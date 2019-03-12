@@ -8,5 +8,5 @@
     {{ include('grr_utilisateurs/_form.html.twig') }}
 
     <br />
-    <a href="{{ path('grr_user_index') }}">{{ 'form.btn.cancel'|trans({},'actions') }}</a>
+    <a href="{{ path('grr_user_index') }}"><i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({},'actions') }}</a>
 {% endblock %}

@@ -145,3 +145,21 @@ user:
       label: Role
     etat:
       label: Etat
+typeArea:
+  index:
+    title: Types de réservation
+  form:
+    name:
+      label: Nom
+    typeName:
+      label: Nom du type
+    orderDisplay:
+      label: Ordre d'affichage
+    couleur:
+      label: Couleur
+    typeLetter:
+      label: Identifiant
+    disponible:
+      label: Disponible pour
+  new:
+    title: Nouveau type de réservation

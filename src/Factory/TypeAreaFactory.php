@@ -21,6 +21,6 @@ class TypeAreaFactory
     {
         $typeArea
             ->setOrderDisplay(0)
-        ->setDisponible(2);
+            ->setDisponible(2);
     }
 }

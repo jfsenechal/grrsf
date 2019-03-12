@@ -51,3 +51,8 @@ user:
     confirm: Êtes vous sur de supprimer l'utilisateur %name%
   new:
     title: Nouvelle utilisateur
+typeArea:
+  delete:
+    confirm: Êtes vous sur de supprimer le type de réservation %name%
+  new:
+    title: Ajouter un type de réservation

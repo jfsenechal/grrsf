@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New GrrTypeArea{% endblock %}
+{% block title %}{{ 'typeArea.new.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Create new GrrTypeArea</h1>
+    <h1>{{ 'typeArea.new.title'|trans }}</h1>
 
     {{ include('grr_type_area/_form.html.twig') }}
-
-    <a href="{{ path('grr_area_index') }}">{{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+    <br/>
+    <a href="{{ path('grr_area_index') }}"><i
+                class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
 {% endblock %}

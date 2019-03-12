@@ -2,7 +2,9 @@
 
 namespace App\Twig;
 
+use App\GrrData\DateUtils;
 use App\GrrData\EntryData;
+use App\GrrData\GrrConstants;
 use App\Repository\GrrRoomRepository;
 use App\Repository\GrrTypeAreaRepository;
 use Twig\Extension\AbstractExtension;
@@ -22,15 +24,27 @@ class GrrExtension extends AbstractExtension
      * @var GrrTypeAreaRepository
      */
     private $grrTypeAreaRepository;
+    /**
+     * @var DateUtils
+     */
+    private $dateUtils;
+    /**
+     * @var GrrConstants
+     */
+    private $grrConstants;
 
     public function __construct(
+        DateUtils $dateUtils,
         GrrRoomRepository $grrRoomRepository,
         GrrTypeAreaRepository $grrTypeAreaRepository,
         EntryData $entryData
+
     ) {
+        $this->dateUtils = $dateUtils;
         $this->grrRoomRepository = $grrRoomRepository;
         $this->entryData = $entryData;
         $this->grrTypeAreaRepository = $grrTypeAreaRepository;
+
     }
 
     public function getFilters(): array
@@ -44,6 +58,8 @@ class GrrExtension extends AbstractExtension
             new TwigFilter('entryTypeGetName', [$this, 'entryTypeGetName']),
             new TwigFilter('getNumWeeks', [$this, 'getNumWeeks']),
             new TwigFilter('joursSemaine', [$this, 'joursSemaine']),
+            new TwigFilter('periodName', [$this, 'periodName']),
+            new TwigFilter('hourFormat', [$this, 'hourFormat']),
         ];
     }
 
@@ -91,11 +107,22 @@ class GrrExtension extends AbstractExtension
      * field:repOpt
      * 7 chiffres
      * @param $value
+     * @return string
      */
     public function joursSemaine($value)
     {
-        return $value;
+        $jours = $this->dateUtils->getJoursSemaine();
 
+        return isset($jours[$value]) ? $jours[$value] : $value;
     }
 
+    public function periodName(int $value)
+    {
+        return GrrConstants::PERIOD[$value];
+    }
+
+    public function hourFormat(int $value)
+    {
+        return $this->dateUtils->getAffichageFormat()[$value];
+    }
 }

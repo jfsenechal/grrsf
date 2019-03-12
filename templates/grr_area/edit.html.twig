@@ -5,9 +5,10 @@
 {% block body %}
     <h1>{{ grr_area.areaName }}</h1>
 
-    {{ include('grr_area/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('grr_area/_form.html.twig', {'button_label': 'form.btn.update'}) }}
 
-    <a href="{{ path('grr_area_index') }}">{{ 'back.to.list'|trans({}, 'actions') }}</a>
+    <br />
+    <a href="{{ path('grr_area_index') }}"><i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
 
     {{ include('grr_area/_delete_form.html.twig') }}
 {% endblock %}

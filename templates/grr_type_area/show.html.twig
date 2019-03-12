@@ -1,42 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GrrTypeArea{% endblock %}
+{% block title %}{{ grr_type_area.typeName }}{% endblock %}
 
 {% block body %}
-    <h1>GrrTypeArea</h1>
 
-    <table class="table">
+    <h1>{{ grr_type_area.typeName }}</h1>
+
+    {% include 'grr_type_area/_actions.html.twig' %}
+
+    <table class="table table-bordered">
         <tbody>
-            <tr>
-                <th>TypeName</th>
-                <td>{{ grr_type_area.typeName }}</td>
-            </tr>
-            <tr>
-                <th>OrderDisplay</th>
-                <td>{{ grr_type_area.orderDisplay }}</td>
-            </tr>
-            <tr>
-                <th>Couleur</th>
-                <td>{{ grr_type_area.couleur }}</td>
-            </tr>
-            <tr>
-                <th>TypeLetter</th>
-                <td>{{ grr_type_area.typeLetter }}</td>
-            </tr>
-            <tr>
-                <th>Disponible</th>
-                <td>{{ grr_type_area.disponible }}</td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ grr_type_area.id }}</td>
-            </tr>
+        <tr>
+            <th>{{ 'typeArea.form.orderDisplay.label'|trans }}</th>
+            <td>{{ grr_type_area.orderDisplay }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'typeArea.form.couleur.label'|trans }}</th>
+            <td>{{ grr_type_area.couleur }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'typeArea.form.typeLetter.label'|trans }}</th>
+            <td>{{ grr_type_area.typeLetter }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'typeArea.form.disponible.label'|trans }}Disponible</th>
+            <td>{{ grr_type_area.disponible }}</td>
+        </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('grr_type_area_index') }}">back to list</a>
-
-    <a href="{{ path('grr_type_area_edit', {'id': grr_type_area.id}) }}">edit</a>
 
     {{ include('grr_type_area/_delete_form.html.twig') }}
 {% endblock %}

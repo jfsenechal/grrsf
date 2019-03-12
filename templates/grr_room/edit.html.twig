@@ -5,9 +5,10 @@
 {% block body %}
     <h1>{{ grr_room.roomName }}</h1>
 
-    {{ include('grr_room/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('grr_room/_form.html.twig', {'button_label': 'form.btn.update'}) }}
 
-    <a href="{{ path('grr_room_index') }}">{{ 'back to list'|trans({}, 'actions') }}</a>
+    <br />
+    <a href="{{ path('grr_area_show',{'id': grr_room.areaId}) }}"><i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
 
     {{ include('grr_room/_delete_form.html.twig') }}
 {% endblock %}
