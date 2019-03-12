@@ -60,6 +60,7 @@ class GrrExtension extends AbstractExtension
             new TwigFilter('joursSemaine', [$this, 'joursSemaine']),
             new TwigFilter('periodName', [$this, 'periodName']),
             new TwigFilter('hourFormat', [$this, 'hourFormat']),
+            new TwigFilter('displayColor', [$this, 'displayColor']),
         ];
     }
 
@@ -125,4 +126,17 @@ class GrrExtension extends AbstractExtension
     {
         return $this->dateUtils->getAffichageFormat()[$value];
     }
+
+    public function displayColor(string $value)
+    {
+        return '<span style="background-color: '.$value.';"></span>';
+    }
+
+    public function displayLine(int $value) {
+        if($value !== 1 ){
+
+        }
+    }
+
+
 }

@@ -39,10 +39,15 @@ class GrrTypeAreaType extends AbstractType
                 IntegerType::class,
                 [
                     'label' => 'typeArea.form.orderDisplay.label',
-                    'required'=>false
                 ]
             )
-            ->add('couleur', ColorType::class)
+            ->add(
+                'couleur',
+                ColorType::class,
+                [
+                    'required' => false,
+                ]
+            )
             ->add(
                 'typeLetter',
                 ChoiceType::class,

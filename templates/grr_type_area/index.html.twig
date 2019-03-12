@@ -6,7 +6,7 @@
     <h1>{{ 'typeArea.index.title'| trans }}</h1>
 
     <a class="btn btn-primary" href="{{ path('grr_type_area_new') }}"><i
-                class="fas fa-plus"></i> {{ 'type_area.new.title'| trans({}, 'actions') }}</a>
+                class="fas fa-plus"></i> {{ 'typeArea.new.title'| trans({}, 'actions') }}</a>
     <br/> <br/>
 
     <table class="table">
@@ -21,9 +21,13 @@
         <tbody>
         {% for grr_type_area in grr_type_areas %}
             <tr>
-                <td>{{ grr_type_area.typeName }}</td>
+                <td>
+                    <a href="{{ path('grr_type_area_show', {'id': grr_type_area.id}) }}">
+                        {{ grr_type_area.typeName }}
+                    </a>
+                </td>
                 <td>{{ grr_type_area.orderDisplay }}</td>
-                <td>{{ grr_type_area.couleur }}</td>
+                <td style="background-color: {{ grr_type_area.couleur}}">{{ grr_type_area.couleur }}</td>
                 <td>{{ grr_type_area.typeLetter }}</td>
             </tr>
         {% else %}

@@ -15,9 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class GrrSettingController extends AbstractController
 {
+    /**
+     * @var GrrSettingRepository
+     */
+    private $grrSettingRepository;
+
     public function __construct(GrrSettingRepository $grrSettingRepository)
     {
-
+        $this->grrSettingRepository = $grrSettingRepository;
     }
 
     /**
@@ -25,18 +30,21 @@ class GrrSettingController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('grr_setting/index.html.twig', [
-            'grr_settings' => $grrSettingRepository->findAll(),
-        ]);
+        return $this->render(
+            'grr_setting/index.html.twig',
+            [
+                'grr_settings' => $this->grrSettingRepository->findAll(),
+            ]
+        );
     }
 
-    /**
+ /**
      * @Route("/new", name="grr_setting_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
         $grrSetting = new GrrSetting();
-        $form = $this->createForm(GrrSettingType::class, $grrSetting);
+        $form = $this->createForm(GrrSettingType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,9 +66,12 @@ class GrrSettingController extends AbstractController
      */
     public function show(GrrSetting $grrSetting): Response
     {
-        return $this->render('grr_setting/show.html.twig', [
-            'grr_setting' => $grrSetting,
-        ]);
+        return $this->render(
+            'grr_setting/show.html.twig',
+            [
+                'grr_setting' => $grrSetting,
+            ]
+        );
     }
 
     /**
@@ -72,17 +83,23 @@ class GrrSettingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->grrSettingRepository->flush();
 
-            return $this->redirectToRoute('grr_setting_index', [
-                'name' => $grrSetting->getName(),
-            ]);
+            return $this->redirectToRoute(
+                'grr_setting_index',
+                [
+                    'name' => $grrSetting->getName(),
+                ]
+            );
         }
 
-        return $this->render('grr_setting/edit.html.twig', [
-            'grr_setting' => $grrSetting,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'grr_setting/edit.html.twig',
+            [
+                'grr_setting' => $grrSetting,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -91,9 +108,8 @@ class GrrSettingController extends AbstractController
     public function delete(Request $request, GrrSetting $grrSetting): Response
     {
         if ($this->isCsrfTokenValid('delete'.$grrSetting->getName(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($grrSetting);
-            $entityManager->flush();
+            $this->grrSettingRepository->remove($grrSetting);
+            $this->grrSettingRepository->flush();
         }
 
         return $this->redirectToRoute('grr_setting_index');

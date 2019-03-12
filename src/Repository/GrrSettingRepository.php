@@ -19,6 +19,21 @@ class GrrSettingRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrSetting::class);
     }
 
+    public function persist(GrrSetting $grrSetting)
+    {
+        $this->_em->persist($grrSetting);
+    }
+
+    public function remove(GrrSetting $grrSetting)
+    {
+        $this->_em->remove($grrSetting);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
     /**
      * @param string $name
      * @return GrrSetting|null

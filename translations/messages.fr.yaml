@@ -93,13 +93,14 @@ area:
       help: -1 si pas de restriction - Pour toutes les ressources du domaine
   rooms:
     title: Nombre de ressources
-Sunday: Dimanche
-Monday: Lundi
-Tuesday: Mardi
-Wednesday: Mercredi
-Thursday: Jeudi
-Friday: Vendredi
-Saturday: Samedi
+sunday: Dimanche
+monday: Lundi
+tuesday: Mardi
+wednesday: Mercredi
+thursday: Jeudi
+friday: Vendredi
+saturday: Samedi
+week: Semaine
 twentyfourhourFormat12: Affichage 12 h
 twentyfourhourFormat24: Affichage 24h
 name: Nom

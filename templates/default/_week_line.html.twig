@@ -1,0 +1,23 @@
+{% set number = day|date('w') %}
+
+{% if loop.first %}
+
+    <td>{{ day | date('W') }}</td>
+
+    {% if number != 1 %}
+        {% for i in 2..number %}
+            <td>c</td>
+        {% endfor %}
+    {% endif %}
+
+{% elseif number == 1 %}
+    <td>{{ day | date('W') }}</td>
+
+{% endif %}
+
+<td><span class="text-muted">({{ number }})</span> {{ day | date('d-m') }}</td>
+
+{% if number == 0 %}
+</tr>
+<tr>
+    {% endif %}
