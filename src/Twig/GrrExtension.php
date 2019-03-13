@@ -10,6 +10,7 @@ use App\Repository\GrrTypeAreaRepository;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class GrrExtension extends AbstractExtension
 {
@@ -66,7 +67,13 @@ class GrrExtension extends AbstractExtension
             new TwigFilter('periodName', [$this, 'periodName']),
             new TwigFilter('hourFormat', [$this, 'hourFormat']),
             new TwigFilter('displayColor', [$this, 'displayColor'], ['is_safe' => ['html']]),
-            new TwigFilter('completeLine', [$this, 'completeLine']),
+        ];
+    }
+
+    public function getFunctions()
+    {
+        return [
+            new TwigFunction('completeTr', [$this, 'completeTr'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -145,10 +152,9 @@ class GrrExtension extends AbstractExtension
         }
     }
 
-    public function completeLine(int $start, int $end)
+    public function completeTr(int $start, int $end)
     {
-       return $this->twigEnvironment->render('default/_complete_tr.html.twig', ['start' => $start, 'end' => $end]);
+        return $this->twigEnvironment->render('default/_complete_tr.html.twig', ['start' => $start, 'end' => $end]);
+
     }
-
-
 }

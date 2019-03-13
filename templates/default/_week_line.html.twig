@@ -1,4 +1,4 @@
-{% set number = day|date('w') %}
+{% set numericDay = day|date('w') %}
 
 {# premiere ligne #}
 {% if loop.first %}
@@ -6,21 +6,19 @@
     <td>{{ day | date('W') }}</td>
 
     {# on remplit les cases vides #}
-    {% if number != 1 %}
-        {% for i in 2..number %}
-            <td>c</td>
-        {% endfor %}
+    {% if numericDay != 1 %}
+        {{ completeTr(2, numericDay) }}
     {% endif %}
 
     {# si lundi 1 #}
-{% elseif number == 1 %}
+{% elseif numericDay == 1 %}
     <td>{{ day | date('W') }}</td>
 {% endif %}
 
-<td><span class="text-muted">({{ number }})</span> {{ day | date('d') }}</td>
+<td><span class="text-muted">({{ numericDay }})</span> {{ day | date('j') }}</td>
 
-{# retour a la ligne #}
-{% if number == 0 %}
+{# retour a la ligne si dimanche #}
+{% if numericDay == 0 %}
     </tr>
 <tr>
 
@@ -28,9 +26,7 @@
 
     {# derniere ligne on comble les vide #}
     {% if loop.last %}
-    {% if number != 0 %}
-        {% for i in number..6 %}
-            <td>f</td>
-        {% endfor %}
+    {% if numericDay != 0 %}
+        {{ completeTr(numericDay, 6) }}
     {% endif %}
 {% endif %}
