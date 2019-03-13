@@ -1,3 +1,17 @@
-{% for i in start..end %}
-    <td>c</td>
-{% endfor %}
+{% if action == 'begin' %}
+    {% set end = numericDay - 1 %}
+
+    {% if numericDay == 0 %}
+        {% set end = 6 %}
+    {% endif %}
+
+    {% for i in 1..end %}
+        <td></td>
+    {% endfor %}
+{% endif %}
+
+{% if action == 'end' %}
+    {% for i in numericDay..6 %}
+        <td></td>
+    {% endfor %}
+{% endif %}

@@ -152,9 +152,17 @@ class GrrExtension extends AbstractExtension
         }
     }
 
-    public function completeTr(int $start, int $end)
+    /**
+     * @param int $numericDay
+     * @param string $action begin|end
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
+    public function completeTr(int $numericDay, string $action)
     {
-        return $this->twigEnvironment->render('default/_complete_tr.html.twig', ['start' => $start, 'end' => $end]);
+        return $this->twigEnvironment->render('default/_complete_tr.html.twig', ['numericDay' => $numericDay, 'action'=>$action]);
 
     }
 }

@@ -7,7 +7,7 @@
 
     {# on remplit les cases vides #}
     {% if numericDay != 1 %}
-        {{ completeTr(2, numericDay) }}
+        {{ completeTr(numericDay, 'begin') }}
     {% endif %}
 
     {# si lundi 1 #}
@@ -27,6 +27,6 @@
     {# derniere ligne on comble les vide #}
     {% if loop.last %}
     {% if numericDay != 0 %}
-        {{ completeTr(numericDay, 6) }}
+        {{ completeTr(numericDay, 'end') }}
     {% endif %}
 {% endif %}
