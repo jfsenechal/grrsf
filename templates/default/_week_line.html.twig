@@ -1,23 +1,36 @@
 {% set number = day|date('w') %}
 
+{# premiere ligne #}
 {% if loop.first %}
 
     <td>{{ day | date('W') }}</td>
 
+    {# on remplit les cases vides #}
     {% if number != 1 %}
         {% for i in 2..number %}
             <td>c</td>
         {% endfor %}
     {% endif %}
 
+    {# si lundi 1 #}
 {% elseif number == 1 %}
     <td>{{ day | date('W') }}</td>
-
 {% endif %}
 
-<td><span class="text-muted">({{ number }})</span> {{ day | date('d-m') }}</td>
+<td><span class="text-muted">({{ number }})</span> {{ day | date('d') }}</td>
 
+{# retour a la ligne #}
 {% if number == 0 %}
-</tr>
+    </tr>
 <tr>
+
     {% endif %}
+
+    {# derniere ligne on comble les vide #}
+    {% if loop.last %}
+    {% if number != 0 %}
+        {% for i in number..6 %}
+            <td>f</td>
+        {% endfor %}
+    {% endif %}
+{% endif %}

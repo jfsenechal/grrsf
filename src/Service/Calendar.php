@@ -41,6 +41,10 @@ class Calendar
         return $date->modify('last day of 1 month');
     }
 
+    /**
+     * @return \DatePeriod
+     * @throws \Exception
+     */
     public function getAllDaysOfMonth()
     {
         $interval = new \DateInterval('P1D');

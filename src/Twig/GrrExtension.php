@@ -7,6 +7,7 @@ use App\GrrData\EntryData;
 use App\GrrData\GrrConstants;
 use App\Repository\GrrRoomRepository;
 use App\Repository\GrrTypeAreaRepository;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -32,19 +33,23 @@ class GrrExtension extends AbstractExtension
      * @var GrrConstants
      */
     private $grrConstants;
+    /**
+     * @var Environment
+     */
+    private $twigEnvironment;
 
     public function __construct(
         DateUtils $dateUtils,
         GrrRoomRepository $grrRoomRepository,
         GrrTypeAreaRepository $grrTypeAreaRepository,
-        EntryData $entryData
-
+        EntryData $entryData,
+        Environment $twigEnvironment
     ) {
         $this->dateUtils = $dateUtils;
         $this->grrRoomRepository = $grrRoomRepository;
         $this->entryData = $entryData;
         $this->grrTypeAreaRepository = $grrTypeAreaRepository;
-
+        $this->twigEnvironment = $twigEnvironment;
     }
 
     public function getFilters(): array
@@ -60,7 +65,8 @@ class GrrExtension extends AbstractExtension
             new TwigFilter('joursSemaine', [$this, 'joursSemaine']),
             new TwigFilter('periodName', [$this, 'periodName']),
             new TwigFilter('hourFormat', [$this, 'hourFormat']),
-            new TwigFilter('displayColor', [$this, 'displayColor']),
+            new TwigFilter('displayColor', [$this, 'displayColor'], ['is_safe' => ['html']]),
+            new TwigFilter('completeLine', [$this, 'completeLine']),
         ];
     }
 
@@ -132,10 +138,16 @@ class GrrExtension extends AbstractExtension
         return '<span style="background-color: '.$value.';"></span>';
     }
 
-    public function displayLine(int $value) {
-        if($value !== 1 ){
+    public function displayLine(int $value)
+    {
+        if ($value !== 1) {
 
         }
+    }
+
+    public function completeLine(int $start, int $end)
+    {
+       return $this->twigEnvironment->render('default/_complete_tr.html.twig', ['start' => $start, 'end' => $end]);
     }
 
 

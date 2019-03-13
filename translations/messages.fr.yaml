@@ -124,6 +124,8 @@ login:
       label: Nom d'utilisateur
   password: Mot de passe
   title: S'identifier
+  remember:
+    me: 'messages'
 btn:
   login: S'identifier
 user:
