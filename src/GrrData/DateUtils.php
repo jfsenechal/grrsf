@@ -26,7 +26,7 @@ class DateUtils
     public function getJoursSemaine()
     {
         $data = [];
-        $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        $days = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday');
 
         foreach ($days as $day) {
             $data[] = $this->translator->trans($day);

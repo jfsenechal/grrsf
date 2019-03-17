@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        var $locationSelect = $('#area_menu_select_area');
+        var $specificLocationTarget = $('#area_menu_select_room');
+
+        $locationSelect.on('change', function (e) {
+            console.log("coucou");
+            $.ajax({
+                url: '{{ path('grr_ajax_getrooms') }}',
+                data: {
+                    id: $locationSelect.val()
+                },
+                success: function (html) {
+                    if (!html) {
+                        $specificLocationTarget.find('select').remove();
+                        $specificLocationTarget.addClass('d-none');
+
+                        return;
+                    }
+
+                    // Replace the current field and show
+                    $specificLocationTarget
+                        .html(html)
+                        .removeClass('d-none')
+                }
+            });
+        });
+    });
+
+    $(function () {
+        $('#area_menu_select_room').on('change', function () {
+            var roomId = $(this).val();
+            var url = '{{ path("grr_front_home", {'room': 'roomid'}) }}';
+            url = url.replace("roomid", roomId);
+            if (url) {
+                window.location = url;
+            }
+            return false;
+        });
+    });
+
+
+</script>

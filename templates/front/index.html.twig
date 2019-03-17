@@ -3,34 +3,15 @@
 {% block title %}GrrArea index{% endblock %}
 
 {% block body %}
+    <div class="row">
+        <div class="col-3">
+            {#{ form_row(form.myCheckbox, {label_attr: {class: 'checkbox-custom'} }) }#}
 
-    <table class="table">
-        <tr>
-            <th><a href="{{ path('grr_front_home', {'month': previous|date('n')}) }}">Précédent</a></th>
-            <th>{{ current | date('Y-m') }}</th>
-            <th><a href="{{ path('grr_front_home', {'month': next|date('n')}) }}">Suivant</a></th>
-        </tr>
-    </table>
-
-    <table class="table table-bordered">
-        <tr>
-            <th>{{ 'week'|trans }}</th>
-            <th>{{ 'monday'|trans }}</th>
-            <th>{{ 'tuesday'|trans }}</th>
-            <th>{{ 'wednesday'|trans }}</th>
-            <th>{{ 'thursday'|trans }}</th>
-            <th>{{ 'friday'|trans }}</th>
-            <th>{{ 'saturday'|trans }}</th>
-            <th>{{ 'sunday'|trans }}</th>
-        </tr>
-        <tbody>
-        <tr>
-            {% for day in range %}
-                {% include 'default/_week_line.html.twig' %}
-            {% endfor %}
-        <tr>
-        </tbody>
-    </table>
-
-
+            {{ form(form) }}
+        </div>
+        <div class="col-9">
+            {% include 'front/_calendars.html.twig' %}
+        </div>
+    </div>
+    {% include 'front/_menu_select.js.html.twig' %}
 {% endblock %}

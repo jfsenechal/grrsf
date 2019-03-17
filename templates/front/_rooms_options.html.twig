@@ -1,0 +1,4 @@
+<option value="">{{ 'menu.select.room' | trans }}</option>
+{% for room in rooms %}
+<option value="{{ room.id }}">{{ room.roomName }}</option>
+{% endfor %}

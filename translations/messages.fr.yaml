@@ -166,3 +166,6 @@ typeArea:
       label: Disponible pour
   new:
     title: Nouveau type de réservation
+menu:
+  select:
+    room: Toutes les ressources
