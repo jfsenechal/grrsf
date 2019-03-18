@@ -5,12 +5,14 @@ namespace App\Form;
 use App\Entity\GrrArea;
 use App\Entity\GrrEntry;
 use App\Entity\GrrRoom;
-use App\Form\Type\TimestampFieldType;
 use App\Form\Type\GrrEntryTypeField;
+use App\Form\Type\TimestampFieldType;
 use App\Repository\GrrAreaRepository;
 use App\Repository\GrrRoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -34,11 +36,10 @@ class GrrEntryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', TextType::class)
             ->add('startTime', TimestampFieldType::class)
             ->add('endTime', TimestampFieldType::class)
             ->add('entryType')
-            ->add('repeatId')
             ->add(
                 'area',
                 EntityType::class,
@@ -51,7 +52,7 @@ class GrrEntryType extends AbstractType
                     'mapped' => false,
                 ]
             )
-            ->add(
+         /*   ->add(
                 'roomId',
                 EntityType::class,
                 [
@@ -61,8 +62,17 @@ class GrrEntryType extends AbstractType
                     'query_builder' => $this->grrRoomRepository->getQueryBuilder(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
+            )*/
+            ->add(
+                'roomId',
+                ChoiceType::class,
+                [
+                    'required' => false,
+                    'placeholder' => 'Room',
+                    'choices' => $this->grrRoomRepository->getForForm(),
+                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
+                ]
             )
-            ->add('timestamp')
             ->add('createBy')
             ->add('beneficiaireExt')
             ->add('beneficiaire')
@@ -73,7 +83,6 @@ class GrrEntryType extends AbstractType
             ->add('overloadDesc')
             ->add('moderate')
             ->add('jours');
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

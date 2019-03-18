@@ -21,13 +21,13 @@ class GrrRoomRepository extends ServiceEntityRepository
         parent::__construct($registry, GrrRoom::class);
     }
 
-    public function getQueryBuilder() : QueryBuilder
+    public function getQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('grr_room')
             ->orderBy('grr_room.roomName', 'ASC');
     }
 
-    public function getRoomsByAreaQueryBuilder(GrrArea $area) : QueryBuilder
+    public function getRoomsByAreaQueryBuilder(GrrArea $area): QueryBuilder
     {
         $qb = $this->createQueryBuilder('grr_room')
             ->andWhere('grr_room.areaId = :area')->setParameter('area', $area->getId())
@@ -60,7 +60,7 @@ class GrrRoomRepository extends ServiceEntityRepository
     /**
      * @return GrrRoom[] Returns an array of GrrRoom objects
      */
-    public function findByArea(GrrArea $area) : iterable
+    public function findByArea(GrrArea $area): iterable
     {
         return $this->createQueryBuilder('grr_room')
             ->andWhere('grr_room.areaId = :area')
@@ -68,6 +68,22 @@ class GrrRoomRepository extends ServiceEntityRepository
             ->orderBy('grr_room.roomName', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function getForForm(): iterable
+    {
+        $result = $this->createQueryBuilder('grr_room')
+            ->orderBy('grr_room.roomName', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $rooms = [];
+        foreach ($result as $romm) {
+            $rooms[$romm->getRoomName()] = $romm->getId();
+        }
+
+        return $rooms;
+
     }
 
     /*

@@ -56,3 +56,10 @@ typeArea:
     confirm: Êtes vous sur de supprimer le type de réservation %name%
   new:
     title: Ajouter un type de réservation
+entry:
+  delete:
+    confirm: Ëtes vous sur de supprimer %name%
+  index:
+    title: Liste des réservations
+  new:
+    title: Nouvelle réservation

@@ -79,10 +79,13 @@ class GrrEntryController extends AbstractController
     public function new(Request $request): Response
     {
         $grrEntry = $this->grrEntryFactory->createNew();
+
         $form = $this->createForm(GrrEntryType::class, $grrEntry);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $grrEntry->setTimestamp(new \DateTime());
             $this->grrEntryManager->insert($grrEntry);
 
             return $this->redirectToRoute('grr_entry_index');
@@ -102,7 +105,10 @@ class GrrEntryController extends AbstractController
      */
     public function show(GrrEntry $grrEntry): Response
     {
-        $grr_repeat = $this->grrRepeatRepository->find($grrEntry->getRepeatId());
+        $grr_repeat = '';
+        if ($grrEntry->getRepeatId()) {
+            $grr_repeat = $this->grrRepeatRepository->find($grrEntry->getRepeatId());
+        }
 
         return $this->render(
             'grr_entry/show.html.twig',

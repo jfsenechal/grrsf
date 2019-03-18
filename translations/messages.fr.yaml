@@ -169,3 +169,37 @@ typeArea:
 menu:
   select:
     room: Toutes les ressources
+entry:
+  form:
+    name:
+      label: Nom
+    startTime:
+      label: Date de début
+    endTime:
+      label: Date de fin
+    room:
+      label: Ressource
+    type:
+      label: Type
+    statutEntry:
+      label: Statut
+    entryType:
+      label: Entry type
+    repeatId:
+      label: repeat
+    createBy:
+      label: Créé par
+    beneficiaireExt:
+      label: Bénéficiaire extérieur
+    beneficiaire:
+      label: Bénéficiaire
+    description:
+      label: Description
+    optionReservation:
+      label: Option réservation
+    overloadDesc:
+      label: Overload description
+    moderate:
+      label: Modération
+    jours:
+      label: Jours

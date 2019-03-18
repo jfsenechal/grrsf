@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\AreaMenuSelectType;
 use App\Repository\GrrAreaRepository;
+use App\Repository\GrrEntryRepository;
 use App\Repository\GrrRoomRepository;
 use App\Service\Calendar;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,15 +26,21 @@ class FrontController extends AbstractController
      * @var GrrRoomRepository
      */
     private $grrRoomRepository;
+    /**
+     * @var GrrEntryRepository
+     */
+    private $grrEntryRepository;
 
     public function __construct(
         Calendar $calendar,
         GrrAreaRepository $grrAreaRepository,
-        GrrRoomRepository $grrRoomRepository
+        GrrRoomRepository $grrRoomRepository,
+        GrrEntryRepository $grrEntryRepository
     ) {
         $this->calendar = $calendar;
         $this->grrAreaRepository = $grrAreaRepository;
         $this->grrRoomRepository = $grrRoomRepository;
+        $this->grrEntryRepository = $grrEntryRepository;
     }
 
     /**
@@ -52,6 +59,7 @@ class FrontController extends AbstractController
 
         $esquare = $this->grrAreaRepository->find(1);
         $areas = $this->grrAreaRepository->findAll();
+        $entries = $this->grrEntryRepository->findAll();
         //$rooms = $this->grrRoomRepository->findByArea($area);
 
         $data = [];
@@ -78,6 +86,7 @@ class FrontController extends AbstractController
                 'previous' => $previous,
                 'range' => $days,
                 'areas' => $areas,
+                'entries'=>$entries,
                 'form' => $form->createView(),
             ]
         );

@@ -29,54 +29,54 @@ class GrrEntry
      *
      * @ORM\Column(name="start_time", type="integer", nullable=false)
      */
-    private $startTime = '0';
+    private $startTime;
 
     /**
      * @var int
      *
      * @ORM\Column(name="end_time", type="integer", nullable=false)
      */
-    private $endTime = '0';
+    private $endTime;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="entry_type", type="integer", nullable=false)
+     * @ORM\Column(name="entry_type", type="integer", nullable=true)
      */
-    private $entryType = '0';
+    private $entryType;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="repeat_id", type="integer", nullable=false)
+     * @ORM\Column(name="repeat_id", type="integer", nullable=true)
      */
-    private $repeatId = '0';
+    private $repeatId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="room_id", type="integer", nullable=false, options={"default"="1"})
+     * @ORM\Column(name="room_id", type="integer", nullable=false)
      */
-    private $roomId = '1';
+    private $roomId;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="timestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $timestamp = 'CURRENT_TIMESTAMP';
+    private $timestamp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="create_by", type="string", length=100, nullable=false)
      */
-    private $createBy = '';
+    private $createBy;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="beneficiaire_ext", type="string", length=200, nullable=false)
+     * @ORM\Column(name="beneficiaire_ext", type="string", length=200, nullable=true)
      */
     private $beneficiaireExt;
 
@@ -85,19 +85,19 @@ class GrrEntry
      *
      * @ORM\Column(name="beneficiaire", type="string", length=100, nullable=false)
      */
-    private $beneficiaire = '';
+    private $beneficiaire;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=80, nullable=false)
      */
-    private $name = '';
+    private $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="type", type="string", length=2, nullable=true, options={"fixed"=true})
+     * @ORM\Column(name="type", type="string", length=2, nullable=true)
      */
     private $type;
 
@@ -111,16 +111,16 @@ class GrrEntry
     /**
      * @var string
      *
-     * @ORM\Column(name="statut_entry", type="string", length=1, nullable=false, options={"default"="-","fixed"=true})
+     * @ORM\Column(name="statut_entry", type="string", length=1, nullable=true)
      */
-    private $statutEntry = '-';
+    private $statutEntry;
 
     /**
      * @var int
      *
      * @ORM\Column(name="option_reservation", type="integer", nullable=false)
      */
-    private $optionReservation = '0';
+    private $optionReservation;
 
     /**
      * @var string|null
@@ -134,14 +134,14 @@ class GrrEntry
      *
      * @ORM\Column(name="moderate", type="boolean", nullable=true)
      */
-    private $moderate = '0';
+    private $moderate;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="jours", type="boolean", nullable=false)
      */
-    private $jours = '0';
+    private $jours;
 
     public function getId(): ?int
     {

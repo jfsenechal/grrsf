@@ -1,60 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GrrEntry index{% endblock %}
+{% block title %}{{ 'entry.index.title'|trans({}, 'actions') }}{% endblock %}
 
 {% block body %}
-    <h1>GrrEntry index</h1>
+    <h1>{{ 'entry.index.title'|trans({}, 'actions') }}</h1>
 
     {% include 'search/entry.html.twig' %}
 
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>StartTime</th>
-            <th>EndTime</th>
-            <th>EntryType</th>
-            <th>RepeatId</th>
-            <th>RoomId</th>
-            <th>Timestamp</th>
-            <th>CreateBy</th>
-            <th>Beneficiaire</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>StatutEntry</th>
-            <th>Moderate</th>
-            <th>Jours</th>
+            <th>{{ 'entry.form.name.label'|trans }}</th>
+            <th>{{ 'entry.form.startTime.label'|trans }}</th>
+            <th>{{ 'entry.form.endTime.label'|trans }}</th>
+            <th>{{ 'entry.form.room.label'|trans }}</th>
         </tr>
         </thead>
         <tbody>
         {% for grr_entry in entries %}
             <tr>
-                <td>{{ grr_entry.id }}</td>
                 <td>
-                    <a href="{{ path('grr_entry_show', {'id': grr_entry.id}) }}">{{ grr_entry.startTime|date('Y-m-d H:i:s') }}</a>
+                    <a href="{{ path('grr_entry_show', {'id': grr_entry.id}) }}">
+                        {{ grr_entry.name }}</a>
                 </td>
+                <td>{{ grr_entry.startTime|date('Y-m-d H:i:s') }}</td>
                 <td>{{ grr_entry.endTime|date('Y-m-d H:i:s') }}</td>
-                <td>{{ grr_entry.entryType }}</td>
-                <td>
-                    <a href="{{ path('grr_repeat_show', {'id': grr_entry.repeatId}) }}">{{ grr_entry.repeatId }}</a>
-                </td>
                 <td>{{ grr_entry.roomId | room_getName }}</td>
-                <td>{{ grr_entry.timestamp ? grr_entry.timestamp|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ grr_entry.createBy }}</td>
-                <td>{{ grr_entry.beneficiaire }}</td>
-                <td>{{ grr_entry.name }}</td>
-                <td>{{ grr_entry.type|entryTypeGetName }}</td>
-                <td>{{ grr_entry.statutEntry }}</td>
-                <td>{{ grr_entry.moderate }}</td>
-                <td>{{ grr_entry.jours }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="19">no records found</td>
+                <td colspan="4">{{ 'records.notfound'| trans({}, 'actions') }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('grr_entry_new') }}">Create new</a>
 {% endblock %}

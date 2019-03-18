@@ -46,6 +46,11 @@ class GrrAreaRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
+    public function ge(GrrArea $area) {
+        return $this->createQueryBuilder('area')
+            ->andWhere('are');
+    }
+
 
 
     // /**

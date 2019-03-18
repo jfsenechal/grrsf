@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\GrrArea;
 use App\Entity\GrrEntry;
 use App\Entity\GrrRoom;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -48,6 +49,7 @@ class GrrEntryRepository extends ServiceEntityRepository
     public function search(array $args = [])
     {
         $name = $args['name'] ?? null;
+        $area = $args['area'] ?? null;
         $room = $args['room'] ?? null;
         $entryType = $args['entry_type'] ?? null;
         $type = $args['type'] ?? null;
@@ -57,6 +59,11 @@ class GrrEntryRepository extends ServiceEntityRepository
         if ($name) {
             $qb->andWhere('grr_entry.name LIKE :name')
                 ->setParameter('name', '%'.$name.'%');
+        }
+        if ($area instanceof GrrArea) {
+            $rooms = $this->getRooms($area);
+            $qb->andWhere('grr_entry.roomId IN (:rooms)')
+                ->setParameter('room', $rooms);
         }
         if ($room instanceof GrrRoom) {
             $qb->andWhere('grr_entry.roomId = :room')
@@ -84,6 +91,17 @@ class GrrEntryRepository extends ServiceEntityRepository
             ->andWhere('grr_entry.booking IS NOT NULL')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param GrrArea $area
+     * @return GrrRoom[]|iterable
+     */
+    private function getRooms(GrrArea $area)
+    {
+        $areaRepository = $this->getEntityManager()->getRepository(GrrRoom::class);
+
+        return $areaRepository->findByArea($area);
     }
 
 }

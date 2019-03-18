@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New GrrEntry{% endblock %}
+{% block title %}{{ 'entry.new.title'|trans({},'actions') }}{% endblock %}
 
 {% block body %}
-    <h1>Create new GrrEntry</h1>
+    <h1>{{ 'entry.new.title'|trans({},'actions') }}</h1>
 
     {{ include('grr_entry/_form.html.twig') }}
 
-    <a href="{{ path('grr_entry_index') }}">back to list</a>
+    <br/>
+    <a href="{{ path('grr_entry_index') }}"><i
+                class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
 {% endblock %}

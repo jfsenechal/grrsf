@@ -1,35 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GrrEntry{% endblock %}
+{% block title %}{{ grr_entry.name }}{% endblock %}
 
 {% block body %}
-    <h1>GrrEntry</h1>
+    <h1>{{ grr_entry.name }}</h1>
 
-    <a href="{{ path('grr_entry_edit', {'id': grr_entry.id}) }}">edit</a>
+    {% include 'grr_entry/_actions.html.twig' %}
 
     <div class="row">
         <div class="col-6">
 
-            <table class="table">
+            <table class="table table-bordered">
                 <tbody>
                 <tr>
-                    <th>Id</th>
-                    <td>{{ grr_entry.id }}</td>
-                </tr>
-                <tr>
-                    <th>Name</th>
-                    <td>{{ grr_entry.name }}</td>
-                </tr>
-                <tr>
-                    <th>StartTime</th>
+                    <th>{{ 'entry.form.startTime.label'|trans }}</th>
                     <td>{{ grr_entry.startTime|date('Y-m-d H:i:s') }}</td>
                 </tr>
                 <tr>
-                    <th>EndTime</th>
+                    <th>{{ 'entry.form.endTime.label'|trans }}</th>
                     <td>{{ grr_entry.endTime |date('Y-m-d H:i:s') }}</td>
                 </tr>
                 <tr>
-                    <th>RoomId</th>
+                    <th>{{ 'entry.form.room.label'|trans }}</th>
                     <td>{{ grr_entry.roomId | room_getName }}</td>
                 </tr>
                 <tr>
@@ -37,16 +29,12 @@
                     <td>{{ grr_entry.timestamp ? grr_entry.timestamp|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Type</th>
+                    <th>{{ 'entry.form.type.label'|trans }}</th>
                     <td>{{ grr_entry.type }}</td>
                 </tr>
                 <tr>
-                    <th>StatutEntry</th>
+                    <th>{{ 'entry.form.statutEntry.label'|trans }}</th>
                     <td>{{ grr_entry.statutEntry }}</td>
-                </tr>
-                <tr>
-                    <th>BookingId</th>
-                    <td>{{ grr_entry.booking }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -54,50 +42,46 @@
         </div>
         <div class="col-6">
 
-            <table class="table">
+            <table class="table table-bordered">
                 <tbody>
                 <tr>
-                    <th>EntryType</th>
+                    <th>{{ 'entry.form.entryType.label'|trans }}</th>
                     <td>{{ grr_entry.entryType }}</td>
                 </tr>
                 <tr>
-                    <th>RepeatId</th>
+                    <th>{{ 'entry.form.repeatId.label'|trans }}</th>
                     <td>{{ grr_entry.repeatId }}</td>
                 </tr>
                 <tr>
-                    <th>CreateBy</th>
+                    <th>{{ 'entry.form.createBy.label'|trans }}</th>
                     <td>{{ grr_entry.createBy }}</td>
                 </tr>
                 <tr>
-                    <th>BeneficiaireExt</th>
+                    <th>{{ 'entry.form.beneficiaireExt.label'|trans }}</th>
                     <td>{{ grr_entry.beneficiaireExt }}</td>
                 </tr>
                 <tr>
-                    <th>Beneficiaire</th>
+                    <th>{{ 'entry.form.beneficiaire.label'|trans }}</th>
                     <td>{{ grr_entry.beneficiaire }}</td>
                 </tr>
                 <tr>
-                    <th>Name</th>
-                    <td>{{ grr_entry.name }}</td>
-                </tr>
-                <tr>
-                    <th>Description</th>
+                    <th>{{ 'entry.form.description.label'|trans }}</th>
                     <td>{{ grr_entry.description }}</td>
                 </tr>
                 <tr>
-                    <th>OptionReservation</th>
+                    <th>{{ 'entry.form.optionReservation.label'|trans }}</th>
                     <td>{{ grr_entry.optionReservation }}</td>
                 </tr>
                 <tr>
-                    <th>OverloadDesc</th>
+                    <th>{{ 'entry.form.overloadDesc.label'|trans }}</th>
                     <td>{{ grr_entry.overloadDesc }}</td>
                 </tr>
                 <tr>
-                    <th>Moderate</th>
+                    <th>{{ 'entry.form.moderate.label'|trans }}</th>
                     <td>{{ grr_entry.moderate }}</td>
                 </tr>
                 <tr>
-                    <th>Jours</th>
+                    <th>{{ 'entry.form.jours.label'|trans }}</th>
                     <td>{{ grr_entry.jours }}</td>
                 </tr>
                 </tbody>
@@ -110,10 +94,6 @@
         <h3>Repeat</h3>
         {% include 'grr_repeat/_detail.html.twig' %}
     {% endif %}
-
-    <a href="{{ path('grr_entry_index') }}">back to list</a>
-
-    <a href="{{ path('grr_entry_edit', {'id': grr_entry.id}) }}">edit</a>
 
     {{ include('grr_entry/_delete_form.html.twig') }}
 {% endblock %}

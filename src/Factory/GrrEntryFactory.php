@@ -23,6 +23,16 @@ class GrrEntryFactory
 
     public function createNew(): GrrEntry
     {
+        return new GrrEntry();
+
         return $this->factory->createNew();
+    }
+
+    public function setDefaultValues(GrrEntry $grrEntry)
+    {
+        $grrEntry
+            ->setTimestamp(new \DateTime())
+            ->setModerate(false)
+            ->setJours(false);
     }
 }
