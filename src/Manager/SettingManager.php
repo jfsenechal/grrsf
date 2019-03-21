@@ -22,27 +22,27 @@ class SettingManager
 
     public function __construct(SettingRepository $SettingRepository)
     {
-        $this->grrSettingRepository = $SettingRepository;
+        $this->SettingRepository = $SettingRepository;
     }
 
     public function persist(Area $area)
     {
-        $this->grrSettingRepository->persist($area);
+        $this->SettingRepository->persist($area);
     }
 
     public function remove(Area $area)
     {
-        $this->grrSettingRepository->remove($area);
+        $this->SettingRepository->remove($area);
     }
 
     public function flush()
     {
-        $this->grrSettingRepository->flush();
+        $this->SettingRepository->flush();
     }
 
     public function insert(Area $area)
     {
-        $this->grrSettingRepository->insert($area);
+        $this->SettingRepository->insert($area);
     }
 
 }

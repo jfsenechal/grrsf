@@ -47,9 +47,9 @@ class GrrExtension extends AbstractExtension
         Environment $twigEnvironment
     ) {
         $this->dateUtils = $dateUtils;
-        $this->grrRoomRepository = $roomRepository;
+        $this->roomRepository = $roomRepository;
         $this->entryData = $entryData;
-        $this->grrTypeAreaRepository = $TypeAreaRepository;
+        $this->TypeAreaRepository = $TypeAreaRepository;
         $this->twigEnvironment = $twigEnvironment;
     }
 
@@ -79,7 +79,7 @@ class GrrExtension extends AbstractExtension
 
     public function roomGetName($value)
     {
-        $room = $this->grrRoomRepository->find($value);
+        $room = $this->roomRepository->find($value);
         if ($room) {
             return $room->getRoomName().' ('.$value.')';
         }
@@ -99,7 +99,7 @@ class GrrExtension extends AbstractExtension
      */
     public function entryTypeGetName($value)
     {
-        $room = $this->grrTypeAreaRepository->findOneBy(['typeLetter' => $value]);
+        $room = $this->TypeAreaRepository->findOneBy(['typeLetter' => $value]);
         if ($room) {
             return $room->getTypeName().' ('.$value.')';
         }

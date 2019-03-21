@@ -20,27 +20,27 @@ class RepeatManager
 
     public function __construct(RepeatRepository $entryRepository)
     {
-        $this->grrEntryRepository = $entryRepository;
+        $this->entryRepository = $entryRepository;
     }
 
     public function persist(Repeat $entry)
     {
-        $this->grrEntryRepository->persist($entry);
+        $this->entryRepository->persist($entry);
     }
 
     public function remove(Repeat $entry)
     {
-        $this->grrEntryRepository->remove($entry);
+        $this->entryRepository->remove($entry);
     }
 
     public function flush()
     {
-        $this->grrEntryRepository->flush();
+        $this->entryRepository->flush();
     }
 
     public function insert(Repeat $entry)
     {
-        $this->grrEntryRepository->insert($entry);
+        $this->entryRepository->insert($entry);
     }
 
 }

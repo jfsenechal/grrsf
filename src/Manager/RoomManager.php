@@ -20,27 +20,27 @@ class RoomManager
 
     public function __construct(RoomRepository $roomRepository)
     {
-        $this->grrRoomRepository = $roomRepository;
+        $this->roomRepository = $roomRepository;
     }
 
     public function persist(Room $room)
     {
-        $this->grrRoomRepository->persist($room);
+        $this->roomRepository->persist($room);
     }
 
     public function remove(Room $room)
     {
-        $this->grrRoomRepository->remove($room);
+        $this->roomRepository->remove($room);
     }
 
     public function flush()
     {
-        $this->grrRoomRepository->flush();
+        $this->roomRepository->flush();
     }
 
     public function insert(Room $room)
     {
-        $this->grrRoomRepository->insert($room);
+        $this->roomRepository->insert($room);
     }
 
 }

@@ -26,7 +26,7 @@ class UpgradeCommand extends Command
         AreaRepository $areaRepository
     ) {
         parent::__construct($name);
-        $this->grrAreaRepository = $areaRepository;
+        $this->areaRepository = $areaRepository;
     }
 
     protected function configure()
@@ -46,7 +46,7 @@ class UpgradeCommand extends Command
      */
     protected function areaUpgrade()
     {
-        $areas = $this->grrAreaRepository->findAll();
+        $areas = $this->areaRepository->findAll();
 
         foreach ($areas as $area) {
             $displayDays = $area->getDisplayDays();
@@ -57,7 +57,7 @@ class UpgradeCommand extends Command
             }
 
         }
-    //    $this->grrEntryManager->flush();
+    //    $this->entryManager->flush();
     }
 
 }

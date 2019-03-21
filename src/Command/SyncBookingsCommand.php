@@ -42,9 +42,9 @@ class SyncBookingsCommand extends Command
     ) {
         parent::__construct($name);
         $this->bookingService = $bookingService;
-        $this->grrEntryFactory = $entryFactory;
-        $this->grrEntryRepository = $entryRepository;
-        $this->grrEntryManager = $entryManager;
+        $this->entryFactory = $entryFactory;
+        $this->entryRepository = $entryRepository;
+        $this->entryManager = $entryManager;
     }
 
     protected function configure()
@@ -78,15 +78,15 @@ class SyncBookingsCommand extends Command
 
     protected function purge(Output $output)
     {
-        $entries = $this->grrEntryRepository->getBookings();
+        $entries = $this->entryRepository->getBookings();
 
         foreach ($entries as $entry) {
             if (!in_array($entry->getBooking(), $this->bookingService->bookingsFromFlux)) {
-                $this->grrEntryManager->remove($entry);
+                $this->entryManager->remove($entry);
                 echo $output->writeln("remove : ".$entry->getBooking());
             }
         }
-        $this->grrEntryManager->flush();
+        $this->entryManager->flush();
     }
 
 }

@@ -91,9 +91,9 @@ class BookingService
         EntryManager $entryManager
     ) {
         $this->parameterBag = $parameterBag;
-        $this->grrEntryRepository = $entryRepository;
-        $this->grrEntryFactory = $entryFactory;
-        $this->grrEntryManager = $entryManager;
+        $this->entryRepository = $entryRepository;
+        $this->entryFactory = $entryFactory;
+        $this->entryManager = $entryManager;
         $this->bookingsFromFlux = [];
     }
 
@@ -137,7 +137,7 @@ class BookingService
 
                 $entry->setStartTime($dateTimeDebut->getTimestamp());
                 $entry->setEndTime($dateTimeFin->getTimestamp());
-                $this->grrEntryManager->insert($entry);
+                $this->entryManager->insert($entry);
             }
         }
     }
@@ -161,7 +161,7 @@ class BookingService
         $entry->setStartTime($dateTimeDebut->getTimestamp());
         $entry->setEndTime($dateTimeFin->getTimestamp());
 
-        $this->grrEntryManager->insert($entry);
+        $this->entryManager->insert($entry);
     }
 
     private function setHeureDebut(\DateTime $dateTime)
@@ -210,10 +210,10 @@ class BookingService
     {
         $key = $this->getKeyBooking($booking, $date);
         $this->bookingsFromFlux[] = $key;
-        $entry = $this->grrEntryRepository->findOneBy(['booking' => $key]);
+        $entry = $this->entryRepository->findOneBy(['booking' => $key]);
         if (!$entry) {
             echo $this->output->writeln("nouveau : $date => $key");
-            $entry = $this->grrEntryFactory->createNew();
+            $entry = $this->entryFactory->createNew();
             $entry->setBooking($key);
         }
 

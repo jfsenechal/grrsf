@@ -21,7 +21,7 @@ class CreateuserCommand extends Command
     public function __construct(?string $name = null, UserManager $UtilisateurManager)
     {
         parent::__construct($name);
-        $this->grrUtilisateurManager = $UtilisateurManager;
+        $this->UtilisateurManager = $UtilisateurManager;
     }
 
     protected function configure()
@@ -37,7 +37,7 @@ class CreateuserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->grrUtilisateurManager->insert();
+        $this->UtilisateurManager->insert();
 
         $arg1 = $input->getArgument('arg1');
 

@@ -20,27 +20,27 @@ class AreaManager
 
     public function __construct(AreaRepository $areaRepository)
     {
-        $this->grrAreaRepository = $areaRepository;
+        $this->areaRepository = $areaRepository;
     }
 
     public function persist(Area $area)
     {
-        $this->grrAreaRepository->persist($area);
+        $this->areaRepository->persist($area);
     }
 
     public function remove(Area $area)
     {
-        $this->grrAreaRepository->remove($area);
+        $this->areaRepository->remove($area);
     }
 
     public function flush()
     {
-        $this->grrAreaRepository->flush();
+        $this->areaRepository->flush();
     }
 
     public function insert(Area $area)
     {
-        $this->grrAreaRepository->insert($area);
+        $this->areaRepository->insert($area);
     }
 
 }

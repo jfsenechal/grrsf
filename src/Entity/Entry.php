@@ -25,16 +25,16 @@ class Entry
     private $id;
 
     /**
-     * @var int
+     * @var \DateTime
      *
-     * @ORM\Column(name="start_time", type="integer", nullable=false)
+     * @ORM\Column(name="start_time", type="datetime", nullable=false)
      */
     private $startTime;
 
     /**
-     * @var int
+     * @var \DateTime
      *
-     * @ORM\Column(name="end_time", type="integer", nullable=false)
+     * @ORM\Column(name="end_time", type="datetime", nullable=false)
      */
     private $endTime;
 
@@ -62,7 +62,7 @@ class Entry
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
     private $timestamp;
 
@@ -148,24 +148,24 @@ class Entry
         return $this->id;
     }
 
-    public function getStartTime(): ?int
+    public function getStartTime(): ?\DateTimeInterface
     {
         return $this->startTime;
     }
 
-    public function setStartTime(int $startTime): self
+    public function setStartTime(\DateTimeInterface $startTime): self
     {
         $this->startTime = $startTime;
 
         return $this;
     }
 
-    public function getEndTime(): ?int
+    public function getEndTime(): ?\DateTimeInterface
     {
         return $this->endTime;
     }
 
-    public function setEndTime(int $endTime): self
+    public function setEndTime(\DateTimeInterface $endTime): self
     {
         $this->endTime = $endTime;
 
@@ -177,7 +177,7 @@ class Entry
         return $this->entryType;
     }
 
-    public function setEntryType(int $entryType): self
+    public function setEntryType(?int $entryType): self
     {
         $this->entryType = $entryType;
 
@@ -189,7 +189,7 @@ class Entry
         return $this->repeatId;
     }
 
-    public function setRepeatId(int $repeatId): self
+    public function setRepeatId(?int $repeatId): self
     {
         $this->repeatId = $repeatId;
 
@@ -237,7 +237,7 @@ class Entry
         return $this->beneficiaireExt;
     }
 
-    public function setBeneficiaireExt(string $beneficiaireExt): self
+    public function setBeneficiaireExt(?string $beneficiaireExt): self
     {
         $this->beneficiaireExt = $beneficiaireExt;
 
@@ -297,7 +297,7 @@ class Entry
         return $this->statutEntry;
     }
 
-    public function setStatutEntry(string $statutEntry): self
+    public function setStatutEntry(?string $statutEntry): self
     {
         $this->statutEntry = $statutEntry;
 
@@ -351,4 +351,6 @@ class Entry
 
         return $this;
     }
+
+
 }

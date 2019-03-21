@@ -24,8 +24,8 @@ class AreaMenuSelectType extends AbstractType
 
     public function __construct(AreaRepository $areaRepository, RoomRepository $roomRepository)
     {
-        $this->grrAreaRepository = $areaRepository;
-        $this->grrRoomRepository = $roomRepository;
+        $this->areaRepository = $areaRepository;
+        $this->roomRepository = $roomRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -38,7 +38,7 @@ class AreaMenuSelectType extends AbstractType
                 EntityType::class,
                 [
                     'class' => Area::class,
-                    'query_builder' => $this->grrAreaRepository->getQueryBuilder(),
+                    'query_builder' => $this->areaRepository->getQueryBuilder(),
                     'required' => true,
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
@@ -50,7 +50,7 @@ class AreaMenuSelectType extends AbstractType
                     'class' => Room::class,
                     'required' => false,
                     'placeholder' => 'menu.select.room',
-                    'query_builder' => $this->grrRoomRepository->getRoomsByAreaQueryBuilder($area),
+                    'query_builder' => $this->roomRepository->getRoomsByAreaQueryBuilder($area),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             );

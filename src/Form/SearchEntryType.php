@@ -25,7 +25,7 @@ class SearchEntryType extends AbstractType
 
     public function __construct(RoomRepository $roomRepository, EntryData $entryData)
     {
-        $this->grrRoomRepository = $roomRepository;
+        $this->roomRepository = $roomRepository;
         $this->entryData = $entryData;
     }
 
@@ -57,7 +57,7 @@ class SearchEntryType extends AbstractType
                     'required' => false,
                     'placeholder' => 'Room',
                     'class' => Room::class,
-                    'query_builder' => $this->grrRoomRepository->getQueryBuilder(),
+                    'query_builder' => $this->roomRepository->getQueryBuilder(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )

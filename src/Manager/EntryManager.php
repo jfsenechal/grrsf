@@ -21,27 +21,27 @@ class EntryManager
 
     public function __construct(EntryRepository $entryRepository)
     {
-        $this->grrEntryRepository = $entryRepository;
+        $this->entryRepository = $entryRepository;
     }
 
     public function persist(Entry $entry)
     {
-        $this->grrEntryRepository->persist($entry);
+        $this->entryRepository->persist($entry);
     }
 
     public function remove(Entry $entry)
     {
-        $this->grrEntryRepository->remove($entry);
+        $this->entryRepository->remove($entry);
     }
 
     public function flush()
     {
-        $this->grrEntryRepository->flush();
+        $this->entryRepository->flush();
     }
 
     public function insert(Entry $entry)
     {
-        $this->grrEntryRepository->insert($entry);
+        $this->entryRepository->insert($entry);
     }
 
 }

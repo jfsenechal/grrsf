@@ -4,14 +4,13 @@ namespace App\Form;
 
 use App\Entity\Area;
 use App\Entity\Entry;
-use App\Entity\Room;
 use App\Form\Type\EntryTypeField;
-use App\Form\Type\TimestampFieldType;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,16 +28,16 @@ class EntryType extends AbstractType
 
     public function __construct(RoomRepository $roomRepository, AreaRepository $areaRepository)
     {
-        $this->grrRoomRepository = $roomRepository;
-        $this->grrAreaRepository = $areaRepository;
+        $this->roomRepository = $roomRepository;
+        $this->areaRepository = $areaRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', TextType::class)
-            ->add('startTime', TimestampFieldType::class)
-            ->add('endTime', TimestampFieldType::class)
+            ->add('startTime', DateTimeType::class)
+            ->add('endTime', DateTimeType::class)
             ->add('entryType')
             ->add(
                 'area',
@@ -47,29 +46,29 @@ class EntryType extends AbstractType
                     'required' => false,
                     'placeholder' => 'Area',
                     'class' => Area::class,
-                    'query_builder' => $this->grrAreaRepository->getQueryBuilder(),
+                    'query_builder' => $this->areaRepository->getQueryBuilder(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                     'mapped' => false,
                 ]
             )
-         /*   ->add(
-                'roomId',
-                EntityType::class,
-                [
-                    'required' => false,
-                    'placeholder' => 'Room',
-                    'class' => Room::class,
-                    'query_builder' => $this->grrRoomRepository->getQueryBuilder(),
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
-                ]
-            )*/
+            /*   ->add(
+                   'roomId',
+                   EntityType::class,
+                   [
+                       'required' => false,
+                       'placeholder' => 'Room',
+                       'class' => Room::class,
+                       'query_builder' => $this->roomRepository->getQueryBuilder(),
+                       'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
+                   ]
+               )*/
             ->add(
                 'roomId',
                 ChoiceType::class,
                 [
                     'required' => false,
                     'placeholder' => 'Room',
-                    'choices' => $this->grrRoomRepository->getForForm(),
+                    'choices' => $this->roomRepository->getForForm(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )

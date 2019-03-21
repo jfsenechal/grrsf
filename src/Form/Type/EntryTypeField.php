@@ -23,7 +23,7 @@ class EntryTypeField extends AbstractType
 
     public function __construct(TypeAreaRepository $TypeAreaRepository)
     {
-        $this->grrTypeAreaRepository = $TypeAreaRepository;
+        $this->TypeAreaRepository = $TypeAreaRepository;
     }
 
     public function configureOptions(OptionsResolver $resolver)

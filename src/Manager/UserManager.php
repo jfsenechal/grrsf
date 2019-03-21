@@ -28,28 +28,28 @@ class UserManager
         UserRepository $UtilisateurRepository,
         UserPasswordEncoderInterface $userPasswordEncoder
     ) {
-        $this->grrUtilisateurRepository = $UtilisateurRepository;
+        $this->UtilisateurRepository = $UtilisateurRepository;
         $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
     public function persist(UserInterface $user)
     {
-        $this->grrUtilisateurRepository->persist($user);
+        $this->UtilisateurRepository->persist($user);
     }
 
     public function remove(UserInterface $user)
     {
-        $this->grrUtilisateurRepository->remove($user);
+        $this->UtilisateurRepository->remove($user);
     }
 
     public function flush()
     {
-        $this->grrUtilisateurRepository->flush();
+        $this->UtilisateurRepository->flush();
     }
 
     public function insert(UserInterface $user)
     {
-        $this->grrUtilisateurRepository->insert($user);
+        $this->UtilisateurRepository->insert($user);
     }
 
     public function encodePassword(User $user, string $clearPassword)

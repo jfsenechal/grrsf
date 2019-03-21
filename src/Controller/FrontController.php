@@ -79,7 +79,7 @@ class FrontController extends AbstractController
 
         $areas = $this->areaRepository->findAll();
         $entries = $this->entryRepository->findAll();
-        //$rooms = $this->RoomRepository->findByArea($area);
+        //$rooms = $this->roomRepository->findByArea($area);
         dump($entries);
 
         // $form = $this->createForm(AreaMenuSelectType::class, ['area' => $esquare]);
