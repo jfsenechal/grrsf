@@ -1,2 +1,4 @@
 <span class="text-muted">({{ numericDay }})</span> {{ dateTime | date('j') }}
-{{ dump(day.entries) }}
+{% for entry in day.entries %}
+    <p>{{ entry.name }}</p>
+{% endfor %}

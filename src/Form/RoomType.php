@@ -20,7 +20,7 @@ class RoomType extends AbstractType
     {
         $builder
             ->add(
-                'roomName',
+                'name',
                 TextType::class,
                 [
                     'label' => 'room.form.nom.label',

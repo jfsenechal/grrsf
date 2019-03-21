@@ -20,21 +20,21 @@ class Calendar
         $this->originalDate = $dateTime;
     }
 
-    public function getFirstDay()
+    public function getFirstDay(): \DateTimeInterface
     {
         $date = clone $this->originalDate;
 
         return $date->modify('first day of this month');
     }
 
-    public function getLastDay()
+    public function getLastDay(): \DateTimeInterface
     {
         $date = clone $this->originalDate;
 
         return $date->modify('last day of this month');
     }
 
-    public function getNextMonth()
+    public function getNextMonth(): \DateTimeInterface
     {
         $date = clone $this->originalDate;
 
@@ -45,7 +45,7 @@ class Calendar
      * @return \DatePeriod
      * @throws \Exception
      */
-    public function getAllDaysOfMonth()
+    public function getAllDaysOfMonth(): \DatePeriod
     {
         $interval = new \DateInterval('P1D');
         $end = $this->getLastDay();
@@ -54,7 +54,7 @@ class Calendar
         return new \DatePeriod($this->getFirstDay(), $interval, $end);
     }
 
-    public function getPreviousMonth()
+    public function getPreviousMonth(): \DateTimeInterface
     {
         $date = clone $this->originalDate;
 

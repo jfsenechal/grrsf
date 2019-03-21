@@ -9,6 +9,8 @@
 namespace App\Model;
 
 
+use App\Entity\Entry;
+
 class Day
 {
     /**
@@ -17,7 +19,7 @@ class Day
     protected $date;
 
     /**
-     * @var array $entries
+     * @var Entry[] $entries
      */
     protected $entries;
 
@@ -47,7 +49,7 @@ class Day
     }
 
     /**
-     * @return array
+     * @return Entry[]
      */
     public function getEntries(): array
     {
@@ -55,7 +57,7 @@ class Day
     }
 
     /**
-     * @param array $entries
+     * @param Entry[] $entries
      * @return Day
      */
     public function setEntries(array $entries): self

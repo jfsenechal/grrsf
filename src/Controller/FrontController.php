@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Form\AreaMenuSelectType;
 use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
 use App\Service\Calendar;
+use App\Service\CalendarDataManager;
 use App\Service\CalendarDisplay;
 use App\Service\Garbadge;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,22 +71,20 @@ class FrontController extends AbstractController
         $esquare = $this->areaRepository->find(1);
 
         $this->calendar->createCalendarFromDate($startDate);
-        $allDays = $this->calendar->getAllDaysOfMonth();
-
-        foreach ($allDays as $day) {
-            //    dump($day);
-            $entries = $this->entryRepository->search2($day, $esquare);
-            // $this->garbadge->addEntries($day, $entries);
-        }
 
         $areas = $this->areaRepository->findAll();
         $entries = $this->entryRepository->findAll();
         //$rooms = $this->roomRepository->findByArea($area);
-        dump($entries);
+        dump($esquare);
 
-        // $form = $this->createForm(AreaMenuSelectType::class, ['area' => $esquare]);
+        $form = $this->createForm(AreaMenuSelectType::class, $esquare, ['area' => $esquare]);
+        $calendarDataManager = new CalendarDataManager();
+        $calendarDataManager->setEntries($entries);
 
-        $oneMonth = $this->calendarDisplay->oneMonth($startDate, $entries);
+        $dataMonth = $this->calendarDisplay->oneMonth($startDate, $calendarDataManager);
+        $navigationMonth = $this->calendarDisplay->oneMonthNavigation($startDate);
+        $nexMonth = $this->calendar->getNextMonth();
+        $navigationNextMonth = $this->calendarDisplay->oneMonthNavigation($nexMonth);
 
         return $this->render(
             'front/index.html.twig',
@@ -93,9 +93,10 @@ class FrontController extends AbstractController
                 'current' => $startDate,
                 'areas' => $areas,
                 'entries' => $entries,
-                'html' => $oneMonth,
-                'form' => '',
-
+                'data' => $dataMonth,
+                'navigation' => $navigationMonth,
+                'navigation2' => $navigationNextMonth,
+                'form' => $form->createView(),
             ]
         );
     }

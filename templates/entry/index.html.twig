@@ -29,7 +29,7 @@
                 </td>
                 <td>{{ entry.startTime|date('Y-m-d H:i:s') }}</td>
                 <td>{{ entry.endTime|date('Y-m-d H:i:s') }}</td>
-                <td>{{ entry.roomId | room_getName }}</td>
+                <td>{{ entry.room }}</td>
             </tr>
         {% else %}
             <tr>

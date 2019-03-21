@@ -1,0 +1,4 @@
+<span class="text-muted">{{ dateTime | date('j') }}</span>
+{% for entry in day.entries %}
+    <p>{{ entry.name }}</p>
+{% endfor %}

@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{ 'room.delete.confirm'|trans({'name': room.roomName}, 'actions') }}
+                {{ 'room.delete.confirm'|trans({'name': room.name}, 'actions') }}
             </div>
             <div class="modal-footer">
                 <form method="post" action="{{ path('grr_room_delete', {'id': room.id}) }}">

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Area;
 use App\Entity\Room;
+use App\Events\AddEmailFieldListener;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -41,10 +42,11 @@ class AreaMenuSelectType extends AbstractType
                     'query_builder' => $this->areaRepository->getQueryBuilder(),
                     'required' => true,
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
+                    'mapped'=>false
                 ]
             )
             ->add(
-                'room',
+                'rooms',
                 EntityType::class,
                 [
                     'class' => Room::class,
@@ -53,19 +55,20 @@ class AreaMenuSelectType extends AbstractType
                     'query_builder' => $this->roomRepository->getRoomsByAreaQueryBuilder($area),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
-            );
-        //->addEventSubscriber(new AddEmailFieldListener());
+            )
+            ->addEventSubscriber(new AddEmailFieldListener());
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
+                'data' => Area::class,
                 'area' => null,
             )
         );
 
-        $resolver->setAllowedTypes('area', Area::class);
+        $resolver->setAllowedTypes('area', [Area::class]);
     }
 
 

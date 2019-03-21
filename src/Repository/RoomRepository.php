@@ -24,14 +24,15 @@ class RoomRepository extends ServiceEntityRepository
     public function getQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('room')
-            ->orderBy('room.roomName', 'ASC');
+            ->orderBy('room.name', 'ASC');
     }
 
     public function getRoomsByAreaQueryBuilder(Area $area): QueryBuilder
     {
         $qb = $this->createQueryBuilder('room')
-            ->andWhere('room.areaId = :area')->setParameter('area', $area->getId())
-            ->orderBy('room.roomName', 'ASC');
+            ->andWhere('room.area = :area')
+            ->setParameter('area', $area)
+            ->orderBy('room.name', 'ASC');
 
         return $qb;
     }
@@ -63,28 +64,13 @@ class RoomRepository extends ServiceEntityRepository
     public function findByArea(Area $area): iterable
     {
         return $this->createQueryBuilder('room')
-            ->andWhere('room.areaId = :area')
-            ->setParameter('area', $area->getId())
-            ->orderBy('room.roomName', 'ASC')
+            ->andWhere('room.area = :area')
+            ->setParameter('area', $area)
+            ->orderBy('room.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    public function getForForm(): iterable
-    {
-        $result = $this->createQueryBuilder('room')
-            ->orderBy('room.roomName', 'ASC')
-            ->getQuery()
-            ->getResult();
-
-        $rooms = [];
-        foreach ($result as $romm) {
-            $rooms[$romm->getRoomName()] = $romm->getId();
-        }
-
-        return $rooms;
-
-    }
 
     /*
     public function findOneBySomeField($value): ?Room

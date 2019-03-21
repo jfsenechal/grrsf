@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,18 +24,17 @@ class Room
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="area_id", type="integer", nullable=false)
+     * @var
+     * @ORM\ManyToOne(targetEntity="App\Entity\Area", inversedBy="rooms")
      */
-    private $areaId;
+    private $area;
 
     /**
      * @var string
      *
      * @ORM\Column(name="room_name", type="string", length=60, nullable=false)
      */
-    private $roomName;
+    private $name;
 
     /**
      * @var string
@@ -168,9 +169,19 @@ class Room
      */
     private $whoCanSee;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="room")
+     */
+    private $entries;
+
+    public function __construct()
+    {
+        $this->entries = new ArrayCollection();
+    }
+
     public function __toString()
     {
-        return $this->roomName;
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -178,26 +189,14 @@ class Room
         return $this->id;
     }
 
-    public function getAreaId(): ?int
+    public function getName(): ?string
     {
-        return $this->areaId;
+        return $this->name;
     }
 
-    public function setAreaId(int $areaId): self
+    public function setName(string $name): self
     {
-        $this->areaId = $areaId;
-
-        return $this;
-    }
-
-    public function getRoomName(): ?string
-    {
-        return $this->roomName;
-    }
-
-    public function setRoomName(string $roomName): self
-    {
-        $this->roomName = $roomName;
+        $this->name = $name;
 
         return $this;
     }
@@ -207,7 +206,7 @@ class Room
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -267,7 +266,7 @@ class Room
         return $this->pictureRoom;
     }
 
-    public function setPictureRoom(string $pictureRoom): self
+    public function setPictureRoom(?string $pictureRoom): self
     {
         $this->pictureRoom = $pictureRoom;
 
@@ -279,7 +278,7 @@ class Room
         return $this->commentRoom;
     }
 
-    public function setCommentRoom(string $commentRoom): self
+    public function setCommentRoom(?string $commentRoom): self
     {
         $this->commentRoom = $commentRoom;
 
@@ -322,6 +321,18 @@ class Room
         return $this;
     }
 
+    public function getAllowActionInPast(): ?bool
+    {
+        return $this->allowActionInPast;
+    }
+
+    public function setAllowActionInPast(bool $allowActionInPast): self
+    {
+        $this->allowActionInPast = $allowActionInPast;
+
+        return $this;
+    }
+
     public function getOrderDisplay(): ?int
     {
         return $this->orderDisplay;
@@ -342,6 +353,18 @@ class Room
     public function setDelaisOptionReservation(int $delaisOptionReservation): self
     {
         $this->delaisOptionReservation = $delaisOptionReservation;
+
+        return $this;
+    }
+
+    public function getDontAllowModify(): ?bool
+    {
+        return $this->dontAllowModify;
+    }
+
+    public function setDontAllowModify(bool $dontAllowModify): self
+    {
+        $this->dontAllowModify = $dontAllowModify;
 
         return $this;
     }
@@ -382,6 +405,18 @@ class Room
         return $this;
     }
 
+    public function getActiveRessourceEmpruntee(): ?bool
+    {
+        return $this->activeRessourceEmpruntee;
+    }
+
+    public function setActiveRessourceEmpruntee(bool $activeRessourceEmpruntee): self
+    {
+        $this->activeRessourceEmpruntee = $activeRessourceEmpruntee;
+
+        return $this;
+    }
+
     public function getWhoCanSee(): ?int
     {
         return $this->whoCanSee;
@@ -394,40 +429,48 @@ class Room
         return $this;
     }
 
-    public function getAllowActionInPast(): ?bool
+    public function getArea(): ?Area
     {
-        return $this->allowActionInPast;
+        return $this->area;
     }
 
-    public function setAllowActionInPast(bool $allowActionInPast): self
+    public function setArea(?Area $area): self
     {
-        $this->allowActionInPast = $allowActionInPast;
+        $this->area = $area;
 
         return $this;
     }
 
-    public function getDontAllowModify(): ?bool
+    /**
+     * @return Collection|Entry[]
+     */
+    public function getEntries(): Collection
     {
-        return $this->dontAllowModify;
+        return $this->entries;
     }
 
-    public function setDontAllowModify(bool $dontAllowModify): self
+    public function addEntry(Entry $entry): self
     {
-        $this->dontAllowModify = $dontAllowModify;
+        if (!$this->entries->contains($entry)) {
+            $this->entries[] = $entry;
+            $entry->setRoom($this);
+        }
 
         return $this;
     }
 
-    public function getActiveRessourceEmpruntee(): ?bool
+    public function removeEntry(Entry $entry): self
     {
-        return $this->activeRessourceEmpruntee;
-    }
-
-    public function setActiveRessourceEmpruntee(bool $activeRessourceEmpruntee): self
-    {
-        $this->activeRessourceEmpruntee = $activeRessourceEmpruntee;
+        if ($this->entries->contains($entry)) {
+            $this->entries->removeElement($entry);
+            // set the owning side to null (unless already changed)
+            if ($entry->getRoom() === $this) {
+                $entry->setRoom(null);
+            }
+        }
 
         return $this;
     }
+
 
 }

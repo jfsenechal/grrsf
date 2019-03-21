@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,9 +26,9 @@ class Area
     /**
      * @var string
      *
-     * @ORM\Column(name="area_name", type="string", length=30, nullable=false)
+     * @ORM\Column(type="string", length=30, nullable=false)
      */
-    private $areaName;
+    private $name;
 
     /**
      * @var boolean
@@ -140,9 +142,19 @@ class Area
      */
     private $maxBooking ;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="area")
+     */
+    private $rooms;
+
+    public function __construct()
+    {
+        $this->rooms = new ArrayCollection();
+    }
+
     public function __toString()
     {
-        return $this->areaName;
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -150,14 +162,14 @@ class Area
         return $this->id;
     }
 
-    public function getAreaName(): ?string
+    public function getName(): ?string
     {
-        return $this->areaName;
+        return $this->name;
     }
 
-    public function setAreaName(string $areaName): self
+    public function setName(string $name): self
     {
-        $this->areaName = $areaName;
+        $this->name = $name;
 
         return $this;
     }
@@ -353,4 +365,36 @@ class Area
 
         return $this;
     }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getRooms(): Collection
+    {
+        return $this->rooms;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->rooms->contains($room)) {
+            $this->rooms[] = $room;
+            $room->setArea($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        if ($this->rooms->contains($room)) {
+            $this->rooms->removeElement($room);
+            // set the owning side to null (unless already changed)
+            if ($room->getArea() === $this) {
+                $room->setArea(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

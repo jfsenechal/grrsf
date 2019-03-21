@@ -23,12 +23,41 @@ class CalendarDisplay
      * @var Environment
      */
     private $environment;
+    /**
+     * @var CalendarDataManager
+     */
+    private $calendarDataManager;
 
-    public function __construct(Calendar $calendar, Environment $environment)
+    public function __construct(Calendar $calendar, CalendarDataManager $calendarDataManager, Environment $environment)
     {
         $this->calendar = $calendar;
         $this->environment = $environment;
+        $this->calendarDataManager = $calendarDataManager;
     }
+
+    public function oneMonthNavigation(\DateTimeImmutable $dateTimeImmutable)
+    {
+        $next = $this->calendar->getNextMonth();
+        $previous = $this->calendar->getPreviousMonth();
+        $allDays = $this->calendar->getAllDaysOfMonth();
+        //pour avoir un iterable
+        $days = [];
+        foreach ($allDays as $date) {
+            $day = new Day($date);
+            $days[] = $day;
+        }
+
+        return $this->environment->render(
+            'front/_calendar_navigation.html.twig',
+            [
+                'next' => $next,
+                'previous' => $previous,
+                'days' => $days,
+                'current' => $dateTimeImmutable,
+            ]
+        );
+    }
+
 
     /**
      * @param \DateTimeImmutable $dateTimeImmutable
@@ -38,7 +67,7 @@ class CalendarDisplay
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function oneMonth(\DateTimeImmutable $dateTimeImmutable, iterable $data = [])
+    public function oneMonth(\DateTimeImmutable $dateTimeImmutable, CalendarDataManager $calendarDataManager = null)
     {
         $this->calendar->createCalendarFromDate($dateTimeImmutable);
         $next = $this->calendar->getNextMonth();
@@ -47,18 +76,16 @@ class CalendarDisplay
         //pour avoir un iterable
         $days = [];
         foreach ($allDays as $date) {
-            $Day = new Day($date);
-            if ($data) {
-                $entries = $data[$date->format('Y-m-d')] ?? null;
-                if ($entries) {
-                    $Day->setEntries($entries);
-                }
+            $day = new Day($date);
+            if ($calendarDataManager) {
+                $calendarDataManager->add($day);
             }
-            $days[] = $Day;
+
+            $days[] = $day;
         }
 
         return $this->environment->render(
-            'front/_calendars.html.twig',
+            'front/_calendar_data.html.twig',
             [
                 'next' => $next,
                 'previous' => $previous,

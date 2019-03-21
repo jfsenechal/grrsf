@@ -29,7 +29,7 @@ class AreaType extends AbstractType
     {
         $builder
             ->add(
-                'areaName',
+                'name',
                 TextType::class,
                 [
                     'label' => 'area.form.name.label',

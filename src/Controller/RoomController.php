@@ -61,9 +61,8 @@ class RoomController extends AbstractController
      */
     public function new(Request $request, Area $area): Response
     {
-        $room = $this->roomFactory->createNew();
+        $room = $this->roomFactory->createNew($area);
         $this->roomFactory->setDefaultValues($room);
-        $room->setAreaId($area->getId());
 
         $form = $this->createForm(RoomType::class, $room);
         $form->handleRequest($request);

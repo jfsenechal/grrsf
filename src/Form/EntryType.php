@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Area;
 use App\Entity\Entry;
+use App\Entity\Room;
 use App\Form\Type\EntryTypeField;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
@@ -63,12 +64,13 @@ class EntryType extends AbstractType
                    ]
                )*/
             ->add(
-                'roomId',
-                ChoiceType::class,
+                'room',
+                EntityType::class,
                 [
                     'required' => false,
+                    'class'=>Room::class,
                     'placeholder' => 'Room',
-                    'choices' => $this->roomRepository->getForForm(),
+                    'query_builder' => $this->roomRepository->getQueryBuilder(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )

@@ -8,13 +8,17 @@
 
 namespace App\Factory;
 
+use App\Entity\Area;
 use App\Entity\Room;
 
-class RoomFactory implements FactoryInterface
+class RoomFactory //implements FactoryInterface
 {
-    public function createNew(): Room
+    public function createNew(Area $area): Room
     {
-        return new Room();
+        $room = new Room();
+        $room->setArea($area);
+
+        return $room;
     }
 
     public function setDefaultValues(Room $room)

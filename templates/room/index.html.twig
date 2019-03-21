@@ -15,8 +15,8 @@
         <tbody>
         {% for room in rooms %}
             <tr>
-                <td>{{ room.areaId }}</td>
-                <td><a href="{{ path('grr_room_show', {'id': room.id}) }}">{{ room.roomName }}</a></td>
+                <td>{{ room.area }}</td>
+                <td><a href="{{ path('grr_room_show', {'id': room.id}) }}">{{ room.name }}</a></td>
                 <td>{{ room.orderDisplay }}</td>
             </tr>
         {% else %}

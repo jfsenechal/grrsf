@@ -3,18 +3,24 @@
 {% block title %}GrrArea index{% endblock %}
 
 {% block body %}
+
     <div class="row">
-        <div class="col-3">
-            {#{ form_row(form.myCheckbox, {label_attr: {class: 'checkbox-custom'} }) }#}
-
-
+        <div class="col-2">
+            {{ form_start(form) }}
+            {{ form_row(form.area, {label_attr: {class: 'checkbox-custom'} }) }}
+            {{ form_end(form) }}
         </div>
-        <div class="col-9">
-            {{ html|raw }}
+        <div class="col-5">
+            {{ navigation|raw }}
+        </div>
+        <div class="col-5">
+            {{ navigation2|raw }}
         </div>
     </div>
 
+    <h3 class="text-center text-success">{{ current|date('m Y') }}</h3>
 
+    {{ data|raw }}
 
 
     {% include 'front/_menu_select.js.html.twig' %}

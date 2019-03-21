@@ -94,7 +94,7 @@ class AreaController extends AbstractController
      */
     public function show(Area $area): Response
     {
-        $rooms = $this->roomRepository->findBy(['areaId' => $area->getId()]);
+        $rooms = $this->roomRepository->findBy(['area' => $area]);
 
         return $this->render(
             'area/show.html.twig',

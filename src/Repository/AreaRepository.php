@@ -22,7 +22,7 @@ class AreaRepository extends ServiceEntityRepository
     public function getQueryBuilder()
     {
         return $this->createQueryBuilder('area')
-            ->orderBy('area.areaName', 'ASC');
+            ->orderBy('area.name', 'ASC');
     }
 
     public function persist(Area $area)

@@ -53,13 +53,6 @@ class Entry
     private $repeatId;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="room_id", type="integer", nullable=false)
-     */
-    private $roomId;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="timestamp", type="datetime", nullable=false)
@@ -143,6 +136,12 @@ class Entry
      */
     private $jours;
 
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="App\Entity\Room", inversedBy="entries")
+     */
+    private $room;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -192,18 +191,6 @@ class Entry
     public function setRepeatId(?int $repeatId): self
     {
         $this->repeatId = $repeatId;
-
-        return $this;
-    }
-
-    public function getRoomId(): ?int
-    {
-        return $this->roomId;
-    }
-
-    public function setRoomId(int $roomId): self
-    {
-        $this->roomId = $roomId;
 
         return $this;
     }
@@ -348,6 +335,18 @@ class Entry
     public function setJours(bool $jours): self
     {
         $this->jours = $jours;
+
+        return $this;
+    }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): self
+    {
+        $this->room = $room;
 
         return $this;
     }

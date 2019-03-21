@@ -1,9 +1,9 @@
 {% extends 'layout_front.html.twig' %}
 
-{% block title %}{{ room.roomName }}{% endblock %}
+{% block title %}{{ room.name }}{% endblock %}
 
 {% block body %}
-    <h1>{{ room.roomName }}</h1>
+    <h1>{{ room.name }}</h1>
 
     {% include 'room/_actions.html.twig' %}
 

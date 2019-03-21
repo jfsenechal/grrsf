@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{ 'area.delete.confirm'|trans({'name': area.areaName}, 'actions') }}
+                {{ 'area.delete.confirm'|trans({'name': area.name}, 'actions') }}
             </div>
             <div class="modal-footer">
                 <form method="post" action="{{ path('grr_area_delete', {'id': area.id}) }}">

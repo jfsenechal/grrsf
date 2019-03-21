@@ -22,7 +22,7 @@
         {% for area in areas %}
             <tr>
                 <td>
-                    <a href="{{ path('grr_area_show', {'id': area.id}) }}">{{ area.areaName }}</a>
+                    <a href="{{ path('grr_area_show', {'id': area.id}) }}">{{ area.name }}</a>
                 </td>
                 <td>{{ area.orderDisplay }}</td>
                 <td>{{ area.morningstartsArea }}</td>

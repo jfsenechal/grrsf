@@ -1,0 +1,18 @@
+<table class="table table-bordered">
+    <tr>
+        <th>{{ 'monday'|trans }}</th>
+        <th>{{ 'tuesday'|trans }}</th>
+        <th>{{ 'wednesday'|trans }}</th>
+        <th>{{ 'thursday'|trans }}</th>
+        <th>{{ 'friday'|trans }}</th>
+        <th>{{ 'saturday'|trans }}</th>
+        <th>{{ 'sunday'|trans }}</th>
+    </tr>
+    <tbody>
+    <tr>
+        {% for day in days %}
+            {% include 'default/_week_line_data.html.twig' %}
+        {% endfor %}
+    <tr>
+    </tbody>
+</table>

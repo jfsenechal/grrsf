@@ -15,7 +15,7 @@ class EntryFactory
     /** @var FactoryInterface */
     private $factory;
 
-    public function __construct(
+    public function construct(
         FactoryInterface $factory
     ) {
         $this->factory = $factory;
@@ -25,7 +25,7 @@ class EntryFactory
     {
         return new Entry();
 
-        return $this->factory->createNew();
+        //return $this->factory->createNew();
     }
 
     public function setDefaultValues(Entry $entry)

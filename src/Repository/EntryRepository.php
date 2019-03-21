@@ -62,12 +62,12 @@ class EntryRepository extends ServiceEntityRepository
         }
         if ($area instanceof Area) {
             $rooms = $this->getRooms($area);
-            $qb->andWhere('entry.roomId IN (:rooms)')
+            $qb->andWhere('entry.room IN (:rooms)')
                 ->setParameter('room', $rooms);
         }
         if ($room instanceof Room) {
-            $qb->andWhere('entry.roomId = :room')
-                ->setParameter('room', $room->getId());
+            $qb->andWhere('entry.room = :room')
+                ->setParameter('room', $room);
         }
         if ($entryType) {
             $qb->andWhere('entry.entryType = :entryType')
@@ -109,7 +109,7 @@ class EntryRepository extends ServiceEntityRepository
 
         if ($room instanceof Room) {
             $qb->andWhere('entry.roomId = :room')
-                ->setParameter('room', $room->getId());
+                ->setParameter('room', $room);
         }
 
         return $qb
