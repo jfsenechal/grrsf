@@ -59,11 +59,11 @@ class RoomController extends AbstractController
     /**
      * @Route("/new/{id}", name="grr_room_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Area $Area): Response
+    public function new(Request $request, Area $area): Response
     {
         $room = $this->roomFactory->createNew();
         $this->roomFactory->setDefaultValues($room);
-        $room->setAreaId($Area->getId());
+        $room->setAreaId($area->getId());
 
         $form = $this->createForm(RoomType::class, $room);
         $form->handleRequest($request);

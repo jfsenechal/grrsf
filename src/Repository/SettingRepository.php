@@ -19,14 +19,14 @@ class SettingRepository extends ServiceEntityRepository
         parent::__construct($registry, Setting::class);
     }
 
-    public function persist(Setting $grrSetting)
+    public function persist(Setting $Setting)
     {
-        $this->_em->persist($grrSetting);
+        $this->_em->persist($Setting);
     }
 
-    public function remove(Setting $grrSetting)
+    public function remove(Setting $Setting)
     {
-        $this->_em->remove($grrSetting);
+        $this->_em->remove($Setting);
     }
 
     public function flush()

@@ -17,7 +17,7 @@ class GrrExtension extends AbstractExtension
     /**
      * @var RoomRepository
      */
-    private $grrRoomRepository;
+    private $roomRepository;
     /**
      * @var EntryData
      */
@@ -25,7 +25,7 @@ class GrrExtension extends AbstractExtension
     /**
      * @var TypeAreaRepository
      */
-    private $grrTypeAreaRepository;
+    private $TypeAreaRepository;
     /**
      * @var DateUtils
      */
@@ -33,7 +33,7 @@ class GrrExtension extends AbstractExtension
     /**
      * @var GrrConstants
      */
-    private $grrConstants;
+    private $Constants;
     /**
      * @var Environment
      */
@@ -41,15 +41,15 @@ class GrrExtension extends AbstractExtension
 
     public function __construct(
         DateUtils $dateUtils,
-        RoomRepository $grrRoomRepository,
-        TypeAreaRepository $grrTypeAreaRepository,
+        RoomRepository $roomRepository,
+        TypeAreaRepository $TypeAreaRepository,
         EntryData $entryData,
         Environment $twigEnvironment
     ) {
         $this->dateUtils = $dateUtils;
-        $this->grrRoomRepository = $grrRoomRepository;
+        $this->grrRoomRepository = $roomRepository;
         $this->entryData = $entryData;
-        $this->grrTypeAreaRepository = $grrTypeAreaRepository;
+        $this->grrTypeAreaRepository = $TypeAreaRepository;
         $this->twigEnvironment = $twigEnvironment;
     }
 

@@ -16,16 +16,16 @@ class AreaMenuSelectType extends AbstractType
     /**
      * @var AreaRepository
      */
-    private $grrAreaRepository;
+    private $areaRepository;
     /**
      * @var RoomRepository
      */
-    private $grrRoomRepository;
+    private $roomRepository;
 
-    public function __construct(AreaRepository $grrAreaRepository, RoomRepository $grrRoomRepository)
+    public function __construct(AreaRepository $areaRepository, RoomRepository $roomRepository)
     {
-        $this->grrAreaRepository = $grrAreaRepository;
-        $this->grrRoomRepository = $grrRoomRepository;
+        $this->grrAreaRepository = $areaRepository;
+        $this->grrRoomRepository = $roomRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

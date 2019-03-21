@@ -25,20 +25,20 @@ class AreaRepository extends ServiceEntityRepository
             ->orderBy('area.areaName', 'ASC');
     }
 
-    public function persist(Area $grrArea)
+    public function persist(Area $area)
     {
-        $this->_em->persist($grrArea);
+        $this->_em->persist($area);
     }
 
-    public function insert(Area $grrArea)
+    public function insert(Area $area)
     {
-        $this->persist($grrArea);
+        $this->persist($area);
         $this->flush();
     }
 
-    public function remove(Area $grrArea)
+    public function remove(Area $area)
     {
-        $this->_em->remove($grrArea);
+        $this->_em->remove($area);
     }
 
     public function flush()

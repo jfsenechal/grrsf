@@ -19,20 +19,20 @@ class RepeatRepository extends ServiceEntityRepository
         parent::__construct($registry, Repeat::class);
     }
 
-    public function persist(Repeat $grrRepeat)
+    public function persist(Repeat $Repeat)
     {
-        $this->_em->persist($grrRepeat);
+        $this->_em->persist($Repeat);
     }
 
-    public function insert(Repeat $grrRepeat)
+    public function insert(Repeat $Repeat)
     {
-        $this->persist($grrRepeat);
+        $this->persist($Repeat);
         $this->flush();
     }
 
-    public function remove(Repeat $grrRepeat)
+    public function remove(Repeat $Repeat)
     {
-        $this->_em->remove($grrRepeat);
+        $this->_em->remove($Repeat);
     }
 
     public function flush()

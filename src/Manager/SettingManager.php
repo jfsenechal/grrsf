@@ -18,21 +18,21 @@ class SettingManager
     /**
      * @var SettingRepository
      */
-    private $grrSettingRepository;
+    private $SettingRepository;
 
-    public function __construct(SettingRepository $grrSettingRepository)
+    public function __construct(SettingRepository $SettingRepository)
     {
-        $this->grrSettingRepository = $grrSettingRepository;
+        $this->grrSettingRepository = $SettingRepository;
     }
 
-    public function persist(Area $grrArea)
+    public function persist(Area $area)
     {
-        $this->grrSettingRepository->persist($grrArea);
+        $this->grrSettingRepository->persist($area);
     }
 
-    public function remove(Area $grrArea)
+    public function remove(Area $area)
     {
-        $this->grrSettingRepository->remove($grrArea);
+        $this->grrSettingRepository->remove($area);
     }
 
     public function flush()
@@ -40,9 +40,9 @@ class SettingManager
         $this->grrSettingRepository->flush();
     }
 
-    public function insert(Area $grrArea)
+    public function insert(Area $area)
     {
-        $this->grrSettingRepository->insert($grrArea);
+        $this->grrSettingRepository->insert($area);
     }
 
 }

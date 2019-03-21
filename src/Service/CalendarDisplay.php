@@ -47,14 +47,14 @@ class CalendarDisplay
         //pour avoir un iterable
         $days = [];
         foreach ($allDays as $date) {
-            $grrDay = new Day($date);
+            $Day = new Day($date);
             if ($data) {
                 $entries = $data[$date->format('Y-m-d')] ?? null;
                 if ($entries) {
-                    $grrDay->setEntries($entries);
+                    $Day->setEntries($entries);
                 }
             }
-            $days[] = $grrDay;
+            $days[] = $Day;
         }
 
         return $this->environment->render(

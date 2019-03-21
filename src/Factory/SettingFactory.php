@@ -19,12 +19,12 @@ class SettingFactory
         return new Setting();
     }
 
-    public function setDefaultValues(Area $grrArea)
+    public function setDefaultValues(Area $area)
     {
-        $grrArea->setDisplayDays(array_flip(DateUtils::getJoursSemaine()));
-        $grrArea->setMorningstartsArea(8);
-        $grrArea->setEveningendsArea(19);
-        $grrArea->setResolutionArea(900);
-        $grrArea->setDureeParDefautReservationArea(900);
+        $area->setDisplayDays(array_flip(DateUtils::getJoursSemaine()));
+        $area->setMorningstartsArea(8);
+        $area->setEveningendsArea(19);
+        $area->setResolutionArea(900);
+        $area->setDureeParDefautReservationArea(900);
     }
 }

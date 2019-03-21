@@ -21,16 +21,16 @@ class EntryType extends AbstractType
     /**
      * @var RoomRepository
      */
-    private $grrRoomRepository;
+    private $roomRepository;
     /**
      * @var AreaRepository
      */
-    private $grrAreaRepository;
+    private $areaRepository;
 
-    public function __construct(RoomRepository $grrRoomRepository, AreaRepository $grrAreaRepository)
+    public function __construct(RoomRepository $roomRepository, AreaRepository $areaRepository)
     {
-        $this->grrRoomRepository = $grrRoomRepository;
-        $this->grrAreaRepository = $grrAreaRepository;
+        $this->grrRoomRepository = $roomRepository;
+        $this->grrAreaRepository = $areaRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

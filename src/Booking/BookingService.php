@@ -65,15 +65,15 @@ class BookingService
     /**
      * @var EntryRepository
      */
-    private $grrEntryRepository;
+    private $entryRepository;
     /**
      * @var EntryFactory
      */
-    private $grrEntryFactory;
+    private $entryFactory;
     /**
      * @var EntryManager
      */
-    private $grrEntryManager;
+    private $entryManager;
     /**
      * @var OutputInterface
      */
@@ -86,14 +86,14 @@ class BookingService
 
     public function __construct(
         ParameterBagInterface $parameterBag,
-        EntryRepository $grrEntryRepository,
-        EntryFactory $grrEntryFactory,
-        EntryManager $grrEntryManager
+        EntryRepository $entryRepository,
+        EntryFactory $entryFactory,
+        EntryManager $entryManager
     ) {
         $this->parameterBag = $parameterBag;
-        $this->grrEntryRepository = $grrEntryRepository;
-        $this->grrEntryFactory = $grrEntryFactory;
-        $this->grrEntryManager = $grrEntryManager;
+        $this->grrEntryRepository = $entryRepository;
+        $this->grrEntryFactory = $entryFactory;
+        $this->grrEntryManager = $entryManager;
         $this->bookingsFromFlux = [];
     }
 
@@ -123,7 +123,7 @@ class BookingService
             foreach ($booking->dates as $date) {
                 $firstDate = $date->booking_date;
 
-                $grrEntry = $this->createGrrEntry($booking, $firstDate);
+                $entry = $this->createGrrEntry($booking, $firstDate);
                 $dateTimeDebut = $this->convertToDateTime($firstDate);
                 $dateTimeFin = $this->convertToDateTime($firstDate);
 
@@ -135,9 +135,9 @@ class BookingService
                 $this->output->write($dateTimeDebut->format('Y-m-d H:i:s').' , ');
                 $this->output->writeln($dateTimeFin->format('Y-m-d H:i:s'));
 
-                $grrEntry->setStartTime($dateTimeDebut->getTimestamp());
-                $grrEntry->setEndTime($dateTimeFin->getTimestamp());
-                $this->grrEntryManager->insert($grrEntry);
+                $entry->setStartTime($dateTimeDebut->getTimestamp());
+                $entry->setEndTime($dateTimeFin->getTimestamp());
+                $this->grrEntryManager->insert($entry);
             }
         }
     }
@@ -146,7 +146,7 @@ class BookingService
     {
         $firstDate = $booking->dates[0]->booking_date;
         $secondDate = $booking->dates[1]->booking_date;
-        $grrEntry = $this->createGrrEntry($booking, $firstDate);
+        $entry = $this->createGrrEntry($booking, $firstDate);
         $dateTimeDebut = $this->convertToDateTime($firstDate);
         $dateTimeFin = $this->convertToDateTime($secondDate);
 
@@ -158,10 +158,10 @@ class BookingService
         $this->output->write($dateTimeDebut->format('Y-m-d H:i:s').' , ');
         $this->output->writeln($dateTimeFin->format('Y-m-d H:i:s'));
 
-        $grrEntry->setStartTime($dateTimeDebut->getTimestamp());
-        $grrEntry->setEndTime($dateTimeFin->getTimestamp());
+        $entry->setStartTime($dateTimeDebut->getTimestamp());
+        $entry->setEndTime($dateTimeFin->getTimestamp());
 
-        $this->grrEntryManager->insert($grrEntry);
+        $this->grrEntryManager->insert($entry);
     }
 
     private function setHeureDebut(\DateTime $dateTime)
@@ -194,30 +194,30 @@ class BookingService
         //13:00 - 18:00
         $rangetime = $form_data->rangetime;
         $fields = $form_data->_all_fields_;
-        $grrEntry = $this->getInstance($booking, $date);
-        $grrEntry->setName($this->removeAccents($fields->name).' '.$this->removeAccents($fields->secondname));
-        $grrEntry->setTimestamp($this->convertToDateTime($booking->modification_date));
-        $grrEntry->setRoomId($this->getCorrespondanceRoom($booking->booking_type));
-        $grrEntry->setDescription($this->getDescriptionString($fields));
-        $grrEntry->setBeneficiaire('esquare');
-        $grrEntry->setCreateBy('esquare');
-        $this->setDefaultFields($grrEntry);
+        $entry = $this->getInstance($booking, $date);
+        $entry->setName($this->removeAccents($fields->name).' '.$this->removeAccents($fields->secondname));
+        $entry->setTimestamp($this->convertToDateTime($booking->modification_date));
+        $entry->setRoomId($this->getCorrespondanceRoom($booking->booking_type));
+        $entry->setDescription($this->getDescriptionString($fields));
+        $entry->setBeneficiaire('esquare');
+        $entry->setCreateBy('esquare');
+        $this->setDefaultFields($entry);
 
-        return $grrEntry;
+        return $entry;
     }
 
     public function getInstance($booking, string $date): Entry
     {
         $key = $this->getKeyBooking($booking, $date);
         $this->bookingsFromFlux[] = $key;
-        $grrEntry = $this->grrEntryRepository->findOneBy(['booking' => $key]);
-        if (!$grrEntry) {
+        $entry = $this->grrEntryRepository->findOneBy(['booking' => $key]);
+        if (!$entry) {
             echo $this->output->writeln("nouveau : $date => $key");
-            $grrEntry = $this->grrEntryFactory->createNew();
-            $grrEntry->setBooking($key);
+            $entry = $this->grrEntryFactory->createNew();
+            $entry->setBooking($key);
         }
 
-        return $grrEntry;
+        return $entry;
     }
 
     protected function getKeyBooking($booking, $date)
@@ -225,15 +225,15 @@ class BookingService
         return $booking->booking_id.'_'.$this->convertToDateTime($date)->format('Y-m-d');
     }
 
-    private function setDefaultFields(Entry $grrEntry)
+    private function setDefaultFields(Entry $entry)
     {
-        $grrEntry->setBeneficiaireExt(' ');//pas null
-        $grrEntry->setType('B');
-        $grrEntry->setModerate(0);
-        $grrEntry->setJours(0);
-        $grrEntry->setEntryType(0);
-        $grrEntry->setOptionReservation(-1);
-        $grrEntry->setStatutEntry('-');
+        $entry->setBeneficiaireExt(' ');//pas null
+        $entry->setType('B');
+        $entry->setModerate(0);
+        $entry->setJours(0);
+        $entry->setEntryType(0);
+        $entry->setOptionReservation(-1);
+        $entry->setStatutEntry('-');
     }
 
     public function convertToDateTime(string $date): \DateTime

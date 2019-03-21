@@ -23,28 +23,28 @@ class SyncBookingsCommand extends Command
     /**
      * @var EntryFactory
      */
-    private $grrEntryFactory;
+    private $entryFactory;
     /**
      * @var EntryRepository
      */
-    private $grrEntryRepository;
+    private $entryRepository;
     /**
      * @var EntryManager
      */
-    private $grrEntryManager;
+    private $entryManager;
 
     public function __construct(
         ?string $name = null,
         BookingService $bookingService,
-        EntryFactory $grrEntryFactory,
-        EntryRepository $grrEntryRepository,
-        EntryManager $grrEntryManager
+        EntryFactory $entryFactory,
+        EntryRepository $entryRepository,
+        EntryManager $entryManager
     ) {
         parent::__construct($name);
         $this->bookingService = $bookingService;
-        $this->grrEntryFactory = $grrEntryFactory;
-        $this->grrEntryRepository = $grrEntryRepository;
-        $this->grrEntryManager = $grrEntryManager;
+        $this->grrEntryFactory = $entryFactory;
+        $this->grrEntryRepository = $entryRepository;
+        $this->grrEntryManager = $entryManager;
     }
 
     protected function configure()

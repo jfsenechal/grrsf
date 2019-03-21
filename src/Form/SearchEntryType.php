@@ -17,15 +17,15 @@ class SearchEntryType extends AbstractType
     /**
      * @var RoomRepository
      */
-    private $grrRoomRepository;
+    private $roomRepository;
     /**
      * @var EntryData
      */
     private $entryData;
 
-    public function __construct(RoomRepository $grrRoomRepository, EntryData $entryData)
+    public function __construct(RoomRepository $roomRepository, EntryData $entryData)
     {
-        $this->grrRoomRepository = $grrRoomRepository;
+        $this->grrRoomRepository = $roomRepository;
         $this->entryData = $entryData;
     }
 

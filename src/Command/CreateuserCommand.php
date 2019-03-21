@@ -16,12 +16,12 @@ class CreateuserCommand extends Command
     /**
      * @var UserManager
      */
-    private $grrUtilisateurManager;
+    private $UtilisateurManager;
 
-    public function __construct(?string $name = null, UserManager $grrUtilisateurManager)
+    public function __construct(?string $name = null, UserManager $UtilisateurManager)
     {
         parent::__construct($name);
-        $this->grrUtilisateurManager = $grrUtilisateurManager;
+        $this->grrUtilisateurManager = $UtilisateurManager;
     }
 
     protected function configure()

@@ -36,20 +36,20 @@ class RoomRepository extends ServiceEntityRepository
         return $qb;
     }
 
-    public function persist(Room $grrRoom)
+    public function persist(Room $room)
     {
-        $this->_em->persist($grrRoom);
+        $this->_em->persist($room);
     }
 
-    public function insert(Room $grrRoom)
+    public function insert(Room $room)
     {
-        $this->persist($grrRoom);
+        $this->persist($room);
         $this->flush();
     }
 
-    public function remove(Room $grrRoom)
+    public function remove(Room $room)
     {
-        $this->_em->remove($grrRoom);
+        $this->_em->remove($room);
     }
 
     public function flush()

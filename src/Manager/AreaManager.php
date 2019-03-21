@@ -16,21 +16,21 @@ class AreaManager
     /**
      * @var AreaRepository
      */
-    private $grrAreaRepository;
+    private $areaRepository;
 
-    public function __construct(AreaRepository $grrAreaRepository)
+    public function __construct(AreaRepository $areaRepository)
     {
-        $this->grrAreaRepository = $grrAreaRepository;
+        $this->grrAreaRepository = $areaRepository;
     }
 
-    public function persist(Area $grrArea)
+    public function persist(Area $area)
     {
-        $this->grrAreaRepository->persist($grrArea);
+        $this->grrAreaRepository->persist($area);
     }
 
-    public function remove(Area $grrArea)
+    public function remove(Area $area)
     {
-        $this->grrAreaRepository->remove($grrArea);
+        $this->grrAreaRepository->remove($area);
     }
 
     public function flush()
@@ -38,9 +38,9 @@ class AreaManager
         $this->grrAreaRepository->flush();
     }
 
-    public function insert(Area $grrArea)
+    public function insert(Area $area)
     {
-        $this->grrAreaRepository->insert($grrArea);
+        $this->grrAreaRepository->insert($area);
     }
 
 }

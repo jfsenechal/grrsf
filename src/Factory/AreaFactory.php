@@ -28,9 +28,9 @@ class AreaFactory
         return new Area();
     }
 
-    public function setDefaultValues(Area $grrArea)
+    public function setDefaultValues(Area $area)
     {
-        $grrArea
+        $area
             ->setDisplayDays(array_flip($this->dateUtils->getJoursSemaine()))
             ->setMorningstartsArea(8)
             ->setEveningendsArea(19)

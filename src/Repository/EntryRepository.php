@@ -21,20 +21,20 @@ class EntryRepository extends ServiceEntityRepository
         parent::__construct($registry, Entry::class);
     }
 
-    public function persist(Entry $grrEntry)
+    public function persist(Entry $entry)
     {
-        $this->_em->persist($grrEntry);
+        $this->_em->persist($entry);
     }
 
-    public function insert(Entry $grrEntry)
+    public function insert(Entry $entry)
     {
-        $this->persist($grrEntry);
+        $this->persist($entry);
         $this->flush();
     }
 
-    public function remove(Entry $grrEntry)
+    public function remove(Entry $entry)
     {
-        $this->_em->remove($grrEntry);
+        $this->_em->remove($entry);
     }
 
     public function flush()

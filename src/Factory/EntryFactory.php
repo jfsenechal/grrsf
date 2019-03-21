@@ -28,9 +28,9 @@ class EntryFactory
         return $this->factory->createNew();
     }
 
-    public function setDefaultValues(Entry $grrEntry)
+    public function setDefaultValues(Entry $entry)
     {
-        $grrEntry
+        $entry
             ->setTimestamp(new \DateTime())
             ->setModerate(false)
             ->setJours(false);

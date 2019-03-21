@@ -18,17 +18,17 @@ class UserManager
     /**
      * @var UserRepository
      */
-    private $grrUtilisateurRepository;
+    private $UtilisateurRepository;
     /**
      * @var UserPasswordEncoderInterface
      */
     private $userPasswordEncoder;
 
     public function __construct(
-        UserRepository $grrUtilisateurRepository,
+        UserRepository $UtilisateurRepository,
         UserPasswordEncoderInterface $userPasswordEncoder
     ) {
-        $this->grrUtilisateurRepository = $grrUtilisateurRepository;
+        $this->grrUtilisateurRepository = $UtilisateurRepository;
         $this->userPasswordEncoder = $userPasswordEncoder;
     }
 

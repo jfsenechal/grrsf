@@ -16,21 +16,21 @@ class RoomManager
     /**
      * @var RoomRepository
      */
-    private $grrRoomRepository;
+    private $roomRepository;
 
-    public function __construct(RoomRepository $grrRoomRepository)
+    public function __construct(RoomRepository $roomRepository)
     {
-        $this->grrRoomRepository = $grrRoomRepository;
+        $this->grrRoomRepository = $roomRepository;
     }
 
-    public function persist(Room $grrRoom)
+    public function persist(Room $room)
     {
-        $this->grrRoomRepository->persist($grrRoom);
+        $this->grrRoomRepository->persist($room);
     }
 
-    public function remove(Room $grrRoom)
+    public function remove(Room $room)
     {
-        $this->grrRoomRepository->remove($grrRoom);
+        $this->grrRoomRepository->remove($room);
     }
 
     public function flush()
@@ -38,9 +38,9 @@ class RoomManager
         $this->grrRoomRepository->flush();
     }
 
-    public function insert(Room $grrRoom)
+    public function insert(Room $room)
     {
-        $this->grrRoomRepository->insert($grrRoom);
+        $this->grrRoomRepository->insert($room);
     }
 
 }

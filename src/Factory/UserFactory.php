@@ -17,9 +17,9 @@ class UserFactory
         return new User();
     }
 
-    public function setDefaultValues(User $grrUtilisateur)
+    public function setDefaultValues(User $Utilisateur)
     {
-        $grrUtilisateur
+        $Utilisateur
             ->setDefaultSite(0)
             ->setDefaultArea(0)
             ->setDefaultRoom(0)

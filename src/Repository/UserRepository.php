@@ -19,20 +19,20 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function persist(User $grrUtilisateur)
+    public function persist(User $Utilisateur)
     {
-        $this->_em->persist($grrUtilisateur);
+        $this->_em->persist($Utilisateur);
     }
 
-    public function insert(User $grrUtilisateur)
+    public function insert(User $Utilisateur)
     {
-        $this->persist($grrUtilisateur);
+        $this->persist($Utilisateur);
         $this->flush();
     }
 
-    public function remove(User $grrUtilisateur)
+    public function remove(User $Utilisateur)
     {
-        $this->_em->remove($grrUtilisateur);
+        $this->_em->remove($Utilisateur);
     }
 
     public function flush()

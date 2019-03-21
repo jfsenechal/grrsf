@@ -14,7 +14,7 @@ class UpgradeCommand extends Command
     /**
      * @var AreaRepository
      */
-    private $grrAreaRepository;
+    private $areaRepository;
     /**
      * @var SymfonyStyle
      */
@@ -23,10 +23,10 @@ class UpgradeCommand extends Command
 
     public function __construct(
         ?string $name = null,
-        AreaRepository $grrAreaRepository
+        AreaRepository $areaRepository
     ) {
         parent::__construct($name);
-        $this->grrAreaRepository = $grrAreaRepository;
+        $this->grrAreaRepository = $areaRepository;
     }
 
     protected function configure()

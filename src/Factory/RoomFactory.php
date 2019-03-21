@@ -17,9 +17,9 @@ class RoomFactory implements FactoryInterface
         return new Room();
     }
 
-    public function setDefaultValues(Room $grrRoom)
+    public function setDefaultValues(Room $room)
     {
-        $grrRoom
+        $room
             ->setCapacity(0)
             ->setMaxBooking(-1)
             ->setStatutRoom(false)

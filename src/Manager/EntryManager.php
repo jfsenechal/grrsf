@@ -17,21 +17,21 @@ class EntryManager
     /**
      * @var EntryRepository
      */
-    private $grrEntryRepository;
+    private $entryRepository;
 
-    public function __construct(EntryRepository $grrEntryRepository)
+    public function __construct(EntryRepository $entryRepository)
     {
-        $this->grrEntryRepository = $grrEntryRepository;
+        $this->grrEntryRepository = $entryRepository;
     }
 
-    public function persist(Entry $grrEntry)
+    public function persist(Entry $entry)
     {
-        $this->grrEntryRepository->persist($grrEntry);
+        $this->grrEntryRepository->persist($entry);
     }
 
-    public function remove(Entry $grrEntry)
+    public function remove(Entry $entry)
     {
-        $this->grrEntryRepository->remove($grrEntry);
+        $this->grrEntryRepository->remove($entry);
     }
 
     public function flush()
@@ -39,9 +39,9 @@ class EntryManager
         $this->grrEntryRepository->flush();
     }
 
-    public function insert(Entry $grrEntry)
+    public function insert(Entry $entry)
     {
-        $this->grrEntryRepository->insert($grrEntry);
+        $this->grrEntryRepository->insert($entry);
     }
 
 }

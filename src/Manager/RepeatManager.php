@@ -16,21 +16,21 @@ class RepeatManager
     /**
      * @var RepeatRepository
      */
-    private $grrEntryRepository;
+    private $entryRepository;
 
-    public function __construct(RepeatRepository $grrEntryRepository)
+    public function __construct(RepeatRepository $entryRepository)
     {
-        $this->grrEntryRepository = $grrEntryRepository;
+        $this->grrEntryRepository = $entryRepository;
     }
 
-    public function persist(Repeat $grrEntry)
+    public function persist(Repeat $entry)
     {
-        $this->grrEntryRepository->persist($grrEntry);
+        $this->grrEntryRepository->persist($entry);
     }
 
-    public function remove(Repeat $grrEntry)
+    public function remove(Repeat $entry)
     {
-        $this->grrEntryRepository->remove($grrEntry);
+        $this->grrEntryRepository->remove($entry);
     }
 
     public function flush()
@@ -38,9 +38,9 @@ class RepeatManager
         $this->grrEntryRepository->flush();
     }
 
-    public function insert(Repeat $grrEntry)
+    public function insert(Repeat $entry)
     {
-        $this->grrEntryRepository->insert($grrEntry);
+        $this->grrEntryRepository->insert($entry);
     }
 
 }

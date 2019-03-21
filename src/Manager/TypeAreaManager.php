@@ -23,14 +23,14 @@ class TypeAreaManager
         $this->typeAreaRepository = $typeAreaRepository;
     }
 
-    public function persist(TypeArea $grrArea)
+    public function persist(TypeArea $area)
     {
-        $this->typeAreaRepository->persist($grrArea);
+        $this->typeAreaRepository->persist($area);
     }
 
-    public function remove(TypeArea $grrArea)
+    public function remove(TypeArea $area)
     {
-        $this->typeAreaRepository->remove($grrArea);
+        $this->typeAreaRepository->remove($area);
     }
 
     public function flush()
@@ -38,9 +38,9 @@ class TypeAreaManager
         $this->typeAreaRepository->flush();
     }
 
-    public function insert(TypeArea $grrArea)
+    public function insert(TypeArea $area)
     {
-        $this->typeAreaRepository->insert($grrArea);
+        $this->typeAreaRepository->insert($area);
     }
 
 }
