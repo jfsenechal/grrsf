@@ -8,15 +8,15 @@
 
 namespace App\Factory;
 
-use App\Entity\GrrRepeat;
+use App\Entity\Repeat;
 
 class RepeatFactory //implements FactoryInterface
 {
     /**
-     * @return GrrRepeat
+     * @return Repeat
      */
-    public function createNew() : GrrRepeat
+    public function createNew() : Repeat
     {
-        return new GrrRepeat();
+        return new Repeat();
     }
 }

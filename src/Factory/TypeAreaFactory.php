@@ -8,16 +8,16 @@
 
 namespace App\Factory;
 
-use App\Entity\GrrTypeArea;
+use App\Entity\TypeArea;
 
 class TypeAreaFactory
 {
-    public function createNew(): GrrTypeArea
+    public function createNew(): TypeArea
     {
-        return new GrrTypeArea();
+        return new TypeArea();
     }
 
-    public function setDefaultValues(GrrTypeArea $typeArea)
+    public function setDefaultValues(TypeArea $typeArea)
     {
         $typeArea
             ->setOrderDisplay(0)

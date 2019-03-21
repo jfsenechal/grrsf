@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\GrrRoom;
+use App\Entity\Room;
 use App\GrrData\EntryData;
-use App\Repository\GrrRoomRepository;
+use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SearchEntryType extends AbstractType
 {
     /**
-     * @var GrrRoomRepository
+     * @var RoomRepository
      */
     private $grrRoomRepository;
     /**
@@ -23,7 +23,7 @@ class SearchEntryType extends AbstractType
      */
     private $entryData;
 
-    public function __construct(GrrRoomRepository $grrRoomRepository, EntryData $entryData)
+    public function __construct(RoomRepository $grrRoomRepository, EntryData $entryData)
     {
         $this->grrRoomRepository = $grrRoomRepository;
         $this->entryData = $entryData;
@@ -56,7 +56,7 @@ class SearchEntryType extends AbstractType
                 [
                     'required' => false,
                     'placeholder' => 'Room',
-                    'class' => GrrRoom::class,
+                    'class' => Room::class,
                     'query_builder' => $this->grrRoomRepository->getQueryBuilder(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]

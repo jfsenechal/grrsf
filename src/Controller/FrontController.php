@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-use App\Form\AreaMenuSelectType;
-use App\Repository\GrrAreaRepository;
-use App\Repository\GrrEntryRepository;
-use App\Repository\GrrRoomRepository;
+use App\Repository\AreaRepository;
+use App\Repository\EntryRepository;
+use App\Repository\RoomRepository;
 use App\Service\Calendar;
+use App\Service\CalendarDisplay;
+use App\Service\Garbadge;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,28 +20,40 @@ class FrontController extends AbstractController
      */
     private $calendar;
     /**
-     * @var GrrAreaRepository
+     * @var AreaRepository
      */
-    private $grrAreaRepository;
+    private $areaRepository;
     /**
-     * @var GrrRoomRepository
+     * @var RoomRepository
      */
-    private $grrRoomRepository;
+    private $roomRepository;
     /**
-     * @var GrrEntryRepository
+     * @var EntryRepository
      */
-    private $grrEntryRepository;
+    private $entryRepository;
+    /**
+     * @var CalendarDisplay
+     */
+    private $calendarDisplay;
+    /**
+     * @var Garbadge
+     */
+    private $garbadge;
 
     public function __construct(
         Calendar $calendar,
-        GrrAreaRepository $grrAreaRepository,
-        GrrRoomRepository $grrRoomRepository,
-        GrrEntryRepository $grrEntryRepository
+        CalendarDisplay $calendarDisplay,
+        AreaRepository $areaRepository,
+        RoomRepository $roomRepository,
+        EntryRepository $entryRepository,
+        Garbadge $garbadge
     ) {
         $this->calendar = $calendar;
-        $this->grrAreaRepository = $grrAreaRepository;
-        $this->grrRoomRepository = $grrRoomRepository;
-        $this->grrEntryRepository = $grrEntryRepository;
+        $this->areaRepository = $areaRepository;
+        $this->roomRepository = $roomRepository;
+        $this->entryRepository = $entryRepository;
+        $this->calendarDisplay = $calendarDisplay;
+        $this->garbadge = $garbadge;
     }
 
     /**
@@ -51,43 +64,38 @@ class FrontController extends AbstractController
         if (!$month) {
             $month = date('n');
         }
-        $t = \DateTimeImmutable::createFromFormat('Y-m-d', '2019-'.$month.'-01');
-        $this->calendar->createCalendarFromDate($t);
-        $next = $this->calendar->getNextMonth();
-        $previous = $this->calendar->getPreviousMonth();
+
+        $startDate = \DateTimeImmutable::createFromFormat('Y-m-d', '2019-'.$month.'-01');
+        $esquare = $this->areaRepository->find(1);
+
+        $this->calendar->createCalendarFromDate($startDate);
         $allDays = $this->calendar->getAllDaysOfMonth();
 
-        $esquare = $this->grrAreaRepository->find(1);
-        $areas = $this->grrAreaRepository->findAll();
-        $entries = $this->grrEntryRepository->findAll();
-        //$rooms = $this->grrRoomRepository->findByArea($area);
-
-        $data = [];
-        $form = $this->createForm(
-            AreaMenuSelectType::class,
-            $data,
-            [
-                'area' => $esquare,
-            ]
-        );
-
-        //pour avoir un iterable
-        $days = [];
         foreach ($allDays as $day) {
-            $days[] = $day;
+            //    dump($day);
+            $entries = $this->entryRepository->search2($day, $esquare);
+            // $this->garbadge->addEntries($day, $entries);
         }
+
+        $areas = $this->areaRepository->findAll();
+        $entries = $this->entryRepository->findAll();
+        //$rooms = $this->RoomRepository->findByArea($area);
+        dump($entries);
+
+        // $form = $this->createForm(AreaMenuSelectType::class, ['area' => $esquare]);
+
+        $oneMonth = $this->calendarDisplay->oneMonth($startDate, $entries);
 
         return $this->render(
             'front/index.html.twig',
             [
                 'first' => $this->calendar->getFirstDay(),
-                'current' => $t,
-                'next' => $next,
-                'previous' => $previous,
-                'range' => $days,
+                'current' => $startDate,
                 'areas' => $areas,
-                'entries'=>$entries,
-                'form' => $form->createView(),
+                'entries' => $entries,
+                'html' => $oneMonth,
+                'form' => '',
+
             ]
         );
     }
@@ -98,8 +106,8 @@ class FrontController extends AbstractController
     public function ajaxRequestGetRooms(Request $request)
     {
         $areaId = $request->get('id');
-        $area = $this->grrAreaRepository->find($areaId);
-        $rooms = $this->grrRoomRepository->findByArea($area);
+        $area = $this->areaRepository->find($areaId);
+        $rooms = $this->roomRepository->findByArea($area);
 
         return $this->render('front/_rooms_options.html.twig', ['rooms' => $rooms]);
     }

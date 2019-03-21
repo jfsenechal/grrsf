@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\GrrArea;
+use App\Entity\Area;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
@@ -42,7 +42,7 @@ class AreaVoter extends Voter
     protected function supports($attribute, $subject)
     {
         if ($subject) {
-            if (!$subject instanceof GrrArea) {
+            if (!$subject instanceof Area) {
                 return false;
             }
         }
@@ -91,11 +91,11 @@ class AreaVoter extends Voter
 
     /**
      * Voir dans l'admin
-     * @param GrrArea $volontaire
+     * @param Area $volontaire
      * @param TokenInterface $token
      * @return bool
      */
-    private function canView(GrrArea $volontaire, TokenInterface $token)
+    private function canView(Area $volontaire, TokenInterface $token)
     {
         if ($this->canEdit($volontaire, $token)) {
             return true;
@@ -103,14 +103,14 @@ class AreaVoter extends Voter
 
     }
 
-    private function canEdit(GrrArea $volontaire, TokenInterface $token)
+    private function canEdit(Area $volontaire, TokenInterface $token)
     {
         $user = $token->getUser();
 
         return $user === $volontaire->getUser();
     }
 
-    private function canDelete(GrrArea $volontaire, TokenInterface $token)
+    private function canDelete(Area $volontaire, TokenInterface $token)
     {
         if ($this->canEdit($volontaire, $token)) {
             return true;

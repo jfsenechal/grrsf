@@ -8,10 +8,10 @@
 
 namespace App\Booking;
 
-use App\Entity\GrrEntry;
-use App\Factory\GrrEntryFactory;
-use App\Manager\GrrEntryManager;
-use App\Repository\GrrEntryRepository;
+use App\Entity\Entry;
+use App\Factory\EntryFactory;
+use App\Manager\EntryManager;
+use App\Repository\EntryRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -63,15 +63,15 @@ class BookingService
      */
     private $parameterBag;
     /**
-     * @var GrrEntryRepository
+     * @var EntryRepository
      */
     private $grrEntryRepository;
     /**
-     * @var GrrEntryFactory
+     * @var EntryFactory
      */
     private $grrEntryFactory;
     /**
-     * @var GrrEntryManager
+     * @var EntryManager
      */
     private $grrEntryManager;
     /**
@@ -86,9 +86,9 @@ class BookingService
 
     public function __construct(
         ParameterBagInterface $parameterBag,
-        GrrEntryRepository $grrEntryRepository,
-        GrrEntryFactory $grrEntryFactory,
-        GrrEntryManager $grrEntryManager
+        EntryRepository $grrEntryRepository,
+        EntryFactory $grrEntryFactory,
+        EntryManager $grrEntryManager
     ) {
         $this->parameterBag = $parameterBag;
         $this->grrEntryRepository = $grrEntryRepository;
@@ -186,9 +186,9 @@ class BookingService
 
     /**
      * @param $booking
-     * @return GrrEntry
+     * @return Entry
      */
-    public function createGrrEntry($booking, string $date): GrrEntry
+    public function createGrrEntry($booking, string $date): Entry
     {
         $form_data = $booking->form_data;
         //13:00 - 18:00
@@ -206,7 +206,7 @@ class BookingService
         return $grrEntry;
     }
 
-    public function getInstance($booking, string $date): GrrEntry
+    public function getInstance($booking, string $date): Entry
     {
         $key = $this->getKeyBooking($booking, $date);
         $this->bookingsFromFlux[] = $key;
@@ -225,7 +225,7 @@ class BookingService
         return $booking->booking_id.'_'.$this->convertToDateTime($date)->format('Y-m-d');
     }
 
-    private function setDefaultFields(GrrEntry $grrEntry)
+    private function setDefaultFields(Entry $grrEntry)
     {
         $grrEntry->setBeneficiaireExt(' ');//pas null
         $grrEntry->setType('B');

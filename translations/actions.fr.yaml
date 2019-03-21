@@ -38,6 +38,7 @@ room:
   informations:
     title: Informations
 menu:
+  home: Accueil
   area: Domaine
   settings: Paramètres
   users: Utilisateurs
@@ -63,3 +64,5 @@ entry:
     title: Liste des réservations
   new:
     title: Nouvelle réservation
+
+

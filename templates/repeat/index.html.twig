@@ -1,0 +1,59 @@
+{% extends 'layout_front.html.twig' %}
+
+{% block title %}GrrRepeat index{% endblock %}
+
+{% block body %}
+    <h1>GrrRepeat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>StartTime</th>
+                <th>EndTime</th>
+                <th>RepType</th>
+                <th>EndDate</th>
+                <th>RepOpt</th>
+                <th>RoomId</th>
+                <th>Timestamp</th>
+                <th>CreateBy</th>
+                <th>Beneficiaire</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>RepNumWeeks</th>
+                <th>Jours</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for grr_repeat in grr_repeats %}
+            <tr>
+                <td>{{ repeat.id }}</td>
+                <td>
+                    <a href="{{ path('grr_repeat_show', {'id':repeat.id}) }}">
+                        {{ repeat.startTime|date('Y-m-d H:i:s') }}
+                    </a>
+                    </td>
+                <td>{{ repeat.endTime|date('Y-m-d H:i:s') }}</td>
+                <td>{{ repeat.repType|periodiciteName }}</td>
+                <td>{{ repeat.endDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ repeat.repOpt }}</td>
+                <td>{{ repeat.roomId | room_getName }}</td>
+                <td>{{ repeat.timestamp ? grr_repeat.timestamp|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ repeat.createBy }}</td>
+                <td>{{ repeat.beneficiaire }}</td>
+                <td>{{ repeat.name }}</td>
+                <td>{{ repeat.type|entryTypeGetName }}</td>
+                <td>{{ repeat.repNumWeeks | getNumWeeks }}</td>
+                <td>{{ repeat.jours }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="18">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('grr_repeat_new') }}">Create new</a>
+{% endblock %}

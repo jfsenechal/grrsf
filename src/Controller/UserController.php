@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Factory\UserFactory;
 use App\Form\UserEditType;
 use App\Form\UserType;
-use App\Manager\GrrUserManager;
+use App\Manager\UserManager;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,24 +21,24 @@ class UserController extends AbstractController
     /**
      * @var UserRepository
      */
-    private $grrUtilisateurRepository;
+    private $utilisateurRepository;
 
     /**
-     * @var GrrUserManager
+     * @var UserManager
      */
-    private $grrUtilisateurManager;
+    private $utilisateurManager;
     /**
      * @var UserFactory
      */
     private $userFactory;
 
     public function __construct(
-        UserRepository $grrUtilisateurRepository,
+        UserRepository $utilisateurRepository,
         UserFactory $userFactory,
-        GrrUserManager $grrUtilisateurManager
+        UserManager $utilisateurManager
     ) {
-        $this->grrUtilisateurRepository = $grrUtilisateurRepository;
-        $this->grrUtilisateurManager = $grrUtilisateurManager;
+        $this->utilisateurRepository = $utilisateurRepository;
+        $this->utilisateurManager = $utilisateurManager;
         $this->userFactory = $userFactory;
     }
 
@@ -48,9 +48,9 @@ class UserController extends AbstractController
     public function index(): Response
     {
         return $this->render(
-            'grr_utilisateurs/index.html.twig',
+            'utilisateurs/index.html.twig',
             [
-                'grr_utilisateurs' => $this->grrUtilisateurRepository->findAll(),
+                'utilisateurs' => $this->utilisateurRepository->findAll(),
             ]
         );
     }
@@ -60,22 +60,22 @@ class UserController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $grrUtilisateur = $this->userFactory->createNew();
-        $form = $this->createForm(UserType::class, $grrUtilisateur);
+        $utilisateur = $this->userFactory->createNew();
+        $form = $this->createForm(UserType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->grrUtilisateurManager->encodePassword($grrUtilisateur, $grrUtilisateur->getPassword());
-            $this->grrUtilisateurRepository->insert($grrUtilisateur);
+            $this->utilisateurManager->encodePassword($utilisateur, $utilisateur->getPassword());
+            $this->utilisateurRepository->insert($utilisateur);
 
-            return $this->redirectToRoute('grr_user_show', ['id' => $grrUtilisateur->getId()]);
+            return $this->redirectToRoute('grr_user_show', ['id' => $utilisateur->getId()]);
         }
 
         return $this->render(
-            'grr_utilisateurs/new.html.twig',
+            'utilisateurs/new.html.twig',
             [
-                'grr_utilisateur' => $grrUtilisateur,
+                'utilisateur' => $utilisateur,
                 'form' => $form->createView(),
             ]
         );
@@ -84,12 +84,12 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="grr_user_show", methods={"GET"})
      */
-    public function show(User $grrUtilisateur): Response
+    public function show(User $utilisateur): Response
     {
         return $this->render(
-            'grr_utilisateurs/show.html.twig',
+            'utilisateurs/show.html.twig',
             [
-                'grr_utilisateur' => $grrUtilisateur,
+                'utilisateur' => $utilisateur,
             ]
         );
     }
@@ -97,24 +97,24 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="grr_user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $grrUtilisateur): Response
+    public function edit(Request $request, User $utilisateur): Response
     {
-        $form = $this->createForm(UserEditType::class, $grrUtilisateur);
+        $form = $this->createForm(UserEditType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->grrUtilisateurRepository->flush();
+            $this->utilisateurRepository->flush();
 
             return $this->redirectToRoute(
                 'grr_user_show',
-                ['id' => $grrUtilisateur->getId()]
+                ['id' => $utilisateur->getId()]
             );
         }
 
         return $this->render(
-            'grr_utilisateurs/edit.html.twig',
+            'utilisateurs/edit.html.twig',
             [
-                'grr_utilisateur' => $grrUtilisateur,
+                'utilisateur' => $utilisateur,
                 'form' => $form->createView(),
             ]
         );
@@ -123,11 +123,11 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="grr_user_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, User $grrUtilisateur): Response
+    public function delete(Request $request, User $utilisateur): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$grrUtilisateur->getLogin(), $request->request->get('_token'))) {
-            $this->grrUtilisateurRepository->remove($grrUtilisateur);
-            $this->grrUtilisateurRepository->flush();
+        if ($this->isCsrfTokenValid('delete'.$utilisateur->getLogin(), $request->request->get('_token'))) {
+            $this->utilisateurRepository->remove($utilisateur);
+            $this->utilisateurRepository->flush();
         }
 
         return $this->redirectToRoute('grr_user_index');

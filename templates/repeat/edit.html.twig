@@ -1,0 +1,13 @@
+{% extends 'layout_front.html.twig' %}
+
+{% block title %}Edit GrrRepeat{% endblock %}
+
+{% block body %}
+    <h1>Edit GrrRepeat</h1>
+
+    {{ include('repeat/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('grr_repeat_index') }}">back to list</a>
+
+    {{ include('repeat/_delete_form.html.twig') }}
+{% endblock %}

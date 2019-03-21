@@ -8,7 +8,7 @@
 
 namespace App\Factory;
 
-use App\Entity\GrrRepeat;
+use App\Entity\Repeat;
 
 class GrrRepeatFactory
 {
@@ -21,7 +21,7 @@ class GrrRepeatFactory
         $this->factory = $factory;
     }
 
-    public function createNew(): GrrRepeat
+    public function createNew(): Repeat
     {
         return $this->factory->createNew();
     }

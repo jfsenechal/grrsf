@@ -91,6 +91,10 @@ area:
     maxBooking:
       label: Nombre max. de réservations par utilisateur
       help: -1 si pas de restriction - Pour toutes les ressources du domaine
+    calendardefaultvalues:
+      label: 'messages'
+    idTypeParDefaut:
+      label: 'messages'
   rooms:
     title: Nombre de ressources
 sunday: Dimanche
@@ -123,7 +127,7 @@ login:
     username:
       label: Nom d'utilisateur
   password: Mot de passe
-  title: S'identifier
+  title: Authentification
   remember:
     me: 'messages'
 btn:

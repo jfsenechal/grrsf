@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\GrrArea;
-use App\Entity\GrrRoom;
-use App\Repository\GrrAreaRepository;
-use App\Repository\GrrRoomRepository;
+use App\Entity\Area;
+use App\Entity\Room;
+use App\Repository\AreaRepository;
+use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,15 +14,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AreaMenuSelectType extends AbstractType
 {
     /**
-     * @var GrrAreaRepository
+     * @var AreaRepository
      */
     private $grrAreaRepository;
     /**
-     * @var GrrRoomRepository
+     * @var RoomRepository
      */
     private $grrRoomRepository;
 
-    public function __construct(GrrAreaRepository $grrAreaRepository, GrrRoomRepository $grrRoomRepository)
+    public function __construct(AreaRepository $grrAreaRepository, RoomRepository $grrRoomRepository)
     {
         $this->grrAreaRepository = $grrAreaRepository;
         $this->grrRoomRepository = $grrRoomRepository;
@@ -37,7 +37,7 @@ class AreaMenuSelectType extends AbstractType
                 'area',
                 EntityType::class,
                 [
-                    'class' => GrrArea::class,
+                    'class' => Area::class,
                     'query_builder' => $this->grrAreaRepository->getQueryBuilder(),
                     'required' => true,
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
@@ -47,7 +47,7 @@ class AreaMenuSelectType extends AbstractType
                 'room',
                 EntityType::class,
                 [
-                    'class' => GrrRoom::class,
+                    'class' => Room::class,
                     'required' => false,
                     'placeholder' => 'menu.select.room',
                     'query_builder' => $this->grrRoomRepository->getRoomsByAreaQueryBuilder($area),
@@ -65,7 +65,7 @@ class AreaMenuSelectType extends AbstractType
             )
         );
 
-        $resolver->setAllowedTypes('area', GrrArea::class);
+        $resolver->setAllowedTypes('area', Area::class);
     }
 
 

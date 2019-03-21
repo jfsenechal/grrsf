@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout_front.html.twig' %}
 
 {% block title %}GrrArea index{% endblock %}
 
@@ -7,11 +7,15 @@
         <div class="col-3">
             {#{ form_row(form.myCheckbox, {label_attr: {class: 'checkbox-custom'} }) }#}
 
-            {{ form(form) }}
+
         </div>
         <div class="col-9">
-            {% include 'front/_calendars.html.twig' %}
+            {{ html|raw }}
         </div>
     </div>
+
+
+
+
     {% include 'front/_menu_select.js.html.twig' %}
 {% endblock %}

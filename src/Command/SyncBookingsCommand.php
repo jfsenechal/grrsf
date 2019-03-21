@@ -3,9 +3,9 @@
 namespace App\Command;
 
 use App\Booking\BookingService;
-use App\Factory\GrrEntryFactory;
-use App\Manager\GrrEntryManager;
-use App\Repository\GrrEntryRepository;
+use App\Factory\EntryFactory;
+use App\Manager\EntryManager;
+use App\Repository\EntryRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\Output;
@@ -21,24 +21,24 @@ class SyncBookingsCommand extends Command
      */
     private $bookingService;
     /**
-     * @var GrrEntryFactory
+     * @var EntryFactory
      */
     private $grrEntryFactory;
     /**
-     * @var GrrEntryRepository
+     * @var EntryRepository
      */
     private $grrEntryRepository;
     /**
-     * @var GrrEntryManager
+     * @var EntryManager
      */
     private $grrEntryManager;
 
     public function __construct(
         ?string $name = null,
         BookingService $bookingService,
-        GrrEntryFactory $grrEntryFactory,
-        GrrEntryRepository $grrEntryRepository,
-        GrrEntryManager $grrEntryManager
+        EntryFactory $grrEntryFactory,
+        EntryRepository $grrEntryRepository,
+        EntryManager $grrEntryManager
     ) {
         parent::__construct($name);
         $this->bookingService = $bookingService;

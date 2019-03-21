@@ -1,9 +1,11 @@
-{% set numericDay = day|date('w') %}
+{% set dateTime = day.date %}
+
+{% set numericDay = dateTime|date('w') %}
 
 {# premiere ligne #}
 {% if loop.first %}
 
-    <td>{{ day | date('W') }}</td>
+    <td>{{ dateTime | date('W') }}</td>
 
     {# on remplit les cases vides #}
     {% if numericDay != 1 %}
@@ -12,10 +14,10 @@
 
     {# si lundi 1 #}
 {% elseif numericDay == 1 %}
-    <td>{{ day | date('W') }}</td>
+    <td>{{ dateTime | date('W') }}</td>
 {% endif %}
 
-<td><span class="text-muted">({{ numericDay }})</span> {{ day | date('j') }}</td>
+<td>{% include 'front/_day_line.html.twig' %}</td>
 
 {# retour a la ligne si dimanche #}
 {% if numericDay == 0 %}

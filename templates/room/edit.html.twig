@@ -1,0 +1,14 @@
+{% extends 'layout_front.html.twig' %}
+
+{% block title %}{{ room.roomName }}{% endblock %}
+
+{% block body %}
+    <h1>{{ room.roomName }}</h1>
+
+    {{ include('room/_form.html.twig', {'button_label': 'form.btn.update'}) }}
+
+    <br />
+    <a href="{{ path('grr_area_show',{'id': room.areaId}) }}"><i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+
+    {{ include('room/_delete_form.html.twig') }}
+{% endblock %}

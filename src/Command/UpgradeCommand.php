@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Repository\GrrAreaRepository;
+use App\Repository\AreaRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,7 +12,7 @@ class UpgradeCommand extends Command
 {
     protected static $defaultName = 'grr:upgrade';
     /**
-     * @var GrrAreaRepository
+     * @var AreaRepository
      */
     private $grrAreaRepository;
     /**
@@ -23,7 +23,7 @@ class UpgradeCommand extends Command
 
     public function __construct(
         ?string $name = null,
-        GrrAreaRepository $grrAreaRepository
+        AreaRepository $grrAreaRepository
     ) {
         parent::__construct($name);
         $this->grrAreaRepository = $grrAreaRepository;
