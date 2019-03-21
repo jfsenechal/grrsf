@@ -4,24 +4,16 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-2">
-            {{ form_start(form) }}
-            {{ form_row(form.area, {label_attr: {class: 'checkbox-custom'} }) }}
-            {{ form_end(form) }}
-        </div>
-        <div class="col-5">
-            {{ navigation|raw }}
-        </div>
-        <div class="col-5">
-            {{ navigation2|raw }}
-        </div>
-    </div>
+    <h3>Front</h3>
 
-    <h3 class="text-center text-success">{{ current|date('m Y') }}</h3>
+    <br/>
+    <a href="{{ path('grr_front_month', {'month': 3}) }}">Par mois</a>
+    <br/><br/>
 
-    {{ data|raw }}
+    <a href="{{ path('grr_front_day', {'day': 3}) }}">Par jour</a>
+    <br/><br/>
 
+    <a href="{{ path('grr_front_week', {'week': 3}) }}">Par semaine</a>
+    <br/><br/>
 
-    {% include 'front/_menu_select.js.html.twig' %}
 {% endblock %}

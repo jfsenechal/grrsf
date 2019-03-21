@@ -38,17 +38,6 @@ class Day
     }
 
     /**
-     * @param \DateTimeInterface $date
-     * @return Day
-     */
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
      * @return Entry[]
      */
     public function getEntries(): array
@@ -65,6 +54,21 @@ class Day
         $this->entries = $entries;
 
         return $this;
+    }
+
+    public function time(): string
+    {
+        return $this->date->format('h:s');
+    }
+
+    public function year(): string
+    {
+        return $this->date->format('Y');
+    }
+
+    public function month(): string
+    {
+        return $this->date->format('m');
     }
 
 }

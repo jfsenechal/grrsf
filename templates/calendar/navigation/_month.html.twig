@@ -1,8 +1,10 @@
 <table class="table">
     <tr>
-        <th colspan="3"><a href="{{ path('grr_front_home', {'month': previous|date('n')}) }}">Précédent</a></th>
-        <th colspan="2">{{ current | date('Y-m') }}</th>
-        <th colspan="3"><a href="{{ path('grr_front_home', {'month': next|date('n')}) }}">Suivant</a></th>
+        <th class="text-center" colspan="8">
+            <a href="{{ path('grr_front_month', {'month': current|date('n')}) }}">
+                {{ current|date('F Y') }}
+            </a>
+        </th>
     </tr>
     <tr>
         <th>{{ 'week'|trans }}</th>
@@ -17,7 +19,7 @@
     <tbody>
     <tr>
         {% for day in days %}
-            {% include 'default/_week_line.html.twig' %}
+            {% include 'calendar/navigation/_week_line.html.twig' %}
         {% endfor %}
     <tr>
     </tbody>

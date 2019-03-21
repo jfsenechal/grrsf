@@ -151,7 +151,7 @@ class GrrExtension extends AbstractExtension
      */
     public function completeTr(int $numericDay, string $action)
     {
-        return $this->twigEnvironment->render('default/_complete_tr.html.twig', ['numericDay' => $numericDay, 'action'=>$action]);
+        return $this->twigEnvironment->render('calendar/_complete_tr.html.twig', ['numericDay' => $numericDay, 'action'=>$action]);
 
     }
 }

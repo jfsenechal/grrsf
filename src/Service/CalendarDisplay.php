@@ -35,29 +35,6 @@ class CalendarDisplay
         $this->calendarDataManager = $calendarDataManager;
     }
 
-    public function oneMonthNavigation(\DateTimeImmutable $dateTimeImmutable)
-    {
-        $next = $this->calendar->getNextMonth();
-        $previous = $this->calendar->getPreviousMonth();
-        $allDays = $this->calendar->getAllDaysOfMonth();
-        //pour avoir un iterable
-        $days = [];
-        foreach ($allDays as $date) {
-            $day = new Day($date);
-            $days[] = $day;
-        }
-
-        return $this->environment->render(
-            'front/_calendar_navigation.html.twig',
-            [
-                'next' => $next,
-                'previous' => $previous,
-                'days' => $days,
-                'current' => $dateTimeImmutable,
-            ]
-        );
-    }
-
 
     /**
      * @param \DateTimeImmutable $dateTimeImmutable
@@ -85,7 +62,7 @@ class CalendarDisplay
         }
 
         return $this->environment->render(
-            'front/_calendar_data.html.twig',
+            'calendar/data/_calendar_data.html.twig',
             [
                 'next' => $next,
                 'previous' => $previous,

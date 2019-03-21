@@ -1,0 +1,14 @@
+{% extends 'layout_front.html.twig' %}
+
+{% block title %}GrrArea index{% endblock %}
+
+{% block body %}
+
+    {% include 'front/_navigation.html.twig' %}
+
+    <h3 class="text-center text-success">{{ current|date('m Y') }}</h3>
+
+    {{ data|raw }}
+
+{% endblock %}
+

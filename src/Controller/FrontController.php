@@ -9,12 +9,17 @@ use App\Repository\RoomRepository;
 use App\Service\Calendar;
 use App\Service\CalendarDataManager;
 use App\Service\CalendarDisplay;
-use App\Service\Garbadge;
+use App\Service\CalendarNavigationDisplay;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class FrontController
+ * @package App\Controller
+ * @Route("/front")
+ */
 class FrontController extends AbstractController
 {
     /**
@@ -38,30 +43,40 @@ class FrontController extends AbstractController
      */
     private $calendarDisplay;
     /**
-     * @var Garbadge
+     * @var CalendarNavigationDisplay
      */
-    private $garbadge;
+    private $calendarNavigationDisplay;
 
     public function __construct(
         Calendar $calendar,
         CalendarDisplay $calendarDisplay,
+        CalendarNavigationDisplay $calendarNavigationDisplay,
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
-        EntryRepository $entryRepository,
-        Garbadge $garbadge
+        EntryRepository $entryRepository
     ) {
         $this->calendar = $calendar;
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
         $this->entryRepository = $entryRepository;
         $this->calendarDisplay = $calendarDisplay;
-        $this->garbadge = $garbadge;
+        $this->calendarNavigationDisplay = $calendarNavigationDisplay;
     }
 
     /**
-     * @Route("/front/{month}", name="grr_front_home", methods={"GET"})
+     * @Route("/", name="grr_front_home", methods={"GET"})
      */
     public function index(int $month = null): Response
+    {
+        return $this->render(
+            'front/index.html.twig'
+        );
+    }
+
+    /**
+     * @Route("/month/{month}", name="grr_front_month", methods={"GET"})
+     */
+    public function month(int $month = null): Response
     {
         if (!$month) {
             $month = date('n');
@@ -74,30 +89,49 @@ class FrontController extends AbstractController
 
         $areas = $this->areaRepository->findAll();
         $entries = $this->entryRepository->findAll();
-        //$rooms = $this->roomRepository->findByArea($area);
-        dump($esquare);
 
-        $form = $this->createForm(AreaMenuSelectType::class, $esquare, ['area' => $esquare]);
+        $form = $this->createForm(AreaMenuSelectType::class, $esquare);
+
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);
 
         $dataMonth = $this->calendarDisplay->oneMonth($startDate, $calendarDataManager);
-        $navigationMonth = $this->calendarDisplay->oneMonthNavigation($startDate);
-        $nexMonth = $this->calendar->getNextMonth();
-        $navigationNextMonth = $this->calendarDisplay->oneMonthNavigation($nexMonth);
+
+        $navigation = $this->calendarNavigationDisplay->create($startDate, 2);
 
         return $this->render(
-            'front/index.html.twig',
+            'front/month.html.twig',
             [
                 'first' => $this->calendar->getFirstDay(),
                 'current' => $startDate,
                 'areas' => $areas,
                 'entries' => $entries,
                 'data' => $dataMonth,
-                'navigation' => $navigationMonth,
-                'navigation2' => $navigationNextMonth,
+                'navigation' => $navigation,
                 'form' => $form->createView(),
             ]
+        );
+    }
+
+    /**
+     * @Route("/day/{day}", name="grr_front_day", methods={"GET"})
+     */
+    public function day(int $day = null): Response
+    {
+        return $this->render(
+            'front/day.html.twig',
+            []
+        );
+    }
+
+    /**
+     * @Route("/week/{week}", name="grr_front_week", methods={"GET"})
+     */
+    public function week(int $week = null): Response
+    {
+        return $this->render(
+            'front/week.html.twig',
+            []
         );
     }
 

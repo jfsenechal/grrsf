@@ -1,0 +1,13 @@
+<table class="table">
+    <tr>
+        <td>{{ navigation.previousButton | raw }}</td>
+
+        {% for month in navigation.months %}
+            <td>{{ month | raw }}</td>
+        {% endfor %}
+
+        <td>
+            {{ navigation.nextButton | raw }}
+        </td>
+    </tr>
+</table>

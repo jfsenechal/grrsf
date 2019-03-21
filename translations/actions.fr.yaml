@@ -65,4 +65,5 @@ entry:
   new:
     title: Nouvelle réservation
 
-
+next: Suivant
+previous: Précédent

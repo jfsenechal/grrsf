@@ -20,6 +20,14 @@ class Calendar
         $this->originalDate = $dateTime;
     }
 
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getOriginalDate(): \DateTimeImmutable
+    {
+        return $this->originalDate;
+    }
+
     public function getFirstDay(): \DateTimeInterface
     {
         $date = clone $this->originalDate;
@@ -41,6 +49,13 @@ class Calendar
         return $date->modify('last day of 1 month');
     }
 
+    public function getPreviousMonth(): \DateTimeInterface
+    {
+        $date = clone $this->originalDate;
+
+        return $date->modify('previous month');
+    }
+
     /**
      * @return \DatePeriod
      * @throws \Exception
@@ -52,12 +67,5 @@ class Calendar
         $end = $end->modify('+1 day');//to be included
 
         return new \DatePeriod($this->getFirstDay(), $interval, $end);
-    }
-
-    public function getPreviousMonth(): \DateTimeInterface
-    {
-        $date = clone $this->originalDate;
-
-        return $date->modify('previous month');
     }
 }
