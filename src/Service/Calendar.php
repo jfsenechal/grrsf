@@ -13,45 +13,42 @@ class Calendar
     /**
      * @var \DateTimeImmutable
      */
-    protected $originalDate;
+    protected $dateTimeImmutable;
 
     public function createCalendarFromDate(\DateTimeImmutable $dateTime)
     {
-        $this->originalDate = $dateTime;
+        $this->dateTimeImmutable = $dateTime;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
-    public function getOriginalDate(): \DateTimeImmutable
+    public function getDateTimeImmutable(): \DateTimeImmutable
     {
-        return $this->originalDate;
+        return $this->dateTimeImmutable;
     }
 
     public function getFirstDay(): \DateTimeInterface
     {
-        $date = clone $this->originalDate;
+        $date = clone $this->dateTimeImmutable;
 
         return $date->modify('first day of this month');
     }
 
     public function getLastDay(): \DateTimeInterface
     {
-        $date = clone $this->originalDate;
+        $date = clone $this->dateTimeImmutable;
 
         return $date->modify('last day of this month');
     }
 
     public function getNextMonth(): \DateTimeInterface
     {
-        $date = clone $this->originalDate;
+        $date = clone $this->dateTimeImmutable;
 
         return $date->modify('last day of 1 month');
     }
 
     public function getPreviousMonth(): \DateTimeInterface
     {
-        $date = clone $this->originalDate;
+        $date = clone $this->dateTimeImmutable;
 
         return $date->modify('previous month');
     }
