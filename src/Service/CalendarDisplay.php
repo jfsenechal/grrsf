@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\Entry;
 use App\Model\Day;
 use Twig\Environment;

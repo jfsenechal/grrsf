@@ -40,7 +40,6 @@ class AddRoomsFieldListener implements EventSubscriberInterface
     {
         $area = $event->getData();
         $form = $event->getForm();
-        dump($area);
 
         if ($area) {
             $form->add(

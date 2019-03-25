@@ -47,7 +47,7 @@ class CalendarDataManager
     {
         $data = [];
         foreach ($this->entries as $entry) {
-            if ($entry->getStartTime()->format('Y-m-d') == $dateTime->format('Y-m-d')) {dump(123);
+            if ($entry->getStartTime()->format('Y-m-d') == $dateTime->format('Y-m-d')) {
                 $data[] = $entry;
             }
         }

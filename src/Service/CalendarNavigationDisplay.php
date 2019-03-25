@@ -16,28 +16,34 @@ use Webmozart\Assert\Assert;
 class CalendarNavigationDisplay
 {
     /**
-     * @var Calendar
-     */
-    private $calendar;
-    /**
      * @var Environment
      */
     private $environment;
+    /**
+     * @var Calendar
+     */
+    private $calendar;
 
-    public function __construct(Calendar $calendar, Environment $environment)
+    public function __construct(Calendar $calendarMutable, Environment $environment)
     {
-        $this->calendar = $calendar;
         $this->environment = $environment;
+        $this->calendar = $calendarMutable;
     }
 
-    public function create(\DateTimeInterface $dateTime, int $number = 1)
+    public function create(int $number = 1)
     {
         Assert::greaterThan($number, 0);
         $navigation = new Navigation();
 
         $navigation->setNextButton($this->nextButton());
         $navigation->setPreviousButton($this->previousButton());
-        $navigation->addMonth($this->month());
+
+        $current = $this->calendar->getDateTimeImmutable();
+
+        for ($i = 0; $i < $number; $i++) {
+            $navigation->addMonth($this->month($current));
+            $current->modify('+1 month');
+        }
 
         return $this->environment->render(
             'calendar/navigation/_calendar_navigation.html.twig',
@@ -72,17 +78,16 @@ class CalendarNavigationDisplay
         );
     }
 
-    public function month()
+    public function month(\DateTimeInterface $dateTime)
     {
-        $allDays = $this->calendar->getAllDaysOfMonth();
+        $allDays = $this->calendar->getAllDaysOfMonth($dateTime);
         $days = $this->getDays($allDays);
-        $current = $this->calendar->getOriginalDate();
 
         return $this->environment->render(
             'calendar/navigation/_month.html.twig',
             [
                 'days' => $days,
-                'current' => $current,
+                'current' => $dateTime,
             ]
         );
     }
@@ -94,6 +99,7 @@ class CalendarNavigationDisplay
      */
     protected function getDays(iterable $data)
     {
+        $days = [];
         foreach ($data as $date) {
             $day = new Day($date);
             $days[] = $day;

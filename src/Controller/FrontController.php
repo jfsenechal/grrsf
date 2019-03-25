@@ -82,10 +82,11 @@ class FrontController extends AbstractController
             $month = date('n');
         }
 
-        $startDate = \DateTimeImmutable::createFromFormat('Y-m-d', '2019-'.$month.'-01');
+        $startDate = \DateTime::createFromFormat('Y-m-d', '2019-'.$month.'-01');
+        $startDateImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', '2019-'.$month.'-01');
         $esquare = $this->areaRepository->find(1);
 
-        $this->calendar->createCalendarFromDate($startDate);
+        $this->calendar->createCalendarFromDate($startDateImmutable);
 
         $areas = $this->areaRepository->findAll();
         $entries = $this->entryRepository->findAll();
@@ -95,9 +96,9 @@ class FrontController extends AbstractController
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);
 
-        $dataMonth = $this->calendarDisplay->oneMonth($startDate, $calendarDataManager);
+        $dataMonth = $this->calendarDisplay->oneMonth($startDateImmutable, $calendarDataManager);
 
-        $navigation = $this->calendarNavigationDisplay->create($startDate, 2);
+        $navigation = $this->calendarNavigationDisplay->create();
 
         return $this->render(
             'front/month.html.twig',
