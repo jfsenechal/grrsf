@@ -5,7 +5,7 @@
 {# premiere ligne #}
 {% if loop.first %}
 
-    <td>{{ dateTime | date('W') }}</td>
+    {% include 'calendar/navigation/_cell_week.html.twig' %}
 
     {# on remplit les cases vides #}
     {% if numericDay != 1 %}
@@ -14,10 +14,10 @@
 
     {# si lundi 1 #}
 {% elseif numericDay == 1 %}
-    <td>{{ dateTime | date('W') }}</td>
+    {% include 'calendar/navigation/_cell_week.html.twig' %}
 {% endif %}
 
-<td>{% include 'calendar/navigation/_day_line.html.twig' %}</td>
+<td>{% include 'calendar/navigation/_cell_day.html.twig' %}</td>
 
 {# retour a la ligne si dimanche #}
 {% if numericDay == 0 %}
