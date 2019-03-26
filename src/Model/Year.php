@@ -6,8 +6,7 @@
  * Time: 21:09
  */
 
-namespace App\Service;
-
+namespace App\Model;
 
 final class Year
 {

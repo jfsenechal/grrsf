@@ -17,7 +17,14 @@
         <th>{{ 'sunday'|trans }}</th>
     </tr>
     <tbody>
-    <tr>
+
+    {% if current | date('W') == app.request.get('week') %}
+        {% set class = "table-info" %}
+    {% else %}
+        {% set class = "" %}
+    {% endif %}
+
+    <tr class="{{ class }}">
         {% for day in days %}
             {% include 'calendar/navigation/_week_line.html.twig' %}
         {% endfor %}

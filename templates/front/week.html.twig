@@ -4,10 +4,12 @@
 
 {% block body %}
 
-
     {% include 'front/_navigation.html.twig' %}
 
-    <h3 class="text-center text-success">{{ current|date('m Y') }}</h3>
+    <h3 class="text-center text-success">
+        {{ 'week'|trans }} du {{ week.firstDay|date('d-m') }}
+        au {{ week.lastDay|date('d-m') }}
+    </h3>
 
     {{ data|raw }}
 
@@ -15,7 +17,7 @@
         <thead>
         <tr>
             <th>{{ 'ressources'|trans }}</th>
-            {% for day in days %}
+            {% for day in week.days %}
                 <th>{{ day|date('d') }}</th>
             {% endfor %}
         </tr>
@@ -24,7 +26,7 @@
         {% for room in rooms %}
             <tr>
                 <td>{{ room.name }}</td>
-                {% for day in days %}
+                {% for day in week.days %}
                     <th>entry</th>
                 {% endfor %}
             </tr>
@@ -32,4 +34,8 @@
         </tbody>
     </table>
 
+{% endblock %}
+
+{% block scripts %}
+    {% include 'front/_menu_select.js.html.twig' %}
 {% endblock %}

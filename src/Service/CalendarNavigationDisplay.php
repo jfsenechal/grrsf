@@ -10,6 +10,7 @@ namespace App\Service;
 
 use App\Entity\Area;
 use App\Model\Day;
+use App\Model\Month;
 use App\Model\Navigation;
 use Twig\Environment;
 use Webmozart\Assert\Assert;
@@ -21,24 +22,22 @@ class CalendarNavigationDisplay
      */
     private $environment;
     /**
-     * @var Calendar
+     * @var Month
      */
-    private $calendar;
-
+    private $month;
     /**
      * @var Area
      */
     private $area;
-
     /**
      * @var int
      */
-    private $month;
+    private $monthNumeric;
 
-    public function __construct(Calendar $calendar, Environment $environment)
+    public function __construct(Month $calendar, Environment $environment)
     {
         $this->environment = $environment;
-        $this->calendar = $calendar;
+        $this->month = $calendar;
     }
 
     public function init(Area $area, int $month)
@@ -49,7 +48,7 @@ class CalendarNavigationDisplay
     public function create(Area $area, int $month, int $number = 1)
     {
         $this->area = $area;
-        $this->month = $month;
+        $this->monthNumeric = $month;
 
         Assert::greaterThan($number, 0);
         //todo extract
@@ -58,7 +57,7 @@ class CalendarNavigationDisplay
         $navigation->setNextButton($this->nextButton());
         $navigation->setPreviousButton($this->previousButton());
 
-        $current = $this->calendar->getDateTimeImmutable();
+        $current = $this->month->getDateTimeImmutable();
 
         for ($i = 0; $i < $number; $i++) {
             $navigation->addMonth($this->month($current));
@@ -76,35 +75,35 @@ class CalendarNavigationDisplay
 
     public function previousButton()
     {
-        $previous = $this->calendar->getPreviousMonth();
+        $previous = $this->month->getPreviousMonth();
 
         return $this->environment->render(
             'calendar/navigation/_button_previous.html.twig',
             [
                 'previous' => $previous,
                 'area' => $this->area,
-                'month' => $this->month,
+                'month' => $this->monthNumeric,
             ]
         );
     }
 
     public function nextButton()
     {
-        $next = $this->calendar->getNextMonth();
+        $next = $this->month->getNextMonth();
 
         return $this->environment->render(
             'calendar/navigation/_button_next.html.twig',
             [
                 'next' => $next,
                 'area' => $this->area,
-                'month' => $this->month,
+                'month' => $this->monthNumeric,
             ]
         );
     }
 
     public function month(\DateTimeInterface $dateTime)
     {
-        $allDays = $this->calendar->getAllDaysOfMonth($dateTime);
+        $allDays = $this->month->getDays();
         $days = $this->getDays($allDays);
 
         return $this->environment->render(

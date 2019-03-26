@@ -6,23 +6,38 @@
  * Time: 16:22
  */
 
-namespace App\Service;
+namespace App\Model;
 
-class Calendar
+class Month
 {
     /**
      * @var \DateTimeImmutable
      */
     protected $dateTimeImmutable;
 
-    public function createCalendarFromDate(\DateTimeImmutable $dateTime)
+    public function createCalendarFromDate(\DateTimeImmutable $dateTime): self
     {
         $this->dateTimeImmutable = $dateTime;
+
+        return $this;
     }
 
     public function getDateTimeImmutable(): \DateTimeImmutable
     {
         return $this->dateTimeImmutable;
+    }
+
+    /**
+     * @return \DatePeriod
+     * @throws \Exception
+     */
+    public function getDays(): \DatePeriod
+    {
+        $interval = new \DateInterval('P1D');
+        $end = $this->getLastDay();
+        $end = $end->modify('+1 day');//to be included
+
+        return new \DatePeriod($this->getFirstDay(), $interval, $end);
     }
 
     public function getFirstDay(): \DateTimeInterface
@@ -51,18 +66,5 @@ class Calendar
         $date = clone $this->dateTimeImmutable;
 
         return $date->modify('previous month');
-    }
-
-    /**
-     * @return \DatePeriod
-     * @throws \Exception
-     */
-    public function getAllDaysOfMonth(): \DatePeriod
-    {
-        $interval = new \DateInterval('P1D');
-        $end = $this->getLastDay();
-        $end = $end->modify('+1 day');//to be included
-
-        return new \DatePeriod($this->getFirstDay(), $interval, $end);
     }
 }

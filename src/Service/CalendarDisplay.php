@@ -10,14 +10,15 @@ namespace App\Service;
 
 use App\Entity\Entry;
 use App\Model\Day;
+use App\Model\Month;
 use Twig\Environment;
 
 class CalendarDisplay
 {
     /**
-     * @var Calendar
+     * @var Month
      */
-    private $calendar;
+    private $month;
     /**
      * @var Environment
      */
@@ -27,9 +28,9 @@ class CalendarDisplay
      */
     private $calendarDataManager;
 
-    public function __construct(Calendar $calendar, CalendarDataManager $calendarDataManager, Environment $environment)
+    public function __construct(Month $month, CalendarDataManager $calendarDataManager, Environment $environment)
     {
-        $this->calendar = $calendar;
+        $this->month = $month;
         $this->environment = $environment;
         $this->calendarDataManager = $calendarDataManager;
     }
@@ -45,10 +46,10 @@ class CalendarDisplay
      */
     public function oneMonth(\DateTimeImmutable $dateTimeImmutable, CalendarDataManager $calendarDataManager = null)
     {
-        $this->calendar->createCalendarFromDate($dateTimeImmutable);
-        $next = $this->calendar->getNextMonth();
-        $previous = $this->calendar->getPreviousMonth();
-        $allDays = $this->calendar->getAllDaysOfMonth();
+        $this->month->createCalendarFromDate($dateTimeImmutable);
+        $next = $this->month->getNextMonth();
+        $previous = $this->month->getPreviousMonth();
+        $allDays = $this->month->getDays();
         //pour avoir un iterable
         $days = [];
         foreach ($allDays as $date) {

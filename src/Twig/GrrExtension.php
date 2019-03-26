@@ -211,8 +211,9 @@ class GrrExtension extends AbstractExtension
         $area = $attributes['area'];
         $room = $attributes['room'];
         $year = $attributes['year'];
+        $month = $attributes['month'];
 
-        $params = ['area' => $area, 'year' => $year, 'week' => $week];
+        $params = ['area' => $area, 'year' => $year, 'month' => $month, 'week' => $week];
 
         if ($room) {
             $params['room'] = $room;

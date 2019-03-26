@@ -5,15 +5,15 @@ namespace App\Controller;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Form\AreaMenuSelectType;
+use App\Model\Month;
+use App\Model\Week;
 use App\Navigation\MenuSelect;
 use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
-use App\Service\Calendar;
 use App\Service\CalendarDataManager;
 use App\Service\CalendarDisplay;
 use App\Service\CalendarNavigationDisplay;
-use App\Service\WeekService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FrontController extends AbstractController
 {
     /**
-     * @var Calendar
+     * @var Month
      */
     private $calendar;
     /**
@@ -52,18 +52,18 @@ class FrontController extends AbstractController
      */
     private $calendarNavigationDisplay;
     /**
-     * @var WeekService
+     * @var Week
      */
-    private $weekService;
+    private $week;
 
     public function __construct(
-        Calendar $calendar,
+        Month $calendar,
         CalendarDisplay $calendarDisplay,
         CalendarNavigationDisplay $calendarNavigationDisplay,
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
-        WeekService $weekService
+        Week $week
     ) {
         $this->calendar = $calendar;
         $this->areaRepository = $areaRepository;
@@ -71,7 +71,7 @@ class FrontController extends AbstractController
         $this->entryRepository = $entryRepository;
         $this->calendarDisplay = $calendarDisplay;
         $this->calendarNavigationDisplay = $calendarNavigationDisplay;
-        $this->weekService = $weekService;
+        $this->week = $week;
     }
 
     /**
@@ -144,17 +144,17 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/week/area/{area}/{year}/{week}/room/{room}", name="grr_front_week", methods={"GET"})
+     * @Route("/week/area/{area}/year/{year}/month/{month}/week/{week}/room/{room}", name="grr_front_week", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
      * @Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
      */
-    public function week(Area $area, int $year, int $week, Room $room = null): Response
+    public function week(Area $area, int $year, int $month, int $week, int $room = null): Response
     {
         $data = '';
 
-        $startDate = new \DateTimeImmutable();
+        $startDateImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
 
-        $this->calendar->createCalendarFromDate($startDate);
+        $this->calendar->createCalendarFromDate($startDateImmutable);
 
         $areas = $this->areaRepository->findAll();
         $entries = $this->entryRepository->findAll();
@@ -162,18 +162,19 @@ class FrontController extends AbstractController
         $rooms = $this->roomRepository->findByArea($area);
 
         $form = $this->generateMenuSelect($area);
-        $navigation = $this->calendarNavigationDisplay->create();
 
-        $days = $this->weekService->getDays($year, $week);
+        $navigation = $this->calendarNavigationDisplay->create($area, $month);
+
+        $week = $this->week->create($year, $week);
 
         return $this->render(
             'front/week.html.twig',
             [
                 'data' => $data,
                 'form' => $form->createView(),
-                'current' => $startDate,
+                'current' => $startDateImmutable,
                 'navigation' => $navigation,
-                'days' => $days,
+                'week' => $week,
                 'rooms' => $rooms,
             ]
         );
