@@ -1,12 +1,15 @@
 <script type="text/javascript">
-    $(document).ready(function () {
-        var $locationSelect = $('#area_menu_select_area');
-        var $specificLocationTarget = $('#area_menu_select_room');
+    /**
+     * Met ajour la liste des rooms
+     */
+    {#  $(document).ready(function () {
+          var $locationSelect = $('#area_menu_select_area');
+          var $specificLocationTarget = $('#area_menu_select_room');
 
-        $locationSelect.on('change', function (e) {
-            console.log("coucou");
-            $.ajax({
-                url: '{{ path('grr_ajax_getrooms') }}',
+          $locationSelect.on('change', function (e) {
+              console.log("coucou");
+              $.ajax({
+                  url: '{{ path('grr_ajax_getrooms') }}',
                 data: {
                     id: $locationSelect.val()
                 },
@@ -25,13 +28,30 @@
                 }
             });
         });
-    });
+    });#}
 
     $(function () {
         $('#area_menu_select_room').on('change', function () {
             var roomId = $(this).val();
-            var url = '{{ path("grr_front_home", {'room': 'roomid'}) }}';
+            var areaId = $("#area_menu_select_area").val();
+            console.log(areaId);
+            console.log(roomId);
+            var url = '{{ path("grr_front_month", {'area': 'areaid','room': 'roomid','year':current|date('Y'),'month':current|date('n')}) }}';
             url = url.replace("roomid", roomId);
+            url = url.replace("areaid", areaId);
+            if (url) {
+                window.location = url;
+            }
+            return false;
+        });
+    });
+
+    $(function () {
+        $('#area_menu_select_area').on('change', function () {
+            var areaId = $(this).val();
+
+            var url = '{{ path("grr_front_month", {'area': 'areaid','year':current|date('Y'),'month':current|date('n')}) }}';
+            url = url.replace("areaid", areaId);
             if (url) {
                 window.location = url;
             }

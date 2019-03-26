@@ -5,8 +5,31 @@
 {% block body %}
 
 
+    {% include 'front/_navigation.html.twig' %}
+
+    <h3 class="text-center text-success">{{ current|date('m Y') }}</h3>
 
     {{ data|raw }}
 
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>{{ 'ressources'|trans }}</th>
+            {% for day in days %}
+                <th>{{ day|date('d') }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for room in rooms %}
+            <tr>
+                <td>{{ room.name }}</td>
+                {% for day in days %}
+                    <th>entry</th>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

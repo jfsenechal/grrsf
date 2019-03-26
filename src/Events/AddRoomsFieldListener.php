@@ -38,12 +38,13 @@ class AddRoomsFieldListener implements EventSubscriberInterface
 
     public function onPreSetData(FormEvent $event)
     {
-        $area = $event->getData();
+        $menuSelect = $event->getData();
+        $area = $menuSelect->getArea();
         $form = $event->getForm();
 
         if ($area) {
             $form->add(
-                'rooms',
+                'room',
                 EntityType::class,
                 [
                     'class' => Room::class,

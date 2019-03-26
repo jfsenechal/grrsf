@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Area;
+use App\Entity\Room;
 use App\Form\AreaMenuSelectType;
+use App\Navigation\MenuSelect;
 use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
@@ -10,6 +13,8 @@ use App\Service\Calendar;
 use App\Service\CalendarDataManager;
 use App\Service\CalendarDisplay;
 use App\Service\CalendarNavigationDisplay;
+use App\Service\WeekService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,6 +51,10 @@ class FrontController extends AbstractController
      * @var CalendarNavigationDisplay
      */
     private $calendarNavigationDisplay;
+    /**
+     * @var WeekService
+     */
+    private $weekService;
 
     public function __construct(
         Calendar $calendar,
@@ -53,7 +62,8 @@ class FrontController extends AbstractController
         CalendarNavigationDisplay $calendarNavigationDisplay,
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
-        EntryRepository $entryRepository
+        EntryRepository $entryRepository,
+        WeekService $weekService
     ) {
         $this->calendar = $calendar;
         $this->areaRepository = $areaRepository;
@@ -61,44 +71,49 @@ class FrontController extends AbstractController
         $this->entryRepository = $entryRepository;
         $this->calendarDisplay = $calendarDisplay;
         $this->calendarNavigationDisplay = $calendarNavigationDisplay;
+        $this->weekService = $weekService;
     }
 
     /**
      * @Route("/", name="grr_front_home", methods={"GET"})
      */
-    public function index(int $month = null): Response
+    public function index(): Response
     {
-        return $this->render(
-            'front/index.html.twig'
+        $month = date('n');
+        $year = date('Y');
+        $esquare = $this->areaRepository->find(1);
+
+        return $this->redirectToRoute(
+            'grr_front_month',
+            ['area' => $esquare->getId(), 'year' => $year, 'month' => $month]
         );
+
+
     }
 
     /**
-     * @Route("/month/{month}", name="grr_front_month", methods={"GET"})
+     * @Route("/month/area/{area}/year/{year}/month/{month}/room/{room}", name="grr_front_month", methods={"GET"})
+     * @Entity("area", expr="repository.find(area)")
+     * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=false})
      */
-    public function month(int $month = null): Response
+    public function month(Area $area, int $year, int $month, int $room = null): Response
     {
-        if (!$month) {
-            $month = date('n');
-        }
-
-        $startDate = \DateTime::createFromFormat('Y-m-d', '2019-'.$month.'-01');
-        $startDateImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', '2019-'.$month.'-01');
-        $esquare = $this->areaRepository->find(1);
+        $startDate = \DateTime::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
+        $startDateImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
 
         $this->calendar->createCalendarFromDate($startDateImmutable);
 
         $areas = $this->areaRepository->findAll();
         $entries = $this->entryRepository->findAll();
 
-        $form = $this->createForm(AreaMenuSelectType::class, $esquare);
+        $form = $this->generateMenuSelect($area, $room);
 
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);
 
         $dataMonth = $this->calendarDisplay->oneMonth($startDateImmutable, $calendarDataManager);
 
-        $navigation = $this->calendarNavigationDisplay->create();
+        $navigation = $this->calendarNavigationDisplay->create($area, $month);
 
         return $this->render(
             'front/month.html.twig',
@@ -106,6 +121,7 @@ class FrontController extends AbstractController
                 'first' => $this->calendar->getFirstDay(),
                 'current' => $startDate,
                 'areas' => $areas,
+                'area' => $area,
                 'entries' => $entries,
                 'data' => $dataMonth,
                 'navigation' => $navigation,
@@ -115,9 +131,11 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/day/{day}", name="grr_front_day", methods={"GET"})
+     * @Route("/day/area/{area}/year/{year}/month/{month}/day/{day}/room/{room}", name="grr_front_day", methods={"GET"})
+     * @Entity("area", expr="repository.find(area)")
+     * @Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
      */
-    public function day(int $day = null): Response
+    public function day(Area $area, int $year, int $month, int $day, Room $room = null): Response
     {
         return $this->render(
             'front/day.html.twig',
@@ -126,14 +144,52 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/week/{week}", name="grr_front_week", methods={"GET"})
+     * @Route("/week/area/{area}/{year}/{week}/room/{room}", name="grr_front_week", methods={"GET"})
+     * @Entity("area", expr="repository.find(area)")
+     * @Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
      */
-    public function week(int $week = null): Response
+    public function week(Area $area, int $year, int $week, Room $room = null): Response
     {
+        $data = '';
+
+        $startDate = new \DateTimeImmutable();
+
+        $this->calendar->createCalendarFromDate($startDate);
+
+        $areas = $this->areaRepository->findAll();
+        $entries = $this->entryRepository->findAll();
+
+        $rooms = $this->roomRepository->findByArea($area);
+
+        $form = $this->generateMenuSelect($area);
+        $navigation = $this->calendarNavigationDisplay->create();
+
+        $days = $this->weekService->getDays($year, $week);
+
         return $this->render(
             'front/week.html.twig',
-            []
+            [
+                'data' => $data,
+                'form' => $form->createView(),
+                'current' => $startDate,
+                'navigation' => $navigation,
+                'days' => $days,
+                'rooms' => $rooms,
+            ]
         );
+    }
+
+    private function generateMenuSelect(Area $area, int $roomId = null)
+    {
+        $menuSelect = new MenuSelect();
+        $menuSelect->setArea($area);
+
+        if ($roomId) {
+            $room = $this->roomRepository->find($roomId);
+            $menuSelect->setRoom($room);
+        }
+
+        return $this->createForm(AreaMenuSelectType::class, $menuSelect);
     }
 
     /**

@@ -1,3 +1,3 @@
-<a href="{{ path('grr_front_month', {'month': next|date('n')}) }}" title="{{ 'next'|trans({},'actions') }}">
+<a href="{{ generateRouteMonthView(next|date('Y'), next|date('n')) }}" title="{{ 'next'|trans({},'actions') }}">
     <i class="fas fa-arrow-right"></i>
 </a>

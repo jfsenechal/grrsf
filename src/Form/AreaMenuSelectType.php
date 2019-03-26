@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Area;
 use App\Events\AddRoomsFieldListener;
+use App\Navigation\MenuSelect;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -39,7 +40,7 @@ class AreaMenuSelectType extends AbstractType
                     'query_builder' => $this->areaRepository->getQueryBuilder(),
                     'required' => true,
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
-                    'mapped' => false,
+                  //  'mapped' => false,
                 ]
             )
             ->addEventSubscriber(new AddRoomsFieldListener($this->roomRepository));
@@ -49,7 +50,7 @@ class AreaMenuSelectType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data' => Area::class,
+                'data' => MenuSelect::class,
             )
         );
 

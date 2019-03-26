@@ -8,6 +8,7 @@
 
 namespace App\Service;
 
+use App\Entity\Area;
 use App\Model\Day;
 use App\Model\Navigation;
 use Twig\Environment;
@@ -24,15 +25,34 @@ class CalendarNavigationDisplay
      */
     private $calendar;
 
-    public function __construct(Calendar $calendarMutable, Environment $environment)
+    /**
+     * @var Area
+     */
+    private $area;
+
+    /**
+     * @var int
+     */
+    private $month;
+
+    public function __construct(Calendar $calendar, Environment $environment)
     {
         $this->environment = $environment;
-        $this->calendar = $calendarMutable;
+        $this->calendar = $calendar;
     }
 
-    public function create(int $number = 1)
+    public function init(Area $area, int $month)
     {
+
+    }
+
+    public function create(Area $area, int $month, int $number = 1)
+    {
+        $this->area = $area;
+        $this->month = $month;
+
         Assert::greaterThan($number, 0);
+        //todo extract
         $navigation = new Navigation();
 
         $navigation->setNextButton($this->nextButton());
@@ -62,6 +82,8 @@ class CalendarNavigationDisplay
             'calendar/navigation/_button_previous.html.twig',
             [
                 'previous' => $previous,
+                'area' => $this->area,
+                'month' => $this->month,
             ]
         );
     }
@@ -74,6 +96,8 @@ class CalendarNavigationDisplay
             'calendar/navigation/_button_next.html.twig',
             [
                 'next' => $next,
+                'area' => $this->area,
+                'month' => $this->month,
             ]
         );
     }
@@ -88,6 +112,7 @@ class CalendarNavigationDisplay
             [
                 'days' => $days,
                 'current' => $dateTime,
+                'area' => $this->area,
             ]
         );
     }

@@ -1,3 +1,5 @@
 <td>
-<a href="{{ path('grr_front_week', {'week': dateTime|date('W')}) }}">{{ dateTime | date('W') }}</a>
+    <a href="{{ generateRouteWeekView(dateTime|date('W')) }}">
+        {{ dateTime | date('W') }}
+    </a>
 </td>

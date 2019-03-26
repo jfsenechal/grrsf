@@ -1,7 +1,7 @@
 <table class="table">
     <tr>
         <th class="text-center" colspan="8">
-            <a href="{{ path('grr_front_month', {'month': current|date('n')}) }}">
+            <a href="{{ generateRouteMonthView() }}">
                 {{ current|date('F Y') }}
             </a>
         </th>
