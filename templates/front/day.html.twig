@@ -6,12 +6,27 @@
 
     {% include 'calendar/navigation/_navigation.html.twig' %}
 
-    <h3 class="text-center text-success">{{ current|date('m Y') }}</h3>
+    <h3 class="text-center text-success">
+        {{ firstDay|date('l') |trans }} {{ firstDay|date('j') }} {{ firstDay|date('F')|trans|lower }} {{ firstDay|date('Y') }}
+    </h3>
 
-    {{ data|raw }}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            {% for room in rooms %}
+
+                <th>{{ room.name }}</th>
+
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
 
 {% endblock %}
 
 {% block scripts %}
-    {% include 'front/_menu_select.js.html.twig' %}
+    {% include 'calendar/navigation/_menu_select.js.html.twig' %}
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Form\AreaMenuSelectType;
+use App\Model\Day;
 use App\Model\Month;
 use App\Model\Week;
 use App\Navigation\MenuSelect;
@@ -135,10 +136,6 @@ class FrontController extends AbstractController
      */
     public function week(Area $area, int $year, int $month, int $week, int $room = null): Response
     {
-        $data = '';
-
-        $firstDay = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
-
         $entries = $this->entryRepository->findAll();
 
         $rooms = $this->roomRepository->findByArea($area);
@@ -150,18 +147,18 @@ class FrontController extends AbstractController
         $navigation = $this->calendarNavigationDisplay->create($monthModel);
 
         $weekModel = $this->week->create($year, $week);
+        $firstDay = $weekModel->getFirstDay();
 
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);
 
-        $data = $this->calendarDisplay->oneWeek($weekModel, $calendarDataManager);
+        //  $data = $this->calendarDisplay->oneWeek($weekModel, $calendarDataManager);
 
         return $this->render(
             'front/week.html.twig',
             [
-                'data' => $data,
                 'form' => $form->createView(),
-                'firstDay' => $firstDay,
+                'firstDay' => $firstDay,//utilise par form select
                 'navigation' => $navigation,
                 'week' => $weekModel,
                 'rooms' => $rooms,
@@ -177,9 +174,34 @@ class FrontController extends AbstractController
      */
     public function day(Area $area, int $year, int $month, int $day, int $room = null): Response
     {
+        $daySelected = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-'.$day);
+
+        $entries = $this->entryRepository->findAll();
+
+        $rooms = $this->roomRepository->findByArea($area);
+
+        $form = $this->generateMenuSelect($area);
+
+        $monthModel = $this->month->create($year, $month);
+
+        $navigation = $this->calendarNavigationDisplay->create($monthModel);
+
+        $dayModel = new Day($daySelected);
+
+        $calendarDataManager = new CalendarDataManager();
+        $calendarDataManager->setEntries($entries);
+
+        // $data = $this->calendarDisplay->oneWeek($weekModel, $calendarDataManager);
+
         return $this->render(
             'front/day.html.twig',
-            []
+            [
+                'form' => $form->createView(),
+                'firstDay' => $daySelected,
+                'navigation' => $navigation,
+                'day' => $dayModel,
+                'rooms' => $rooms,
+            ]
         );
     }
 

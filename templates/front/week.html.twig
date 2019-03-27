@@ -25,11 +25,11 @@
             <tr>
                 <td>{{ room.name }}</td>
                 {% for day in week.data %}
-                    <th>
+                    <td>
                         {% for entry in day.entries %}
                             {{ entry.name }}
                         {% endfor %}
-                    </th>
+                    </td>
                 {% endfor %}
             </tr>
         {% endfor %}
@@ -39,5 +39,5 @@
 {% endblock %}
 
 {% block scripts %}
-    {% include 'front/_menu_select.js.html.twig' %}
+    {% include 'calendar/navigation/_menu_select.js.html.twig' %}
 {% endblock %}
