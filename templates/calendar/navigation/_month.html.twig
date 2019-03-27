@@ -18,10 +18,11 @@
     </tr>
     <tbody>
 
-    {% if current | date('W') == app.request.get('week') %}
+    {% set weekSelected = app.request.get('week') %}
+    {% set class = "" %}
+
+    {% if current | date('W') == weekSelected %}
         {% set class = "table-info" %}
-    {% else %}
-        {% set class = "" %}
     {% endif %}
 
     <tr class="{{ class }}">
