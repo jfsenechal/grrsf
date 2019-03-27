@@ -1,4 +1,5 @@
 <table class="table">
+    <tbody>
     <tr>
         <th class="text-center" colspan="8">
             <a href="{{ generateRouteMonthView() }}">
@@ -16,20 +17,24 @@
         <th>{{ 'saturday'|trans }}</th>
         <th>{{ 'sunday'|trans }}</th>
     </tr>
-    <tbody>
 
     {% set weekSelected = app.request.get('week') %}
-    {% set class = "" %}
 
-    {% if firstDay | date('W') == weekSelected %}
-        {% set class = "table-info" %}
-    {% endif %}
+    {% for numericWeek, days in weeks %}
 
-    <tr class="{{ class }}">
-        {% set class = "" %}
-        {% for day in days %}
-            {% include 'calendar/navigation/_week_line.html.twig' %}
-        {% endfor %}
-    <tr>
+        {% if numericWeek == weekSelected %}
+            {% set class = "table-info" %}
+        {% else %}
+            {% set class = "" %}
+        {% endif %}
+
+        <tr class="{{ class }}">
+            {% include 'calendar/navigation/_cell_week.html.twig' %}
+            {% for day in days %}
+                {% include 'calendar/navigation/_week_line.html.twig' %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
     </tbody>
+
 </table>

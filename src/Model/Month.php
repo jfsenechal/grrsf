@@ -72,4 +72,21 @@ class Month
     {
         return $this->dateTimeImmutable->format('n');
     }
+
+    /**
+     *
+     * @return array
+     */
+    public function getDaysGroupByWeeks()
+    {
+        $weeks = [];
+
+        foreach ($this->getDays() as $date) {
+            $numericWeek = $date->format('W');
+
+            $weeks[$numericWeek][] = $date;
+        }
+
+        return $weeks;
+    }
 }

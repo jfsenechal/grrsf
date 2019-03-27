@@ -1,34 +1,17 @@
 {% set numericDay = day|date('w') %}
-{% set numericWeek = day|date('W') %}
 
 {# premiere ligne #}
 {% if loop.first %}
-
-    {% include 'calendar/navigation/_cell_week.html.twig' %}
-
     {# on remplit les cases vides #}
     {% if numericDay != 1 %}
         {{ completeTr(numericDay, 'begin') }}
     {% endif %}
-
-    {# si lundi 1 #}
-{% elseif numericDay == 1 %}
-    {% include 'calendar/navigation/_cell_week.html.twig' %}
 {% endif %}
 
 <td>{% include 'calendar/navigation/_cell_day.html.twig' %}</td>
 
-{# retour a la ligne si dimanche #}
-{% if numericDay == 0 %}
-
-    </tr>
-
-<tr class="{{ class }}">
-    {% set class = "" %}
-    {% endif %}
-
-    {# derniere ligne on comble les vide #}
-    {% if loop.last %}
+{# derniere ligne on comble les vide #}
+{% if loop.last %}
     {% if numericDay != 0 %}
         {{ completeTr(numericDay, 'end') }}
     {% endif %}

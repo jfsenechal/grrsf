@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-use App\Entity\Area;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\Navigation;
@@ -99,6 +98,7 @@ class CalendarNavigationDisplay
             [
                 'days' => $days,
                 'firstDay' => $firstDay,
+                'weeks'=>$this->month->getDaysGroupByWeeks()
             ]
         );
     }
@@ -118,5 +118,7 @@ class CalendarNavigationDisplay
 
         return $days;
     }
+
+
 
 }
