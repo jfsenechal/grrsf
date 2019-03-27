@@ -1,12 +1,15 @@
 {% extends 'layout_front.html.twig' %}
 
-{% block title %}GrrArea index{% endblock %}
+{% block title %}{{ firstDay|date('F Y') }}{% endblock %}
 
 {% block body %}
 
     {% include 'front/_navigation.html.twig' %}
 
-    <h3 class="text-center text-success">{{ current|date('m Y') }}</h3>
+    <h3 class="text-center text-success">
+        {{ firstDay|date('F Y') }} <br />
+        {{ area }} - {% if room %} {{ room }} {% else %} {{ 'room.all'|trans({},'actions') }} {% endif %}
+    </h3>
 
     {{ data|raw }}
 

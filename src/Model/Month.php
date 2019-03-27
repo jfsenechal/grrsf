@@ -15,9 +15,9 @@ class Month
      */
     protected $dateTimeImmutable;
 
-    public function createCalendarFromDate(\DateTimeImmutable $dateTime): self
+    public function create(int $year, int $month): self
     {
-        $this->dateTimeImmutable = $dateTime;
+        $this->dateTimeImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
 
         return $this;
     }
@@ -66,5 +66,10 @@ class Month
         $date = clone $this->dateTimeImmutable;
 
         return $date->modify('previous month');
+    }
+
+    public function getNumeric(): int
+    {
+        return $this->dateTimeImmutable->format('n');
     }
 }

@@ -30,7 +30,7 @@ class FrontController extends AbstractController
     /**
      * @var Month
      */
-    private $calendar;
+    private $month;
     /**
      * @var AreaRepository
      */
@@ -57,7 +57,7 @@ class FrontController extends AbstractController
     private $week;
 
     public function __construct(
-        Month $calendar,
+        Month $month,
         CalendarDisplay $calendarDisplay,
         CalendarNavigationDisplay $calendarNavigationDisplay,
         AreaRepository $areaRepository,
@@ -65,7 +65,7 @@ class FrontController extends AbstractController
         EntryRepository $entryRepository,
         Week $week
     ) {
-        $this->calendar = $calendar;
+        $this->month = $month;
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
         $this->entryRepository = $entryRepository;
@@ -94,41 +94,77 @@ class FrontController extends AbstractController
     /**
      * @Route("/month/area/{area}/year/{year}/month/{month}/room/{room}", name="grr_front_month", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
+     * //prend room = 1 meme si pas selectionne
      * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=false})
      */
     public function month(Area $area, int $year, int $month, int $room = null): Response
     {
-        $startDate = \DateTime::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
-        $startDateImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
 
-        $this->calendar->createCalendarFromDate($startDateImmutable);
+        $monthModel = $this->month->create($year, $month);
 
-        $areas = $this->areaRepository->findAll();
         $entries = $this->entryRepository->findAll();
+        if ($room) {
+            $roomObject = $this->roomRepository->find($room);
+        }
 
-        $form = $this->generateMenuSelect($area, $room);
+        $form = $this->generateMenuSelect($area, $roomObject);
 
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);
 
-        $dataMonth = $this->calendarDisplay->oneMonth($startDateImmutable, $calendarDataManager);
+        $dataMonth = $this->calendarDisplay->oneMonth($monthModel, $calendarDataManager);
 
-        $navigation = $this->calendarNavigationDisplay->create($area, $month);
+        $navigation = $this->calendarNavigationDisplay->create($monthModel);
 
         return $this->render(
             'front/month.html.twig',
             [
-                'first' => $this->calendar->getFirstDay(),
-                'current' => $startDate,
-                'areas' => $areas,
+                'firstDay' => $this->month->getFirstDay(),
                 'area' => $area,
-                'entries' => $entries,
+                'room' => $roomObject,
                 'data' => $dataMonth,
                 'navigation' => $navigation,
                 'form' => $form->createView(),
             ]
         );
     }
+
+    /**
+     * @Route("/week/area/{area}/year/{year}/month/{month}/week/{week}/room/{room}", name="grr_front_week", methods={"GET"})
+     * @Entity("area", expr="repository.find(area)")
+     * @Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
+     */
+    public function week(Area $area, int $year, int $month, int $week, int $room = null): Response
+    {
+        $data = '';
+
+        $firstDay = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
+
+        $entries = $this->entryRepository->findAll();
+
+        $rooms = $this->roomRepository->findByArea($area);
+
+        $form = $this->generateMenuSelect($area);
+
+        $monthModel = $this->month->create($year, $month);
+
+        $navigation = $this->calendarNavigationDisplay->create($monthModel);
+
+        $weekModel = $this->week->create($year, $week);
+
+        return $this->render(
+            'front/week.html.twig',
+            [
+                'data' => $data,
+                'form' => $form->createView(),
+                'firstDay' => $firstDay,
+                'navigation' => $navigation,
+                'week' => $weekModel,
+                'rooms' => $rooms,
+            ]
+        );
+    }
+
 
     /**
      * @Route("/day/area/{area}/year/{year}/month/{month}/day/{day}/room/{room}", name="grr_front_day", methods={"GET"})
@@ -143,50 +179,12 @@ class FrontController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/week/area/{area}/year/{year}/month/{month}/week/{week}/room/{room}", name="grr_front_week", methods={"GET"})
-     * @Entity("area", expr="repository.find(area)")
-     * @Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
-     */
-    public function week(Area $area, int $year, int $month, int $week, int $room = null): Response
-    {
-        $data = '';
-
-        $startDateImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
-
-        $this->calendar->createCalendarFromDate($startDateImmutable);
-
-        $areas = $this->areaRepository->findAll();
-        $entries = $this->entryRepository->findAll();
-
-        $rooms = $this->roomRepository->findByArea($area);
-
-        $form = $this->generateMenuSelect($area);
-
-        $navigation = $this->calendarNavigationDisplay->create($area, $month);
-
-        $week = $this->week->create($year, $week);
-
-        return $this->render(
-            'front/week.html.twig',
-            [
-                'data' => $data,
-                'form' => $form->createView(),
-                'current' => $startDateImmutable,
-                'navigation' => $navigation,
-                'week' => $week,
-                'rooms' => $rooms,
-            ]
-        );
-    }
-
-    private function generateMenuSelect(Area $area, int $roomId = null)
+    private function generateMenuSelect(Area $area, Room $room = null)
     {
         $menuSelect = new MenuSelect();
         $menuSelect->setArea($area);
 
-        if ($roomId) {
-            $room = $this->roomRepository->find($roomId);
+        if ($room) {
             $menuSelect->setRoom($room);
         }
 

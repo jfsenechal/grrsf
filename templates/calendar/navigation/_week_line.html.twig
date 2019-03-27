@@ -1,13 +1,5 @@
-{% set dateTime = day.date %}
-
-{% set numericDay = dateTime|date('w') %}
-{% set numericWeek = dateTime|date('W') %}
-
-{% set class = "" %}
-
-{% if numericWeek == weekSelected %}
-    {% set class = "table-info" %}
-{% endif %}
+{% set numericDay = day|date('w') %}
+{% set numericWeek = day|date('W') %}
 
 {# premiere ligne #}
 {% if loop.first %}
@@ -28,10 +20,11 @@
 
 {# retour a la ligne si dimanche #}
 {% if numericDay == 0 %}
+
     </tr>
 
 <tr class="{{ class }}">
-
+    {% set class = "" %}
     {% endif %}
 
     {# derniere ligne on comble les vide #}

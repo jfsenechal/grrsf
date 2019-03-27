@@ -26,29 +26,19 @@ class CalendarNavigationDisplay
      */
     private $month;
     /**
-     * @var Area
-     */
-    private $area;
-    /**
      * @var int
      */
     private $monthNumeric;
 
-    public function __construct(Month $calendar, Environment $environment)
+    public function __construct(Month $month, Environment $environment)
     {
         $this->environment = $environment;
-        $this->month = $calendar;
+        $this->month = $month;
     }
 
-    public function init(Area $area, int $month)
+    public function create(Month $month, int $number = 1)
     {
-
-    }
-
-    public function create(Area $area, int $month, int $number = 1)
-    {
-        $this->area = $area;
-        $this->monthNumeric = $month;
+        $this->monthNumeric = $month->getNumeric();
 
         Assert::greaterThan($number, 0);
         //todo extract
@@ -75,13 +65,12 @@ class CalendarNavigationDisplay
 
     public function previousButton()
     {
-        $previous = $this->month->getPreviousMonth();
+        $previousMonth = $this->month->getPreviousMonth();
 
         return $this->environment->render(
             'calendar/navigation/_button_previous.html.twig',
             [
-                'previous' => $previous,
-                'area' => $this->area,
+                'previousMonth' => $previousMonth,
                 'month' => $this->monthNumeric,
             ]
         );
@@ -89,19 +78,18 @@ class CalendarNavigationDisplay
 
     public function nextButton()
     {
-        $next = $this->month->getNextMonth();
+        $nextMonth = $this->month->getNextMonth();
 
         return $this->environment->render(
             'calendar/navigation/_button_next.html.twig',
             [
-                'next' => $next,
-                'area' => $this->area,
+                'nextMonth' => $nextMonth,
                 'month' => $this->monthNumeric,
             ]
         );
     }
 
-    public function month(\DateTimeInterface $dateTime)
+    public function month(\DateTimeInterface $firstDay)
     {
         $allDays = $this->month->getDays();
         $days = $this->getDays($allDays);
@@ -110,8 +98,7 @@ class CalendarNavigationDisplay
             'calendar/navigation/_month.html.twig',
             [
                 'days' => $days,
-                'current' => $dateTime,
-                'area' => $this->area,
+                'firstDay' => $firstDay,
             ]
         );
     }
@@ -126,7 +113,7 @@ class CalendarNavigationDisplay
         $days = [];
         foreach ($data as $date) {
             $day = new Day($date);
-            $days[] = $day;
+            $days[] = $date;
         }
 
         return $days;

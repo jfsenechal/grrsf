@@ -37,16 +37,16 @@ class CalendarDisplay
 
 
     /**
-     * @param \DateTimeImmutable $dateTimeImmutable
-     * @param Entry[] $data
+     * @param Month $month
+     * @param CalendarDataManager|null $calendarDataManager
      * @return string
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function oneMonth(\DateTimeImmutable $dateTimeImmutable, CalendarDataManager $calendarDataManager = null)
+    public function oneMonth(Month $month, CalendarDataManager $calendarDataManager = null)
     {
-        $this->month->createCalendarFromDate($dateTimeImmutable);
+        $this->month = $month;
         $next = $this->month->getNextMonth();
         $previous = $this->month->getPreviousMonth();
         $allDays = $this->month->getDays();
@@ -67,7 +67,7 @@ class CalendarDisplay
                 'next' => $next,
                 'previous' => $previous,
                 'days' => $days,
-                'current' => $dateTimeImmutable,
+                'firstDay' => $this->month->getFirstDay(),
             ]
         );
 

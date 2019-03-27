@@ -2,7 +2,7 @@
     <tr>
         <th class="text-center" colspan="8">
             <a href="{{ generateRouteMonthView() }}">
-                {{ current|date('F Y') }}
+                {{ firstDay|date('F Y') }}
             </a>
         </th>
     </tr>
@@ -21,11 +21,12 @@
     {% set weekSelected = app.request.get('week') %}
     {% set class = "" %}
 
-    {% if current | date('W') == weekSelected %}
+    {% if firstDay | date('W') == weekSelected %}
         {% set class = "table-info" %}
     {% endif %}
 
     <tr class="{{ class }}">
+        {% set class = "" %}
         {% for day in days %}
             {% include 'calendar/navigation/_week_line.html.twig' %}
         {% endfor %}

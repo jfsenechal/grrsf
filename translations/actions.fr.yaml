@@ -25,6 +25,7 @@ area:
   rooms:
     title: Ressources
 room:
+  all: Toutes les ressources
   new:
     title: Nouvelle ressource
   index:
