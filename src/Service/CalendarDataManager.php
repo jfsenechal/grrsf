@@ -40,7 +40,6 @@ class CalendarDataManager
         if (count($entries) > 0) {
             $day->setEntries($entries);
         }
-
     }
 
     public function extractByDate(\DateTimeInterface $dateTime)

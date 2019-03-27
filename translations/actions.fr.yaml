@@ -68,3 +68,5 @@ entry:
 
 next: Suivant
 previous: Précédent
+week:
+  initial: s

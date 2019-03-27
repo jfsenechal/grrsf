@@ -28,6 +28,11 @@ class Week
      */
     protected $endDate;
 
+    /**
+     * @var array
+     */
+    protected $data;
+
     public function create(int $year, int $week): self
     {
         Assert::greaterThan($year, 0);
@@ -66,4 +71,26 @@ class Week
     {
         return $this->endDate;
     }
+
+    public function setDaysData(array $days)
+    {
+        $this->data = $days;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param array $data
+     */
+    public function setData(array $data): void
+    {
+        $this->data = $data;
+    }
+
 }

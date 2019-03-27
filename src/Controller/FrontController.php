@@ -99,7 +99,6 @@ class FrontController extends AbstractController
      */
     public function month(Area $area, int $year, int $month, int $room = null): Response
     {
-
         $monthModel = $this->month->create($year, $month);
 
         $entries = $this->entryRepository->findAll();
@@ -112,7 +111,7 @@ class FrontController extends AbstractController
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);
 
-        $dataMonth = $this->calendarDisplay->oneMonth($monthModel, $calendarDataManager);
+        $data = $this->calendarDisplay->oneMonth($monthModel, $calendarDataManager);
 
         $navigation = $this->calendarNavigationDisplay->create($monthModel);
 
@@ -122,7 +121,7 @@ class FrontController extends AbstractController
                 'firstDay' => $this->month->getFirstDay(),
                 'area' => $area,
                 'room' => $roomObject,
-                'data' => $dataMonth,
+                'data' => $data,
                 'navigation' => $navigation,
                 'form' => $form->createView(),
             ]
@@ -132,7 +131,7 @@ class FrontController extends AbstractController
     /**
      * @Route("/week/area/{area}/year/{year}/month/{month}/week/{week}/room/{room}", name="grr_front_week", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
-     * @Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
+     * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
      */
     public function week(Area $area, int $year, int $month, int $week, int $room = null): Response
     {
@@ -152,6 +151,11 @@ class FrontController extends AbstractController
 
         $weekModel = $this->week->create($year, $week);
 
+        $calendarDataManager = new CalendarDataManager();
+        $calendarDataManager->setEntries($entries);
+
+        $data = $this->calendarDisplay->oneWeek($weekModel, $calendarDataManager);
+
         return $this->render(
             'front/week.html.twig',
             [
@@ -169,9 +173,9 @@ class FrontController extends AbstractController
     /**
      * @Route("/day/area/{area}/year/{year}/month/{month}/day/{day}/room/{room}", name="grr_front_day", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
-     * @Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
+     * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
      */
-    public function day(Area $area, int $year, int $month, int $day, Room $room = null): Response
+    public function day(Area $area, int $year, int $month, int $day, int $room = null): Response
     {
         return $this->render(
             'front/day.html.twig',

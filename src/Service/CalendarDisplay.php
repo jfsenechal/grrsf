@@ -8,17 +8,13 @@
 
 namespace App\Service;
 
-use App\Entity\Entry;
 use App\Model\Day;
 use App\Model\Month;
+use App\Model\Week;
 use Twig\Environment;
 
 class CalendarDisplay
 {
-    /**
-     * @var Month
-     */
-    private $month;
     /**
      * @var Environment
      */
@@ -28,13 +24,11 @@ class CalendarDisplay
      */
     private $calendarDataManager;
 
-    public function __construct(Month $month, CalendarDataManager $calendarDataManager, Environment $environment)
+    public function __construct(CalendarDataManager $calendarDataManager, Environment $environment)
     {
-        $this->month = $month;
         $this->environment = $environment;
         $this->calendarDataManager = $calendarDataManager;
     }
-
 
     /**
      * @param Month $month
@@ -44,32 +38,48 @@ class CalendarDisplay
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function oneMonth(Month $month, CalendarDataManager $calendarDataManager = null)
+    public function oneMonth(Month $month, CalendarDataManager $calendarDataManager)
     {
-        $this->month = $month;
-        $next = $this->month->getNextMonth();
-        $previous = $this->month->getPreviousMonth();
-        $allDays = $this->month->getDays();
+        $allDays = $month->getDays();
         //pour avoir un iterable
         $days = [];
         foreach ($allDays as $date) {
+            //todo extract
             $day = new Day($date);
-            if ($calendarDataManager) {
-                $calendarDataManager->add($day);
-            }
-
+            $calendarDataManager->add($day);
             $days[] = $day;
         }
 
         return $this->environment->render(
             'calendar/data/_calendar_data.html.twig',
             [
-                'next' => $next,
-                'previous' => $previous,
                 'days' => $days,
-                'firstDay' => $this->month->getFirstDay(),
+                'firstDay' => $month->getFirstDay(),
             ]
         );
 
+    }
+
+    public function oneWeek(Week $week, CalendarDataManager $calendarDataManager)
+    {
+        $days = [];
+        foreach ($week->getDays() as $date) {
+            //todo extract
+            $day = new Day($date);
+            $calendarDataManager->add($day);
+            $days[] = $day;
+        }
+
+        $week->setDaysData($days);
+
+        return $week;
+
+        return $this->environment->render(
+            'calendar/data/_calendar_data.html.twig',
+            [
+                'days' => $days,
+                'firstDay' => $week->getFirstDay(),
+            ]
+        );
     }
 }
