@@ -13,6 +13,7 @@
     <table class="table table-bordered">
         <thead>
         <tr>
+            <th>Heures</th>
             {% for room in rooms %}
 
                 <th>{{ room.name }}</th>
@@ -21,7 +22,14 @@
         </tr>
         </thead>
         <tbody>
-
+        {% for hour in hours %}
+            <tr>
+                <td>{{ hour.begin|date('H:i') }} - {{ hour.end|date('H:i') }}</td>
+                {% for room in rooms %}
+                    <th>entries</th>
+                {% endfor %}
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 

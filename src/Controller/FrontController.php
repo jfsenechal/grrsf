@@ -6,6 +6,7 @@ use App\Entity\Area;
 use App\Entity\Room;
 use App\Form\AreaMenuSelectType;
 use App\Model\Day;
+use App\Model\Hour;
 use App\Model\Month;
 use App\Model\Week;
 use App\Navigation\MenuSelect;
@@ -17,7 +18,6 @@ use App\Service\CalendarDisplay;
 use App\Service\CalendarNavigationDisplay;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -103,6 +103,8 @@ class FrontController extends AbstractController
         $monthModel = $this->month->create($year, $month);
 
         $entries = $this->entryRepository->findAll();
+        $roomObject = null;
+
         if ($room) {
             $roomObject = $this->roomRepository->find($room);
         }
@@ -152,8 +154,6 @@ class FrontController extends AbstractController
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);
 
-        //  $data = $this->calendarDisplay->oneWeek($weekModel, $calendarDataManager);
-
         return $this->render(
             'front/week.html.twig',
             [
@@ -165,7 +165,6 @@ class FrontController extends AbstractController
             ]
         );
     }
-
 
     /**
      * @Route("/day/area/{area}/year/{year}/month/{month}/day/{day}/room/{room}", name="grr_front_day", methods={"GET"})
@@ -187,11 +186,42 @@ class FrontController extends AbstractController
         $navigation = $this->calendarNavigationDisplay->create($monthModel);
 
         $dayModel = new Day($daySelected);
+        $dayModel->setEntries($entries);
 
-        $calendarDataManager = new CalendarDataManager();
-        $calendarDataManager->setEntries($entries);
+        $heureDebut = $area->getMorningstartsArea();
+        $heureFin = $area->getEveningendsArea();
+        $resolution = $area->getResolutionArea();
 
-        // $data = $this->calendarDisplay->oneWeek($weekModel, $calendarDataManager);
+        $debut = \DateTime::createFromFormat('Y-m-d', $year.'-'.$month.'-'.$day);
+        $fin = clone($debut);
+
+        $debut->setTime($heureDebut, 0);
+        $fin->setTime($heureFin, 0,$resolution);
+
+        $interval = new \DateInterval('PT'.$resolution.'S');
+        $heures = new \DatePeriod($debut, $interval, $fin);
+
+        dump($heures);
+
+        $i = 0;
+
+        $hours = [];
+        $hour = new Hour();
+
+        foreach ($heures as $heure) {
+            //premier passage
+            if ($i == 0) {
+                $hour->setBegin($heure);
+            } else {
+                $hour->setEnd($heure);
+                $hours[] = $hour;
+                $hour = new Hour();
+                $hour->setBegin($heure);
+            }
+            $i = 1;
+        }
+
+        dump($hours);
 
         return $this->render(
             'front/day.html.twig',
@@ -201,6 +231,7 @@ class FrontController extends AbstractController
                 'navigation' => $navigation,
                 'day' => $dayModel,
                 'rooms' => $rooms,
+                'hours' => $hours,
             ]
         );
     }
@@ -215,18 +246,6 @@ class FrontController extends AbstractController
         }
 
         return $this->createForm(AreaMenuSelectType::class, $menuSelect);
-    }
-
-    /**
-     * @Route("/ajax/getrooms", name="grr_ajax_getrooms")
-     */
-    public function ajaxRequestGetRooms(Request $request)
-    {
-        $areaId = $request->get('id');
-        $area = $this->areaRepository->find($areaId);
-        $rooms = $this->roomRepository->findByArea($area);
-
-        return $this->render('front/_rooms_options.html.twig', ['rooms' => $rooms]);
     }
 
 }

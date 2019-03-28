@@ -76,6 +76,7 @@ class Month
     /**
      *
      * @return array
+     * @throws \Exception
      */
     public function getDaysGroupByWeeks()
     {
