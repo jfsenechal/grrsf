@@ -12,6 +12,7 @@ use App\Entity\Entry;
 use App\Factory\EntryFactory;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
+use App\Repository\RoomRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -83,18 +84,24 @@ class BookingService
      * @var array
      */
     public $bookingsFromFlux;
+    /**
+     * @var RoomRepository
+     */
+    private $roomRepository;
 
     public function __construct(
         ParameterBagInterface $parameterBag,
         EntryRepository $entryRepository,
         EntryFactory $entryFactory,
-        EntryManager $entryManager
+        EntryManager $entryManager,
+        RoomRepository $roomRepository
     ) {
         $this->parameterBag = $parameterBag;
         $this->entryRepository = $entryRepository;
         $this->entryFactory = $entryFactory;
         $this->entryManager = $entryManager;
         $this->bookingsFromFlux = [];
+        $this->roomRepository = $roomRepository;
     }
 
     public function getData()
@@ -135,8 +142,8 @@ class BookingService
                 $this->output->write($dateTimeDebut->format('Y-m-d H:i:s').' , ');
                 $this->output->writeln($dateTimeFin->format('Y-m-d H:i:s'));
 
-                $entry->setStartTime($dateTimeDebut->getTimestamp());
-                $entry->setEndTime($dateTimeFin->getTimestamp());
+                $entry->setStartTime($dateTimeDebut);
+                $entry->setEndTime($dateTimeFin);
                 $this->entryManager->insert($entry);
             }
         }
@@ -158,8 +165,8 @@ class BookingService
         $this->output->write($dateTimeDebut->format('Y-m-d H:i:s').' , ');
         $this->output->writeln($dateTimeFin->format('Y-m-d H:i:s'));
 
-        $entry->setStartTime($dateTimeDebut->getTimestamp());
-        $entry->setEndTime($dateTimeFin->getTimestamp());
+        $entry->setStartTime($dateTimeDebut);
+        $entry->setEndTime($dateTimeFin);
 
         $this->entryManager->insert($entry);
     }
@@ -190,6 +197,7 @@ class BookingService
      */
     public function createGrrEntry($booking, string $date): Entry
     {
+        $room = $this->roomRepository->find($this->getCorrespondanceRoom($booking->booking_type));
         $form_data = $booking->form_data;
         //13:00 - 18:00
         $rangetime = $form_data->rangetime;
@@ -197,7 +205,7 @@ class BookingService
         $entry = $this->getInstance($booking, $date);
         $entry->setName($this->removeAccents($fields->name).' '.$this->removeAccents($fields->secondname));
         $entry->setTimestamp($this->convertToDateTime($booking->modification_date));
-        $entry->setRoomId($this->getCorrespondanceRoom($booking->booking_type));
+        $entry->setRoom($room);
         $entry->setDescription($this->getDescriptionString($fields));
         $entry->setBeneficiaire('esquare');
         $entry->setCreateBy('esquare');
