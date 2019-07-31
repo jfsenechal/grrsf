@@ -23,7 +23,7 @@ class AreaFactory
         $this->dateUtils = $dateUtils;
     }
 
-    public function createNew(): Area
+    public static function createNew(): Area
     {
         return new Area();
     }

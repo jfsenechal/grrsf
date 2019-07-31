@@ -11,9 +11,9 @@ namespace App\Factory;
 use App\Entity\Area;
 use App\Entity\Room;
 
-class RoomFactory //implements FactoryInterface
+class RoomFactory
 {
-    public function createNew(Area $area): Room
+    public static function createNew(Area $area): Room
     {
         $room = new Room();
         $room->setArea($area);
