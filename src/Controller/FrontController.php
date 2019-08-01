@@ -19,6 +19,7 @@ use App\Service\CalendarDisplay;
 use App\Service\CalendarNavigationDisplay;
 use App\Service\LocalHelper;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,6 +90,11 @@ class FrontController extends AbstractController
      */
     public function test(): Response
     {
+        $today = CarbonFactory::getToday();
+        $today->weekd;
+        $t = CarbonPeriod::create('2017-11-01', '2017-11-30')->count();
+        $t->countWeekDays();
+
         return $this->render(
             'front/test.html.twig',
             [
@@ -208,7 +214,6 @@ class FrontController extends AbstractController
         $form = $this->generateMenuSelect($area);
 
         $monthModel = $this->month->create($year, $month);
-
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         $dayModel = new Day($daySelected);
@@ -221,19 +226,11 @@ class FrontController extends AbstractController
         $debut = Carbon::create($year, $month, $day, $heureDebut, 0);
         $fin = Carbon::create($year, $month, $day, $heureFin, 0, 0);//$resolution bug
 
-       // $debut->setTime($heureDebut, 0);
-      //  $fin->setTime($heureFin, 0, $resolution);
-
-        $interval = new \DateInterval('PT'.$resolution.'S');
-        $heures = new \DatePeriod($debut, $interval, $fin);
-
-        dump($heures);
-
-        $i = 0;
+        $heures = Carbon::parse($debut)->secondsUntil($fin, $resolution);
 
         $hours = [];
         $hour = new Hour();
-
+        $i = 0;
         foreach ($heures as $heure) {
             //premier passage
             if ($i == 0) {
@@ -247,7 +244,7 @@ class FrontController extends AbstractController
             $i = 1;
         }
 
-        dump($hours);
+        //    dump($hours);
 
         return $this->render(
             'front/day.html.twig',

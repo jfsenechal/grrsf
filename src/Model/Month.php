@@ -9,6 +9,7 @@
 namespace App\Model;
 
 use App\Service\LocalHelper;
+use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
@@ -39,9 +40,7 @@ class Month
      */
     public function getDays(): CarbonPeriod
     {
-        return new CarbonPeriod(
-            $this->dateTimeImmutable->firstOfMonth()->toDateString(),
-            '1 days',
+        return Carbon::parse($this->dateTimeImmutable->firstOfMonth()->toDateString())->daysUntil(
             $this->dateTimeImmutable->endOfMonth()->toDateString()
         );
     }
@@ -51,17 +50,17 @@ class Month
         return $this->dateTimeImmutable->firstOfMonth();
     }
 
-    public function getLastDay(): \DateTimeInterface
+    public function getLastDay(): CarbonInterface
     {
         return $this->dateTimeImmutable->lastOfMonth();
     }
 
-    public function getNextMonth(): \DateTimeInterface
+    public function getNextMonth(): CarbonInterface
     {
         return $this->dateTimeImmutable->addMonth();
     }
 
-    public function getPreviousMonth(): \DateTimeInterface
+    public function getPreviousMonth(): CarbonInterface
     {
         return $this->dateTimeImmutable->subMonth();
     }
@@ -72,8 +71,6 @@ class Month
     }
 
     /**
-     *
-     * @param CarbonInterface $firstDayMonth Position au 1 du mois
      * @return array
      */
     function getWeeks()
@@ -82,13 +79,10 @@ class Month
         $firstDayMonth = $this->getFirstDay();
 
         $firstDayWeek = $firstDayMonth->copy()->startOfWeek()->toMutable();
-        $firstDayMonthMutable = $firstDayMonth->toMutable();
 
-        do  {
+        do {
             $weeks[] = $this->getWeek($firstDayWeek);// point at end ofWeek
-            $firstDayWeek->addDay();
-            //$date->endOfWeek(); ?
-            $firstDayMonthMutable->addWeek();
+            $firstDayWeek->nextWeekday();
         } while ($firstDayWeek->isSameMonth($firstDayMonth));
 
         return $weeks;
@@ -99,13 +93,7 @@ class Month
         $debut = $date->toDateString();
         $fin = $date->endOfWeek()->toDateString();
 
-        $period = new CarbonPeriod(
-            $debut,
-            '1 days',
-            $fin
-        );
-
-        return $period;
+        return Carbon::parse($debut)->daysUntil($fin);
     }
 
     /**
