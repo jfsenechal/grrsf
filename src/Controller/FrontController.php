@@ -127,22 +127,20 @@ class FrontController extends AbstractController
      */
     public function month(Area $area, int $year, int $month, int $room = null): Response
     {
-        $monthModel = $this->month->create($year, $month);
-
-        $entries = $this->entryRepository->findAll();
         $roomObject = null;
 
         if ($room) {
             $roomObject = $this->roomRepository->find($room);
         }
 
-        $form = $this->generateMenuSelect($area, $roomObject);
-
+        $entries = $this->entryRepository->findAll();
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);
 
+        $monthModel = $this->month->create($year, $month);
         $data = $this->calendarDisplay->oneMonth($monthModel, $calendarDataManager);
 
+        $form = $this->generateMenuSelect($area, $roomObject);
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         return $this->render(
@@ -153,6 +151,7 @@ class FrontController extends AbstractController
                 'room' => $roomObject,
                 'data' => $data,
                 'navigation' => $navigation,
+                'monthModel' => $monthModel,
                 'form' => $form->createView(),
             ]
         );
@@ -165,16 +164,9 @@ class FrontController extends AbstractController
      */
     public function week(Area $area, int $year, int $month, int $week, int $room = null): Response
     {
-        $entries = $this->entryRepository->findAll();
-
         $rooms = $this->roomRepository->findByArea($area);
 
-        $form = $this->generateMenuSelect($area);
-
-        $monthModel = $this->month->create($year, $month);
-
-        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
-
+        $entries = $this->entryRepository->findAll();
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);
 
@@ -183,8 +175,9 @@ class FrontController extends AbstractController
 
         $this->calendarDisplay->oneWeek($weekModel, $calendarDataManager);
 
-        $calendarDataManager = new CalendarDataManager();
-        $calendarDataManager->setEntries($entries);
+        $monthModel = $this->month->create($year, $month);
+        $form = $this->generateMenuSelect($area);
+        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         return $this->render(
             'front/week.html.twig',
@@ -207,15 +200,9 @@ class FrontController extends AbstractController
     {
         $daySelected = CarbonFactory::createImmutable($year, $month, $day);
 
-        $entries = $this->entryRepository->findAll();
-
         $rooms = $this->roomRepository->findByArea($area);
 
-        $form = $this->generateMenuSelect($area);
-
-        $monthModel = $this->month->create($year, $month);
-        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
-
+        $entries = $this->entryRepository->findAll();
         $dayModel = new Day($daySelected);
         $dayModel->setEntries($entries);
 
@@ -244,7 +231,9 @@ class FrontController extends AbstractController
             $i = 1;
         }
 
-        //    dump($hours);
+        $monthModel = $this->month->create($year, $month);
+        $form = $this->generateMenuSelect($area);
+        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         return $this->render(
             'front/day.html.twig',
