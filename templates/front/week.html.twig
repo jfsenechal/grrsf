@@ -24,7 +24,7 @@
         {% for room in rooms %}
             <tr>
                 <td>{{ room.name }}</td>
-                {% for day in week.data %}
+                {% for day in week.data.days %}
                     <td>
                         {% for entry in day.entries %}
                             {{ entry.name }}

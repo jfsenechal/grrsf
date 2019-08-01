@@ -8,66 +8,65 @@
 
 namespace App\Model;
 
+use App\Service\LocalHelper;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
+use Carbon\CarbonPeriod;
 use Webmozart\Assert\Assert;
 
 class Week
 {
     /**
-     *
-     * $date = new DateTime('first day of this month');
-     * $date->modify('monday this week');
-     */
-
-    /**
-     * @var \DateTimeImmutable
+     * @var CarbonInterface
      */
     protected $startDate;
 
     /**
-     * @var \DateTimeImmutable
+     * @var CarbonInterface
      */
     protected $endDate;
 
     /**
      * @var array
      */
-    protected $data;
+    protected $data = [];
 
     public function create(int $year, int $week): self
     {
         Assert::greaterThan($year, 0);
         Assert::greaterThan($week, 0);
 
-        $date = new \DateTime();
+        $date = Carbon::create($year)->locale(LocalHelper::getDefaultLocal());
         $date->setISODate($year, $week);
+        //$date->isoWeek($week, Carbon::MONDAY);
 
         $this->startDate = $date;
-
-        $this->endDate = clone($this->startDate);
-        $this->endDate->modify('+6 days');
+        $this->endDate = $date->copy()->endOfWeek();
 
         return $this;
     }
 
     /**
-     * @return \DatePeriod
-     * @throws \Exception
+     * @return CarbonPeriod
+     *
      */
-    public function getDays(): \DatePeriod
+    public function getDays(): CarbonPeriod
     {
-        $interval = new \DateInterval('P1D');
-        $end = clone $this->endDate;
-        $end->modify('+1 days');//to include
+        $period = new CarbonPeriod(
+            $this->getFirstDay()->toDateString(),
+            '1 days',
+            $this->getLastDay()->toDateString()
+        );
 
-        return new \DatePeriod($this->startDate, $interval, $end);
+        return $period;
     }
 
-    public function getFirstDay(): \DateTimeInterface
+    public function getFirstDay(): CarbonInterface
     {
         return $this->startDate;
     }
 
-    public function getLastDay(): \DateTimeInterface
+    public function getLastDay(): CarbonInterface
     {
         return $this->endDate;
     }
@@ -81,7 +80,7 @@ class Week
      * @return array
      */
     public function getData(): array
-    {return[];
+    {
         return $this->data;
     }
 

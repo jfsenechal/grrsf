@@ -73,24 +73,18 @@ class CalendarDisplay
 
     public function oneWeek(Week $week, CalendarDataManager $calendarDataManager)
     {
-        $days = [];
+        $days = $data = [];
+        $data['week'] = $week;
         foreach ($week->getDays() as $date) {
             //todo extract
             $day = new Day($date);
             $calendarDataManager->add($day);
-            $days[] = $day;
+            $days [] = $day;
         }
+        $data['days'] = $days;
 
-        $week->setDaysData($days);
+        $week->setData($data);
 
-        return $week;
 
-        return $this->environment->render(
-            'calendar/data/_calendar_data.html.twig',
-            [
-                'days' => $days,
-                'firstDay' => $week->getFirstDay(),
-            ]
-        );
     }
 }

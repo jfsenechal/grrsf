@@ -17,11 +17,10 @@ use App\Repository\RoomRepository;
 use App\Service\CalendarDataManager;
 use App\Service\CalendarDisplay;
 use App\Service\CalendarNavigationDisplay;
+use App\Service\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
-use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
-use Carbon\CarbonPeriod;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,6 +61,10 @@ class FrontController extends AbstractController
      * @var Week
      */
     private $week;
+    /**
+     * @var LocalHelper
+     */
+    private $localHelper;
 
     public function __construct(
         Month $month,
@@ -70,7 +73,8 @@ class FrontController extends AbstractController
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
-        Week $week
+        Week $week,
+    LocalHelper $localHelper
     ) {
         $this->month = $month;
         $this->areaRepository = $areaRepository;
@@ -79,6 +83,7 @@ class FrontController extends AbstractController
         $this->calendarDisplay = $calendarDisplay;
         $this->calendarNavigationDisplay = $calendarNavigationDisplay;
         $this->week = $week;
+        $this->localHelper = $localHelper;
     }
 
     /**
@@ -101,7 +106,6 @@ class FrontController extends AbstractController
 
         $immutable = CarbonImmutable::now();
         $months = CarbonInterval::months(3);
-
 
 
         /*dump($mutable->startOfMonth());
@@ -127,21 +131,19 @@ class FrontController extends AbstractController
                 'firstDay' => $firstDay,
                 'nextMonth' => $nextMonth,
                 'previousMonth' => $previousMonth,
-
                 'listDays' => DateUtils::getJoursSemaine(),
             ]
         );
     }
-
-
 
     /**
      * @Route("/", name="grr_front_home", methods={"GET"})
      */
     public function index(): Response
     {
-        $month = date('n');
-        $year = date('Y');
+        $today = Carbon::today()->locale(LocalHelper::getDefaultLocal());
+        $month = $today->month;
+        $year = $today->year;
         $esquare = $this->areaRepository->find(1);
 
         return $this->redirectToRoute(
@@ -208,8 +210,13 @@ class FrontController extends AbstractController
 
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
+        $calendarDataManager = new CalendarDataManager();
+        $calendarDataManager->setEntries($entries);
+
         $weekModel = $this->week->create($year, $week);
         $firstDay = $weekModel->getFirstDay();
+
+        $this->calendarDisplay->oneWeek($weekModel, $calendarDataManager);
 
         $calendarDataManager = new CalendarDataManager();
         $calendarDataManager->setEntries($entries);

@@ -8,6 +8,7 @@
 
 namespace App\Model;
 
+use App\Service\LocalHelper;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
@@ -22,7 +23,7 @@ class Month
     public function create(int $year, int $month): self
     {
         //$this->dateTimeImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
-        $this->dateTimeImmutable = CarbonImmutable::create($year, $month, 01)->locale('fr_FR');
+        $this->dateTimeImmutable = CarbonImmutable::create($year, $month, 01)->locale(LocalHelper::getDefaultLocal());
 
         return $this;
     }
@@ -86,6 +87,7 @@ class Month
         do  {
             $weeks[] = $this->getWeek($firstDayWeek);// point at end ofWeek
             $firstDayWeek->addDay();
+            //$date->endOfWeek(); ?
             $firstDayMonthMutable->addWeek();
         } while ($firstDayWeek->isSameMonth($firstDayMonth));
 
