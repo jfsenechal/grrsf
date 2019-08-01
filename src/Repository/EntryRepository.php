@@ -121,7 +121,7 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * Pour wordpress
-     * @return mixed
+     * @return Entry[]
      */
     public function getBookings()
     {
