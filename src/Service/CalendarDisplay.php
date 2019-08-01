@@ -8,6 +8,7 @@
 
 namespace App\Service;
 
+use App\GrrData\DateUtils;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\Week;
@@ -40,21 +41,26 @@ class CalendarDisplay
      */
     public function oneMonth(Month $month, CalendarDataManager $calendarDataManager)
     {
-        $allDays = $month->getDays();
         //pour avoir un iterable
         $days = [];
-        foreach ($allDays as $date) {
-            //todo extract
-            $day = new Day($date);
-            $calendarDataManager->add($day);
-            $days[] = $day;
+        $allDays = $month->getDays();
+        $weeks = $month->getWeeks();
+        foreach ($weeks as $week) {
+            foreach ($week as $date) {
+                //todo extract
+                $day = new Day($date);
+                $calendarDataManager->add($day);
+                $days[] = $day;
+            }
         }
 
         return $this->environment->render(
             'calendar/data/_calendar_data.html.twig',
             [
                 'days' => $days,
+                'listDays' => DateUtils::getJoursSemaine(),
                 'firstDay' => $month->getFirstDay(),
+                'weeks' => $weeks,
             ]
         );
 

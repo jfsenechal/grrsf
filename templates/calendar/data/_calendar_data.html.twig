@@ -1,18 +1,21 @@
 <table class="table table-bordered">
+    <thead>
     <tr>
-        <th>{{ 'monday'|trans }}</th>
-        <th>{{ 'tuesday'|trans }}</th>
-        <th>{{ 'wednesday'|trans }}</th>
-        <th>{{ 'thursday'|trans }}</th>
-        <th>{{ 'friday'|trans }}</th>
-        <th>{{ 'saturday'|trans }}</th>
-        <th>{{ 'sunday'|trans }}</th>
-    </tr>
-    <tbody>
-    <tr>
-        {% for day in days %}
-            {% include 'calendar/data/_week_line_data.html.twig' %}
+        {% for dayName in listDays %}
+            <th scope="col">{{ dayName|trans }}</th>
         {% endfor %}
-    <tr>
+    </tr>
+    </thead>
+    <tbody>
+    {% for week in weeks %}
+
+        {% set class = "" %}
+        <tr class="{{ class }}">
+            {% for day in week %}
+                {% include 'calendar/navigation/_cell_day.html.twig' with { 'day': day } %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+
     </tbody>
 </table>

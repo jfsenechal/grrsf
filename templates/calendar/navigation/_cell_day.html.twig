@@ -1,7 +1,9 @@
 {% set classDay = "" %}
+{% set daySelected = app.request.get('day') %}
+
 {% if daySelected == day.day %}
     {% set classDay = "table-info" %}
 {% endif %}
 <td class="{{ classDay }}">
-    <a href="{{ generateRouteDayView(day|date('j')) }}">{{ day | date('j') }}</a>
+    <a href="{{ generateRouteDayView(day|date('j')) }}">{{ day.day }}</a>
 </td>

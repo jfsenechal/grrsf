@@ -93,7 +93,7 @@ class CalendarNavigationDisplay
     {
         $firstDay = $month->firstOfMonth();
 
-        $weeks = $this->month->getWeeks($firstDay);
+        $weeks = $this->month->getWeeks();
 
         return $this->twigEnvironment->render(
             'calendar/navigation/_month.html.twig',

@@ -7,10 +7,11 @@
     {% include 'calendar/navigation/_navigation.html.twig' %}
 
     <h3 class="text-center text-success">
-        {{ firstDay|date('F Y') }} <br />
+        {{ firstDay.monthName|upper }} {{ firstDay.year }}<br />
         {{ area }} - {% if room %} {{ room }} {% else %} {{ 'room.all'|trans({},'actions') }} {% endif %}
     </h3>
 
+    {{ data|raw }}
 {% endblock %}
 
 {% block scripts %}

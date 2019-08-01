@@ -52,9 +52,7 @@ class Month
 
     public function getLastDay(): \DateTimeInterface
     {
-        $date = clone $this->dateTimeImmutable;
-
-        return $date->modify('last day of this month');
+        return $this->dateTimeImmutable->lastOfMonth();
     }
 
     public function getNextMonth(): \DateTimeInterface
@@ -73,13 +71,14 @@ class Month
     }
 
     /**
-     * Position au 1 du mois
-     * @param CarbonInterface $firstDayMonth
+     *
+     * @param CarbonInterface $firstDayMonth Position au 1 du mois
      * @return array
      */
-    function getWeeks(CarbonInterface $firstDayMonth)
+    function getWeeks()
     {
         $weeks = [];
+        $firstDayMonth = $this->getFirstDay();
 
         $firstDayWeek = $firstDayMonth->copy()->startOfWeek()->toMutable();
         $firstDayMonthMutable = $firstDayMonth->toMutable();
