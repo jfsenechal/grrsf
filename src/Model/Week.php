@@ -81,7 +81,7 @@ class Week
      * @return array
      */
     public function getData(): array
-    {
+    {return[];
         return $this->data;
     }
 

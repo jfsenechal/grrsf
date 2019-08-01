@@ -8,43 +8,46 @@
 
 namespace App\Model;
 
+use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
+use Carbon\CarbonPeriod;
+
 class Month
 {
     /**
-     * @var \DateTimeImmutable
+     * @var CarbonInterface
      */
     protected $dateTimeImmutable;
 
     public function create(int $year, int $month): self
     {
-        $this->dateTimeImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
+        //$this->dateTimeImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
+        $this->dateTimeImmutable = CarbonImmutable::create($year, $month, 01)->locale('fr_FR');
 
         return $this;
     }
 
-    public function getDateTimeImmutable(): \DateTimeImmutable
+    public function getDateTimeImmutable(): CarbonInterface
     {
         return $this->dateTimeImmutable;
     }
 
     /**
-     * @return \DatePeriod
-     * @throws \Exception
+     * @return CarbonPeriod
+     *
      */
-    public function getDays(): \DatePeriod
+    public function getDays(): CarbonPeriod
     {
-        $interval = new \DateInterval('P1D');
-        $end = $this->getLastDay();
-        $end = $end->modify('+1 day');//to be included
-
-        return new \DatePeriod($this->getFirstDay(), $interval, $end);
+        return new CarbonPeriod(
+            $this->dateTimeImmutable->firstOfMonth()->toDateString(),
+            '1 days',
+            $this->dateTimeImmutable->endOfMonth()->toDateString()
+        );
     }
 
-    public function getFirstDay(): \DateTimeInterface
+    public function getFirstDay(): CarbonInterface
     {
-        $date = clone $this->dateTimeImmutable;
-
-        return $date->modify('first day of this month');
+        return $this->dateTimeImmutable->firstOfMonth();
     }
 
     public function getLastDay(): \DateTimeInterface
@@ -56,21 +59,54 @@ class Month
 
     public function getNextMonth(): \DateTimeInterface
     {
-        $date = clone $this->dateTimeImmutable;
-
-        return $date->modify('last day of 1 month');
+        return $this->dateTimeImmutable->addMonth();
     }
 
     public function getPreviousMonth(): \DateTimeInterface
     {
-        $date = clone $this->dateTimeImmutable;
-
-        return $date->modify('previous month');
+        return $this->dateTimeImmutable->subMonth();
     }
 
     public function getNumeric(): int
     {
-        return $this->dateTimeImmutable->format('n');
+        return $this->dateTimeImmutable->month;
+    }
+
+    /**
+     * Position au 1 du mois
+     * @param CarbonInterface $firstDayMonth
+     * @return array
+     */
+    function getWeeks(CarbonInterface $firstDayMonth)
+    {
+        $weeks = [];
+
+        // $dt->isCurrentMonth();
+        // $dt->isSameMonth($dt2); // same month of the same year of the given date
+        $start = $firstDayMonth->copy()->startOfWeek()->toMutable();
+        $mutable = $firstDayMonth->toMutable();
+
+        while ($mutable->isSameMonth()) {
+            $weeks[] = $this->getWeek($start);
+            $start->addDay();
+            $mutable->addWeek();
+        }
+
+        return $weeks;
+    }
+
+    private function getWeek(CarbonInterface $date)
+    {
+        $debut = $date->toDateString();
+        $fin = $date->endOfWeek()->toDateString();
+
+        $period = new CarbonPeriod(
+            $debut,
+            '1 days',
+            $fin
+        );
+
+        return $period;
     }
 
     /**

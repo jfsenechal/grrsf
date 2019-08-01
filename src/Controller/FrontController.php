@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Form\AreaMenuSelectType;
+use App\GrrData\DateUtils;
 use App\Model\Day;
 use App\Model\Hour;
 use App\Model\Month;
@@ -16,6 +17,11 @@ use App\Repository\RoomRepository;
 use App\Service\CalendarDataManager;
 use App\Service\CalendarDisplay;
 use App\Service\CalendarNavigationDisplay;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
+use Carbon\CarbonInterval;
+use Carbon\CarbonPeriod;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,6 +80,60 @@ class FrontController extends AbstractController
         $this->calendarNavigationDisplay = $calendarNavigationDisplay;
         $this->week = $week;
     }
+
+    /**
+     * @Route("/test", name="grr_front_test", methods={"GET"})
+     */
+    public function test(): Response
+    {
+        Carbon::create(2019, 5)->locale('fr_FR');
+        $mutable = Carbon::today()->locale('fr_FR');
+
+        //$mutable->addMonth();
+        $firstDay = $mutable->firstOfMonth();
+        $nextMonth = $mutable->copy()->addMonth();
+        $previousMonth = $mutable->copy()->subMonth();
+
+        // Carbon::setWeekStartsAt(Carbon::MONDAY);
+        //  dump($mutable->startOfWeek());
+        //  dump($mutable->startOfWeek());
+        // dump($mutable->endOfWeek());
+
+        $immutable = CarbonImmutable::now();
+        $months = CarbonInterval::months(3);
+
+
+
+        /*dump($mutable->startOfMonth());
+        dump($mutable->endOfWeek());
+        dump($mutable->nextWeekendDay());
+        dump($mutable->startOfWeek());
+
+        dump($mutable->lastOfMonth());
+
+
+        dump($mutable->firstOfMonth());
+        dump($mutable->startOfDay());
+        dump($mutable->startOfMonth());
+
+        dump($mutable->endOfWeek());
+        dump($mutable->nextWeekday());
+        dump($mutable->lastOfMonth()->monthName);*/
+
+        return $this->render(
+            'front/test.html.twig',
+            [
+                //   'period' => $period,
+                'firstDay' => $firstDay,
+                'nextMonth' => $nextMonth,
+                'previousMonth' => $previousMonth,
+                'weeks' => $weeks,
+                'listDays' => DateUtils::getJoursSemaine(),
+            ]
+        );
+    }
+
+
 
     /**
      * @Route("/", name="grr_front_home", methods={"GET"})
@@ -196,7 +256,7 @@ class FrontController extends AbstractController
         $fin = clone($debut);
 
         $debut->setTime($heureDebut, 0);
-        $fin->setTime($heureFin, 0,$resolution);
+        $fin->setTime($heureFin, 0, $resolution);
 
         $interval = new \DateInterval('PT'.$resolution.'S');
         $heures = new \DatePeriod($debut, $interval, $fin);

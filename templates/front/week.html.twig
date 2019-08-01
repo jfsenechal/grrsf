@@ -16,7 +16,7 @@
         <tr>
             <th>{{ 'ressources'|trans }}</th>
             {% for day in week.days %}
-                <th>{{ day|date('l') |trans|lower }} {{ day|date('d') }} {{ day|date('F')|trans|lower }}</th>
+                <th>{{ day|date('l') |trans|lower }} {{ day|date('d') }} {# firstDay.getTranslatedDayName #} {{ day|date('F')|trans|lower }}</th>
             {% endfor %}
         </tr>
         </thead>

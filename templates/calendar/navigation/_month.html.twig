@@ -1,40 +1,36 @@
-<table class="table">
-    <tbody>
+{% set weekSelected = app.request.get('week') %}
+
+<table class="table table-bordered">
+    <thead>
     <tr>
         <th class="text-center" colspan="8">
-            <a href="{{ generateRouteMonthView() }}">
-             {{ firstDay|date('F') | trans }} {{ firstDay|date('Y') }}
+            <a href="{# generateRouteMonthView() #}">
+                {{ firstDay.monthName|upper }} {{ firstDay.year }}
             </a>
         </th>
     </tr>
     <tr>
         <th>{{ 'week'|trans }}</th>
-        <th>{{ 'monday'|trans }}</th>
-        <th>{{ 'tuesday'|trans }}</th>
-        <th>{{ 'wednesday'|trans }}</th>
-        <th>{{ 'thursday'|trans }}</th>
-        <th>{{ 'friday'|trans }}</th>
-        <th>{{ 'saturday'|trans }}</th>
-        <th>{{ 'sunday'|trans }}</th>
+        {% for dayName in listDays %}
+            <th>{{ dayName|trans }}</th>
+        {% endfor %}
     </tr>
+    </thead>
+    {% for week in weeks %}
 
-    {% set weekSelected = app.request.get('week') %}
-
-    {% for numericWeek, days in weeks %}
-
-        {% if numericWeek == weekSelected %}
+        {% if week.startDate.week == weekSelected %}
             {% set class = "table-info" %}
         {% else %}
             {% set class = "" %}
         {% endif %}
 
         <tr class="{{ class }}">
-            {% include 'calendar/navigation/_cell_week.html.twig' %}
-            {% for day in days %}
-                {% include 'calendar/navigation/_week_line.html.twig' %}
+            {% include 'calendar/navigation/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
+            {% for day in week %}
+                <td>
+                    {% include 'calendar/navigation/_cell_day.html.twig' with { 'day': day } %}
+                </td>
             {% endfor %}
         </tr>
     {% endfor %}
-    </tbody>
-
 </table>

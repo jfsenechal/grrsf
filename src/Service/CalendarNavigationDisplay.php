@@ -8,6 +8,7 @@
 
 namespace App\Service;
 
+use App\GrrData\DateUtils;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\Navigation;
@@ -19,7 +20,7 @@ class CalendarNavigationDisplay
     /**
      * @var Environment
      */
-    private $environment;
+    private $twigEnvironment;
     /**
      * @var Month
      */
@@ -29,14 +30,14 @@ class CalendarNavigationDisplay
      */
     private $monthNumeric;
 
-    public function __construct(Month $month, Environment $environment)
+    public function __construct(Environment $environment)
     {
-        $this->environment = $environment;
-        $this->month = $month;
+        $this->twigEnvironment = $environment;
     }
 
     public function create(Month $month, int $number = 1)
     {
+        $this->month = $month;
         $this->monthNumeric = $month->getNumeric();
 
         Assert::greaterThan($number, 0);
@@ -49,11 +50,11 @@ class CalendarNavigationDisplay
         $current = $this->month->getDateTimeImmutable();
 
         for ($i = 0; $i < $number; $i++) {
-            $navigation->addMonth($this->month($current));
-            $current->modify('+1 month');
+            $navigation->addMonth($this->month($month));
+            //   $current->modify('+1 month');
         }
 
-        return $this->environment->render(
+        return $this->twigEnvironment->render(
             'calendar/navigation/_calendar_navigation.html.twig',
             [
                 'navigation' => $navigation,
@@ -66,7 +67,7 @@ class CalendarNavigationDisplay
     {
         $previousMonth = $this->month->getPreviousMonth();
 
-        return $this->environment->render(
+        return $this->twigEnvironment->render(
             'calendar/navigation/_button_previous.html.twig',
             [
                 'previousMonth' => $previousMonth,
@@ -79,7 +80,7 @@ class CalendarNavigationDisplay
     {
         $nextMonth = $this->month->getNextMonth();
 
-        return $this->environment->render(
+        return $this->twigEnvironment->render(
             'calendar/navigation/_button_next.html.twig',
             [
                 'nextMonth' => $nextMonth,
@@ -88,17 +89,21 @@ class CalendarNavigationDisplay
         );
     }
 
-    public function month(\DateTimeInterface $firstDay)
+    public function month(Month $month)
     {
+        $firstDay = $month->getFirstDay();
         $allDays = $this->month->getDays();
         $days = $this->getDays($allDays);
+        $weeks = $this->month->getWeeks($firstDay);
 
-        return $this->environment->render(
+        return $this->twigEnvironment->render(
             'calendar/navigation/_month.html.twig',
             [
                 'days' => $days,
                 'firstDay' => $firstDay,
-                'weeks'=>$this->month->getDaysGroupByWeeks()
+                'listDays' => DateUtils::getJoursSemaine(),
+                //'weeks'=>$this->month->getDaysGroupByWeeks(),
+                'weeks' => $weeks,
             ]
         );
     }
@@ -118,7 +123,6 @@ class CalendarNavigationDisplay
 
         return $days;
     }
-
 
 
 }

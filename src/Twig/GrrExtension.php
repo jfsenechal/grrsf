@@ -180,8 +180,8 @@ class GrrExtension extends AbstractExtension
 
         $attributes = $request->attributes->get('_route_params');
 
-        $area = $attributes['area'];
-        $room = $attributes['room'];
+        $area = $attributes['area'] ?? 0;
+        $room = $attributes['room'] ?? 0;
 
         if (!$year) {
             $year = $attributes['year'];

@@ -9,6 +9,7 @@
 namespace App\GrrData;
 
 
+use Carbon\Carbon;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DateUtils
@@ -23,16 +24,14 @@ class DateUtils
         $this->translator = $translator;
     }
 
-    public function getJoursSemaine()
+    public static function getJoursSemaine()
     {
-        $data = [];
-        $days = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday');
+        $days = Carbon::getDays();
+        //if lundi first
+        $days[] = $days[0];
+        unset($days[0]);
 
-        foreach ($days as $day) {
-            $data[] = $this->translator->trans($day);
-        }
-
-        return $data;
+        return $days;
     }
 
     public static function getHeures()
