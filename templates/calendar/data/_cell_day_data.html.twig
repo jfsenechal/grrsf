@@ -1,4 +1,6 @@
-<span class="text-muted">{{ day.day }}</span>
-{#% for entry in day.entries %}
-    <p>{{ entry.name }}</p>
-{% endfor %#}
+<td>
+    <span class="text-muted">{{ day.date.day }}</span>
+    {% for entry in day.entries %}
+        <p>{{ entry.name }}</p>
+    {% endfor %}
+</td>

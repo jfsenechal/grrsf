@@ -42,25 +42,30 @@ class CalendarDisplay
     public function oneMonth(Month $month, CalendarDataManager $calendarDataManager)
     {
         //pour avoir un iterable
-        $days = [];
+        $data = [];
         $allDays = $month->getDays();
         $weeks = $month->getWeeks();
+        $i = 0;
         foreach ($weeks as $week) {
+            $days = [];
+            $data[$i]['week'] = $week;
             foreach ($week as $date) {
                 //todo extract
                 $day = new Day($date);
                 $calendarDataManager->add($day);
-                $days[] = $day;
+                $days [] = $day;
             }
+            $data[$i]['days'] = $days;
+            $i++;
         }
 
         return $this->environment->render(
             'calendar/data/_calendar_data.html.twig',
             [
-                'days' => $days,
                 'listDays' => DateUtils::getJoursSemaine(),
                 'firstDay' => $month->getFirstDay(),
                 'weeks' => $weeks,
+                'datas' => $data,
             ]
         );
 
