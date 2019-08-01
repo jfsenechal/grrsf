@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Area;
 use App\Entity\Room;
+use App\Factory\CarbonFactory;
 use App\Form\AreaMenuSelectType;
-use App\GrrData\DateUtils;
 use App\Model\Day;
 use App\Model\Hour;
 use App\Model\Month;
@@ -19,8 +19,6 @@ use App\Service\CalendarDisplay;
 use App\Service\CalendarNavigationDisplay;
 use App\Service\LocalHelper;
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
-use Carbon\CarbonInterval;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,7 +72,7 @@ class FrontController extends AbstractController
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
         Week $week,
-    LocalHelper $localHelper
+        LocalHelper $localHelper
     ) {
         $this->month = $month;
         $this->areaRepository = $areaRepository;
@@ -91,47 +89,10 @@ class FrontController extends AbstractController
      */
     public function test(): Response
     {
-        Carbon::create(2019, 5)->locale('fr_FR');
-        $mutable = Carbon::today()->locale('fr_FR');
-
-        //$mutable->addMonth();
-        $firstDay = $mutable->firstOfMonth();
-        $nextMonth = $mutable->copy()->addMonth();
-        $previousMonth = $mutable->copy()->subMonth();
-
-        // Carbon::setWeekStartsAt(Carbon::MONDAY);
-        //  dump($mutable->startOfWeek());
-        //  dump($mutable->startOfWeek());
-        // dump($mutable->endOfWeek());
-
-        $immutable = CarbonImmutable::now();
-        $months = CarbonInterval::months(3);
-
-
-        /*dump($mutable->startOfMonth());
-        dump($mutable->endOfWeek());
-        dump($mutable->nextWeekendDay());
-        dump($mutable->startOfWeek());
-
-        dump($mutable->lastOfMonth());
-
-
-        dump($mutable->firstOfMonth());
-        dump($mutable->startOfDay());
-        dump($mutable->startOfMonth());
-
-        dump($mutable->endOfWeek());
-        dump($mutable->nextWeekday());
-        dump($mutable->lastOfMonth()->monthName);*/
-
         return $this->render(
             'front/test.html.twig',
             [
-                //   'period' => $period,
-                'firstDay' => $firstDay,
-                'nextMonth' => $nextMonth,
-                'previousMonth' => $previousMonth,
-                'listDays' => DateUtils::getJoursSemaine(),
+
             ]
         );
     }
@@ -141,17 +102,15 @@ class FrontController extends AbstractController
      */
     public function index(): Response
     {
-        $today = Carbon::today()->locale(LocalHelper::getDefaultLocal());
-        $month = $today->month;
-        $year = $today->year;
+        $today = CarbonFactory::getToday();
+
+        //todo get area by default
         $esquare = $this->areaRepository->find(1);
 
         return $this->redirectToRoute(
             'grr_front_month',
-            ['area' => $esquare->getId(), 'year' => $year, 'month' => $month]
+            ['area' => $esquare->getId(), 'year' => $today->year, 'month' => $today->month]
         );
-
-
     }
 
     /**
@@ -240,7 +199,7 @@ class FrontController extends AbstractController
      */
     public function day(Area $area, int $year, int $month, int $day, int $room = null): Response
     {
-        $daySelected = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-'.$day);
+        $daySelected = CarbonFactory::createImmutable($year, $month, $day);
 
         $entries = $this->entryRepository->findAll();
 
@@ -259,11 +218,11 @@ class FrontController extends AbstractController
         $heureFin = $area->getEveningendsArea();
         $resolution = $area->getResolutionArea();
 
-        $debut = \DateTime::createFromFormat('Y-m-d', $year.'-'.$month.'-'.$day);
-        $fin = clone($debut);
+        $debut = Carbon::create($year, $month, $day, $heureDebut, 0);
+        $fin = Carbon::create($year, $month, $day, $heureFin, 0, 0);//$resolution bug
 
-        $debut->setTime($heureDebut, 0);
-        $fin->setTime($heureFin, 0, $resolution);
+       // $debut->setTime($heureDebut, 0);
+      //  $fin->setTime($heureFin, 0, $resolution);
 
         $interval = new \DateInterval('PT'.$resolution.'S');
         $heures = new \DatePeriod($debut, $interval, $fin);
