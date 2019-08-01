@@ -1,9 +1,11 @@
 {% set weekSelected = app.request.get('week') %}
+{% set daySelected = app.request.get('day') %}
+{% set monthSelected = app.request.get('month') %}
 
 <table class="table table-bordered">
     <thead>
     <tr>
-        <th class="text-center" colspan="8">
+        <th scope="col" class="text-center" colspan="8">
             <a href="{{ generateRouteMonthView() }}">
                 {{ firstDay.monthName|upper }} {{ firstDay.year }}
             </a>
@@ -27,9 +29,7 @@
         <tr class="{{ class }}">
             {% include 'calendar/navigation/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
             {% for day in week %}
-                <td>
                     {% include 'calendar/navigation/_cell_day.html.twig' with { 'day': day } %}
-                </td>
             {% endfor %}
         </tr>
     {% endfor %}

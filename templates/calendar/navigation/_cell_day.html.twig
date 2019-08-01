@@ -1,1 +1,7 @@
-<a href="{{ generateRouteDayView(day|date('j'))}}">{{ day | date('j') }}</a>
+{% set classDay = "" %}
+{% if daySelected == day.day %}
+    {% set classDay = "table-info" %}
+{% endif %}
+<td class="{{ classDay }}">
+    <a href="{{ generateRouteDayView(day|date('j')) }}">{{ day | date('j') }}</a>
+</td>
