@@ -81,16 +81,14 @@ class Month
     {
         $weeks = [];
 
-        // $dt->isCurrentMonth();
-        // $dt->isSameMonth($dt2); // same month of the same year of the given date
-        $start = $firstDayMonth->copy()->startOfWeek()->toMutable();
-        $mutable = $firstDayMonth->toMutable();
+        $firstDayWeek = $firstDayMonth->copy()->startOfWeek()->toMutable();
+        $firstDayMonthMutable = $firstDayMonth->toMutable();
 
-        while ($mutable->isSameMonth()) {
-            $weeks[] = $this->getWeek($start);
-            $start->addDay();
-            $mutable->addWeek();
-        }
+        do  {
+            $weeks[] = $this->getWeek($firstDayWeek);// point at end ofWeek
+            $firstDayWeek->addDay();
+            $firstDayMonthMutable->addWeek();
+        } while ($firstDayWeek->isSameMonth($firstDayMonth));
 
         return $weeks;
     }

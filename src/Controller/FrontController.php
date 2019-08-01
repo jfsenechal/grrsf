@@ -127,7 +127,7 @@ class FrontController extends AbstractController
                 'firstDay' => $firstDay,
                 'nextMonth' => $nextMonth,
                 'previousMonth' => $previousMonth,
-                'weeks' => $weeks,
+
                 'listDays' => DateUtils::getJoursSemaine(),
             ]
         );
@@ -176,7 +176,7 @@ class FrontController extends AbstractController
 
         $data = $this->calendarDisplay->oneMonth($monthModel, $calendarDataManager);
 
-        $navigation = $this->calendarNavigationDisplay->create($monthModel);
+        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         return $this->render(
             'front/month.html.twig',
@@ -206,7 +206,7 @@ class FrontController extends AbstractController
 
         $monthModel = $this->month->create($year, $month);
 
-        $navigation = $this->calendarNavigationDisplay->create($monthModel);
+        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         $weekModel = $this->week->create($year, $week);
         $firstDay = $weekModel->getFirstDay();
@@ -243,7 +243,7 @@ class FrontController extends AbstractController
 
         $monthModel = $this->month->create($year, $month);
 
-        $navigation = $this->calendarNavigationDisplay->create($monthModel);
+        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         $dayModel = new Day($daySelected);
         $dayModel->setEntries($entries);

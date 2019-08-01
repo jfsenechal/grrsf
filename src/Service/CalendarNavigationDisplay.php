@@ -12,6 +12,7 @@ use App\GrrData\DateUtils;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\Navigation;
+use Carbon\CarbonInterface;
 use Twig\Environment;
 use Webmozart\Assert\Assert;
 
@@ -35,23 +36,22 @@ class CalendarNavigationDisplay
         $this->twigEnvironment = $environment;
     }
 
-    public function create(Month $month, int $number = 1)
+    public function createMonth(Month $month, int $number = 1)
     {
         $this->month = $month;
-        $this->monthNumeric = $month->getNumeric();
 
         Assert::greaterThan($number, 0);
-        //todo extract
+        //todo set in constructor
         $navigation = new Navigation();
 
         $navigation->setNextButton($this->nextButton());
         $navigation->setPreviousButton($this->previousButton());
 
-        $current = $this->month->getDateTimeImmutable();
+        $current = $this->month->getDateTimeImmutable()->toMutable();
 
         for ($i = 0; $i < $number; $i++) {
-            $navigation->addMonth($this->month($month));
-            //   $current->modify('+1 month');
+            $navigation->addMonth($this->generateMonth($current));
+            $current->addMonth();
         }
 
         return $this->twigEnvironment->render(
@@ -89,17 +89,15 @@ class CalendarNavigationDisplay
         );
     }
 
-    public function month(Month $month)
+    public function generateMonth(CarbonInterface $month)
     {
-        $firstDay = $month->getFirstDay();
-        $allDays = $this->month->getDays();
-        $days = $this->getDays($allDays);
+        $firstDay = $month->firstOfMonth();
+
         $weeks = $this->month->getWeeks($firstDay);
 
         return $this->twigEnvironment->render(
             'calendar/navigation/_month.html.twig',
             [
-                'days' => $days,
                 'firstDay' => $firstDay,
                 'listDays' => DateUtils::getJoursSemaine(),
                 //'weeks'=>$this->month->getDaysGroupByWeeks(),
