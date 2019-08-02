@@ -33,11 +33,12 @@ class Month extends Carbon
         $this->data_days = new ArrayCollection();
     }
 
-    public function createJf(int $year, int $month): self
+    public static function createJf(int $year, int $month): self
     {
-        $this->firstDayImmutable = CarbonFactory::createImmutable($year, $month, 01);
+        $monthModel = new self();
+        $monthModel->firstDayImmutable = CarbonFactory::createImmutable($year, $month, 01);
 
-        return $this;
+        return $monthModel;
     }
 
     public function getFirstDayImmutable(): CarbonInterface

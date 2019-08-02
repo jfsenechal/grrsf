@@ -44,19 +44,22 @@ class Week extends Carbon
         $this->data_days = new ArrayCollection();
     }
 
-    public function createWithLocal(int $year, int $week): self
+    public static function createWithLocal(int $year, int $week): self
     {
         Assert::greaterThan($year, 0);
         Assert::greaterThan($week, 0);
 
-        $date = Carbon::create($year)->locale(LocalHelper::getDefaultLocal());
+        $date = Carbon::create($year);
+        $date->locale(LocalHelper::getDefaultLocal());
         $date->setISODate($year, $week);
         //$date->isoWeek($week, Carbon::MONDAY);
 
-        $this->startDate = $date;
-        $this->endDate = $date->copy()->endOfWeek();
+        $weekModel = new self();
 
-        return $this;
+        $weekModel->startDate = $date;
+        $weekModel->endDate = $date->copy()->endOfWeek();
+
+        return $weekModel;
     }
 
     /**

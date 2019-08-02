@@ -12,8 +12,8 @@ use App\Model\Week;
 use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
-use App\Service\CalendarDataManager;
 use App\Service\CalendarDataDisplay;
+use App\Service\CalendarDataManager;
 use App\Service\CalendarNavigationDisplay;
 use App\Service\LocalHelper;
 use Carbon\Carbon;
@@ -29,10 +29,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FrontController extends AbstractController
 {
-    /**
-     * @var Month
-     */
-    private $month;
     /**
      * @var AreaRepository
      */
@@ -54,10 +50,6 @@ class FrontController extends AbstractController
      */
     private $calendarNavigationDisplay;
     /**
-     * @var Week
-     */
-    private $week;
-    /**
      * @var LocalHelper
      */
     private $localHelper;
@@ -71,7 +63,6 @@ class FrontController extends AbstractController
     private $calendarDataManager;
 
     public function __construct(
-        Month $month,
         CalendarDataDisplay $calendarDisplay,
         MenuGenerator $menuGenerator,
         CalendarNavigationDisplay $calendarNavigationDisplay,
@@ -80,7 +71,6 @@ class FrontController extends AbstractController
         EntryRepository $entryRepository,
         CalendarDataManager $calendarDataManager
     ) {
-        $this->month = $month;
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
         $this->entryRepository = $entryRepository;
@@ -133,7 +123,7 @@ class FrontController extends AbstractController
             $roomObject = $this->roomRepository->find($room);
         }
 
-        $monthModel = $this->month->createJf($year, $month);
+        $monthModel = Month::createJf($year, $month);
 
         $entries = $this->entryRepository->findForMonth($monthModel, $area, $roomObject);
 
@@ -147,7 +137,7 @@ class FrontController extends AbstractController
         return $this->render(
             'front/month.html.twig',
             [
-                'firstDay' => $this->month->firstOfMonth(),
+                'firstDay' => $monthModel->firstOfMonth(),
                 'area' => $area,
                 'room' => $roomObject,
                 'data' => $monthData,
@@ -172,7 +162,7 @@ class FrontController extends AbstractController
             $roomObject = $this->roomRepository->find($room);
         }
 
-        $weekModel = $this->week->createWithLocal($year, $week);
+        $weekModel = Week::createWithLocal($year, $week);
 
         $entries = $this->entryRepository->findForWeek($weekModel, $area, $roomObject);
         $this->calendarDataManager->bindWeek($weekModel, $entries);
