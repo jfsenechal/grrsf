@@ -3,23 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Area;
-use App\Entity\Room;
 use App\Factory\CarbonFactory;
-use App\Form\AreaMenuSelectType;
+use App\Factory\MenuGenerator;
 use App\Model\Day;
 use App\Model\Hour;
 use App\Model\Month;
 use App\Model\Week;
-use App\Navigation\MenuSelect;
 use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
 use App\Service\CalendarDataManager;
-use App\Service\CalendarDisplay;
+use App\Service\CalendarDataDisplay;
 use App\Service\CalendarNavigationDisplay;
 use App\Service\LocalHelper;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +46,7 @@ class FrontController extends AbstractController
      */
     private $entryRepository;
     /**
-     * @var CalendarDisplay
+     * @var CalendarDataDisplay
      */
     private $calendarDisplay;
     /**
@@ -64,16 +61,24 @@ class FrontController extends AbstractController
      * @var LocalHelper
      */
     private $localHelper;
+    /**
+     * @var MenuGenerator
+     */
+    private $menuGenerator;
+    /**
+     * @var CalendarDataManager
+     */
+    private $calendarDataManager;
 
     public function __construct(
         Month $month,
-        CalendarDisplay $calendarDisplay,
+        CalendarDataDisplay $calendarDisplay,
+        MenuGenerator $menuGenerator,
         CalendarNavigationDisplay $calendarNavigationDisplay,
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
-        Week $week,
-        LocalHelper $localHelper
+        CalendarDataManager $calendarDataManager
     ) {
         $this->month = $month;
         $this->areaRepository = $areaRepository;
@@ -81,8 +86,8 @@ class FrontController extends AbstractController
         $this->entryRepository = $entryRepository;
         $this->calendarDisplay = $calendarDisplay;
         $this->calendarNavigationDisplay = $calendarNavigationDisplay;
-        $this->week = $week;
-        $this->localHelper = $localHelper;
+        $this->menuGenerator = $menuGenerator;
+        $this->calendarDataManager = $calendarDataManager;
     }
 
     /**
@@ -90,11 +95,6 @@ class FrontController extends AbstractController
      */
     public function test(): Response
     {
-        $today = CarbonFactory::getToday();
-        $today->weekd;
-        $t = CarbonPeriod::create('2017-11-01', '2017-11-30')->count();
-        $t->countWeekDays();
-
         return $this->render(
             'front/test.html.twig',
             [
@@ -133,23 +133,24 @@ class FrontController extends AbstractController
             $roomObject = $this->roomRepository->find($room);
         }
 
-        $entries = $this->entryRepository->findAll();
-        $calendarDataManager = new CalendarDataManager();
-        $calendarDataManager->setEntries($entries);
+        $monthModel = $this->month->createJf($year, $month);
 
-        $monthModel = $this->month->create($year, $month);
-        $data = $this->calendarDisplay->oneMonth($monthModel, $calendarDataManager);
+        $entries = $this->entryRepository->findForMonth($monthModel, $area, $roomObject);
 
-        $form = $this->generateMenuSelect($area, $roomObject);
+        $this->calendarDataManager->bindMonth($monthModel, $entries);
+
+        $monthData = $this->calendarDisplay->generateMonth($monthModel);
+
+        $form = $this->menuGenerator->generateMenuSelect($area, $roomObject);
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         return $this->render(
             'front/month.html.twig',
             [
-                'firstDay' => $this->month->getFirstDay(),
+                'firstDay' => $this->month->firstOfMonth(),
                 'area' => $area,
                 'room' => $roomObject,
-                'data' => $data,
+                'data' => $monthData,
                 'navigation' => $navigation,
                 'monthModel' => $monthModel,
                 'form' => $form->createView(),
@@ -165,18 +166,23 @@ class FrontController extends AbstractController
     public function week(Area $area, int $year, int $month, int $week, int $room = null): Response
     {
         $rooms = $this->roomRepository->findByArea($area);
+        $roomObject = null;
 
-        $entries = $this->entryRepository->findAll();
-        $calendarDataManager = new CalendarDataManager();
-        $calendarDataManager->setEntries($entries);
+        if ($room) {
+            $roomObject = $this->roomRepository->find($room);
+        }
 
-        $weekModel = $this->week->create($year, $week);
+        $weekModel = $this->week->createWithLocal($year, $week);
+
+        $entries = $this->entryRepository->findForWeek($weekModel, $area, $roomObject);
+        $this->calendarDataManager->bindWeek($weekModel, $entries);
+
         $firstDay = $weekModel->getFirstDay();
 
-        $this->calendarDisplay->oneWeek($weekModel, $calendarDataManager);
+        $this->calendarDisplay->generateWeek($weekModel);
 
-        $monthModel = $this->month->create($year, $month);
-        $form = $this->generateMenuSelect($area);
+        $monthModel = $this->month->createJf($year, $month);
+        $form = $this->menuGenerator->generateMenuSelect($area);
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         return $this->render(
@@ -204,7 +210,7 @@ class FrontController extends AbstractController
 
         $entries = $this->entryRepository->findAll();
         $dayModel = new Day($daySelected);
-        $dayModel->setEntries($entries);
+        $dayModel->addEntries($entries);
 
         $heureDebut = $area->getMorningstartsArea();
         $heureFin = $area->getEveningendsArea();
@@ -231,8 +237,8 @@ class FrontController extends AbstractController
             $i = 1;
         }
 
-        $monthModel = $this->month->create($year, $month);
-        $form = $this->generateMenuSelect($area);
+        $monthModel = $this->month->createJf($year, $month);
+        $form = $this->menuGenerator->generateMenuSelect($area);
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         return $this->render(
@@ -248,16 +254,5 @@ class FrontController extends AbstractController
         );
     }
 
-    private function generateMenuSelect(Area $area, Room $room = null)
-    {
-        $menuSelect = new MenuSelect();
-        $menuSelect->setArea($area);
-
-        if ($room) {
-            $menuSelect->setRoom($room);
-        }
-
-        return $this->createForm(AreaMenuSelectType::class, $menuSelect);
-    }
 
 }

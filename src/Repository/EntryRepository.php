@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
+use App\Model\Month;
+use App\Model\Week;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -40,6 +42,64 @@ class EntryRepository extends ServiceEntityRepository
     public function flush()
     {
         $this->_em->flush();
+    }
+
+    /**
+     * @param array $args
+     * @return Entry[] Returns an array of Entry objects
+     */
+    public function findForMonth(Month $monthModel, Area $area = null, Room $room = null)
+    {
+        $qb = $this->createQueryBuilder('entry');
+
+        $qb->andWhere('YEAR(entry.startTime) = :year')
+            ->setParameter('year', $monthModel->getFirstDayImmutable()->year);
+
+        $qb->andWhere('MONTH(entry.startTime) = :month')
+            ->setParameter('month', $monthModel->getFirstDayImmutable()->month);
+
+        if ($area) {
+            $rooms = $this->getRooms($area);
+            $qb->andWhere('entry.room IN (:rooms)')
+                ->setParameter('rooms', $rooms);
+        }
+
+        if ($room) {
+            $qb->andWhere('entry.room = :room')
+                ->setParameter('room', $room);
+        }
+
+        return $qb
+            ->orderBy('entry.startTime', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findForWeek(Week $weekModel, Area $area = null, Room $room = null)
+    {
+        $qb = $this->createQueryBuilder('entry');
+
+        $qb->andWhere('YEAR(entry.startTime) = :year')
+            ->setParameter('year', $weekModel->getDateImmutable()->year);
+
+        $qb->andWhere('MONTH(entry.startTime) = :month')
+            ->setParameter('month', $weekModel->getDateImmutable()->month);
+
+        if ($area) {
+            $rooms = $this->getRooms($area);
+            $qb->andWhere('entry.room IN (:rooms)')
+                ->setParameter('rooms', $rooms);
+        }
+
+        if ($room) {
+            $qb->andWhere('entry.room = :room')
+                ->setParameter('room', $room);
+        }
+
+        return $qb
+            ->orderBy('entry.startTime', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -141,5 +201,6 @@ class EntryRepository extends ServiceEntityRepository
 
         return $areaRepository->findByArea($area);
     }
+
 
 }

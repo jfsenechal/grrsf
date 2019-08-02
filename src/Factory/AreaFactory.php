@@ -31,7 +31,7 @@ class AreaFactory
     public function setDefaultValues(Area $area)
     {
         $area
-            ->setDisplayDays(array_flip($this->dateUtils::getJoursSemaine()))
+            ->setDisplayDays(array_flip($this->dateUtils::getDays()))
             ->setMorningstartsArea(8)
             ->setEveningendsArea(19)
             ->setResolutionArea(900)

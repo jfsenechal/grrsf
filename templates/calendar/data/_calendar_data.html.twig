@@ -7,11 +7,14 @@
     </tr>
     </thead>
     <tbody>
-    {% for data in datas %}
-        {% set week = data.week %}
-        {% set class = "" %}
-        <tr class="{{ class }}">
-            {% for day in data.days %}
+    {% for week in weeks %}
+        <tr class="">
+            {% for day in week.days %}
+                {% if loop.first %}
+                    {% if day.day != 1 %}
+                        {{ completeTr(day.day, 'begin') }}
+                    {% endif %}
+                {% endif %}
                 {% include 'calendar/data/_cell_day_data.html.twig' %}
             {% endfor %}
         </tr>

@@ -10,65 +10,56 @@ namespace App\Model;
 
 
 use App\Entity\Entry;
+use Carbon\CarbonImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-class Day
+class Day extends CarbonImmutable
 {
     /**
-     * @var \DateTimeInterface $date
-     */
-    protected $date;
-
-    /**
-     * @var Entry[] $entries
+     * @var ArrayCollection|Entry[] $entries
      */
     protected $entries;
 
-    public function __construct(\DateTimeInterface $dateTime)
+    /**
+     * Day constructor.
+     * @param null $time
+     * @param null $tz
+     * @throws \Exception Emits Exception in case of an error
+     */
+    public function __construct($time = null, $tz = null)
     {
-        $this->date = $dateTime;
-        $this->entries = [];
+        parent::__construct($time, $tz);
+        $this->entries = new ArrayCollection();
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return Collection|Entry[]
      */
-    public function getDate(): \DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    /**
-     * @return Entry[]
-     */
-    public function getEntries(): array
+    public function getEntries(): Collection
     {
         return $this->entries;
     }
 
-    /**
-     * @param Entry[] $entries
-     * @return Day
-     */
-    public function setEntries(array $entries): self
+    public function addEntry(Entry $entry): self
     {
-        $this->entries = $entries;
+        if (!$this->entries->contains($entry)) {
+            $this->entries[] = $entry;
+        }
 
         return $this;
     }
 
+    public function addEntries(array $entries)
+    {
+        foreach ($entries as $entry) {
+            $this->addEntry($entry);
+        }
+    }
+
     public function time(): string
     {
-        return $this->date->format('h:s');
-    }
-
-    public function year(): string
-    {
-        return $this->date->format('Y');
-    }
-
-    public function month(): string
-    {
-        return $this->date->format('m');
+        return $this->dateImmutable->format('h:s');
     }
 
 }

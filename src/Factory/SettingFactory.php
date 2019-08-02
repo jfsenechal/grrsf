@@ -21,7 +21,7 @@ class SettingFactory
 
     public function setDefaultValues(Area $area)
     {
-        $area->setDisplayDays(array_flip(DateUtils::getJoursSemaine()));
+        $area->setDisplayDays(array_flip(DateUtils::getDays()));
         $area->setMorningstartsArea(8);
         $area->setEveningendsArea(19);
         $area->setResolutionArea(900);

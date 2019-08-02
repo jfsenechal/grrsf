@@ -127,7 +127,7 @@ class GrrExtension extends AbstractExtension
      */
     public function joursSemaine($value)
     {
-        $jours = $this->dateUtils::getJoursSemaine();
+        $jours = $this->dateUtils::getDays();
 
         return isset($jours[$value]) ? $jours[$value] : $value;
     }

@@ -53,7 +53,7 @@ class AreaType extends AbstractType
                 'weekstartsArea',
                 ChoiceType::class,
                 [
-                    'choices' => array_flip(DateUtils::getJoursSemaine()),
+                    'choices' => array_flip(DateUtils::getDays()),
                     'label' => 'area.form.weekstartsArea.label',
                 ]
             )
@@ -62,7 +62,7 @@ class AreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.displayDays.label',
-                    'choices' => array_flip(DateUtils::getJoursSemaine()),
+                    'choices' => array_flip(DateUtils::getDays()),
                     'multiple' => true,
                     'expanded' => true,
                 ]

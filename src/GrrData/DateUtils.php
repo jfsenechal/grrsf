@@ -8,7 +8,6 @@
 
 namespace App\GrrData;
 
-
 use Carbon\Carbon;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -24,10 +23,11 @@ class DateUtils
         $this->translator = $translator;
     }
 
-    public static function getJoursSemaine()
+    public static function getDays()
     {
         $days = Carbon::getDays();
-        //if lundi first
+        //todo dynamic
+        //if lundi first, on pousse dimanche a la fin
         $days[] = $days[0];
         unset($days[0]);
 

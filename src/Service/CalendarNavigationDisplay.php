@@ -47,7 +47,7 @@ class CalendarNavigationDisplay
         $navigation->setNextButton($this->nextButton());
         $navigation->setPreviousButton($this->previousButton());
 
-        $current = $this->month->getDateTimeImmutable()->toMutable();
+        $current = $this->month->getFirstDayImmutable()->toMutable();
 
         for ($i = 0; $i < $number; $i++) {
             $navigation->addMonth($this->generateMonth($current));
@@ -65,7 +65,7 @@ class CalendarNavigationDisplay
 
     public function previousButton()
     {
-        $previousMonth = $this->month->getPreviousMonth();
+        $previousMonth = $this->month->subMonth();
 
         return $this->twigEnvironment->render(
             'calendar/navigation/_button_previous.html.twig',
@@ -78,7 +78,7 @@ class CalendarNavigationDisplay
 
     public function nextButton()
     {
-        $nextMonth = $this->month->getNextMonth();
+        $nextMonth = $this->month->addMonth();
 
         return $this->twigEnvironment->render(
             'calendar/navigation/_button_next.html.twig',
@@ -93,34 +93,16 @@ class CalendarNavigationDisplay
     {
         $firstDay = $month->firstOfMonth();
 
-        $weeks = $this->month->getWeeks();
+        $weeks = $this->month->getCalendarWeeks();
 
         return $this->twigEnvironment->render(
             'calendar/navigation/_month.html.twig',
             [
                 'firstDay' => $firstDay,
-                'listDays' => DateUtils::getJoursSemaine(),
+                'listDays' => DateUtils::getDays(),
                 //'weeks'=>$this->month->getDaysGroupByWeeks(),
                 'weeks' => $weeks,
             ]
         );
     }
-
-    /**
-     *
-     * @param \DateTimeInterface[] $data
-     * @return Day[]
-     */
-    protected function getDays(iterable $data)
-    {
-        $days = [];
-        foreach ($data as $date) {
-            $day = new Day($date);
-            $days[] = $date;
-        }
-
-        return $days;
-    }
-
-
 }

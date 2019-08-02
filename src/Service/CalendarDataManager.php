@@ -10,6 +10,8 @@ namespace App\Service;
 
 use App\Entity\Entry;
 use App\Model\Day;
+use App\Model\Month;
+use App\Model\Week;
 
 class CalendarDataManager
 {
@@ -18,27 +20,41 @@ class CalendarDataManager
      */
     protected $entries;
 
-    /**
-     * @return Entry[]
-     */
-    public function getEntries(): array
+    public function __construct()
     {
-        return $this->entries;
+        $this->entries = [];
     }
 
     /**
+     * Parcours tous les jours du mois
+     * Crée une instance Day et set les entrées
+     *
+     * @param Month $param
      * @param Entry[] $entries
      */
-    public function setEntries(array $entries): void
+    public function bindMonth(Month $month, array $entries)
     {
         $this->entries = $entries;
+        foreach ($month->getCalendarDays() as $date) {
+            $day = new Day($date);
+            $events = $this->extractByDate($day);
+            $day->addEntries($events);
+            $month->addDataDay($day);
+        }
     }
 
-    public function add(Day $day)
+    /**
+     * @param Week $week
+     * @param Entry[] $entries
+     */
+    public function bindWeek(Week $week, array $entries)
     {
-        $entries = $this->extractByDate($day->getDate());
-        if (count($entries) > 0) {
-            $day->setEntries($entries);
+        $this->entries = $entries;
+        foreach ($week->getCalendarDays() as $date) {
+            $day = new Day($date);
+            $events = $this->extractByDate($day);
+            $day->addEntries($events);
+            $week->addDataDay($day);
         }
     }
 

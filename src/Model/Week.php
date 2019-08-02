@@ -12,9 +12,11 @@ use App\Service\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Webmozart\Assert\Assert;
 
-class Week
+class Week extends Carbon
 {
     /**
      * @var CarbonInterface
@@ -31,7 +33,18 @@ class Week
      */
     protected $data = [];
 
-    public function create(int $year, int $week): self
+    /**
+     * @var ArrayCollection
+     */
+    protected $data_days;
+
+    public function __construct($time = null, $tz = null)
+    {
+        parent::__construct($time, $tz);
+        $this->data_days = new ArrayCollection();
+    }
+
+    public function createWithLocal(int $year, int $week): self
     {
         Assert::greaterThan($year, 0);
         Assert::greaterThan($week, 0);
@@ -50,15 +63,9 @@ class Week
      * @return CarbonPeriod
      *
      */
-    public function getDays(): CarbonPeriod
+    public function getCalendarDays(): CarbonPeriod
     {
-        $period = new CarbonPeriod(
-            $this->getFirstDay()->toDateString(),
-            '1 days',
-            $this->getLastDay()->toDateString()
-        );
-
-        return $period;
+        return Carbon::parse($this->getFirstDay()->toDateString())->daysUntil($this->getLastDay()->toDateString());
     }
 
     public function getFirstDay(): CarbonInterface
@@ -71,25 +78,21 @@ class Week
         return $this->endDate;
     }
 
-    public function setDaysData(array $days)
+    /**
+     * @return Collection|Day[]
+     */
+    public function getDataDays(): Collection
     {
-        $this->data = $days;
+        return $this->data_days;
     }
 
-    /**
-     * @return array
-     */
-    public function getData(): array
+    public function addDataDay(Day $day): self
     {
-        return $this->data;
-    }
+        if (!$this->data_days->contains($day)) {
+            $this->data_days[] = $day;
+        }
 
-    /**
-     * @param array $data
-     */
-    public function setData(array $data): void
-    {
-        $this->data = $data;
+        return $this;
     }
 
 }

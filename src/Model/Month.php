@@ -8,87 +8,74 @@
 
 namespace App\Model;
 
-use App\Service\LocalHelper;
+use App\Factory\CarbonFactory;
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-class Month
+class Month extends Carbon
 {
     /**
      * @var CarbonInterface
      */
-    protected $dateTimeImmutable;
+    protected $firstDayImmutable;
 
-    public function create(int $year, int $month): self
+    /**
+     * @var ArrayCollection
+     */
+    protected $data_days;
+
+    public function __construct($time = null, $tz = null)
     {
-        //$this->dateTimeImmutable = \DateTimeImmutable::createFromFormat('Y-m-d', $year.'-'.$month.'-01');
-        $this->dateTimeImmutable = CarbonImmutable::create($year, $month, 01)->locale(LocalHelper::getDefaultLocal());
+        parent::__construct($time, $tz);
+        $this->data_days = new ArrayCollection();
+    }
+
+    public function createJf(int $year, int $month): self
+    {
+        $this->firstDayImmutable = CarbonFactory::createImmutable($year, $month, 01);
 
         return $this;
     }
 
-    public function getDateTimeImmutable(): CarbonInterface
+    public function getFirstDayImmutable(): CarbonInterface
     {
-        return $this->dateTimeImmutable;
+        return $this->firstDayImmutable;
     }
 
     /**
      * @return CarbonPeriod
      *
      */
-    public function getDays(): CarbonPeriod
+    public function getCalendarDays(): CarbonPeriod
     {
-        return Carbon::parse($this->dateTimeImmutable->firstOfMonth()->toDateString())->daysUntil(
-            $this->dateTimeImmutable->endOfMonth()->toDateString()
+        return Carbon::parse($this->firstDayImmutable->firstOfMonth()->toDateString())->daysUntil(
+            $this->firstDayImmutable->endOfMonth()->toDateString()
         );
     }
 
-    public function getFirstDay(): CarbonInterface
-    {
-        return $this->dateTimeImmutable->firstOfMonth();
-    }
-
-    public function getLastDay(): CarbonInterface
-    {
-        return $this->dateTimeImmutable->lastOfMonth();
-    }
-
-    public function getNextMonth(): CarbonInterface
-    {
-        return $this->dateTimeImmutable->addMonth();
-    }
-
-    public function getPreviousMonth(): CarbonInterface
-    {
-        return $this->dateTimeImmutable->subMonth();
-    }
-
-    public function getNumeric(): int
-    {
-        return $this->dateTimeImmutable->month;
-    }
-
     /**
-     * @return array
+     * @return CarbonPeriod[]
+     *
      */
-    function getWeeks()
+    function getCalendarWeeks()
     {
         $weeks = [];
-        $firstDayMonth = $this->getFirstDay();
+        $firstDayMonth = $this->firstOfMonth();
 
         $firstDayWeek = $firstDayMonth->copy()->startOfWeek()->toMutable();
 
         do {
-            $weeks[] = $this->getWeek($firstDayWeek);// point at end ofWeek
+            $weeks[] = $this->getCalendarWeek($firstDayWeek);// point at end ofWeek
             $firstDayWeek->nextWeekday();
         } while ($firstDayWeek->isSameMonth($firstDayMonth));
 
         return $weeks;
     }
 
-    private function getWeek(CarbonInterface $date)
+    public function getCalendarWeek(CarbonInterface $date): CarbonPeriod
     {
         $debut = $date->toDateString();
         $fin = $date->endOfWeek()->toDateString();
@@ -96,21 +83,20 @@ class Month
         return Carbon::parse($debut)->daysUntil($fin);
     }
 
-    /**
-     *
-     * @return array
-     * @throws \Exception
-     */
-    public function getDaysGroupByWeeks()
+    public function addDataDay(Day $day): self
     {
-        $weeks = [];
-
-        foreach ($this->getDays() as $date) {
-            $numericWeek = $date->format('W');
-
-            $weeks[$numericWeek][] = $date;
+        if (!$this->data_days->contains($day)) {
+            $this->data_days[] = $day;
         }
 
-        return $weeks;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Day[]
+     */
+    public function getDataDays(): Collection
+    {
+        return $this->data_days;
     }
 }

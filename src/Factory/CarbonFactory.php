@@ -21,14 +21,26 @@ class CarbonFactory
 
     public static function getToday(): CarbonInterface
     {
-        return Carbon::today()->locale(LocalHelper::getDefaultLocal());
+        $date = Carbon::today();
+        $date->locale(LocalHelper::getDefaultLocal());
+
+        return $date;
+    }
+
+    public static function getTodayImmutable(): CarbonImmutable
+    {
+        $date = Carbon::today();
+        $date->locale(LocalHelper::getDefaultLocal());
+
+        return $date->toImmutable();
     }
 
     public static function create($year = 0, $month = 1, $day = 1, $hour = 0, $minute = 0, $second = 0): Carbon
     {
-        return Carbon::create($year, $month, $day, $hour, $minute, $second)->locale(
-            LocalHelper::getDefaultLocal()
-        );
+        $date = Carbon::create($year, $month, $day, $hour, $minute, $second);
+        $date->locale(LocalHelper::getDefaultLocal());
+
+        return $date;
     }
 
     public static function createImmutable(
@@ -39,14 +51,17 @@ class CarbonFactory
         $minute = 0,
         $second = 0
     ): CarbonImmutable {
-        return CarbonImmutable::create(
+        $date = CarbonImmutable::create(
             $year,
             $month,
             $day,
             $hour,
             $minute,
             $second
-        )->locale(LocalHelper::getDefaultLocal());
+        );
+        $date->locale(LocalHelper::getDefaultLocal());
+
+        return $date;
     }
 
     /**
