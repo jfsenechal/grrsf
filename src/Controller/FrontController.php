@@ -171,7 +171,7 @@ class FrontController extends AbstractController
 
         $this->calendarDisplay->generateWeek($weekModel);
 
-        $monthModel = $this->month->createJf($year, $month);
+        $monthModel = Month::createJf($year, $month);
         $form = $this->menuGenerator->generateMenuSelect($area);
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
@@ -227,7 +227,7 @@ class FrontController extends AbstractController
             $i = 1;
         }
 
-        $monthModel = $this->month->createJf($year, $month);
+        $monthModel = Month::createJf($year, $month);
         $form = $this->menuGenerator->generateMenuSelect($area);
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 

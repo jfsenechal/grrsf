@@ -15,7 +15,7 @@
         <thead>
         <tr>
             <th>{{ 'ressources'|trans }}</th>
-            {% for day in week.days %}
+            {% for day in week.calendarDays %}
                 <th>{{ day|date('l') |trans|lower }} {{ day|date('d') }} {# firstDay.getTranslatedDayName #} {{ day|date('F')|trans|lower }}</th>
             {% endfor %}
         </tr>
@@ -24,7 +24,7 @@
         {% for room in rooms %}
             <tr>
                 <td>{{ room.name }}</td>
-                {% for day in week.data.days %}
+                {% for day in week.dataDays %}
                     <td>
                         {% for entry in day.entries %}
                             {{ entry.name }}

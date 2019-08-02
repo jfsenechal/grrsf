@@ -79,11 +79,14 @@ class EntryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('entry');
 
-        $qb->andWhere('YEAR(entry.startTime) = :year')
-            ->setParameter('year', $weekModel->getDateImmutable()->year);
+        $days = $weekModel->getCalendarDays();
 
-        $qb->andWhere('MONTH(entry.startTime) = :month')
-            ->setParameter('month', $weekModel->getDateImmutable()->month);
+        /*  $qb->andWhere('YEAR(entry.startTime) = :year')
+              ->setParameter('year', $weekModel->getDateImmutable()->year);
+
+          $qb->andWhere('MONTH(entry.startTime) = :month')
+              ->setParameter('month', $weekModel->getDateImmutable()->month);
+  */
 
         if ($area) {
             $rooms = $this->getRooms($area);
