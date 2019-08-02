@@ -5,6 +5,7 @@ namespace App\Twig;
 use App\GrrData\DateUtils;
 use App\GrrData\EntryData;
 use App\GrrData\GrrConstants;
+use App\Model\Day;
 use App\Repository\RoomRepository;
 use App\Repository\TypeAreaRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -155,20 +156,19 @@ class GrrExtension extends AbstractExtension
     }
 
     /**
-     * @param int $numericDay
+     * @param Day $day
      * @param string $action begin|end
      * @return string
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function completeTr(int $numericDay, string $action)
+    public function completeTr(Day $day, string $action)
     {
         return $this->twigEnvironment->render(
             'calendar/_complete_tr.html.twig',
-            ['numericDay' => $numericDay, 'action' => $action]
+            ['numericDay' => $day->weekday(), 'action' => $action]
         );
-
     }
 
     public function generateRouteMonthView(int $year = null, int $month = null)

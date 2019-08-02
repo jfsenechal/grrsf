@@ -31,6 +31,7 @@ class CalendarDataManager
      *
      * @param Month $param
      * @param Entry[] $entries
+     * @throws \Exception
      */
     public function bindMonth(Month $month, array $entries)
     {
@@ -46,6 +47,7 @@ class CalendarDataManager
     /**
      * @param Week $week
      * @param Entry[] $entries
+     * @throws \Exception
      */
     public function bindWeek(Week $week, array $entries)
     {

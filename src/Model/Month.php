@@ -99,4 +99,42 @@ class Month extends Carbon
     {
         return $this->data_days;
     }
+
+    public function groupDataDaysByWeeks()
+    {
+        $dataDays = $this->getDataDays();
+        $weeks = [];
+        foreach ($this->getCalendarWeeks() as $weekCalendar) {
+            $days = [];
+            foreach ($weekCalendar as $dayCalendar) {
+                foreach ($dataDays as $dataDay) {
+                    if ($dataDay->toDateString() == $dayCalendar->toDateString()) {
+                        $days[] = $dataDay;
+                    }
+                }
+            }
+            $weeks[]['days'] = $days;
+        }
+
+        return $weeks;
+    }
+
+    public function groupDaysByWeeks()
+    {
+        $weeks = [];
+        $calendarDays = $this->getCalendarDays();
+        foreach ($this->getCalendarWeeks() as $weekCalendar) {
+            $days = [];
+            foreach ($weekCalendar as $dayCalendar) {
+                foreach ($calendarDays as $dataDay) {
+                    if ($dataDay->toDateString() == $dayCalendar->toDateString()) {
+                        $days[] = $dataDay;
+                    }
+                }
+            }
+            $weeks[]['days'] = $days;
+        }
+
+        return $weeks;
+    }
 }

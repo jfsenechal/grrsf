@@ -1,5 +1,5 @@
 {% if action == 'begin' %}
-    {% set end = numericDay  %}
+    {% set end = numericDay -1  %} {# to not include #}
     {% if numericDay == 0 %}
         {% set end = 6 %}
     {% endif %}

@@ -39,24 +39,7 @@ class CalendarDataDisplay
      */
     public function generateMonth(Month $month)
     {
-        $dataDays = $month->getDataDays();
-
-        $weeks = [];
-        $weeksCalendar = $month->getCalendarWeeks();
-        /**
-         * je regroupe les jours par semaine
-         */
-        foreach ($weeksCalendar as $weekCalendar) {
-            $days = [];
-            foreach ($weekCalendar as $day) {
-                foreach ($dataDays as $dataDay) {
-                    if ($dataDay->toDateString() == $day->toDateString()) {
-                        $days[] = $dataDay;
-                    }
-                }
-            }
-            $weeks[]['days'] = $days;
-        }
+        $weeks = $month->groupDataDaysByWeeks();
 
         return $this->environment->render(
             'calendar/data/_calendar_data.html.twig',

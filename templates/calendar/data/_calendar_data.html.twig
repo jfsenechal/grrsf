@@ -9,14 +9,19 @@
     <tbody>
     {% for week in weeks %}
         <tr class="">
+
+            {% if loop.first %}
+                {{ completeTr(week.days|first, 'begin') }}
+            {% endif %}
+
             {% for day in week.days %}
-                {% if loop.first %}
-                    {% if day.day != 1 %}
-                        {{ completeTr(day.day, 'begin') }}
-                    {% endif %}
-                {% endif %}
                 {% include 'calendar/data/_cell_day_data.html.twig' %}
             {% endfor %}
+
+            {% if loop.last %}
+                {{ completeTr(week.days|last, 'end') }}
+            {% endif %}
+
         </tr>
     {% endfor %}
 
