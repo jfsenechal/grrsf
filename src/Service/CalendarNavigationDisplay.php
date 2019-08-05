@@ -11,6 +11,7 @@ namespace App\Service;
 use App\GrrData\DateUtils;
 use App\Model\Month;
 use App\Model\Navigation;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Webmozart\Assert\Assert;
 
@@ -28,13 +29,18 @@ class CalendarNavigationDisplay
      * @var int
      */
     private $monthNumeric;
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
 
-    public function __construct(Environment $environment)
+    public function __construct(Environment $environment, RequestStack $requestStack)
     {
         $this->twigEnvironment = $environment;
+        $this->requestStack = $requestStack;
     }
 
-    public function createMonth(Month $month, int $number = 1) : Navigation
+    public function createMonth(Month $month, int $number = 1): Navigation
     {
         $this->month = $month;
 
@@ -88,6 +94,9 @@ class CalendarNavigationDisplay
         $firstDay = $month->firstOfMonth();
 
         $weeks = $this->month->getCalendarWeeks();
+        $request = $this->requestStack->getMasterRequest();
+        $weekSelected = $request ? $request->get('week') : 0;
+        $daySelected = $request ? $request->get('day') : 0;
 
         return $this->twigEnvironment->render(
             'calendar/navigation/_month_by_weeks.html.twig',
@@ -95,6 +104,8 @@ class CalendarNavigationDisplay
                 'firstDay' => $firstDay,
                 'listDays' => DateUtils::getDays(),
                 'weeks' => $weeks,
+                'weekSelected' => $weekSelected,
+                'daySelected' => $daySelected,
             ]
         );
     }

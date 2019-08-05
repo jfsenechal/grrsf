@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Area;
 use App\Factory\MenuGenerator;
 use App\Model\Month;
 use App\Service\CalendarNavigationDisplay;
@@ -14,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class NavigationController
  * @package App\Controller
- * @Route("/navigation2")
+ * @Route("/navigation")
  */
 class NavigationController extends AbstractController
 {
@@ -36,11 +35,15 @@ class NavigationController extends AbstractController
     }
 
     /**
-     * @Route("/m", name="grr_navigation_month2", methods={"GET"})
+     * @Route("/month", methods={"GET"})
      */
     public function month(RequestStack $requestStack): Response
     {
         $request = $requestStack->getMasterRequest();
+
+        if (!$request) {
+            return new Response('');
+        }
 
         $year = $request->get('year') ?? 0;
         $month = $request->get('month') ?? 0;
@@ -59,7 +62,7 @@ class NavigationController extends AbstractController
     }
 
     /**
-     * @Route("/menu", name="grr_navigation_menu", methods={"GET"})
+     * @Route("/menu", methods={"GET"})
      */
     public function menu(RequestStack $requestStack): Response
     {
