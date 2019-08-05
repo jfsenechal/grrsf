@@ -1,0 +1,44 @@
+{% set weekSelected = app.request.get('week') %}
+{% set daySelected = app.request.get('day') %}
+{% set monthSelected = app.request.get('month') %}
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col" class="text-center" colspan="8">
+            <a href="{{ generateRouteMonthView() }}">
+                {{ firstDay.monthName|upper }} {{ firstDay.year }}
+            </a>
+        </th>
+    </tr>
+    <tr>
+        <th>{{ 'week'|trans }}</th>
+        {% for dayName in listDays %}
+            <th scope="col">{{ dayName|trans }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tr class="">
+
+        {% for day in days %}
+
+        {% if loop.first %}
+            {% include 'calendar/navigation/_cell_week.html.twig' with {'numericWeek': day.week } %}
+            {{ completeTr(day, 'begin') }}
+        {% endif %}
+
+        {% include 'calendar/navigation/_cell_day.html.twig' with { 'day': day } %}
+        {% if day.isSunday %}
+
+    </tr>
+    <tr class="">
+        {% include 'calendar/navigation/_cell_week.html.twig' with {'numericWeek': firstDay.week } %}
+
+        {% endif %}
+
+        {% if loop.last %}
+            {{ completeTr(day, 'end') }}
+        {% endif %}
+
+        {% endfor %}
+</table>

@@ -6,5 +6,7 @@
 {% endif %}
 
 <td class="{{ classDay }}">
-    <a href="{{ generateRouteDayView(day.day) }}">{{ day.day }}</a>
+    {% if day.month == firstDay.month %}
+        <a href="{{ generateRouteDayView(day.day) }}">{{ day.day }}</a>
+    {% endif %}
 </td>

@@ -8,6 +8,8 @@ use App\GrrData\GrrConstants;
 use App\Model\Day;
 use App\Repository\RoomRepository;
 use App\Repository\TypeAreaRepository;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -163,7 +165,7 @@ class GrrExtension extends AbstractExtension
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function completeTr(Day $day, string $action)
+    public function completeTr(CarbonInterface $day, string $action)
     {
         return $this->twigEnvironment->render(
             'calendar/_complete_tr.html.twig',

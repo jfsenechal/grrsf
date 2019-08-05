@@ -9,10 +9,8 @@
 namespace App\Service;
 
 use App\GrrData\DateUtils;
-use App\Model\Day;
 use App\Model\Month;
 use App\Model\Navigation;
-use Carbon\CarbonInterface;
 use Twig\Environment;
 use Webmozart\Assert\Assert;
 
@@ -50,7 +48,8 @@ class CalendarNavigationDisplay
         $current = $this->month->getFirstDayImmutable()->toMutable();
 
         for ($i = 0; $i < $number; $i++) {
-            $navigation->addMonth($this->generateMonth($current));
+            $monthModel = Month::createJf($current->year, $current->month);
+            $navigation->addMonth($this->generateMonthByWeeks($monthModel));
             $current->addMonth();
         }
 
@@ -65,7 +64,7 @@ class CalendarNavigationDisplay
 
     public function previousButton()
     {
-        $previousMonth = $this->month->subMonth();
+        $previousMonth = $this->month->previousMonth();
 
         return $this->twigEnvironment->render(
             'calendar/navigation/_button_previous.html.twig',
@@ -78,7 +77,7 @@ class CalendarNavigationDisplay
 
     public function nextButton()
     {
-        $nextMonth = $this->month->addMonth();
+        $nextMonth = $this->month->nexMonth();
 
         return $this->twigEnvironment->render(
             'calendar/navigation/_button_next.html.twig',
@@ -89,19 +88,33 @@ class CalendarNavigationDisplay
         );
     }
 
-    public function generateMonth(CarbonInterface $month)
+    public function generateMonthByWeeks(Month $month)
     {
         $firstDay = $month->firstOfMonth();
 
         $weeks = $this->month->getCalendarWeeks();
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/_month.html.twig',
+            'calendar/navigation/_month_by_weeks.html.twig',
             [
                 'firstDay' => $firstDay,
                 'listDays' => DateUtils::getDays(),
-                //'weeks'=>$this->month->getDaysGroupByWeeks(),
                 'weeks' => $weeks,
+            ]
+        );
+    }
+
+    public function generateMonthByDay(Month $month)
+    {
+        $firstDay = $month->firstOfMonth();
+        $days = $month->getCalendarDays();
+
+        return $this->twigEnvironment->render(
+            'calendar/navigation/_month_by_days.html.twig',
+            [
+                'firstDay' => $firstDay,
+                'listDays' => DateUtils::getDays(),
+                'days' => $days,
             ]
         );
     }

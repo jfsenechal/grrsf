@@ -18,7 +18,9 @@
         {% endfor %}
     </tr>
     </thead>
-    {% for week in weeks %}
+    <tr class="">
+
+        {% for week in weeks %}
 
         {% if week.startDate.week == weekSelected %}
             {% set class = "table-info" %}
@@ -26,11 +28,11 @@
             {% set class = "" %}
         {% endif %}
 
-        <tr class="{{ class }}">
-            {% include 'calendar/navigation/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
-            {% for day in week %}
-                    {% include 'calendar/navigation/_cell_day.html.twig' with { 'day': day } %}
-            {% endfor %}
-        </tr>
+    <tr class="{{ class }}">
+        {% include 'calendar/navigation/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
+        {% for day in week %}
+            {% include 'calendar/navigation/_cell_day.html.twig' with { 'day': day } %}
+        {% endfor %}
+    </tr>
     {% endfor %}
 </table>
