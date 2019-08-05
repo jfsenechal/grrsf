@@ -2,38 +2,24 @@
 
 namespace App\Twig;
 
+use App\Factory\MenuGenerator;
 use App\GrrData\DateUtils;
 use App\GrrData\EntryData;
-use App\GrrData\GrrConstants;
 use App\Model\Day;
+use App\Model\Month;
 use App\Repository\RoomRepository;
 use App\Repository\TypeAreaRepository;
+use App\Service\CalendarNavigationDisplay;
 use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-class GrrExtension extends AbstractExtension
+class GrrFrontExtension extends AbstractExtension
 {
-    /**
-     * @var RoomRepository
-     */
-    private $roomRepository;
-    /**
-     * @var EntryData
-     */
-    private $entryData;
-    /**
-     * @var TypeAreaRepository
-     */
-    private $TypeAreaRepository;
-    /**
-     * @var DateUtils
-     */
-    private $dateUtils;
     /**
      * @var Environment
      */
@@ -46,23 +32,25 @@ class GrrExtension extends AbstractExtension
      * @var RequestStack
      */
     private $requestStack;
+    /**
+     * @var CalendarNavigationDisplay
+     */
+    private $calendarNavigationDisplay;
+    /**
+     * @var MenuGenerator
+     */
+    private $menuGenerator;
 
     public function __construct(
-        DateUtils $dateUtils,
-        RoomRepository $roomRepository,
-        TypeAreaRepository $TypeAreaRepository,
-        EntryData $entryData,
+        RequestStack $requestStack,
+        MenuGenerator $menuGenerator,
         Environment $twigEnvironment,
-        RouterInterface $router,
-        RequestStack $requestStack
+        CalendarNavigationDisplay $calendarNavigationDisplay
     ) {
-        $this->dateUtils = $dateUtils;
-        $this->roomRepository = $roomRepository;
-        $this->entryData = $entryData;
-        $this->TypeAreaRepository = $TypeAreaRepository;
         $this->twigEnvironment = $twigEnvironment;
-        $this->router = $router;
+        $this->calendarNavigationDisplay = $calendarNavigationDisplay;
         $this->requestStack = $requestStack;
+        $this->menuGenerator = $menuGenerator;
     }
 
     public function getFilters(): array
@@ -71,19 +59,15 @@ class GrrExtension extends AbstractExtension
             // If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
-            new TwigFilter('periodiciteName', [$this, 'periodiciteName']),
-            new TwigFilter('entryTypeGetName', [$this, 'entryTypeGetName']),
-            new TwigFilter('getNumWeeks', [$this, 'getNumWeeks']),
-            new TwigFilter('joursSemaine', [$this, 'joursSemaine']),
-            new TwigFilter('periodName', [$this, 'periodName']),
-            new TwigFilter('hourFormat', [$this, 'hourFormat']),
-            new TwigFilter('displayColor', [$this, 'displayColor'], ['is_safe' => ['html']]),
+
         ];
     }
 
     public function getFunctions()
     {
         return [
+            new TwigFunction('grrMonthNavigation', [$this, 'MonthNavigation'], ['is_safe' => ['html']]),
+            new TwigFunction('grrMenuNavigation', [$this, 'menuNavigation'], ['is_safe' => ['html']]),
             new TwigFunction('completeTr', [$this, 'completeTr'], ['is_safe' => ['html']]),
             new TwigFunction('generateRouteMonthView', [$this, 'generateRouteMonthView']),
             new TwigFunction('generateRouteWeekView', [$this, 'generateRouteWeekView']),
@@ -91,69 +75,52 @@ class GrrExtension extends AbstractExtension
         ];
     }
 
-    public function periodiciteName($value)
-    {
-        return $this->entryData->getTypePeriodicite($value);
-    }
-
     /**
-     * field: type
-     * @param $value
+     * @param Month $monthModel
      * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    public function entryTypeGetName($value)
+    public function monthNavigation()
     {
-        $room = $this->TypeAreaRepository->findOneBy(['typeLetter' => $value]);
-        if ($room) {
-            return $room->getTypeName().' ('.$value.')';
+        $request = $this->requestStack->getMasterRequest();
+
+        if (!$request) {
+            return new Response('');
         }
 
-        return $value;
+        $year = $request->get('year') ?? 0;
+        $month = $request->get('month') ?? 0;
+
+        $monthModel = Month::createJf($year, $month);
+
+        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
+
+        return $this->twigEnvironment->render(
+            'calendar/navigation/_calendar_navigation.html.twig',
+            [
+                'navigation' => $navigation,
+                'monthModel' => $monthModel,
+            ]
+        );
+
     }
 
-    /**
-     *field: rep_num_weeks
-     * @param $value
-     * @return mixed
-     */
-    public function getNumWeeks($value)
+    public function menuNavigation()
     {
-        return $this->entryData->getNumWeeks($value).' ('.$value.')';
-    }
+        $request = $this->requestStack->getMasterRequest();
+        $area = $request ? $request->get('area') : 0;
 
-    /**
-     * field:repOpt
-     * 7 chiffres
-     * @param $value
-     * @return string
-     */
-    public function joursSemaine($value)
-    {
-        $jours = $this->dateUtils::getDays();
+        $form = $this->menuGenerator->generateMenuSelect($area);
 
-        return isset($jours[$value]) ? $jours[$value] : $value;
-    }
+        return $this->render(
+            'calendar/navigation/_area_form.html.twig',
+            [
+                'form' => $form->createView(),
 
-    public function periodName(int $value)
-    {
-        return GrrConstants::PERIOD[$value];
-    }
-
-    public function hourFormat(int $value)
-    {
-        return $this->dateUtils->getAffichageFormat()[$value];
-    }
-
-    public function displayColor(string $value)
-    {
-        return '<span style="background-color: '.$value.';"></span>';
-    }
-
-    public function displayLine(int $value)
-    {
-        if ($value !== 1) {
-
-        }
+            ]
+        );
     }
 
     /**
@@ -232,10 +199,10 @@ class GrrExtension extends AbstractExtension
 
         $attributes = $request->attributes->get('_route_params');
 
-        $area = $attributes['area']?? 0;
-        $room = $attributes['room']?? 0;
-        $year = $attributes['year']?? 0;
-        $month = $attributes['month']?? 0;
+        $area = $attributes['area'] ?? 0;
+        $room = $attributes['room'] ?? 0;
+        $year = $attributes['year'] ?? 0;
+        $month = $attributes['month'] ?? 0;
 
         $params = ['area' => $area, 'year' => $year, 'month' => $month, 'day' => $day];
 

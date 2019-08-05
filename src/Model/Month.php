@@ -40,7 +40,6 @@ class Month extends Carbon
         $monthModel->setDate($year, $month, $day);
         $monthModel->locale(LocalHelper::getDefaultLocal());
         $monthModel->firstDayImmutable = CarbonFactory::createImmutable($year, $month, $day);
-        $monthModel->firstDayImmutable->locale(LocalHelper::getDefaultLocal());
 
         return $monthModel;
     }
