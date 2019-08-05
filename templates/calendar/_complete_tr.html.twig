@@ -1,3 +1,5 @@
+{# complete les cellules du tableau en début de ligne et en fin de mois #}
+
 {% if action == 'begin' %}
     {% set end = numericDay -1  %} {# to not include #}
     {% if numericDay == 0 %}

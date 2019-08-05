@@ -68,7 +68,7 @@ class CalendarNavigationDisplay
         $previousMonth = $this->month->previousMonth();
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/_button_previous.html.twig',
+            'calendar/navigation/month/_button_previous.html.twig',
             [
                 'previousMonth' => $previousMonth,
                 'month' => $this->monthNumeric,
@@ -81,7 +81,7 @@ class CalendarNavigationDisplay
         $nextMonth = $this->month->nexMonth();
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/_button_next.html.twig',
+            'calendar/navigation/month/_button_next.html.twig',
             [
                 'nextMonth' => $nextMonth,
                 'month' => $this->monthNumeric,
@@ -99,7 +99,7 @@ class CalendarNavigationDisplay
         $daySelected = $request ? $request->get('day') : 0;
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/_month_by_weeks.html.twig',
+            'calendar/navigation/month/_month_by_weeks.html.twig',
             [
                 'firstDay' => $firstDay,
                 'listDays' => DateUtils::getDays(),
@@ -115,12 +115,18 @@ class CalendarNavigationDisplay
         $firstDay = $month->firstOfMonth();
         $days = $month->getCalendarDays();
 
+        $request = $this->requestStack->getMasterRequest();
+        $weekSelected = $request ? $request->get('week') : 0;
+        $daySelected = $request ? $request->get('day') : 0;
+
         return $this->twigEnvironment->render(
-            'calendar/navigation/_month_by_days.html.twig',
+            'calendar/navigation/month/_month_by_days.html.twig',
             [
                 'firstDay' => $firstDay,
                 'listDays' => DateUtils::getDays(),
                 'days' => $days,
+                'weekSelected' => $weekSelected,
+                'daySelected' => $daySelected,
             ]
         );
     }

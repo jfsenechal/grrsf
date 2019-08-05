@@ -25,9 +25,9 @@
         {% endif %}
 
     <tr class="{{ class }}">
-        {% include 'calendar/navigation/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
+        {% include 'calendar/navigation/month/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
         {% for day in week %}
-            {% include 'calendar/navigation/_cell_day.html.twig' with { 'day': day } %}
+            {% include 'calendar/navigation/month/_cell_day.html.twig' with { 'day': day } %}
         {% endfor %}
     </tr>
     {% endfor %}

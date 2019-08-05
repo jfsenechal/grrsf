@@ -45,12 +45,14 @@ class GrrFrontExtension extends AbstractExtension
         RequestStack $requestStack,
         MenuGenerator $menuGenerator,
         Environment $twigEnvironment,
+        RouterInterface $router,
         CalendarNavigationDisplay $calendarNavigationDisplay
     ) {
         $this->twigEnvironment = $twigEnvironment;
         $this->calendarNavigationDisplay = $calendarNavigationDisplay;
         $this->requestStack = $requestStack;
         $this->menuGenerator = $menuGenerator;
+        $this->router = $router;
     }
 
     public function getFilters(): array
@@ -98,7 +100,7 @@ class GrrFrontExtension extends AbstractExtension
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/_calendar_navigation.html.twig',
+            'calendar/navigation/month/_calendar_navigation.html.twig',
             [
                 'navigation' => $navigation,
                 'monthModel' => $monthModel,
@@ -114,11 +116,10 @@ class GrrFrontExtension extends AbstractExtension
 
         $form = $this->menuGenerator->generateMenuSelect($area);
 
-        return $this->render(
-            'calendar/navigation/_area_form.html.twig',
+        return $this->twigEnvironment->render(
+            'calendar/navigation/form/_area_form.html.twig',
             [
                 'form' => $form->createView(),
-
             ]
         );
     }
