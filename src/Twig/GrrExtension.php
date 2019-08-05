@@ -8,7 +8,6 @@ use App\GrrData\GrrConstants;
 use App\Model\Day;
 use App\Repository\RoomRepository;
 use App\Repository\TypeAreaRepository;
-use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
@@ -175,7 +174,7 @@ class GrrExtension extends AbstractExtension
 
     public function generateRouteMonthView(int $year = null, int $month = null)
     {
-        $request = $this->requestStack->getCurrentRequest();
+        $request = $this->requestStack->getMasterRequest();
         if (!$request) {
             return '';
         }
@@ -186,10 +185,10 @@ class GrrExtension extends AbstractExtension
         $room = $attributes['room'] ?? 0;
 
         if (!$year) {
-            $year = $attributes['year'];
+            $year = (int)$attributes['year'];
         }
         if (!$month) {
-            $month = $attributes['month'];
+            $month = (int)$attributes['month'];
         }
 
         $params = ['area' => $area, 'year' => $year, 'month' => $month];
@@ -203,22 +202,22 @@ class GrrExtension extends AbstractExtension
 
     public function generateRouteWeekView(int $week)
     {
-        $request = $this->requestStack->getCurrentRequest();
+        $request = $this->requestStack->getMasterRequest();
         if (!$request) {
             return '';
         }
 
         $attributes = $request->attributes->get('_route_params');
 
-        $area = $attributes['area'];
-        $room = $attributes['room'];
-        $year = $attributes['year'];
-        $month = $attributes['month'];
+        $area = $attributes['area'] ?? 0;
+        $room = $attributes['room'] ?? 0;
+        $year = $attributes['year'] ?? 0;
+        $month = $attributes['month'] ?? 0;
 
         $params = ['area' => $area, 'year' => $year, 'month' => $month, 'week' => $week];
 
         if ($room) {
-            $params['room'] = $room;
+            $params['room'] = (int)$room;
         }
 
         return $this->router->generate('grr_front_week', $params);
@@ -226,17 +225,17 @@ class GrrExtension extends AbstractExtension
 
     public function generateRouteDayView(int $day)
     {
-        $request = $this->requestStack->getCurrentRequest();
+        $request = $this->requestStack->getMasterRequest();
         if (!$request) {
             return '';
         }
 
         $attributes = $request->attributes->get('_route_params');
 
-        $area = $attributes['area'];
-        $room = $attributes['room'];
-        $year = $attributes['year'];
-        $month = $attributes['month'];
+        $area = $attributes['area']?? 0;
+        $room = $attributes['room']?? 0;
+        $year = $attributes['year']?? 0;
+        $month = $attributes['month']?? 0;
 
         $params = ['area' => $area, 'year' => $year, 'month' => $month, 'day' => $day];
 

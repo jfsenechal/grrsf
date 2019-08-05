@@ -34,7 +34,7 @@ class CalendarNavigationDisplay
         $this->twigEnvironment = $environment;
     }
 
-    public function createMonth(Month $month, int $number = 1)
+    public function createMonth(Month $month, int $number = 1) : Navigation
     {
         $this->month = $month;
 
@@ -53,12 +53,7 @@ class CalendarNavigationDisplay
             $current->addMonth();
         }
 
-        return $this->twigEnvironment->render(
-            'calendar/navigation/_calendar_navigation.html.twig',
-            [
-                'navigation' => $navigation,
-            ]
-        );
+        return $navigation;
 
     }
 

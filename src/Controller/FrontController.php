@@ -110,7 +110,7 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/month/area/{area}/year/{year}/month/{month}/room/{room}", name="grr_front_month", methods={"GET"})
+     * @Route("/monthview/area/{area}/year/{year}/month/{month}/room/{room}", name="grr_front_month", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
      * //prend room = 1 meme si pas selectionne
      * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=false})
@@ -131,9 +131,6 @@ class FrontController extends AbstractController
 
         $monthData = $this->calendarDisplay->generateMonth($monthModel);
 
-        $form = $this->menuGenerator->generateMenuSelect($area, $roomObject);
-        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
-
         return $this->render(
             'front/month.html.twig',
             [
@@ -141,15 +138,12 @@ class FrontController extends AbstractController
                 'area' => $area,
                 'room' => $roomObject,
                 'data' => $monthData,
-                'navigation' => $navigation,
-                'monthModel' => $monthModel,
-                'form' => $form->createView(),
             ]
         );
     }
 
     /**
-     * @Route("/week/area/{area}/year/{year}/month/{month}/week/{week}/room/{room}", name="grr_front_week", methods={"GET"})
+     * @Route("/weekview/area/{area}/year/{year}/month/{month}/week/{week}/room/{room}", name="grr_front_week", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
      * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
      */
@@ -171,16 +165,10 @@ class FrontController extends AbstractController
 
         $this->calendarDisplay->generateWeek($weekModel);
 
-        $monthModel = Month::createJf($year, $month);
-        $form = $this->menuGenerator->generateMenuSelect($area);
-        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
-
         return $this->render(
             'front/week.html.twig',
             [
-                'form' => $form->createView(),
                 'firstDay' => $firstDay,//utilise par form select
-                'navigation' => $navigation,
                 'week' => $weekModel,
                 'rooms' => $rooms,
             ]
@@ -188,7 +176,7 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/day/area/{area}/year/{year}/month/{month}/day/{day}/room/{room}", name="grr_front_day", methods={"GET"})
+     * @Route("/dayview/area/{area}/year/{year}/month/{month}/day/{day}/room/{room}", name="grr_front_day", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
      * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
      */
@@ -227,16 +215,10 @@ class FrontController extends AbstractController
             $i = 1;
         }
 
-        $monthModel = Month::createJf($year, $month);
-        $form = $this->menuGenerator->generateMenuSelect($area);
-        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
-
         return $this->render(
             'front/day.html.twig',
             [
-                'form' => $form->createView(),
                 'firstDay' => $daySelected,
-                'navigation' => $navigation,
                 'day' => $dayModel,
                 'rooms' => $rooms,
                 'hours' => $hours,

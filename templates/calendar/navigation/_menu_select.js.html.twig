@@ -34,9 +34,8 @@
         $('#area_menu_select_room').on('change', function () {
             var roomId = $(this).val();
             var areaId = $("#area_menu_select_area").val();
-            console.log(areaId);
-            console.log(roomId);
-            var url = '{{ path("grr_front_month", {'area': 'areaid','room': 'roomid','year':firstDay|date('Y'),'month':firstDay|date('n')}) }}';
+            var url = '{{ generateRouteMonthView() }}';
+            console.log(url);
             url = url.replace("roomid", roomId);
             url = url.replace("areaid", areaId);
             if (url) {
@@ -49,8 +48,7 @@
     $(function () {
         $('#area_menu_select_area').on('change', function () {
             var areaId = $(this).val();
-
-            var url = '{{ path("grr_front_month", {'area': 'areaid','year':firstDay|date('Y'),'month':firstDay|date('n')}) }}';
+            var url = '{{ generateRouteMonthView() }}';
             url = url.replace("areaid", areaId);
             if (url) {
                 window.location = url;
