@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use App\GrrData\AreaData;
 use App\GrrData\DateUtils;
 use App\GrrData\EntryData;
 use App\GrrData\GrrConstants;
@@ -114,7 +115,7 @@ class GrrAdminExtension extends AbstractExtension
 
     public function hourFormat(int $value)
     {
-        return $this->dateUtils->getAffichageFormat()[$value];
+        return AreaData::getAffichageFormat()[$value];
     }
 
     public function displayColor(string $value)

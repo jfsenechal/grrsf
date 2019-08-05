@@ -13,16 +13,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DateUtils
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
     public static function getDays()
     {
         $days = Carbon::getDays();
@@ -39,8 +29,4 @@ class DateUtils
         return range(0, 23);
     }
 
-    public function getAffichageFormat()
-    {
-        return [$this->translator->trans('twentyfourhourFormat12'), $this->translator->trans('twentyfourhourFormat24')];
-    }
 }

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\TypeArea;
-use App\Factory\TypeAreaFactory;
+use App\Factory\TypeEntryFactory;
 use App\Form\TypeAreaType;
 use App\Manager\TypeAreaManager;
 use App\Repository\TypeAreaRepository;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TypeAreaController extends AbstractController
 {
     /**
-     * @var TypeAreaFactory
+     * @var TypeEntryFactory
      */
     private $typeAreaFactory;
     /**
@@ -31,7 +31,7 @@ class TypeAreaController extends AbstractController
     private $typeAreaManager;
 
     public function __construct(
-        TypeAreaFactory $typeAreaFactory,
+        TypeEntryFactory $typeAreaFactory,
         TypeAreaRepository $typeAreaRepository,
         TypeAreaManager $typeAreaManager
     ) {

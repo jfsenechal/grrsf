@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Area;
+use App\GrrData\AreaData;
 use App\GrrData\DateUtils;
 use App\GrrData\GrrConstants;
 use Symfony\Component\Form\AbstractType;
@@ -121,7 +122,7 @@ class AreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.twentyfourhourFormatArea.label',
-                    'choices' => array_flip($this->dateUtils->getAffichageFormat()),
+                    'choices' => array_flip(AreaData::getAffichageFormat()),
                     'multiple' => false,
                     'expanded' => true,
                 ]

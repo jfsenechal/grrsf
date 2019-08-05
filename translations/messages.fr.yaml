@@ -124,7 +124,7 @@ October: Octobre
 November: Novembre
 December: Décembre
 week: Semaine
-twentyfourhourFormat12: Affichage 12 h
+twentyfourhourFormat12: Affichage 12h
 twentyfourhourFormat24: Affichage 24h
 name: Nom
 periodicity:
@@ -151,6 +151,9 @@ login:
     me: 'messages'
 btn:
   login: S'identifier
+  entry:
+    add:
+      title: Ajouter une entrée
 user:
   index:
     title: Liste des utilisateurs
@@ -196,35 +199,52 @@ entry:
   form:
     name:
       label: Nom
+      help: Aide sur le nom
     startTime:
       label: Date de début
+      help: Aide sur le début
     endTime:
       label: Date de fin
+      help: Aide sur lefin
+    area:
+      label: Domaine
+      help: Aide sur le domaine
     room:
       label: Ressource
+      help: Aide sur le ressource
     type:
       label: Type
+      help: Type de réservation (voir dans paramètres)
     statutEntry:
       label: Statut
+      help: Semble pas utilise
     entryType:
       label: Entry type
+      help: Vaut 0 ou 1 ou 2, surement périodicité
     repeatId:
       label: repeat
     createBy:
       label: Créé par
     beneficiaireExt:
       label: Bénéficiaire extérieur
+      help: Ne semble jamais utilise
     beneficiaire:
       label: Bénéficiaire
+      help: Si admin pour reserver au nom de
     description:
       label: Description
+      help: Description complète
     optionReservation:
       label: Option réservation
+      help: par defaut -1
     overloadDesc:
-      label: Overload description
+      label: overloadDesc
+      help: Semble pas utilise
     moderate:
       label: Modération
+      help: Par defaut 0
     jours:
       label: Jours
+      help: Par defaut 0
 ressources: Ressources
 weekabr: 's'

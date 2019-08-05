@@ -10,14 +10,14 @@ namespace App\Factory;
 
 use App\Entity\TypeArea;
 
-class TypeAreaFactory
+class TypeEntryFactory
 {
-    public function createNew(): TypeArea
+    public static function createNew(): TypeArea
     {
         return new TypeArea();
     }
 
-    public function setDefaultValues(TypeArea $typeArea)
+    public static function setDefaultValues(TypeArea $typeArea)
     {
         $typeArea
             ->setOrderDisplay(0)

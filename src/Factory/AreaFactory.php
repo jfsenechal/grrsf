@@ -28,10 +28,10 @@ class AreaFactory
         return new Area();
     }
 
-    public function setDefaultValues(Area $area)
+    public static function setDefaultValues(Area $area)
     {
         $area
-            ->setDisplayDays(array_flip($this->dateUtils::getDays()))
+            ->setDisplayDays(array_flip(DateUtils::getDays()))
             ->setMorningstartsArea(8)
             ->setEveningendsArea(19)
             ->setResolutionArea(900)

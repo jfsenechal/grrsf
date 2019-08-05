@@ -21,7 +21,7 @@ class RoomFactory
         return $room;
     }
 
-    public function setDefaultValues(Room $room)
+    public static function setDefaultValues(Room $room)
     {
         $room
             ->setCapacity(0)

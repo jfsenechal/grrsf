@@ -16,6 +16,7 @@ use App\Service\CalendarDataDisplay;
 use App\Service\CalendarDataManager;
 use App\Service\CalendarNavigationDisplay;
 use App\Service\LocalHelper;
+use App\Service\Settingservice;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -61,8 +62,13 @@ class FrontController extends AbstractController
      * @var CalendarDataManager
      */
     private $calendarDataManager;
+    /**
+     * @var Settingservice
+     */
+    private $settingservice;
 
     public function __construct(
+        Settingservice $settingservice,
         CalendarDataDisplay $calendarDisplay,
         MenuGenerator $menuGenerator,
         CalendarNavigationDisplay $calendarNavigationDisplay,
@@ -78,6 +84,7 @@ class FrontController extends AbstractController
         $this->calendarNavigationDisplay = $calendarNavigationDisplay;
         $this->menuGenerator = $menuGenerator;
         $this->calendarDataManager = $calendarDataManager;
+        $this->settingservice = $settingservice;
     }
 
     /**
@@ -100,8 +107,7 @@ class FrontController extends AbstractController
     {
         $today = CarbonFactory::getToday();
 
-        //todo get area by default
-        $esquare = $this->areaRepository->find(1);
+        $esquare = $this->settingservice->getDefaultArea();
 
         return $this->redirectToRoute(
             'grr_front_month',

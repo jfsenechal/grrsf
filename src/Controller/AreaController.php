@@ -68,7 +68,7 @@ class AreaController extends AbstractController
     public function new(Request $request): Response
     {
         $area = AreaFactory::createNew();
-        $this->areaFactory->setDefaultValues($area);
+        AreaFactory::setDefaultValues($area);
 
         $form = $this->createForm(AreaType::class, $area);
         $form->handleRequest($request);

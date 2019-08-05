@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Entry;
+use App\Entity\Room;
 use App\Factory\EntryFactory;
 use App\Form\EntryType;
 use App\Form\SearchEntryType;
@@ -74,11 +75,14 @@ class EntryController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="grr_entry_new", methods={"GET","POST"})
+     * @Route("/new/{room}", name="grr_entry_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Room $room = null): Response
     {
         $entry = $this->entryFactory->createNew();
+        if ($room) {
+            $entry->setRoom($room);
+        }
 
         $form = $this->createForm(EntryType::class, $entry);
         $form->handleRequest($request);
