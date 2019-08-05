@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\EntryFactory;
@@ -10,6 +11,7 @@ use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
 use App\Repository\RepeatRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,11 +77,14 @@ class EntryController extends AbstractController
     }
 
     /**
-     * @Route("/new/{room}", name="grr_entry_new", methods={"GET","POST"})
+     * @Route("/new/{area}/{room}", name="grr_entry_new", methods={"GET","POST"})
+     * @Entity("area", expr="repository.find(area)")
      */
-    public function new(Request $request, Room $room = null): Response
+    public function new(Request $request, Area $area, Room $room = null): Response
     {
         $entry = $this->entryFactory->createNew();
+        $entry->setArea($area);
+
         if ($room) {
             $entry->setRoom($room);
         }

@@ -142,6 +142,28 @@ class Entry
      */
     private $room;
 
+    /**
+     * Util lors de l'ajout d'un Entry
+     * @var Area|null
+     */
+    private $area;
+
+    /**
+     * @return Area|null
+     */
+    public function getArea(): ?Area
+    {
+        return $this->area;
+    }
+
+    /**
+     * @param Area|null $area
+     */
+    public function setArea(?Area $area): void
+    {
+        $this->area = $area;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

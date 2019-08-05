@@ -75,8 +75,8 @@ class EntryType extends AbstractType
                 [
                     'label' => 'entry.form.area.label',
                     'help' => 'entry.form.area.help',
-                    'required' => false,
-                    'placeholder' => 'Area',
+                    'required' => true,
+                    'placeholder' => 'entry.form.area.label',
                     'class' => Area::class,
                     'query_builder' => $this->areaRepository->getQueryBuilder(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],

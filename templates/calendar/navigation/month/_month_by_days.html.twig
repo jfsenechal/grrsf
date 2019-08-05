@@ -23,7 +23,7 @@
             {{ completeTr(day, 'begin') }}
         {% endif %}
 
-        {% include 'calendar/navigation/month/_cell_day.html.twig' with { 'day': day } %}
+        {% include 'calendar/navigation/month/_cell_day.html.twig' %}
         {% if day.isSunday %}
 
     </tr>

@@ -18,10 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class TypeAreaController extends AbstractController
 {
     /**
-     * @var TypeEntryFactory
-     */
-    private $typeAreaFactory;
-    /**
      * @var TypeAreaRepository
      */
     private $typeAreaRepository;
@@ -31,11 +27,9 @@ class TypeAreaController extends AbstractController
     private $typeAreaManager;
 
     public function __construct(
-        TypeEntryFactory $typeAreaFactory,
         TypeAreaRepository $typeAreaRepository,
         TypeAreaManager $typeAreaManager
     ) {
-        $this->typeAreaFactory = $typeAreaFactory;
         $this->typeAreaRepository = $typeAreaRepository;
         $this->typeAreaManager = $typeAreaManager;
     }
@@ -58,8 +52,8 @@ class TypeAreaController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $typeArea = $this->typeAreaFactory->createNew();
-        $this->typeAreaFactory->setDefaultValues($typeArea);
+        $typeArea = TypeEntryFactory::createNew();
+        TypeEntryFactory::setDefaultValues($typeArea);
 
         $form = $this->createForm(TypeAreaType::class, $typeArea);
         $form->handleRequest($request);

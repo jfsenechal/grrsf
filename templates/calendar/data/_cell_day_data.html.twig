@@ -1,6 +1,6 @@
 <td>
     <span class="text-muted">{{ day.day }}</span>
-    <a href="{{ path('grr_entry_new') }}" class="float-right" title="{{ 'btn.entry.add.title'|trans }}"> <i class="fas fa-plus"></i> </a>
+    <a href="{{ path('grr_entry_new',{'area': app.request.get('area').id}) }}" class="float-right" title="{{ 'btn.entry.add.title'|trans }}"> <i class="fas fa-plus"></i> </a>
     {% for entry in day.entries %}
         <p>{{ entry.name }}</p>
     {% endfor %}

@@ -65,6 +65,8 @@ entry:
     title: Liste des réservations
   new:
     title: Nouvelle réservation
+    periodicity:
+      title: 'Options de périodicité'
 
 next: Suivant
 previous: Précédent
