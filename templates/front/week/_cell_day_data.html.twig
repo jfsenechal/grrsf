@@ -2,6 +2,8 @@
     <a href="{{ generateRouteAddEntry(area.id,room.id, day.day) }}" class="float-right" title="{{ 'btn.entry.add.title'|trans }}"> <i
                 class="fas fa-plus"></i> </a>
     {% for entry in day.entries %}
-        {{ entry.name }}
+        <p>
+            <a href="{{ path('grr_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
+        </p>
     {% endfor %}
 </td>
