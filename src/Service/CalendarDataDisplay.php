@@ -37,7 +37,7 @@ class CalendarDataDisplay
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function generateMonth(Month $month)
+    public function generateHtmlMonth(Month $month)
     {
         $weeks = $month->groupDataDaysByWeeks();
 

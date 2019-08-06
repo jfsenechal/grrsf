@@ -130,12 +130,9 @@ class FrontController extends AbstractController
         }
 
         $monthModel = Month::createJf($year, $month);
+        $this->calendarDataManager->bindMonth($monthModel, $area, $roomObject);
 
-        $entries = $this->entryRepository->findForMonth($monthModel, $area, $roomObject);
-
-        $this->calendarDataManager->bindMonth($monthModel, $entries);
-
-        $monthData = $this->calendarDisplay->generateMonth($monthModel);
+        $monthData = $this->calendarDisplay->generateHtmlMonth($monthModel);
 
         return $this->render(
             'front/month.html.twig',
@@ -158,6 +155,7 @@ class FrontController extends AbstractController
         $roomObject = null;
 
         if ($room) {
+            //todo if room selected
             $roomObject = $this->roomRepository->find($room);
         }
 
@@ -168,6 +166,7 @@ class FrontController extends AbstractController
             'front/week.html.twig',
             [
                 'week' => $weekModel,
+                'area' => $area,//pour lien add entry
                 'data' => $data,
             ]
         );

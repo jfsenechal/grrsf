@@ -78,11 +78,11 @@ class EntryController extends AbstractController
     }
 
     /**
-     * @Route("/new/{area}/{room}", name="grr_entry_new", methods={"GET","POST"})
+     * @Route("/new/area/{area}/room/{room}/year/{year}/month/{month}/day/{day}", name="grr_entry_new", methods={"GET","POST"})
      * @Entity("area", expr="repository.find(area)")
      * @Entity("room", expr="repository.find(room)")
      */
-    public function new(Request $request, Area $area, Room $room): Response
+    public function new(Request $request, Area $area, Room $room, int $year, int $month, int $day): Response
     {
         $entry = $this->entryFactory->createNew();
         $entry->setArea($area);
@@ -107,7 +107,7 @@ class EntryController extends AbstractController
             'entry/new.html.twig',
             [
                 'entry' => $entry,
-                'form_periodicity'=>$formPeriodicity->createView(),
+                'form_periodicity' => $formPeriodicity->createView(),
                 'form' => $form->createView(),
             ]
         );

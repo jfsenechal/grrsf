@@ -22,14 +22,11 @@
         </thead>
         <tbody>
         {% for roomModel in data %}
+            {% set room = roomModel.room %}
             <tr>
-                <td>{{ roomModel.room.name }}</td>
+                <td>{{ room.name }}</td>
                 {% for day in roomModel.dataDays %}
-                    <td>ll
-                        {% for entry in day.entries %}
-                            {{ entry.name }}
-                        {% endfor %}
-                    </td>
+                    {% include 'front/week/_cell_day_data.html.twig' %}
                 {% endfor %}
             </tr>
         {% endfor %}

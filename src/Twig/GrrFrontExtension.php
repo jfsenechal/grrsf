@@ -3,12 +3,8 @@
 namespace App\Twig;
 
 use App\Factory\MenuGenerator;
-use App\GrrData\DateUtils;
-use App\GrrData\EntryData;
 use App\Model\Day;
 use App\Model\Month;
-use App\Repository\RoomRepository;
-use App\Repository\TypeAreaRepository;
 use App\Service\CalendarNavigationDisplay;
 use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -224,17 +220,10 @@ class GrrFrontExtension extends AbstractExtension
 
         $attributes = $request->attributes->get('_route_params');
 
-
-
         $year = $attributes['year'] ?? 0;
         $month = $attributes['month'] ?? 0;
 
-        $params = ['area' => $area, 'year' => $year, 'month' => $month, 'day' => $day];
-        $params = ['area' => $area];
-
-        if ($room) {
-            $params['room'] = $room;
-        }
+        $params = ['area' => $area, 'room' => $room, 'year' => $year, 'month' => $month, 'day' => $day];
 
         return $this->router->generate('grr_entry_new', $params);
     }

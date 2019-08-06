@@ -10,6 +10,7 @@ namespace App\Service;
 
 use App\Entity\Area;
 use App\Entity\Entry;
+use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Model\Day;
 use App\Model\Month;
@@ -42,14 +43,16 @@ class CalendarDataManager
      * @param Entry[] $entries
      * @throws \Exception
      */
-    public function bindMonth(Month $month, array $entries)
+    public function bindMonth(Month $monthModel, Area $area, Room $room = null)
     {
+        $entries = $this->entryRepository->findForMonth($monthModel, $area, $room);
         $this->entries = $entries;
-        foreach ($month->getCalendarDays() as $date) {
+
+        foreach ($monthModel->getCalendarDays() as $date) {
             $day = new Day($date);
             $events = $this->extractByDate($day);
             $day->addEntries($events);
-            $month->addDataDay($day);
+            $monthModel->addDataDay($day);
         }
     }
 
