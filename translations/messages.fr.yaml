@@ -259,10 +259,11 @@ entry:
       label: Unité
       help: ''
 ressources: Ressources
-weekabr: 's'
-Duration: 'Durée'
+weekabr: s
+Duration: Durée
 unit:
   minutes: Minute(s)
   hours: Heure(s)
   days: Jour(s)
   weeks: Semaine(s)
+Hours: Heures

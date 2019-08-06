@@ -9,6 +9,8 @@
 namespace App\Model;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class Hour
 {
     /**
@@ -19,6 +21,44 @@ class Hour
      * @var \DateTimeInterface
      */
     protected $end;
+
+    /**
+     * @var ArrayCollection|Day[]
+     */
+    protected $data_days;
+
+    /**
+     * @var ArrayCollection|RoomModel[]
+     */
+    protected $rooms;
+
+    public function __construct()
+    {
+        $this->data_days = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
+    }
+
+    /**
+     * @return RoomModel[]|ArrayCollection
+     */
+    public function getRooms()
+    {
+        return $this->rooms;
+    }
+
+    public function addRoom(RoomModel $roomModel): self
+    {
+        if (!$this->rooms->contains($roomModel)) {
+            $this->rooms[] = $roomModel;
+        }
+
+        return $this;
+    }
+
+    public function setRooms(iterable $rooms)
+    {
+        $this->rooms = $rooms;
+    }
 
     /**
      * @return \DateTimeInterface
@@ -51,7 +91,6 @@ class Hour
     {
         $this->end = $end;
     }
-
 
 
 }

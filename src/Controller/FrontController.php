@@ -6,18 +6,16 @@ use App\Entity\Area;
 use App\Factory\CarbonFactory;
 use App\Factory\MenuGenerator;
 use App\Model\Day;
-use App\Model\Hour;
 use App\Model\Month;
 use App\Model\Week;
 use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
+use App\Service\AreaService;
 use App\Service\CalendarDataDisplay;
 use App\Service\CalendarDataManager;
 use App\Service\CalendarNavigationDisplay;
-use App\Service\LocalHelper;
 use App\Service\Settingservice;
-use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,10 +49,6 @@ class FrontController extends AbstractController
      */
     private $calendarNavigationDisplay;
     /**
-     * @var LocalHelper
-     */
-    private $localHelper;
-    /**
      * @var MenuGenerator
      */
     private $menuGenerator;
@@ -66,6 +60,10 @@ class FrontController extends AbstractController
      * @var Settingservice
      */
     private $settingservice;
+    /**
+     * @var AreaService
+     */
+    private $areaService;
 
     public function __construct(
         Settingservice $settingservice,
@@ -75,7 +73,8 @@ class FrontController extends AbstractController
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
-        CalendarDataManager $calendarDataManager
+        CalendarDataManager $calendarDataManager,
+        AreaService $areaService
     ) {
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
@@ -85,6 +84,7 @@ class FrontController extends AbstractController
         $this->menuGenerator = $menuGenerator;
         $this->calendarDataManager = $calendarDataManager;
         $this->settingservice = $settingservice;
+        $this->areaService = $areaService;
     }
 
     /**
@@ -183,40 +183,17 @@ class FrontController extends AbstractController
 
         $rooms = $this->roomRepository->findByArea($area);
 
-        $entries = $this->entryRepository->findAll();
         $dayModel = new Day($daySelected);
-        $dayModel->addEntries($entries);
 
-        $heureDebut = $area->getMorningstartsArea();
-        $heureFin = $area->getEveningendsArea();
-        $resolution = $area->getResolutionArea();
+        $hoursPeriod = $this->areaService->getHoursPeriod($area, $daySelected);
 
-        $debut = Carbon::create($year, $month, $day, $heureDebut, 0);
-        $fin = Carbon::create($year, $month, $day, $heureFin, 0, 0);//$resolution bug
-
-        $heures = Carbon::parse($debut)->secondsUntil($fin, $resolution);
-
-        $hours = [];
-        $hour = new Hour();
-        $i = 0;
-        foreach ($heures as $heure) {
-            //premier passage
-            if ($i == 0) {
-                $hour->setBegin($heure);
-            } else {
-                $hour->setEnd($heure);
-                $hours[] = $hour;
-                $hour = new Hour();
-                $hour->setBegin($heure);
-            }
-            $i = 1;
-        }
+        $hours = $this->calendarDataManager->bindDay($hoursPeriod, $area);
 
         return $this->render(
             'front/day.html.twig',
             [
-                'firstDay' => $daySelected,
                 'day' => $dayModel,
+                'area' => $area,
                 'rooms' => $rooms,
                 'hours' => $hours,
             ]

@@ -1,6 +1,5 @@
 <td>
-    <span class="text-muted">{{ day.day }}</span>
-    <a href="{{ generateRouteAddEntry(day,room) }}" class="float-right" title="{{ 'btn.entry.add.title'|trans }}"> <i
+    <a href="{{ generateRouteAddEntry(area.id,1,day.day) }}" class="float-right" title="{{ 'btn.entry.add.title'|trans }}"> <i
                 class="fas fa-plus"></i> </a>
 
     {% for entry in day.entries %}

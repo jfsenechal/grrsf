@@ -13,10 +13,12 @@ use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Model\Day;
+use App\Model\Hour;
 use App\Model\Month;
 use App\Model\RoomModel;
 use App\Model\Week;
 use App\Repository\EntryRepository;
+use Carbon\CarbonPeriod;
 
 class CalendarDataManager
 {
@@ -68,12 +70,12 @@ class CalendarDataManager
         $month = $weekModel->month;
         $data = [];
 
-        foreach ($area->getRooms() as $room2) {
-            $roomModel = new RoomModel($room2);
+        foreach ($area->getRooms() as $room) {
+            $roomModel = new RoomModel($room);
             foreach ($days as $dayCalendar) {
                 $daySelected = CarbonFactory::createImmutable($year, $month, $dayCalendar->day);
                 $dataDay = new Day($daySelected);
-                $entries = $this->entryRepository->findForWeek($dayCalendar, $room2);
+                $entries = $this->entryRepository->findForWeek($dayCalendar, $room);
                 $dataDay->addEntries($entries);
                 $roomModel->addDataDay($dataDay);
             }
@@ -81,6 +83,44 @@ class CalendarDataManager
         }
 
         return $data;
+    }
+
+    /**
+     * @param CarbonPeriod $hoursPeriod
+     * @param Area $area
+     * @return Hour[]
+     * @throws \Exception
+     */
+    public function bindDay(CarbonPeriod $hoursPeriod, Area $area)
+    {
+        $hours = [];
+
+        $last = $hoursPeriod->last();
+        $hoursPeriod->rewind();
+
+        while ($hoursPeriod->current()->format('H:i') < $last->format('H:i')) {
+
+            $begin = $hoursPeriod->current();
+            $hoursPeriod->next();
+            $end = $hoursPeriod->current();
+
+            $hour = new Hour();
+            $hour->setBegin($begin);
+            $hour->setEnd($end);
+
+            foreach ($area->getRooms() as $roomObject) {
+                $roomModel = new RoomModel($roomObject);
+                //$daySelected = CarbonFactory::createImmutable($year, $month, $dayCalendar->day, $heure, $minute);
+                $dataDay = new Day($begin);
+                $entries = $this->entryRepository->findForDay($begin, $end, $roomObject);
+                $dataDay->addEntries($entries);
+                $roomModel->addDataDay($dataDay);
+                $hour->addRoom($roomModel);
+            }
+
+            $hours[] = $hour;
+        }
+        return $hours;
     }
 
     public function extractByDate(\DateTimeInterface $dateTime)

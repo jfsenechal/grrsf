@@ -7,17 +7,15 @@
     {% include 'calendar/navigation/_top_navigation.html.twig' %}
 
     <h3 class="text-center text-success">
-        {{ firstDay.dayName|title }} {{ firstDay.day }} {{ firstDay.monthName }} {{ firstDay.year }}
+        {{ day.dayName|title }} {{ day.day }} {{ day.monthName }} {{ day.year }}
     </h3>
 
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Heures</th>
+            <th scope="col">{{ 'Hours'|trans }}</th>
             {% for room in rooms %}
-
-                <th>{{ room.name }}</th>
-
+                <th scope="col">{{ room.name }}</th>
             {% endfor %}
         </tr>
         </thead>
@@ -25,8 +23,10 @@
         {% for hour in hours %}
             <tr>
                 <td>{{ hour.begin|date('H:i') }} - {{ hour.end|date('H:i') }}</td>
-                {% for room in rooms %}
-                    <th>entries</th>
+                {% for roomModel in hour.rooms %}
+                    {% for day in roomModel.dataDays %}
+                        {% include 'front/day/_cell_day_data.html.twig' %}
+                    {% endfor %}
                 {% endfor %}
             </tr>
         {% endfor %}
