@@ -10,32 +10,23 @@ namespace App\Service;
 
 use App\GrrData\DateUtils;
 use App\Model\Month;
-use App\Model\Week;
 use Twig\Environment;
 
-class CalendarDataDisplay
+class MonthHelperDataDisplay
 {
     /**
      * @var Environment
      */
     private $environment;
-    /**
-     * @var CalendarDataManager
-     */
-    private $calendarDataManager;
 
-    public function __construct(CalendarDataManager $calendarDataManager, Environment $environment)
+    public function __construct(Environment $environment)
     {
         $this->environment = $environment;
-        $this->calendarDataManager = $calendarDataManager;
     }
 
     /**
      * @param Month $month
      * @return string
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
      */
     public function generateHtmlMonth(Month $month)
     {

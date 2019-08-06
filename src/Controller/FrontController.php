@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Area;
 use App\Factory\CarbonFactory;
-use App\Factory\MenuGenerator;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\Week;
@@ -12,9 +11,8 @@ use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
 use App\Service\AreaService;
-use App\Service\CalendarDataDisplay;
 use App\Service\CalendarDataManager;
-use App\Service\CalendarNavigationDisplay;
+use App\Service\MonthHelperDataDisplay;
 use App\Service\Settingservice;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,17 +39,9 @@ class FrontController extends AbstractController
      */
     private $entryRepository;
     /**
-     * @var CalendarDataDisplay
+     * @var MonthHelperDataDisplay
      */
     private $calendarDisplay;
-    /**
-     * @var CalendarNavigationDisplay
-     */
-    private $calendarNavigationDisplay;
-    /**
-     * @var MenuGenerator
-     */
-    private $menuGenerator;
     /**
      * @var CalendarDataManager
      */
@@ -64,12 +54,14 @@ class FrontController extends AbstractController
      * @var AreaService
      */
     private $areaService;
+    /**
+     * @var MonthHelperDataDisplay
+     */
+    private $monthHelperDataDisplay;
 
     public function __construct(
         Settingservice $settingservice,
-        CalendarDataDisplay $calendarDisplay,
-        MenuGenerator $menuGenerator,
-        CalendarNavigationDisplay $calendarNavigationDisplay,
+        MonthHelperDataDisplay $monthHelperDataDisplay,
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
@@ -79,25 +71,10 @@ class FrontController extends AbstractController
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
         $this->entryRepository = $entryRepository;
-        $this->calendarDisplay = $calendarDisplay;
-        $this->calendarNavigationDisplay = $calendarNavigationDisplay;
-        $this->menuGenerator = $menuGenerator;
         $this->calendarDataManager = $calendarDataManager;
         $this->settingservice = $settingservice;
         $this->areaService = $areaService;
-    }
-
-    /**
-     * @Route("/test", name="grr_front_test", methods={"GET"})
-     */
-    public function test(): Response
-    {
-        return $this->render(
-            'front/test.html.twig',
-            [
-
-            ]
-        );
+        $this->monthHelperDataDisplay = $monthHelperDataDisplay;
     }
 
     /**
@@ -132,7 +109,7 @@ class FrontController extends AbstractController
         $monthModel = Month::createJf($year, $month);
         $this->calendarDataManager->bindMonth($monthModel, $area, $roomObject);
 
-        $monthData = $this->calendarDisplay->generateHtmlMonth($monthModel);
+        $monthData = $this->monthHelperDataDisplay->generateHtmlMonth($monthModel);
 
         return $this->render(
             'front/month.html.twig',
@@ -182,6 +159,11 @@ class FrontController extends AbstractController
         $daySelected = CarbonFactory::createImmutable($year, $month, $day);
 
         $rooms = $this->roomRepository->findByArea($area);
+
+        if ($room) {
+            //todo if room selected
+            $rooms = [$this->roomRepository->find($room)];
+        }
 
         $dayModel = new Day($daySelected);
 

@@ -8,7 +8,6 @@
 
 namespace App\Model;
 
-
 use App\Entity\Entry;
 use Carbon\CarbonImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
