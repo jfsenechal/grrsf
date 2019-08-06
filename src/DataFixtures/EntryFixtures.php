@@ -15,6 +15,10 @@ class EntryFixtures extends Fixture implements DependentFixtureInterface
      * @var AreaFactory
      */
     private $areaFactory;
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
 
     public function __construct(AreaFactory $areaFactory)
     {
@@ -23,16 +27,37 @@ class EntryFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        $entry = EntryFactory::createNew();
-        EntryFactory::setDefaultValues($entry);
-        $entry->setRoom($this->getReference('Box'));
-        $entry->setStartTime(Carbon::today()->setTime(10, 0));
-        $entry->setEndTime(Carbon::today()->setTime(14, 10));
-        $entry->setName('Réunion');
-        $entry->setType($this->getReference("entry-type-C"));
-        $manager->persist($entry);
+        $this->manager = $manager;
+
+        $start = Carbon::today()->setTime(10, 0);
+        $end = Carbon::today()->setTime(14, 10);
+        $this->createEntry('Réunion cst', $start, $end, 'Box', 'entry-type-C');
+
+        $start = Carbon::today()->setTime(9, 0);
+        $end = Carbon::today()->setTime(15, 35);
+        $this->createEntry('Réunion pssp', $start, $end, 'Relax Room', 'entry-type-D');
+
+        $start = Carbon::tomorrow()->setTime(16, 0);
+        $end = Carbon::today()->setTime(17, 20);
+        $this->createEntry('Réunion henalux', $start, $end, 'Box', 'entry-type-A');
+
+        $start = Carbon::yesterday()->setTime(8, 0);
+        $end = Carbon::today()->setTime(12, 40);
+        $this->createEntry('Réunion timesquare', $start, $end, 'Digital Room', 'entry-type-F');
 
         $manager->flush();
+    }
+
+    protected function createEntry($name, $start, $end, $area, $type)
+    {
+        $entry = EntryFactory::createNew();
+        EntryFactory::setDefaultValues($entry);
+        $entry->setRoom($this->getReference($area));
+        $entry->setStartTime($start);
+        $entry->setEndTime($end);
+        $entry->setName($name);
+        $entry->setType($this->getReference($type));
+        $this->manager->persist($entry);
     }
 
     /**

@@ -12,12 +12,12 @@ class AppFixtures extends Fixture
     {
         $types = [
             "A" => "Cours",
-            "G" => "Cours ext",
-            "B" => "Reunion",
-            "H" => "Location",
-            "D" => "Bureau",
-            "C" => "Mise a disposition",
-            "E" => "Non disponible",
+            "B" => "Cours ext",
+            "C" => "Reunion",
+            "D" => "Location",
+            "E" => "Bureau",
+            "F" => "Mise a disposition",
+            "G" => "Non disponible",
         ];
 
         foreach ($types as $index => $nom) {
