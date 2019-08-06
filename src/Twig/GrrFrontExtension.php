@@ -74,6 +74,7 @@ class GrrFrontExtension extends AbstractExtension
             new TwigFunction('generateRouteMonthView', [$this, 'generateRouteMonthView']),
             new TwigFunction('generateRouteWeekView', [$this, 'generateRouteWeekView']),
             new TwigFunction('generateRouteDayView', [$this, 'generateRouteDayView']),
+            new TwigFunction('generateRouteAddEntry', [$this, 'generateRouteAddEntry']),
         ];
     }
 
@@ -212,5 +213,29 @@ class GrrFrontExtension extends AbstractExtension
         }
 
         return $this->router->generate('grr_front_day', $params);
+    }
+
+    public function generateRouteAddEntry(int $area, int $room, int $day)
+    {
+        $request = $this->requestStack->getMasterRequest();
+        if (!$request) {
+            return '';
+        }
+
+        $attributes = $request->attributes->get('_route_params');
+
+
+
+        $year = $attributes['year'] ?? 0;
+        $month = $attributes['month'] ?? 0;
+
+        $params = ['area' => $area, 'year' => $year, 'month' => $month, 'day' => $day];
+        $params = ['area' => $area];
+
+        if ($room) {
+            $params['room'] = $room;
+        }
+
+        return $this->router->generate('grr_entry_new', $params);
     }
 }

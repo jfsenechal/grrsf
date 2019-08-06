@@ -80,8 +80,9 @@ class EntryController extends AbstractController
     /**
      * @Route("/new/{area}/{room}", name="grr_entry_new", methods={"GET","POST"})
      * @Entity("area", expr="repository.find(area)")
+     * @Entity("room", expr="repository.find(room)")
      */
-    public function new(Request $request, Area $area, Room $room = null): Response
+    public function new(Request $request, Area $area, Room $room): Response
     {
         $entry = $this->entryFactory->createNew();
         $entry->setArea($area);

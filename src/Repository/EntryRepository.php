@@ -7,6 +7,9 @@ use App\Entity\Entry;
 use App\Entity\Room;
 use App\Model\Month;
 use App\Model\Week;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -75,29 +78,18 @@ class EntryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findForWeek(Week $weekModel, Area $area = null, Room $room = null)
+    public function findForWeek(CarbonInterface $day, Room $room)
     {
         $qb = $this->createQueryBuilder('entry');
 
-        $days = $weekModel->getCalendarDays();
-
-        /*  $qb->andWhere('YEAR(entry.startTime) = :year')
-              ->setParameter('year', $weekModel->getDateImmutable()->year);
+          $qb->andWhere('YEAR(entry.startTime) = :year')
+              ->setParameter('year', $day->year);
 
           $qb->andWhere('MONTH(entry.startTime) = :month')
-              ->setParameter('month', $weekModel->getDateImmutable()->month);
-  */
+              ->setParameter('month', $day->month);
 
-        if ($area) {
-            $rooms = $this->getRooms($area);
-            $qb->andWhere('entry.room IN (:rooms)')
-                ->setParameter('rooms', $rooms);
-        }
-
-        if ($room) {
-            $qb->andWhere('entry.room = :room')
-                ->setParameter('room', $room);
-        }
+        $qb->andWhere('entry.room = :room')
+            ->setParameter('room', $room);
 
         return $qb
             ->orderBy('entry.startTime', 'DESC')

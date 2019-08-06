@@ -155,7 +155,6 @@ class FrontController extends AbstractController
      */
     public function week(Area $area, int $year, int $month, int $week, int $room = null): Response
     {
-        $rooms = $this->roomRepository->findByArea($area);
         $roomObject = null;
 
         if ($room) {
@@ -163,20 +162,13 @@ class FrontController extends AbstractController
         }
 
         $weekModel = Week::createWithLocal($year, $week);
-
-        $entries = $this->entryRepository->findForWeek($weekModel, $area, $roomObject);
-        $this->calendarDataManager->bindWeek($weekModel, $entries);
-
-        $firstDay = $weekModel->getFirstDay();
-
-        $this->calendarDisplay->generateWeek($weekModel);
+        $data = $this->calendarDataManager->bindWeek($weekModel, $area);
 
         return $this->render(
             'front/week.html.twig',
             [
-                'firstDay' => $firstDay,//utilise par form select
                 'week' => $weekModel,
-                'rooms' => $rooms,
+                'data' => $data,
             ]
         );
     }

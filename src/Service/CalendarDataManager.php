@@ -8,10 +8,14 @@
 
 namespace App\Service;
 
+use App\Entity\Area;
 use App\Entity\Entry;
+use App\Factory\CarbonFactory;
 use App\Model\Day;
 use App\Model\Month;
+use App\Model\RoomModel;
 use App\Model\Week;
+use App\Repository\EntryRepository;
 
 class CalendarDataManager
 {
@@ -19,10 +23,15 @@ class CalendarDataManager
      * @var Entry[] $entries
      */
     protected $entries;
+    /**
+     * @var EntryRepository
+     */
+    private $entryRepository;
 
-    public function __construct()
+    public function __construct(EntryRepository $entryRepository)
     {
         $this->entries = [];
+        $this->entryRepository = $entryRepository;
     }
 
     /**
@@ -46,18 +55,29 @@ class CalendarDataManager
 
     /**
      * @param Week $week
-     * @param Entry[] $entries
+     * @return RoomModel[]
      * @throws \Exception
      */
-    public function bindWeek(Week $week, array $entries)
+    public function bindWeek(Week $weekModel, Area $area)
     {
-        $this->entries = $entries;
-        foreach ($week->getCalendarDays() as $date) {
-            $day = new Day($date);
-            $events = $this->extractByDate($day);
-            $day->addEntries($events);
-            $week->addDataDay($day);
+        $days = $weekModel->getCalendarDays();
+        $year = $weekModel->year;
+        $month = $weekModel->month;
+        $data = [];
+
+        foreach ($area->getRooms() as $room2) {
+            $roomModel = new RoomModel($room2);
+            foreach ($days as $dayCalendar) {
+                $daySelected = CarbonFactory::createImmutable($year, $month, $dayCalendar->day);
+                $dataDay = new Day($daySelected);
+                $entries = $this->entryRepository->findForWeek($dayCalendar, $room2);
+                $dataDay->addEntries($entries);
+                $roomModel->addDataDay($dataDay);
+            }
+            $data[] = $roomModel;
         }
+
+        return $data;
     }
 
     public function extractByDate(\DateTimeInterface $dateTime)

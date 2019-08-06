@@ -8,6 +8,7 @@
 
 namespace App\Model;
 
+use App\Entity\Room;
 use App\Service\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -34,14 +35,36 @@ class Week extends Carbon
     protected $data = [];
 
     /**
-     * @var ArrayCollection
+     * @var ArrayCollection|Day[]
      */
     protected $data_days;
+
+    /**
+     * @var ArrayCollection|RoomModel[]
+     */
+    protected $rooms;
+
+    /**
+     * @return RoomModel[]|ArrayCollection
+     */
+    public function getRooms()
+    {
+        return $this->rooms;
+    }
+
+    /**
+     * @param RoomModel[]|ArrayCollection $rooms
+     */
+    public function setRooms($rooms): void
+    {
+        $this->rooms = $rooms;
+    }
 
     public function __construct($time = null, $tz = null)
     {
         parent::__construct($time, $tz);
         $this->data_days = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
 
     public static function createWithLocal(int $year, int $week): self

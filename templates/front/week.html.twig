@@ -1,11 +1,8 @@
 {% extends 'layout_front.html.twig' %}
 
-{% block title %}GrrArea index{% endblock %}
+{% block title %}Week page{% endblock %}
 
 {% block body %}
-
-    {% set weekSelected = app.request.get('week') %}
-    {% set daySelected = app.request.get('day') %}
 
     {% include 'calendar/navigation/_top_navigation.html.twig' %}
 
@@ -24,11 +21,11 @@
         </tr>
         </thead>
         <tbody>
-        {% for room in rooms %}
+        {% for roomModel in data %}
             <tr>
-                <td>{{ room.name }}</td>
-                {% for day in week.dataDays %}
-                    <td>
+                <td>{{ roomModel.room.name }}</td>
+                {% for day in roomModel.dataDays %}
+                    <td>ll
                         {% for entry in day.entries %}
                             {{ entry.name }}
                         {% endfor %}

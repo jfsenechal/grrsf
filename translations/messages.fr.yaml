@@ -261,3 +261,8 @@ entry:
 ressources: Ressources
 weekabr: 's'
 Duration: 'Durée'
+unit:
+  minutes: Minute(s)
+  hours: Heure(s)
+  days: Jour(s)
+  weeks: Semaine(s)

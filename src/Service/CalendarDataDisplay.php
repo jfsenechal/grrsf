@@ -53,8 +53,4 @@ class CalendarDataDisplay
 
     }
 
-    public function generateWeek(Week $week)
-    {
-
-    }
 }

@@ -1,0 +1,9 @@
+<td>
+    <a href="{{ generateRouteDayView(day.day) }}" class="float-right">
+        {{ day.day }}
+    </a>
+
+    {% for entry in day.entries %}
+        <p>{{ entry.name }}</p>
+    {% endfor %}
+</td>

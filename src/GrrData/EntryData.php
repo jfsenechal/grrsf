@@ -33,8 +33,8 @@ class EntryData
         $vocab[1] = $this->translator->trans('periodicity.type.everyday');
         $vocab[2] = $this->translator->trans('periodicity.type.everyweek');
         $vocab[3] = $this->translator->trans('periodicity.type.everymonth.sameday');
-        $vocab[4] =$this->translator->trans('periodicity.type.everyyear');
-        $vocab[5] =$this->translator->trans('periodicity.type.everymonth.sameweek');
+        $vocab[4] = $this->translator->trans('periodicity.type.everyyear');
+        $vocab[5] = $this->translator->trans('periodicity.type.everymonth.sameweek');
         $vocab[6] = $this->translator->trans('periodicity.type.cycle.days');
 
         return $vocab;
@@ -75,5 +75,17 @@ class EntryData
     public function getEntryTypes()
     {
         return [0 => 0, 1 => 1, 2 => 2];
+    }
+
+    public function getUnitsTime()
+    {
+        $units = [];
+        $choices = ['unit.minutes', 'unit.hours', 'unit.days', 'unit.weeks'];
+        foreach ($choices as $choice) {
+            $units[] = $this->translator->trans($choice);
+        }
+
+        return $units;
+
     }
 }
