@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\TypeArea;
+use App\Entity\EntryType;
 use App\Factory\TypeEntryFactory;
 use App\Form\TypeAreaType;
 use App\Manager\TypeAreaManager;
-use App\Repository\TypeAreaRepository;
+use App\Repository\EntryTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TypeAreaController extends AbstractController
 {
     /**
-     * @var TypeAreaRepository
+     * @var EntryTypeRepository
      */
     private $typeAreaRepository;
     /**
@@ -27,7 +27,7 @@ class TypeAreaController extends AbstractController
     private $typeAreaManager;
 
     public function __construct(
-        TypeAreaRepository $typeAreaRepository,
+        EntryTypeRepository $typeAreaRepository,
         TypeAreaManager $typeAreaManager
     ) {
         $this->typeAreaRepository = $typeAreaRepository;
@@ -77,7 +77,7 @@ class TypeAreaController extends AbstractController
     /**
      * @Route("/{id}", name="grr_type_area_show", methods={"GET"})
      */
-    public function show(TypeArea $typeArea): Response
+    public function show(EntryType $typeArea): Response
     {
         return $this->render(
             'type_area/show.html.twig',
@@ -90,7 +90,7 @@ class TypeAreaController extends AbstractController
     /**
      * @Route("/{id}/edit", name="grr_type_area_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, TypeArea $typeArea): Response
+    public function edit(Request $request, EntryType $typeArea): Response
     {
         $form = $this->createForm(TypeAreaType::class, $typeArea);
         $form->handleRequest($request);
@@ -119,7 +119,7 @@ class TypeAreaController extends AbstractController
     /**
      * @Route("/{id}", name="grr_type_area_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, TypeArea $typeArea): Response
+    public function delete(Request $request, EntryType $typeArea): Response
     {
         if ($this->isCsrfTokenValid('delete'.$typeArea->getId(), $request->request->get('_token'))) {
             $this->typeAreaRepository->persist($typeArea);

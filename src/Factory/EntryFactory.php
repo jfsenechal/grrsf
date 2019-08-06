@@ -12,27 +12,19 @@ use App\Entity\Entry;
 
 class EntryFactory
 {
-    /** @var FactoryInterface */
-    private $factory;
-
-    public function construct(
-        FactoryInterface $factory
-    ) {
-        $this->factory = $factory;
-    }
-
-    public function createNew(): Entry
+    public static function createNew(): Entry
     {
         return new Entry();
-
-        //return $this->factory->createNew();
     }
 
-    public function setDefaultValues(Entry $entry)
+    public static function setDefaultValues(Entry $entry)
     {
         $entry
             ->setTimestamp(new \DateTime())
             ->setModerate(false)
-            ->setJours(false);
+            ->setJours(false)
+            ->setCreateBy('jf')
+            ->setBeneficiaire('jf')
+            ->setOptionReservation(0);
     }
 }

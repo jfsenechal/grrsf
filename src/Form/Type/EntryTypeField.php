@@ -8,8 +8,8 @@
 
 namespace App\Form\Type;
 
-use App\Entity\TypeArea;
-use App\Repository\TypeAreaRepository;
+use App\Entity\EntryType;
+use App\Repository\EntryTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,11 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class EntryTypeField extends AbstractType
 {
     /**
-     * @var TypeAreaRepository
+     * @var EntryTypeRepository
      */
     private $TypeAreaRepository;
 
-    public function __construct(TypeAreaRepository $TypeAreaRepository)
+    public function __construct(EntryTypeRepository $TypeAreaRepository)
     {
         $this->TypeAreaRepository = $TypeAreaRepository;
     }
@@ -30,7 +30,7 @@ class EntryTypeField extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'class' => TypeArea::class,
+                'class' => EntryType::class,
             ]
         );
     }

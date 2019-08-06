@@ -8,27 +8,27 @@
 
 namespace App\Manager;
 
-use App\Entity\TypeArea;
-use App\Repository\TypeAreaRepository;
+use App\Entity\EntryType;
+use App\Repository\EntryTypeRepository;
 
 class TypeAreaManager
 {
     /**
-     * @var TypeAreaRepository
+     * @var EntryTypeRepository
      */
     private $typeAreaRepository;
 
-    public function __construct(TypeAreaRepository $typeAreaRepository)
+    public function __construct(EntryTypeRepository $typeAreaRepository)
     {
         $this->typeAreaRepository = $typeAreaRepository;
     }
 
-    public function persist(TypeArea $area)
+    public function persist(EntryType $area)
     {
         $this->typeAreaRepository->persist($area);
     }
 
-    public function remove(TypeArea $area)
+    public function remove(EntryType $area)
     {
         $this->typeAreaRepository->remove($area);
     }
@@ -38,7 +38,7 @@ class TypeAreaManager
         $this->typeAreaRepository->flush();
     }
 
-    public function insert(TypeArea $area)
+    public function insert(EntryType $area)
     {
         $this->typeAreaRepository->insert($area);
     }

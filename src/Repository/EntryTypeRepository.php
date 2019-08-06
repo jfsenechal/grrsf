@@ -2,35 +2,35 @@
 
 namespace App\Repository;
 
-use App\Entity\TypeArea;
+use App\Entity\EntryType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method TypeArea|null find($id, $lockMode = null, $lockVersion = null)
- * @method TypeArea|null findOneBy(array $criteria, array $orderBy = null)
- * @method TypeArea[]    findAll()
- * @method TypeArea[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method EntryType|null find($id, $lockMode = null, $lockVersion = null)
+ * @method EntryType|null findOneBy(array $criteria, array $orderBy = null)
+ * @method EntryType[]    findAll()
+ * @method EntryType[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TypeAreaRepository extends ServiceEntityRepository
+class EntryTypeRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, TypeArea::class);
+        parent::__construct($registry, EntryType::class);
     }
 
-    public function persist(TypeArea $typeArea)
+    public function persist(EntryType $typeArea)
     {
         $this->_em->persist($typeArea);
     }
 
-    public function insert(TypeArea $typeArea)
+    public function insert(EntryType $typeArea)
     {
         $this->persist($typeArea);
         $this->flush();
     }
 
-    public function remove(TypeArea $typeArea)
+    public function remove(EntryType $typeArea)
     {
         $this->_em->remove($typeArea);
     }

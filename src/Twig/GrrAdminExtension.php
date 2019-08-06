@@ -6,7 +6,7 @@ use App\GrrData\AreaData;
 use App\GrrData\DateUtils;
 use App\GrrData\EntryData;
 use App\GrrData\GrrConstants;
-use App\Repository\TypeAreaRepository;
+use App\Repository\EntryTypeRepository;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -18,7 +18,7 @@ class GrrAdminExtension extends AbstractExtension
      */
     private $entryData;
     /**
-     * @var TypeAreaRepository
+     * @var EntryTypeRepository
      */
     private $TypeAreaRepository;
     /**
@@ -32,7 +32,7 @@ class GrrAdminExtension extends AbstractExtension
 
     public function __construct(
         DateUtils $dateUtils,
-        TypeAreaRepository $TypeAreaRepository,
+        EntryTypeRepository $TypeAreaRepository,
         EntryData $entryData,
         Environment $twigEnvironment
     ) {

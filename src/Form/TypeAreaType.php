@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\TypeArea;
+use App\Entity\EntryType;
 use App\GrrData\TypeAreaData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -70,7 +70,7 @@ class TypeAreaType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => TypeArea::class,
+                'data_class' => EntryType::class,
             ]
         );
     }

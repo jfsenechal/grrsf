@@ -3,15 +3,17 @@
 namespace App\Entity;
 
 use App\Doctrine\IdEntityTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * TypeArea
- *
- * @ORM\Table(name="grr_type_area")
- * @ORM\Entity(repositoryClass="App\Repository\TypeAreaRepository")
+ * //depracted : grr_type_area
+ * @ORM\Table(name="grr_entry_type")
+ * @ORM\Entity(repositoryClass="App\Repository\EntryTypeRepository")
  */
-class TypeArea
+class EntryType
 {
     use IdEntityTrait;
 
@@ -49,6 +51,16 @@ class TypeArea
      * @ORM\Column(name="disponible", type="smallint", nullable=false)
      */
     private $disponible;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="type")
+     */
+    private $entries;
+
+    public function __construct()
+    {
+        $this->entries = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -111,6 +123,37 @@ class TypeArea
     public function setDisponible(int $disponible): self
     {
         $this->disponible = $disponible;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entry[]
+     */
+    public function getEntries(): Collection
+    {
+        return $this->entries;
+    }
+
+    public function addEntry(Entry $entry): self
+    {
+        if (!$this->entries->contains($entry)) {
+            $this->entries[] = $entry;
+            $entry->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntry(Entry $entry): self
+    {
+        if ($this->entries->contains($entry)) {
+            $this->entries->removeElement($entry);
+            // set the owning side to null (unless already changed)
+            if ($entry->getType() === $this) {
+                $entry->setType(null);
+            }
+        }
 
         return $this;
     }

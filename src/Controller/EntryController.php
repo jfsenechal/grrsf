@@ -84,7 +84,8 @@ class EntryController extends AbstractController
      */
     public function new(Request $request, Area $area, Room $room, int $year, int $month, int $day): Response
     {
-        $entry = $this->entryFactory->createNew();
+        $entry = EntryFactory::createNew();
+        EntryFactory::setDefaultValues($entry);
         $entry->setArea($area);
 
         if ($room) {

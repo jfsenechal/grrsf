@@ -39,6 +39,7 @@ class Entry
     private $endTime;
 
     /**
+     * Type de periode : aucune, chaque jour, chaque semaine, chaque mois
      * @var int
      *
      * @ORM\Column(name="entry_type", type="integer", nullable=true)
@@ -88,9 +89,9 @@ class Entry
     private $name;
 
     /**
-     * @var string|null
+     * @var EntryType|null
+     * @ORM\ManyToOne(targetEntity="App\Entity\EntryType", inversedBy="entries")
      *
-     * @ORM\Column(name="type", type="string", length=2, nullable=true)
      */
     private $type;
 
@@ -337,18 +338,6 @@ class Entry
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -421,6 +410,18 @@ class Entry
         return $this;
     }
 
+    public function getType(): ?EntryType
+    {
+        return $this->type;
+    }
+
+    public function setType(?EntryType $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
     public function getRoom(): ?Room
     {
         return $this->room;
@@ -433,5 +434,6 @@ class Entry
         return $this;
     }
 
+   
 
 }

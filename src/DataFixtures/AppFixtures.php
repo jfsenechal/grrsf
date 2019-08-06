@@ -26,6 +26,7 @@ class AppFixtures extends Fixture
             $type->setTypeLetter($index);
             $type->setTypeName($nom);
             $manager->persist($type);
+            $this->addReference("entry-type-".$index, $type);
         }
         $manager->flush();
     }

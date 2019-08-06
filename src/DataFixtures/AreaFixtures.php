@@ -5,20 +5,11 @@ namespace App\DataFixtures;
 use App\Factory\AreaFactory;
 use App\Factory\RoomFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class AreaFixtures extends Fixture
 {
-    /**
-     * @var AreaFactory
-     */
-    private $areaFactory;
-
-    public function __construct(AreaFactory $areaFactory)
-    {
-        $this->areaFactory = $areaFactory;
-    }
-
     public function load(ObjectManager $manager)
     {
         $esquare = AreaFactory::createNew();
@@ -46,6 +37,7 @@ class AreaFixtures extends Fixture
             RoomFactory::setDefaultValues($room);
             $room->setName($salle);
             $manager->persist($room);
+            $this->addReference($salle, $room);
         }
 
         $salles = [
@@ -63,4 +55,6 @@ class AreaFixtures extends Fixture
 
         $manager->flush();
     }
+
+
 }

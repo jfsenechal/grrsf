@@ -9,7 +9,7 @@ use App\Form\Type\DurationTimeTypeField;
 use App\Form\Type\EntryTypeField;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
-use App\Repository\TypeAreaRepository;
+use App\Repository\EntryTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -29,14 +29,14 @@ class EntryType extends AbstractType
      */
     private $areaRepository;
     /**
-     * @var TypeAreaRepository
+     * @var EntryTypeRepository
      */
     private $typeAreaRepository;
 
     public function __construct(
         RoomRepository $roomRepository,
         AreaRepository $areaRepository,
-        TypeAreaRepository $typeAreaRepository
+        EntryTypeRepository $typeAreaRepository
     ) {
         $this->roomRepository = $roomRepository;
         $this->areaRepository = $areaRepository;

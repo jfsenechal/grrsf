@@ -8,16 +8,16 @@
 
 namespace App\Factory;
 
-use App\Entity\TypeArea;
+use App\Entity\EntryType;
 
 class TypeEntryFactory
 {
-    public static function createNew(): TypeArea
+    public static function createNew(): EntryType
     {
-        return new TypeArea();
+        return new EntryType();
     }
 
-    public static function setDefaultValues(TypeArea $typeArea)
+    public static function setDefaultValues(EntryType $typeArea)
     {
         $typeArea
             ->setOrderDisplay(0)
