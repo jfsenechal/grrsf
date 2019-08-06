@@ -6,7 +6,7 @@
  * Time: 22:03
  */
 
-namespace App\Service\Clock;
+namespace App\Model\Clock;
 
 /**
  * $meetupRepository = new MeetupRepository(

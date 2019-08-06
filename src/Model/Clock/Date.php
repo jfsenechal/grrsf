@@ -6,7 +6,7 @@
  * Time: 11:58
  */
 
-namespace App\Service\Clock;
+namespace App\Model\Clock;
 
 final class Date
 {

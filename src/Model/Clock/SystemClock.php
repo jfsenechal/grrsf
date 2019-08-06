@@ -6,7 +6,7 @@
  * Time: 22:00
  */
 
-namespace App\Service\Clock;
+namespace App\Model\Clock;
 
 
 final class SystemClock implements Clock
