@@ -1,17 +1,11 @@
 {{ form_row(form.name) }}
+{{ form_row(form.startTime) }}
 
 {# if admin
 {{ form_row(form.beneficiaire) }}
 #}
 
-<div class="row">
-    <div class="col-6">
-        {{ form_row(form.startTime) }}
-    </div>
-    <div class="col-6">
-        {{ form_row(form.endTime) }}
-    </div>
-</div>
+{% include 'entry/_field_duration.html.twig' %}
 
 <div class="row">
     <div class="col-6">

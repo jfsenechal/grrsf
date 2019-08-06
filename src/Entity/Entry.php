@@ -149,6 +149,50 @@ class Entry
     private $area;
 
     /**
+     * Util lors de l'ajout d'un Entry
+     * @var boolean
+     */
+    private $full_day = false;
+
+    private $duration;
+
+    private $duration2;
+
+    /**
+     * @return mixed
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @param mixed $duration
+     */
+    public function setDuration($duration): void
+    {
+        $this->duration = $duration;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDuration2()
+    {
+        return $this->duration2;
+    }
+
+    /**
+     * @param mixed $duration2
+     */
+    public function setDuration2($duration2): void
+    {
+        $this->duration2 = $duration2;
+    }
+
+
+
+    /**
      * @return Area|null
      */
     public function getArea(): ?Area
@@ -162,6 +206,22 @@ class Entry
     public function setArea(?Area $area): void
     {
         $this->area = $area;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFullDay(): bool
+    {
+        return $this->full_day;
+    }
+
+    /**
+     * @param bool $full_day
+     */
+    public function setFullDay(bool $full_day): void
+    {
+        $this->full_day = $full_day;
     }
 
     public function getId(): ?int

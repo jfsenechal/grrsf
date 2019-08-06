@@ -7,6 +7,7 @@ use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\EntryFactory;
 use App\Form\EntryType;
+use App\Form\PeriodicityType;
 use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
@@ -90,6 +91,7 @@ class EntryController extends AbstractController
         }
 
         $form = $this->createForm(EntryType::class, $entry);
+        $formPeriodicity = $this->createForm(PeriodicityType::class, null);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -104,6 +106,7 @@ class EntryController extends AbstractController
             'entry/new.html.twig',
             [
                 'entry' => $entry,
+                'form_periodicity'=>$formPeriodicity->createView(),
                 'form' => $form->createView(),
             ]
         );

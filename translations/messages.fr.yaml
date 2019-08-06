@@ -201,11 +201,11 @@ entry:
       label: Nom
       help: Aide sur le nom
     startTime:
-      label: Date de début
+      label: Début de la réservation
       help: Aide sur le début
     endTime:
-      label: Date de fin
-      help: Aide sur lefin
+      label: Fin de la réservation
+      help: Aide sur la fin
     area:
       label: Domaine
       help: Aide sur le domaine
@@ -246,5 +246,18 @@ entry:
     jours:
       label: Jours
       help: Par defaut 0
+    full_day:
+      label: Journée complète
+      help: Dynamic heure
+    duration:
+      label: Durée
+      help: ''
+    duration_time:
+      label: Durée
+      help: Uniquement les chiffres
+    duration_unit:
+      label: Unité
+      help: ''
 ressources: Ressources
 weekabr: 's'
+Duration: 'Durée'

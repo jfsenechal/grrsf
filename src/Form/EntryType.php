@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
+use App\Form\Type\DurationTimeTypeField;
 use App\Form\Type\EntryTypeField;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
@@ -46,14 +47,6 @@ class EntryType extends AbstractType
     {
         $builder
             ->add(
-                'name',
-                TextType::class,
-                [
-                    'label' => 'entry.form.name.label',
-                    'help' => 'entry.form.name.help',
-                ]
-            )
-            ->add(
                 'startTime',
                 DateTimeType::class,
                 [
@@ -61,12 +54,22 @@ class EntryType extends AbstractType
                     'help' => 'entry.form.startTime.help',
                 ]
             )
+            /*   ->add('duration', DurationStartEndTypeField::class,[
+                   'label' => false
+               ])*/
             ->add(
-                'endTime',
-                DateTimeType::class,
+                'duration',
+                DurationTimeTypeField::class,
                 [
-                    'label' => 'entry.form.endTime.label',
-                    'help' => 'entry.form.endTime.help',
+                    'label' => false,
+                ]
+            )
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'label' => 'entry.form.name.label',
+                    'help' => 'entry.form.name.help',
                 ]
             )
             ->add(
