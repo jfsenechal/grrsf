@@ -112,7 +112,7 @@ class DefaultController extends AbstractController
         $monthData = $this->monthHelperDataDisplay->generateHtmlMonth($monthModel);
 
         return $this->render(
-            '@grr_front/month.html.twig',
+            '@grr_front/month/month.html.twig',
             [
                 'firstDay' => $monthModel->firstOfMonth(),
                 'area' => $area,
@@ -140,7 +140,7 @@ class DefaultController extends AbstractController
         $data = $this->calendarDataManager->bindWeek($weekModel, $area);
 
         return $this->render(
-            '@grr_front/week.html.twig',
+            '@grr_front/week/week.html.twig',
             [
                 'week' => $weekModel,
                 'area' => $area,//pour lien add entry
@@ -168,7 +168,7 @@ class DefaultController extends AbstractController
         $roomsModel = $this->calendarDataManager->bindDay($daySelected, $area, $hoursModel);
 
         return $this->render(
-            '@grr_front/day.html.twig',
+            '@grr_front/day/day.html.twig',
             [
                 'day' => $dayModel,
                 'roomsModel' => $roomsModel,
