@@ -24,7 +24,7 @@
             <tr>
                 <td>{{ hourModel.begin|date('H:i') }} - {{ hourModel.end|date('H:i') }}</td>
                 {% for roomModel in roomsModel %}
-                        {{ grrGenerateCellDataDay(hourModel, roomModel) }}
+                        {{ grrGenerateCellDataDay(hourModel, roomModel, day) }}
                 {% endfor %}
             </tr>
         {% endfor %}

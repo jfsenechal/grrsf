@@ -2,7 +2,6 @@
 
 namespace App\Twig;
 
-use App\Entity\Entry;
 use App\Factory\MenuGenerator;
 use App\Model\Day;
 use App\Model\Hour;
@@ -86,7 +85,7 @@ class GrrFrontExtension extends AbstractExtension
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function grrGenerateCellDataDay(Hour $hour, RoomModel $roomModel)
+    public function grrGenerateCellDataDay(Hour $hour, RoomModel $roomModel, Day $day)
     {
         $entries = $roomModel->getEntries();
         foreach ($entries as $entry) {
@@ -112,9 +111,12 @@ class GrrFrontExtension extends AbstractExtension
             }
         }
 
+        $room = $roomModel->getRoom();
+        $area = $room->getArea();
+
         return $this->twigEnvironment->render(
             'front/day/_cell_day_data.html.twig',
-            ['position' => 999, 'entry' => $entry]
+            ['position' => 999, 'entry' => $entry, 'area' => $area, 'room' => $room, 'day' => $day]
         );
     }
 

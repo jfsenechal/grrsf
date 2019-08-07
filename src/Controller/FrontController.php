@@ -12,7 +12,6 @@ use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
 use App\Service\AreaService;
 use App\Service\CalendarDataManager;
-use App\Service\EntryService;
 use App\Service\MonthHelperDataDisplay;
 use App\Service\Settingservice;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -40,10 +39,6 @@ class FrontController extends AbstractController
      */
     private $entryRepository;
     /**
-     * @var MonthHelperDataDisplay
-     */
-    private $calendarDisplay;
-    /**
      * @var CalendarDataManager
      */
     private $calendarDataManager;
@@ -59,10 +54,6 @@ class FrontController extends AbstractController
      * @var MonthHelperDataDisplay
      */
     private $monthHelperDataDisplay;
-    /**
-     * @var EntryService
-     */
-    private $entryService;
 
     public function __construct(
         Settingservice $settingservice,
@@ -71,8 +62,7 @@ class FrontController extends AbstractController
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
         CalendarDataManager $calendarDataManager,
-        AreaService $areaService,
-        EntryService $entryService
+        AreaService $areaService
     ) {
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
@@ -81,7 +71,6 @@ class FrontController extends AbstractController
         $this->settingservice = $settingservice;
         $this->areaService = $areaService;
         $this->monthHelperDataDisplay = $monthHelperDataDisplay;
-        $this->entryService = $entryService;
     }
 
     /**
@@ -110,6 +99,7 @@ class FrontController extends AbstractController
         $roomObject = null;
 
         if ($room) {
+            //todo if room selected
             $roomObject = $this->roomRepository->find($room);
         }
 
@@ -179,6 +169,7 @@ class FrontController extends AbstractController
             [
                 'day' => $dayModel,
                 'roomsModel' => $roomsModel,
+                'area' => $area,//pour lien add entry
                 'hoursModel' => $hoursModel,
             ]
         );
