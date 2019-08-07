@@ -88,6 +88,7 @@ class EntryController extends AbstractController
         $entry = EntryFactory::createNew();
         EntryFactory::setDefaultValues($entry);
         $entry->setArea($area);
+        dump($entry);
 
         if ($room) {
             $entry->setRoom($room);
