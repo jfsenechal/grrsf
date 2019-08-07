@@ -1,5 +1,7 @@
 {% if position == 0 %}
-    <td rowspan="{{ entry.cellules }}" class="table-info">{{ entry.name }}</td>
+    <td rowspan="{{ entry.cellules }}" class="table-info">
+        {{ entry.name }} <span class="text-muted">({{ entry.startTime|date('H:i') }} to {{ entry.endTime|date('H:i') }})</span>
+    </td>
 {% else %}
     <td>
     <a href="{{ generateRouteAddEntry(area.id,room.id, day.day) }}" class="float-right" title="{{ 'btn.entry.add.title'|trans }}"> <i
