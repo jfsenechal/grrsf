@@ -1,16 +1,5 @@
-{% if day.entries|length > 0 %}
-<td rowspan="2">
-    {% for entry in day.entries %}
-        <p>
-            <a href="{{ path('grr_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
-        </p>
-    {% endfor %}
-
-</td>
+{% if position == 0 %}
+    <td rowspan="{{ entry.cellules }}" class="table-info">{{ entry.name }}</td>
 {% else %}
-<td>
-    <a href="{{ generateRouteAddEntry(area.id,1,day.day) }}" class="float-right"
-       title="{{ 'btn.entry.add.title'|trans }}"> <i
-                class="fas fa-plus"></i> </a>
-    {% endif %}
-</td>
+    <td></td>
+{% endif %}

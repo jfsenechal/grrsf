@@ -9,16 +9,17 @@
 namespace App\Model;
 
 
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Hour
 {
     /**
-     * @var \DateTimeInterface
+     * @var CarbonInterface
      */
     protected $begin;
     /**
-     * @var \DateTimeInterface
+     * @var CarbonInterface
      */
     protected $end;
 
@@ -61,33 +62,33 @@ class Hour
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return CarbonInterface
      */
-    public function getBegin(): \DateTimeInterface
+    public function getBegin(): CarbonInterface
     {
         return $this->begin;
     }
 
     /**
-     * @param \DateTimeInterface $begin
+     * @param CarbonInterface $begin
      */
-    public function setBegin(\DateTimeInterface $begin): void
+    public function setBegin(CarbonInterface $begin): void
     {
         $this->begin = $begin;
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return CarbonInterface
      */
-    public function getEnd(): \DateTimeInterface
+    public function getEnd(): CarbonInterface
     {
         return $this->end;
     }
 
     /**
-     * @param \DateTimeInterface $end
+     * @param CarbonInterface $end
      */
-    public function setEnd(\DateTimeInterface $end): void
+    public function setEnd(CarbonInterface $end): void
     {
         $this->end = $end;
     }

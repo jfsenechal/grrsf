@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Booking\BookingTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -160,6 +162,46 @@ class Entry
     private $duration2;
 
     /**
+     * @var ArrayCollection
+     */
+    private $locations = [];
+
+    /**
+     * @var int
+     */
+    private $cellules;
+
+    public function __construct()
+    {
+        $this->locations = new ArrayCollection();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCellules(): int
+    {
+        return $this->cellules;
+    }
+
+    /**
+     * @param int $cellules
+     */
+    public function setCellules(int $cellules): void
+    {
+        $this->cellules = $cellules;
+    }
+
+    public function addLocation(array $location): self
+    {
+        if (!$this->locations->contains($location)) {
+            $this->locations[] = $location;
+        }
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getDuration()
@@ -192,7 +234,6 @@ class Entry
     }
 
 
-
     /**
      * @return Area|null
      */
@@ -223,6 +264,22 @@ class Entry
     public function setFullDay(bool $full_day): void
     {
         $this->full_day = $full_day;
+    }
+
+    /**
+     * @return Collection|array
+     */
+    public function getLocations(): array
+    {
+        return $this->locations;
+    }
+
+    /**
+     * @param array $locations
+     */
+    public function setLocations(array $locations): void
+    {
+        $this->locations = $locations;
     }
 
     public function getId(): ?int
@@ -434,6 +491,5 @@ class Entry
         return $this;
     }
 
-   
 
 }

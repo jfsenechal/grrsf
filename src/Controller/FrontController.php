@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Area;
+use App\Entity\Entry;
 use App\Factory\CarbonFactory;
 use App\Model\Day;
+use App\Model\Hour;
 use App\Model\Month;
 use App\Model\Week;
 use App\Repository\AreaRepository;
@@ -15,6 +17,7 @@ use App\Service\CalendarDataManager;
 use App\Service\MonthHelperDataDisplay;
 use App\Service\Settingservice;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -171,19 +174,48 @@ class FrontController extends AbstractController
         $diff = $start->diffInSeconds($end);//80 minutes
 
         $resolution = $area->getResolutionArea();//30 minutes
-        $cellules = (integer)($diff/$resolution);//2.6 arrondit a 2
+        $cellules = (integer)($diff / $resolution);//2.6 arrondit a 2
 
         $dayModel = new Day($daySelected);
 
         $hoursPeriod = $this->areaService->getHoursPeriod($area, $daySelected);
+        $last = $hoursPeriod->last();
+        $hoursPeriod->first();
 
-        $hours = $this->calendarDataManager->bindDay($hoursPeriod, $area);
+        $data = $this->calendarDataManager->bindDay($daySelected, $area);
+
+        $colonne = $ligne = 0;
+        $hours = $this->getHours($hoursPeriod);
+
+        foreach ($data as $roomModel) {
+            $entries = $roomModel->getEntries();
+            foreach ($entries as $entry) {
+
+                $cellules = $this->getCountCellules($entry, $resolution);
+                $entryStart = $entry->getStartTime();
+                $entryEnd = $entry->getEndTime();
+                $locations = [];
+
+                foreach ($hours as $hour) {
+                    $begin = $hour->getBegin();
+                    $end = $hour->getEnd();
+                    if ($this->getEntry($entry, $begin, $end)) {
+                        $locations[] = $hour;
+                    }
+                }
+                $entry->setLocations($locations);
+                $entry->setCellules($cellules);
+                dump($locations);
+            }
+        }
+
 
 
         return $this->render(
             'front/day.html.twig',
             [
                 'day' => $dayModel,
+                'data' => $data,
                 'area' => $area,
                 'rooms' => $rooms,
                 'hours' => $hours,
@@ -191,5 +223,53 @@ class FrontController extends AbstractController
         );
     }
 
+    protected function getEntry(Entry $entry, \DateTimeInterface $begin, \DateTimeInterface $end): bool
+    {
+        if ($begin->format('H:i') >= $entry->getStartTime()->format('H:i') &&
+            $begin->format('H:i') <= $entry->getEndTime()->format('H:i')) {
+
+            //  dump($begin->format('H:i'), '>=', $entry->getStartTime()->format('H:i'));
+            //  dump($end->format('H:i'), '<=', $entry->getEndTime()->format('H:i'));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function getCountCellules(Entry $entry, int $resolution)
+    {
+        $start = Carbon::instance($entry->getStartTime());
+        $end = Carbon::instance($entry->getEndTime());
+        $diff = $start->diffInSeconds($end);//80 minutes
+
+        return (integer)(round($diff / $resolution));
+    }
+
+    /**
+     * @param CarbonPeriod $hoursPeriod
+     * @return Hour[]
+     */
+    protected function getHours(CarbonPeriod $hoursPeriod)
+    {
+        $hours = [];
+        $hoursPeriod->rewind();
+        $last = $hoursPeriod->last();
+        $hoursPeriod->rewind();
+
+        while ($hoursPeriod->current()->lessThan($last)) {
+
+            $begin = $hoursPeriod->current();
+            $hoursPeriod->next();
+            $end = $hoursPeriod->current();
+
+            $hour = new Hour();
+            $hour->setBegin($begin);
+            $hour->setEnd($end);
+            $hours[] = $hour;
+        }
+
+        return $hours;
+    }
 
 }

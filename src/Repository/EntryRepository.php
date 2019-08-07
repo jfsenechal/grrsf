@@ -73,8 +73,29 @@ class EntryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findForDay(CarbonInterface $day, Room $room)
+    {
+        $qb = $this->createQueryBuilder('entry');
 
-    public function findForDay(CarbonInterface $begin, CarbonInterface $end, Room $room)
+        $qb->andWhere('entry.startTime LIKE :begin')
+            ->setParameter('begin', $day->format('Y-m-d').'%');
+
+        /* $qb->andWhere('entry.startTime = :year')
+             ->setParameter('year', $begin->year);
+
+         $qb->andWhere('MONTH(entry.endTime) = :month')
+             ->setParameter('month', $begin->month);*/
+
+        $qb->andWhere('entry.room = :room')
+            ->setParameter('room', $room);
+
+        return $qb
+            ->orderBy('entry.startTime', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findForDay2(CarbonInterface $begin, CarbonInterface $end, Room $room)
     {
         $qb = $this->createQueryBuilder('entry');
 

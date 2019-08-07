@@ -23,10 +23,8 @@
         {% for hour in hours %}
             <tr>
                 <td>{{ hour.begin|date('H:i') }} - {{ hour.end|date('H:i') }}</td>
-                {% for roomModel in hour.rooms %}
-                    {% for day in roomModel.dataDays %}
-                        {% include 'front/day/_cell_day_data.html.twig' %}
-                    {% endfor %}
+                {% for roomModel in data %}
+                        {{ grrLocation(hour, roomModel) }}
                 {% endfor %}
             </tr>
         {% endfor %}

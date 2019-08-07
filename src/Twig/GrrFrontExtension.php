@@ -2,9 +2,12 @@
 
 namespace App\Twig;
 
+use App\Entity\Entry;
 use App\Factory\MenuGenerator;
 use App\Model\Day;
+use App\Model\Hour;
 use App\Model\Month;
+use App\Model\RoomModel;
 use App\Service\CalendarNavigationDisplay;
 use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -71,7 +74,42 @@ class GrrFrontExtension extends AbstractExtension
             new TwigFunction('generateRouteWeekView', [$this, 'generateRouteWeekView']),
             new TwigFunction('generateRouteDayView', [$this, 'generateRouteDayView']),
             new TwigFunction('generateRouteAddEntry', [$this, 'generateRouteAddEntry']),
+            new TwigFunction('grrLocation', [$this, 'grrLocation']),
         ];
+    }
+
+    /**
+     * @param int $ligneSrc
+     * @param int $colonneSrc
+     * @param Entry $entries
+     */
+    public function grrLocation(Hour $hour, RoomModel $roomModel)
+    {
+        $entries = $roomModel->getEntries();
+        foreach ($entries as $entry) {
+            /**
+             * @var Hour[] $locations
+             */
+            $locations = $entry->getLocations();
+            $cellules = $entry->getCellules();
+            $name = $entry->getName();
+            $position = 0;
+            foreach ($locations as $location) {
+                if ($location->getBegin()->equalTo(
+                    $hour->getBegin() && $location->getEnd()->equalTo($hour->getEnd())
+                )) {
+                    if ($position == 0) {
+                        echo "<td rowspan='$cellules' class='table-info'>$name</td>";
+                    }
+
+                    return;
+                }
+                $position++;
+            }
+
+        }
+        echo '<td></td>';
+
     }
 
     /**
