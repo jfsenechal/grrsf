@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Area;
 use App\Entity\Entry;
-use App\Entity\Room;
+use App\EventSubscriber\AddRoomsFieldSubscriber;
 use App\Form\Type\EntryTypeField;
 use App\Repository\AreaRepository;
 use App\Repository\EntryTypeRepository;
@@ -87,31 +87,7 @@ class EntryType extends AbstractType
                     'class' => Area::class,
                     'query_builder' => $this->areaRepository->getQueryBuilder(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
-                    'mapped' => false,
-                ]
-            )
-            /*   ->add(
-                   'roomId',
-                   EntityType::class,
-                   [
-                       'required' => false,
-                       'placeholder' => 'Room',
-                       'class' => Room::class,
-                       'query_builder' => $this->roomRepository->getQueryBuilder(),
-                       'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
-                   ]
-               )*/
-            ->add(
-                'room',
-                EntityType::class,
-                [
-                    'label' => 'entry.form.room.label',
-                    'help' => 'entry.form.room.help',
-                    'required' => false,
-                    'class' => Room::class,
-                    'placeholder' => 'Room',
-                    'query_builder' => $this->roomRepository->getQueryBuilder(),
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
+                    // 'mapped' => false,
                 ]
             )
             ->add(
@@ -129,7 +105,8 @@ class EntryType extends AbstractType
                     'label' => 'entry.form.description.label',
                     'help' => 'entry.form.description.help',
                 ]
-            );
+            )
+            ->addEventSubscriber(new AddRoomsFieldSubscriber($this->roomRepository));
     }
 
     public function configureOptions(OptionsResolver $resolver)

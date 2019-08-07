@@ -46,10 +46,10 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('generateRouteMonthView', [$this, 'generateRouteMonthView']),
-            new TwigFunction('generateRouteWeekView', [$this, 'generateRouteWeekView']),
-            new TwigFunction('generateRouteDayView', [$this, 'generateRouteDayView']),
-            new TwigFunction('generateRouteAddEntry', [$this, 'generateRouteAddEntry']),
+            new TwigFunction('grrGenerateRouteMonthView', [$this, 'generateRouteMonthView']),
+            new TwigFunction('grrGenerateRouteWeekView', [$this, 'generateRouteWeekView']),
+            new TwigFunction('grrGenerateRouteDayView', [$this, 'generateRouteDayView']),
+            new TwigFunction('grrGenerateRouteAddEntry', [$this, 'generateRouteAddEntry']),
         ];
     }
 
@@ -127,7 +127,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
         return $this->router->generate('grr_front_day', $params);
     }
 
-    public function generateRouteAddEntry(int $area, int $room, int $day)
+    public function generateRouteAddEntry(int $area, int $room, int $day, int $hour = null, int $minute = null)
     {
         $request = $this->requestStack->getMasterRequest();
         if (!$request) {
@@ -138,8 +138,18 @@ class GrrhUrlHelperExtension extends AbstractExtension
 
         $year = $attributes['year'] ?? 0;
         $month = $attributes['month'] ?? 0;
+        $hour = $hour ?? 0;
+        $minute = $minute ?? 0;
 
-        $params = ['area' => $area, 'room' => $room, 'year' => $year, 'month' => $month, 'day' => $day];
+        $params = [
+            'area' => $area,
+            'room' => $room,
+            'year' => $year,
+            'month' => $month,
+            'day' => $day,
+            'hour' => $hour,
+            'minute' => $minute,
+        ];
 
         return $this->router->generate('grr_front_entry_new', $params);
     }

@@ -106,7 +106,7 @@ class GrrFrontExtension extends AbstractExtension
 
         return $this->twigEnvironment->render(
             '@grr_front/day/_cell_day_empty.html.twig',
-            ['position' => 999, 'area' => $area, 'room' => $room, 'day' => $day]
+            ['position' => 999, 'area' => $area, 'room' => $room, 'day' => $day, 'hourModel'=> $hour]
         );
     }
 

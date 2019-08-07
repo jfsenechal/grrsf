@@ -4,7 +4,7 @@
             <a href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
         </p>
     {% else %}
-        <a href="{{ generateRouteAddEntry(area.id,room.id, day.day) }}" class="float-right"
+        <a href="{{ grrGenerateRouteAddEntry(area.id,room.id, day.day) }}" class="float-right"
            title="{{ 'btn.entry.add.title'|trans }}"> <i
                     class="fas fa-plus"></i> </a>
     {% endfor %}

@@ -212,6 +212,8 @@ entry:
     room:
       label: Ressource
       help: Aide sur le ressource
+      select:
+        placeholder: Sélectionnez une ressource
     type:
       label: Type
       help: Type de réservation (voir dans paramètres)

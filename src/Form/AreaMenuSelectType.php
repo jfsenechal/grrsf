@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Area;
-use App\Events\AddRoomsFieldListener;
+use App\EventSubscriber\AddRoomsFieldSubscriber;
 use App\Navigation\MenuSelect;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
@@ -43,7 +43,7 @@ class AreaMenuSelectType extends AbstractType
                   //  'mapped' => false,
                 ]
             )
-            ->addEventSubscriber(new AddRoomsFieldListener($this->roomRepository));
+            ->addEventSubscriber(new AddRoomsFieldSubscriber($this->roomRepository));
     }
 
     public function configureOptions(OptionsResolver $resolver)

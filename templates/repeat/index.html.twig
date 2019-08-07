@@ -1,4 +1,4 @@
-{% extends 'layout_front.html.twig' %}
+{% extends '@grr_front/layout_front.html.twig' %}
 
 {% block title %}GrrRepeat index{% endblock %}
 
@@ -34,16 +34,16 @@
                     </a>
                     </td>
                 <td>{{ repeat.endTime|date('Y-m-d H:i:s') }}</td>
-                <td>{{ repeat.repType|periodiciteName }}</td>
+                <td>{{ repeat.repType|grrPeriodiciteName }}</td>
                 <td>{{ repeat.endDate|date('Y-m-d H:i:s') }}</td>
                 <td>{{ repeat.repOpt }}</td>
-                <td>{{ repeat.roomId | room_getName }}</td>
+                <td></td>
                 <td>{{ repeat.timestamp ? grr_repeat.timestamp|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ repeat.createBy }}</td>
                 <td>{{ repeat.beneficiaire }}</td>
                 <td>{{ repeat.name }}</td>
-                <td>{{ repeat.type|entryTypeGetName }}</td>
-                <td>{{ repeat.repNumWeeks | getNumWeeks }}</td>
+                <td>{{ repeat.type }}</td>
+                <td>{{ repeat.repNumWeeks  }}</td>
                 <td>{{ repeat.jours }}</td>
 
             </tr>

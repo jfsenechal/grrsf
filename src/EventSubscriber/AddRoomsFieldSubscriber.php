@@ -6,7 +6,7 @@
  * Time: 22:00
  */
 
-namespace App\Events;
+namespace App\EventSubscriber;
 
 
 use App\Entity\Room;
@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-class AddRoomsFieldListener implements EventSubscriberInterface
+class AddRoomsFieldSubscriber implements EventSubscriberInterface
 {
     /**
      * @var RoomRepository
@@ -47,13 +47,26 @@ class AddRoomsFieldListener implements EventSubscriberInterface
                 'room',
                 EntityType::class,
                 [
+                    'label' => 'entry.form.room.label',
+                    'help' => 'entry.form.room.help',
+                    'required' => true,
                     'class' => Room::class,
-                    'required' => false,
-                    'placeholder' => 'menu.select.room',
+                    'placeholder' => 'entry.form.room.select.placeholder',
                     'query_builder' => $this->roomRepository->getRoomsByAreaQueryBuilder($area),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             );
+            /*  $form->add(
+                  'room',
+                  EntityType::class,
+                  [
+                      'class' => Room::class,
+                      'required' => false,
+                      'placeholder' => 'menu.select.room',
+                      'query_builder' => $this->roomRepository->getRoomsByAreaQueryBuilder($area),
+                      'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
+                  ]
+              );*/
         } else {
             $form->add(
                 'rooms',
@@ -62,9 +75,7 @@ class AddRoomsFieldListener implements EventSubscriberInterface
                     'choices' => [],
                 ]
             );
-
         }
-
 
         // checks whether the user from the initial data has chosen to
         // display their email or not.

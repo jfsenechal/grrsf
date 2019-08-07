@@ -1,4 +1,5 @@
 <td>
-    <a href="{{ generateRouteAddEntry(area.id,room.id, day.day) }}" class="float-right" title="{{ 'btn.entry.add.title'|trans }}"> <i
+    <a href="{{ grrGenerateRouteAddEntry(area.id,room.id, day.day, hourModel.begin.hour, hourModel.begin.minute) }}"
+       class="float-right" title="{{ 'btn.entry.add.title'|trans }}"> <i
                 class="fas fa-plus"></i> </a>
 </td>

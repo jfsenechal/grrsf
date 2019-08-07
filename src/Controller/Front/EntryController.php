@@ -12,6 +12,7 @@ use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
 use App\Repository\RepeatRepository;
+use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,20 +80,28 @@ class EntryController extends AbstractController
     }
 
     /**
-     * @Route("/new/area/{area}/room/{room}/year/{year}/month/{month}/day/{day}", name="grr_front_entry_new", methods={"GET","POST"})
+     * @Route("/new/area/{area}/room/{room}/year/{year}/month/{month}/day/{day}/hour/{hour}/minute/{minute}", name="grr_front_entry_new", methods={"GET","POST"})
      * @Entity("area", expr="repository.find(area)")
      * @Entity("room", expr="repository.find(room)")
      */
-    public function new(Request $request, Area $area, Room $room, int $year, int $month, int $day): Response
-    {
+    public function new(
+        Request $request,
+        Area $area,
+        Room $room,
+        int $year,
+        int $month,
+        int $day,
+        int $hour = null,
+        int $minute = null
+    ): Response {
+        $date = Carbon::create($year, $month, $day, $hour, $minute);
         $entry = EntryFactory::createNew();
         EntryFactory::setDefaultValues($entry);
         $entry->setArea($area);
-        dump($entry);
-
-        if ($room) {
-            $entry->setRoom($room);
-        }
+        $entry->setRoom($room);
+        $entry->setStartTime($date);
+        $date->addHour(2);
+        $entry->setEndTime($date);
 
         $form = $this->createForm(EntryType::class, $entry);
         $formPeriodicity = $this->createForm(PeriodicityType::class, null);
