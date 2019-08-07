@@ -168,7 +168,7 @@ class GrrFrontExtension extends AbstractExtension
     public function grrCompleteTr(CarbonInterface $day, string $action)
     {
         return $this->twigEnvironment->render(
-            '@grr_front/_complete_tr.html.twig',
+            '@grr_front/navigation/_complete_tr.html.twig',
             ['numericDay' => $day->weekday(), 'action' => $action]
         );
     }
