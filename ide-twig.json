@@ -1,0 +1,12 @@
+{
+  "namespaces": [
+    {
+      "namespace": "grr_admin",
+      "path": "templates/admin"
+    },
+    {
+      "namespace": "grr_front",
+      "path": "templates/front"
+    }
+  ]
+}

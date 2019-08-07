@@ -1,0 +1,12 @@
+{% extends '@grr_admin/layout_admin.html.twig' %}
+
+{% block title %}{{ 'user.new.title'|trans({},'actions') }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'user.new.title'|trans({},'actions') }}</h1>
+
+    {{ include('@grr_admin/utilisateurs/_form.html.twig') }}
+
+    <br />
+    <a href="{{ path('grr_admin_user_index') }}"><i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({},'actions') }}</a>
+{% endblock %}

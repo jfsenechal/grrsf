@@ -174,7 +174,7 @@ user:
       label: Role
     etat:
       label: Etat
-typeArea:
+typeEntry:
   index:
     title: Types de réservation
   form:

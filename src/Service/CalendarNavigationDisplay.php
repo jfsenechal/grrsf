@@ -68,7 +68,7 @@ class CalendarNavigationDisplay
         $previousMonth = $this->month->previousMonth();
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/month/_button_previous.html.twig',
+            '@grr_front/navigation/month/_button_previous.html.twig',
             [
                 'previousMonth' => $previousMonth,
                 'month' => $this->monthNumeric,
@@ -81,7 +81,7 @@ class CalendarNavigationDisplay
         $nextMonth = $this->month->nexMonth();
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/month/_button_next.html.twig',
+            '@grr_front/navigation/month/_button_next.html.twig',
             [
                 'nextMonth' => $nextMonth,
                 'month' => $this->monthNumeric,
@@ -99,7 +99,7 @@ class CalendarNavigationDisplay
         $daySelected = $request ? $request->get('day') : 0;
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/month/_month_by_weeks.html.twig',
+            '@grr_front/navigation/month/_month_by_weeks.html.twig',
             [
                 'firstDay' => $firstDay,
                 'listDays' => DateUtils::getDays(),
@@ -120,7 +120,7 @@ class CalendarNavigationDisplay
         $daySelected = $request ? $request->get('day') : 0;
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/month/_month_by_days.html.twig',
+            '@grr_front/navigation/month/_month_by_days.html.twig',
             [
                 'firstDay' => $firstDay,
                 'listDays' => DateUtils::getDays(),

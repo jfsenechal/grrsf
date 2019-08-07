@@ -1,0 +1,15 @@
+{% extends '@grr_admin/layout_admin.html.twig' %}
+
+{% block title %}Edit GrrArea{% endblock %}
+
+{% block body %}
+    <h1>{{ area.name }}</h1>
+
+    {{ include('@grr_admin/area/_form.html.twig', {'button_label': 'form.btn.update'}) }}
+
+    <br/>
+    <a href="{{ path('grr_admin_area_show',{'id': area.id}) }}"><i
+                class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+
+    {{ include('@grr_admin/area/_delete_form.html.twig') }}
+{% endblock %}

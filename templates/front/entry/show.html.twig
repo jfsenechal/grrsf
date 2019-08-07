@@ -1,0 +1,96 @@
+{% extends '@grr_front/layout_front.html.twig' %}
+
+{% block title %}{{ entry.name }}{% endblock %}
+
+{% block body %}
+    <h1>{{ entry.name }}</h1>
+
+    <div class="row">
+        <div class="col-6">
+
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>{{ 'entry.form.startTime.label'|trans }}</th>
+                    <td>{{ entry.startTime|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.endTime.label'|trans }}</th>
+                    <td>{{ entry.endTime |date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.room.label'|trans }}</th>
+                    <td>{{ entry.room }}</td>
+                </tr>
+                <tr>
+                    <th>Timestamp</th>
+                    <td>{{ entry.timestamp ? entry.timestamp|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.type.label'|trans }}</th>
+                    <td>{{ entry.type }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.statutEntry.label'|trans }}</th>
+                    <td>{{ entry.statutEntry }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-6">
+
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>{{ 'entry.form.entryType.label'|trans }}</th>
+                    <td>{{ entry.entryType }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.repeatId.label'|trans }}</th>
+                    <td>{{ entry.repeatId }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.createBy.label'|trans }}</th>
+                    <td>{{ entry.createBy }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.beneficiaireExt.label'|trans }}</th>
+                    <td>{{ entry.beneficiaireExt }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.beneficiaire.label'|trans }}</th>
+                    <td>{{ entry.beneficiaire }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.description.label'|trans }}</th>
+                    <td>{{ entry.description }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.optionReservation.label'|trans }}</th>
+                    <td>{{ entry.optionReservation }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.overloadDesc.label'|trans }}</th>
+                    <td>{{ entry.overloadDesc }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.moderate.label'|trans }}</th>
+                    <td>{{ entry.moderate }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'entry.form.jours.label'|trans }}</th>
+                    <td>{{ entry.jours }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    {% if repeat %}
+        <h3>Repeat</h3>
+        {% include 'repeat/_detail.html.twig' %}
+    {% endif %}
+
+{% endblock %}

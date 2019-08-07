@@ -1,0 +1,13 @@
+{% extends '@grr_admin/layout_admin.html.twig' %}
+
+{% block title %}{{ utilisateur.email }}{% endblock %}
+
+{% block body %}
+    <h1>{{ utilisateur.email }}</h1>
+
+    {{ include('@grr_admin/utilisateurs/_form.html.twig', {'button_label': 'form.btn.update'}) }}
+
+    <br />
+    <a href="{{ path('grr_admin_user_index') }}"><i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({},'actions') }}</a>
+
+{% endblock %}

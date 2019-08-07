@@ -1,0 +1,15 @@
+{% extends 'layout_front.html.twig' %}
+
+{% block title %}{{ 'action.edit'|trans({},'actions') }} {{ entry.name }}{% endblock %}
+
+{% block body %}
+    <h1>{{ entry.name }}</h1>
+
+    {{ include('@grr_admin/entry/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <br/>
+    <a href="{{ path('grr_admin_entry_show',{'id': entry.id}) }}"><i
+                class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+
+    {{ include('entry/_delete_form.html.twig') }}
+{% endblock %}

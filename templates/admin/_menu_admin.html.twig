@@ -1,0 +1,22 @@
+<li class="nav-item active">
+    <a class="nav-link" href="{{ path('grr_front_home') }}">{{ 'menu.home'|trans({}, 'actions') }} <span class="sr-only">(current)</span></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ path('grr_admin_area_index') }}">{{ 'menu.area'|trans({}, 'actions') }}</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ path('grr_admin_entry_index') }}">{{ 'menu.entries'|trans({}, 'actions') }}</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ path('grr_admin_user_index') }}">{{ 'menu.users'|trans({}, 'actions') }}</a>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+       aria-expanded="false">{{ 'menu.settings'|trans({}, 'actions') }}</a>
+    <div class="dropdown-menu" aria-labelledby="dropdown01">
+        <a class="dropdown-item"
+           href="{{ path('grr_admin_type_entry_index') }}">{{ 'menu.reservation.type'|trans({}, 'actions') }}</a>
+        <a class="dropdown-item"
+           href="{{ path('grr_admin_setting_index') }}">{{ 'menu.settings'|trans({}, 'actions') }}</a>
+    </div>
+</li>

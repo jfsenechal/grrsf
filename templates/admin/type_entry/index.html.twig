@@ -1,0 +1,41 @@
+{% extends '@grr_admin/layout_admin.html.twig' %}
+
+{% block title %}GrrTypeArea index{% endblock %}
+
+{% block body %}
+    <h1>{{ 'typeEntry.index.title'| trans }}</h1>
+
+    <a class="btn btn-primary" href="{{ path('grr_admin_type_entry_new') }}"><i
+                class="fas fa-plus"></i> {{ 'typeArea.new.title'| trans({}, 'actions') }}</a>
+    <br/> <br/>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>{{ 'typeArea.form.typeName.label'|trans }}</th>
+            <th>{{ 'typeArea.form.orderDisplay.label'|trans }}</th>
+            <th>{{ 'typeArea.form.couleur.label'|trans }}</th>
+            <th>{{ 'typeArea.form.typeLetter.label'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for type_entry in type_entries %}
+            <tr>
+                <td>
+                    <a href="{{ path('grr_admin_type_entry_show', {'id': type_entry.id}) }}">
+                        {{ type_entry.typeName }}
+                    </a>
+                </td>
+                <td>{{ type_entry.orderDisplay }}</td>
+                <td style="background-color: {{ type_entry.couleur}}">{{ type_entry.couleur }}</td>
+                <td>{{ type_entry.typeLetter }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{{ 'records.notfound'| trans({}, 'actions') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

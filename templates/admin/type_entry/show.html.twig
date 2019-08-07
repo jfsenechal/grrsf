@@ -1,0 +1,33 @@
+{% extends '@grr_admin/layout_admin.html.twig' %}
+
+{% block title %}{{ type_entry.typeName }}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ type_entry.typeName }}</h1>
+
+    {% include '@grr_admin/type_entry/_actions.html.twig' %}
+
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th>{{ 'typeArea.form.orderDisplay.label'|trans }}</th>
+            <td>{{ type_entry.orderDisplay }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'typeArea.form.couleur.label'|trans }}</th>
+            <td style="background-color: {{ type_entry.couleur }}">{{ type_entry.couleur }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'typeArea.form.typeLetter.label'|trans }}</th>
+            <td>{{ type_entry.typeLetter }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'typeArea.form.disponible.label'|trans }}Disponible</th>
+            <td>{{ type_entry.disponible }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {{ include('@grr_admin/type_entry/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends '@grr_admin/layout_admin.html.twig' %}
+
+{% block title %}Edit GrrSetting{% endblock %}
+
+{% block body %}
+    <h1>Edit GrrSetting</h1>
+
+    {{ include('@grr_admin/setting/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('grr_admin_setting_index') }}">back to list</a>
+
+{% endblock %}

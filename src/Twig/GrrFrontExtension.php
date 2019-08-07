@@ -23,10 +23,6 @@ class GrrFrontExtension extends AbstractExtension
      */
     private $twigEnvironment;
     /**
-     * @var RouterInterface
-     */
-    private $router;
-    /**
      * @var RequestStack
      */
     private $requestStack;
@@ -43,14 +39,12 @@ class GrrFrontExtension extends AbstractExtension
         RequestStack $requestStack,
         MenuGenerator $menuGenerator,
         Environment $twigEnvironment,
-        RouterInterface $router,
         CalendarNavigationDisplay $calendarNavigationDisplay
     ) {
         $this->twigEnvironment = $twigEnvironment;
         $this->calendarNavigationDisplay = $calendarNavigationDisplay;
         $this->requestStack = $requestStack;
         $this->menuGenerator = $menuGenerator;
-        $this->router = $router;
     }
 
     public function getFilters(): array
@@ -68,11 +62,7 @@ class GrrFrontExtension extends AbstractExtension
         return [
             new TwigFunction('grrMonthNavigation', [$this, 'MonthNavigation'], ['is_safe' => ['html']]),
             new TwigFunction('grrMenuNavigation', [$this, 'menuNavigation'], ['is_safe' => ['html']]),
-            new TwigFunction('completeTr', [$this, 'completeTr'], ['is_safe' => ['html']]),
-            new TwigFunction('generateRouteMonthView', [$this, 'generateRouteMonthView']),
-            new TwigFunction('generateRouteWeekView', [$this, 'generateRouteWeekView']),
-            new TwigFunction('generateRouteDayView', [$this, 'generateRouteDayView']),
-            new TwigFunction('generateRouteAddEntry', [$this, 'generateRouteAddEntry']),
+            new TwigFunction('grrCompleteTr', [$this, 'grrCompleteTr'], ['is_safe' => ['html']]),
             new TwigFunction('grrGenerateCellDataDay', [$this, 'grrGenerateCellDataDay'], ['is_safe' => ['html']]),
         ];
     }
@@ -100,7 +90,7 @@ class GrrFrontExtension extends AbstractExtension
                 )) {
                     if ($position == 0) {
                         return $this->twigEnvironment->render(
-                            'front/day/_cell_day_data.html.twig',
+                            '@grr_front/day/_cell_day_data.html.twig',
                             ['position' => $position, 'entry' => $entry]
                         );
                     }
@@ -115,7 +105,7 @@ class GrrFrontExtension extends AbstractExtension
         $area = $room->getArea();
 
         return $this->twigEnvironment->render(
-            'front/day/_cell_day_empty.html.twig',
+            '@grr_front/day/_cell_day_empty.html.twig',
             ['position' => 999, 'area' => $area, 'room' => $room, 'day' => $day]
         );
     }
@@ -143,7 +133,7 @@ class GrrFrontExtension extends AbstractExtension
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/month/_calendar_navigation.html.twig',
+            '@grr_front/navigation/month/_calendar_navigation.html.twig',
             [
                 'navigation' => $navigation,
                 'monthModel' => $monthModel,
@@ -160,7 +150,7 @@ class GrrFrontExtension extends AbstractExtension
         $form = $this->menuGenerator->generateMenuSelect($area);
 
         return $this->twigEnvironment->render(
-            'calendar/navigation/form/_area_form.html.twig',
+            '@grr_front/navigation/form/_area_form.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -175,102 +165,12 @@ class GrrFrontExtension extends AbstractExtension
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function completeTr(CarbonInterface $day, string $action)
+    public function grrCompleteTr(CarbonInterface $day, string $action)
     {
         return $this->twigEnvironment->render(
-            'calendar/_complete_tr.html.twig',
+            '@grr_front/_complete_tr.html.twig',
             ['numericDay' => $day->weekday(), 'action' => $action]
         );
     }
 
-    public function generateRouteMonthView(int $year = null, int $month = null)
-    {
-        $request = $this->requestStack->getMasterRequest();
-        if (!$request) {
-            return '';
-        }
-
-        $attributes = $request->attributes->get('_route_params');
-
-        $area = $attributes['area'] ?? 0;
-        $room = $attributes['room'] ?? 0;
-
-        if (!$year) {
-            $year = (int)$attributes['year'];
-        }
-        if (!$month) {
-            $month = (int)$attributes['month'];
-        }
-
-        $params = ['area' => $area, 'year' => $year, 'month' => $month];
-
-        if ($room) {
-            $params['room'] = $room;
-        }
-
-        return $this->router->generate('grr_front_month', $params);
-    }
-
-    public function generateRouteWeekView(int $week)
-    {
-        $request = $this->requestStack->getMasterRequest();
-        if (!$request) {
-            return '';
-        }
-
-        $attributes = $request->attributes->get('_route_params');
-
-        $area = $attributes['area'] ?? 0;
-        $room = $attributes['room'] ?? 0;
-        $year = $attributes['year'] ?? 0;
-        $month = $attributes['month'] ?? 0;
-
-        $params = ['area' => $area, 'year' => $year, 'month' => $month, 'week' => $week];
-
-        if ($room) {
-            $params['room'] = (int)$room;
-        }
-
-        return $this->router->generate('grr_front_week', $params);
-    }
-
-    public function generateRouteDayView(int $day)
-    {
-        $request = $this->requestStack->getMasterRequest();
-        if (!$request) {
-            return '';
-        }
-
-        $attributes = $request->attributes->get('_route_params');
-
-        $area = $attributes['area'] ?? 0;
-        $room = $attributes['room'] ?? 0;
-        $year = $attributes['year'] ?? 0;
-        $month = $attributes['month'] ?? 0;
-
-        $params = ['area' => $area, 'year' => $year, 'month' => $month, 'day' => $day];
-
-        if ($room) {
-            $params['room'] = $room;
-        }
-
-        return $this->router->generate('grr_front_day', $params);
-    }
-
-    public function generateRouteAddEntry(int $area, int $room, int $day)
-    {
-        $request = $this->requestStack->getMasterRequest();
-        if (!$request) {
-            return '';
-        }
-
-        $attributes = $request->attributes->get('_route_params');
-
-        $year = $attributes['year'] ?? 0;
-        $month = $attributes['month'] ?? 0;
-
-        $params = ['area' => $area, 'room' => $room, 'year' => $year, 'month' => $month, 'day' => $day];
-
-        return $this->router->generate('grr_entry_new', $params);
-    }
 }

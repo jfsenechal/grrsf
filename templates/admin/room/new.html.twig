@@ -1,0 +1,12 @@
+{% extends '@grr_admin/layout_admin.html.twig' %}
+
+{% block title %}{{ 'room.new.title'|trans({}, 'actions')}}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'room.new.title'|trans({}, 'actions')}}</h1>
+
+    {{ include('@grr_admin/room/_form.html.twig') }}
+
+    <br />
+    <a href="{{ path('grr_admin_room_index') }}"><i class="fas fa-arrow-left"></i> {{ 'back.to.list'|trans({}, 'actions') }}</a>
+{% endblock %}

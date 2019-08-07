@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PasswordController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="grr_user_password")
+     * @Route("/{id}", name="grr_admin_user_password")
      */
     public function edit(Request $request, User $user)
     {

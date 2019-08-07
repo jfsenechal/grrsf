@@ -27,13 +27,16 @@ class MonthHelperDataDisplay
     /**
      * @param Month $month
      * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function generateHtmlMonth(Month $month)
     {
         $weeks = $month->groupDataDaysByWeeks();
 
         return $this->environment->render(
-            'calendar/data/_calendar_data.html.twig',
+            '@grr_front/month/_calendar_data.html.twig',
             [
                 'listDays' => DateUtils::getDays(),
                 'firstDay' => $month->firstOfMonth(),

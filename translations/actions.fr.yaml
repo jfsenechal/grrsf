@@ -46,6 +46,7 @@ menu:
   entries: Réservations
   reservation:
     type: Type de réservations
+  administration: Administration
 user:
   index:
     title: Liste des utilisateurs

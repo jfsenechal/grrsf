@@ -5,7 +5,7 @@
 
     {% for entry in day.entries %}
         <p>
-            <a href="{{ path('grr_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
+            <a href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
         </p>
     {% endfor %}
 </td>

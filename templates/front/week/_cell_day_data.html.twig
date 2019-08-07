@@ -1,7 +1,7 @@
 <td>
     {% for entry in day.entries %}
         <p>
-            <a href="{{ path('grr_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
+            <a href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
         </p>
     {% else %}
         <a href="{{ generateRouteAddEntry(area.id,room.id, day.day) }}" class="float-right"
