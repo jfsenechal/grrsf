@@ -13,7 +13,7 @@
                 {{ 'entry.delete.confirm'|trans({'name': entry.name}, 'actions') }}
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{ path('grr_admin_entry_delete', {'id': entry.id}) }}">
+                <form method="post" action="{{ path('grr_front_entry_delete', {'id': entry.id}) }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
                     <button type="button" class="btn btn-secondary"

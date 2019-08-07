@@ -2,12 +2,17 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Area;
 use App\Entity\Entry;
+use App\Entity\Room;
 use App\Factory\EntryFactory;
+use App\Form\EntryType;
+use App\Form\PeriodicityType;
 use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
 use App\Repository\RepeatRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,6 +77,45 @@ class EntryController extends AbstractController
             ]
         );
     }
+
+    /**
+     * @Route("/new/area/{area}/room/{room}/year/{year}/month/{month}/day/{day}", name="grr_front_entry_new", methods={"GET","POST"})
+     * @Entity("area", expr="repository.find(area)")
+     * @Entity("room", expr="repository.find(room)")
+     */
+    public function new(Request $request, Area $area, Room $room, int $year, int $month, int $day): Response
+    {
+        $entry = EntryFactory::createNew();
+        EntryFactory::setDefaultValues($entry);
+        $entry->setArea($area);
+        dump($entry);
+
+        if ($room) {
+            $entry->setRoom($room);
+        }
+
+        $form = $this->createForm(EntryType::class, $entry);
+        $formPeriodicity = $this->createForm(PeriodicityType::class, null);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entry->setTimestamp(new \DateTime());
+            $this->entryManager->insert($entry);
+
+            return $this->redirectToRoute('grr_front_entry_index');
+        }
+
+        return $this->render(
+            '@grr_front/entry/new.html.twig',
+            [
+                'entry' => $entry,
+                'form_periodicity' => $formPeriodicity->createView(),
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
     /**
      * @Route("/{id}", name="grr_front_entry_show", methods={"GET"})
      */
@@ -89,5 +133,48 @@ class EntryController extends AbstractController
                 'repeat' => $repeat,
             ]
         );
+    }
+
+    /**
+     * @Route("/{id}/edit", name="grr_front_entry_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Entry $entry): Response
+    {
+        $form = $this->createForm(EntryType::class, $entry);
+        $formPeriodicity = $this->createForm(PeriodicityType::class, null);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entryManager->flush();
+
+            return $this->redirectToRoute(
+                'grr_front_entry_index',
+                [
+                    'id' => $entry->getId(),
+                ]
+            );
+        }
+
+        return $this->render(
+            '@grr_front/entry/edit.html.twig',
+            [
+                'entry' => $entry,
+                'form' => $form->createView(),
+                'form_periodicity' => $formPeriodicity->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{id}", name="grr_front_entry_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Entry $entry): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$entry->getId(), $request->request->get('_token'))) {
+            $this->entryManager->remove($entry);
+            $this->entryManager->flush();
+        }
+
+        return $this->redirectToRoute('grr_front_entry_index');
     }
 }

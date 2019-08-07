@@ -141,6 +141,6 @@ class GrrhUrlHelperExtension extends AbstractExtension
 
         $params = ['area' => $area, 'room' => $room, 'year' => $year, 'month' => $month, 'day' => $day];
 
-        return $this->router->generate('grr_admin_entry_new', $params);
+        return $this->router->generate('grr_front_entry_new', $params);
     }
 }

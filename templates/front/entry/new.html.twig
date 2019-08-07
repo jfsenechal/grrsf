@@ -5,9 +5,9 @@
 {% block body %}
     <h1>{{ 'entry.new.title'|trans({},'actions') }}</h1>
 
-    {%   include('@grr_admin/entry/form/_form.html.twig') %}
+    {%   include('@grr_front/entry/form/_form.html.twig') %}
 
     <br/>
-    <a href="{{ path('grr_admin_entry_index') }}"><i
+    <a href="{{ path('grr_front_entry_index') }}"><i
                 class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
 {% endblock %}
