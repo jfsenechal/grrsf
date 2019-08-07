@@ -57,16 +57,17 @@ class EntryController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $args = [];
+        $args = $entries = [];
+
         $form = $this->createForm(SearchEntryType::class, $args);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $args = $form->getData();
-        }
 
-        $entries = $this->entryRepository->search($args);
+            $entries = $this->entryRepository->search($args);
+
+        }
 
         return $this->render(
             'entry/index.html.twig',
@@ -138,7 +139,6 @@ class EntryController extends AbstractController
      */
     public function edit(Request $request, Entry $entry): Response
     {
-        dump($entry);
         $form = $this->createForm(EntryType::class, $entry);
         $formPeriodicity = $this->createForm(PeriodicityType::class, null);
         $form->handleRequest($request);

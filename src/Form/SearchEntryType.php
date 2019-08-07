@@ -42,11 +42,11 @@ class SearchEntryType extends AbstractType
             )
             ->add(
                 'entry_type',
-                ChoiceType::class,
+                EntityType::class,
                 [
+                    'class' => \App\Entity\EntryType::class,
                     'required' => false,
                     'placeholder' => 'Entry type',
-                    'choices' => $this->entryData->getEntryTypes(),
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )

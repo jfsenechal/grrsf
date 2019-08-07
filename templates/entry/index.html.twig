@@ -5,10 +5,8 @@
 {% block body %}
     <h1>{{ 'entry.index.title'|trans({}, 'actions') }}</h1>
 
-    {% include 'search/entry.html.twig' %}
+    {% include 'search/_entry.html.twig' %}
 
-    <a class="btn btn-primary" href="{{ path('grr_entry_new') }}"><i
-                class="fas fa-plus"></i> {{ 'entry.new.title'| trans({}, 'actions') }}</a>
     <br/> <br/>
 
     <table class="table table-bordered">

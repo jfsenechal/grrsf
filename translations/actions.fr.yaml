@@ -72,3 +72,5 @@ next: Suivant
 previous: Précédent
 week:
   initial: s
+action:
+  edit: Editer

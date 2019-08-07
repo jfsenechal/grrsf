@@ -1,6 +1,6 @@
 {% extends 'layout_front.html.twig' %}
 
-{% block title %}Edit GrrEntry{% endblock %}
+{% block title %}{{ 'action.edit'|trans({},'actions') }} {{ entry.name }}{% endblock %}
 
 {% block body %}
     <h1>{{ entry.name }}</h1>
