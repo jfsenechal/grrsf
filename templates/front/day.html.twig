@@ -14,17 +14,17 @@
         <thead>
         <tr>
             <th scope="col">{{ 'Hours'|trans }}</th>
-            {% for room in rooms %}
-                <th scope="col">{{ room.name }}</th>
+            {% for roomModel in roomsModel %}
+                <th scope="col">{{ roomModel.room.name }}</th>
             {% endfor %}
         </tr>
         </thead>
         <tbody>
-        {% for hour in hours %}
+        {% for hourModel in hoursModel %}
             <tr>
-                <td>{{ hour.begin|date('H:i') }} - {{ hour.end|date('H:i') }}</td>
-                {% for roomModel in data %}
-                        {{ grrLocation(hour, roomModel) }}
+                <td>{{ hourModel.begin|date('H:i') }} - {{ hourModel.end|date('H:i') }}</td>
+                {% for roomModel in roomsModel %}
+                        {{ grrGenerateCellDataDay(hourModel, roomModel) }}
                 {% endfor %}
             </tr>
         {% endfor %}

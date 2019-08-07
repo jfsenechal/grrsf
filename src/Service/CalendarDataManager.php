@@ -31,11 +31,16 @@ class CalendarDataManager
      * @var EntryRepository
      */
     private $entryRepository;
+    /**
+     * @var EntryService
+     */
+    private $entryService;
 
-    public function __construct(EntryRepository $entryRepository)
+    public function __construct(EntryRepository $entryRepository, EntryService $entryService)
     {
         $this->entries = [];
         $this->entryRepository = $entryRepository;
+        $this->entryService = $entryService;
     }
 
     /**
@@ -87,24 +92,30 @@ class CalendarDataManager
     }
 
     /**
-     * @param CarbonPeriod $hoursPeriod
+     * @param CarbonInterface $day
      * @param Area $area
+     * @param Hour[] $hoursModel
      * @return RoomModel[]
-     * @throws \Exception
      */
-    public function bindDay(CarbonInterface $day, Area $area)
+    public function bindDay(CarbonInterface $day, Area $area, array $hoursModel)
     {
-        $data = [];
+        $roomsModel = [];
         foreach ($area->getRooms() as $roomObject) {
             $roomModel = new RoomModel($roomObject);
             $entries = $this->entryRepository->findForDay($day, $roomObject);
             $roomModel->setEntries($entries);
-            $data[] = $roomModel;
+            $roomsModel[] = $roomModel;
         }
 
-        return $data;
+        foreach ($roomsModel as $roomModel) {
+            $entries = $roomModel->getEntries();
+            foreach ($entries as $entry) {
+                $this->entryService->setCountCells($entry, $area);
+                $this->entryService->setLocations($entry, $hoursModel);
+            }
+        }
 
-
+        return $roomsModel;
     }
 
     /**

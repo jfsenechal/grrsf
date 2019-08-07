@@ -74,16 +74,19 @@ class GrrFrontExtension extends AbstractExtension
             new TwigFunction('generateRouteWeekView', [$this, 'generateRouteWeekView']),
             new TwigFunction('generateRouteDayView', [$this, 'generateRouteDayView']),
             new TwigFunction('generateRouteAddEntry', [$this, 'generateRouteAddEntry']),
-            new TwigFunction('grrLocation', [$this, 'grrLocation']),
+            new TwigFunction('grrGenerateCellDataDay', [$this, 'grrGenerateCellDataDay'], ['is_safe' => ['html']]),
         ];
     }
 
     /**
-     * @param int $ligneSrc
-     * @param int $colonneSrc
-     * @param Entry $entries
+     * @param Hour $hour
+     * @param RoomModel $roomModel
+     * @return string|void
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    public function grrLocation(Hour $hour, RoomModel $roomModel)
+    public function grrGenerateCellDataDay(Hour $hour, RoomModel $roomModel)
     {
         $entries = $roomModel->getEntries();
         foreach ($entries as $entry) {
@@ -91,25 +94,28 @@ class GrrFrontExtension extends AbstractExtension
              * @var Hour[] $locations
              */
             $locations = $entry->getLocations();
-            $cellules = $entry->getCellules();
-            $name = $entry->getName();
             $position = 0;
             foreach ($locations as $location) {
                 if ($location->getBegin()->equalTo(
                     $hour->getBegin() && $location->getEnd()->equalTo($hour->getEnd())
                 )) {
                     if ($position == 0) {
-                        echo "<td rowspan='$cellules' class='table-info'>$name</td>";
+                        return $this->twigEnvironment->render(
+                            'front/day/_cell_day_data.html.twig',
+                            ['position' => $position, 'entry' => $entry]
+                        );
                     }
 
                     return;
                 }
                 $position++;
             }
-
         }
-        echo '<td></td>';
 
+        return $this->twigEnvironment->render(
+            'front/day/_cell_day_data.html.twig',
+            ['position' => 999, 'entry' => $entry]
+        );
     }
 
     /**

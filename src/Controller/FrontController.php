@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Area;
-use App\Entity\Entry;
 use App\Factory\CarbonFactory;
 use App\Model\Day;
-use App\Model\Hour;
 use App\Model\Month;
 use App\Model\Week;
 use App\Repository\AreaRepository;
@@ -14,10 +12,9 @@ use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
 use App\Service\AreaService;
 use App\Service\CalendarDataManager;
+use App\Service\EntryService;
 use App\Service\MonthHelperDataDisplay;
 use App\Service\Settingservice;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,6 +59,10 @@ class FrontController extends AbstractController
      * @var MonthHelperDataDisplay
      */
     private $monthHelperDataDisplay;
+    /**
+     * @var EntryService
+     */
+    private $entryService;
 
     public function __construct(
         Settingservice $settingservice,
@@ -70,7 +71,8 @@ class FrontController extends AbstractController
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
         CalendarDataManager $calendarDataManager,
-        AreaService $areaService
+        AreaService $areaService,
+        EntryService $entryService
     ) {
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
@@ -79,6 +81,7 @@ class FrontController extends AbstractController
         $this->settingservice = $settingservice;
         $this->areaService = $areaService;
         $this->monthHelperDataDisplay = $monthHelperDataDisplay;
+        $this->entryService = $entryService;
     }
 
     /**
@@ -161,115 +164,24 @@ class FrontController extends AbstractController
     public function day(Area $area, int $year, int $month, int $day, int $room = null): Response
     {
         $daySelected = CarbonFactory::createImmutable($year, $month, $day);
-
-        $rooms = $this->roomRepository->findByArea($area);
+        $dayModel = new Day($daySelected);
 
         if ($room) {
             //todo if room selected
             $rooms = [$this->roomRepository->find($room)];
         }
 
-        $start = Carbon::today()->setTime(16, 0);
-        $end = Carbon::today()->setTime(17, 20);
-        $diff = $start->diffInSeconds($end);//80 minutes
-
-        $resolution = $area->getResolutionArea();//30 minutes
-        $cellules = (integer)($diff / $resolution);//2.6 arrondit a 2
-
-        $dayModel = new Day($daySelected);
-
-        $hoursPeriod = $this->areaService->getHoursPeriod($area, $daySelected);
-        $last = $hoursPeriod->last();
-        $hoursPeriod->first();
-
-        $data = $this->calendarDataManager->bindDay($daySelected, $area);
-
-        $colonne = $ligne = 0;
-        $hours = $this->getHours($hoursPeriod);
-
-        foreach ($data as $roomModel) {
-            $entries = $roomModel->getEntries();
-            foreach ($entries as $entry) {
-
-                $cellules = $this->getCountCellules($entry, $resolution);
-                $entryStart = $entry->getStartTime();
-                $entryEnd = $entry->getEndTime();
-                $locations = [];
-
-                foreach ($hours as $hour) {
-                    $begin = $hour->getBegin();
-                    $end = $hour->getEnd();
-                    if ($this->getEntry($entry, $begin, $end)) {
-                        $locations[] = $hour;
-                    }
-                }
-                $entry->setLocations($locations);
-                $entry->setCellules($cellules);
-                dump($locations);
-            }
-        }
-
-
+        $hoursModel = $this->areaService->getHoursModel($area, $daySelected);
+        $roomsModel = $this->calendarDataManager->bindDay($daySelected, $area, $hoursModel);
 
         return $this->render(
             'front/day.html.twig',
             [
                 'day' => $dayModel,
-                'data' => $data,
-                'area' => $area,
-                'rooms' => $rooms,
-                'hours' => $hours,
+                'roomsModel' => $roomsModel,
+                'hoursModel' => $hoursModel,
             ]
         );
-    }
-
-    protected function getEntry(Entry $entry, \DateTimeInterface $begin, \DateTimeInterface $end): bool
-    {
-        if ($begin->format('H:i') >= $entry->getStartTime()->format('H:i') &&
-            $begin->format('H:i') <= $entry->getEndTime()->format('H:i')) {
-
-            //  dump($begin->format('H:i'), '>=', $entry->getStartTime()->format('H:i'));
-            //  dump($end->format('H:i'), '<=', $entry->getEndTime()->format('H:i'));
-
-            return true;
-        }
-
-        return false;
-    }
-
-    protected function getCountCellules(Entry $entry, int $resolution)
-    {
-        $start = Carbon::instance($entry->getStartTime());
-        $end = Carbon::instance($entry->getEndTime());
-        $diff = $start->diffInSeconds($end);//80 minutes
-
-        return (integer)(round($diff / $resolution));
-    }
-
-    /**
-     * @param CarbonPeriod $hoursPeriod
-     * @return Hour[]
-     */
-    protected function getHours(CarbonPeriod $hoursPeriod)
-    {
-        $hours = [];
-        $hoursPeriod->rewind();
-        $last = $hoursPeriod->last();
-        $hoursPeriod->rewind();
-
-        while ($hoursPeriod->current()->lessThan($last)) {
-
-            $begin = $hoursPeriod->current();
-            $hoursPeriod->next();
-            $end = $hoursPeriod->current();
-
-            $hour = new Hour();
-            $hour->setBegin($begin);
-            $hour->setEnd($end);
-            $hours[] = $hour;
-        }
-
-        return $hours;
     }
 
 }
