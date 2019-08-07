@@ -64,6 +64,9 @@ class EntryRepository extends ServiceEntityRepository
         $qb->andWhere('MONTH(entry.startTime) = :month')
             ->setParameter('month', $day->month);
 
+        $qb->andWhere('DAY(entry.startTime) = :day')
+            ->setParameter('day', $day->day);
+
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
 
@@ -215,6 +218,7 @@ class EntryRepository extends ServiceEntityRepository
     {
         $areaRepository = $this->getEntityManager()->getRepository(Room::class);
 
+        $this->getEntityManager();
         return $areaRepository->findByArea($area);
     }
 

@@ -7,8 +7,8 @@
     {% include 'calendar/navigation/_top_navigation.html.twig' %}
 
     <h3 class="text-center text-success">
-        {{ 'week'|trans }} du {{ week.firstDay|date('d-m') }}
-        au {{ week.lastDay|date('d-m') }}
+        {{ 'week'|trans }} du {{ week.firstDay.getTranslatedDayName }} {{ week.firstDay.day }} {{ week.firstDay.monthName|trans|lower }}
+        au {{ week.lastDay.getTranslatedDayName }} {{ week.lastDay.day }}  {{ week.lastDay.monthName|trans|lower }}
     </h3>
 
     <table class="table table-bordered">
@@ -16,7 +16,7 @@
         <tr>
             <th>{{ 'ressources'|trans }}</th>
             {% for day in week.calendarDays %}
-                <th>{{ day|date('l') |trans|lower }} {{ day|date('d') }} {# firstDay.getTranslatedDayName #} {{ day|date('F')|trans|lower }}</th>
+                <th>{{ day.getTranslatedDayName |trans|lower }} {{ day.day }} {{ day.monthName|trans|lower }}</th>
             {% endfor %}
         </tr>
         </thead>
