@@ -38,11 +38,11 @@ class EntryFixtures extends Fixture implements DependentFixtureInterface
         $this->createEntry('Réunion pssp', $start, $end, 'Relax Room', 'entry-type-D');
 
         $start = Carbon::tomorrow()->setTime(16, 0);
-        $end = Carbon::today()->setTime(17, 20);
+        $end = Carbon::tomorrow()->setTime(17, 20);
         $this->createEntry('Réunion henalux', $start, $end, 'Box', 'entry-type-A');
 
         $start = Carbon::yesterday()->setTime(8, 0);
-        $end = Carbon::today()->setTime(12, 40);
+        $end = Carbon::yesterday()->setTime(12, 40);
         $this->createEntry('Réunion timesquare', $start, $end, 'Digital Room', 'entry-type-F');
 
         $manager->flush();

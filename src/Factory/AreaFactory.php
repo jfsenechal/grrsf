@@ -34,7 +34,7 @@ class AreaFactory
             ->setDisplayDays(array_flip(DateUtils::getDays()))
             ->setMorningstartsArea(8)
             ->setEveningendsArea(19)
-            ->setResolutionArea(900)
+            ->setResolutionArea(1800)
             ->setDureeParDefautReservationArea(900)
             ->setDureeMaxResaArea(-1)
             ->setIdTypeParDefaut(-1)

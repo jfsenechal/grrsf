@@ -37,6 +37,19 @@ class RoomRepository extends ServiceEntityRepository
         return $qb;
     }
 
+    /**
+     * @return Room[] Returns an array of Room objects
+     */
+    public function findByArea(Area $area): iterable
+    {
+        return $this->createQueryBuilder('room')
+            ->andWhere('room.area = :area')
+            ->setParameter('area', $area)
+            ->orderBy('room.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function persist(Room $room)
     {
         $this->_em->persist($room);
@@ -57,30 +70,4 @@ class RoomRepository extends ServiceEntityRepository
     {
         $this->_em->flush();
     }
-
-    /**
-     * @return Room[] Returns an array of Room objects
-     */
-    public function findByArea(Area $area): iterable
-    {
-        return $this->createQueryBuilder('room')
-            ->andWhere('room.area = :area')
-            ->setParameter('area', $area)
-            ->orderBy('room.name', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-
-    /*
-    public function findOneBySomeField($value): ?Room
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

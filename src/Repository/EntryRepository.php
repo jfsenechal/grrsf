@@ -23,27 +23,6 @@ class EntryRepository extends ServiceEntityRepository
         parent::__construct($registry, Entry::class);
     }
 
-    public function persist(Entry $entry)
-    {
-        $this->_em->persist($entry);
-    }
-
-    public function insert(Entry $entry)
-    {
-        $this->persist($entry);
-        $this->flush();
-    }
-
-    public function remove(Entry $entry)
-    {
-        $this->_em->remove($entry);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
     /**
      * @param array $args
      * @return Entry[] Returns an array of Entry objects
@@ -99,11 +78,15 @@ class EntryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('entry');
 
-        $qb->andWhere('YEAR(entry.startTime) = :year')
-            ->setParameter('year', $begin->year);
+        $qb->where('entry.startTime <= :begin AND entry.endTime >= :end')
+            ->setParameter('begin', $begin)
+            ->setParameter('end', $end);
 
-        $qb->andWhere('MONTH(entry.startTime) = :month')
-            ->setParameter('month', $begin->month);
+        /* $qb->andWhere('entry.startTime = :year')
+             ->setParameter('year', $begin->year);
+
+         $qb->andWhere('MONTH(entry.endTime) = :month')
+             ->setParameter('month', $begin->month);*/
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
@@ -212,6 +195,28 @@ class EntryRepository extends ServiceEntityRepository
         $areaRepository = $this->getEntityManager()->getRepository(Room::class);
 
         return $areaRepository->findByArea($area);
+    }
+
+
+    public function persist(Entry $entry)
+    {
+        $this->_em->persist($entry);
+    }
+
+    public function insert(Entry $entry)
+    {
+        $this->persist($entry);
+        $this->flush();
+    }
+
+    public function remove(Entry $entry)
+    {
+        $this->_em->remove($entry);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
     }
 
 

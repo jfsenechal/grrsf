@@ -98,7 +98,7 @@ class CalendarDataManager
         $last = $hoursPeriod->last();
         $hoursPeriod->rewind();
 
-        while ($hoursPeriod->current()->format('H:i') < $last->format('H:i')) {
+        while ($hoursPeriod->current()->lessThan($last)) {
 
             $begin = $hoursPeriod->current();
             $hoursPeriod->next();
@@ -113,6 +113,10 @@ class CalendarDataManager
                 //$daySelected = CarbonFactory::createImmutable($year, $month, $dayCalendar->day, $heure, $minute);
                 $dataDay = new Day($begin);
                 $entries = $this->entryRepository->findForDay($begin, $end, $roomObject);
+                if(count($entries)>0){
+                    dump($hour);
+                }
+
                 $dataDay->addEntries($entries);
                 $roomModel->addDataDay($dataDay);
                 $hour->addRoom($roomModel);
@@ -120,6 +124,7 @@ class CalendarDataManager
 
             $hours[] = $hour;
         }
+
         return $hours;
     }
 

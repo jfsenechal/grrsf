@@ -14,6 +14,7 @@ use App\Service\AreaService;
 use App\Service\CalendarDataManager;
 use App\Service\MonthHelperDataDisplay;
 use App\Service\Settingservice;
+use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -165,11 +166,19 @@ class FrontController extends AbstractController
             $rooms = [$this->roomRepository->find($room)];
         }
 
+        $start = Carbon::today()->setTime(16, 0);
+        $end = Carbon::today()->setTime(17, 20);
+        $diff = $start->diffInSeconds($end);//80 minutes
+
+        $resolution = $area->getResolutionArea();//30 minutes
+        $cellules = (integer)($diff/$resolution);//2.6 arrondit a 2
+
         $dayModel = new Day($daySelected);
 
         $hoursPeriod = $this->areaService->getHoursPeriod($area, $daySelected);
 
         $hours = $this->calendarDataManager->bindDay($hoursPeriod, $area);
+
 
         return $this->render(
             'front/day.html.twig',

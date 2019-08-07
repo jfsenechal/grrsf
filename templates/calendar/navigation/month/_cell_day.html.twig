@@ -5,7 +5,7 @@
 {% endif %}
 
 <td class="{{ classDay }}">
-    {% if day.month == firstDay.month %}
+    {% if day.isSameMonth(firstDay) %}
         <a href="{{ generateRouteDayView(day.day) }}">{{ day.day }}</a>
     {% endif %}
 </td>
