@@ -91,13 +91,6 @@ class Entry
     private $name;
 
     /**
-     * @var EntryType|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\EntryType", inversedBy="entries")
-     *
-     */
-    private $type;
-
-    /**
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
@@ -140,8 +133,16 @@ class Entry
     private $jours;
 
     /**
+     * @var EntryType|null
+     * @ORM\ManyToOne(targetEntity="App\Entity\EntryType", inversedBy="entries")
+     * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
+     */
+    private $type;
+
+    /**
      * @var
      * @ORM\ManyToOne(targetEntity="App\Entity\Room", inversedBy="entries")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $room;
 
@@ -167,6 +168,7 @@ class Entry
     private $locations = [];
 
     /**
+     * Pour l'affichage par jour, nbre de cellules occupees
      * @var int
      */
     private $cellules;

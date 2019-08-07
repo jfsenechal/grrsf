@@ -19,7 +19,6 @@ use App\Model\RoomModel;
 use App\Model\Week;
 use App\Repository\EntryRepository;
 use Carbon\CarbonInterface;
-use Carbon\CarbonPeriod;
 
 class CalendarDataManager
 {
@@ -116,49 +115,6 @@ class CalendarDataManager
         }
 
         return $roomsModel;
-    }
-
-    /**
-     * @param CarbonPeriod $hoursPeriod
-     * @param Area $area
-     * @return Hour[]
-     * @throws \Exception
-     */
-    public function bindDay2(CarbonPeriod $hoursPeriod, Area $area)
-    {
-        $hours = [];
-
-        $last = $hoursPeriod->last();
-        $hoursPeriod->rewind();
-
-        while ($hoursPeriod->current()->lessThan($last)) {
-
-            $begin = $hoursPeriod->current();
-            $hoursPeriod->next();
-            $end = $hoursPeriod->current();
-
-            $hour = new Hour();
-            $hour->setBegin($begin);
-            $hour->setEnd($end);
-
-            foreach ($area->getRooms() as $roomObject) {
-                $roomModel = new RoomModel($roomObject);
-                //$daySelected = CarbonFactory::createImmutable($year, $month, $dayCalendar->day, $heure, $minute);
-                $dataDay = new Day($begin);
-                $entries = $this->entryRepository->findForDay($begin, $end, $roomObject);
-                if (count($entries) > 0) {
-                    dump($hour);
-                }
-
-                $dataDay->addEntries($entries);
-                $roomModel->addDataDay($dataDay);
-                $hour->addRoom($roomModel);
-            }
-
-            $hours[] = $hour;
-        }
-
-        return $hours;
     }
 
     public function extractByDate(\DateTimeInterface $dateTime)

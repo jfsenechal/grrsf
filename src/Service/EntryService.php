@@ -17,7 +17,7 @@ class EntryService
         $start = Carbon::instance($entry->getStartTime());
         $end = Carbon::instance($entry->getEndTime());
         $diff = $start->diffInSeconds($end);
-        $cellules = (integer)(round($diff / $resolution));
+        $cellules = (integer)(ceil($diff / $resolution));
         $entry->setCellules($cellules);
     }
 

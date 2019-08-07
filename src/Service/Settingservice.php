@@ -1,9 +1,8 @@
 <?php
 
-
 namespace App\Service;
 
-
+use App\Entity\Area;
 use App\Repository\AreaRepository;
 
 class Settingservice
@@ -18,9 +17,8 @@ class Settingservice
         $this->areaRepository = $areaRepository;
     }
 
-    public function getDefaultArea()
+    public function getDefaultArea(): ?Area
     {
-       $areas = $this->areaRepository->findAll();
-       return $areas[0];
+        return $this->areaRepository->findOneBy([], ['id' => 'ASC']);
     }
 }

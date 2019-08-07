@@ -22,7 +22,7 @@ class AreaService
     }
 
     /**
-     * Retourne les heures de l'area
+     * Retourne les heures de l'area suivant son resolution
      * @param Area $area
      * @param CarbonInterface $dayModel
      * @return CarbonPeriod
@@ -40,6 +40,7 @@ class AreaService
     }
 
     /**
+     * Crée les tranches d'heures sous forme d'objet
      * @param CarbonPeriod $hoursPeriod
      * @return Hour[]
      */

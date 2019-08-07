@@ -170,7 +170,7 @@ class Room
     private $whoCanSee;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="room")
+     * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="room", cascade={"remove"})
      */
     private $entries;
 

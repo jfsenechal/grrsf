@@ -115,8 +115,8 @@ class GrrFrontExtension extends AbstractExtension
         $area = $room->getArea();
 
         return $this->twigEnvironment->render(
-            'front/day/_cell_day_data.html.twig',
-            ['position' => 999, 'entry' => $entry, 'area' => $area, 'room' => $room, 'day' => $day]
+            'front/day/_cell_day_empty.html.twig',
+            ['position' => 999, 'area' => $area, 'room' => $room, 'day' => $day]
         );
     }
 

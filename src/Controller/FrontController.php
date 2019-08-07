@@ -81,6 +81,9 @@ class FrontController extends AbstractController
         $today = CarbonFactory::getToday();
 
         $esquare = $this->settingservice->getDefaultArea();
+        if (!$esquare) {
+            return new Response('No data');
+        }
 
         return $this->redirectToRoute(
             'grr_front_month',
