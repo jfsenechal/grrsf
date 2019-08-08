@@ -13,3 +13,6 @@
 
     {{ include('@grr_front/entry/_delete_form.html.twig') }}
 {% endblock %}
+{% block scripts %}
+    {% include '@grr_front/entry/form/_rooms_list_ajax.html.twig' %}
+{% endblock %}

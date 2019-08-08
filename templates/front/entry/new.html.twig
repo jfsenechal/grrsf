@@ -11,3 +11,6 @@
     <a href="{{ path('grr_front_entry_index') }}"><i
                 class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
 {% endblock %}
+{% block scripts %}
+    {% include '@grr_front/entry/form/_rooms_list_ajax.html.twig' %}
+{% endblock %}

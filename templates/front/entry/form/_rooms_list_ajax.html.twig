@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    /**
+     * Met ajour la liste des rooms
+     */
+      $(document).ready(function () {
+          var $locationSelect = $('#entry_area');
+          var $specificLocationTarget = $('#entry_room');
+
+          $locationSelect.on('change', function (e) {
+              console.log("coucou");
+              $.ajax({
+                  url: '{{ path('grr_ajax_getrooms') }}',
+                data: {
+                    id: $locationSelect.val()
+                },
+                success: function (html) {
+                    if (!html) {
+                        $specificLocationTarget.find('select').remove();
+                        $specificLocationTarget.addClass('d-none');
+
+                        return;
+                    }
+
+                    // Replace the current field and show
+                    $specificLocationTarget
+                        .html(html)
+                        .removeClass('d-none')
+                }
+            });
+        });
+    });
+</script>
