@@ -273,6 +273,4 @@ page:
   welcome: Bienvenue sur Grr
 validator:
   entry:
-    busy: 'La réservation {value} est dans une zone accupée.'
-
-validator.entry.busy "{{ value }}": 'ezezez'
+    busy: The reservation "{{ value }}" is in a busy area.

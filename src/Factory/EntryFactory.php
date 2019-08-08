@@ -25,6 +25,7 @@ class EntryFactory
             ->setJours(false)
             ->setCreateBy('jf')
             ->setBeneficiaire('jf')
+            ->setTimestamp(new \DateTime())
             ->setOptionReservation(0);
     }
 }

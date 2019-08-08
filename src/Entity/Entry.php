@@ -140,7 +140,7 @@ class Entry
     private $type;
 
     /**
-     * @var
+     * @var Room
      * @ORM\ManyToOne(targetEntity="App\Entity\Room", inversedBy="entries")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -176,6 +176,11 @@ class Entry
     public function __construct()
     {
         $this->locations = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**

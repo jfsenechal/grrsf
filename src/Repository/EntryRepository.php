@@ -98,19 +98,16 @@ class EntryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findForDay2(CarbonInterface $begin, CarbonInterface $end, Room $room)
+    public function isBusy(Entry $entry, Room $room)
     {
         $qb = $this->createQueryBuilder('entry');
 
-        $qb->where('entry.startTime <= :begin AND entry.endTime >= :end')
+        $begin = $entry->getStartTime();
+        $end = $entry->getEndTime();
+
+        $qb->andWhere('entry.startTime BETWEEN :begin AND :end')
             ->setParameter('begin', $begin)
             ->setParameter('end', $end);
-
-        /* $qb->andWhere('entry.startTime = :year')
-             ->setParameter('year', $begin->year);
-
-         $qb->andWhere('MONTH(entry.endTime) = :month')
-             ->setParameter('month', $begin->month);*/
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
@@ -219,6 +216,7 @@ class EntryRepository extends ServiceEntityRepository
         $areaRepository = $this->getEntityManager()->getRepository(Room::class);
 
         $this->getEntityManager();
+
         return $areaRepository->findByArea($area);
     }
 

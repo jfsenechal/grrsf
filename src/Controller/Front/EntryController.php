@@ -12,12 +12,14 @@ use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
 use App\Repository\RepeatRepository;
+use App\Validator\BusyRoom;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/front/entry")
@@ -40,17 +42,23 @@ class EntryController extends AbstractController
      * @var EntryFactory
      */
     private $entryFactory;
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
 
     public function __construct(
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
         EntryManager $entryManager,
-        RepeatRepository $repeatRepository
+        RepeatRepository $repeatRepository,
+        ValidatorInterface $validator
     ) {
         $this->entryRepository = $entryRepository;
         $this->repeatRepository = $repeatRepository;
         $this->entryManager = $entryManager;
         $this->entryFactory = $entryFactory;
+        $this->validator = $validator;
     }
 
     /**
@@ -109,10 +117,15 @@ class EntryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $entry->setTimestamp(new \DateTime());
-            $this->entryManager->insert($entry);
+            $constraint = new BusyRoom();
+            $violations = $this->validator->validate($entry, $constraint);
+            foreach ($violations as $violation) {
+                dump($violation->getMessage());
+            }
 
-            return $this->redirectToRoute('grr_front_entry_index');
+            //  $this->entryManager->insert($entry);
+
+            //  return $this->redirectToRoute('grr_front_entry_index');
         }
 
         return $this->render(
