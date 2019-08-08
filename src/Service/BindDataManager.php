@@ -20,7 +20,7 @@ use App\Model\Week;
 use App\Repository\EntryRepository;
 use Carbon\CarbonInterface;
 
-class CalendarDataManager
+class BindDataManager
 {
     /**
      * @var Entry[] $entries

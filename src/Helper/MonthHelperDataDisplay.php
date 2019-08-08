@@ -6,7 +6,7 @@
  * Time: 16:21
  */
 
-namespace App\Service;
+namespace App\Helper;
 
 use App\GrrData\DateUtils;
 use App\Model\Month;

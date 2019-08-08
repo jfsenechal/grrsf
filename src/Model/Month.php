@@ -8,8 +8,7 @@
 
 namespace App\Model;
 
-use App\Factory\CarbonFactory;
-use App\Service\LocalHelper;
+use App\Helper\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
@@ -34,12 +33,12 @@ class Month extends Carbon
         $this->data_days = new ArrayCollection();
     }
 
-    public static function createJf(int $year, int $month, $day = 01): self
+    public static function init(int $year, int $month, $day = 01): self
     {
         $monthModel = new self();
         $monthModel->setDate($year, $month, $day);
         $monthModel->locale(LocalHelper::getDefaultLocal());
-        $monthModel->firstDayImmutable = CarbonFactory::createImmutable($year, $month, $day);
+        $monthModel->firstDayImmutable = $monthModel->toImmutable();
 
         return $monthModel;
     }

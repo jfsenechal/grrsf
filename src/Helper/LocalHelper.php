@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Helper;
 
 use Carbon\Carbon;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;

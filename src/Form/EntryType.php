@@ -104,6 +104,7 @@ class EntryType extends AbstractType
                 [
                     'label' => 'entry.form.description.label',
                     'help' => 'entry.form.description.help',
+                    'required' => false,
                 ]
             )
             ->addEventSubscriber(new AddRoomsFieldSubscriber($this->roomRepository));

@@ -7,7 +7,7 @@ use App\Model\Day;
 use App\Model\Hour;
 use App\Model\Month;
 use App\Model\RoomModel;
-use App\Service\CalendarNavigationDisplay;
+use App\Navigation\NavigationManager;
 use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +27,7 @@ class GrrFrontExtension extends AbstractExtension
      */
     private $requestStack;
     /**
-     * @var CalendarNavigationDisplay
+     * @var NavigationManager
      */
     private $calendarNavigationDisplay;
     /**
@@ -39,7 +39,7 @@ class GrrFrontExtension extends AbstractExtension
         RequestStack $requestStack,
         MenuGenerator $menuGenerator,
         Environment $twigEnvironment,
-        CalendarNavigationDisplay $calendarNavigationDisplay
+        NavigationManager $calendarNavigationDisplay
     ) {
         $this->twigEnvironment = $twigEnvironment;
         $this->calendarNavigationDisplay = $calendarNavigationDisplay;
@@ -128,7 +128,7 @@ class GrrFrontExtension extends AbstractExtension
         $year = $request->get('year') ?? 0;
         $month = $request->get('month') ?? 0;
 
-        $monthModel = Month::createJf($year, $month);
+        $monthModel = Month::init($year, $month);
 
         $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
 

@@ -6,7 +6,7 @@
  * Time: 18:30
  */
 
-namespace App\Service;
+namespace App\Security;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;

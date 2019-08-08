@@ -11,8 +11,8 @@ use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
 use App\Service\AreaService;
-use App\Service\CalendarDataManager;
-use App\Service\MonthHelperDataDisplay;
+use App\Service\BindDataManager;
+use App\Helper\MonthHelperDataDisplay;
 use App\Service\Settingservice;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +39,7 @@ class DefaultController extends AbstractController
      */
     private $entryRepository;
     /**
-     * @var CalendarDataManager
+     * @var BindDataManager
      */
     private $calendarDataManager;
     /**
@@ -61,7 +61,7 @@ class DefaultController extends AbstractController
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
-        CalendarDataManager $calendarDataManager,
+        BindDataManager $calendarDataManager,
         AreaService $areaService
     ) {
         $this->areaRepository = $areaRepository;
@@ -106,7 +106,7 @@ class DefaultController extends AbstractController
             $roomObject = $this->roomRepository->find($room);
         }
 
-        $monthModel = Month::createJf($year, $month);
+        $monthModel = Month::init($year, $month);
         $this->calendarDataManager->bindMonth($monthModel, $area, $roomObject);
 
         $monthData = $this->monthHelperDataDisplay->generateHtmlMonth($monthModel);

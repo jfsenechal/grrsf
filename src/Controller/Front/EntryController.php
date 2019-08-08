@@ -100,8 +100,8 @@ class EntryController extends AbstractController
         $entry->setArea($area);
         $entry->setRoom($room);
         $entry->setStartTime($date);
-        $date->addHour(2);
-        $entry->setEndTime($date);
+        $suite = $date->copy()->addHour(2);
+        $entry->setEndTime($suite);
 
         $form = $this->createForm(EntryType::class, $entry);
         $formPeriodicity = $this->createForm(PeriodicityType::class, null);

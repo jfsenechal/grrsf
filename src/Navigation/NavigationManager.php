@@ -6,7 +6,7 @@
  * Time: 16:21
  */
 
-namespace App\Service;
+namespace App\Navigation;
 
 use App\GrrData\DateUtils;
 use App\Model\Month;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Webmozart\Assert\Assert;
 
-class CalendarNavigationDisplay
+class NavigationManager
 {
     /**
      * @var Environment
@@ -40,6 +40,11 @@ class CalendarNavigationDisplay
         $this->requestStack = $requestStack;
     }
 
+    /**
+     * @param Month $month
+     * @param int $number nombre de mois
+     * @return Navigation
+     */
     public function createMonth(Month $month, int $number = 1): Navigation
     {
         $this->month = $month;
@@ -54,8 +59,8 @@ class CalendarNavigationDisplay
         $current = $this->month->getFirstDayImmutable()->toMutable();
 
         for ($i = 0; $i < $number; $i++) {
-            $monthModel = Month::createJf($current->year, $current->month);
-            $navigation->addMonth($this->generateMonthByWeeks($monthModel));
+            $monthModel = Month::init($current->year, $current->month);
+            $navigation->addMonth($this->renderMonthByWeeks($monthModel));
             $current->addMonth();
         }
 
@@ -89,7 +94,7 @@ class CalendarNavigationDisplay
         );
     }
 
-    public function generateMonthByWeeks(Month $month)
+    public function renderMonthByWeeks(Month $month)
     {
         $firstDay = $month->firstOfMonth();
 
@@ -110,7 +115,7 @@ class CalendarNavigationDisplay
         );
     }
 
-    public function generateMonthByDay(Month $month)
+    public function renderMonthByDay(Month $month)
     {
         $firstDay = $month->firstOfMonth();
         $days = $month->getCalendarDays();
