@@ -271,8 +271,3 @@ unit:
 Hours: Heures
 page:
   welcome: Bienvenue sur Grr
-validator:
-  entry:
-    busy: 'La réservation {value} est dans une zone accupée.'
-
-validator.entry.busy "{{ value }}": 'ezezez'

@@ -12,10 +12,11 @@ use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
 use App\Repository\RepeatRepository;
-use App\Validator\BusyRoom;
+use App\Validator\ValidationsEntry;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,19 +47,23 @@ class EntryController extends AbstractController
      * @var ValidatorInterface
      */
     private $validator;
+    /**
+     * @var ValidationsEntry
+     */
+    private $validationsEntry;
 
     public function __construct(
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
         EntryManager $entryManager,
         RepeatRepository $repeatRepository,
-        ValidatorInterface $validator
+        ValidationsEntry $validationsEntry
     ) {
         $this->entryRepository = $entryRepository;
         $this->repeatRepository = $repeatRepository;
         $this->entryManager = $entryManager;
         $this->entryFactory = $entryFactory;
-        $this->validator = $validator;
+        $this->validationsEntry = $validationsEntry;
     }
 
     /**
@@ -117,11 +122,7 @@ class EntryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $constraint = new BusyRoom();
-            $violations = $this->validator->validate($entry, $constraint);
-            foreach ($violations as $violation) {
-                dump($violation->getMessage());
-            }
+
 
             //  $this->entryManager->insert($entry);
 

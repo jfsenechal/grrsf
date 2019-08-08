@@ -1,3 +1,2 @@
-say_hello: 'Hello {name}!'
-
-validator.entry.busy "{{ value }}": 'ezezez'
+say_hello: 'Hello {value}!'
+validator.entry.busy: '{value} ezezez'

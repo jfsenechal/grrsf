@@ -1,0 +1,6 @@
+validator:
+  entry:
+    busy: 'La réservation {value} est dans une zone accupée.'
+
+validator.entry.busy "{{ value }}": 'ezezez'
+validator.entry.busy: 'La réservation {value} est dans une zone accupée.'

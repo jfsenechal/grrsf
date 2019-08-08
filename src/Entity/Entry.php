@@ -6,12 +6,17 @@ use App\Booking\BookingTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as AppAssert;
 
 /**
  * Entry
  *
  * @ORM\Table(name="grr_entry", indexes={@ORM\Index(name="idxEndTime", columns={"end_time"}), @ORM\Index(name="idxStartTime", columns={"start_time"})})
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
+ *
+ * @AppAssert\BusyRoom()
+ *
  */
 class Entry
 {
@@ -29,13 +34,16 @@ class Entry
     /**
      * @var \DateTime
      *
+     * @Assert\DateTime()
+     * @Assert\LessThan(propertyPath="endTime")
      * @ORM\Column(name="start_time", type="datetime", nullable=false)
      */
     private $startTime;
 
     /**
      * @var \DateTime
-     *
+     * @Assert\DateTime()
+     * @Assert\GreaterThan(propertyPath="startTime")
      * @ORM\Column(name="end_time", type="datetime", nullable=false)
      */
     private $endTime;
@@ -181,6 +189,14 @@ class Entry
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @Assert\IsTrue(message="assert.entry.startstdend")
+     */
+    public function isStartStEnd(): bool
+    {
+        return $this->startTime < $this->endTime;
     }
 
     /**

@@ -1,0 +1,6 @@
+entry:
+    busy: 'La réservation {{value}}  est dans une zone accupée.'
+
+assert:
+    entry:
+        startstdend: La date de début doit être plus petite que la date de fin
