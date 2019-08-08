@@ -49,7 +49,7 @@ class EntryRepository extends ServiceEntityRepository
         }
 
         return $qb
-            ->orderBy('entry.startTime', 'DESC')
+            ->orderBy('entry.startTime', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -71,7 +71,7 @@ class EntryRepository extends ServiceEntityRepository
             ->setParameter('room', $room);
 
         return $qb
-            ->orderBy('entry.startTime', 'DESC')
+            ->orderBy('entry.startTime', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -93,7 +93,7 @@ class EntryRepository extends ServiceEntityRepository
             ->setParameter('room', $room);
 
         return $qb
-            ->orderBy('entry.startTime', 'DESC')
+            ->orderBy('entry.startTime', 'ASC')
             ->getQuery()
             ->getResult();
     }

@@ -271,3 +271,6 @@ unit:
 Hours: Heures
 page:
   welcome: Bienvenue sur Grr
+flash:
+  entry:
+    delete: Réservation supprimée

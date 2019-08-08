@@ -17,10 +17,15 @@ class AreaManager
      * @var AreaRepository
      */
     private $areaRepository;
+    /**
+     * @var RoomManager
+     */
+    private $roomManager;
 
-    public function __construct(AreaRepository $areaRepository)
+    public function __construct(AreaRepository $areaRepository, RoomManager $roomManager)
     {
         $this->areaRepository = $areaRepository;
+        $this->roomManager = $roomManager;
     }
 
     public function persist(Area $area)
@@ -41,6 +46,13 @@ class AreaManager
     public function insert(Area $area)
     {
         $this->areaRepository->insert($area);
+    }
+
+    public function removeRooms(Area $area) {
+        foreach ($area->getRooms() as $room) {
+            $this->roomManager->remove($room);
+        }
+        $this->roomManager->flush();
     }
 
 }

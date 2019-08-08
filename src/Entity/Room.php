@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,7 +32,7 @@ class Room
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank()
      * @ORM\Column(name="room_name", type="string", length=60, nullable=false)
      */
     private $name;

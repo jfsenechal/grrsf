@@ -1,4 +1,5 @@
 <td rowspan="{{ entry.cellules }}" class="table-info">
-    {{ entry.name }} <span
+    <a href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">
+    {{ entry.name }}</a> <span
             class="text-muted">({{ entry.startTime|date('H:i') }} to {{ entry.endTime|date('H:i') }})</span>
 </td>

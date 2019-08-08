@@ -31,6 +31,10 @@ class BusyRoomValidator extends ConstraintValidator
             return;
         }
 
+        if (!$value instanceof Entry) {
+            throw new \UnexpectedValueException($value, 'Entry');
+        }
+
         $room = $value->getRoom();
 
         $entries = $this->entryRepository->isBusy($value, $room);
@@ -38,7 +42,6 @@ class BusyRoomValidator extends ConstraintValidator
         if (count($entries) > 0) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $value)
-
                 ->addViolation();
         }
     }

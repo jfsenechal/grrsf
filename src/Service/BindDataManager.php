@@ -91,6 +91,9 @@ class BindDataManager
     }
 
     /**
+     * Genere des RoomModel avec les entrées pour chaque Room
+     * Puis pour chaque entrées en calcul le nbre de cellules qu'elle occupe
+     * et sa localisation
      * @param CarbonInterface $day
      * @param Area $area
      * @param Hour[] $hoursModel
@@ -109,8 +112,10 @@ class BindDataManager
         foreach ($roomsModel as $roomModel) {
             $entries = $roomModel->getEntries();
             foreach ($entries as $entry) {
-                $this->entryService->setCountCells($entry, $area);
                 $this->entryService->setLocations($entry, $hoursModel);
+                $count = count($entry->getLocations());
+                $entry->setCellules($count);
+                //$this->entryService->setCountCells($entry, $area);
             }
         }
 

@@ -1,5 +1,5 @@
 entry:
-    busy: 'La réservation {{value}}  est dans une zone accupée.'
+    busy: 'La réservation %value%  est dans une zone accupée.'
 
 assert:
     entry:

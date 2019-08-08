@@ -17,10 +17,15 @@ class RoomManager
      * @var RoomRepository
      */
     private $roomRepository;
+    /**
+     * @var EntryManager
+     */
+    private $entryManager;
 
-    public function __construct(RoomRepository $roomRepository)
+    public function __construct(RoomRepository $roomRepository, EntryManager $entryManager)
     {
         $this->roomRepository = $roomRepository;
+        $this->entryManager = $entryManager;
     }
 
     public function persist(Room $room)
@@ -41,6 +46,13 @@ class RoomManager
     public function insert(Room $room)
     {
         $this->roomRepository->insert($room);
+    }
+
+    public function removeEntries(Room $room)
+    {
+        foreach ($room->getEntries() as $entry) {
+            $this->entryManager->remove($entry);
+        }
     }
 
 }

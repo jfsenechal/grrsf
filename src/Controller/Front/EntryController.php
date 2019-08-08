@@ -16,7 +16,6 @@ use App\Validator\ValidationsEntry;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -122,11 +121,18 @@ class EntryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $this->entryManager->insert($entry);
 
-
-            //  $this->entryManager->insert($entry);
-
-            //  return $this->redirectToRoute('grr_front_entry_index');
+            return $this->redirectToRoute(
+                'grr_front_day',
+                [
+                    'area' => $area,
+                    'room' => $room,
+                    'month' => $month,
+                    'year' => $year,
+                    'day' => $day,
+                ]
+            );
         }
 
         return $this->render(
@@ -165,13 +171,15 @@ class EntryController extends AbstractController
     {
         $form = $this->createForm(EntryType::class, $entry);
         $formPeriodicity = $this->createForm(PeriodicityType::class, null);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->entryManager->flush();
 
             return $this->redirectToRoute(
-                'grr_front_entry_index',
+                'grr_front_entry_show',
                 [
                     'id' => $entry->getId(),
                 ]
@@ -196,8 +204,9 @@ class EntryController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$entry->getId(), $request->request->get('_token'))) {
             $this->entryManager->remove($entry);
             $this->entryManager->flush();
+            $this->addFlash('success','flash.entry.delete');
         }
 
-        return $this->redirectToRoute('grr_front_entry_index');
+        return $this->redirectToRoute('grr_front_home');
     }
 }

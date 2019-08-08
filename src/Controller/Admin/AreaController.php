@@ -139,6 +139,7 @@ class AreaController extends AbstractController
     public function delete(Request $request, Area $area): Response
     {
         if ($this->isCsrfTokenValid('delete'.$area->getId(), $request->request->get('_token'))) {
+            $this->areaManager->removeRooms($area);
             $this->areaManager->remove($area);
             $this->areaManager->flush();
         }

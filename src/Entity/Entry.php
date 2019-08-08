@@ -16,6 +16,7 @@ use App\Validator as AppAssert;
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
  *
  * @AppAssert\BusyRoom()
+ * @AppAssert\AreaTimeSlot()
  *
  */
 class Entry
@@ -30,6 +31,13 @@ class Entry
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="name", type="string", length=80, nullable=false)
+     */
+    private $name;
 
     /**
      * @var \DateTime
@@ -65,7 +73,7 @@ class Entry
 
     /**
      * @var \DateTime
-     *
+     * @deprecated
      * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
     private $timestamp;
@@ -91,12 +99,6 @@ class Entry
      */
     private $beneficiaire;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=80, nullable=false)
-     */
-    private $name;
 
     /**
      * @var string|null
