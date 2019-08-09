@@ -184,6 +184,11 @@ class Entry
      */
     private $cellules;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Periodicity", inversedBy="entry", cascade={"persist", "remove"})
+     */
+    private $periodicity;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -513,6 +518,18 @@ class Entry
     public function setRoom(?Room $room): self
     {
         $this->room = $room;
+
+        return $this;
+    }
+
+    public function getPeriodicity(): ?Periodicity
+    {
+        return $this->periodicity;
+    }
+
+    public function setPeriodicity(?Periodicity $periodicity): self
+    {
+        $this->periodicity = $periodicity;
 
         return $this;
     }

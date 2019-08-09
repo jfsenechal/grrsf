@@ -6,12 +6,14 @@ use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\EntryFactory;
+use App\Factory\PeriodicityFactory;
 use App\Form\EntryType;
 use App\Form\PeriodicityType;
 use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
 use App\Repository\RepeatRepository;
+use App\Service\PeriodicityService;
 use App\Validator\ValidationsEntry;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -50,19 +52,25 @@ class EntryController extends AbstractController
      * @var ValidationsEntry
      */
     private $validationsEntry;
+    /**
+     * @var PeriodicityService
+     */
+    private $periodicityService;
 
     public function __construct(
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
         EntryManager $entryManager,
         RepeatRepository $repeatRepository,
-        ValidationsEntry $validationsEntry
+        ValidationsEntry $validationsEntry,
+        PeriodicityService $periodicityService
     ) {
         $this->entryRepository = $entryRepository;
         $this->repeatRepository = $repeatRepository;
         $this->entryManager = $entryManager;
         $this->entryFactory = $entryFactory;
         $this->validationsEntry = $validationsEntry;
+        $this->periodicityService = $periodicityService;
     }
 
     /**
@@ -155,6 +163,21 @@ class EntryController extends AbstractController
             $repeat = $this->repeatRepository->find($entry->getRepeatId());
         }
 
+        $today = Carbon::today();
+
+        $periodicity = PeriodicityFactory::createNew($entry);
+        $periodicity->setEndTime($today->addYears(2)->toDateTime());
+        $entry->setPeriodicity($periodicity);
+        //$periodicity->setEveryDay(true);
+        //$periodicity->setEveryYear(true);
+        //$periodicity->setEveryMonthSameDay(true);
+        $periodicity->setEveryMonthSameWeekOfDay(true);
+
+        $days = $this->periodicityService->getDays($entry);
+        foreach ($days as $day) {
+            dump($day);
+        }
+
         return $this->render(
             '@grr_front/entry/show.html.twig',
             [
@@ -205,7 +228,7 @@ class EntryController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$entry->getId(), $request->request->get('_token'))) {
             $this->entryManager->remove($entry);
             $this->entryManager->flush();
-            $this->addFlash('success','flash.entry.delete');
+            $this->addFlash('success', 'flash.entry.delete');
         }
 
         return $this->redirectToRoute('grr_front_home');
