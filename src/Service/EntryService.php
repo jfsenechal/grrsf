@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\Area;
 use App\Entity\Entry;
-use App\Model\Hour;
+use App\Model\TimeSlot;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
@@ -28,7 +28,7 @@ class EntryService
 
     /**
      * @param Entry  $entry
-     * @param Hour[] $dayTimeSlots
+     * @param TimeSlot[] $dayTimeSlots
      */
     public function setLocations(Entry $entry, array $dayTimeSlots)
     {

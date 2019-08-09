@@ -13,7 +13,7 @@ use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Model\Day;
-use App\Model\Hour;
+use App\Model\TimeSlot;
 use App\Model\Month;
 use App\Model\RoomModel;
 use App\Model\Week;
@@ -100,7 +100,7 @@ class BindDataManager
      *
      * @param CarbonInterface $day
      * @param Area            $area
-     * @param Hour[]          $hoursModel
+     * @param TimeSlot[]          $hoursModel
      *
      * @return RoomModel[]
      */
@@ -115,6 +115,9 @@ class BindDataManager
         }
 
         foreach ($roomsModel as $roomModel) {
+            /**
+             * @var Entry[] $entries
+             */
             $entries = $roomModel->getEntries();
             foreach ($entries as $entry) {
                 $this->entryService->setLocations($entry, $hoursModel);

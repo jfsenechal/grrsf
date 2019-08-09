@@ -11,7 +11,7 @@ namespace App\Model;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Hour
+class TimeSlot
 {
     /**
      * @var CarbonInterface

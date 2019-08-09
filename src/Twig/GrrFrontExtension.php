@@ -5,9 +5,9 @@ namespace App\Twig;
 use App\Entity\Entry;
 use App\Factory\MenuGenerator;
 use App\Model\Day;
-use App\Model\Hour;
 use App\Model\Month;
 use App\Model\RoomModel;
+use App\Model\TimeSlot;
 use App\Navigation\NavigationManager;
 use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -47,27 +47,18 @@ class GrrFrontExtension extends AbstractExtension
         $this->menuGenerator = $menuGenerator;
     }
 
-    public function getFilters(): array
-    {
-        return [
-            // If your filter generates SAFE HTML, you should add a third
-            // parameter: ['is_safe' => ['html']]
-            // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
-        ];
-    }
-
     public function getFunctions()
     {
         return [
-            new TwigFunction('grrMonthNavigation', [$this, 'MonthNavigation'], ['is_safe' => ['html']]),
-            new TwigFunction('grrMenuNavigation', [$this, 'menuNavigation'], ['is_safe' => ['html']]),
+            new TwigFunction('grrMonthNavigationRender', [$this, 'MonthNavigationRender'], ['is_safe' => ['html']]),
+            new TwigFunction('grrMenuNavigationRender', [$this, 'menuNavigationRender'], ['is_safe' => ['html']]),
             new TwigFunction('grrCompleteTr', [$this, 'grrCompleteTr'], ['is_safe' => ['html']]),
             new TwigFunction('grrGenerateCellDataDay', [$this, 'grrGenerateCellDataDay'], ['is_safe' => ['html']]),
         ];
     }
 
     /**
-     * @param Hour $hour
+     * @param TimeSlot $hour
      * @param RoomModel $roomModel
      *
      * @return string|void
@@ -76,7 +67,7 @@ class GrrFrontExtension extends AbstractExtension
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function grrGenerateCellDataDay(Hour $hour, RoomModel $roomModel, Day $day)
+    public function grrGenerateCellDataDay(TimeSlot $hour, RoomModel $roomModel, Day $day)
     {
         /**
          * @var Entry[] $entries
@@ -84,7 +75,7 @@ class GrrFrontExtension extends AbstractExtension
         $entries = $roomModel->getEntries();
         foreach ($entries as $entry) {
             /**
-             * @var Hour[] $locations
+             * @var TimeSlot[] $locations
              */
             $locations = $entry->getLocations();
             $position = 0;
@@ -119,7 +110,7 @@ class GrrFrontExtension extends AbstractExtension
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function monthNavigation()
+    public function monthNavigationRender()
     {
         $request = $this->requestStack->getMasterRequest();
 
@@ -143,7 +134,13 @@ class GrrFrontExtension extends AbstractExtension
         );
     }
 
-    public function menuNavigation()
+    /**
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
+    public function menuNavigationRender()
     {
         $request = $this->requestStack->getMasterRequest();
         $area = $request ? $request->get('area') : 0;

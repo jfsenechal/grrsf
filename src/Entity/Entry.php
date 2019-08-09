@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Booking\BookingTrait;
-use App\Model\Hour;
+use App\Model\TimeSlot;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -168,7 +168,7 @@ class Entry
     private $duration2;
 
     /**
-     * @var ArrayCollection
+     * @var ArrayCollection|TimeSlot[]
      */
     private $locations = [];
 
@@ -292,7 +292,7 @@ class Entry
     }
 
     /**
-     * @return Collection|array|Hour[]
+     * @return Collection|array|TimeSlot[]
      */
     public function getLocations(): array
     {

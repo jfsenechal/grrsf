@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\Area;
 use App\Factory\CarbonFactory;
-use App\Model\Hour;
+use App\Model\TimeSlot;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
@@ -46,7 +46,7 @@ class AreaService
      *
      * @param CarbonPeriod $hoursPeriod
      *
-     * @return Hour[]
+     * @return TimeSlot[]
      */
     public function getHoursModel($area, $daySelected)
     {
@@ -62,7 +62,7 @@ class AreaService
             $timeSlots->next();
             $end = $timeSlots->current();
 
-            $hour = new Hour();
+            $hour = new TimeSlot();
             $hour->setBegin($begin);
             $hour->setEnd($end);
             $hours[] = $hour;

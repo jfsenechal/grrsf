@@ -15,6 +15,11 @@ use Carbon\CarbonPeriod;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
+/**
+ * @todo https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
+ * Class Month
+ * @package App\Model
+ */
 class Month extends Carbon
 {
     /**
