@@ -25,15 +25,15 @@ class PeriodicityService
     /**
      * @param Entry $entry
      *
-     * @return CarbonPeriod|array
+     * @return CarbonPeriod|null
      *
      * @throws \Exception
      */
-    public function getDays(Entry $entry): CarbonPeriod
+    public function getDays(Entry $entry): ?CarbonPeriod
     {
         $periodicity = $entry->getPeriodicity();
         if (!$periodicity) {
-            throw new \Exception('Pas de periodicity');
+            return null;
         }
 
         $this->entry = $entry;
@@ -61,7 +61,7 @@ class PeriodicityService
             return $this->forEveryWeek();
         }
 
-        return [];
+        return null;
     }
 
     protected function forEveryDays(): CarbonPeriod
@@ -138,8 +138,6 @@ class PeriodicityService
 
     protected function applyFilter(CarbonPeriod $period, callable $filter): CarbonPeriod
     {
-        $period::filter($filter);
-
-        return $period;
+        return $period::filter($filter);
     }
 }

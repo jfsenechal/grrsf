@@ -20,12 +20,10 @@ class EntryFactory
     public static function setDefaultValues(Entry $entry)
     {
         $entry
-            ->setTimestamp(new \DateTime())
             ->setModerate(false)
             ->setJours(false)
             ->setCreateBy('jf')
             ->setBeneficiaire('jf')
-            ->setTimestamp(new \DateTime())
             ->setOptionReservation(0);
     }
 }

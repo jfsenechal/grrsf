@@ -2,8 +2,11 @@
 
 namespace App\Form;
 
+use App\Form\Type\SelectDayOfWeekTypeField;
+use App\GrrData\PeriodicityConstant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,7 +14,8 @@ class PeriodicityType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $types = ['None', 'Chaque jour', 'Chaque semaine', 'Chaque mois', 'Chaque année'];
+        $types = PeriodicityConstant::getTypesPeriodicite();
+
         $builder
             ->add(
                 'type',
@@ -20,6 +24,20 @@ class PeriodicityType extends AbstractType
                     'choices' => array_flip($types),
                     'multiple' => false,
                     'expanded' => true,
+                ]
+            )
+            ->add(
+                'days',
+                SelectDayOfWeekTypeField::class,
+                [
+                    'attr' => ['class' => 'd-none'],
+                ]
+            )
+            ->add(
+                'end_periodicity',
+                DateTimeType::class,
+                [
+            
                 ]
             );
     }

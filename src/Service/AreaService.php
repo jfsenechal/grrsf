@@ -29,7 +29,7 @@ class AreaService
      *
      * @return CarbonPeriod
      */
-    public function getHoursPeriod(Area $area, CarbonInterface $dayModel): CarbonPeriod
+    public function getTimeSlots(Area $area, CarbonInterface $dayModel): CarbonPeriod
     {
         $heureDebut = $area->getMorningstartsArea();
         $heureFin = $area->getEveningendsArea();
@@ -50,17 +50,17 @@ class AreaService
      */
     public function getHoursModel($area, $daySelected)
     {
-        $hoursPeriod = $this->getHoursPeriod($area, $daySelected);
+        $timeSlots = $this->getTimeSlots($area, $daySelected);
 
         $hours = [];
-        $hoursPeriod->rewind();
-        $last = $hoursPeriod->last();
-        $hoursPeriod->rewind();
+        $timeSlots->rewind();
+        $last = $timeSlots->last();
+        $timeSlots->rewind();
 
-        while ($hoursPeriod->current()->lessThan($last)) {
-            $begin = $hoursPeriod->current();
-            $hoursPeriod->next();
-            $end = $hoursPeriod->current();
+        while ($timeSlots->current()->lessThan($last)) {
+            $begin = $timeSlots->current();
+            $timeSlots->next();
+            $end = $timeSlots->current();
 
             $hour = new Hour();
             $hour->setBegin($begin);

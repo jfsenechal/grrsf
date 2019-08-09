@@ -67,7 +67,7 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @param Hour      $hour
+     * @param Hour $hour
      * @param RoomModel $roomModel
      *
      * @return string|void
@@ -89,10 +89,8 @@ class GrrFrontExtension extends AbstractExtension
             $locations = $entry->getLocations();
             $position = 0;
             foreach ($locations as $location) {
-                if ($location->getBegin()->equalTo(
-                    $hour->getBegin() && $location->getEnd()->equalTo($hour->getEnd())
-                )) {
-                    if (0 == $position) {
+                if ($location === $hour) {
+                    if (0 === $position) {
                         return $this->twigEnvironment->render(
                             '@grr_front/day/_cell_day_data.html.twig',
                             ['position' => $position, 'entry' => $entry]
@@ -115,8 +113,6 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @param Month $monthModel
-     *
      * @return string
      *
      * @throws \Twig\Error\LoaderError
@@ -163,7 +159,7 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @param Day    $day
+     * @param Day $day
      * @param string $action begin|end
      *
      * @return string

@@ -48,54 +48,11 @@ class GrrAdminExtension extends AbstractExtension
             // If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
-            new TwigFilter('grrPeriodiciteName', [$this, 'periodiciteName']),
-            new TwigFilter('grrEntryTypeGetName', [$this, 'entryTypeGetName']),
-            new TwigFilter('grrGetNumWeeks', [$this, 'getNumWeeks']),
             new TwigFilter('grrJoursSemaine', [$this, 'joursSemaine']),
             new TwigFilter('grrPeriodName', [$this, 'periodName']),
             new TwigFilter('grrHourFormat', [$this, 'hourFormat']),
             new TwigFilter('grrDisplayColor', [$this, 'displayColor'], ['is_safe' => ['html']]),
         ];
-    }
-
-    public function getFunctions()
-    {
-        return [
-        ];
-    }
-
-    public function periodiciteName($value)
-    {
-        return $this->entryData->getTypePeriodicite($value);
-    }
-
-    /**
-     * field: type.
-     *
-     * @param $value
-     *
-     * @return string
-     */
-    public function entryTypeGetName($value)
-    {
-        $room = $this->TypeAreaRepository->findOneBy(['typeLetter' => $value]);
-        if ($room) {
-            return $room->getTypeName().' ('.$value.')';
-        }
-
-        return $value;
-    }
-
-    /**
-     *field: rep_num_weeks.
-     *
-     * @param $value
-     *
-     * @return mixed
-     */
-    public function getNumWeeks($value)
-    {
-        return $this->entryData->getNumWeeks($value).' ('.$value.')';
     }
 
     /**
@@ -126,11 +83,5 @@ class GrrAdminExtension extends AbstractExtension
     public function displayColor(string $value)
     {
         return '<span style="background-color: '.$value.';"></span>';
-    }
-
-    public function displayLine(int $value)
-    {
-        if (1 !== $value) {
-        }
     }
 }

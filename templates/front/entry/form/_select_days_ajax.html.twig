@@ -1,0 +1,17 @@
+<script type="text/javascript">
+    /**
+     * Met ajour la liste des rooms
+     */
+    $(document).ready(function () {
+        var $locationSelect = $('#periodicity_type');
+        var $specificLocationTarget = $('#periodicity_days');
+
+        $locationSelect.on('change', function (e) {
+            console.log($locationSelect.val());
+
+            //$specificLocationTarget.toggleClass('IsBestAnswer bestanswer');
+            $specificLocationTarget.removeClass('d-none');
+
+        });
+    });
+</script>

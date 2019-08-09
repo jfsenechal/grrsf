@@ -1,0 +1,4 @@
+parameters:
+  autoload_paths:
+    - 'vendor/squizlabs/php_codesniffer/autoload.php'
+    - 'vendor/project-without-composer'
