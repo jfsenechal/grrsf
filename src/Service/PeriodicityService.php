@@ -3,9 +3,9 @@
 
 namespace App\Service;
 
-
 use App\Entity\Entry;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 
 class PeriodicityService
@@ -15,9 +15,13 @@ class PeriodicityService
      */
     protected $entry;
     /**
-     * @var \DateTimeInterface|null
+     * @var CarbonInterface
      */
-    private $endTime;
+    private $periodicity_end;
+    /**
+     * @var CarbonInterface
+     */
+    private $entry_start;
 
     /**
      * @param Entry $entry
@@ -32,7 +36,9 @@ class PeriodicityService
         }
 
         $this->entry = $entry;
-        $this->endTime = $periodicity->getEndTime();
+
+        $this->entry_start = Carbon::instance($this->entry->getStartTime());
+        $this->periodicity_end = Carbon::instance($periodicity->getEndTime());
 
         if ($periodicity->getEveryDay()) {
             return $this->forEveryDays();
@@ -59,11 +65,8 @@ class PeriodicityService
 
     protected function forEveryDays(): CarbonPeriod
     {
-        $start = Carbon::instance($this->entry->getStartTime());
-        $end = Carbon::instance($this->endTime);
-
-        return Carbon::parse($start->toDateString())->daysUntil(
-            $end->toDateString()
+        return Carbon::parse($this->entry_start->toDateString())->daysUntil(
+            $this->periodicity_end->toDateString()
         );
     }
 
@@ -71,87 +74,73 @@ class PeriodicityService
      *
      * @return CarbonPeriod
      */
-    protected function forEveryYears()
+    protected function forEveryYears(): CarbonPeriod
     {
-        $start = Carbon::instance($this->entry->getStartTime());
-        $end = Carbon::instance($this->endTime);
-
-        $period = Carbon::parse($start->toDateString())->yearsUntil(
-            $end->toDateString()
+        $period = Carbon::parse($this->entry_start->toDateString())->yearsUntil(
+            $this->periodicity_end->toDateString()
         );
 
-        $weekendFilter = function ($date) use ($start) {
-            return $date->day == $start->day;
+        $filter = function ($date) {
+            return $date->day == $this->entry_start->day;
         };
 
-        $period->filter($weekendFilter);
-
-        return $period;
+        return $this->applyFilter($period, $filter);
     }
 
     /**
      * Par exemple 12-08 12-09 12-10
      * @return CarbonPeriod
      */
-    protected function forEveryMonthSameDay()
+    protected function forEveryMonthSameDay(): CarbonPeriod
     {
-        $start = Carbon::instance($this->entry->getStartTime());
-        $end = Carbon::instance($this->endTime);
-
-        $period = Carbon::parse($start->toDateString())->daysUntil(
-            $end->toDateString()
+        $period = Carbon::parse($this->entry_start->toDateString())->daysUntil(
+            $this->periodicity_end->toDateString()
         );
 
-        $weekendFilter = function ($date) use ($start) {
-            return $date->day == $start->day;
+        $filter = function ($date) {
+            return $date->day == $this->entry_start->day;
         };
 
-        $period->filter($weekendFilter);
-
-        return $period;
+        return $this->applyFilter($period, $filter);
     }
 
     /**
      * Par exemple le premier samedi de chaque mois
      * @return CarbonPeriod
      */
-    private function forEveryMonthSameDayOfWeek()
+    private function forEveryMonthSameDayOfWeek(): CarbonPeriod
     {
-        $start = Carbon::instance($this->entry->getStartTime());
-        $end = Carbon::instance($this->endTime);
-
-        $period = Carbon::parse($start->toDateString())->daysUntil(
-            $end->toDateString()
+        $period = Carbon::parse($this->entry_start->toDateString())->daysUntil(
+            $this->periodicity_end->toDateString()
         );
 
-        $weekendFilter = function ($date) use ($start) {
-            return $date->dayOfWeek == $start->dayOfWeek && $date->weekOfMonth == $start->weekOfMonth;
+        $filter = function ($date) {
+            return $date->dayOfWeek == $this->entry_start->dayOfWeek && $date->weekOfMonth == $this->entry_start->weekOfMonth;
         };
 
-        $period->filter($weekendFilter);
-
-        return $period;
+        return $this->applyFilter($period, $filter);
 
     }
 
-    protected function forEveryWeek()
+    protected function forEveryWeek(): CarbonPeriod
     {
-        $start = Carbon::instance($this->entry->getStartTime());
-        $end = Carbon::instance($this->endTime);
-
-        $period = Carbon::parse($start->toDateString())->daysUntil(
-            $end->toDateString()
+        $period = Carbon::parse($this->entry_start->toDateString())->daysUntil(
+            $this->periodicity_end->toDateString()
         );
 
-        $weekendFilter = function ($date) use ($start) {
-            return $date->day == $start->day;
+        $filter = function ($date) {
+            return $date->day == $this->entry_start->day;
         };
 
-        $period->filter($weekendFilter);
+        return $this->applyFilter($period, $filter);
+    }
+
+    protected function applyFilter(CarbonPeriod $period, callable $filter): CarbonPeriod
+    {
+        $period::filter($filter);
 
         return $period;
     }
-
 
 
 }
