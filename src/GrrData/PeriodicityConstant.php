@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\GrrData;
-
 
 class PeriodicityConstant
 {

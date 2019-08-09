@@ -118,7 +118,7 @@ class EntryController extends AbstractController
         $entry->setArea($area);
         $entry->setRoom($room);
         $entry->setStartTime($date);
-        $suite = $date->copy()->addHour($area->getDureeParDefautReservationArea());
+        $suite = $date->copy()->addMinutes($area->getDureeParDefautReservationArea());
         $entry->setEndTime($suite);
 
         $form = $this->createForm(EntryType::class, $entry);

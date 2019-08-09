@@ -37,7 +37,6 @@ class PeriodicityType extends AbstractType
                 'end_periodicity',
                 DateTimeType::class,
                 [
-            
                 ]
             );
     }

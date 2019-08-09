@@ -27,7 +27,7 @@ class EntryService
     }
 
     /**
-     * @param Entry  $entry
+     * @param Entry      $entry
      * @param TimeSlot[] $dayTimeSlots
      */
     public function setLocations(Entry $entry, array $dayTimeSlots)

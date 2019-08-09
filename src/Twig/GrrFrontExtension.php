@@ -58,7 +58,7 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @param TimeSlot $hour
+     * @param TimeSlot  $hour
      * @param RoomModel $roomModel
      *
      * @return string|void
@@ -70,12 +70,12 @@ class GrrFrontExtension extends AbstractExtension
     public function grrGenerateCellDataDay(TimeSlot $hour, RoomModel $roomModel, Day $day)
     {
         /**
-         * @var Entry[] $entries
+         * @var Entry[]
          */
         $entries = $roomModel->getEntries();
         foreach ($entries as $entry) {
             /**
-             * @var TimeSlot[] $locations
+             * @var TimeSlot[]
              */
             $locations = $entry->getLocations();
             $position = 0;
@@ -136,6 +136,7 @@ class GrrFrontExtension extends AbstractExtension
 
     /**
      * @return string
+     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -156,7 +157,7 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @param Day $day
+     * @param Day    $day
      * @param string $action begin|end
      *
      * @return string

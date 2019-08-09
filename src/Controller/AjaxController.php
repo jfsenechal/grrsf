@@ -57,6 +57,6 @@ class AjaxController extends AbstractController
         dump($areaId);
         $form = $this->createForm(SelectDayOfWeekTypeField::class);
 
-      //  return $this->render('ajax/_select_days.html.twig', ['form' => $form->createView()]);
+        //  return $this->render('ajax/_select_days.html.twig', ['form' => $form->createView()]);
     }
 }

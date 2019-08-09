@@ -22,8 +22,6 @@ class EntryData
         $this->translator = $translator;
     }
 
-
-
     /**
      * field:entry_type
      * Type de periode : aucune, chaque jour, chaque semaine, chaque mois.
@@ -34,7 +32,8 @@ class EntryData
     }
 
     /**
-     * Encodage de la date de fin de l'entry
+     * Encodage de la date de fin de l'entry.
+     *
      * @return array
      */
     public function getUnitsTime()

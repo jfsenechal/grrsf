@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Area.
@@ -26,7 +26,7 @@ class Area
 
     /**
      * @var string
-     *@Assert\NotBlank()
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=30, nullable=false)
      */
     private $name;
@@ -134,7 +134,7 @@ class Area
      *
      * @ORM\Column(name="duree_par_defaut_reservation_area", type="integer", nullable=false)
      */
-    private $dureeParDefautReservationArea;
+    private $dureeParDefautReservationArea = 900;
 
     /**
      * @var int

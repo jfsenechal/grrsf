@@ -100,7 +100,7 @@ class BindDataManager
      *
      * @param CarbonInterface $day
      * @param Area            $area
-     * @param TimeSlot[]          $hoursModel
+     * @param TimeSlot[]      $hoursModel
      *
      * @return RoomModel[]
      */
@@ -116,7 +116,7 @@ class BindDataManager
 
         foreach ($roomsModel as $roomModel) {
             /**
-             * @var Entry[] $entries
+             * @var Entry[]
              */
             $entries = $roomModel->getEntries();
             foreach ($entries as $entry) {
