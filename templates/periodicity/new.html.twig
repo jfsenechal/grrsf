@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Periodicity{% endblock %}
+
+{% block body %}
+    <h1>Create new Periodicity</h1>
+
+    {{ include('periodicity/_form.html.twig') }}
+
+    <a href="{{ path('periodicity_index') }}">back to list</a>
+{% endblock %}

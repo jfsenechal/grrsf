@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Periodicity{% endblock %}
+
+{% block body %}
+    <h1>Periodicity</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ periodicity.id }}</td>
+            </tr>
+            <tr>
+                <th>End_time</th>
+                <td>{{ periodicity.endTime ? periodicity.endTime|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Every_day</th>
+                <td>{{ periodicity.everyDay ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Every_year</th>
+                <td>{{ periodicity.everyYear ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Every_week</th>
+                <td>{{ periodicity.everyWeek ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Number_week</th>
+                <td>{{ periodicity.numberWeek }}</td>
+            </tr>
+            <tr>
+                <th>Week_days</th>
+                <td>{{ periodicity.weekDays ? periodicity.weekDays|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Every_month_same_day</th>
+                <td>{{ periodicity.everyMonthSameDay ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Every_month_same_week_day</th>
+                <td>{{ periodicity.everyMonthSameWeekDay ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('periodicity_index') }}">back to list</a>
+
+    <a href="{{ path('periodicity_edit', {'id': periodicity.id}) }}">edit</a>
+
+    {{ include('periodicity/_delete_form.html.twig') }}
+{% endblock %}
