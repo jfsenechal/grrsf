@@ -14,12 +14,6 @@ class AreaTimeSlotValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        /* @var $constraint \App\Validator\AreaTimeSlot */
-
-        if (null === $value || '' === $value) {
-            return;
-        }
-
         if (!$value instanceof Entry) {
             throw new \UnexpectedValueException($value, 'Entry');
         }

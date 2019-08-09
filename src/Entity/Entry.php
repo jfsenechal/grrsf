@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Booking\BookingTrait;
+use App\Model\Hour;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -39,7 +40,7 @@ class Entry
     private $name;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeInterface
      *
      * @Assert\DateTime()
      * @Assert\LessThan(propertyPath="endTime")
@@ -48,7 +49,7 @@ class Entry
     private $startTime;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeInterface
      * @Assert\DateTime()
      * @Assert\GreaterThan(propertyPath="startTime")
      * @ORM\Column(name="end_time", type="datetime", nullable=false)
@@ -70,14 +71,6 @@ class Entry
      * @ORM\Column(name="repeat_id", type="integer", nullable=true)
      */
     private $repeatId;
-
-    /**
-     * @var \DateTime
-     *
-     * @deprecated
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
-     */
-    private $timestamp;
 
     /**
      * @var string
@@ -299,7 +292,7 @@ class Entry
     }
 
     /**
-     * @return Collection|array
+     * @return Collection|array|Hour[]
      */
     public function getLocations(): array
     {
@@ -363,18 +356,6 @@ class Entry
     public function setRepeatId(?int $repeatId): self
     {
         $this->repeatId = $repeatId;
-
-        return $this;
-    }
-
-    public function getTimestamp(): ?\DateTimeInterface
-    {
-        return $this->timestamp;
-    }
-
-    public function setTimestamp(\DateTimeInterface $timestamp): self
-    {
-        $this->timestamp = $timestamp;
 
         return $this;
     }

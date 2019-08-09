@@ -77,7 +77,7 @@ class Navigation
     }
 
     /**
-     * @param string $months
+     * @param array $months
      *
      * @return Navigation
      */

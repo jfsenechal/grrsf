@@ -20,32 +20,12 @@ class PeriodicityController extends AbstractController
      */
     public function index(PeriodicityRepository $periodicityRepository): Response
     {
-        return $this->render('periodicity/index.html.twig', [
-            'periodicities' => $periodicityRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="periodicity_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $periodicity = new Periodicity();
-        $form = $this->createForm(Periodicity1Type::class, $periodicity);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($periodicity);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('periodicity_index');
-        }
-
-        return $this->render('periodicity/new.html.twig', [
-            'periodicity' => $periodicity,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'periodicity/index.html.twig',
+            [
+                'periodicities' => $periodicityRepository->findAll(),
+            ]
+        );
     }
 
     /**
@@ -53,9 +33,12 @@ class PeriodicityController extends AbstractController
      */
     public function show(Periodicity $periodicity): Response
     {
-        return $this->render('periodicity/show.html.twig', [
-            'periodicity' => $periodicity,
-        ]);
+        return $this->render(
+            'periodicity/show.html.twig',
+            [
+                'periodicity' => $periodicity,
+            ]
+        );
     }
 
     /**
@@ -72,10 +55,13 @@ class PeriodicityController extends AbstractController
             return $this->redirectToRoute('periodicity_index');
         }
 
-        return $this->render('periodicity/edit.html.twig', [
-            'periodicity' => $periodicity,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'periodicity/edit.html.twig',
+            [
+                'periodicity' => $periodicity,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**

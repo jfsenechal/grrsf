@@ -25,6 +25,7 @@ class ValidationsEntry
      */
     public function validate(Entry $entry)
     {
+        $violations = [];
         $validators = $this->getValidators();
         foreach ($validators as $validator) {
             $constraint = new $validator();
