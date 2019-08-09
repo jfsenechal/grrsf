@@ -169,6 +169,7 @@ class EntryController extends AbstractController
      */
     public function edit(Request $request, Entry $entry): Response
     {
+        $entry->setArea($entry->getRoom()->getArea());
         $form = $this->createForm(EntryType::class, $entry);
         $formPeriodicity = $this->createForm(PeriodicityType::class, null);
 

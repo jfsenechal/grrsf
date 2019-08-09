@@ -23,6 +23,7 @@ class Entry
 {
     use BookingTrait;
 
+
     /**
      * @var int
      *
