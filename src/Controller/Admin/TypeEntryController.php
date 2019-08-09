@@ -59,7 +59,6 @@ class TypeEntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->typeAreaRepository->insert($typeArea);
 
             return $this->redirectToRoute('grr_admin_type_entry_index');
@@ -96,7 +95,6 @@ class TypeEntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->typeAreaRepository->flush();
 
             return $this->redirectToRoute(

@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UseradminArea
+ * UseradminArea.
  *
  * @ORM\Table(name="grr_j_useradmin_area")
  * @ORM\Entity(repositoryClass="App\Repository\UseradminAreaRepository")
@@ -39,6 +39,4 @@ class UseradminArea
     {
         return $this->idArea;
     }
-
-
 }

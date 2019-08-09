@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 1/03/19
- * Time: 19:59
+ * Time: 19:59.
  */
 
 namespace App\Manager;
-
 
 use App\Entity\Entry;
 use App\Repository\EntryRepository;
@@ -43,5 +42,4 @@ class EntryManager
     {
         $this->entryRepository->insert($entry);
     }
-
 }

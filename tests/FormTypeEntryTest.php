@@ -4,9 +4,6 @@ namespace App\Tests;
 
 use App\Form\EntryType;
 use App\Form\Type\EntryTypeField;
-use PHPUnit\Framework\TestCase;
-use App\Form\Type\TestedType;
-use App\Model\TestObject;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 //https://symfony.com/doc/current/form/unit_testing.html

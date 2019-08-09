@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 20/03/19
- * Time: 16:38
+ * Time: 16:38.
  */
 
 namespace App\Helper;
-
 
 use Doctrine\ORM\QueryBuilder;
 
@@ -29,7 +28,5 @@ class QueryHelper
 
         $this->queryBuilder->andWhere('entry.startTime LIKE %:date%')
             ->setParameter('date', $dateTime);
-
     }
-
 }

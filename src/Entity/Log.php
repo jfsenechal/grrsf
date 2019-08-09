@@ -6,7 +6,7 @@ use App\Doctrine\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Log
+ * Log.
  *
  * @ORM\Table(name="grr_log")
  * @ORM\Entity
@@ -176,6 +176,4 @@ class Log
 
         return $this;
     }
-
-
 }

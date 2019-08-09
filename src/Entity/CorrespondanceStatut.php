@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CorrespondanceStatut
+ * CorrespondanceStatut.
  *
  * @ORM\Table(name="grr_correspondance_statut")
  * @ORM\Entity
@@ -82,6 +82,4 @@ class CorrespondanceStatut
 
         return $this;
     }
-
-
 }

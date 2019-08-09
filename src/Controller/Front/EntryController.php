@@ -85,9 +85,7 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entries = $this->entryRepository->search($args);
-
         }
 
         return $this->render(
@@ -128,7 +126,6 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->entryManager->insert($entry);
 
             return $this->redirectToRoute(
@@ -199,7 +196,6 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->entryManager->flush();
 
             return $this->redirectToRoute(

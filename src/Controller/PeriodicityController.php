@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Periodicity;
-use App\Factory\PeriodicityFactory;
 use App\Form\Periodicity1Type;
 use App\Repository\PeriodicityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,10 +20,6 @@ class PeriodicityController extends AbstractController
      */
     public function index(PeriodicityRepository $periodicityRepository): Response
     {
-
-
-
-
         return $this->render('periodicity/index.html.twig', [
             'periodicities' => $periodicityRepository->findAll(),
         ]);

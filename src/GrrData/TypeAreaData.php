@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 11/03/19
- * Time: 21:44
+ * Time: 21:44.
  */
 
 namespace App\GrrData;
-
 
 use Symfony\Contracts\Translation\TranslatorInterface;
 

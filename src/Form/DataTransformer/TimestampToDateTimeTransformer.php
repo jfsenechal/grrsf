@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 27/02/19
- * Time: 21:27
+ * Time: 21:27.
  */
 
 namespace App\Form\DataTransformer;
@@ -14,8 +14,7 @@ use Symfony\Component\Form\Extension\Core\DataTransformer\BaseDateTimeTransforme
 /**
  * Class TimestampToDateTimeTransformer
  * Converti un timestamp en datetime et inversement
- * Utile pour la saisie dans les formulaires
- * @package App\Form\DataTransformer
+ * Utile pour la saisie dans les formulaires.
  */
 class TimestampToDateTimeTransformer extends BaseDateTimeTransformer
 {
@@ -31,7 +30,6 @@ class TimestampToDateTimeTransformer extends BaseDateTimeTransformer
      */
     public function transform($value)
     {
-
         if (null === $value) {
             return;
         }

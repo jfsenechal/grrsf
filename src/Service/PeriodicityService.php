@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\Entry;
@@ -25,7 +24,9 @@ class PeriodicityService
 
     /**
      * @param Entry $entry
+     *
      * @return CarbonPeriod|array
+     *
      * @throws \Exception
      */
     public function getDays(Entry $entry): CarbonPeriod
@@ -71,7 +72,6 @@ class PeriodicityService
     }
 
     /**
-     *
      * @return CarbonPeriod
      */
     protected function forEveryYears(): CarbonPeriod
@@ -88,7 +88,8 @@ class PeriodicityService
     }
 
     /**
-     * Par exemple 12-08 12-09 12-10
+     * Par exemple 12-08 12-09 12-10.
+     *
      * @return CarbonPeriod
      */
     protected function forEveryMonthSameDay(): CarbonPeriod
@@ -105,7 +106,8 @@ class PeriodicityService
     }
 
     /**
-     * Par exemple le premier samedi de chaque mois
+     * Par exemple le premier samedi de chaque mois.
+     *
      * @return CarbonPeriod
      */
     private function forEveryMonthSameDayOfWeek(): CarbonPeriod
@@ -119,7 +121,6 @@ class PeriodicityService
         };
 
         return $this->applyFilter($period, $filter);
-
     }
 
     protected function forEveryWeek(): CarbonPeriod
@@ -141,6 +142,4 @@ class PeriodicityService
 
         return $period;
     }
-
-
 }

@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 27/02/19
- * Time: 16:59
+ * Time: 16:59.
  */
 
 namespace App\GrrData;
@@ -24,6 +24,7 @@ class EntryData
 
     /**
      * clef de type rep_type_0,rep_type_1,...
+     *
      * @return array
      */
     public function getTypesPeriodicite()
@@ -51,7 +52,7 @@ class EntryData
 
     public function getNumWeeks(int $value)
     {
-        $weeklist = array("unused", "every week", "week 1/2", "week 1/3", "week 1/4", "week 1/5");
+        $weeklist = ['unused', 'every week', 'week 1/2', 'week 1/3', 'week 1/4', 'week 1/5'];
 
         return $weeklist[$value];
     }
@@ -61,16 +62,16 @@ class EntryData
      * e : Signaler que la ressource est empruntée
      * dans le cadre de cette réservation et envoyer quotidiennement un mail notifiant le retard.emprentee
      * y:Signaler que la ressource est empruntée dans le cadre de cette réservation.
+     *
      * @param $value
      */
     public function getStatutEntry($value)
     {
-
     }
 
     /**
      * field:entry_type
-     * Type de periode : aucune, chaque jour, chaque semaine, chaque mois
+     * Type de periode : aucune, chaque jour, chaque semaine, chaque mois.
      */
     public function getEntryTypes()
     {
@@ -86,6 +87,5 @@ class EntryData
         }
 
         return $units;
-
     }
 }

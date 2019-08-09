@@ -10,19 +10,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator as AppAssert;
 
 /**
- * Entry
+ * Entry.
  *
  * @ORM\Table(name="grr_entry", indexes={@ORM\Index(name="idxEndTime", columns={"end_time"}), @ORM\Index(name="idxStartTime", columns={"start_time"})})
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
  *
  * @AppAssert\BusyRoom()
  * @AppAssert\AreaTimeSlot()
- *
  */
 class Entry
 {
     use BookingTrait;
-
 
     /**
      * @var int
@@ -58,7 +56,8 @@ class Entry
     private $endTime;
 
     /**
-     * Type de periode : aucune, chaque jour, chaque semaine, chaque mois
+     * Type de periode : aucune, chaque jour, chaque semaine, chaque mois.
+     *
      * @var int
      *
      * @ORM\Column(name="entry_type", type="integer", nullable=true)
@@ -74,6 +73,7 @@ class Entry
 
     /**
      * @var \DateTime
+     *
      * @deprecated
      * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
@@ -99,7 +99,6 @@ class Entry
      * @ORM\Column(name="beneficiaire", type="string", length=100, nullable=false)
      */
     private $beneficiaire;
-
 
     /**
      * @var string|null
@@ -158,14 +157,16 @@ class Entry
     private $room;
 
     /**
-     * Util lors de l'ajout d'un Entry
+     * Util lors de l'ajout d'un Entry.
+     *
      * @var Area|null
      */
     private $area;
 
     /**
-     * Util lors de l'ajout d'un Entry
-     * @var boolean
+     * Util lors de l'ajout d'un Entry.
+     *
+     * @var bool
      */
     private $full_day = false;
 
@@ -179,7 +180,8 @@ class Entry
     private $locations = [];
 
     /**
-     * Pour l'affichage par jour, nbre de cellules occupees
+     * Pour l'affichage par jour, nbre de cellules occupees.
+     *
      * @var int
      */
     private $cellules;
@@ -263,7 +265,6 @@ class Entry
     {
         $this->duration2 = $duration2;
     }
-
 
     /**
      * @return Area|null
@@ -533,6 +534,4 @@ class Entry
 
         return $this;
     }
-
-
 }

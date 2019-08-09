@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 21/03/19
- * Time: 11:35
+ * Time: 11:35.
  */
 
 namespace App\Service;
@@ -23,7 +23,7 @@ use Carbon\CarbonInterface;
 class BindDataManager
 {
     /**
-     * @var Entry[] $entries
+     * @var Entry[]
      */
     protected $entries;
     /**
@@ -44,10 +44,11 @@ class BindDataManager
 
     /**
      * Parcours tous les jours du mois
-     * Crée une instance Day et set les entrées
+     * Crée une instance Day et set les entrées.
      *
-     * @param Month $param
+     * @param Month   $param
      * @param Entry[] $entries
+     *
      * @throws \Exception
      */
     public function bindMonth(Month $monthModel, Area $area, Room $room = null)
@@ -65,7 +66,9 @@ class BindDataManager
 
     /**
      * @param Week $week
+     *
      * @return RoomModel[]
+     *
      * @throws \Exception
      */
     public function bindWeek(Week $weekModel, Area $area)
@@ -93,10 +96,12 @@ class BindDataManager
     /**
      * Genere des RoomModel avec les entrées pour chaque Room
      * Puis pour chaque entrées en calcul le nbre de cellules qu'elle occupe
-     * et sa localisation
+     * et sa localisation.
+     *
      * @param CarbonInterface $day
-     * @param Area $area
-     * @param Hour[] $hoursModel
+     * @param Area            $area
+     * @param Hour[]          $hoursModel
+     *
      * @return RoomModel[]
      */
     public function bindDay(CarbonInterface $day, Area $area, array $hoursModel)

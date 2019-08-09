@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 28/03/19
- * Time: 14:49
+ * Time: 14:49.
  */
 
 namespace App\Model;
-
 
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -92,6 +91,4 @@ class Hour
     {
         $this->end = $end;
     }
-
-
 }

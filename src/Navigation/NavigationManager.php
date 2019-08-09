@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 20/03/19
- * Time: 16:21
+ * Time: 16:21.
  */
 
 namespace App\Navigation;
@@ -42,7 +42,8 @@ class NavigationManager
 
     /**
      * @param Month $month
-     * @param int $number nombre de mois
+     * @param int   $number nombre de mois
+     *
      * @return Navigation
      */
     public function createMonth(Month $month, int $number = 1): Navigation
@@ -58,14 +59,13 @@ class NavigationManager
 
         $current = $this->month->getFirstDayImmutable()->toMutable();
 
-        for ($i = 0; $i < $number; $i++) {
+        for ($i = 0; $i < $number; ++$i) {
             $monthModel = Month::init($current->year, $current->month);
             $navigation->addMonth($this->renderMonthByWeeks($monthModel));
             $current->addMonth();
         }
 
         return $navigation;
-
     }
 
     public function previousButton()

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class AreaTimeSlotValidator extends ConstraintValidator
 {
     /**
-     * @param Entry $value
+     * @param Entry      $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
@@ -27,7 +27,6 @@ class AreaTimeSlotValidator extends ConstraintValidator
         $area = $value->getArea();
 
         if ($value->getStartTime()->format('H:i') > $area->getMorningstartsArea()) {
-
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value1 }}', 'début')
                 ->setParameter('{{ value2 }}', 'début')
@@ -35,13 +34,10 @@ class AreaTimeSlotValidator extends ConstraintValidator
         }
 
         if ($value->getEndTime()->format('H:i') > $area->getEveningendsArea()) {
-
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value1 }}', 'fin')
                 ->setParameter('{{ value2 }}', 'fin')
                 ->addViolation();
         }
-
-
     }
 }

@@ -58,7 +58,7 @@ class RoomType extends AbstractType
                 [
                     'label' => 'room.form.statutRoom.label',
                     'help' => 'room.form.statutRoom.help',
-                    'required'=>false
+                    'required' => false,
                 ]
             )
             ->add(
@@ -93,7 +93,7 @@ class RoomType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => 'room.form.showComment.label',
-                    'required'=>false
+                    'required' => false,
                 ]
             )
             ->add(
@@ -118,7 +118,7 @@ class RoomType extends AbstractType
                 [
                     'label' => 'room.form.allowActionInPast.label',
                     'help' => 'room.form.allowActionInPast.help',
-                    'required'=>false
+                    'required' => false,
                 ]
             )
             ->add(
@@ -142,7 +142,7 @@ class RoomType extends AbstractType
                 [
                     'label' => 'room.form.dontAllowModify.label',
                     'help' => 'room.form.dontAllowModify.help',
-                    'required'=>false
+                    'required' => false,
                 ]
             )
             ->add(
@@ -160,7 +160,7 @@ class RoomType extends AbstractType
                 [
                     'label' => 'room.form.moderate.label',
                     'help' => 'room.form.moderate.help',
-                    'required'=>false
+                    'required' => false,
                 ]
             )
             ->add(
@@ -176,7 +176,7 @@ class RoomType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => 'room.form.activeRessourceEmpruntee.label',
-                    'required'=>false
+                    'required' => false,
                 ]
             )
             ->add(

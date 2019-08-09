@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User
+ * User.
  *
  * @ORM\Table(name="grr_utilisateurs")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -116,7 +116,6 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
-
 
     /**
      * Returns the roles granted to the user.

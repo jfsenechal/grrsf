@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 12/03/19
- * Time: 16:22
+ * Time: 16:22.
  */
 
 namespace App\Model;
@@ -60,7 +60,6 @@ class Month extends Carbon
 
     /**
      * @return CarbonPeriod
-     *
      */
     public function getCalendarDays(): CarbonPeriod
     {
@@ -71,9 +70,8 @@ class Month extends Carbon
 
     /**
      * @return CarbonPeriod[]
-     *
      */
-    function getCalendarWeeks()
+    public function getCalendarWeeks()
     {
         $weeks = [];
         $firstDayMonth = $this->firstOfMonth();
@@ -81,7 +79,7 @@ class Month extends Carbon
         $firstDayWeek = $firstDayMonth->copy()->startOfWeek()->toMutable();
 
         do {
-            $weeks[] = $this->getCalendarWeek($firstDayWeek);// point at end ofWeek
+            $weeks[] = $this->getCalendarWeek($firstDayWeek); // point at end ofWeek
             $firstDayWeek->nextWeekday();
         } while ($firstDayWeek->isSameMonth($firstDayMonth));
 

@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 11/03/19
- * Time: 16:48
+ * Time: 16:48.
  */
 
 namespace App\GrrData;
@@ -22,7 +22,7 @@ class UserData
         $this->translator = $translator;
     }
 
-    public  function statutsList()
+    public function statutsList()
     {
         return [
             'visiteur' => $this->translator->trans('Visiteur'),
@@ -32,12 +32,11 @@ class UserData
         ];
     }
 
-    public  function etatsList()
+    public function etatsList()
     {
         return [
             'actif' => $this->translator->trans('Actif'),
             'inactif' => $this->translator->trans('Inactif'),
         ];
     }
-
 }

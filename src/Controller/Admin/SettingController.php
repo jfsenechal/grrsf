@@ -38,7 +38,7 @@ class SettingController extends AbstractController
         );
     }
 
- /**
+    /**
      * @Route("/new", name="grr_admin_setting_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response

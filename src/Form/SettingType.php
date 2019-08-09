@@ -44,7 +44,6 @@ class SettingType extends AbstractType
     {
         $resolver->setDefaults(
             [
-
             ]
         );
     }

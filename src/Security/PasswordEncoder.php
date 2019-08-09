@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 11/03/19
- * Time: 20:40
+ * Time: 20:40.
  */
 
 namespace App\Security;
-
 
 use App\Entity\User;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;

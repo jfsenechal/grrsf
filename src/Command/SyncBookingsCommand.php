@@ -59,13 +59,13 @@ class SyncBookingsCommand extends Command
         try {
             $data = json_decode($this->bookingService->getData());
         } catch (\Exception $exception) {
-            $io->error("Erreur obtention data: ".$exception->getMessage());
+            $io->error('Erreur obtention data: '.$exception->getMessage());
             die();
         }
 
         $this->bookingService->output = $output;
 
-        echo $output->writeln("sync : ".date('Y-m-d H:i'));
+        echo $output->writeln('sync : '.date('Y-m-d H:i'));
 
         $resources = $data->resources;
         $bookings = $data->bookings;
@@ -83,10 +83,9 @@ class SyncBookingsCommand extends Command
         foreach ($entries as $entry) {
             if (!in_array($entry->getBooking(), $this->bookingService->bookingsFromFlux)) {
                 $this->entryManager->remove($entry);
-                echo $output->writeln("remove : ".$entry->getBooking());
+                echo $output->writeln('remove : '.$entry->getBooking());
             }
         }
         $this->entryManager->flush();
     }
-
 }

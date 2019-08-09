@@ -40,7 +40,6 @@ class RepeatRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
-    
     /**
      * @return Repeat[] Returns an array of Repeat objects
      */
@@ -52,7 +51,6 @@ class RepeatRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 
     /*
     public function findOneBySomeField($value): ?Repeat

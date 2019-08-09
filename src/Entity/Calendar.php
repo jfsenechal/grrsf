@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Month
+ * Month.
  *
  * @ORM\Table(name="grr_calendar")
  * @ORM\Entity
@@ -44,6 +44,4 @@ class Calendar
 
         return $this;
     }
-
-
 }

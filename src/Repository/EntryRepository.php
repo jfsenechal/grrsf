@@ -25,6 +25,7 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param array $args
+     *
      * @return Entry[] Returns an array of Entry objects
      */
     public function findForMonth(Month $monthModel, Area $area = null, Room $room = null)
@@ -120,6 +121,7 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param array $args
+     *
      * @return Entry[] Returns an array of Entry objects
      */
     public function search(array $args = [])
@@ -163,8 +165,9 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param \DateTimeInterface|null $dateTime
-     * @param Area|null $area
-     * @param Room|null $room
+     * @param Area|null               $area
+     * @param Room|null               $room
+     *
      * @return Entry[] Returns an array of Entry objects
      */
     public function search2(\DateTimeInterface $dateTime = null, Area $area = null, Room $room = null)
@@ -196,7 +199,8 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Pour wordpress
+     * Pour wordpress.
+     *
      * @return Entry[]
      */
     public function getBookings()
@@ -209,6 +213,7 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param Area $area
+     *
      * @return Room[]|iterable
      */
     private function getRooms(Area $area)
@@ -219,7 +224,6 @@ class EntryRepository extends ServiceEntityRepository
 
         return $areaRepository->findByArea($area);
     }
-
 
     public function persist(Entry $entry)
     {
@@ -241,6 +245,4 @@ class EntryRepository extends ServiceEntityRepository
     {
         $this->_em->flush();
     }
-
-
 }

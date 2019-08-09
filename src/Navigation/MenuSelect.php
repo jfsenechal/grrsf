@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 26/03/19
- * Time: 11:12
+ * Time: 11:12.
  */
 
 namespace App\Navigation;
@@ -54,5 +54,4 @@ class MenuSelect
     {
         $this->room = $room;
     }
-
 }

@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 1/03/19
- * Time: 13:35
+ * Time: 13:35.
  */
 
 namespace App\Booking;
@@ -18,7 +18,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class BookingService
 {
-
     protected $sallesGrr = [
         113 => 'Box',
         114 => 'Créative',
@@ -32,7 +31,8 @@ class BookingService
      * 2 => 'LA CREATIVE',
      * 3 => 'DIGITAL ROOM',
      * 4 => 'RELAX ROOM',
-     * 5 => 'MEETING',
+     * 5 => 'MEETING',.
+     *
      * @var array
      */
     protected $sallesGrrProd = [
@@ -45,11 +45,11 @@ class BookingService
 
     /**
      * @var array
-     * LA BOX
-     * LA CREATIVE
-     * DIGITAL ROOM
-     * RELAX ROOM
-     * La MEETING
+     *            LA BOX
+     *            LA CREATIVE
+     *            DIGITAL ROOM
+     *            RELAX ROOM
+     *            La MEETING
      */
     protected $salles = [
         1 => 1,
@@ -112,9 +112,9 @@ class BookingService
         curl_setopt(
             $ch,
             CURLOPT_HTTPHEADER,
-            array(
+            [
                 'X-Authorization: '.$this->parameterBag->get('booking_token'),
-            )
+            ]
         );
         $server_output = curl_exec($ch);
         curl_close($ch);
@@ -124,7 +124,7 @@ class BookingService
 
     public function traitementByDates($booking)
     {
-        if (count($booking->dates) === 2) {
+        if (2 === count($booking->dates)) {
             $this->traitement2Dates($booking);
         } else {
             foreach ($booking->dates as $date) {
@@ -174,7 +174,7 @@ class BookingService
     private function setHeureDebut(\DateTime $dateTime)
     {
         $heure = $dateTime->format('H:i');
-        if ($heure === '00:00') {
+        if ('00:00' === $heure) {
             $dateTime->setTime(8, 00);
         }
     }
@@ -183,16 +183,16 @@ class BookingService
     {
         $heure = $dateTime->format('H:i');
 
-        if ($force == true) {
+        if (true == $force) {
             $dateTime->setTime(23, 00);
-        } elseif ($heure === '00:00') {
+        } elseif ('00:00' === $heure) {
             $dateTime->setTime(23, 00);
         }
     }
 
-
     /**
      * @param $booking
+     *
      * @return Entry
      */
     public function createGrrEntry($booking, string $date): Entry
@@ -235,7 +235,7 @@ class BookingService
 
     private function setDefaultFields(Entry $entry)
     {
-        $entry->setBeneficiaireExt(' ');//pas null
+        $entry->setBeneficiaireExt(' '); //pas null
         $entry->setType('B');
         $entry->setModerate(0);
         $entry->setJours(0);
@@ -274,7 +274,7 @@ class BookingService
 
     public function removeAccents(string $string)
     {
-        $unwanted_array = array(
+        $unwanted_array = [
             'Š' => 'S',
             'š' => 's',
             'Ž' => 'Z',
@@ -339,7 +339,7 @@ class BookingService
             'ý' => 'y',
             'þ' => 'b',
             'ÿ' => 'y',
-        );
+        ];
 
         return strtr($string, $unwanted_array);
     }

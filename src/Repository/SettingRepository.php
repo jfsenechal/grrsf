@@ -36,7 +36,9 @@ class SettingRepository extends ServiceEntityRepository
 
     /**
      * @param string $name
+     *
      * @return Setting|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getValueByName(string $name)

@@ -11,7 +11,6 @@ use App\Navigation\NavigationManager;
 use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -53,7 +52,6 @@ class GrrFrontExtension extends AbstractExtension
             // If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
-
         ];
     }
 
@@ -68,9 +66,11 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @param Hour $hour
+     * @param Hour      $hour
      * @param RoomModel $roomModel
+     *
      * @return string|void
+     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -80,7 +80,7 @@ class GrrFrontExtension extends AbstractExtension
         $entries = $roomModel->getEntries();
         foreach ($entries as $entry) {
             /**
-             * @var Hour[] $locations
+             * @var Hour[]
              */
             $locations = $entry->getLocations();
             $position = 0;
@@ -88,7 +88,7 @@ class GrrFrontExtension extends AbstractExtension
                 if ($location->getBegin()->equalTo(
                     $hour->getBegin() && $location->getEnd()->equalTo($hour->getEnd())
                 )) {
-                    if ($position == 0) {
+                    if (0 == $position) {
                         return $this->twigEnvironment->render(
                             '@grr_front/day/_cell_day_data.html.twig',
                             ['position' => $position, 'entry' => $entry]
@@ -97,7 +97,7 @@ class GrrFrontExtension extends AbstractExtension
 
                     return;
                 }
-                $position++;
+                ++$position;
             }
         }
 
@@ -106,13 +106,15 @@ class GrrFrontExtension extends AbstractExtension
 
         return $this->twigEnvironment->render(
             '@grr_front/day/_cell_day_empty.html.twig',
-            ['position' => 999, 'area' => $area, 'room' => $room, 'day' => $day, 'hourModel'=> $hour]
+            ['position' => 999, 'area' => $area, 'room' => $room, 'day' => $day, 'hourModel' => $hour]
         );
     }
 
     /**
      * @param Month $monthModel
+     *
      * @return string
+     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -139,7 +141,6 @@ class GrrFrontExtension extends AbstractExtension
                 'monthModel' => $monthModel,
             ]
         );
-
     }
 
     public function menuNavigation()
@@ -158,9 +159,11 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @param Day $day
+     * @param Day    $day
      * @param string $action begin|end
+     *
      * @return string
+     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -172,5 +175,4 @@ class GrrFrontExtension extends AbstractExtension
             ['numericDay' => $day->weekday(), 'action' => $action]
         );
     }
-
 }

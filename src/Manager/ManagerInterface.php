@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 1/03/19
- * Time: 20:08
+ * Time: 20:08.
  */
 
 namespace App\Manager;
-
 
 interface ManagerInterface
 {
@@ -18,5 +17,4 @@ interface ManagerInterface
     public function flush();
 
     public function insert();
-
 }

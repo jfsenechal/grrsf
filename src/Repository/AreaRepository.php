@@ -46,12 +46,11 @@ class AreaRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
-    public function ge(Area $area) {
+    public function ge(Area $area)
+    {
         return $this->createQueryBuilder('area')
             ->andWhere('are');
     }
-
-
 
     // /**
     //  * @return Area[] Returns an array of Area objects

@@ -12,7 +12,8 @@ class SecurityData
     }
 
     /**
-     * visiteur
+     * visiteur.
+     *
      * @return string
      */
     public static function getRoleVisiteur()
@@ -21,7 +22,8 @@ class SecurityData
     }
 
     /**
-     * utilisateur
+     * utilisateur.
+     *
      * @return string
      */
     public static function getRoleUsager()
@@ -30,7 +32,8 @@ class SecurityData
     }
 
     /**
-     * gestionnaire_utilisateur
+     * gestionnaire_utilisateur.
+     *
      * @return string
      */
     public static function getRoleGestionnaire()
@@ -39,12 +42,12 @@ class SecurityData
     }
 
     /**
-     * administrateur
+     * administrateur.
+     *
      * @return string
      */
     public static function getRoleAdmin()
     {
         return 'ROLE_GRR_ADMIN';
     }
-
 }

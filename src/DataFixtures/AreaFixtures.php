@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 use App\Factory\AreaFactory;
 use App\Factory\RoomFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class AreaFixtures extends Fixture
@@ -55,6 +54,4 @@ class AreaFixtures extends Fixture
 
         $manager->flush();
     }
-
-
 }

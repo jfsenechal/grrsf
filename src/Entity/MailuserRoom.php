@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MailuserRoom
+ * MailuserRoom.
  *
  * @ORM\Table(name="grr_j_mailuser_room")
  * @ORM\Entity
@@ -39,6 +39,4 @@ class MailuserRoom
     {
         return $this->idRoom;
     }
-
-
 }

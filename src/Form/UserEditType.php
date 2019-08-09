@@ -17,5 +17,4 @@ class UserEditType extends AbstractType
     {
         return UserType::class;
     }
-
 }

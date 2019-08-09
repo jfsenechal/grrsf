@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 20/03/19
- * Time: 17:14
+ * Time: 17:14.
  */
 
 namespace App\Model;
@@ -16,14 +16,16 @@ use Doctrine\Common\Collections\Collection;
 class Day extends CarbonImmutable
 {
     /**
-     * @var ArrayCollection|Entry[] $entries
+     * @var ArrayCollection|Entry[]
      */
     protected $entries;
 
     /**
      * Day constructor.
+     *
      * @param null $time
      * @param null $tz
+     *
      * @throws \Exception Emits Exception in case of an error
      */
     public function __construct($time = null, $tz = null)
@@ -60,5 +62,4 @@ class Day extends CarbonImmutable
     {
         return $this->dateImmutable->format('h:s');
     }
-
 }

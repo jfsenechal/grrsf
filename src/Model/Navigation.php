@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 21/03/19
- * Time: 15:47
+ * Time: 15:47.
  */
 
 namespace App\Model;
-
 
 class Navigation
 {
@@ -39,6 +38,7 @@ class Navigation
 
     /**
      * @param string $previousButton
+     *
      * @return Navigation
      */
     public function setPreviousButton(string $previousButton): self
@@ -58,6 +58,7 @@ class Navigation
 
     /**
      * @param string $nextButton
+     *
      * @return Navigation
      */
     public function setNextButton(string $nextButton): self
@@ -77,6 +78,7 @@ class Navigation
 
     /**
      * @param string $months
+     *
      * @return Navigation
      */
     public function setMonths(array $months): self
@@ -90,6 +92,4 @@ class Navigation
     {
         $this->months[] = $month;
     }
-
-
 }

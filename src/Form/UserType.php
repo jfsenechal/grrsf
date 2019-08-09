@@ -58,7 +58,7 @@ class UserType extends AbstractType
                     'second_options' => ['label' => 'user.form.passwordrepeat.label'],
                 ]
             )
-            ->add('email', EmailType::class,[
+            ->add('email', EmailType::class, [
                     'label' => 'user.form.email.label',
                 ])
             ->add(

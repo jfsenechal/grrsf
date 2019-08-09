@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CalendrierJoursCycle
+ * CalendrierJoursCycle.
  *
  * @ORM\Table(name="grr_calendrier_jours_cycle")
  * @ORM\Entity
@@ -63,6 +63,4 @@ class CalendrierJoursCycle
 
         return $this;
     }
-
-
 }

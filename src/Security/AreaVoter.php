@@ -27,7 +27,7 @@ class AreaVoter extends Voter
     private $decisionManager;
 
     /**
-     * @var User $user
+     * @var User
      */
     private $user;
 
@@ -86,13 +86,14 @@ class AreaVoter extends Voter
 
     private function canIndex()
     {
-
     }
 
     /**
-     * Voir dans l'admin
-     * @param Area $volontaire
+     * Voir dans l'admin.
+     *
+     * @param Area           $volontaire
      * @param TokenInterface $token
+     *
      * @return bool
      */
     private function canView(Area $volontaire, TokenInterface $token)
@@ -100,7 +101,6 @@ class AreaVoter extends Voter
         if ($this->canEdit($volontaire, $token)) {
             return true;
         }
-
     }
 
     private function canEdit(Area $volontaire, TokenInterface $token)

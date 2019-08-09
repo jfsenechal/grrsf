@@ -99,7 +99,7 @@ class Periodicity
         $this->entry = $entry;
 
         // set (or unset) the owning side of the relation if necessary
-        $newPeriodicity = $entry === null ? null : $this;
+        $newPeriodicity = null === $entry ? null : $this;
         if ($newPeriodicity !== $entry->getPeriodicity()) {
             $entry->setPeriodicity($newPeriodicity);
         }
@@ -207,5 +207,4 @@ class Periodicity
 
         return $this;
     }
-
 }

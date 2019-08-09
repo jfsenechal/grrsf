@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 8/03/19
- * Time: 18:30
+ * Time: 18:30.
  */
 
 namespace App\Security;

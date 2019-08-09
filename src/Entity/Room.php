@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Room
+ * Room.
  *
  * @ORM\Table(name="grr_room")
  * @ORM\Entity(repositoryClass="App\Repository\RoomRepository")
@@ -472,6 +472,4 @@ class Room
 
         return $this;
     }
-
-
 }

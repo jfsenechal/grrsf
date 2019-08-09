@@ -6,7 +6,7 @@ use App\Doctrine\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Setting
+ * Setting.
  *
  * @ORM\Table(name="grr_setting")
  * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
@@ -54,6 +54,4 @@ class Setting
 
         return $this;
     }
-
-
 }

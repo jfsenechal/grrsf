@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 1/03/19
- * Time: 17:42
+ * Time: 17:42.
  */
 
 namespace App\Factory;
@@ -15,7 +15,7 @@ class RepeatFactory //implements FactoryInterface
     /**
      * @return Repeat
      */
-    public function createNew() : Repeat
+    public function createNew(): Repeat
     {
         return new Repeat();
     }

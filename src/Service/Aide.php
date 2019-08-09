@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 6/03/19
- * Time: 21:43
+ * Time: 21:43.
  */
 
 namespace App\Service;
@@ -13,7 +13,7 @@ use Webmozart\Assert\Assert;
 /**
  * [scope] function methodName(type name, ...): void|[return-type]
  *{
- *[pre-conditions checks]
+ *[pre-conditions checks].
  *
  *[failure scenarios]
  *
@@ -23,8 +23,6 @@ use Webmozart\Assert\Assert;
  *
  *[return void|specific-return-type]
  *}
- *
- *
  */
 class Aide
 {

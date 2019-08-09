@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * JSiteArea
+ * JSiteArea.
  *
  * @ORM\Table(name="grr_j_site_area")
  * @ORM\Entity
@@ -39,6 +39,4 @@ class JSiteArea
     {
         return $this->idArea;
     }
-
-
 }

@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 8/03/19
- * Time: 14:43
+ * Time: 14:43.
  */
 
 namespace App\Service;
-
 
 class SettingConstants
 {

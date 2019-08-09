@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 15/03/19
- * Time: 22:00
+ * Time: 22:00.
  */
 
 namespace App\EventSubscriber;
-
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;
@@ -42,7 +41,7 @@ class AddRoomsFieldSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
 
         if (!$area) {
-            return ;
+            return;
         }
 
         $form->add(
@@ -59,6 +58,4 @@ class AddRoomsFieldSubscriber implements EventSubscriberInterface
             ]
         );
     }
-
-
 }

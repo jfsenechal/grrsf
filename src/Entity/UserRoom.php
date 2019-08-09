@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UserRoom
+ * UserRoom.
  *
  * @ORM\Table(name="grr_j_user_room")
  * @ORM\Entity(repositoryClass="App\Repository\UserRoomRepository")
@@ -39,6 +39,4 @@ class UserRoom
     {
         return $this->idRoom;
     }
-
-
 }

@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Overload
+ * Overload.
  *
  * @ORM\Table(name="grr_overload")
  * @ORM\Entity
@@ -177,6 +177,4 @@ class Overload
 
         return $this;
     }
-
-
 }

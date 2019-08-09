@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 20/03/19
- * Time: 16:21
+ * Time: 16:21.
  */
 
 namespace App\Helper;
@@ -26,7 +26,9 @@ class MonthHelperDataDisplay
 
     /**
      * @param Month $month
+     *
      * @return string
+     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -44,7 +46,5 @@ class MonthHelperDataDisplay
                 'weeks' => $weeks,
             ]
         );
-
     }
-
 }

@@ -22,9 +22,11 @@ class AreaService
     }
 
     /**
-     * Retourne les heures de l'area suivant son resolution
-     * @param Area $area
+     * Retourne les heures de l'area suivant son resolution.
+     *
+     * @param Area            $area
      * @param CarbonInterface $dayModel
+     *
      * @return CarbonPeriod
      */
     public function getHoursPeriod(Area $area, CarbonInterface $dayModel): CarbonPeriod
@@ -40,8 +42,10 @@ class AreaService
     }
 
     /**
-     * Crée les tranches d'heures sous forme d'objet
+     * Crée les tranches d'heures sous forme d'objet.
+     *
      * @param CarbonPeriod $hoursPeriod
+     *
      * @return Hour[]
      */
     public function getHoursModel($area, $daySelected)
@@ -54,7 +58,6 @@ class AreaService
         $hoursPeriod->rewind();
 
         while ($hoursPeriod->current()->lessThan($last)) {
-
             $begin = $hoursPeriod->current();
             $hoursPeriod->next();
             $end = $hoursPeriod->current();

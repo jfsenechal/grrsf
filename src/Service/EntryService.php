@@ -11,9 +11,10 @@ use Carbon\CarbonPeriod;
 class EntryService
 {
     /**
-     * Bug si dateEnd entry > dateEndArea
+     * Bug si dateEnd entry > dateEndArea.
+     *
      * @param Entry $entry
-     * @param Area $area
+     * @param Area  $area
      */
     public function setCountCells(Entry $entry, Area $area)
     {
@@ -21,12 +22,12 @@ class EntryService
         $start = Carbon::instance($entry->getStartTime());
         $end = Carbon::instance($entry->getEndTime());
         $diff = $start->diffInSeconds($end);
-        $cellules = (integer)(ceil($diff / $resolution));
+        $cellules = (int) (ceil($diff / $resolution));
         $entry->setCellules($cellules);
     }
 
     /**
-     * @param Entry $entry
+     * @param Entry  $entry
      * @param Hour[] $dayTimeSlots
      */
     public function setLocations(Entry $entry, array $dayTimeSlots)

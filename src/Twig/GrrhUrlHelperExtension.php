@@ -39,7 +39,6 @@ class GrrhUrlHelperExtension extends AbstractExtension
             // If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
-
         ];
     }
 
@@ -66,10 +65,10 @@ class GrrhUrlHelperExtension extends AbstractExtension
         $room = $attributes['room'] ?? 0;
 
         if (!$year) {
-            $year = (int)$attributes['year'];
+            $year = (int) $attributes['year'];
         }
         if (!$month) {
-            $month = (int)$attributes['month'];
+            $month = (int) $attributes['month'];
         }
 
         $params = ['area' => $area, 'year' => $year, 'month' => $month];
@@ -98,7 +97,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
         $params = ['area' => $area, 'year' => $year, 'month' => $month, 'week' => $week];
 
         if ($room) {
-            $params['room'] = (int)$room;
+            $params['room'] = (int) $room;
         }
 
         return $this->router->generate('grr_front_week', $params);

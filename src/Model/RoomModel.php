@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Model;
-
 
 use App\Entity\Entry;
 use App\Entity\Room;
@@ -19,11 +17,10 @@ class RoomModel
      * @var ArrayCollection|Day[]
      */
     protected $data_days;
-     /**
+    /**
      * @var ArrayCollection|Entry[]
      */
     private $entries;
-
 
     public function __construct(Room $room)
     {
@@ -69,5 +66,4 @@ class RoomModel
     {
         $this->entries = $entries;
     }
-
 }

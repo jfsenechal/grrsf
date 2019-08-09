@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 27/03/19
- * Time: 17:35
+ * Time: 17:35.
  */
 
 namespace App\Controller;
@@ -46,5 +46,4 @@ class AjaxController extends AbstractController
 
         return $this->render('ajax/_rooms_options.html.twig', ['rooms' => $rooms]);
     }
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Validator;
-
 
 use App\Entity\Entry;
 use Symfony\Component\Validator\ConstraintViolationList;
@@ -22,15 +20,17 @@ class ValidationsEntry
 
     /**
      * @param Entry $entry
+     *
      * @return ConstraintViolationList[]
      */
     public function validate(Entry $entry)
     {
         $validators = $this->getValidators();
         foreach ($validators as $validator) {
-            $constraint = new $validator;
+            $constraint = new $validator();
             $violations[] = $this->validator->validate($entry, $constraint);
         }
+
         return $violations;
     }
 

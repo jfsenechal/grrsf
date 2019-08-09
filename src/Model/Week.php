@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 25/03/19
- * Time: 20:25
+ * Time: 20:25.
  */
 
 namespace App\Model;
@@ -81,7 +81,6 @@ class Week extends Carbon
 
     /**
      * @return CarbonPeriod
-     *
      */
     public function getCalendarDays(): CarbonPeriod
     {
@@ -114,5 +113,4 @@ class Week extends Carbon
 
         return $this;
     }
-
 }

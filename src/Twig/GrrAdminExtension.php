@@ -61,7 +61,6 @@ class GrrAdminExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-
         ];
     }
 
@@ -71,8 +70,10 @@ class GrrAdminExtension extends AbstractExtension
     }
 
     /**
-     * field: type
+     * field: type.
+     *
      * @param $value
+     *
      * @return string
      */
     public function entryTypeGetName($value)
@@ -86,8 +87,10 @@ class GrrAdminExtension extends AbstractExtension
     }
 
     /**
-     *field: rep_num_weeks
+     *field: rep_num_weeks.
+     *
      * @param $value
+     *
      * @return mixed
      */
     public function getNumWeeks($value)
@@ -97,8 +100,10 @@ class GrrAdminExtension extends AbstractExtension
 
     /**
      * field:repOpt
-     * 7 chiffres
+     * 7 chiffres.
+     *
      * @param $value
+     *
      * @return string
      */
     public function joursSemaine($value)
@@ -125,10 +130,7 @@ class GrrAdminExtension extends AbstractExtension
 
     public function displayLine(int $value)
     {
-        if ($value !== 1) {
-
+        if (1 !== $value) {
         }
     }
-
-
 }

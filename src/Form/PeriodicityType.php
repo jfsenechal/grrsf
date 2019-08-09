@@ -28,7 +28,6 @@ class PeriodicityType extends AbstractType
     {
         $resolver->setDefaults(
             [
-
             ]
         );
     }

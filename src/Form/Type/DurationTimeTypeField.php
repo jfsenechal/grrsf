@@ -1,15 +1,12 @@
 <?php
 
-
 namespace App\Form\Type;
-
 
 use App\GrrData\EntryData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class DurationTimeTypeField extends AbstractType
@@ -35,7 +32,6 @@ class DurationTimeTypeField extends AbstractType
                 [
                     'label' => 'entry.form.duration_time.label',
                     'help' => 'entry.form.duration_time.help',
-
                 ]
             )
             ->add(

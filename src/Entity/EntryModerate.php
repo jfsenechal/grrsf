@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * EntryModerate
+ * EntryModerate.
  *
  * @ORM\Table(name="grr_entry_moderate", indexes={@ORM\Index(name="idxEndTime", columns={"end_time"}), @ORM\Index(name="idxStartTime", columns={"start_time"})})
  * @ORM\Entity
@@ -367,6 +367,4 @@ class EntryModerate
 
         return $this;
     }
-
-
 }

@@ -3,13 +3,12 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 1/03/19
- * Time: 21:55
+ * Time: 21:55.
  */
 
 namespace App\GrrData;
 
 use Carbon\Carbon;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DateUtils
 {
@@ -28,5 +27,4 @@ class DateUtils
     {
         return range(0, 23);
     }
-
 }

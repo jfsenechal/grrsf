@@ -3,13 +3,12 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 1/03/19
- * Time: 20:24
+ * Time: 20:24.
  */
 
 namespace App\Booking;
 
 use Doctrine\ORM\Mapping as ORM;
-
 
 trait BookingTrait
 {
@@ -29,12 +28,13 @@ trait BookingTrait
 
     /**
      * @param string|null $booking
+     *
      * @return self
      */
     public function setBooking(?string $booking): self
     {
         $this->booking = $booking;
+
         return $this;
     }
-
 }

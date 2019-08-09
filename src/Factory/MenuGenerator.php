@@ -21,7 +21,7 @@ class MenuGenerator
         $this->formFactory = $formFactory;
     }
 
-    public function generateMenuSelect(Area $area, Room $room = null) : FormInterface
+    public function generateMenuSelect(Area $area, Room $room = null): FormInterface
     {
         $menuSelect = new MenuSelect();
         $menuSelect->setArea($area);

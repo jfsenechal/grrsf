@@ -20,7 +20,6 @@ class UpgradeCommand extends Command
      */
     private $io;
 
-
     public function __construct(
         ?string $name = null,
         AreaRepository $areaRepository
@@ -41,23 +40,18 @@ class UpgradeCommand extends Command
         $this->areaUpgrade();
     }
 
-    /**
-     *
-     */
     protected function areaUpgrade()
     {
         $areas = $this->areaRepository->findAll();
 
         foreach ($areas as $area) {
             $displayDays = $area->getDisplayDays();
-            if (strlen($displayDays) == 7) {
+            if (7 == strlen($displayDays)) {
                 var_dump(str_split($displayDays));
             } else {
                 $this->io->error('La longueur dois faire 7');
             }
-
         }
-    //    $this->entryManager->flush();
+        //    $this->entryManager->flush();
     }
-
 }

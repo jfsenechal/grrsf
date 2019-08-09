@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * TypeArea
- * //depracted : grr_type_area
+ * //depracted : grr_type_area.
+ *
  * @ORM\Table(name="grr_entry_type")
  * @ORM\Entity(repositoryClass="App\Repository\EntryTypeRepository")
  */

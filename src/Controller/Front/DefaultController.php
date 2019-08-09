@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class FrontController
- * @package App\DefaultController
+ * Class FrontController.
+ *
  * @Route("/front")
  */
 class DefaultController extends AbstractController
@@ -143,7 +143,7 @@ class DefaultController extends AbstractController
             '@grr_front/week/week.html.twig',
             [
                 'week' => $weekModel,
-                'area' => $area,//pour lien add entry
+                'area' => $area, //pour lien add entry
                 'data' => $data,
             ]
         );
@@ -172,10 +172,9 @@ class DefaultController extends AbstractController
             [
                 'day' => $dayModel,
                 'roomsModel' => $roomsModel,
-                'area' => $area,//pour lien add entry
+                'area' => $area, //pour lien add entry
                 'hoursModel' => $hoursModel,
             ]
         );
     }
-
 }

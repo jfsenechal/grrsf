@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UseradminSite
+ * UseradminSite.
  *
  * @ORM\Table(name="grr_j_useradmin_site")
  * @ORM\Entity
@@ -39,6 +39,4 @@ class UseradminSite
     {
         return $this->idSite;
     }
-
-
 }

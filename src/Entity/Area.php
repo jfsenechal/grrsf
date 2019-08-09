@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Area
+ * Area.
  *
  * @ORM\Table(name="grr_area")
  * @ORM\Entity(repositoryClass="App\Repository\AreaRepository")
@@ -32,7 +32,7 @@ class Area
     private $name;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="access",type="boolean", nullable=false)
      */
@@ -95,14 +95,14 @@ class Area
     private $twentyfourhourFormatArea;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="calendar_default_values", type="boolean", nullable=false, options={"default"="1"})
      */
     private $calendarDefaultValues;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="enable_periods", type="boolean", nullable=false, options={"default"="0"})
      */
@@ -141,7 +141,7 @@ class Area
      *
      * @ORM\Column(name="max_booking", type="smallint", nullable=false, options={"default"="-1"})
      */
-    private $maxBooking ;
+    private $maxBooking;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="area")
@@ -397,5 +397,4 @@ class Area
 
         return $this;
     }
-
 }

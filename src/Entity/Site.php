@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Site
+ * Site.
  *
  * @ORM\Table(name="grr_site")
  * @ORM\Entity
@@ -215,6 +215,4 @@ class Site
 
         return $this;
     }
-
-
 }

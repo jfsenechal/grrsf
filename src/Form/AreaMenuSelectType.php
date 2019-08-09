@@ -49,12 +49,9 @@ class AreaMenuSelectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data' => MenuSelect::class,
-            )
+            ]
         );
-
     }
-
-
 }

@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Repeat
+ * Repeat.
  *
  * @ORM\Table(name="grr_repeat")
  * @ORM\Entity(repositoryClass="App\Repository\RepeatRepository")
@@ -329,6 +329,4 @@ class Repeat
 
         return $this;
     }
-
-
 }

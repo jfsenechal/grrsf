@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * JTypeArea
+ * JTypeArea.
  *
  * @ORM\Table(name="grr_j_type_area")
  * @ORM\Entity(repositoryClass="App\Repository\JTypeAreaRepository")
@@ -63,6 +63,4 @@ class JTypeArea
 
         return $this;
     }
-
-
 }

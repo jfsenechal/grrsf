@@ -74,7 +74,6 @@ class AreaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->areaManager->insert($area);
 
             return $this->redirectToRoute('grr_admin_area_show', ['id' => $area->getId()]);

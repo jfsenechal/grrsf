@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 27/02/19
- * Time: 21:57
+ * Time: 21:57.
  */
 
 namespace App\Form\Type;
@@ -39,5 +39,4 @@ class EntryTypeField extends AbstractType
     {
         return EntityType::class;
     }
-
 }

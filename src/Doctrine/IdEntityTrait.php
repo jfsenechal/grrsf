@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 4/03/19
- * Time: 14:45
+ * Time: 14:45.
  */
 
 namespace App\Doctrine;

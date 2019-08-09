@@ -2,7 +2,6 @@
 
 namespace App\Helper;
 
-use Carbon\Carbon;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class LocalHelper
@@ -26,5 +25,4 @@ class LocalHelper
     {
         return self::$defaultLocale;
     }
-
 }

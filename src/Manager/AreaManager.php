@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jfsenechal
  * Date: 1/03/19
- * Time: 19:59
+ * Time: 19:59.
  */
 
 namespace App\Manager;
@@ -48,11 +48,11 @@ class AreaManager
         $this->areaRepository->insert($area);
     }
 
-    public function removeRooms(Area $area) {
+    public function removeRooms(Area $area)
+    {
         foreach ($area->getRooms() as $room) {
             $this->roomManager->remove($room);
         }
         $this->roomManager->flush();
     }
-
 }

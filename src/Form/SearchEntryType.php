@@ -77,7 +77,6 @@ class SearchEntryType extends AbstractType
     {
         $resolver->setDefaults(
             [
-
             ]
         );
     }

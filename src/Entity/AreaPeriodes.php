@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AreaPeriodes
+ * AreaPeriodes.
  *
  * @ORM\Table(name="grr_area_periodes")
  * @ORM\Entity
@@ -58,6 +58,4 @@ class AreaPeriodes
 
         return $this;
     }
-
-
 }
