@@ -1,5 +1,3 @@
 parameters:
   autoload_paths:
-    - 'vendor/squizlabs/php_codesniffer/autoload.php'
-    - 'vendor/project-without-composer'
-    - 'vendor/bin/.phpunit/phpunit-6.5/vendor/autoload.php'
+    - 'bin/.phpunit/phpunit-6.5/vendor/autoload.php'
