@@ -123,7 +123,7 @@ class Month extends Carbon
             $days = [];
             foreach ($weekCalendar as $dayCalendar) {
                 foreach ($dataDays as $dataDay) {
-                    if ($dataDay->toDateString() == $dayCalendar->toDateString()) {
+                    if ($dataDay->toDateString() === $dayCalendar->toDateString()) {
                         $days[] = $dataDay;
                     }
                 }
@@ -142,7 +142,7 @@ class Month extends Carbon
             $days = [];
             foreach ($weekCalendar as $dayCalendar) {
                 foreach ($calendarDays as $dataDay) {
-                    if ($dataDay->toDateString() == $dayCalendar->toDateString()) {
+                    if ($dataDay->toDateString() === $dayCalendar->toDateString()) {
                         $days[] = $dataDay;
                     }
                 }

@@ -26,7 +26,7 @@ class MenuGenerator
         $menuSelect = new MenuSelect();
         $menuSelect->setArea($area);
 
-        if ($room) {
+        if ($room !== null) {
             $menuSelect->setRoom($room);
         }
 

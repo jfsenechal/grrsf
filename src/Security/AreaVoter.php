@@ -112,10 +112,6 @@ class AreaVoter extends Voter
 
     private function canDelete(Area $volontaire, TokenInterface $token)
     {
-        if ($this->canEdit($volontaire, $token)) {
-            return true;
-        }
-
-        return false;
+        return (bool) $this->canEdit($volontaire, $token);
     }
 }

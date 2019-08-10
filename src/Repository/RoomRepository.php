@@ -29,12 +29,10 @@ class RoomRepository extends ServiceEntityRepository
 
     public function getRoomsByAreaQueryBuilder(Area $area): QueryBuilder
     {
-        $qb = $this->createQueryBuilder('room')
+        return $this->createQueryBuilder('room')
             ->andWhere('room.area = :area')
             ->setParameter('area', $area)
             ->orderBy('room.name', 'ASC');
-
-        return $qb;
     }
 
     /**

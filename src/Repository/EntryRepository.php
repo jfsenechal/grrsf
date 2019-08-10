@@ -38,13 +38,13 @@ class EntryRepository extends ServiceEntityRepository
         $qb->andWhere('MONTH(entry.startTime) = :month')
             ->setParameter('month', $monthModel->getFirstDayImmutable()->month);
 
-        if ($area) {
+        if ($area !== null) {
             $rooms = $this->getRooms($area);
             $qb->andWhere('entry.room IN (:rooms)')
                 ->setParameter('rooms', $rooms);
         }
 
-        if ($room) {
+        if ($room !== null) {
             $qb->andWhere('entry.room = :room')
                 ->setParameter('room', $room);
         }
@@ -174,7 +174,7 @@ class EntryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('entry');
 
-        if ($dateTime) {
+        if ($dateTime !== null) {
             $date = $dateTime->format('Y-m-d');
             $qb->andWhere('entry.startTime LIKE :date')
                 ->setParameter('date', '%'.$date.'%');

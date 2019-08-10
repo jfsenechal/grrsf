@@ -28,6 +28,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class EntryController extends AbstractController
 {
     /**
+     * @var mixed
+     */
+    public $repeatRepository;
+    /**
      * @var EntryRepository
      */
     private $entryRepository;

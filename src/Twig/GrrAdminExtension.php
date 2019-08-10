@@ -48,10 +48,18 @@ class GrrAdminExtension extends AbstractExtension
             // If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
-            new TwigFilter('grrJoursSemaine', [$this, 'joursSemaine']),
-            new TwigFilter('grrPeriodName', [$this, 'periodName']),
-            new TwigFilter('grrHourFormat', [$this, 'hourFormat']),
-            new TwigFilter('grrDisplayColor', [$this, 'displayColor'], ['is_safe' => ['html']]),
+            new TwigFilter('grrJoursSemaine', function ($value) {
+                return $this->joursSemaine($value);
+            }),
+            new TwigFilter('grrPeriodName', function (int $value) {
+                return $this->periodName($value);
+            }),
+            new TwigFilter('grrHourFormat', function (int $value) {
+                return $this->hourFormat($value);
+            }),
+            new TwigFilter('grrDisplayColor', function (string $value) {
+                return $this->displayColor($value);
+            }, ['is_safe' => ['html']]),
         ];
     }
 

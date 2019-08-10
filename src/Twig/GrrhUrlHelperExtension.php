@@ -36,17 +36,25 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('grrGenerateRouteMonthView', [$this, 'generateRouteMonthView']),
-            new TwigFunction('grrGenerateRouteWeekView', [$this, 'generateRouteWeekView']),
-            new TwigFunction('grrGenerateRouteDayView', [$this, 'generateRouteDayView']),
-            new TwigFunction('grrGenerateRouteAddEntry', [$this, 'generateRouteAddEntry']),
+            new TwigFunction('grrGenerateRouteMonthView', function (int $year = null, int $month = null) {
+                return $this->generateRouteMonthView($year, $month);
+            }),
+            new TwigFunction('grrGenerateRouteWeekView', function (int $week) {
+                return $this->generateRouteWeekView($week);
+            }),
+            new TwigFunction('grrGenerateRouteDayView', function (int $day) {
+                return $this->generateRouteDayView($day);
+            }),
+            new TwigFunction('grrGenerateRouteAddEntry', function (int $area, int $room, int $day, int $hour = null, int $minute = null) {
+                return $this->generateRouteAddEntry($area, $room, $day, $hour, $minute);
+            }),
         ];
     }
 
     public function generateRouteMonthView(int $year = null, int $month = null)
     {
         $request = $this->requestStack->getMasterRequest();
-        if (!$request) {
+        if ($request === null) {
             return '';
         }
 
@@ -74,7 +82,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function generateRouteWeekView(int $week)
     {
         $request = $this->requestStack->getMasterRequest();
-        if (!$request) {
+        if ($request === null) {
             return '';
         }
 
@@ -97,7 +105,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function generateRouteDayView(int $day)
     {
         $request = $this->requestStack->getMasterRequest();
-        if (!$request) {
+        if ($request === null) {
             return '';
         }
 
@@ -120,7 +128,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function generateRouteAddEntry(int $area, int $room, int $day, int $hour = null, int $minute = null)
     {
         $request = $this->requestStack->getMasterRequest();
-        if (!$request) {
+        if ($request === null) {
             return '';
         }
 

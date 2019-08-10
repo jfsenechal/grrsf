@@ -32,7 +32,7 @@ class PeriodicityService
     public function getDays(Entry $entry): ?CarbonPeriod
     {
         $periodicity = $entry->getPeriodicity();
-        if (!$periodicity) {
+        if ($periodicity === null) {
             return null;
         }
 

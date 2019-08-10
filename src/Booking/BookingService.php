@@ -219,7 +219,7 @@ class BookingService
         $key = $this->getKeyBooking($booking, $date);
         $this->bookingsFromFlux[] = $key;
         $entry = $this->entryRepository->findOneBy(['booking' => $key]);
-        if (!$entry) {
+        if ($entry === null) {
             echo $this->output->writeln("nouveau : $date => $key");
             $entry = $this->entryFactory->createNew();
             $entry->setBooking($key);

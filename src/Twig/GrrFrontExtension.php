@@ -50,10 +50,18 @@ class GrrFrontExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('grrMonthNavigationRender', [$this, 'MonthNavigationRender'], ['is_safe' => ['html']]),
-            new TwigFunction('grrMenuNavigationRender', [$this, 'menuNavigationRender'], ['is_safe' => ['html']]),
-            new TwigFunction('grrCompleteTr', [$this, 'grrCompleteTr'], ['is_safe' => ['html']]),
-            new TwigFunction('grrGenerateCellDataDay', [$this, 'grrGenerateCellDataDay'], ['is_safe' => ['html']]),
+            new TwigFunction('grrMonthNavigationRender', function () {
+                return $this->monthNavigationRender();
+            }, ['is_safe' => ['html']]),
+            new TwigFunction('grrMenuNavigationRender', function () {
+                return $this->menuNavigationRender();
+            }, ['is_safe' => ['html']]),
+            new TwigFunction('grrCompleteTr', function (CarbonInterface $day, string $action) {
+                return $this->grrCompleteTr($day, $action);
+            }, ['is_safe' => ['html']]),
+            new TwigFunction('grrGenerateCellDataDay', function (TimeSlot $hour, RoomModel $roomModel, Day $day) {
+                return $this->grrGenerateCellDataDay($hour, $roomModel, $day);
+            }, ['is_safe' => ['html']]),
         ];
     }
 
@@ -114,7 +122,7 @@ class GrrFrontExtension extends AbstractExtension
     {
         $request = $this->requestStack->getMasterRequest();
 
-        if (!$request) {
+        if ($request === null) {
             return new Response('');
         }
 
@@ -144,7 +152,7 @@ class GrrFrontExtension extends AbstractExtension
     public function menuNavigationRender()
     {
         $request = $this->requestStack->getMasterRequest();
-        $area = $request ? $request->get('area') : 0;
+        $area = $request !== null ? $request->get('area') : 0;
 
         $form = $this->menuGenerator->generateMenuSelect($area);
 

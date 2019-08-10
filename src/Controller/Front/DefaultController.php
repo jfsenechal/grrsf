@@ -81,7 +81,7 @@ class DefaultController extends AbstractController
         $today = CarbonFactory::getToday();
 
         $esquare = $this->settingservice->getDefaultArea();
-        if (!$esquare) {
+        if ($esquare === null) {
             return new Response('No data');
         }
 

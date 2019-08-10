@@ -100,8 +100,8 @@ class NavigationManager
 
         $weeks = $this->month->getCalendarWeeks();
         $request = $this->requestStack->getMasterRequest();
-        $weekSelected = $request ? $request->get('week') : 0;
-        $daySelected = $request ? $request->get('day') : 0;
+        $weekSelected = $request !== null ? $request->get('week') : 0;
+        $daySelected = $request !== null ? $request->get('day') : 0;
 
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_month_by_weeks.html.twig',
@@ -121,8 +121,8 @@ class NavigationManager
         $days = $month->getCalendarDays();
 
         $request = $this->requestStack->getMasterRequest();
-        $weekSelected = $request ? $request->get('week') : 0;
-        $daySelected = $request ? $request->get('day') : 0;
+        $weekSelected = $request !== null ? $request->get('week') : 0;
+        $daySelected = $request !== null ? $request->get('day') : 0;
 
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_month_by_days.html.twig',

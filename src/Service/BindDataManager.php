@@ -134,7 +134,7 @@ class BindDataManager
     {
         $data = [];
         foreach ($this->entries as $entry) {
-            if ($entry->getStartTime()->format('Y-m-d') == $dateTime->format('Y-m-d')) {
+            if ($entry->getStartTime()->format('Y-m-d') === $dateTime->format('Y-m-d')) {
                 $data[] = $entry;
             }
         }
