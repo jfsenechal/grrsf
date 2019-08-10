@@ -6,12 +6,23 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testSomething()
+    /**
+     * @dataProvider provideUrls
+     */
+    public function testPageIsSuccessful($url)
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/');
+        $client = self::createClient();
+        $client->request('GET', $url);
+        var_dump($client->getResponse()->getContent());
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
 
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Hello World');
+    public function provideUrls()
+    {
+        return [
+            ['/'],
+            ['/front/monthview/area/3/year/2019/month/8/room'],
+            ['/admin'],
+        ];
     }
 }

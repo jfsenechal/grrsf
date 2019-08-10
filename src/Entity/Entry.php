@@ -13,7 +13,7 @@ use App\Validator as AppAssert;
 /**
  * Entry.
  *
- * @ORM\Table(name="grr_entry", indexes={@ORM\Index(name="idxEndTime", columns={"end_time"}), @ORM\Index(name="idxStartTime", columns={"start_time"})})
+ * @ORM\Table(name="grr_entry")
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
  *
  * @AppAssert\BusyRoom()
