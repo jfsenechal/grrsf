@@ -53,6 +53,6 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(GrrModuleInterface::class)
             ->addTag('grr_module');
 
-        $container->addCompilerPass(new ModulesPass());
+      //  $container->addCompilerPass(new ModulesPass());
     }
 }

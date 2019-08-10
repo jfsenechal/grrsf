@@ -10,6 +10,15 @@ class ModuleSender implements GrrModuleSenderInterface
      * @var GrrModuleInterface[]
      */
     public $modules = [];
+    /**
+     * @var iterable
+     */
+    private $list;
+
+    public function __construct(iterable $list)
+    {
+        $this->list = $list;
+    }
 
     /**
      * @param GrrModuleInterface $module
@@ -21,7 +30,10 @@ class ModuleSender implements GrrModuleSenderInterface
 
     public function postContent()
     {
-        dump($this->modules);
+        foreach ($this->list as $list) {
+            $list->postContent();
+        }
+
         foreach ($this->modules as $module) {
             $module->postContent();
         }
