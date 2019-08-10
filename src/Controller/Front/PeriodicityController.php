@@ -3,7 +3,6 @@
 namespace App\Controller\Front;
 
 use App\Entity\Periodicity;
-use App\Form\Periodicity1Type;
 use App\Repository\PeriodicityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,18 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PeriodicityController extends AbstractController
 {
-    /**
-     * @Route("/", name="periodicity_index", methods={"GET"})
-     */
-    public function index(PeriodicityRepository $periodicityRepository): Response
-    {
-        return $this->render(
-            'periodicity/index.html.twig',
-            [
-                'periodicities' => $periodicityRepository->findAll(),
-            ]
-        );
-    }
 
     /**
      * @Route("/{id}", name="periodicity_show", methods={"GET"})

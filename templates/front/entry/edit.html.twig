@@ -13,6 +13,6 @@
 
 {% endblock %}
 {% block scripts %}
+    <script src="{{ asset('js/display_select_days.js') }}"></script>
     {% include '@grr_front/entry/form/_rooms_list_ajax.html.twig' %}
-    {% include '@grr_front/entry/form/_select_days_ajax.html.twig' %}
 {% endblock %}
