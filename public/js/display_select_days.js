@@ -3,7 +3,7 @@
  */
 $(document).ready(function () {
     var typeList = $('#periodicity_type');
-    var periodicityZone = $('#periodicity_days');
+    var periodicityZone = $('#weeks_options');
     typeList.on('click', function (e) {
         var radioValue = $("input[name='periodicity[type]']:checked").val();
         if (radioValue === '2') {

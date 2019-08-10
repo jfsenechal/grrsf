@@ -141,6 +141,7 @@ periodicity:
   form:
     selectdays.label: Sélectionnez les jours
     selectweeksrepeat.label: Quelle répétition
+    endtime.label: Date de fin de la périodicité
 login:
   form:
     password:

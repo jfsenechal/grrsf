@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\Area;
 use App\Entity\Entry;
+use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Factory\EntryFactory;
 use App\Factory\PeriodicityFactory;
@@ -99,6 +100,8 @@ class EntryController extends AbstractController
     ): Response {
 
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
+        $periodicity = new Periodicity($entry);
+
 
         $form = $this->createForm(EntryType::class, $entry);
         $formPeriodicity = $this->createForm(PeriodicityType::class, null);

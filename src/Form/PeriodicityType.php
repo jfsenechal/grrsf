@@ -18,24 +18,25 @@ class PeriodicityType extends AbstractType
 
         $builder
             ->add(
+                'end_periodicity',
+                DateTimeType::class,
+                [
+                    'label' => 'periodicity.form.endtime.label',
+                ]
+            )
+            ->add(
                 'type',
                 ChoiceType::class,
                 [
                     'choices' => array_flip($types),
                     'multiple' => false,
                     'expanded' => true,
+                    'data' => 0,
                 ]
             )
             ->add(
                 'days',
                 SelectDayOfWeekTypeField::class,
-                [
-                    'attr' => ['class' => 'd-none'],
-                ]
-            )
-            ->add(
-                'end_periodicity',
-                DateTimeType::class,
                 [
                 ]
             );
