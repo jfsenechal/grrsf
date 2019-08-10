@@ -19,6 +19,27 @@ class PeriodicityRepository extends ServiceEntityRepository
         parent::__construct($registry, Periodicity::class);
     }
 
+    public function persist(Periodicity $Repeat)
+    {
+        $this->_em->persist($Repeat);
+    }
+
+    public function insert(Periodicity $Repeat)
+    {
+        $this->persist($Repeat);
+        $this->flush();
+    }
+
+    public function remove(Repeat $Repeat)
+    {
+        $this->_em->remove($Repeat);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
     // /**
     //  * @return Periodicity[] Returns an array of Periodicity objects
     //  */

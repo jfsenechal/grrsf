@@ -33,10 +33,6 @@ class EntryController extends AbstractController
      */
     private $entryRepository;
     /**
-     * @var RepeatRepository
-     */
-    private $repeatRepository;
-    /**
      * @var EntryManager
      */
     private $entryManager;
@@ -61,12 +57,10 @@ class EntryController extends AbstractController
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
         EntryManager $entryManager,
-        RepeatRepository $repeatRepository,
         ValidationsEntry $validationsEntry,
         PeriodicityService $periodicityService
     ) {
         $this->entryRepository = $entryRepository;
-        $this->repeatRepository = $repeatRepository;
         $this->entryManager = $entryManager;
         $this->entryFactory = $entryFactory;
         $this->validationsEntry = $validationsEntry;
