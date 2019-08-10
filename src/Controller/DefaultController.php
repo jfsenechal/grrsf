@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Modules\GrrModuleSenderInterface;
-use App\Modules\ModuleSender;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +14,8 @@ class DefaultController extends AbstractController
      */
     public function index(GrrModuleSenderInterface $grrModule): Response
     {
+        $grrModule->postContent();
+
         return $this->render(
             'default/index.html.twig',
             [

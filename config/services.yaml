@@ -26,10 +26,5 @@ services:
     resource: '../src/Controller'
     tags: ['controller.service_arguments']
 
-  App\Modules\Module1:
-    tags: ['grr_module']
-  App\Modules\Module2:
-    tags: ['grr_module']
-
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones

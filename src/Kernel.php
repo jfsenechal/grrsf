@@ -3,6 +3,7 @@
 namespace App;
 
 use App\DependencyInjection\Compiler\ModulesPass;
+use App\Modules\GrrModuleInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -49,6 +50,9 @@ class Kernel extends BaseKernel
 
     protected function build(ContainerBuilder $container)
     {
+        $container->registerForAutoconfiguration(GrrModuleInterface::class)
+            ->addTag('grr_module');
+
         $container->addCompilerPass(new ModulesPass());
     }
 }
