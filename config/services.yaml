@@ -26,6 +26,7 @@ services:
     resource: '../src/Controller'
     tags: ['controller.service_arguments']
 
+
   #il faut ajouter un constructeur iterable
   #App\Modules\ModuleSender:
     # inject all services tagged with app.handler as first argument

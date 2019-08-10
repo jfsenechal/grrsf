@@ -13,14 +13,12 @@ use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
 use App\Service\PeriodicityService;
-use App\Validator\ValidationsEntry;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/front/entry")
@@ -44,14 +42,6 @@ class EntryController extends AbstractController
      */
     private $entryFactory;
     /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-    /**
-     * @var ValidationsEntry
-     */
-    private $validationsEntry;
-    /**
      * @var PeriodicityService
      */
     private $periodicityService;
@@ -60,13 +50,11 @@ class EntryController extends AbstractController
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
         EntryManager $entryManager,
-        ValidationsEntry $validationsEntry,
         PeriodicityService $periodicityService
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryManager = $entryManager;
         $this->entryFactory = $entryFactory;
-        $this->validationsEntry = $validationsEntry;
         $this->periodicityService = $periodicityService;
     }
 
@@ -109,14 +97,8 @@ class EntryController extends AbstractController
         int $hour = null,
         int $minute = null
     ): Response {
-        $date = Carbon::create($year, $month, $day, $hour, $minute);
-        $entry = EntryFactory::createNew();
-        EntryFactory::setDefaultValues($entry);
-        $entry->setArea($area);
-        $entry->setRoom($room);
-        $entry->setStartTime($date);
-        $suite = $date->copy()->addMinutes($area->getDureeParDefautReservationArea());
-        $entry->setEndTime($suite);
+
+        $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
 
         $form = $this->createForm(EntryType::class, $entry);
         $formPeriodicity = $this->createForm(PeriodicityType::class, null);
