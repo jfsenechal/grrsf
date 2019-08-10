@@ -48,11 +48,4 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
     }
 
-    protected function build(ContainerBuilder $container)
-    {
-        $container->registerForAutoconfiguration(GrrModuleInterface::class)
-            ->addTag('grr_module');
-
-      //  $container->addCompilerPass(new ModulesPass());
-    }
 }
