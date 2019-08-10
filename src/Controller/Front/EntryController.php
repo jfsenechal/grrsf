@@ -12,7 +12,6 @@ use App\Form\PeriodicityType;
 use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
-use App\Repository\RepeatRepository;
 use App\Service\PeriodicityService;
 use App\Validator\ValidationsEntry;
 use Carbon\Carbon;

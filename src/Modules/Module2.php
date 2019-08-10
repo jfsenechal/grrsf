@@ -1,12 +1,9 @@
 <?php
 
-
 namespace App\Modules;
-
 
 class Module2 implements GrrModuleInterface
 {
-
     public function getSupport(): string
     {
         return 'module2';

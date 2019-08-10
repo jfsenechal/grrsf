@@ -47,6 +47,7 @@ menu:
   reservation:
     type: Type de réservations
   administration: Administration
+  planning: Retour au planning
 user:
   index:
     title: Liste des utilisateurs

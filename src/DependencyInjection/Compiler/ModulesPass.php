@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\DependencyInjection\Compiler;
-
 
 use App\Modules\GrrModuleSenderInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -24,7 +22,7 @@ class ModulesPass implements CompilerPassInterface
         $definition = $container->findDefinition(GrrModuleSenderInterface::class);
 
         // find all service IDs with the grr_module tag
-        $taggedServices = $container->findTaggedServiceIds('grr_module');
+        $taggedServices = $container->find('grr_module');
 
         foreach ($taggedServices as $id => $module) {
             // add the transport service to the TransportChain service

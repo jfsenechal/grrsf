@@ -18,6 +18,4 @@ class GrrBundle extends Bundle
 
         $container->addCompilerPass(new ModulesPass());
     }
-
-
 }
