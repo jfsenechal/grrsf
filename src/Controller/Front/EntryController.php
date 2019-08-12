@@ -111,6 +111,9 @@ class EntryController extends AbstractController
             $periodicity = $data->getPeriodicity();
             if ($periodicity) {
                 dump($periodicity);
+                if ($periodicity->getType() == 0) {
+                    $entry->setPeriodicity(null);
+                }
                 $this->entryManager->insert($entry);
             }
 
@@ -141,10 +144,8 @@ class EntryController extends AbstractController
      */
     public function show(Entry $entry): Response
     {
-        $repeat = '';
-        if ($entry->getRepeatId()) {
-            $repeat = $this->repeatRepository->find($entry->getRepeatId());
-        }
+
+        dump($entry);
 
         /*  $today = Carbon::today();
 
@@ -165,7 +166,6 @@ class EntryController extends AbstractController
             '@grr_front/entry/show.html.twig',
             [
                 'entry' => $entry,
-                'repeat' => $repeat,
             ]
         );
     }
@@ -178,10 +178,6 @@ class EntryController extends AbstractController
         $entry->setArea($entry->getRoom()->getArea());
 
         $form = $this->createForm(EntryType::class, $entry);
-
-        $periodicity = new Periodicity();
-        $periodicity->setEntry($entry);
-        $entry->setPeriodicity($periodicity);
 
         $form->handleRequest($request);
 

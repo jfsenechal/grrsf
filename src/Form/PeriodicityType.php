@@ -54,7 +54,6 @@ class PeriodicityType extends AbstractType
                 [
                     'choices' => array_flip($weeks),
                     'label' => 'periodicity.form.selectweeksrepeat.label',
-                    'help' => 'entry.form.duration_unit.help',
                     'required' => false,
                     'multiple' => false,
                     'expanded' => true,

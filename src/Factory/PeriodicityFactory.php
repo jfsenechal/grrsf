@@ -8,10 +8,7 @@
 
 namespace App\Factory;
 
-use App\Entity\Area;
-use App\Entity\Entry;
 use App\Entity\Periodicity;
-use App\GrrData\DateUtils;
 
 class PeriodicityFactory
 {
@@ -19,6 +16,4 @@ class PeriodicityFactory
     {
         return new Periodicity();
     }
-
-
 }

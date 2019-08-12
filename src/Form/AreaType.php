@@ -83,7 +83,7 @@ class AreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.morningstartsArea.label',
-                    'choices' => DateUtils::getHeures(),
+                    'choices' => DateUtils::getHours(),
                 ]
             )
             ->add(
@@ -91,7 +91,7 @@ class AreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.eveningendsArea.label',
-                    'choices' => DateUtils::getHeures(),
+                    'choices' => DateUtils::getHours(),
                 ]
             )
             ->add(

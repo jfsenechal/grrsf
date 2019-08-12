@@ -176,7 +176,8 @@ class Entry
     private $cellules;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Periodicity", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Periodicity", inversedBy="entry", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $periodicity;
 
@@ -463,18 +464,6 @@ class Entry
         return $this;
     }
 
-    public function getPeriodicity(): ?Periodicity
-    {
-        return $this->periodicity;
-    }
-
-    public function setPeriodicity(?Periodicity $periodicity): self
-    {
-        $this->periodicity = $periodicity;
-
-        return $this;
-    }
-
     public function getPrivate(): ?bool
     {
         return $this->private;
@@ -483,6 +472,18 @@ class Entry
     public function setPrivate(bool $private): self
     {
         $this->private = $private;
+
+        return $this;
+    }
+
+    public function getPeriodicity(): ?Periodicity
+    {
+        return $this->periodicity;
+    }
+
+    public function setPeriodicity(?Periodicity $periodicity): self
+    {
+        $this->periodicity = $periodicity;
 
         return $this;
     }

@@ -3,7 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Entity\Periodicity;
-use App\Repository\PeriodicityRepository;
+use App\Manager\PeriodicityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,41 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PeriodicityController extends AbstractController
 {
-
     /**
-     * @Route("/{id}", name="periodicity_show", methods={"GET"})
+     * @var PeriodicityManager
      */
-    public function show(Periodicity $periodicity): Response
+    private $periodicityManager;
+
+    public function __construct(PeriodicityManager $periodicityManager)
     {
-        return $this->render(
-            'periodicity/show.html.twig',
-            [
-                'periodicity' => $periodicity,
-            ]
-        );
-    }
-
-    /**
-     * @Route("/{id}/edit", name="periodicity_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Periodicity $periodicity): Response
-    {
-        $form = $this->createForm(Periodicity1Type::class, $periodicity);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('periodicity_index');
-        }
-
-        return $this->render(
-            'periodicity/edit.html.twig',
-            [
-                'periodicity' => $periodicity,
-                'form' => $form->createView(),
-            ]
-        );
+        $this->periodicityManager = $periodicityManager;
     }
 
     /**
@@ -56,12 +29,12 @@ class PeriodicityController extends AbstractController
      */
     public function delete(Request $request, Periodicity $periodicity): Response
     {
+        $entry = $periodicity->getEntry();
+
         if ($this->isCsrfTokenValid('delete'.$periodicity->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($periodicity);
-            $entityManager->flush();
+            $this->periodicityManager->remove($periodicity);
         }
 
-        return $this->redirectToRoute('periodicity_index');
+        return $this->redirectToRoute('grr_front_entry_show', ['id' => $entry->getId()]);
     }
 }

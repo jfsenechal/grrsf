@@ -23,7 +23,7 @@ class DateUtils
         return $days;
     }
 
-    public static function getHeures()
+    public static function getHours()
     {
         return range(0, 23);
     }

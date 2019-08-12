@@ -49,9 +49,9 @@
     <p class="text-muted">{{ 'entry.form.createBy.label'|trans }} {{ entry.createBy }}
     </p>
 
-    {% if repeat %}
-        <h3>Repeat</h3>
-        {% include 'repeat/_detail.html.twig' %}
+    {% if entry.periodicity %}
+        <h3>{{'periodicity'|trans}}</h3>
+        {% include '@grr_front/periodicity/_detail.html.twig' %}
     {% endif %}
 
     {{ include('@grr_front/entry/_delete_form.html.twig') }}

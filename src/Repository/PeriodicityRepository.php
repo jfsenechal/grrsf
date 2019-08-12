@@ -30,7 +30,7 @@ class PeriodicityRepository extends ServiceEntityRepository
         $this->flush();
     }
 
-    public function remove(Repeat $Repeat)
+    public function remove(Periodicity $Repeat)
     {
         $this->_em->remove($Repeat);
     }

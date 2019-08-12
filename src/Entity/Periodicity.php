@@ -35,10 +35,16 @@ class Periodicity
     private $repeat_week = 0;
 
     /**
-     * @var Collection
+     * @var ArrayCollection
      * @ORM\Column(type="array")
      */
     private $days;
+
+    /**
+     * @var Entry
+     * @ORM\OneToOne(targetEntity="App\Entity\Entry", mappedBy="periodicity")
+     */
+    private $entry;
 
     public function __construct()
     {
@@ -113,9 +119,27 @@ class Periodicity
         return $this;
     }
 
-    public function se2tDays(array $days): self
+    public function setDays(array $days): self
     {
         $this->days = $days;
+
+        return $this;
+    }
+
+    public function getEntry(): ?Entry
+    {
+        return $this->entry;
+    }
+
+    public function setEntry(?Entry $entry): self
+    {
+        $this->entry = $entry;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newPeriodicity = $entry === null ? null : $this;
+        if ($newPeriodicity !== $entry->getPeriodicity()) {
+            $entry->setPeriodicity($newPeriodicity);
+        }
 
         return $this;
     }
