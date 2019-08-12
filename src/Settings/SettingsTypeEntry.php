@@ -1,37 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jfsenechal
- * Date: 11/03/19
- * Time: 21:44.
- */
 
-namespace App\GrrData;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
+namespace App\Settings;
 
-class TypeAreaData
+
+class SettingsTypeEntry
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
-    public function disponibleFor()
+    public static function disponibleFor()
     {
         return [
-            2 => $this->translator->trans('Tous'),
-            3 => $this->translator->trans('Les gestionnaires et administrateurs'),
-            5 => $this->translator->trans('Seulement les administrateurs'),
+            2 => 'Tous',
+            3 => 'Les gestionnaires et administrateurs',
+            5 => 'Seulement les administrateurs',
         ];
     }
 
-    public function typeLettres()
+    public static function typeLettres()
     {
         return [
             'A' => 'A',
@@ -136,4 +120,5 @@ class TypeAreaData
             'CV' => 'CV',
         ];
     }
+
 }

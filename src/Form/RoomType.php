@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Room;
-use App\GrrData\RoomData;
+use App\Settings\SettingsRoom;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -151,7 +151,7 @@ class RoomType extends AbstractType
                 [
                     'label' => 'room.form.typeAffichageReser.label',
                     'help' => 'room.form.typeAffichageReser.help',
-                    'choices' => array_flip(RoomData::typeAffichageReser()),
+                    'choices' => array_flip(SettingsRoom::typeAffichageReser()),
                 ]
             )
             ->add(
@@ -168,7 +168,7 @@ class RoomType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'room.form.quiPeutReserverPour.label',
-                    'choices' => array_flip(RoomData::qui_peut_reserver_pour()),
+                    'choices' => array_flip(SettingsRoom::qui_peut_reserver_pour()),
                 ]
             )
             ->add(
@@ -184,7 +184,7 @@ class RoomType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'room.form.whoCanSee.label',
-                    'choices' => array_flip(RoomData::whoCanSee()),
+                    'choices' => array_flip(SettingsRoom::whoCanSee()),
                 ]
             );
     }

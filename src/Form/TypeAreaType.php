@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\EntryType;
 use App\GrrData\TypeAreaData;
+use App\Settings\SettingsTypeEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
@@ -53,7 +54,7 @@ class TypeAreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'typeArea.form.typeLetter.label',
-                    'choices' => array_flip($this->typeAreaData->typeLettres()),
+                    'choices' => array_flip(SettingsTypeEntry::typeLettres()),
                 ]
             )
             ->add(
@@ -61,7 +62,7 @@ class TypeAreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'typeArea.form.disponible.label',
-                    'choices' => array_flip($this->typeAreaData->disponibleFor()),
+                    'choices' => array_flip(SettingsTypeEntry::disponibleFor()),
                 ]
             );
     }

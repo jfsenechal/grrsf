@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jfsenechal
- * Date: 1/03/19
- * Time: 23:49.
- */
 
-namespace App\GrrData;
 
-class RoomData
+namespace App\Settings;
+
+
+class SettingsRoom
 {
     const DISPLAY_TYPE_FORM_RESERVATION_DURATION = 0;
     const DISPLAY_TYPE_FORM_RESERVATION_DATE_END = 1;
