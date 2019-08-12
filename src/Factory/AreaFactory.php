@@ -10,6 +10,7 @@ namespace App\Factory;
 
 use App\Entity\Area;
 use App\GrrData\DateUtils;
+use App\Provider\DateProvider;
 
 class AreaFactory
 {
@@ -28,10 +29,14 @@ class AreaFactory
         return new Area();
     }
 
+    /**
+     * @param Area $area
+     * @deprecated
+     */
     public static function setDefaultValues(Area $area)
     {
         $area
-            ->setDisplayDays(array_flip(DateUtils::getDays()))
+            ->setDisplayDays(array_flip(DateProvider::getNamesDaysOfWeek()))
             ->setMorningstartsArea(8)
             ->setEveningendsArea(19)
             ->setResolutionArea(1800)

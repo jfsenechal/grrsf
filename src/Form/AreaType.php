@@ -4,8 +4,8 @@ namespace App\Form;
 
 use App\Entity\Area;
 use App\GrrData\AreaData;
-use App\GrrData\DateUtils;
 use App\GrrData\GrrConstants;
+use App\Provider\DateProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -54,7 +54,7 @@ class AreaType extends AbstractType
                 'weekstartsArea',
                 ChoiceType::class,
                 [
-                    'choices' => array_flip(DateUtils::getDays()),
+                    'choices' => array_flip(DateProvider::getNamesDaysOfWeek()),
                     'label' => 'area.form.weekstartsArea.label',
                 ]
             )
@@ -63,7 +63,7 @@ class AreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.displayDays.label',
-                    'choices' => array_flip(DateUtils::getDays()),
+                    'choices' => array_flip(DateProvider::getNamesDaysOfWeek()),
                     'multiple' => true,
                     'expanded' => true,
                 ]
@@ -83,7 +83,7 @@ class AreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.morningstartsArea.label',
-                    'choices' => DateUtils::getHours(),
+                    'choices' => DateProvider::getHours(),
                 ]
             )
             ->add(
@@ -91,7 +91,7 @@ class AreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.eveningendsArea.label',
-                    'choices' => DateUtils::getHours(),
+                    'choices' => DateProvider::getHours(),
                 ]
             )
             ->add(

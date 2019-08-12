@@ -10,7 +10,7 @@ namespace App\Factory;
 
 use App\Entity\Area;
 use App\Entity\Setting;
-use App\GrrData\DateUtils;
+use App\Provider\DateProvider;
 
 class SettingFactory
 {
@@ -21,7 +21,7 @@ class SettingFactory
 
     public function setDefaultValues(Area $area)
     {
-        $area->setDisplayDays(array_flip(DateUtils::getDays()));
+        $area->setDisplayDays(array_flip(DateProvider::getNamesDaysOfWeek()));
         $area->setMorningstartsArea(8);
         $area->setEveningendsArea(19);
         $area->setResolutionArea(900);

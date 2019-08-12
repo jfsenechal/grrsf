@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Periodicity;
 use App\GrrData\DateUtils;
 use App\GrrData\PeriodicityConstant;
+use App\Provider\DateProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -16,7 +17,7 @@ class PeriodicityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $types = PeriodicityConstant::getTypesPeriodicite();
-        $days = DateUtils::getDays();
+        $days = DateProvider::getNamesDaysOfWeek();
         $weeks = PeriodicityConstant::LIST_WEEKS_REPEAT;
 
         $builder

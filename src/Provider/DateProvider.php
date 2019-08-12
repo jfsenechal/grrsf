@@ -1,18 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jfsenechal
- * Date: 1/03/19
- * Time: 21:55.
- */
 
-namespace App\GrrData;
+
+namespace App\Provider;
+
 
 use Carbon\Carbon;
 
-class DateUtils
+class DateProvider
 {
-    public static function getDays()
+    /**
+     * Names of days of the week.
+     * @return array
+     */
+    public static function getNamesDaysOfWeek()
     {
         $days = Carbon::getDays();
         //todo dynamic

@@ -10,6 +10,7 @@ namespace App\Helper;
 
 use App\GrrData\DateUtils;
 use App\Model\Month;
+use App\Provider\DateProvider;
 use Twig\Environment;
 
 class MonthHelperDataDisplay
@@ -40,7 +41,7 @@ class MonthHelperDataDisplay
         return $this->environment->render(
             '@grr_front/month/_calendar_data.html.twig',
             [
-                'listDays' => DateUtils::getDays(),
+                'listDays' => DateProvider::getNamesDaysOfWeek(),
                 'firstDay' => $month->firstOfMonth(),
                 'dataDays' => $month->getDataDays(),
                 'weeks' => $weeks,

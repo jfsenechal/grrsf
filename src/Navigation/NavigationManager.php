@@ -8,9 +8,9 @@
 
 namespace App\Navigation;
 
-use App\GrrData\DateUtils;
 use App\Model\Month;
 use App\Model\Navigation;
+use App\Provider\DateProvider;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Webmozart\Assert\Assert;
@@ -42,7 +42,7 @@ class NavigationManager
 
     /**
      * @param Month $month
-     * @param int   $number nombre de mois
+     * @param int $number nombre de mois
      *
      * @return Navigation
      */
@@ -107,7 +107,7 @@ class NavigationManager
             '@grr_front/navigation/month/_month_by_weeks.html.twig',
             [
                 'firstDay' => $firstDay,
-                'listDays' => DateUtils::getDays(),
+                'listDays' => DateProvider::getNamesDaysOfWeek(),
                 'weeks' => $weeks,
                 'weekSelected' => $weekSelected,
                 'daySelected' => $daySelected,
@@ -128,7 +128,7 @@ class NavigationManager
             '@grr_front/navigation/month/_month_by_days.html.twig',
             [
                 'firstDay' => $firstDay,
-                'listDays' => DateUtils::getDays(),
+                'listDays' => DateProvider::getNamesDaysOfWeek(),
                 'days' => $days,
                 'weekSelected' => $weekSelected,
                 'daySelected' => $daySelected,
