@@ -3,11 +3,12 @@
 
 namespace App\EventSubscriber;
 
-
 use App\Entity\Entry;
+use App\Factory\DurationFactory;
 use App\Form\Type\DurationTimeTypeField;
-use App\GrrData\EntryData;
+use App\Model\DurationModel;
 use App\Validator\Duration;
+use App\Validator\Duration as DurationConstraint;
 use Carbon\Carbon;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -68,12 +69,10 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
                     'label' => false,
                     'data' => $duration,
                     'constraints' => [
-                        new Duration(),
+                        new DurationConstraint(),
                     ],
                 ]
             );
-            $form->get('duration')
-            ->addModelTransformer($this->transformer);
         }
 
         if ($type === 1) {
@@ -96,6 +95,9 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
      */
     public function OnPreSubmit(FormEvent $event)
     {
+        /**
+         * @var Entry $entry
+         */
         $entry = $event->getData();
         $room = $entry->getRoom();
 
@@ -108,24 +110,27 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
             $entry = $event->getData();
 
             $form = $event->getForm();
+            /**
+             * @var DurationModel $duration
+             */
             $duration = $form->getData()->getDuration();
 
             $startTime = Carbon::instance($entry->getStartTime());
 
-            $unit = $duration['unit'];
-            $time = $duration['time'];
+            $unit = $duration->getUnit();
+            $time = $duration->getTime();
 
             switch ($unit) {
-                case EntryData::UNIT_TIME_WEEKS:
+                case DurationModel::UNIT_TIME_WEEKS:
                     $startTime->addWeeks($time);
                     break;
-                case EntryData::UNIT_TIME_DAYS:
+                case DurationModel::UNIT_TIME_DAYS:
                     $startTime->addDays($time);
                     break;
-                case EntryData::UNIT_TIME_HOURS:
+                case DurationModel::UNIT_TIME_HOURS:
                     $startTime->addHours($time);
                     break;
-                case EntryData::UNIT_TIME_MINUTES:
+                case DurationModel::UNIT_TIME_MINUTES:
                     $startTime->addMinutes($time);
                     break;
                 default:
@@ -136,7 +141,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
 
     private function getDuration(Entry $entry)
     {
-        $duration = [];
+        $duration = DurationFactory::createNew();
         if ($entry || null != $entry->getId()) {
 
             $startTime = Carbon::instance($entry->getStartTime());
@@ -148,20 +153,20 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
             $weeks = $startTime->diffInWeeks($endTime);
 
             if ($minutes > 0) {
-                $duration['unit'] = EntryData::UNIT_TIME_MINUTES;
-                $duration['time'] = $minutes;
+                $duration->setUnit(DurationModel::UNIT_TIME_MINUTES);
+                $duration->setTime($minutes);
             }
             if ($hours > 0) {
-                $duration['unit'] = EntryData::UNIT_TIME_HOURS;
-                $duration['time'] = $hours.'.'.($minutes - $hours * 60);
+                $duration->setUnit(DurationModel::UNIT_TIME_HOURS);
+                $duration->setTime($hours.'.'.($minutes - $hours * 60));
             }
             if ($days > 0) {
-                $duration['unit'] = EntryData::UNIT_TIME_DAYS;
-                $duration['time'] = $days;
+                $duration->setUnit(DurationModel::UNIT_TIME_DAYS);
+                $duration->setTime($days);
             }
             if ($weeks > 0) {
-                $duration['unit'] = EntryData::UNIT_TIME_WEEKS;
-                $duration['time'] = $weeks;
+                $duration->setUnit(DurationModel::UNIT_TIME_WEEKS);
+                $duration->setTime($weeks);
             }
         }
 

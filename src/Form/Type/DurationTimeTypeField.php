@@ -3,8 +3,7 @@
 namespace App\Form\Type;
 
 use App\GrrData\EntryData;
-use App\Validator\Duration;
-use App\Validator\DurationValidator;
+use App\Model\DurationModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,7 +24,7 @@ class DurationTimeTypeField extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $choices = $this->entryData->getUnitsTime();
+        $choices = DurationModel::getUnitsTime();
 
         $builder
             ->add(
@@ -43,7 +42,7 @@ class DurationTimeTypeField extends AbstractType
                     'choices' => array_flip($choices),
                     //  'label' => 'entry.form.duration_unit.label',
                     'label' => ' ',
-                    'help' => 'entry.form.duration_unit.help'                   ,
+                    'help' => 'entry.form.duration_unit.help',
                 ]
             )
             ->add(
@@ -52,7 +51,7 @@ class DurationTimeTypeField extends AbstractType
                 [
                     'label' => 'entry.form.full_day.label',
                     'help' => 'entry.form.full_day.help',
-                    'required'=>false
+                    'required' => false,
                 ]
             );
     }

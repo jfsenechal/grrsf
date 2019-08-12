@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Booking\BookingTrait;
+use App\Model\DurationModel;
 use App\Model\TimeSlot;
 use App\Validator as AppAssert;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -170,9 +171,10 @@ class Entry
      */
     private $full_day = false;
 
+    /**
+     * @var DurationModel
+     */
     private $duration;
-
-    private $duration2;
 
     /**
      * @var ArrayCollection|TimeSlot[]
@@ -219,10 +221,13 @@ class Entry
 
     /**
      * @param int $cellules
+     * @return Entry
      */
-    public function setCellules(int $cellules): void
+    public function setCellules(int $cellules): self
     {
         $this->cellules = $cellules;
+
+        return $this;
     }
 
     public function addLocation(array $location): self
@@ -235,35 +240,22 @@ class Entry
     }
 
     /**
-     * @return mixed
+     * @return DurationModel|null
      */
-    public function getDuration()
+    public function getDuration(): ?DurationModel
     {
         return $this->duration;
     }
 
     /**
-     * @param mixed $duration
+     * @param DurationModel|null $duration
+     * @return Entry
      */
-    public function setDuration($duration): void
+    public function setDuration(?DurationModel $duration): self
     {
         $this->duration = $duration;
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getDuration2()
-    {
-        return $this->duration2;
-    }
-
-    /**
-     * @param mixed $duration2
-     */
-    public function setDuration2($duration2): void
-    {
-        $this->duration2 = $duration2;
+        return $this;
     }
 
     /**
