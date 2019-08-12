@@ -1,5 +1,5 @@
 /**
- * Affiche la liste des jours de la semaine
+ * Display/Hide options for week periodicity
  */
 $(document).ready(function () {
     var typeList = $('#entry_periodicity_type');

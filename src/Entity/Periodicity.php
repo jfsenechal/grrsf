@@ -32,58 +32,44 @@ class Periodicity
     /**
      * @ORM\Column(type="integer")
      */
-    private $number_week = 0;
+    private $repeat_week = 0;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      * @ORM\Column(type="array")
      */
-    private $weeks;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Entry", mappedBy="periodicity", cascade={"persist", "remove"})
-     */
-    private $entry;
+    private $days;
 
     public function __construct()
     {
-        $this->weeks = new ArrayCollection();
+        $this->days = new ArrayCollection();
+        $this->end_time = new \DateTime();
     }
 
-    public function addWeekDay(int $day): self
+    public function addDay(int $day): self
     {
-        if (!$this->weeks->contains($day)) {
-            $this->weeks[] = $day;
+        if (!$this->days->contains($day)) {
+            $this->days[] = $day;
         }
 
         return $this;
     }
 
-    public function removeWeekDay(int $day): self
+    public function removeDay(int $day): self
     {
-        if ($this->weeks->contains($day)) {
-            $this->weeks->removeElement($day);
+        if ($this->days->contains($day)) {
+            $this->days->removeElement($day);
         }
 
         return $this;
     }
 
-    public function getEntry(): ?Entry
+    /**
+     * @return Collection|array
+     */
+    public function getDays(): Collection
     {
-        return $this->entry;
-    }
-
-    public function setEntry(?Entry $entry): self
-    {
-        $this->entry = $entry;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newPeriodicity = null === $entry ? null : $this;
-        if ($newPeriodicity !== $entry->getPeriodicity()) {
-            $entry->setPeriodicity($newPeriodicity);
-        }
-
-        return $this;
+        return $this->days;
     }
 
     public function getId(): ?int
@@ -115,26 +101,21 @@ class Periodicity
         return $this;
     }
 
-    public function getNumberWeek(): ?int
+    public function getRepeatWeek(): ?int
     {
-        return $this->number_week;
+        return $this->repeat_week;
     }
 
-    public function setNumberWeek(int $number_week): self
+    public function setRepeatWeek(int $repeat_week): self
     {
-        $this->number_week = $number_week;
+        $this->repeat_week = $repeat_week;
 
         return $this;
     }
 
-    public function getWeeks(): ?Collection
+    public function se2tDays(array $days): self
     {
-        return $this->weeks;
-    }
-
-    public function setWeeks(array $weeks): self
-    {
-        $this->weeks = $weeks;
+        $this->days = $days;
 
         return $this;
     }

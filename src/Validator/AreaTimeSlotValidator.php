@@ -9,28 +9,30 @@ use Symfony\Component\Validator\ConstraintValidator;
 class AreaTimeSlotValidator extends ConstraintValidator
 {
     /**
-     * @param Entry      $value
+     * @param Entry $entry
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($entry, Constraint $constraint)
     {
-        if (!$value instanceof Entry) {
-            throw new \UnexpectedValueException($value, 'Entry');
+        if (!$entry instanceof Entry) {
+            throw new \UnexpectedValueException($entry, 'Entry');
         }
 
-        $area = $value->getArea();
+        $area = $entry->getArea();
 
-        if ($value->getStartTime()->format('H:i') > $area->getMorningstartsArea()) {
+        if ($entry->getStartTime()->format('H:i') < $area->getMorningstartsArea()) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ value1 }}', 'début')
-                ->setParameter('{{ value2 }}', 'début')
+                ->setParameter('{{param1}}', 'début')
+                ->setParameter('{{param2}}', 'grande')
+                ->setParameter('{{param3}}', 'd\'ouverture')
                 ->addViolation();
         }
 
-        if ($value->getEndTime()->format('H:i') > $area->getEveningendsArea()) {
+        if ($entry->getEndTime()->format('H:i') > $area->getEveningendsArea()) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ value1 }}', 'fin')
-                ->setParameter('{{ value2 }}', 'fin')
+                ->setParameter('{{param1}}', 'fin')
+                ->setParameter('{{param2}}', 'petite')
+                ->setParameter('{{param3}}', 'de fermeture')
                 ->addViolation();
         }
     }

@@ -125,7 +125,7 @@ class Entry
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="private", type="boolean")
+     * @ORM\Column(name="private", type="boolean", options={"default" : 0})
      */
     private $private = false;
 
@@ -176,7 +176,7 @@ class Entry
     private $cellules;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Periodicity", inversedBy="entry", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Periodicity", cascade={"persist", "remove"})
      */
     private $periodicity;
 

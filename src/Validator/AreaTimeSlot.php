@@ -5,6 +5,7 @@ namespace App\Validator;
 use Symfony\Component\Validator\Constraint;
 
 /**
+ * Vérifie que l'heure de début et de fin de l'entry respecte les heures d'ouvertures et fermetures de l'are
  * @Annotation
  */
 class AreaTimeSlot extends Constraint
@@ -13,7 +14,7 @@ class AreaTimeSlot extends Constraint
      * Any public properties become valid options for the annotation.
      * Then, use these in your validator class.
      */
-    public $message = 'L\'heure de "{{value1}}" dépasse l\'heure de "{{value2}}" de l\'area.';
+    public $message = 'area.depasse';
 
     public function getTargets()
     {

@@ -68,7 +68,7 @@ entry:
   new:
     title: Nouvelle réservation
     periodicity:
-      title: 'Options de périodicité'
+      title: Options de périodicité
 
 next: Suivant
 previous: Précédent

@@ -7,7 +7,6 @@ use App\Entity\Entry;
 use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Factory\EntryFactory;
-use App\Factory\PeriodicityFactory;
 use App\Form\EntryType;
 use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
@@ -104,9 +103,17 @@ class EntryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $periodicity = PeriodicityFactory::createNew();
+            $data = $form->getData();
+            dump($data);
+            /**
+             * @var Periodicity $periodicity
+             */
+            $periodicity = $data->getPeriodicity();
+            if ($periodicity) {
+                dump($periodicity);
+                $this->entryManager->insert($entry);
+            }
 
-            // $this->entryManager->insert($entry);
 
             /*     return $this->redirectToRoute(
                      'grr_front_day',

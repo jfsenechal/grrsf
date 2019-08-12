@@ -7,3 +7,5 @@ entry:
 assert:
     entry:
         startstdend: La date de début doit être plus petite que la date de fin
+area:
+    depasse: L'heure de {{param1}} doit être plus {{param2}} que l'heure {{param3}} de la salle.

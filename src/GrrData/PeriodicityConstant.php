@@ -8,10 +8,8 @@ class PeriodicityConstant
     const EVERY_DAY = 1;
     const EVERY_WEEK = 2;
     const EVERY_YEAR = 4;
-    const EVERY_MONTH = 1;
     const EVERY_MONTH_SAME_DAY = 3;
     const EVERY_MONTH_SAME_WEEK_DAY = 5;
-    const MONTH_REPEAT = [];
     const LIST_WEEKS_REPEAT = [
         1 => 'every_week_repeat',
         2 => 'every_week_repeat_2',
@@ -42,8 +40,8 @@ class PeriodicityConstant
 
     public function getTypePeriodicite(int $type)
     {
-        if (isset($this->getTypesPeriodicite()[$type])) {
-            return $this->getTypesPeriodicite()[$type].' ('.$type.')';
+        if (isset(self::getTypesPeriodicite()[$type])) {
+            return self::getTypesPeriodicite()[$type].' ('.$type.')';
         }
 
         return $type;
