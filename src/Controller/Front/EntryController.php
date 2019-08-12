@@ -9,7 +9,9 @@ use App\Entity\Room;
 use App\Factory\EntryFactory;
 use App\Form\EntryType;
 use App\Form\SearchEntryType;
+use App\GrrData\PeriodicityConstant;
 use App\Manager\EntryManager;
+use App\Manager\PeriodicityManager;
 use App\Repository\EntryRepository;
 use App\Service\PeriodicityService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -39,17 +41,23 @@ class EntryController extends AbstractController
      * @var PeriodicityService
      */
     private $periodicityService;
+    /**
+     * @var PeriodicityManager
+     */
+    private $periodicityManager;
 
     public function __construct(
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
         EntryManager $entryManager,
+        PeriodicityManager $periodicityManager,
         PeriodicityService $periodicityService
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryManager = $entryManager;
         $this->entryFactory = $entryFactory;
         $this->periodicityService = $periodicityService;
+        $this->periodicityManager = $periodicityManager;
     }
 
     /**
@@ -100,29 +108,31 @@ class EntryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
-            dump($data);
+
             /**
              * @var Periodicity $periodicity
              */
             $periodicity = $data->getPeriodicity();
+
+            if (null === $periodicity->getType()) {
+                $entry->setPeriodicity(null);
+            }
+
             $this->entryManager->insert($entry);
 
-            /*     return $this->redirectToRoute(
-                     'grr_front_day',
-                     [
-                         'area' => $area,
-                         'room' => $room,
-                         'month' => $month,
-                         'year' => $year,
-                         'day' => $day,
-                     ]
-                 );*/
+            return $this->redirectToRoute(
+                'grr_front_entry_show',
+                [
+                    'id' => $entry->getId(),
+                ]
+            );
         }
 
         return $this->render(
             '@grr_front/entry/new.html.twig',
             [
                 'entry' => $entry,
+                'displayOptionsWeek' => false,
                 'form' => $form->createView(),
             ]
         );
@@ -133,23 +143,10 @@ class EntryController extends AbstractController
      */
     public function show(Entry $entry): Response
     {
-
-        dump($entry->getPeriodicity()->getType());
-
-        /*  $today = Carbon::today();
-
-          $periodicity = PeriodicityFactory::createNew($entry);
-          $periodicity->setEndTime($today->addYears(2)->toDateTime());
-          $entry->setPeriodicity($periodicity);
-          //$periodicity->setEveryDay(true);
-          //$periodicity->setEveryYear(true);
-          //$periodicity->setEveryMonthSameDay(true);
-          $periodicity->setEveryMonthSameWeekOfDay(true);
-
-          $days = $this->periodicityService->getDays($entry);
-          foreach ($days as $day) {
-              dump($day);
-          }*/
+        $days = $this->periodicityService->getDays($entry);
+        foreach ($days as $day) {
+            dump($day);
+        }
 
         return $this->render(
             '@grr_front/entry/show.html.twig',
@@ -164,7 +161,15 @@ class EntryController extends AbstractController
      */
     public function edit(Request $request, Entry $entry): Response
     {
+        $displayOptionsWeek = false;
         $entry->setArea($entry->getRoom()->getArea());
+        $periodicity = $entry->getPeriodicity();
+
+        $typePeriodicity = $periodicity ? $periodicity->getType() : 0;
+
+        if ($typePeriodicity === PeriodicityConstant::EVERY_WEEK) {
+            $displayOptionsWeek = true;
+        }
 
         $form = $this->createForm(EntryType::class, $entry);
 
@@ -172,6 +177,14 @@ class EntryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            dump($typePeriodicity);
+            $data = $form->getData();
+            $type = $data->getPeriodicity()->getType();
+            if (null === $type) {
+                $entry->setPeriodicity(null);
+                //   $this->periodicityManager->remove($periodicity);
+                // $this->periodicityManager->flush();
+            }
             $this->entryManager->flush();
 
             /*    return $this->redirectToRoute(
@@ -184,6 +197,7 @@ class EntryController extends AbstractController
             '@grr_front/entry/edit.html.twig',
             [
                 'entry' => $entry,
+                'displayOptionsWeek' => $displayOptionsWeek,
                 'form' => $form->createView(),
             ]
         );

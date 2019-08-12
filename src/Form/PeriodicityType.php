@@ -3,12 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Periodicity;
-use App\Form\DataTransformer\ArrayToDoctrineArrayTransformer;
 use App\GrrData\DateUtils;
 use App\GrrData\PeriodicityConstant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,7 +22,7 @@ class PeriodicityType extends AbstractType
         $builder
             ->add(
                 'end_time',
-                DateTimeType::class,
+                DateType::class,
                 [
                     'label' => 'periodicity.form.endtime.label',
                 ]
@@ -35,6 +34,7 @@ class PeriodicityType extends AbstractType
                     'choices' => array_flip($types),
                     'multiple' => false,
                     'expanded' => true,
+                    'required' => false,
                 ]
             )
             ->add(
@@ -59,7 +59,6 @@ class PeriodicityType extends AbstractType
                     'expanded' => true,
                 ]
             );
-        $builder->get('days')->addModelTransformer(new ArrayToDoctrineArrayTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)

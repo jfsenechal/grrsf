@@ -26,7 +26,7 @@ class PeriodicityConstant
     public static function getTypesPeriodicite()
     {
         $vocab = [];
-        $vocab[self::NONE] = 'periodicity.type.none';
+      //  $vocab[self::NONE] = 'periodicity.type.none';
         $vocab[self::EVERY_DAY] = 'periodicity.type.everyday';
         $vocab[self::EVERY_WEEK] = 'periodicity.type.everyweek';
         $vocab[self::EVERY_MONTH_SAME_DAY] = 'periodicity.type.everymonth.sameday';

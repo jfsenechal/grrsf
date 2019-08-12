@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Entry;
+use App\GrrData\PeriodicityConstant;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
@@ -25,43 +26,46 @@ class PeriodicityService
     /**
      * @param Entry $entry
      *
-     * @return CarbonPeriod|null
+     * @return CarbonPeriod|array
      *
      * @throws \Exception
      */
-    public function getDays(Entry $entry): ?CarbonPeriod
+    public function getDays(Entry $entry): array
     {
         $periodicity = $entry->getPeriodicity();
         if ($periodicity === null) {
-            return null;
+            return [];
         }
 
+        $typePeriodicity = $periodicity->getType();
         $this->entry = $entry;
 
         $this->entry_start = Carbon::instance($this->entry->getStartTime());
         $this->periodicity_end = Carbon::instance($periodicity->getEndTime());
 
-        if ($periodicity->getEveryDay()) {
+        if ($typePeriodicity === PeriodicityConstant::EVERY_DAY) {
             return $this->forEveryDays();
         }
 
-        if ($periodicity->getEveryYear()) {
+        if ($typePeriodicity === PeriodicityConstant::EVERY_YEAR) {
             return $this->forEveryYears();
         }
 
-        if ($periodicity->getEveryMonthSameDay()) {
+        if ($typePeriodicity === PeriodicityConstant::EVERY_MONTH_SAME_DAY) {
             return $this->forEveryMonthSameDay();
         }
 
-        if ($periodicity->getEveryMonthSameWeekOfDay()) {
+        if ($typePeriodicity === PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY) {
             return $this->forEveryMonthSameDayOfWeek();
         }
 
-        if ($periodicity->getEveryWeek()) {
+        if ($typePeriodicity === PeriodicityConstant::EVERY_WEEK) {
+            return [];
+
             return $this->forEveryWeek();
         }
 
-        return null;
+        return [];
     }
 
     protected function forEveryDays(): CarbonPeriod

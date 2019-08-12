@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,18 +23,18 @@ class Periodicity
     private $end_time;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $type;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $repeat_week = 0;
+    private $repeat_week;
 
     /**
      * @var array
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      */
     private $days;
 
@@ -48,32 +46,13 @@ class Periodicity
 
     public function __construct()
     {
-        $this->days = new ArrayCollection();
-        $this->end_time = new \DateTime();
-    }
-
-    public function addDay(int $day): self
-    {
-        if (!$this->days->contains($day)) {
-            $this->days[] = $day;
-        }
-
-        return $this;
-    }
-
-    public function removeDay(int $day): self
-    {
-        if ($this->days->contains($day)) {
-            $this->days->removeElement($day);
-        }
-
-        return $this;
+        $this->days = [];
     }
 
     /**
-     * @return Collection|array
+     * @return array
      */
-    public function getDays()
+    public function getDays(): array
     {
         return $this->days;
     }
@@ -100,7 +79,7 @@ class Periodicity
         return $this->type;
     }
 
-    public function setType(int $type): self
+    public function setType(?int $type): self
     {
         $this->type = $type;
 
@@ -112,7 +91,7 @@ class Periodicity
         return $this->repeat_week;
     }
 
-    public function setRepeatWeek(int $repeat_week): self
+    public function setRepeatWeek(?int $repeat_week): self
     {
         $this->repeat_week = $repeat_week;
 

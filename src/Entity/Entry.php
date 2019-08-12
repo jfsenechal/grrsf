@@ -176,6 +176,8 @@ class Entry
     private $cellules;
 
     /**
+     * @Assert\Type(type="App\Entity\Periodicity")
+     * @Assert\Valid
      * @ORM\OneToOne(targetEntity="App\Entity\Periodicity", inversedBy="entry", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */

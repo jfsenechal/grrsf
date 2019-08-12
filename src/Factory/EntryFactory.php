@@ -10,6 +10,7 @@ namespace App\Factory;
 
 use App\Entity\Area;
 use App\Entity\Entry;
+use App\Entity\Periodicity;
 use App\Entity\Room;
 use Carbon\Carbon;
 
@@ -35,15 +36,26 @@ class EntryFactory
         $entry->setArea($area);
         $entry->setRoom($room);
         $entry->setStartTime($date);
-        $suite = $date->copy()->addSeconds($area->getDureeParDefautReservationArea());
-        $entry->setEndTime($suite);
+        $endTime = $date->copy()->addSeconds($area->getDureeParDefautReservationArea());
+        $entry->setEndTime($endTime);
+        $entry->setPeriodicity(self::initPeriodicity($entry));
 
         return $entry;
     }
 
+    protected static function initPeriodicity(Entry $entry): Periodicity
+    {
+        $periodicity = PeriodicityFactory::createNew();
+        $periodicity->setEntry($entry);
+        $periodicity->setEndTime(new \DateTime('now'));
+        $periodicity->setType(null);
+
+        return $periodicity;
+    }
+
     /**
-     * @deprecated
      * @param Entry $entry
+     * @deprecated
      */
     public static function setDefaultValues(Entry $entry)
     {

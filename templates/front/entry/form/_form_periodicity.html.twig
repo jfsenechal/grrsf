@@ -1,16 +1,10 @@
 <h3>{{ 'entry.new.periodicity.title'|trans({},'actions') }}</h3>
 <hr/>
 
-{{ form_row(form.periodicity.type) }}
 {{ form_row(form.periodicity.end_time) }}
+{{ form_row(form.periodicity.type) }}
 
-{% set display = 'd-none' %}
-
-{% if form.periodicity.type.vars.value == 2 %}
-    {% set display = '' %}
-{% endif %}
-
-<div id="weeks_options" class="{{ display }}">
+<div id="weeks_options" class="{{displayOptionsWeek ? '' : 'd-none'}}">
     <table class="table table-bordered">
         <tbody>
         <tr>
