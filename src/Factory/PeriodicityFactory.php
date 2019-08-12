@@ -15,38 +15,10 @@ use App\GrrData\DateUtils;
 
 class PeriodicityFactory
 {
-    /**
-     * @var DateUtils
-     */
-    private $dateUtils;
-
-    public function __construct(DateUtils $dateUtils)
+    public static function createNew(): Periodicity
     {
-        $this->dateUtils = $dateUtils;
+        return new Periodicity();
     }
 
-    public static function createNew(Entry $entry): Periodicity
-    {
-        return new Periodicity($entry);
-    }
 
-    public static function setDefaultValues(Area $area)
-    {
-        $area
-            ->setDisplayDays(array_flip(DateUtils::getDays()))
-            ->setMorningstartsArea(8)
-            ->setEveningendsArea(19)
-            ->setResolutionArea(1800)
-            ->setDureeParDefautReservationArea(900)
-            ->setDureeMaxResaArea(-1)
-            ->setIdTypeParDefaut(-1)
-            ->setMaxBooking(-1)
-            ->setEnablePeriods(false)
-            ->setCalendarDefaultValues(true)
-            ->setTwentyfourhourFormatArea(0)
-            ->setWeekstartsArea(0)
-            ->setEveningendsMinutesArea(0)
-            ->setOrderDisplay(0)
-            ->setAccess(false);
-    }
 }

@@ -35,12 +35,16 @@ class EntryFactory
         $entry->setArea($area);
         $entry->setRoom($room);
         $entry->setStartTime($date);
-        $suite = $date->copy()->addMinutes($area->getDureeParDefautReservationArea());
+        $suite = $date->copy()->addSeconds($area->getDureeParDefautReservationArea());
         $entry->setEndTime($suite);
 
         return $entry;
     }
 
+    /**
+     * @deprecated
+     * @param Entry $entry
+     */
     public static function setDefaultValues(Entry $entry)
     {
         $entry

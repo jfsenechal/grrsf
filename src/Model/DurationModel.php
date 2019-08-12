@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Model;
-
 
 class DurationModel
 {
@@ -46,6 +44,8 @@ class DurationModel
     public function __construct()
     {
         $this->full_day = false;
+        $this->time = 0;
+        $this->unit = self::UNIT_TIME_MINUTES;
     }
 
     /**

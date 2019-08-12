@@ -7,6 +7,7 @@ use App\Entity\Entry;
 use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Factory\EntryFactory;
+use App\Factory\PeriodicityFactory;
 use App\Form\EntryType;
 use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
@@ -102,18 +103,21 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entryManager->insert($entry);
 
-            return $this->redirectToRoute(
-                'grr_front_day',
-                [
-                    'area' => $area,
-                    'room' => $room,
-                    'month' => $month,
-                    'year' => $year,
-                    'day' => $day,
-                ]
-            );
+            $periodicity = PeriodicityFactory::createNew();
+
+            // $this->entryManager->insert($entry);
+
+            /*     return $this->redirectToRoute(
+                     'grr_front_day',
+                     [
+                         'area' => $area,
+                         'room' => $room,
+                         'month' => $month,
+                         'year' => $year,
+                         'day' => $day,
+                     ]
+                 );*/
         }
 
         return $this->render(
@@ -165,7 +169,9 @@ class EntryController extends AbstractController
     public function edit(Request $request, Entry $entry): Response
     {
         $entry->setArea($entry->getRoom()->getArea());
+
         $form = $this->createForm(EntryType::class, $entry);
+
         $periodicity = new Periodicity();
         $periodicity->setEntry($entry);
         $entry->setPeriodicity($periodicity);
@@ -173,13 +179,13 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($entry);
+            //   $this->entryManager->flush();
 
-         //   $this->entryManager->flush();
-
-        /*    return $this->redirectToRoute(
-                'grr_front_entry_show',
-                ['id' => $entry->getId(),]
-            );*/
+            /*    return $this->redirectToRoute(
+                    'grr_front_entry_show',
+                    ['id' => $entry->getId(),]
+                );*/
         }
 
         return $this->render(

@@ -67,13 +67,6 @@ class Entry
     private $entryType;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="repeat_id", type="integer", nullable=true)
-     */
-    private $repeatId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="create_by", type="string", length=100, nullable=false)
@@ -165,18 +158,12 @@ class Entry
     private $area;
 
     /**
-     * Util lors de l'ajout d'un Entry.
-     *
-     * @var bool
-     */
-    private $full_day = false;
-
-    /**
      * @var DurationModel
      */
     private $duration;
 
     /**
+     * Pour l'affichage, TimeSlot présents
      * @var ArrayCollection|TimeSlot[]
      */
     private $locations = [];
@@ -204,6 +191,7 @@ class Entry
     }
 
     /**
+     * Contrôle si la date de début est bien plus grand que la date de fin
      * @Assert\IsTrue(message="assert.entry.startstdend")
      */
     public function isStartStEnd(): bool
@@ -272,22 +260,6 @@ class Entry
     public function setArea(?Area $area): void
     {
         $this->area = $area;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isFullDay(): bool
-    {
-        return $this->full_day;
-    }
-
-    /**
-     * @param bool $full_day
-     */
-    public function setFullDay(bool $full_day): void
-    {
-        $this->full_day = $full_day;
     }
 
     /**
@@ -499,18 +471,6 @@ class Entry
     public function setPeriodicity(?Periodicity $periodicity): self
     {
         $this->periodicity = $periodicity;
-
-        return $this;
-    }
-
-    public function getRepeatId(): ?int
-    {
-        return $this->repeatId;
-    }
-
-    public function setRepeatId(?int $repeatId): self
-    {
-        $this->repeatId = $repeatId;
 
         return $this;
     }

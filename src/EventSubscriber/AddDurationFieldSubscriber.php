@@ -61,7 +61,9 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
         $type = $room ? $room->getTypeAffichageReser() : 0;
 
         if ($type === 0) {
-            $duration = $this->getDuration($entry);
+
+            $duration = DurationFactory::createByEntry($entry);
+
             $form->add(
                 'duration',
                 DurationTimeTypeField::class,
@@ -89,87 +91,49 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Ajoute la durée suivant l'unité de temps choisi
+     * Modifie la date de fin de réservation suivant les données de la Duration
      * @param FormEvent $event
      * @throws \Exception
      */
     public function OnPreSubmit(FormEvent $event)
     {
+        $form = $event->getForm();
+
         /**
-         * @var Entry $entry
+         * @var DurationModel $duration
          */
-        $entry = $event->getData();
-        $room = $entry->getRoom();
+        $duration = $form->getData()->getDuration();
 
-        $type = $room ? $room->getTypeAffichageReser() : 0;
-
-        if ($type === 0) {
+        if ($duration) {
             /**
              * @var Entry $entry
              */
             $entry = $event->getData();
 
-            $form = $event->getForm();
-            /**
-             * @var DurationModel $duration
-             */
-            $duration = $form->getData()->getDuration();
-
             $startTime = Carbon::instance($entry->getStartTime());
+            $endTime = $startTime->copy();
 
             $unit = $duration->getUnit();
             $time = $duration->getTime();
 
             switch ($unit) {
                 case DurationModel::UNIT_TIME_WEEKS:
-                    $startTime->addWeeks($time);
+                    $endTime->addWeeks($time);
                     break;
                 case DurationModel::UNIT_TIME_DAYS:
-                    $startTime->addDays($time);
+                    $endTime->addDays($time);
                     break;
                 case DurationModel::UNIT_TIME_HOURS:
-                    $startTime->addHours($time);
+                    $endTime->addHours($time);
                     break;
                 case DurationModel::UNIT_TIME_MINUTES:
-                    $startTime->addMinutes($time);
+                    $endTime->addMinutes($time);
                     break;
                 default:
                     throw new \Exception('Unexpected value');
             }
+            $entry->setEndTime($endTime);
         }
     }
 
-    private function getDuration(Entry $entry)
-    {
-        $duration = DurationFactory::createNew();
-        if ($entry || null != $entry->getId()) {
-
-            $startTime = Carbon::instance($entry->getStartTime());
-            $endTime = Carbon::instance($entry->getEndTime());
-
-            $minutes = $startTime->diffInMinutes($endTime);
-            $hours = $startTime->diffInRealHours($endTime);
-            $days = $startTime->diffInDays($endTime);
-            $weeks = $startTime->diffInWeeks($endTime);
-
-            if ($minutes > 0) {
-                $duration->setUnit(DurationModel::UNIT_TIME_MINUTES);
-                $duration->setTime($minutes);
-            }
-            if ($hours > 0) {
-                $duration->setUnit(DurationModel::UNIT_TIME_HOURS);
-                $duration->setTime($hours.'.'.($minutes - $hours * 60));
-            }
-            if ($days > 0) {
-                $duration->setUnit(DurationModel::UNIT_TIME_DAYS);
-                $duration->setTime($days);
-            }
-            if ($weeks > 0) {
-                $duration->setUnit(DurationModel::UNIT_TIME_WEEKS);
-                $duration->setTime($weeks);
-            }
-        }
-
-        return $duration;
-    }
 }
