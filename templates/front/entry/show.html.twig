@@ -43,16 +43,13 @@
         </tr>
     </table>
 
-
     {{ entry.description|nl2br }}
 
-    <p class="text-muted">{{ 'entry.form.createBy.label'|trans }} {{ entry.createBy }}
+    <p class="text-muted">
+        {{ 'entry.form.createBy.label'|trans }} {{ entry.createBy }}
     </p>
 
-    {% if entry.periodicity %}
-        <h3>{{'periodicity'|trans}}</h3>
-        {% include '@grr_front/periodicity/_detail.html.twig' %}
-    {% endif %}
+    {% include '@grr_front/periodicity/_show.html.twig' %}
 
     {{ include('@grr_front/entry/_delete_form.html.twig') }}
 {% endblock %}

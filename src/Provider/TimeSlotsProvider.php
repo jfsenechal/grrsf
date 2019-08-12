@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Provider;
 
 use App\Entity\Area;
 use App\Factory\CarbonFactory;
@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 
-class AreaService
+class TimeSlotsProvider
 {
     /**
      * @var CarbonFactory
@@ -48,7 +48,7 @@ class AreaService
      *
      * @return TimeSlot[]
      */
-    public function getHoursModel($area, $daySelected)
+    public function getTimeSlotsModelByAreaAndDay($area, $daySelected)
     {
         $timeSlots = $this->getTimeSlots($area, $daySelected);
 

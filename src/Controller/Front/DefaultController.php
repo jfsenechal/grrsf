@@ -4,16 +4,16 @@ namespace App\Controller\Front;
 
 use App\Entity\Area;
 use App\Factory\CarbonFactory;
+use App\Helper\MonthHelperDataDisplay;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\Week;
+use App\Provider\SettingsProvider;
+use App\Provider\TimeSlotsProvider;
 use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
-use App\Service\AreaService;
 use App\Service\BindDataManager;
-use App\Helper\MonthHelperDataDisplay;
-use App\Service\Settingservice;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,34 +43,34 @@ class DefaultController extends AbstractController
      */
     private $calendarDataManager;
     /**
-     * @var Settingservice
+     * @var SettingsProvider
      */
     private $settingservice;
-    /**
-     * @var AreaService
-     */
-    private $areaService;
     /**
      * @var MonthHelperDataDisplay
      */
     private $monthHelperDataDisplay;
+    /**
+     * @var TimeSlotsProvider
+     */
+    private $timeSlotsProvider;
 
     public function __construct(
-        Settingservice $settingservice,
+        SettingsProvider $settingservice,
         MonthHelperDataDisplay $monthHelperDataDisplay,
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
         EntryRepository $entryRepository,
         BindDataManager $calendarDataManager,
-        AreaService $areaService
+        TimeSlotsProvider $timeSlotsProvider
     ) {
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
         $this->entryRepository = $entryRepository;
         $this->calendarDataManager = $calendarDataManager;
         $this->settingservice = $settingservice;
-        $this->areaService = $areaService;
         $this->monthHelperDataDisplay = $monthHelperDataDisplay;
+        $this->timeSlotsProvider = $timeSlotsProvider;
     }
 
     /**
@@ -164,7 +164,7 @@ class DefaultController extends AbstractController
             $rooms = [$this->roomRepository->find($room)];
         }
 
-        $hoursModel = $this->areaService->getHoursModel($area, $daySelected);
+        $hoursModel = $this->timeSlotsProvider->getTimeSlotsModelByAreaAndDay($area, $daySelected);
         $roomsModel = $this->calendarDataManager->bindDay($daySelected, $area, $hoursModel);
 
         return $this->render(

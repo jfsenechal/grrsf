@@ -1,2 +1,10 @@
-say_hello: 'Hello {value}!'
-validator.entry.busy: '{value} ezezez'
+periodicity:
+  title: Périodicité
+  endtime:
+    label: Fin de la périodicité
+  type:
+    label: Type de répétition
+  repeatWeek:
+    label: Répétition par semaine
+  days:
+    label: Jour(s) de la semaine

@@ -13,7 +13,7 @@ use App\GrrData\PeriodicityConstant;
 use App\Manager\EntryManager;
 use App\Manager\PeriodicityManager;
 use App\Repository\EntryRepository;
-use App\Service\PeriodicityService;
+use App\Provider\DaysPeriodicityProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +38,7 @@ class EntryController extends AbstractController
      */
     private $entryFactory;
     /**
-     * @var PeriodicityService
+     * @var DaysPeriodicityProvider
      */
     private $periodicityService;
     /**
@@ -51,7 +51,7 @@ class EntryController extends AbstractController
         EntryRepository $entryRepository,
         EntryManager $entryManager,
         PeriodicityManager $periodicityManager,
-        PeriodicityService $periodicityService
+        DaysPeriodicityProvider $periodicityService
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryManager = $entryManager;
@@ -144,14 +144,12 @@ class EntryController extends AbstractController
     public function show(Entry $entry): Response
     {
         $days = $this->periodicityService->getDays($entry);
-        foreach ($days as $day) {
-            dump($day);
-        }
 
         return $this->render(
             '@grr_front/entry/show.html.twig',
             [
                 'entry' => $entry,
+                'days'=>$days
             ]
         );
     }

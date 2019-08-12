@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Provider;
 
 use App\Entity\Entry;
 use App\GrrData\PeriodicityConstant;
@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 
-class PeriodicityService
+class DaysPeriodicityProvider
 {
     /**
      * @var Entry
@@ -30,7 +30,7 @@ class PeriodicityService
      *
      * @throws \Exception
      */
-    public function getDays(Entry $entry): array
+    public function getDays(Entry $entry)
     {
         $periodicity = $entry->getPeriodicity();
         if ($periodicity === null) {

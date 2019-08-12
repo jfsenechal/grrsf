@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service;
+namespace App\Provider;
 
 use App\Entity\Area;
 use App\Repository\AreaRepository;
 
-class Settingservice
+class SettingsProvider
 {
     /**
      * @var AreaRepository

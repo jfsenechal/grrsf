@@ -38,10 +38,10 @@ class PeriodicityConstant
         return $vocab;
     }
 
-    public function getTypePeriodicite(int $type)
+    public  static function getTypePeriodicite(int $type)
     {
         if (isset(self::getTypesPeriodicite()[$type])) {
-            return self::getTypesPeriodicite()[$type].' ('.$type.')';
+            return self::getTypesPeriodicite()[$type];
         }
 
         return $type;

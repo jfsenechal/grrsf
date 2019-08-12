@@ -1,0 +1,34 @@
+{% if entry.periodicity %}
+    <h3>{{ 'periodicity.title'|trans }}</h3>
+    <table class="table table-bordered">
+        <tr>
+            <th>{{ 'periodicity.endtime.label' |trans }}</th>
+            <td>{{ entry.periodicity.endTime|date('d-m-Y') }}</td>
+        <tr>
+        <tr>
+            <th>{{ 'periodicity.type.label'|trans }}</th>
+            <td>{{ entry.periodicity.type|grrPeriodicityTypeName|trans }}</td>
+        <tr>
+        <tr>
+            <th>{{ 'periodicity.repeatWeek.label'|trans }}</th>
+            <td>{{ entry.periodicity.repeatWeek }}</td>
+        <tr>
+        <tr>
+            <th>{{ 'periodicity.days.label'|trans }}</th>
+            <td>
+                {% for day in entry.periodicity.days %}
+                    {{ day }}
+                {% endfor %}
+            </td>
+        <tr>
+    </table>
+
+    <h4 class="text-info">{{ days|trans }}</h4>
+    <ul class="list-group-horizontal">
+        {% for day in days %}
+            <li class="list-group-item">
+                {{ day.dayName|title|trans }} {{ day.day }} {{ day.monthName|trans }} {{ day.year }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

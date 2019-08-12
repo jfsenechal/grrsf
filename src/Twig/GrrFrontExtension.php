@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Entity\Entry;
 use App\Factory\MenuGenerator;
+use App\GrrData\PeriodicityConstant;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\RoomModel;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class GrrFrontExtension extends AbstractExtension
@@ -47,26 +49,51 @@ class GrrFrontExtension extends AbstractExtension
         $this->menuGenerator = $menuGenerator;
     }
 
+    public function getFilters()
+    {
+        return [
+            new TwigFilter(
+                'grrPeriodicityTypeName', function (int $type) {
+                return $this->grrPeriodicityTypeName($type);
+            }, ['is_safe' => ['html']]
+            ),
+            new TwigFilter(
+                'grrPeriodicityWeekDayName', function (int $weekday) {
+                return $this->grrPeriodicityWeekDayName($weekday);
+            }, ['is_safe' => ['html']]
+            ),
+        ];
+    }
+
+
     public function getFunctions()
     {
         return [
-            new TwigFunction('grrMonthNavigationRender', function () {
+            new TwigFunction(
+                'grrMonthNavigationRender', function () {
                 return $this->monthNavigationRender();
-            }, ['is_safe' => ['html']]),
-            new TwigFunction('grrMenuNavigationRender', function () {
+            }, ['is_safe' => ['html']]
+            ),
+            new TwigFunction(
+                'grrMenuNavigationRender', function () {
                 return $this->menuNavigationRender();
-            }, ['is_safe' => ['html']]),
-            new TwigFunction('grrCompleteTr', function (CarbonInterface $day, string $action) {
+            }, ['is_safe' => ['html']]
+            ),
+            new TwigFunction(
+                'grrCompleteTr', function (CarbonInterface $day, string $action) {
                 return $this->grrCompleteTr($day, $action);
-            }, ['is_safe' => ['html']]),
-            new TwigFunction('grrGenerateCellDataDay', function (TimeSlot $hour, RoomModel $roomModel, Day $day) {
+            }, ['is_safe' => ['html']]
+            ),
+            new TwigFunction(
+                'grrGenerateCellDataDay', function (TimeSlot $hour, RoomModel $roomModel, Day $day) {
                 return $this->grrGenerateCellDataDay($hour, $roomModel, $day);
-            }, ['is_safe' => ['html']]),
+            }, ['is_safe' => ['html']]
+            ),
         ];
     }
 
     /**
-     * @param TimeSlot  $hour
+     * @param TimeSlot $hour
      * @param RoomModel $roomModel
      *
      * @return string|void
@@ -165,7 +192,7 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @param Day    $day
+     * @param Day $day
      * @param string $action begin|end
      *
      * @return string
@@ -180,5 +207,15 @@ class GrrFrontExtension extends AbstractExtension
             '@grr_front/navigation/_complete_tr.html.twig',
             ['numericDay' => $day->weekday(), 'action' => $action]
         );
+    }
+
+    private function grrPeriodicityTypeName(int $type)
+    {
+        return PeriodicityConstant::getTypePeriodicite($type);
+    }
+
+    private function grrPeriodicityWeekDayName(int $weekday)
+    {
+
     }
 }

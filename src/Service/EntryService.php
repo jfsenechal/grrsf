@@ -12,7 +12,7 @@ class EntryService
 {
     /**
      * Bug si dateEnd entry > dateEndArea.
-     *
+     * @deprecated
      * @param Entry $entry
      * @param Area  $area
      */
