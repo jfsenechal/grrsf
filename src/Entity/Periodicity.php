@@ -25,19 +25,9 @@ class Periodicity
     private $end_time;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      */
-    private $every_day = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $every_year = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $every_week = false;
+    private $type;
 
     /**
      * @ORM\Column(type="integer")
@@ -48,33 +38,22 @@ class Periodicity
      * @var ArrayCollection
      * @ORM\Column(type="array")
      */
-    private $week_days;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $every_month_same_day = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $every_month_same_week_of_day = false;
+    private $weeks;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Entry", mappedBy="periodicity", cascade={"persist", "remove"})
      */
     private $entry;
 
-    public function __construct(Entry $entry)
+    public function __construct()
     {
-        $this->entry = $entry;
-        $this->week_days = new ArrayCollection();
+        $this->weeks = new ArrayCollection();
     }
 
     public function addWeekDay(int $day): self
     {
-        if (!$this->week_days->contains($day)) {
-            $this->week_days[] = $day;
+        if (!$this->weeks->contains($day)) {
+            $this->weeks[] = $day;
         }
 
         return $this;
@@ -82,8 +61,8 @@ class Periodicity
 
     public function removeWeekDay(int $day): self
     {
-        if ($this->week_days->contains($day)) {
-            $this->week_days->removeElement($day);
+        if ($this->weeks->contains($day)) {
+            $this->weeks->removeElement($day);
         }
 
         return $this;
@@ -124,38 +103,14 @@ class Periodicity
         return $this;
     }
 
-    public function getEveryDay(): ?bool
+    public function getType(): ?int
     {
-        return $this->every_day;
+        return $this->type;
     }
 
-    public function setEveryDay(bool $every_day): self
+    public function setType(int $type): self
     {
-        $this->every_day = $every_day;
-
-        return $this;
-    }
-
-    public function getEveryYear(): ?bool
-    {
-        return $this->every_year;
-    }
-
-    public function setEveryYear(bool $every_year): self
-    {
-        $this->every_year = $every_year;
-
-        return $this;
-    }
-
-    public function getEveryWeek(): ?bool
-    {
-        return $this->every_week;
-    }
-
-    public function setEveryWeek(bool $every_week): self
-    {
-        $this->every_week = $every_week;
+        $this->type = $type;
 
         return $this;
     }
@@ -172,39 +127,16 @@ class Periodicity
         return $this;
     }
 
-    public function getWeekDays(): ?Collection
+    public function getWeeks(): ?Collection
     {
-        return $this->week_days;
+        return $this->weeks;
     }
 
-    public function setWeekDays(array $week_days): self
+    public function setWeeks(array $weeks): self
     {
-        $this->week_days = $week_days;
+        $this->weeks = $weeks;
 
         return $this;
     }
 
-    public function getEveryMonthSameDay(): ?bool
-    {
-        return $this->every_month_same_day;
-    }
-
-    public function setEveryMonthSameDay(bool $every_month_same_day): self
-    {
-        $this->every_month_same_day = $every_month_same_day;
-
-        return $this;
-    }
-
-    public function getEveryMonthSameWeekOfDay(): ?bool
-    {
-        return $this->every_month_same_week_of_day;
-    }
-
-    public function setEveryMonthSameWeekOfDay(bool $every_month_same_week_of_day): self
-    {
-        $this->every_month_same_week_of_day = $every_month_same_week_of_day;
-
-        return $this;
-    }
 }

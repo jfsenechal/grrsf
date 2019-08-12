@@ -7,14 +7,11 @@ use App\Entity\Entry;
 use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Factory\EntryFactory;
-use App\Factory\PeriodicityFactory;
 use App\Form\EntryType;
-use App\Form\PeriodicityType;
 use App\Form\SearchEntryType;
 use App\Manager\EntryManager;
 use App\Repository\EntryRepository;
 use App\Service\PeriodicityService;
-use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,11 +97,8 @@ class EntryController extends AbstractController
     ): Response {
 
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
-        $periodicity = new Periodicity($entry);
-
 
         $form = $this->createForm(EntryType::class, $entry);
-        $formPeriodicity = $this->createForm(PeriodicityType::class, null);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -126,7 +120,6 @@ class EntryController extends AbstractController
             '@grr_front/entry/new.html.twig',
             [
                 'entry' => $entry,
-                'form_periodicity' => $formPeriodicity->createView(),
                 'form' => $form->createView(),
             ]
         );
@@ -142,20 +135,20 @@ class EntryController extends AbstractController
             $repeat = $this->repeatRepository->find($entry->getRepeatId());
         }
 
-        $today = Carbon::today();
+        /*  $today = Carbon::today();
 
-        $periodicity = PeriodicityFactory::createNew($entry);
-        $periodicity->setEndTime($today->addYears(2)->toDateTime());
-        $entry->setPeriodicity($periodicity);
-        //$periodicity->setEveryDay(true);
-        //$periodicity->setEveryYear(true);
-        //$periodicity->setEveryMonthSameDay(true);
-        $periodicity->setEveryMonthSameWeekOfDay(true);
+          $periodicity = PeriodicityFactory::createNew($entry);
+          $periodicity->setEndTime($today->addYears(2)->toDateTime());
+          $entry->setPeriodicity($periodicity);
+          //$periodicity->setEveryDay(true);
+          //$periodicity->setEveryYear(true);
+          //$periodicity->setEveryMonthSameDay(true);
+          $periodicity->setEveryMonthSameWeekOfDay(true);
 
-        $days = $this->periodicityService->getDays($entry);
-        foreach ($days as $day) {
-            dump($day);
-        }
+          $days = $this->periodicityService->getDays($entry);
+          foreach ($days as $day) {
+              dump($day);
+          }*/
 
         return $this->render(
             '@grr_front/entry/show.html.twig',
@@ -173,19 +166,20 @@ class EntryController extends AbstractController
     {
         $entry->setArea($entry->getRoom()->getArea());
         $form = $this->createForm(EntryType::class, $entry);
-        $formPeriodicity = $this->createForm(PeriodicityType::class, null);
+        $periodicity = new Periodicity();
+        $periodicity->setEntry($entry);
+        $entry->setPeriodicity($periodicity);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entryManager->flush();
 
-            return $this->redirectToRoute(
+         //   $this->entryManager->flush();
+
+        /*    return $this->redirectToRoute(
                 'grr_front_entry_show',
-                [
-                    'id' => $entry->getId(),
-                ]
-            );
+                ['id' => $entry->getId(),]
+            );*/
         }
 
         return $this->render(
@@ -193,7 +187,6 @@ class EntryController extends AbstractController
             [
                 'entry' => $entry,
                 'form' => $form->createView(),
-                'form_periodicity' => $formPeriodicity->createView(),
             ]
         );
     }

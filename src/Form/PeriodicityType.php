@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Periodicity;
 use App\Form\Type\SelectDayOfWeekTypeField;
 use App\GrrData\PeriodicityConstant;
 use Symfony\Component\Form\AbstractType;
@@ -18,7 +19,7 @@ class PeriodicityType extends AbstractType
 
         $builder
             ->add(
-                'end_periodicity',
+                'end_time',
                 DateTimeType::class,
                 [
                     'label' => 'periodicity.form.endtime.label',
@@ -35,7 +36,7 @@ class PeriodicityType extends AbstractType
                 ]
             )
             ->add(
-                'days',
+                'weeks',
                 SelectDayOfWeekTypeField::class,
                 [
                 ]
@@ -46,6 +47,7 @@ class PeriodicityType extends AbstractType
     {
         $resolver->setDefaults(
             [
+                'data_class' => Periodicity::class,
             ]
         );
     }

@@ -8,28 +8,12 @@
 
 namespace App\GrrData;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
-
 class EntryData
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
-    /**
-     * field:entry_type
-     * Type de periode : aucune, chaque jour, chaque semaine, chaque mois.
-     */
-    public function getEntryTypes()
-    {
-        return [0 => 0, 1 => 1, 2 => 2];
-    }
+    const UNIT_TIME_MINUTES = 1;
+    const UNIT_TIME_HOURS = 2;
+    const UNIT_TIME_DAYS = 3;
+    const UNIT_TIME_WEEKS = 4;
 
     /**
      * Encodage de la date de fin de l'entry.
@@ -38,11 +22,12 @@ class EntryData
      */
     public function getUnitsTime()
     {
-        $units = [];
-        $choices = ['unit.minutes', 'unit.hours', 'unit.days', 'unit.weeks'];
-        foreach ($choices as $choice) {
-            $units[] = $this->translator->trans($choice);
-        }
+        $units = [
+            self::UNIT_TIME_MINUTES => 'unit.minutes',
+            self::UNIT_TIME_HOURS => 'unit.hours',
+            self::UNIT_TIME_DAYS => 'unit.days',
+            self::UNIT_TIME_WEEKS => 'unit.weeks',
+        ];
 
         return $units;
     }

@@ -67,7 +67,7 @@ class SearchEntryType extends AbstractType
                 [
                     'required' => false,
                     'placeholder' => 'Type périodicité',
-                    'choices' => array_flip($this->entryData->getTypesPeriodicite()),
+
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             );

@@ -23,19 +23,19 @@ class SelectDayOfWeekTypeField extends AbstractType
                     'choices' => array_flip($days),
                     'label' => 'periodicity.form.selectdays.label',
                     'help' => 'entry.form.duration_unit.help',
-                    'mapped' => false,
+
                     'multiple' => true,
                     'expanded' => true,
                 ]
             )
             ->add(
-                'weeks',
+                'repeat_week',
                 ChoiceType::class,
                 [
                     'choices' => array_flip($weeks),
                     'label' => 'periodicity.form.selectweeksrepeat.label',
                     'help' => 'entry.form.duration_unit.help',
-                    'mapped' => false,
+                    'required' => false,
                     'multiple' => false,
                     'expanded' => true,
                 ]

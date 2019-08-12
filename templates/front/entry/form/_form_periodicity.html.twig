@@ -1,22 +1,19 @@
 <h3>{{ 'entry.new.periodicity.title'|trans({},'actions') }}</h3>
 <hr/>
 
-{{ form_start(form_periodicity) }}
-{{ form_errors(form_periodicity) }}
-{{ form_row(form_periodicity.type) }}
-{{ form_row(form_periodicity.end_periodicity) }}
+{{ form_row(form.periodicity.type) }}
+{{ form_row(form.periodicity.end_time) }}
 <div id="weeks_options" class="d-none">
     <table class="table table-bordered">
         <tbody>
         <tr>
             <td>
-                {{ form_row(form_periodicity.days.days) }}
+                {{ form_row(form.periodicity.weeks.days) }}
             </td>
             <td>
-                {{ form_row(form_periodicity.days.weeks) }}
+                {{ form_row(form.periodicity.weeks.repeat_week) }}
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-{{ form_end(form_periodicity) }}

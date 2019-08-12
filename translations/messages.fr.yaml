@@ -285,3 +285,8 @@ every_week_repeat_2: Toutes les 2 semaines
 every_week_repeat_3: Toutes les 3 semaines
 every_week_repeat_4: Toutes les 4 semaines
 every_week_repeat_5: Toutes les 5 semaines
+setting:
+  room:
+    display:
+      type_form_reservation_duree: la durée de la réservation
+      type_form_reservation_endtime: la date/heure de fin de réservation

@@ -1,5 +1,8 @@
 entry:
     busy: 'La réservation %value%  est dans une zone accupée.'
+    duration:
+        time:
+            notintergerfordaysorforweeks: La durée doit être un entier pour les jours et semaines.
 
 assert:
     entry:

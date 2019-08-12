@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Area;
 use App\Entity\Entry;
+use App\EventSubscriber\AddDurationFieldSubscriber;
 use App\EventSubscriber\AddRoomsFieldSubscriber;
 use App\Form\Type\EntryTypeField;
 use App\Repository\AreaRepository;
@@ -54,21 +55,6 @@ class EntryType extends AbstractType
                 ]
             )
             ->add(
-                'endTime',
-                DateTimeType::class,
-                [
-                    'label' => 'entry.form.endTime.label',
-                    'help' => 'entry.form.endTime.help',
-                ]
-            )
-            /*      ->add(
-                      'duration',
-                      DurationTimeTypeField::class,
-                      [
-                          'label' => false,
-                      ]
-                  )*/
-            ->add(
                 'name',
                 TextType::class,
                 [
@@ -107,6 +93,8 @@ class EntryType extends AbstractType
                     'required' => false,
                 ]
             )
+            ->add('periodicity', PeriodicityType::class)
+            ->addEventSubscriber(new AddDurationFieldSubscriber())
             ->addEventSubscriber(new AddRoomsFieldSubscriber($this->roomRepository));
     }
 

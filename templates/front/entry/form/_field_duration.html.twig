@@ -1,24 +1,13 @@
-{% if form.duration.duration_time is defined %}
+{% if form.duration.time is defined %}
     <div class="row">
         <div class="col-4">
-            {{ form_row(form.duration.duration_time) }}
+            {{ form_row(form.duration.time) }}
         </div>
         <div class="col-4">
-            {{ form_row(form.duration.duration_unit) }}
+            {{ form_row(form.duration.unit) }}
         </div>
         <div class="col-4">
             {{ form_row(form.duration.full_day) }}
-        </div>
-    </div>
-{% endif %}
-
-{% if form.duration.endTime is defined %}
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.duration) }}
-        </div>
-        <div class="col-6">
-
         </div>
     </div>
 {% endif %}

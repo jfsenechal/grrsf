@@ -10,6 +10,9 @@ namespace App\GrrData;
 
 class RoomData
 {
+    const DISPLAY_TYPE_FORM_RESERVATION_DURATION = 0;
+    const DISPLAY_TYPE_FORM_RESERVATION_DATE_END = 1;
+
     public static function whoCanSee()
     {
         return [
@@ -26,8 +29,8 @@ class RoomData
     public static function typeAffichageReser()
     {
         return [
-            'la durée de la réservation',
-            'la date/heure de fin de réservation',
+            self::DISPLAY_TYPE_FORM_RESERVATION_DURATION => 'setting.room.display.type_form_reservation_duree',
+            self::DISPLAY_TYPE_FORM_RESERVATION_DATE_END => 'setting.room.display.type_form_reservation_endtime',
         ];
     }
 

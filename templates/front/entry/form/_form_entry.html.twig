@@ -1,6 +1,9 @@
 {{ form_row(form.name) }}
 {{ form_row(form.startTime) }}
-{{ form_row(form.endTime) }}
+
+{% if form.endTime is defined %}
+    {{ form_row(form.endTime) }}
+{% endif %}
 
 {# if admin
 {{ form_row(form.beneficiaire) }}

@@ -4,11 +4,11 @@ namespace App\Entity;
 
 use App\Booking\BookingTrait;
 use App\Model\TimeSlot;
+use App\Validator as AppAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator as AppAssert;
 
 /**
  * Entry.
@@ -127,6 +127,13 @@ class Entry
      * @ORM\Column(name="moderate", type="boolean", nullable=true)
      */
     private $moderate;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="private", type="boolean")
+     */
+    private $private = false;
 
     /**
      * @var bool
@@ -348,18 +355,6 @@ class Entry
         return $this;
     }
 
-    public function getRepeatId(): ?int
-    {
-        return $this->repeatId;
-    }
-
-    public function setRepeatId(?int $repeatId): self
-    {
-        $this->repeatId = $repeatId;
-
-        return $this;
-    }
-
     public function getCreateBy(): ?string
     {
         return $this->createBy;
@@ -512,6 +507,30 @@ class Entry
     public function setPeriodicity(?Periodicity $periodicity): self
     {
         $this->periodicity = $periodicity;
+
+        return $this;
+    }
+
+    public function getRepeatId(): ?int
+    {
+        return $this->repeatId;
+    }
+
+    public function setRepeatId(?int $repeatId): self
+    {
+        $this->repeatId = $repeatId;
+
+        return $this;
+    }
+
+    public function getPrivate(): ?bool
+    {
+        return $this->private;
+    }
+
+    public function setPrivate(bool $private): self
+    {
+        $this->private = $private;
 
         return $this;
     }

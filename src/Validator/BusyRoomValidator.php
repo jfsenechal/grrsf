@@ -29,6 +29,7 @@ class BusyRoomValidator extends ConstraintValidator
             throw new \UnexpectedValueException($value, 'Entry');
         }
 
+        dump($value);
         $room = $value->getRoom();
 
         $entries = $this->entryRepository->isBusy($value, $room);
