@@ -24,10 +24,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class EntryController extends AbstractController
 {
     /**
-     * @var mixed
-     */
-    public $repeatRepository;
-    /**
      * @var EntryRepository
      */
     private $entryRepository;
@@ -109,14 +105,7 @@ class EntryController extends AbstractController
              * @var Periodicity $periodicity
              */
             $periodicity = $data->getPeriodicity();
-            if ($periodicity) {
-                dump($periodicity);
-                if ($periodicity->getType() == 0) {
-                    $entry->setPeriodicity(null);
-                }
-                $this->entryManager->insert($entry);
-            }
-
+            $this->entryManager->insert($entry);
 
             /*     return $this->redirectToRoute(
                      'grr_front_day',
@@ -145,7 +134,7 @@ class EntryController extends AbstractController
     public function show(Entry $entry): Response
     {
 
-        dump($entry);
+        dump($entry->getPeriodicity()->getType());
 
         /*  $today = Carbon::today();
 
@@ -182,8 +171,8 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($entry);
-            //   $this->entryManager->flush();
+
+            $this->entryManager->flush();
 
             /*    return $this->redirectToRoute(
                     'grr_front_entry_show',

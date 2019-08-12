@@ -270,7 +270,7 @@ setting:
       type_form_reservation_duree: la durée de la réservation
       type_form_reservation_endtime: la date/heure de fin de réservation
 
-
+None: Aucune
 periodicity:
   type:
     cycle:

@@ -3,7 +3,14 @@
 
 {{ form_row(form.periodicity.type) }}
 {{ form_row(form.periodicity.end_time) }}
-<div id="weeks_options" class="d-no2ne">
+
+{% set display = 'd-none' %}
+
+{% if form.periodicity.type.vars.value == 2 %}
+    {% set display = '' %}
+{% endif %}
+
+<div id="weeks_options" class="{{ display }}">
     <table class="table table-bordered">
         <tbody>
         <tr>

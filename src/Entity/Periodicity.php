@@ -35,7 +35,7 @@ class Periodicity
     private $repeat_week = 0;
 
     /**
-     * @var ArrayCollection
+     * @var array
      * @ORM\Column(type="array")
      */
     private $days;
@@ -73,7 +73,7 @@ class Periodicity
     /**
      * @return Collection|array
      */
-    public function getDays(): Collection
+    public function getDays()
     {
         return $this->days;
     }

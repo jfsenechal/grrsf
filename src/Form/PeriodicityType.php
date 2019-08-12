@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Periodicity;
+use App\Form\DataTransformer\ArrayToDoctrineArrayTransformer;
 use App\GrrData\DateUtils;
 use App\GrrData\PeriodicityConstant;
 use Symfony\Component\Form\AbstractType;
@@ -34,7 +35,6 @@ class PeriodicityType extends AbstractType
                     'choices' => array_flip($types),
                     'multiple' => false,
                     'expanded' => true,
-                    'data' => 0,
                 ]
             )
             ->add(
@@ -59,6 +59,7 @@ class PeriodicityType extends AbstractType
                     'expanded' => true,
                 ]
             );
+        $builder->get('days')->addModelTransformer(new ArrayToDoctrineArrayTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -117,7 +117,7 @@ class EntryRepository extends ServiceEntityRepository
          * en cas de modif
          */
         $qb->andWhere('entry.id != :id')
-            ->setParameter('id', $room->getId());
+            ->setParameter('id', $entry->getId());
 
         return $qb
             ->orderBy('entry.startTime', 'DESC')
