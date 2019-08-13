@@ -3,6 +3,7 @@
 namespace App\Provider;
 
 use App\Entity\Entry;
+use App\Entity\Periodicity;
 use App\GrrData\PeriodicityConstant;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -62,9 +63,7 @@ class PeriodicityDaysProvider
         }
 
         if ($typePeriodicity === PeriodicityConstant::EVERY_WEEK) {
-            return [];
-
-            return $this->forEveryWeek();
+            return $this->forEveryWeek($periodicity);
         }
 
         return [];
@@ -72,11 +71,13 @@ class PeriodicityDaysProvider
 
     protected function forEveryDays(): CarbonPeriod
     {
-        return CarbonPeriod::create(
+        $period = CarbonPeriod::create(
             $this->entry_start->toDateString(),
             $this->periodicity_end->toDateString(),
             CarbonPeriod::EXCLUDE_START_DATE
         );
+
+        return $this->applyFilter($period);
     }
 
     /**
@@ -88,7 +89,7 @@ class PeriodicityDaysProvider
             $this->periodicity_end->toDateString()
         );
 
-        return $period;
+        return $this->applyFilter($period);
     }
 
     /**
@@ -106,9 +107,7 @@ class PeriodicityDaysProvider
             return $date->day === $this->entry_start->day;
         };
 
-        $period::filter($filter);
-
-        return $period;
+        return $this->applyFilter($period, $filter);
     }
 
     /**
@@ -123,13 +122,16 @@ class PeriodicityDaysProvider
         );
 
         $filter = function ($date) {
-            return $date->dayOfWeek == $this->entry_start->dayOfWeek && $date->weekOfMonth == $this->entry_start->weekOfMonth;
+            return $date->dayOfWeek === $this->entry_start->dayOfWeek && $date->weekOfMonth === $this->entry_start->weekOfMonth;
         };
 
         return $this->applyFilter($period, $filter);
     }
 
-    protected function forEveryWeek(): CarbonPeriod
+    /**
+     * @return CarbonPeriod
+     */
+    protected function forEveryWeek(Periodicity $periodicity): CarbonPeriod
     {
         $period = Carbon::parse($this->entry_start->toDateString())->daysUntil(
             $this->periodicity_end->toDateString()
@@ -142,8 +144,14 @@ class PeriodicityDaysProvider
         return $this->applyFilter($period, $filter);
     }
 
-    protected function applyFilter(CarbonPeriod $period, callable $filter): CarbonPeriod
+    protected function applyFilter(CarbonPeriod $period, callable $filter = null): CarbonPeriod
     {
-        return $period::filter($filter);
+        $period->excludeStartDate();
+
+        if ($filter) {
+            $period->addFilter($filter);
+        }
+
+        return $period;
     }
 }
