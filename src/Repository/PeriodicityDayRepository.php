@@ -26,15 +26,22 @@ class PeriodicityDayRepository extends ServiceEntityRepository
      * @param Month $monthModel
      * @return PeriodicityDay[]
      */
-    public function findForMonth(Month $monthModel)
+    public function findForMonth(Month $monthModel, Room $room = null)
     {
         $qb = $this->createQueryBuilder('periodicity_day');
+        $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');
+        $qb->addSelect('entry');
 
         $qb->andWhere('YEAR(periodicity_day.date_periodicity) = :year')
             ->setParameter('year', $monthModel->getFirstDayImmutable()->year);
 
         $qb->andWhere('MONTH(periodicity_day.date_periodicity) = :month')
             ->setParameter('month', $monthModel->getFirstDayImmutable()->month);
+
+        if ($room !== null) {
+            $qb->andWhere('entry.room = :room')
+                ->setParameter('room', $room);
+        }
 
         return $qb
             ->orderBy('periodicity_day.date_periodicity', 'ASC')
@@ -46,11 +53,34 @@ class PeriodicityDayRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('periodicity_day');
         $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');
-
         $qb->addSelect('entry');
 
         $qb->andWhere('periodicity_day.date_periodicity LIKE :begin')
             ->setParameter('begin', $day->format('Y-m-d').'%');
+
+        $qb->andWhere('entry.room = :room')
+            ->setParameter('room', $room);
+
+        return $qb
+            ->orderBy('periodicity_day.date_periodicity', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findForWeek(CarbonInterface $day, Room $room)
+    {
+        $qb = $this->createQueryBuilder('periodicity_day');
+        $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');
+        $qb->addSelect('entry');
+
+        $qb->andWhere('YEAR(periodicity_day.date_periodicity) = :year')
+            ->setParameter('year', $day->year);
+
+        $qb->andWhere('MONTH(periodicity_day.date_periodicity) = :month')
+            ->setParameter('month', $day->month);
+
+        $qb->andWhere('DAY(periodicity_day.date_periodicity) = :day')
+            ->setParameter('day', $day->day);
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
@@ -110,4 +140,6 @@ class PeriodicityDayRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
 }

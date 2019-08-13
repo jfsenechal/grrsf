@@ -103,6 +103,10 @@ class BindDataManager
                 $daySelected = CarbonFactory::createImmutable($year, $month, $dayCalendar->day);
                 $dataDay = new Day($daySelected);
                 $entries = $this->entryRepository->findForWeek($dayCalendar, $room);
+
+                $periodicityDays = $this->periodicityDayRepository->findForWeek($dayCalendar, $room);
+                $entries = array_merge($entries, $this->generatorEntry->generateEntries($periodicityDays));
+
                 $dataDay->addEntries($entries);
                 $roomModel->addDataDay($dataDay);
             }
@@ -129,8 +133,8 @@ class BindDataManager
         foreach ($area->getRooms() as $roomObject) {
             $roomModel = new RoomModel($roomObject);
             $entries = $this->entryRepository->findForDay($day, $roomObject);
-            $periodicityDays = $this->periodicityDayRepository->findForDay($day, $roomObject);
 
+            $periodicityDays = $this->periodicityDayRepository->findForDay($day, $roomObject);
             $entries = array_merge($entries, $this->generatorEntry->generateEntries($periodicityDays));
 
             $roomModel->setEntries($entries);
