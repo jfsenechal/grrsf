@@ -68,12 +68,13 @@ class BindDataManager
      */
     public function bindMonth(Month $monthModel, Area $area, Room $room = null)
     {
-        $entries = $this->entryRepository->findForMonth($monthModel, $area, $room);
+        $entries = [];
+        $entries[] = $this->entryRepository->findForMonth($monthModel, $area, $room);
+
         $periodicityDays = $this->periodicityDayRepository->findForMonth($monthModel);
+        $entries [] = $this->generatorEntry->generateEntries($periodicityDays);
 
-        $entries = array_merge($entries, $this->generatorEntry->generateEntries($periodicityDays));
-
-        $this->entries = $entries;
+        $this->entries = array_merge(...$entries);
 
         foreach ($monthModel->getCalendarDays() as $date) {
             $day = new Day($date);
@@ -102,12 +103,13 @@ class BindDataManager
             foreach ($days as $dayCalendar) {
                 $daySelected = CarbonFactory::createImmutable($year, $month, $dayCalendar->day);
                 $dataDay = new Day($daySelected);
-                $entries = $this->entryRepository->findForWeek($dayCalendar, $room);
+                $entries = [];
+                $entries[] = $this->entryRepository->findForWeek($dayCalendar, $room);
 
                 $periodicityDays = $this->periodicityDayRepository->findForWeek($dayCalendar, $room);
-                $entries = array_merge($entries, $this->generatorEntry->generateEntries($periodicityDays));
+                $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
 
-                $dataDay->addEntries($entries);
+                $dataDay->addEntries(array_merge(...$entries));
                 $roomModel->addDataDay($dataDay);
             }
             $data[] = $roomModel;
@@ -132,12 +134,13 @@ class BindDataManager
         $roomsModel = [];
         foreach ($area->getRooms() as $roomObject) {
             $roomModel = new RoomModel($roomObject);
-            $entries = $this->entryRepository->findForDay($day, $roomObject);
+            $entries = [];
+            $entries[] = $this->entryRepository->findForDay($day, $roomObject);
 
             $periodicityDays = $this->periodicityDayRepository->findForDay($day, $roomObject);
-            $entries = array_merge($entries, $this->generatorEntry->generateEntries($periodicityDays));
+            $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
 
-            $roomModel->setEntries($entries);
+            $roomModel->setEntries(array_merge(...$entries));
             $roomsModel[] = $roomModel;
         }
 
