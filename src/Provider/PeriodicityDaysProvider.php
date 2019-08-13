@@ -129,19 +129,45 @@ class PeriodicityDaysProvider
     }
 
     /**
+     * toutes les 1,2,3,4,5 semaines
+     * lundi, mardi, mercredi...
      * @return CarbonPeriod
      */
     protected function forEveryWeek(Periodicity $periodicity): CarbonPeriod
     {
+        $days = $periodicity->getDays();
+        $repeat_week = $periodicity->getRepeatWeek();
+
+        $filterDayOfWeek = function ($date) use ($days) {
+            return in_array($date->dayOfWeekIso, $days, true);
+        };
+
         $period = Carbon::parse($this->entry_start->toDateString())->daysUntil(
             $this->periodicity_end->toDateString()
         );
 
-        $filter = function ($date) {
-            return $date->day == $this->entry_start->day;
+        /**
+         * $interval = \Carbon\CarbonInterval::weeks(2);
+         *
+         * $period::interval($interval);
+         *
+         * foreach ($period as $p) {
+         * dump($p);
+         * }
+         */
+
+        $filterWeek = function ($date) use($repeat_week) {
+            return $date->weekOfYear % $repeat_week === 0;
         };
 
-        return $this->applyFilter($period, $filter);
+        $period->excludeStartDate();
+        $period->addFilter($filterDayOfWeek);
+
+        if ($repeat_week > 1) {
+            $period->addFilter($filterWeek);
+        }
+
+        return $period;
     }
 
     protected function applyFilter(CarbonPeriod $period, callable $filter = null): CarbonPeriod

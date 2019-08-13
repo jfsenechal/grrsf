@@ -47,7 +47,7 @@ class EntryFactory
     {
         $periodicity = PeriodicityFactory::createNew();
         $periodicity->setEntry($entry);
-        $periodicity->setEndTime(new \DateTime('now'));
+        $periodicity->setEndTime($entry->getStartTime());
         $periodicity->setType(null);
 
         return $periodicity;

@@ -86,6 +86,16 @@ class EntryController extends AbstractController
      * @Route("/new/area/{area}/room/{room}/year/{year}/month/{month}/day/{day}/hour/{hour}/minute/{minute}", name="grr_front_entry_new", methods={"GET","POST"})
      * @Entity("area", expr="repository.find(area)")
      * @Entity("room", expr="repository.find(room)")
+     * @param Request $request
+     * @param Area $area
+     * @param Room $room
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @param int|null $hour
+     * @param int|null $minute
+     * @return Response
+     * @throws \Exception
      */
     public function new(
         Request $request,
@@ -106,18 +116,14 @@ class EntryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $days = $this->periodicityDaysProvider->getDays($entry);
-            foreach ($days as $day2) {
-                dump($day2);
-            }
-            //   $this->handlerEntry->handleNewEntry($form, $entry);
+            $this->handlerEntry->handleNewEntry($form, $entry);
 
-            /*    return $this->redirectToRoute(
-                    'grr_front_entry_show',
-                    [
-                        'id' => $entry->getId(),
-                    ]
-                );*/
+            return $this->redirectToRoute(
+                'grr_front_entry_show',
+                [
+                    'id' => $entry->getId(),
+                ]
+            );
         }
 
         return $this->render(
