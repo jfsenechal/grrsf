@@ -9,3 +9,7 @@ periodicity:
   days:
     label: Jour(s) de la semaine
 Today: Aujourd'hui
+menu:
+  user:
+    login: Se connecter
+    logout: Me déconnecter

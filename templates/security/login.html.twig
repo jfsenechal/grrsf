@@ -1,6 +1,6 @@
-{% extends 'layout_front.html.twig' %}
+{% extends '@grr_front/layout_front.html.twig' %}
 
-{% block title %}{{ 'login.title'|trans(error.messageData, 'actions') }}{% endblock %}
+{% block title %}{{ 'login.title'|trans() }}{% endblock %}
 {% block stylesheets %}
 
     <link href="{{ asset('css/signin.css') }}" rel="stylesheet">
@@ -25,31 +25,30 @@
 {% block body %}
     <form class="form-signin" method="post" action="{{ path('app_login') }}">
         <img class="mb-4" src="{{ asset('totem_grr.png') }}" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">{{ 'login.title'|trans(error.messageData, 'actions') }}</h1>
+        <h1 class="h3 mb-3 font-weight-normal">{{ 'login.title'|trans() }}</h1>
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
         <label for="inputEmail"
-               class="sr-only">{{ 'login.form.username.label'|trans(error.messageData, 'actions') }}</label>
-        <input type="email" name="login" value="{{ last_username }}" id="inputEmail" class="form-control"
+               class="sr-only">{{ 'login.form.username.label'|trans() }}</label>
+        <input type="email" name="email" value="{{ last_username }}" id="inputEmail" class="form-control"
                placeholder="Email address" required autofocus>
         <label for="inputPassword"
-               class="sr-only">{{ 'login.form.password.label'|trans(error.messageData, 'actions') }}</label>
+               class="sr-only">{{ 'login.form.password.label'|trans() }}</label>
         <input name="password" type="password" id="inputPassword" class="form-control"
-               placeholder="{{ 'login.form.password.placeholder'|trans(error.messageData, 'actions') }}" required>
+               placeholder="{{ 'login.form.password.placeholder'|trans() }}" required>
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox"
-                       value="remember-me"> {{ 'login.remember.me'|trans(error.messageData, 'actions') }}
+                       value="remember-me"> {{ 'login.remember.me'|trans() }}
             </label>
         </div>
         <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}"
         >
         <button class="btn btn-lg btn-primary btn-block"
-                type="submit">{{ 'btn.login'|trans(error.messageData, 'actions') }}</button>
+                type="submit">{{ 'btn.login'|trans() }}</button>
     </form>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
 
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.

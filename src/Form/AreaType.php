@@ -3,9 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Area;
-use App\GrrData\AreaData;
 use App\GrrData\GrrConstants;
 use App\Provider\DateProvider;
+use App\Settings\SettingsArea;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -122,7 +122,7 @@ class AreaType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'area.form.twentyfourhourFormatArea.label',
-                    'choices' => array_flip(AreaData::getAffichageFormat()),
+                    'choices' => array_flip(SettingsArea::getAffichageFormat()),
                     'multiple' => false,
                     'expanded' => true,
                 ]

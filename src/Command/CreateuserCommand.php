@@ -2,52 +2,68 @@
 
 namespace App\Command;
 
+use App\Entity\User;
 use App\Manager\UserManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class CreateuserCommand extends Command
 {
-    protected static $defaultName = 'app:createuser';
+    protected static $defaultName = 'grr:createuser';
     /**
      * @var UserManager
      */
-    private $UtilisateurManager;
+    private $userManager;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $userPasswordEncoder;
 
-    public function __construct(?string $name = null, UserManager $UtilisateurManager)
-    {
+    public function __construct(
+        ?string $name = null,
+        UserManager $userManager,
+        UserPasswordEncoderInterface $userPasswordEncoder
+    ) {
         parent::__construct($name);
-        $this->UtilisateurManager = $UtilisateurManager;
+        $this->userManager = $userManager;
+        $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
     protected function configure()
     {
         $this
             ->setDescription('Add a short description for your command')
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
+            ->addArgument('email', InputArgument::REQUIRED, 'Adresse email')
+            ->addArgument('password', InputArgument::REQUIRED, 'Mot de passe');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->UtilisateurManager->insert();
+        $email = $input->getArgument('email');
+        $password = $input->getArgument('password');
 
-        $arg1 = $input->getArgument('arg1');
-
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $io->error('Adresse email non valide');
+            return;
         }
 
-        if ($input->getOption('option1')) {
-            // ...
+        if (strlen($password) < 4) {
+            $io->error('Password minium 4');
+
+            return;
         }
+
+        $user = new User();
+        $user->setEmail($email);
+        $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
+
+        $this->userManager->insert($user);
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }

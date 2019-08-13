@@ -146,16 +146,6 @@ class PeriodicityDaysProvider
             $this->periodicity_end->toDateString()
         );
 
-        /**
-         * $interval = \Carbon\CarbonInterval::weeks(2);
-         *
-         * $period::interval($interval);
-         *
-         * foreach ($period as $p) {
-         * dump($p);
-         * }
-         */
-
         $filterWeek = function ($date) use($repeat_week) {
             return $date->weekOfYear % $repeat_week === 0;
         };

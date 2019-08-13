@@ -51,9 +51,4 @@ class UserManager
     {
         $this->UtilisateurRepository->insert($user);
     }
-
-    public function encodePassword(User $user, string $clearPassword)
-    {
-        $user->setPassword($this->userPasswordEncoder->encodePassword($user, $clearPassword));
-    }
 }
