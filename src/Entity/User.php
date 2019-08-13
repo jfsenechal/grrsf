@@ -34,6 +34,26 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $first_name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Area")
+     */
+    private $area_default;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Room")
+     */
+    private $room_default;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -110,5 +130,53 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->first_name;
+    }
+
+    public function setFirstName(?string $first_name): self
+    {
+        $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    public function getAreaDefault(): ?Area
+    {
+        return $this->area_default;
+    }
+
+    public function setAreaDefault(?Area $area_default): self
+    {
+        $this->area_default = $area_default;
+
+        return $this;
+    }
+
+    public function getRoomDefault(): ?Room
+    {
+        return $this->room_default;
+    }
+
+    public function setRoomDefault(?Room $room_default): self
+    {
+        $this->room_default = $room_default;
+
+        return $this;
     }
 }

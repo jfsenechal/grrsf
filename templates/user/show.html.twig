@@ -1,0 +1,29 @@
+{% extends '@grr_front/layout_front.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>{{'user.profile.title'|trans}}</h1>
+
+    {% include 'user/_actions.html.twig' %}
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>{{ 'user.profile.area.default.label'|trans }}</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>{{ 'user.profile.room.default.label'|trans }}</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>{{ 'user.profile.email.label'|trans }}</th>
+                <td>{{ user.email }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}

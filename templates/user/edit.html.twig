@@ -1,0 +1,15 @@
+{% extends '@grr_front/layout_front.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1>Edit User</h1>
+
+    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <br/>
+    <a href="{{ path('grr_user_show') }}"><i
+                class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}

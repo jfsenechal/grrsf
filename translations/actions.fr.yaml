@@ -55,6 +55,8 @@ user:
     confirm: Êtes vous sur de supprimer l'utilisateur %name%
   new:
     title: Nouvelle utilisateur
+  password:
+    title: Changer le mot de passe
 typeArea:
   delete:
     confirm: Êtes vous sur de supprimer le type de réservation %name%

@@ -37,6 +37,7 @@ class CreateuserCommand extends Command
     {
         $this
             ->setDescription('Add a short description for your command')
+            ->addArgument('name', InputArgument::REQUIRED, 'Name')
             ->addArgument('email', InputArgument::REQUIRED, 'Adresse email')
             ->addArgument('password', InputArgument::REQUIRED, 'Mot de passe');
     }
@@ -46,6 +47,7 @@ class CreateuserCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $email = $input->getArgument('email');
+        $name = $input->getArgument('name');
         $password = $input->getArgument('password');
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -59,8 +61,15 @@ class CreateuserCommand extends Command
             return;
         }
 
+        if (strlen($name) < 4) {
+            $io->error('Name minium 4');
+
+            return;
+        }
+
         $user = new User();
         $user->setEmail($email);
+        $user->setName($name);
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
 
         $this->userManager->insert($user);

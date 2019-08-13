@@ -34,14 +34,10 @@
             {% endblock %}
         </ul>
         <ul class="navbar-nav">
-            {% block menu_user %}
-                {% include '_menu_user.html.twig' %}
-            {% endblock %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li class="nav-item">
-                    <a href="{{ path('app_logout') }}" class="nav-link" title="{{ 'menu.user.logout'|trans }}"><i
-                                class="fas fa-sign-out-alt"></i></a>
-                </li>
+                {% block menu_user %}
+                    {% include '_menu_user.html.twig' %}
+                {% endblock %}
             {% else %}
                 <li class="nav-item">
                     <a href="{{ path('app_login') }}" class="nav-link" title="{{ 'menu.user.login'|trans }}"><i

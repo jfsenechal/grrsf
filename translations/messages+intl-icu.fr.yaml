@@ -13,3 +13,28 @@ menu:
   user:
     login: Se connecter
     logout: Me déconnecter
+    profile: Profil
+user:
+  profile:
+    area:
+      default:
+        label: Domaine par défaut
+    room:
+      default:
+        label: Ressource par défaut
+    email:
+      label: Email
+    name:
+      label: Nom
+    surname:
+      label: Prénom
+    title: Mon profil
+  form:
+    name:
+      label: Nom
+    first_name:
+      label: Prénom
+    area:
+      label: Domaine par défaut
+    room:
+      label: Ressource par défaut
