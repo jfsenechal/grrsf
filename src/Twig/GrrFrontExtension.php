@@ -9,6 +9,7 @@ use App\Model\Day;
 use App\Model\Month;
 use App\Model\RoomModel;
 use App\Model\TimeSlot;
+use App\Model\Week;
 use App\Navigation\NavigationManager;
 use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -60,6 +61,11 @@ class GrrFrontExtension extends AbstractExtension
             new TwigFilter(
                 'grrPeriodicityWeekDayName', function (int $weekday) {
                 return $this->grrPeriodicityWeekDayName($weekday);
+            }, ['is_safe' => ['html']]
+            ),
+            new TwigFilter(
+                'grrWeekNiceName', function (Week $week) {
+                return $this->grrWeekNiceName($week);
             }, ['is_safe' => ['html']]
             ),
         ];
@@ -217,5 +223,13 @@ class GrrFrontExtension extends AbstractExtension
     private function grrPeriodicityWeekDayName(int $weekday)
     {
 
+    }
+
+    private function grrWeekNiceName(Week $week)
+    {
+        return $this->twigEnvironment->render(
+            '@grr_front/week/_nice_name.html.twig',
+            ['week' => $week]
+        );
     }
 }

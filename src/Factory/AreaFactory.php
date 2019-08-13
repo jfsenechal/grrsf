@@ -9,21 +9,10 @@
 namespace App\Factory;
 
 use App\Entity\Area;
-use App\GrrData\DateUtils;
 use App\Provider\DateProvider;
 
 class AreaFactory
 {
-    /**
-     * @var DateUtils
-     */
-    private $dateUtils;
-
-    public function __construct(DateUtils $dateUtils)
-    {
-        $this->dateUtils = $dateUtils;
-    }
-
     public static function createNew(): Area
     {
         return new Area();

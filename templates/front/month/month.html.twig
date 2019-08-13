@@ -1,6 +1,6 @@
 {% extends '@grr_front/layout_front.html.twig' %}
 
-{% block title %}{{ firstDay|date('F Y') }}{% endblock %}
+{% block title %}{{ firstDay.monthName|trans|title }} {{ firstDay.year }}{% endblock %}
 
 {% block body %}
 

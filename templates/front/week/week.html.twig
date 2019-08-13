@@ -1,15 +1,12 @@
 {% extends '@grr_front/layout_front.html.twig' %}
 
-{% block title %}Week page{% endblock %}
+{% block title %}{{ week|grrWeekNiceName }}{% endblock %}
 
 {% block body %}
 
     {% include '@grr_front/navigation/_top_navigation.html.twig' %}
 
-    <h3 class="text-center text-success">
-        {{ 'week'|trans }} du {{ week.firstDay.getTranslatedDayName }} {{ week.firstDay.day }} {{ week.firstDay.monthName|trans|lower }}
-        au {{ week.lastDay.getTranslatedDayName }} {{ week.lastDay.day }}  {{ week.lastDay.monthName|trans|lower }}
-    </h3>
+    <h3 class="text-center text-success">{{ week|grrWeekNiceName }}</h3>
 
     <table class="table table-bordered">
         <thead>

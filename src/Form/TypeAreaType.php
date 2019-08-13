@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\EntryType;
-use App\GrrData\TypeAreaData;
 use App\Settings\SettingsTypeEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -15,16 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeAreaType extends AbstractType
 {
-    /**
-     * @var TypeAreaData
-     */
-    private $typeAreaData;
-
-    public function __construct(TypeAreaData $typeAreaData)
-    {
-        $this->typeAreaData = $typeAreaData;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
