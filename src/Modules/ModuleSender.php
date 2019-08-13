@@ -20,7 +20,7 @@ class ModuleSender implements GrrModuleSenderInterface
     public function postContent()
     {
         foreach ($this->modules as $module) {
-            $module->postContent();
+            $module->doSomething();
         }
     }
 }

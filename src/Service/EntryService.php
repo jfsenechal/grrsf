@@ -27,8 +27,9 @@ class EntryService
     }
 
     /**
+     * Fixe les emplacements de l'entry pour la vue sur une journee
      * @param Entry      $entry
-     * @param TimeSlot[] $dayTimeSlots
+     * @param TimeSlot[] $dayTimeSlots les tranches horaires de la journée
      */
     public function setLocations(Entry $entry, array $dayTimeSlots)
     {
@@ -59,6 +60,11 @@ class EntryService
         return false;
     }
 
+    /**
+     * Obtient les tranches horaires de l'entrée basée sur la résolution de l'Area
+     * @param Entry $entry
+     * @return CarbonPeriod
+     */
     public function getTimeSlots(Entry $entry): CarbonPeriod
     {
         $area = $entry->getRoom()->getArea();

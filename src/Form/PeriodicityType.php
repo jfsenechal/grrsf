@@ -32,6 +32,7 @@ class PeriodicityType extends AbstractType
                 'type',
                 ChoiceType::class,
                 [
+                    'label'=>'periodicity.type.label',
                     'choices' => array_flip($types),
                     'multiple' => false,
                     'expanded' => true,

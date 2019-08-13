@@ -4,7 +4,7 @@ namespace App\Modules;
 
 interface GrrModuleInterface
 {
-    public function getSupport(): string;
-
-    public function postContent();
+    public function getName() :string ;
+    public function getVersion() :string ;
+    public function doSomething();
 }

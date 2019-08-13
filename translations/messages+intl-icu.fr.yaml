@@ -3,7 +3,7 @@ periodicity:
   endtime:
     label: Fin de la périodicité
   type:
-    label: Type de répétition
+    label: Type de périodicité
   repeatWeek:
     label: Répétition par semaine
   days:

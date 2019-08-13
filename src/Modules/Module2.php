@@ -4,13 +4,19 @@ namespace App\Modules;
 
 class Module2 implements GrrModuleInterface
 {
-    public function getSupport(): string
+
+    public function getName(): string
     {
         return 'module2';
     }
 
-    public function postContent()
+    public function getVersion(): string
     {
-        var_dump('module2');
+        return '1.0';
+    }
+
+    public function doSomething()
+    {
+        //
     }
 }

@@ -183,9 +183,15 @@ class Entry
      */
     private $periodicity;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PeriodicityDay", mappedBy="entry", cascade={"remove"}, orphanRemoval=true)
+     */
+    private $periodicityDays;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
+        $this->periodicityDays = new ArrayCollection();
     }
 
     public function __toString()
@@ -486,6 +492,37 @@ class Entry
     public function setPeriodicity(?Periodicity $periodicity): self
     {
         $this->periodicity = $periodicity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PeriodicityDay[]
+     */
+    public function getPeriodicityDays(): Collection
+    {
+        return $this->periodicityDays;
+    }
+
+    public function addPeriodicityDay(PeriodicityDay $periodicityDay): self
+    {
+        if (!$this->periodicityDays->contains($periodicityDay)) {
+            $this->periodicityDays[] = $periodicityDay;
+            $periodicityDay->setEntry($this);
+        }
+
+        return $this;
+    }
+
+    public function removePeriodicityDay(PeriodicityDay $periodicityDay): self
+    {
+        if ($this->periodicityDays->contains($periodicityDay)) {
+            $this->periodicityDays->removeElement($periodicityDay);
+            // set the owning side to null (unless already changed)
+            if ($periodicityDay->getEntry() === $this) {
+                $periodicityDay->setEntry(null);
+            }
+        }
 
         return $this;
     }

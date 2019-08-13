@@ -4,16 +4,14 @@ namespace App\Controller\Front;
 
 use App\Entity\Area;
 use App\Entity\Entry;
-use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Factory\EntryFactory;
 use App\Form\EntryType;
 use App\Form\SearchEntryType;
 use App\GrrData\PeriodicityConstant;
-use App\Manager\EntryManager;
-use App\Manager\PeriodicityManager;
+use App\Handler\HandlerEntry;
+use App\Provider\PeriodicityDaysProvider;
 use App\Repository\EntryRepository;
-use App\Provider\DaysPeriodicityProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,34 +28,28 @@ class EntryController extends AbstractController
      */
     private $entryRepository;
     /**
-     * @var EntryManager
-     */
-    private $entryManager;
-    /**
      * @var EntryFactory
      */
     private $entryFactory;
     /**
-     * @var DaysPeriodicityProvider
+     * @var PeriodicityDaysProvider
      */
     private $periodicityService;
     /**
-     * @var PeriodicityManager
+     * @var HandlerEntry
      */
-    private $periodicityManager;
+    private $handlerEntry;
 
     public function __construct(
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
-        EntryManager $entryManager,
-        PeriodicityManager $periodicityManager,
-        DaysPeriodicityProvider $periodicityService
+        PeriodicityDaysProvider $periodicityService,
+        HandlerEntry $handlerEntry
     ) {
         $this->entryRepository = $entryRepository;
-        $this->entryManager = $entryManager;
         $this->entryFactory = $entryFactory;
         $this->periodicityService = $periodicityService;
-        $this->periodicityManager = $periodicityManager;
+        $this->handlerEntry = $handlerEntry;
     }
 
     /**
@@ -103,22 +95,12 @@ class EntryController extends AbstractController
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
 
         $form = $this->createForm(EntryType::class, $entry);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $data = $form->getData();
-
-            /**
-             * @var Periodicity $periodicity
-             */
-            $periodicity = $data->getPeriodicity();
-
-            if (null === $periodicity->getType()) {
-                $entry->setPeriodicity(null);
-            }
-
-            $this->entryManager->insert($entry);
+            $this->handlerEntry->handleNewEntry($form, $entry);
 
             return $this->redirectToRoute(
                 'grr_front_entry_show',
@@ -149,7 +131,7 @@ class EntryController extends AbstractController
             '@grr_front/entry/show.html.twig',
             [
                 'entry' => $entry,
-                'days'=>$days
+                'days' => $days,
             ]
         );
     }
@@ -175,20 +157,12 @@ class EntryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            dump($typePeriodicity);
-            $data = $form->getData();
-            $type = $data->getPeriodicity()->getType();
-            if (null === $type) {
-                $entry->setPeriodicity(null);
-                //   $this->periodicityManager->remove($periodicity);
-                // $this->periodicityManager->flush();
-            }
-            $this->entryManager->flush();
+            $this->handlerEntry->handleEditEntry($form, $entry);
 
-            /*    return $this->redirectToRoute(
-                    'grr_front_entry_show',
-                    ['id' => $entry->getId(),]
-                );*/
+            return $this->redirectToRoute(
+                'grr_front_entry_show',
+                ['id' => $entry->getId(),]
+            );
         }
 
         return $this->render(
@@ -207,8 +181,9 @@ class EntryController extends AbstractController
     public function delete(Request $request, Entry $entry): Response
     {
         if ($this->isCsrfTokenValid('delete'.$entry->getId(), $request->request->get('_token'))) {
-            $this->entryManager->remove($entry);
-            $this->entryManager->flush();
+
+            $this->handlerEntry->handleDeleteEntry($entry);
+
             $this->addFlash('success', 'flash.entry.delete');
         }
 

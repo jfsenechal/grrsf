@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 
-class DaysPeriodicityProvider
+class PeriodicityDaysProvider
 {
     /**
      * @var Entry
@@ -70,8 +70,10 @@ class DaysPeriodicityProvider
 
     protected function forEveryDays(): CarbonPeriod
     {
-        return Carbon::parse($this->entry_start->toDateString())->daysUntil(
-            $this->periodicity_end->toDateString()
+        return CarbonPeriod::create(
+            $this->entry_start->toDateString(),
+            $this->periodicity_end->toDateString(),
+            CarbonPeriod::EXCLUDE_START_DATE
         );
     }
 

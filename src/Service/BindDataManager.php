@@ -13,11 +13,12 @@ use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Model\Day;
-use App\Model\TimeSlot;
 use App\Model\Month;
 use App\Model\RoomModel;
+use App\Model\TimeSlot;
 use App\Model\Week;
 use App\Repository\EntryRepository;
+use App\Repository\PeriodicityDayRepository;
 use Carbon\CarbonInterface;
 
 class BindDataManager
@@ -34,19 +35,33 @@ class BindDataManager
      * @var EntryService
      */
     private $entryService;
+    /**
+     * @var PeriodicityDayRepository
+     */
+    private $periodicityDayRepository;
+    /**
+     * @var GeneratorEntry
+     */
+    private $generatorEntry;
 
-    public function __construct(EntryRepository $entryRepository, EntryService $entryService)
-    {
+    public function __construct(
+        EntryRepository $entryRepository,
+        PeriodicityDayRepository $periodicityDayRepository,
+        EntryService $entryService,
+        GeneratorEntry $generatorEntry
+    ) {
         $this->entries = [];
         $this->entryRepository = $entryRepository;
         $this->entryService = $entryService;
+        $this->periodicityDayRepository = $periodicityDayRepository;
+        $this->generatorEntry = $generatorEntry;
     }
 
     /**
      * Parcours tous les jours du mois
      * Crée une instance Day et set les entrées.
      *
-     * @param Month   $param
+     * @param Month $param
      * @param Entry[] $entries
      *
      * @throws \Exception
@@ -54,6 +69,10 @@ class BindDataManager
     public function bindMonth(Month $monthModel, Area $area, Room $room = null)
     {
         $entries = $this->entryRepository->findForMonth($monthModel, $area, $room);
+        $periodicityDays = $this->periodicityDayRepository->findForMonth($monthModel);
+
+        $entries = array_merge($entries, $this->generatorEntry->generateEntries($periodicityDays));
+
         $this->entries = $entries;
 
         foreach ($monthModel->getCalendarDays() as $date) {
@@ -99,8 +118,8 @@ class BindDataManager
      * et sa localisation.
      *
      * @param CarbonInterface $day
-     * @param Area            $area
-     * @param TimeSlot[]      $hoursModel
+     * @param Area $area
+     * @param TimeSlot[] $hoursModel
      *
      * @return RoomModel[]
      */
@@ -110,6 +129,10 @@ class BindDataManager
         foreach ($area->getRooms() as $roomObject) {
             $roomModel = new RoomModel($roomObject);
             $entries = $this->entryRepository->findForDay($day, $roomObject);
+            $periodicityDays = $this->periodicityDayRepository->findForDay($day, $roomObject);
+
+            $entries = array_merge($entries, $this->generatorEntry->generateEntries($periodicityDays));
+
             $roomModel->setEntries($entries);
             $roomsModel[] = $roomModel;
         }
@@ -119,11 +142,11 @@ class BindDataManager
              * @var Entry[]
              */
             $entries = $roomModel->getEntries();
+
             foreach ($entries as $entry) {
                 $this->entryService->setLocations($entry, $hoursModel);
                 $count = count($entry->getLocations());
                 $entry->setCellules($count);
-                //$this->entryService->setCountCells($entry, $area);
             }
         }
 
