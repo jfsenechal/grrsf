@@ -33,11 +33,13 @@ class PeriodicityDaysProvider
     public function getDays(Entry $entry)
     {
         $periodicity = $entry->getPeriodicity();
+        dump($periodicity);
         if ($periodicity === null) {
             return [];
         }
 
         $typePeriodicity = $periodicity->getType();
+
         $this->entry = $entry;
 
         $this->entry_start = Carbon::instance($this->entry->getStartTime());
@@ -86,15 +88,11 @@ class PeriodicityDaysProvider
             $this->periodicity_end->toDateString()
         );
 
-        $filter = function ($date) {
-            return $date->day == $this->entry_start->day;
-        };
-
-        return $this->applyFilter($period, $filter);
+        return $period;
     }
 
     /**
-     * Par exemple 12-08 12-09 12-10.
+     * Par exemple 12-08, 12-09 12-10, 12-11...
      *
      * @return CarbonPeriod
      */

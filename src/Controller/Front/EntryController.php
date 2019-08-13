@@ -39,17 +39,23 @@ class EntryController extends AbstractController
      * @var HandlerEntry
      */
     private $handlerEntry;
+    /**
+     * @var PeriodicityDaysProvider
+     */
+    private $periodicityDaysProvider;
 
     public function __construct(
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
         PeriodicityDaysProvider $periodicityService,
-        HandlerEntry $handlerEntry
+        HandlerEntry $handlerEntry,
+        PeriodicityDaysProvider $periodicityDaysProvider
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryFactory = $entryFactory;
         $this->periodicityService = $periodicityService;
         $this->handlerEntry = $handlerEntry;
+        $this->periodicityDaysProvider = $periodicityDaysProvider;
     }
 
     /**
@@ -100,14 +106,18 @@ class EntryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->handlerEntry->handleNewEntry($form, $entry);
+            $days = $this->periodicityDaysProvider->getDays($entry);
+            foreach ($days as $day2) {
+                dump($day2);
+            }
+            //   $this->handlerEntry->handleNewEntry($form, $entry);
 
-            return $this->redirectToRoute(
-                'grr_front_entry_show',
-                [
-                    'id' => $entry->getId(),
-                ]
-            );
+            /*    return $this->redirectToRoute(
+                    'grr_front_entry_show',
+                    [
+                        'id' => $entry->getId(),
+                    ]
+                );*/
         }
 
         return $this->render(
