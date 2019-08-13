@@ -8,9 +8,11 @@
 
 namespace App\Navigation;
 
+use App\Factory\NavigationFactory;
 use App\Model\Month;
 use App\Model\Navigation;
 use App\Provider\DateProvider;
+use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Webmozart\Assert\Assert;
@@ -26,9 +28,9 @@ class NavigationManager
      */
     private $month;
     /**
-     * @var int
+     * @var CarbonInterface
      */
-    private $monthNumeric;
+    private $today;
     /**
      * @var RequestStack
      */
@@ -51,8 +53,9 @@ class NavigationManager
         $this->month = $month;
 
         Assert::greaterThan($number, 0);
-        //todo set in constructor
-        $navigation = new Navigation();
+
+        $navigation = NavigationFactory::createNew();
+        $this->today = $navigation->getToday();
 
         $navigation->setNextButton($this->nextButton());
         $navigation->setPreviousButton($this->previousButton());
@@ -70,26 +73,20 @@ class NavigationManager
 
     public function previousButton()
     {
-        $previousMonth = $this->month->previousMonth();
-
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_button_previous.html.twig',
             [
-                'previousMonth' => $previousMonth,
-                'month' => $this->monthNumeric,
+                'month' => $this->month,
             ]
         );
     }
 
     public function nextButton()
     {
-        $nextMonth = $this->month->nexMonth();
-
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_button_next.html.twig',
             [
-                'nextMonth' => $nextMonth,
-                'month' => $this->monthNumeric,
+                'month' => $this->month,
             ]
         );
     }
@@ -111,6 +108,7 @@ class NavigationManager
                 'weeks' => $weeks,
                 'weekSelected' => $weekSelected,
                 'daySelected' => $daySelected,
+                'today' => $this->today,
             ]
         );
     }

@@ -52,12 +52,22 @@ class Month extends Carbon
         return $this->firstDayImmutable;
     }
 
+    public function previousYear()
+    {
+        return $this->firstDayImmutable->subYear();
+    }
+
+    public function nextYear()
+    {
+        return $this->firstDayImmutable->addYear();
+    }
+
     public function previousMonth()
     {
         return $this->firstDayImmutable->subMonth();
     }
 
-    public function nexMonth()
+    public function nextMonth()
     {
         return $this->firstDayImmutable->addMonth();
     }

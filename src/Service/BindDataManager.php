@@ -146,7 +146,7 @@ class BindDataManager
 
         foreach ($roomsModel as $roomModel) {
             /**
-             * @var Entry[]
+             * @var Entry[] $entries
              */
             $entries = $roomModel->getEntries();
 

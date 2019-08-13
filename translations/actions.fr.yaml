@@ -70,8 +70,12 @@ entry:
     periodicity:
       title: Options de périodicité
 
-next: Suivant
-previous: Précédent
+next:
+  year: Année suivante
+  month: Mois suivant
+previous:
+  year: Année précédente
+  month: Mois précédent
 week:
   initial: s
 action:

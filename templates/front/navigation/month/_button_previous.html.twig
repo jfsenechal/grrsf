@@ -1,3 +1,6 @@
-<a href="{{ grrGenerateRouteMonthView(previousMonth|date('Y'), previousMonth|date('n')) }}" title="{{ 'previous'|trans({},'actions') }}">
+<a href="{{ grrGenerateRouteMonthView(month.year, month.previousMonth.month) }}" title="{{ 'previous.month'|trans({},'actions') }}">
     <i class="fas fa-arrow-left"></i>
+</a>
+<a href="{{ grrGenerateRouteMonthView(month.previousYear.year, month.month) }}" title="{{ 'previous.year'|trans({},'actions') }}">
+    <i class="fas fa-backward"></i>
 </a>

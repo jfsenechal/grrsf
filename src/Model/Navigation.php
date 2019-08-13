@@ -8,6 +8,9 @@
 
 namespace App\Model;
 
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
+
 class Navigation
 {
     /**
@@ -23,9 +26,15 @@ class Navigation
      */
     protected $months;
 
+    /**
+     * @var CarbonInterface
+     */
+    protected $today;
+
     public function __construct()
     {
         $this->months = [];
+        $this->today = Carbon::today();
     }
 
     /**
@@ -92,4 +101,24 @@ class Navigation
     {
         $this->months[] = $month;
     }
+
+    /**
+     * @return CarbonInterface
+     */
+    public function getToday(): CarbonInterface
+    {
+        return $this->today;
+    }
+
+    /**
+     * @param CarbonInterface $today
+     * @return Navigation
+     */
+    public function setToday(CarbonInterface $today): self
+    {
+        $this->today = $today;
+
+        return $this;
+    }
+
 }

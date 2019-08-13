@@ -19,7 +19,7 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
  */
 class TablePrefix implements EventSubscriber
 {
-    protected $prefix;
+    protected $prefix = 'grr_';
 
     public function __construct($prefix)
     {
