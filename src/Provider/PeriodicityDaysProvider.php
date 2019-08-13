@@ -33,7 +33,7 @@ class PeriodicityDaysProvider
     public function getDays(Entry $entry)
     {
         $periodicity = $entry->getPeriodicity();
-        dump($periodicity);
+
         if ($periodicity === null) {
             return [];
         }
@@ -103,10 +103,12 @@ class PeriodicityDaysProvider
         );
 
         $filter = function ($date) {
-            return $date->day == $this->entry_start->day;
+            return $date->day === $this->entry_start->day;
         };
 
-        return $this->applyFilter($period, $filter);
+        $period::filter($filter);
+
+        return $period;
     }
 
     /**
