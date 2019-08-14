@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Entity\Area;
+use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Helper\MonthHelperDataDisplay;
 use App\Model\Day;
@@ -10,11 +11,9 @@ use App\Model\Month;
 use App\Model\Week;
 use App\Provider\SettingsProvider;
 use App\Provider\TimeSlotsProvider;
-use App\Repository\AreaRepository;
-use App\Repository\EntryRepository;
-use App\Repository\RoomRepository;
 use App\Service\BindDataManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,18 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DefaultController extends AbstractController
 {
-    /**
-     * @var AreaRepository
-     */
-    private $areaRepository;
-    /**
-     * @var RoomRepository
-     */
-    private $roomRepository;
-    /**
-     * @var EntryRepository
-     */
-    private $entryRepository;
     /**
      * @var BindDataManager
      */
@@ -58,15 +45,9 @@ class DefaultController extends AbstractController
     public function __construct(
         SettingsProvider $settingservice,
         MonthHelperDataDisplay $monthHelperDataDisplay,
-        AreaRepository $areaRepository,
-        RoomRepository $roomRepository,
-        EntryRepository $entryRepository,
         BindDataManager $calendarDataManager,
         TimeSlotsProvider $timeSlotsProvider
     ) {
-        $this->areaRepository = $areaRepository;
-        $this->roomRepository = $roomRepository;
-        $this->entryRepository = $entryRepository;
         $this->calendarDataManager = $calendarDataManager;
         $this->settingservice = $settingservice;
         $this->monthHelperDataDisplay = $monthHelperDataDisplay;
@@ -94,20 +75,12 @@ class DefaultController extends AbstractController
     /**
      * @Route("/monthview/area/{area}/year/{year}/month/{month}/room/{room}", name="grr_front_month", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
-     * //prend room = 1 meme si pas selectionne
-     * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=false})
+     * @ParamConverter("room", options={"mapping"={"room"="id"}})
      */
-    public function month(Area $area, int $year, int $month, int $room = null): Response
+    public function month(Area $area, int $year, int $month, Room $room = null): Response
     {
-        $roomObject = null;
-
-        if ($room) {
-            //todo if room selected
-            $roomObject = $this->roomRepository->find($room);
-        }
-
         $monthModel = Month::init($year, $month);
-        $this->calendarDataManager->bindMonth($monthModel, $area, $roomObject);
+        $this->calendarDataManager->bindMonth($monthModel, $area, $room);
 
         $monthData = $this->monthHelperDataDisplay->generateHtmlMonth($monthModel);
 
@@ -116,7 +89,7 @@ class DefaultController extends AbstractController
             [
                 'firstDay' => $monthModel->firstOfMonth(),
                 'area' => $area,
-                'room' => $roomObject,
+                'room' => $room,
                 'data' => $monthData,
             ]
         );
@@ -125,17 +98,10 @@ class DefaultController extends AbstractController
     /**
      * @Route("/weekview/area/{area}/year/{year}/month/{month}/week/{week}/room/{room}", name="grr_front_week", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
-     * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
+     * @ParamConverter("room", options={"mapping"={"room"="id"}})
      */
-    public function week(Area $area, int $year, int $month, int $week, int $room = null): Response
+    public function week(Area $area, int $year, int $month, int $week, Room $room = null): Response
     {
-        $roomObject = null;
-
-        if ($room) {
-            //todo if room selected
-            $roomObject = $this->roomRepository->find($room);
-        }
-
         $weekModel = Week::createWithLocal($year, $week);
         $data = $this->calendarDataManager->bindWeek($weekModel, $area);
 
@@ -152,16 +118,15 @@ class DefaultController extends AbstractController
     /**
      * @Route("/dayview/area/{area}/year/{year}/month/{month}/day/{day}/room/{room}", name="grr_front_day", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
-     * Entity("room", expr="repository.find(room)", isOptional=true, options={"strip_null"=true})
+     * @ParamConverter("room", options={"mapping"={"room"="id"}})
      */
-    public function day(Area $area, int $year, int $month, int $day, int $room = null): Response
+    public function day(Area $area, int $year, int $month, int $day, Room $room = null): Response
     {
         $daySelected = CarbonFactory::createImmutable($year, $month, $day);
         $dayModel = new Day($daySelected);
 
         if ($room) {
-            //todo if room selected
-            $rooms = [$this->roomRepository->find($room)];
+            $rooms = [$room];
         }
 
         $hoursModel = $this->timeSlotsProvider->getTimeSlotsModelByAreaAndDay($area, $daySelected);

@@ -36,18 +36,27 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('grrGenerateRouteMonthView', function (int $year = null, int $month = null) {
+            new TwigFunction(
+                'grrGenerateRouteMonthView', function (int $year = null, int $month = null) {
                 return $this->generateRouteMonthView($year, $month);
-            }),
-            new TwigFunction('grrGenerateRouteWeekView', function (int $week) {
+            }
+            ),
+            new TwigFunction(
+                'grrGenerateRouteWeekView', function (int $week) {
                 return $this->generateRouteWeekView($week);
-            }),
-            new TwigFunction('grrGenerateRouteDayView', function (int $day) {
+            }
+            ),
+            new TwigFunction(
+                'grrGenerateRouteDayView', function (int $day) {
                 return $this->generateRouteDayView($day);
-            }),
-            new TwigFunction('grrGenerateRouteAddEntry', function (int $area, int $room, int $day, int $hour = null, int $minute = null) {
-                return $this->generateRouteAddEntry($area, $room, $day, $hour, $minute);
-            }),
+            }
+            ),
+            new TwigFunction(
+                'grrGenerateRouteAddEntry',
+                function (int $area, int $room, int $day, int $hour = null, int $minute = null) {
+                    return $this->generateRouteAddEntry($area, $room, $day, $hour, $minute);
+                }
+            ),
         ];
     }
 
@@ -64,10 +73,10 @@ class GrrhUrlHelperExtension extends AbstractExtension
         $room = $attributes['room'] ?? 0;
 
         if (!$year) {
-            $year = (int) $attributes['year'];
+            $year = (int)$attributes['year'];
         }
         if (!$month) {
-            $month = (int) $attributes['month'];
+            $month = (int)$attributes['month'];
         }
 
         $params = ['area' => $area, 'year' => $year, 'month' => $month];
@@ -96,7 +105,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
         $params = ['area' => $area, 'year' => $year, 'month' => $month, 'week' => $week];
 
         if ($room) {
-            $params['room'] = (int) $room;
+            $params['room'] = (int)$room;
         }
 
         return $this->router->generate('grr_front_week', $params);

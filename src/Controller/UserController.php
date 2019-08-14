@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
 use App\Manager\UserManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
+ * @IsGranted("ROLE_GRR")
  */
 class UserController extends AbstractController
 {
