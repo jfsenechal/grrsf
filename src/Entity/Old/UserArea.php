@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Old;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * JSiteArea.
+ * UserArea.
  *
- * @ORM\Table(name="grr_j_site_area")
+ * @ORM\Table(name="grr_j_user_area")
  * @ORM\Entity
  */
-class JSiteArea
+class UserArea
 {
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="id_site", type="integer", nullable=false)
+     * @ORM\Column(name="login", type="string", length=20, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $idSite = '0';
+    private $login = '';
 
     /**
      * @var int
@@ -30,9 +30,9 @@ class JSiteArea
      */
     private $idArea = '0';
 
-    public function getIdSite(): ?int
+    public function getLogin(): ?string
     {
-        return $this->idSite;
+        return $this->login;
     }
 
     public function getIdArea(): ?int

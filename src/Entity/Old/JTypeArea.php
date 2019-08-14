@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Old;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JTypeArea.
  *
  * @ORM\Table(name="grr_j_type_area")
- * @ORM\Entity(repositoryClass="App\Repository\JTypeAreaRepository")
+ * @ORM\Entity()
  */
 class JTypeArea
 {

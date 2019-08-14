@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Old;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * UserRoom.
  *
  * @ORM\Table(name="grr_j_user_room")
- * @ORM\Entity(repositoryClass="App\Repository\UserRoomRepository")
+ * @ORM\Entity()
  */
 class UserRoom
 {

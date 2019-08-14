@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Old;
 
 use App\Doctrine\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;

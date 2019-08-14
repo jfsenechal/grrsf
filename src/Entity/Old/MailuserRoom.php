@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Old;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UserArea.
+ * MailuserRoom.
  *
- * @ORM\Table(name="grr_j_user_area")
+ * @ORM\Table(name="grr_j_mailuser_room")
  * @ORM\Entity
  */
-class UserArea
+class MailuserRoom
 {
     /**
      * @var string
@@ -24,19 +24,19 @@ class UserArea
     /**
      * @var int
      *
-     * @ORM\Column(name="id_area", type="integer", nullable=false)
+     * @ORM\Column(name="id_room", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $idArea = '0';
+    private $idRoom = '0';
 
     public function getLogin(): ?string
     {
         return $this->login;
     }
 
-    public function getIdArea(): ?int
+    public function getIdRoom(): ?int
     {
-        return $this->idArea;
+        return $this->idRoom;
     }
 }
