@@ -36,6 +36,13 @@ class RessourceSelectedSubscriber implements EventSubscriberInterface
         if ($controller[0] instanceof FrontControllerInterface) {
             $area = $event->getRequest()->get('area');
             $room = $event->getRequest()->get('room');
+            /**
+             * if not set in ulr, force by user all ressources
+             */
+            if (!$room) {
+                $room = -1;
+            }
+
             if ($area) {
                 $this->ressourceSelectedHelper->setSelected($area, $room);
             }

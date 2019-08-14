@@ -6,7 +6,6 @@ use App\Entity\Area;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Helper\MonthHelperDataDisplay;
-use App\Helper\RessourceSelectedHelper;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\Week;
@@ -42,38 +41,17 @@ class DefaultController extends AbstractController implements FrontControllerInt
      * @var TimeSlotsProvider
      */
     private $timeSlotsProvider;
-    /**
-     * @var RessourceSelectedHelper
-     */
-    private $ressourceSelectedHelper;
 
     public function __construct(
         SettingsProvider $settingservice,
         MonthHelperDataDisplay $monthHelperDataDisplay,
         BindDataManager $calendarDataManager,
-        TimeSlotsProvider $timeSlotsProvider,
-        RessourceSelectedHelper $ressourceSelectedHelper
+        TimeSlotsProvider $timeSlotsProvider
     ) {
         $this->calendarDataManager = $calendarDataManager;
         $this->settingservice = $settingservice;
         $this->monthHelperDataDisplay = $monthHelperDataDisplay;
         $this->timeSlotsProvider = $timeSlotsProvider;
-        $this->ressourceSelectedHelper = $ressourceSelectedHelper;
-    }
-
-    /**
-     * @Route("/", name="grr_front_home", methods={"GET"})
-     */
-    public function index(): Response
-    {
-        $today = CarbonFactory::getToday();
-
-        $area = $this->ressourceSelectedHelper->getArea();
-
-        return $this->redirectToRoute(
-            'grr_front_month',
-            ['area' => $area->getId(), 'year' => $today->year, 'month' => $today->month]
-        );
     }
 
     /**

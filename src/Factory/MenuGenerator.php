@@ -2,14 +2,11 @@
 
 namespace App\Factory;
 
-use App\Entity\Area;
-use App\Entity\Room;
 use App\Form\AreaMenuSelectType;
 use App\Helper\RessourceSelectedHelper;
 use App\Navigation\MenuSelect;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class MenuGenerator
 {
@@ -35,10 +32,7 @@ class MenuGenerator
 
         $menuSelect = new MenuSelect();
         $menuSelect->setArea($area);
-
-        if ($room !== null) {
-            $menuSelect->setRoom($room);
-        }
+        $menuSelect->setRoom($room);
 
         return $this->formFactory->create(AreaMenuSelectType::class, $menuSelect);
     }

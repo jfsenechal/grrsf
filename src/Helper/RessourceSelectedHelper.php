@@ -82,10 +82,17 @@ class RessourceSelectedHelper
         return $this->areaRepository->findOneBy([], ['id' => 'ASC']);
     }
 
-    public function getRoom(): Room
+    /**
+     * -1 = force all ressource
+     * @return Room|null
+     */
+    public function getRoom(): ?Room
     {
         if ($this->session->has(self::ROOM_DEFAULT_SESSION)) {
             $roomId = $this->session->get(self::ROOM_DEFAULT_SESSION);
+            if ($roomId === -1) {
+                return null;
+            }
             if ($roomId) {
                 return $this->roomRepository->find($roomId);
             }
@@ -105,15 +112,16 @@ class RessourceSelectedHelper
             return $room;
         }
 
-        return $this->roomRepository->findOneBy([], ['id' => 'ASC']);
+        return null;
     }
 
     public function setSelected(int $area, int $room = null)
     {
         $this->session->set(self::AREA_DEFAULT_SESSION, $area);
-
         if ($room) {
             $this->session->set(self::ROOM_DEFAULT_SESSION, $room);
+        } else {
+            $this->session->remove(self::ROOM_DEFAULT_SESSION);
         }
     }
 

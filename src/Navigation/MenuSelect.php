@@ -48,9 +48,9 @@ class MenuSelect
     }
 
     /**
-     * @param Room $room
+     * @param Room|null $room
      */
-    public function setRoom(Room $room): void
+    public function setRoom(Room $room = null): void
     {
         $this->room = $room;
     }
