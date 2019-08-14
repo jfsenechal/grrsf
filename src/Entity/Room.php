@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Security\AdministratorResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
@@ -175,9 +176,15 @@ class Room
      */
     private $entries;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\AdministratorResource", mappedBy="room", orphanRemoval=true)
+     */
+    private $administratorResources;
+
     public function __construct()
     {
         $this->entries = new ArrayCollection();
+        $this->administratorResources = new ArrayCollection();
     }
 
     public function __toString()
@@ -467,6 +474,37 @@ class Room
             // set the owning side to null (unless already changed)
             if ($entry->getRoom() === $this) {
                 $entry->setRoom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AdministratorResource[]
+     */
+    public function getAdministratorResources(): Collection
+    {
+        return $this->administratorResources;
+    }
+
+    public function addAdministratorResource(AdministratorResource $administratorResource): self
+    {
+        if (!$this->administratorResources->contains($administratorResource)) {
+            $this->administratorResources[] = $administratorResource;
+            $administratorResource->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdministratorResource(AdministratorResource $administratorResource): self
+    {
+        if ($this->administratorResources->contains($administratorResource)) {
+            $this->administratorResources->removeElement($administratorResource);
+            // set the owning side to null (unless already changed)
+            if ($administratorResource->getRoom() === $this) {
+                $administratorResource->setRoom(null);
             }
         }
 

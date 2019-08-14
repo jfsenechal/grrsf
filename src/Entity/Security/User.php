@@ -2,12 +2,14 @@
 
 namespace App\Entity\Security;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="grr_user")
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Security\UserRepository")
  */
 class User implements UserInterface
 {
@@ -53,6 +55,16 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity="App\Entity\Room")
      */
     private $room_default;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\ManagerArea", mappedBy="user", orphanRemoval=true)
+     */
+    private $managerAreas;
+
+    public function __construct()
+    {
+        $this->managerAreas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -176,6 +188,37 @@ class User implements UserInterface
     public function setRoomDefault(?Room $room_default): self
     {
         $this->room_default = $room_default;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ManagerArea[]
+     */
+    public function getManagerAreas(): Collection
+    {
+        return $this->managerAreas;
+    }
+
+    public function addManagerArea(ManagerArea $managerArea): self
+    {
+        if (!$this->managerAreas->contains($managerArea)) {
+            $this->managerAreas[] = $managerArea;
+            $managerArea->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeManagerArea(ManagerArea $managerArea): self
+    {
+        if ($this->managerAreas->contains($managerArea)) {
+            $this->managerAreas->removeElement($managerArea);
+            // set the owning side to null (unless already changed)
+            if ($managerArea->getUser() === $this) {
+                $managerArea->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -8,7 +8,7 @@
 
 namespace App\Manager;
 
-use App\Repository\UserRepository;
+use App\Repository\Security\UserRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 

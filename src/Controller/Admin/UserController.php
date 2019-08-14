@@ -6,7 +6,7 @@ use App\Entity\Security\User;
 use App\Factory\UserFactory;
 use App\Form\UserEditType;
 use App\Manager\UserManager;
-use App\Repository\UserRepository;
+use App\Repository\Security\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

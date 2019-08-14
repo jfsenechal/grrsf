@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Security\AdministratorResource;
+use App\Entity\Security\ManagerArea;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -148,9 +150,21 @@ class Area
      */
     private $rooms;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\ManagerArea", mappedBy="area", orphanRemoval=true)
+     */
+    private $managerAreas;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\AdministratorResource", mappedBy="area", orphanRemoval=true)
+     */
+    private $administratorResources;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
+        $this->managerAreas = new ArrayCollection();
+        $this->administratorResources = new ArrayCollection();
     }
 
     public function __toString()
@@ -392,6 +406,68 @@ class Area
             // set the owning side to null (unless already changed)
             if ($room->getArea() === $this) {
                 $room->setArea(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ManagerArea[]
+     */
+    public function getManagerAreas(): Collection
+    {
+        return $this->managerAreas;
+    }
+
+    public function addManagerArea(ManagerArea $managerArea): self
+    {
+        if (!$this->managerAreas->contains($managerArea)) {
+            $this->managerAreas[] = $managerArea;
+            $managerArea->setArea($this);
+        }
+
+        return $this;
+    }
+
+    public function removeManagerArea(ManagerArea $managerArea): self
+    {
+        if ($this->managerAreas->contains($managerArea)) {
+            $this->managerAreas->removeElement($managerArea);
+            // set the owning side to null (unless already changed)
+            if ($managerArea->getArea() === $this) {
+                $managerArea->setArea(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AdministratorResource[]
+     */
+    public function getAdministratorResources(): Collection
+    {
+        return $this->administratorResources;
+    }
+
+    public function addAdministratorResource(AdministratorResource $administratorResource): self
+    {
+        if (!$this->administratorResources->contains($administratorResource)) {
+            $this->administratorResources[] = $administratorResource;
+            $administratorResource->setArea($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdministratorResource(AdministratorResource $administratorResource): self
+    {
+        if ($this->administratorResources->contains($administratorResource)) {
+            $this->administratorResources->removeElement($administratorResource);
+            // set the owning side to null (unless already changed)
+            if ($administratorResource->getArea() === $this) {
+                $administratorResource->setArea(null);
             }
         }
 
