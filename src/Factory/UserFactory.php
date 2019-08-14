@@ -8,7 +8,7 @@
 
 namespace App\Factory;
 
-use App\Entity\User;
+use App\Entity\Security\User;
 
 class UserFactory
 {

@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use App\Entity\User;
+use App\Entity\Security\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

@@ -3,7 +3,7 @@
 namespace App\Security\Voter;
 
 use App\Entity\Area;
-use App\Entity\User;
+use App\Entity\Security\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;

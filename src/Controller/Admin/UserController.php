@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\User;
+use App\Entity\Security\User;
 use App\Factory\UserFactory;
 use App\Form\UserEditType;
 use App\Manager\UserManager;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MyBundle;
+namespace App\GrrBundle;
 
 use App\DependencyInjection\Compiler\ModulesPass;
 use App\Modules\GrrModuleInterface;
