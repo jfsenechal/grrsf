@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Log.
  *
- * @ORM\Table(name="grr_log")
- * @ORM\Entity
+ * ORM\Table(name="grr_log")
+ * ORM\Entity
  */
 class Log
 {
@@ -18,14 +18,14 @@ class Log
     /**
      * @var string
      *
-     * @ORM\Column(name="LOGIN", type="string", length=20, nullable=false)
+     * ORM\Column(name="LOGIN", type="string", length=20, nullable=false)
      */
     private $login = '';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="START", type="datetime", nullable=false, options={"default": "CURRENT_TIMESTAMP"})
+     * ORM\Column(name="START", type="datetime", nullable=false, options={"default": "CURRENT_TIMESTAMP"})
      * ORM\Id
      * ORM\GeneratedValue(strategy="NONE")
      */
@@ -34,7 +34,7 @@ class Log
     /**
      * @var string
      *
-     * @ORM\Column(name="SESSION_ID", type="string", length=64, nullable=false)
+     * ORM\Column(name="SESSION_ID", type="string", length=64, nullable=false)
      * ORM\Id
      * ORM\GeneratedValue(strategy="NONE")
      */
@@ -43,35 +43,35 @@ class Log
     /**
      * @var string
      *
-     * @ORM\Column(name="REMOTE_ADDR", type="string", length=16, nullable=false)
+     * ORM\Column(name="REMOTE_ADDR", type="string", length=16, nullable=false)
      */
     private $remoteAddr = '';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="USER_AGENT", type="string", length=255, nullable=true)
+     * ORM\Column(name="USER_AGENT", type="string", length=255, nullable=true)
      */
     private $userAgent;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="REFERER", type="string", length=255, nullable=true)
+     * ORM\Column(name="REFERER", type="string", length=255, nullable=true)
      */
     private $referer;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="AUTOCLOSE", type="boolean", nullable=false)
+     * ORM\Column(name="AUTOCLOSE", type="boolean", nullable=false)
      */
     private $autoclose = '0';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="END", type="datetime", nullable=false, options={"default": "CURRENT_TIMESTAMP"})
+     * ORM\Column(name="END", type="datetime", nullable=false, options={"default": "CURRENT_TIMESTAMP"})
      */
     private $end;
 

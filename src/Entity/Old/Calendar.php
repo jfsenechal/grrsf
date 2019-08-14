@@ -7,24 +7,24 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Month.
  *
- * @ORM\Table(name="grr_calendar")
- * @ORM\Entity
+ * ORM\Table(name="grr_calendar")
+ * ORM\Entity
  */
 class Calendar
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * ORM\Column(name="id", type="integer", nullable=false)
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="DAY", type="integer", nullable=false)
+     * ORM\Column(name="DAY", type="integer", nullable=false)
      */
     private $day = '0';
 

@@ -7,87 +7,87 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Site.
  *
- * @ORM\Table(name="grr_site")
- * @ORM\Entity
+ * ORM\Table(name="grr_site")
+ * ORM\Entity
  */
 class Site
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * ORM\Column(name="id", type="integer", nullable=false)
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sitecode", type="string", length=10, nullable=true)
+     * ORM\Column(name="sitecode", type="string", length=10, nullable=true)
      */
     private $sitecode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sitename", type="string", length=50, nullable=false)
+     * ORM\Column(name="sitename", type="string", length=50, nullable=false)
      */
     private $sitename = '';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="adresse_ligne1", type="string", length=38, nullable=true)
+     * ORM\Column(name="adresse_ligne1", type="string", length=38, nullable=true)
      */
     private $adresseLigne1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="adresse_ligne2", type="string", length=38, nullable=true)
+     * ORM\Column(name="adresse_ligne2", type="string", length=38, nullable=true)
      */
     private $adresseLigne2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="adresse_ligne3", type="string", length=38, nullable=true)
+     * ORM\Column(name="adresse_ligne3", type="string", length=38, nullable=true)
      */
     private $adresseLigne3;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="cp", type="string", length=5, nullable=true)
+     * ORM\Column(name="cp", type="string", length=5, nullable=true)
      */
     private $cp;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ville", type="string", length=50, nullable=true)
+     * ORM\Column(name="ville", type="string", length=50, nullable=true)
      */
     private $ville;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="pays", type="string", length=50, nullable=true)
+     * ORM\Column(name="pays", type="string", length=50, nullable=true)
      */
     private $pays;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="tel", type="string", length=25, nullable=true)
+     * ORM\Column(name="tel", type="string", length=25, nullable=true)
      */
     private $tel;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="fax", type="string", length=25, nullable=true)
+     * ORM\Column(name="fax", type="string", length=25, nullable=true)
      */
     private $fax;
 

@@ -7,26 +7,26 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UserArea.
  *
- * @ORM\Table(name="grr_j_user_area")
- * @ORM\Entity
+ * ORM\Table(name="grr_j_user_area")
+ * ORM\Entity
  */
 class UserArea
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="login", type="string", length=20, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * ORM\Column(name="login", type="string", length=20, nullable=false)
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="NONE")
      */
     private $login = '';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="id_area", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * ORM\Column(name="id_area", type="integer", nullable=false)
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="NONE")
      */
     private $idArea = '0';
 

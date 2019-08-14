@@ -7,143 +7,143 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EntryModerate.
  *
- * @ORM\Table(name="grr_entry_moderate", indexes={@ORM\Index(name="idxEndTime", columns={"end_time"}), @ORM\Index(name="idxStartTime", columns={"start_time"})})
- * @ORM\Entity
+ * ORM\Table(name="grr_entry_moderate", indexes={ORM\Index(name="idxEndTime", columns={"end_time"}), ORM\Index(name="idxStartTime", columns={"start_time"})})
+ * ORM\Entity
  */
 class EntryModerate
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * ORM\Column(name="id", type="integer", nullable=false)
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="login_moderateur", type="string", length=40, nullable=false)
+     * ORM\Column(name="login_moderateur", type="string", length=40, nullable=false)
      */
     private $loginModerateur = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="motivation_moderation", type="text", length=65535, nullable=false)
+     * ORM\Column(name="motivation_moderation", type="text", length=65535, nullable=false)
      */
     private $motivationModeration;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="start_time", type="integer", nullable=false)
+     * ORM\Column(name="start_time", type="integer", nullable=false)
      */
     private $startTime = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="end_time", type="integer", nullable=false)
+     * ORM\Column(name="end_time", type="integer", nullable=false)
      */
     private $endTime = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="entry_type", type="integer", nullable=false)
+     * ORM\Column(name="entry_type", type="integer", nullable=false)
      */
     private $entryType = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="repeat_id", type="integer", nullable=false)
+     * ORM\Column(name="repeat_id", type="integer", nullable=false)
      */
     private $repeatId = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="room_id", type="integer", nullable=false, options={"default"="1"})
+     * ORM\Column(name="room_id", type="integer", nullable=false, options={"default"="1"})
      */
     private $roomId = '1';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * ORM\Column(name="timestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $timestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="create_by", type="string", length=100, nullable=false)
+     * ORM\Column(name="create_by", type="string", length=100, nullable=false)
      */
     private $createBy = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="beneficiaire_ext", type="string", length=200, nullable=false)
+     * ORM\Column(name="beneficiaire_ext", type="string", length=200, nullable=false)
      */
     private $beneficiaireExt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="beneficiaire", type="string", length=100, nullable=false)
+     * ORM\Column(name="beneficiaire", type="string", length=100, nullable=false)
      */
     private $beneficiaire = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=80, nullable=false)
+     * ORM\Column(name="name", type="string", length=80, nullable=false)
      */
     private $name = '';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="type", type="string", length=2, nullable=true, options={"fixed"=true})
+     * ORM\Column(name="type", type="string", length=2, nullable=true, options={"fixed"=true})
      */
     private $type;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     * ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
     private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="statut_entry", type="string", length=1, nullable=false, options={"default"="-","fixed"=true})
+     * ORM\Column(name="statut_entry", type="string", length=1, nullable=false, options={"default"="-","fixed"=true})
      */
     private $statutEntry = '-';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="option_reservation", type="integer", nullable=false)
+     * ORM\Column(name="option_reservation", type="integer", nullable=false)
      */
     private $optionReservation = '0';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="overload_desc", type="text", length=65535, nullable=true)
+     * ORM\Column(name="overload_desc", type="text", length=65535, nullable=true)
      */
     private $overloadDesc;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="moderate", type="boolean", nullable=true)
+     * ORM\Column(name="moderate", type="boolean", nullable=true)
      */
     private $moderate = '0';
 

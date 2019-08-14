@@ -7,73 +7,73 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Overload.
  *
- * @ORM\Table(name="grr_overload")
- * @ORM\Entity
+ * ORM\Table(name="grr_overload")
+ * ORM\Entity
  */
 class Overload
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * ORM\Column(name="id", type="integer", nullable=false)
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="id_area", type="integer", nullable=false)
+     * ORM\Column(name="id_area", type="integer", nullable=false)
      */
     private $idArea;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fieldname", type="string", length=25, nullable=false)
+     * ORM\Column(name="fieldname", type="string", length=25, nullable=false)
      */
     private $fieldname = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fieldtype", type="string", length=25, nullable=false)
+     * ORM\Column(name="fieldtype", type="string", length=25, nullable=false)
      */
     private $fieldtype = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fieldlist", type="text", length=65535, nullable=false)
+     * ORM\Column(name="fieldlist", type="text", length=65535, nullable=false)
      */
     private $fieldlist;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="obligatoire", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
+     * ORM\Column(name="obligatoire", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
      */
     private $obligatoire = 'n';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="affichage", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
+     * ORM\Column(name="affichage", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
      */
     private $affichage = 'n';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="overload_mail", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
+     * ORM\Column(name="overload_mail", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
      */
     private $overloadMail = 'n';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="confidentiel", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
+     * ORM\Column(name="confidentiel", type="string", length=1, nullable=false, options={"default"="n","fixed"=true})
      */
     private $confidentiel = 'n';
 

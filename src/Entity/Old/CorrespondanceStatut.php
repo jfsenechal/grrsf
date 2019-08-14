@@ -7,38 +7,38 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CorrespondanceStatut.
  *
- * @ORM\Table(name="grr_correspondance_statut")
- * @ORM\Entity
+ * ORM\Table(name="grr_correspondance_statut")
+ * ORM\Entity
  */
 class CorrespondanceStatut
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * ORM\Column(name="id", type="integer", nullable=false)
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="code_fonction", type="string", length=30, nullable=false)
+     * ORM\Column(name="code_fonction", type="string", length=30, nullable=false)
      */
     private $codeFonction;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="libelle_fonction", type="string", length=200, nullable=false)
+     * ORM\Column(name="libelle_fonction", type="string", length=200, nullable=false)
      */
     private $libelleFonction;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="statut_grr", type="string", length=30, nullable=false)
+     * ORM\Column(name="statut_grr", type="string", length=30, nullable=false)
      */
     private $statutGrr;
 

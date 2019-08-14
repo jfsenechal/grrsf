@@ -7,31 +7,31 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JTypeArea.
  *
- * @ORM\Table(name="grr_j_type_area")
- * @ORM\Entity()
+ * ORM\Table(name="grr_j_type_area")
+ * ORM\Entity()
  */
 class JTypeArea
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * ORM\Column(name="id", type="integer", nullable=false)
+     * ORM\Id
+     * ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="id_type", type="integer", nullable=false)
+     * ORM\Column(name="id_type", type="integer", nullable=false)
      */
     private $idType = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="id_area", type="integer", nullable=false)
+     * ORM\Column(name="id_area", type="integer", nullable=false)
      */
     private $idArea = '0';
 
