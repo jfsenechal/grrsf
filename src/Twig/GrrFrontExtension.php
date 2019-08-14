@@ -184,11 +184,7 @@ class GrrFrontExtension extends AbstractExtension
      */
     public function menuNavigationRender()
     {
-        $request = $this->requestStack->getMasterRequest();
-        $area = $request !== null ? $request->get('area') : 0;
-        $room = $request !== null ? $request->get('room') : 0;
-
-        $form = $this->menuGenerator->generateMenuSelect($area, $room);
+        $form = $this->menuGenerator->generateMenuSelect();
 
         return $this->twigEnvironment->render(
             '@grr_front/navigation/form/_area_form.html.twig',

@@ -40,7 +40,6 @@ class AreaMenuSelectType extends AbstractType
                     'query_builder' => $this->areaRepository->getQueryBuilder(),
                     'required' => true,
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
-                  //  'mapped' => false,
                 ]
             )
             ->addEventSubscriber(new AddRoomsFieldSubscriber($this->roomRepository));

@@ -6,6 +6,7 @@ use App\Entity\Area;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Helper\MonthHelperDataDisplay;
+use App\Helper\RessourceSelectedHelper;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\Week;
@@ -23,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/front")
  */
-class DefaultController extends AbstractController
+class DefaultController extends AbstractController implements FrontControllerInterface
 {
     /**
      * @var BindDataManager
@@ -41,17 +42,23 @@ class DefaultController extends AbstractController
      * @var TimeSlotsProvider
      */
     private $timeSlotsProvider;
+    /**
+     * @var RessourceSelectedHelper
+     */
+    private $ressourceSelectedHelper;
 
     public function __construct(
         SettingsProvider $settingservice,
         MonthHelperDataDisplay $monthHelperDataDisplay,
         BindDataManager $calendarDataManager,
-        TimeSlotsProvider $timeSlotsProvider
+        TimeSlotsProvider $timeSlotsProvider,
+        RessourceSelectedHelper $ressourceSelectedHelper
     ) {
         $this->calendarDataManager = $calendarDataManager;
         $this->settingservice = $settingservice;
         $this->monthHelperDataDisplay = $monthHelperDataDisplay;
         $this->timeSlotsProvider = $timeSlotsProvider;
+        $this->ressourceSelectedHelper = $ressourceSelectedHelper;
     }
 
     /**
@@ -61,14 +68,11 @@ class DefaultController extends AbstractController
     {
         $today = CarbonFactory::getToday();
 
-        $esquare = $this->settingservice->getDefaultArea();
-        if ($esquare === null) {
-            return new Response('No data');
-        }
+        $area = $this->ressourceSelectedHelper->getArea();
 
         return $this->redirectToRoute(
             'grr_front_month',
-            ['area' => $esquare->getId(), 'year' => $today->year, 'month' => $today->month]
+            ['area' => $area->getId(), 'year' => $today->year, 'month' => $today->month]
         );
     }
 

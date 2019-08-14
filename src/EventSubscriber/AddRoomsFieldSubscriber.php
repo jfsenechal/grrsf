@@ -50,7 +50,7 @@ class AddRoomsFieldSubscriber implements EventSubscriberInterface
             [
                 'label' => 'entry.form.room.label',
                 'help' => 'entry.form.room.help',
-                'required' => true,
+                'required' => false,
                 'class' => Room::class,
                 'placeholder' => 'entry.form.room.select.placeholder',
                 'query_builder' => $this->roomRepository->getRoomsByAreaQueryBuilder($area),

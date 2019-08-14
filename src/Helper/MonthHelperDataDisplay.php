@@ -8,7 +8,6 @@
 
 namespace App\Helper;
 
-use App\GrrData\DateUtils;
 use App\Model\Month;
 use App\Provider\DateProvider;
 use Twig\Environment;

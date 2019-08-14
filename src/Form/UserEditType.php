@@ -38,6 +38,7 @@ class UserEditType extends AbstractType
                     'label' => 'user.form.area.label',
                     'required' => false,
                     'class' => Area::class,
+                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )
             ->add(
@@ -47,6 +48,7 @@ class UserEditType extends AbstractType
                     'label' => 'user.form.room.label',
                     'required' => false,
                     'class' => Room::class,
+                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             );
     }

@@ -202,7 +202,7 @@ entry:
       label: Ressource
       help: Aide sur le ressource
       select:
-        placeholder: Sélectionnez une ressource
+        placeholder: Toutes les ressources
     type:
       label: Type
       help: Type de réservation (voir dans paramètres)
