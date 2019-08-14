@@ -85,20 +85,27 @@ class BindDataManager
     }
 
     /**
-     * @param Week $week
-     *
+     * @param Week $weekModel
+     * @param Area $area
+     * @param Room $roomSelected
      * @return RoomModel[]
      *
      * @throws \Exception
      */
-    public function bindWeek(Week $weekModel, Area $area)
+    public function bindWeek(Week $weekModel, Area $area, Room $roomSelected)
     {
+        if ($roomSelected) {
+            $rooms = [$roomSelected];
+        } else {
+            $rooms = $area->getRooms();
+        }
+
         $days = $weekModel->getCalendarDays();
         $year = $weekModel->year;
         $month = $weekModel->month;
         $data = [];
 
-        foreach ($area->getRooms() as $room) {
+        foreach ($rooms as $room) {
             $roomModel = new RoomModel($room);
             foreach ($days as $dayCalendar) {
                 $daySelected = CarbonFactory::createImmutable($year, $month, $dayCalendar->day);
@@ -127,17 +134,25 @@ class BindDataManager
      * @param Area $area
      * @param TimeSlot[] $hoursModel
      *
+     * @param Room|null $roomSelected
      * @return RoomModel[]
      */
-    public function bindDay(CarbonInterface $day, Area $area, array $hoursModel)
+    public function bindDay(CarbonInterface $day, Area $area, array $hoursModel, Room $roomSelected = null)
     {
         $roomsModel = [];
-        foreach ($area->getRooms() as $roomObject) {
-            $roomModel = new RoomModel($roomObject);
-            $entries = [];
-            $entries[] = $this->entryRepository->findForDay($day, $roomObject);
 
-            $periodicityDays = $this->periodicityDayRepository->findForDay($day, $roomObject);
+        if ($roomSelected) {
+            $rooms = [$roomSelected];
+        } else {
+            $rooms = $area->getRooms();
+        }
+
+        foreach ($rooms as $room) {
+            $roomModel = new RoomModel($room);
+            $entries = [];
+            $entries[] = $this->entryRepository->findForDay($day, $room);
+
+            $periodicityDays = $this->periodicityDayRepository->findForDay($day, $room);
             $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
 
             $roomModel->setEntries(array_merge(...$entries));

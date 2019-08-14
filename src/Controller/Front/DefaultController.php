@@ -85,7 +85,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
     public function week(Area $area, int $year, int $month, int $week, Room $room = null): Response
     {
         $weekModel = Week::createWithLocal($year, $week);
-        $data = $this->calendarDataManager->bindWeek($weekModel, $area);
+        $data = $this->calendarDataManager->bindWeek($weekModel, $area, $room);
 
         return $this->render(
             '@grr_front/week/week.html.twig',
@@ -107,12 +107,8 @@ class DefaultController extends AbstractController implements FrontControllerInt
         $daySelected = CarbonFactory::createImmutable($year, $month, $day);
         $dayModel = new Day($daySelected);
 
-        if ($room) {
-            $rooms = [$room];
-        }
-
         $hoursModel = $this->timeSlotsProvider->getTimeSlotsModelByAreaAndDay($area, $daySelected);
-        $roomsModel = $this->calendarDataManager->bindDay($daySelected, $area, $hoursModel);
+        $roomsModel = $this->calendarDataManager->bindDay($daySelected, $area, $hoursModel,$room);
 
         return $this->render(
             '@grr_front/day/day.html.twig',

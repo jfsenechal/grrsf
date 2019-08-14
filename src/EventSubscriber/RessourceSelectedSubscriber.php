@@ -16,7 +16,6 @@ class RessourceSelectedSubscriber implements EventSubscriberInterface
 
     public function __construct(RessourceSelectedHelper $ressourceSelectedHelper)
     {
-
         $this->ressourceSelectedHelper = $ressourceSelectedHelper;
     }
 
@@ -37,7 +36,7 @@ class RessourceSelectedSubscriber implements EventSubscriberInterface
             $area = $event->getRequest()->get('area');
             $room = $event->getRequest()->get('room');
             /**
-             * if not set in ulr, force by user all ressources
+             * if not set in url, force by user all ressources
              */
             if (!$room) {
                 $room = -1;
