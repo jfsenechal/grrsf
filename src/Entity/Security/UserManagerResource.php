@@ -16,7 +16,7 @@ class UserManagerResource
    use IdEntityTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Security\User", inversedBy="managerAreas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Security\User", inversedBy="users_manager_resource")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

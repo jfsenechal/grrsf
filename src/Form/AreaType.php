@@ -27,7 +27,7 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'access',
+                'isPrivate',
                 CheckboxType::class,
                 [
                     'label' => 'area.form.access.label',
@@ -42,16 +42,7 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'ipAdr',
-                TextType::class,
-                [
-                    'label' => 'area.form.ipAdr.label',
-                    'help' => 'area.form.ipAdr.help',
-                    'required' => false,
-                ]
-            )
-            ->add(
-                'weekstartsArea',
+                'weekStart',
                 ChoiceType::class,
                 [
                     'choices' => array_flip(DateProvider::getNamesDaysOfWeek()),
@@ -59,7 +50,7 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'displayDays',
+                'daysOfWeekToDisplay',
                 ChoiceType::class,
                 [
                     'label' => 'area.form.displayDays.label',
@@ -69,17 +60,7 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'enablePeriods',
-                ChoiceType::class,
-                [
-                    'label' => 'area.form.enablePeriods.label',
-                    'choices' => array_flip(GrrConstants::PERIOD),
-                    'multiple' => false,
-                    'expanded' => true,
-                ]
-            )
-            ->add(
-                'morningstartsArea',
+                'startTime',
                 ChoiceType::class,
                 [
                     'label' => 'area.form.morningstartsArea.label',
@@ -87,7 +68,7 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'eveningendsArea',
+                'endTime',
                 ChoiceType::class,
                 [
                     'label' => 'area.form.eveningendsArea.label',
@@ -95,14 +76,14 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'eveningendsMinutesArea',
+                'minutesToAddToEndTime',
                 IntegerType::class,
                 [
                     'label' => 'area.form.eveningendsMinutesArea.label',
                 ]
             )
             ->add(
-                'resolutionArea',
+                'durationTimeSlot',
                 IntegerType::class,
                 [
                     'label' => 'area.form.resolutionArea.label',
@@ -110,7 +91,7 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'dureeParDefautReservationArea',
+                'durationDefaultEntry',
                 IntegerType::class,
                 [
                     'label' => 'area.form.dureeParDefautReservationArea.label',
@@ -118,21 +99,21 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'twentyfourhourFormatArea',
+                'durationMaximumEntry',
+                IntegerType::class,
+                [
+                    'label' => 'area.form.dureeMaxResaArea.label',
+                    'help' => 'area.form.dureeMaxResaArea.help',
+                ]
+            )
+            ->add(
+                'is24HourFormat',
                 ChoiceType::class,
                 [
                     'label' => 'area.form.twentyfourhourFormatArea.label',
                     'choices' => array_flip(SettingsArea::getAffichageFormat()),
                     'multiple' => false,
                     'expanded' => true,
-                ]
-            )
-            ->add(
-                'dureeMaxResaArea',
-                IntegerType::class,
-                [
-                    'label' => 'area.form.dureeMaxResaArea.label',
-                    'help' => 'area.form.dureeMaxResaArea.help',
                 ]
             )
             ->add(
@@ -143,8 +124,6 @@ class AreaType extends AbstractType
                     'help' => 'area.form.maxBooking.help',
                 ]
             );
-        //->add('calendarDefaultValues')
-        // ->add('idTypeParDefaut');
     }
 
     public function configureOptions(OptionsResolver $resolver)

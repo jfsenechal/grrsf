@@ -26,13 +26,13 @@
                     <a href="{{ path('grr_admin_area_show', {'id': area.id}) }}">{{ area.name }}</a>
                 </td>
                 <td>{{ area.orderDisplay }}</td>
-                <td>{{ area.morningstartsArea }}</td>
-                <td>{{ area.eveningendsArea }}</td>
+                <td>{{ area.startTime }}</td>
+                <td>{{ area.endTime }}</td>
                 <td>{{ area.rooms|length }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">{{ 'records.notfound'| trans({}, 'actions') }}</td>
+                <td colspan="5">{{ 'records.notfound'| trans({}, 'actions') }}</td>
             </tr>
         {% endfor %}
         </tbody>

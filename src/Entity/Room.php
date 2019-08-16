@@ -36,14 +36,14 @@ class Room
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=false, options={"default: 0"})
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $capacity;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint", nullable=false, options={"default"="-1"})
+     * @ORM\Column(type="smallint", nullable=false)
      */
     private $maximum_booking;
 
@@ -57,7 +57,7 @@ class Room
     /**
      * @var string
      *
-     * @ORM\Column(name="show_fic_room", type="boolean", nullable=false, options={"default"="0"})
+     * @ORM\Column(name="show_fic_room", type="boolean", nullable=false)
      */
     private $showFicRoom;
 
@@ -78,14 +78,14 @@ class Room
     /**
      * @var string
      *
-     * @ORM\Column(name="show_comment", type="boolean", nullable=false, options={"default"="0"})
+     * @ORM\Column(name="show_comment", type="boolean", nullable=false)
      */
     private $showComment;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="delais_max_resa_room", type="smallint", nullable=false, options={"default"="-1"})
+     * @ORM\Column(name="delais_max_resa_room", type="smallint", nullable=false)
      */
     private $delaisMaxResaRoom;
 
@@ -99,7 +99,7 @@ class Room
     /**
      * @var string
      *
-     * @ORM\Column(name="allow_action_in_past", type="boolean", nullable=false, options={"default"="0"})
+     * @ORM\Column(name="allow_action_in_past", type="boolean", nullable=false)
      */
     private $allowActionInPast;
 
@@ -120,7 +120,7 @@ class Room
     /**
      * @var string
      *
-     * @ORM\Column(name="dont_allow_modify", type="boolean", nullable=false, options={"default"="0"})
+     * @ORM\Column(name="dont_allow_modify", type="boolean", nullable=false)
      */
     private $dontAllowModify;
 
@@ -141,14 +141,14 @@ class Room
     /**
      * @var string
      *
-     * @ORM\Column(name="qui_peut_reserver_pour", type="string", length=1, nullable=false, options={"default"="5"})
+     * @ORM\Column(name="qui_peut_reserver_pour", type="string", length=1, nullable=false)
      */
     private $quiPeutReserverPour;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="active_ressource_empruntee", type="boolean", nullable=false, options={"default"="0"})
+     * @ORM\Column(name="active_ressource_empruntee", type="boolean", nullable=false)
      */
     private $activeRessourceEmpruntee;
 
@@ -178,6 +178,21 @@ class Room
 
     public function __construct()
     {
+        $this->capacity = 0;
+        $this->statutRoom = '';
+        $this->showFicRoom = '';
+        $this->showComment = '';
+        $this->delaisMaxResaRoom = '';
+        $this->delaisMinResaRoom = '';
+        $this->allowActionInPast = '';
+        $this->order_display = 0;
+        $this->delaisOptionReservation = '';
+        $this->dontAllowModify = '';
+        $this->typeAffichageReser = '';
+        $this->quiPeutReserverPour='';
+        $this->activeRessourceEmpruntee='';
+        $this->whoCanSee = 0;
+        $this->maximum_booking = -1;
         $this->entries = new ArrayCollection();
         $this->users_manager_resource = new ArrayCollection();
     }

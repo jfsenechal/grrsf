@@ -44,7 +44,7 @@ class RoomType extends AbstractType
                 ]
             )
             ->add(
-                'maxBooking',
+                'maximumBooking',
                 IntegerType::class,
                 [
                     'label' => 'room.form.maxBooking.label',

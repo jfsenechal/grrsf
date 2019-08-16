@@ -1,32 +1,32 @@
 {{ form_start(form) }}
-
+{{ form_errors(form) }}
 <div class="row">
     <div class="col-6">
         {{ form_row(form.name) }}
         {{ form_row(form.orderDisplay) }}
     </div>
     <div class="col-6">
-        {{ form_row(form.resolutionArea) }}
-        {{ form_row(form.dureeParDefautReservationArea) }}
+        {{ form_row(form.durationTimeSlot) }}
+        {{ form_row(form.durationDefaultEntry) }}
     </div>
 </div>
 
 <div class="row">
     <div class="col-6">
-        {{ form_row(form.morningstartsArea) }}
+        {{ form_row(form.startTime) }}
     </div>
     <div class="col-6">
-        {{ form_row(form.eveningendsArea) }}
+        {{ form_row(form.endTime) }}
     </div>
 </div>
 
 <div class="row">
     <div class="col-6">
-        {{ form_row(form.weekstartsArea) }}
-        {{ form_row(form.twentyfourhourFormatArea) }}
+        {{ form_row(form.weekStart) }}
+        {{ form_row(form.is24HourFormat) }}
     </div>
     <div class="col-6">
-        {{ form_row(form.displayDays) }}
+        {{ form_row(form.daysOfWeekToDisplay) }}
     </div>
 </div>
 
@@ -36,20 +36,18 @@
         {{ form_row(form.maxBooking) }}
     </div>
     <div class="col-6">
-        {{ form_row(form.dureeMaxResaArea) }}
+        {{ form_row(form.durationMaximumEntry) }}
     </div>
 </div>
 
 <div class="row">
     <div class="col-6">
-        {{ form_row(form.ipAdr) }}
-        {{ form_row(form.access) }}
+        {{ form_row(form.isPrivate) }}
     </div>
     <div class="col-6">
-        {{ form_row(form.enablePeriods) }}
-        {{ form_row(form.eveningendsMinutesArea) }}
+        {{ form_row(form.minutesToAddToEndTime) }}
     </div>
 </div>
 
-<button class="btn btn-primary"><i class="far fa-save"></i> {{ button_label|default('form.btn.save')|trans({}, 'actions') }}</button>
+<button class="btn btn-primary" type="submit"><i class="far fa-save"></i> {{ button_label|default('form.btn.save')|trans({}, 'actions') }}</button>
 {{ form_end(form) }}

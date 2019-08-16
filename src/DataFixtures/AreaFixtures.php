@@ -12,12 +12,10 @@ class AreaFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $esquare = AreaFactory::createNew();
-        AreaFactory::setDefaultValues($esquare);
 
         $esquare->setName('E-square');
 
         $hdv = AreaFactory::createNew();
-        AreaFactory::setDefaultValues($hdv);
         $hdv->setName('Hdv');
 
         $manager->persist($esquare);
@@ -33,7 +31,6 @@ class AreaFixtures extends Fixture
 
         foreach ($salles as $salle) {
             $room = RoomFactory::createNew($esquare);
-            RoomFactory::setDefaultValues($room);
             $room->setName($salle);
             $manager->persist($room);
             $this->addReference($salle, $room);
@@ -47,7 +44,6 @@ class AreaFixtures extends Fixture
 
         foreach ($salles as $salle) {
             $room = RoomFactory::createNew($hdv);
-            RoomFactory::setDefaultValues($room);
             $room->setName($salle);
             $manager->persist($room);
         }

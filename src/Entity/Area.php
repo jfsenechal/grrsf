@@ -29,14 +29,14 @@ class Area
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", nullable=false, options={"default": 0})
+     * @ORM\Column(type="boolean", nullable=false)
      */
-    private $is_private = false;
+    private $is_private;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint", nullable=false, options={"default: 0"})
+     * @ORM\Column(type="smallint", nullable=false)
      */
     private $order_display;
 
@@ -67,13 +67,12 @@ class Area
      * @ORM\Column(type="smallint", nullable=false)
      */
     private $is_24_hour_format;
-
     /**
      * @var array
      *
      * @ORM\Column(type="array", nullable=false)
      */
-    private $days_of_week_to_display = [];
+    private $days_of_week_to_display;
 
     /**
      * Durée de la tranche horaire
@@ -87,7 +86,7 @@ class Area
      * Durée maximum qu'un utilisateur peut réserver
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=false, options={"default"="-1"})
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $duration_maximum_entry;
 
@@ -97,19 +96,19 @@ class Area
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $duration_default_entry = 900;
+    private $duration_default_entry;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint", nullable=false, options={"default:0"})
+     * @ORM\Column(type="smallint", nullable=false)
      */
     private $minutes_to_add_to_end_time;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="smallint", nullable=false, options={"default"="-1"})
+     * @ORM\Column(type="smallint", nullable=false)
      */
     private $max_booking;
 
@@ -125,8 +124,19 @@ class Area
 
     public function __construct()
     {
+        $this->start_time = 8;
+        $this->end_time = 19;
+        $this->is_private = false;
+        $this->is_24_hour_format = true;
+        $this->order_display = 0;
+        $this->week_start = 0;
+        $this->days_of_week_to_display = [];
+        $this->duration_time_slot = 1800;
+        $this->duration_default_entry = 1800;
+        $this->duration_maximum_entry = -1;
+        $this->minutes_to_add_to_end_time = 0;
+        $this->max_booking = -1;
         $this->rooms = new ArrayCollection();
-        $this->managerAreas = new ArrayCollection();
         $this->users_manager_resource = new ArrayCollection();
     }
 
