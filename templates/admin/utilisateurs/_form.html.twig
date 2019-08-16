@@ -2,42 +2,34 @@
 
 <div class="row">
     <div class="col-6">
-        {{ form_row(form.nom) }}
+        {{ form_row(form.name) }}
     </div>
     <div class="col-6">
-        {{ form_row(form.prenom) }}
+        {{ form_row(form.first_name) }}
     </div>
 </div>
 
 <div class="row">
-    <div class="col-6">
-        {{ form_row(form.login) }}
-    </div>
     <div class="col-6">
         {{ form_row(form.email) }}
     </div>
-</div>
-
-{% if form.password is defined %}
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.password.first) }}
-        </div>
-        <div class="col-6">
-            {{ form_row(form.password.second) }}
-        </div>
+    <div class="col-6">
+        {% if form.password is defined %}
+            {{ form_row(form.password) }}
+        {% endif %}
     </div>
-{% endif %}
+</div>
 
 <div class="row">
     <div class="col-6">
-        {{ form_row(form.statut) }}
+        {{ form_row(form.area_default) }}
     </div>
     <div class="col-6">
-        {{ form_row(form.etat) }}
+        {{ form_row(form.room_default) }}
     </div>
 </div>
 
-<button class="btn btn-primary"><i class="far fa-save"></i> {{ button_label|default('form.btn.save') | trans({},'actions') }}</button>
+<button class="btn btn-primary"><i
+            class="far fa-save"></i> {{ button_label|default('form.btn.save') | trans({},'actions') }}</button>
 
 {{ form_end(form) }}

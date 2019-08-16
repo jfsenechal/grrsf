@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Security;
 
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,6 +30,13 @@ class UserEditType extends AbstractType
                 [
                     'label' => 'user.form.first_name.label',
                     'required' => false,
+                ]
+            )
+            ->add(
+                'email',
+                EmailType::class,
+                [
+
                 ]
             )
             ->add(

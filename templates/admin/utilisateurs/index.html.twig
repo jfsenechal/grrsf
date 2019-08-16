@@ -13,23 +13,20 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>{{ 'login.form.username.label'| trans }}</th>
+            <th>{{ 'user.profile.email.label'| trans }}</th>
             <th>{{ 'user.form.nom.label'| trans }}</th>
-            <th>{{ 'user.form.email.label'| trans }}</th>
-            <th>{{ 'room.form.statutRoom.label'| trans }}</th>
-            <th>{{ 'user.form.etat.label'| trans }}</th>
+            <th>{{ 'user.form.isEnabled.label'| trans }}</th>
         </tr>
         </thead>
         <tbody>
         {% for utilisateur in utilisateurs %}
             <tr>
                 <td>
-                    <a href="{{ path('grr_admin_user_show', {'id': utilisateur.id}) }}">{{ utilisateur.login }}</a>
+                    <a href="{{ path('grr_admin_user_show', {'id': utilisateur.id}) }}">{{ utilisateur.email }}</a>
                 </td>
-                <td>{{ utilisateur.nom }} {{ utilisateur.prenom }}</td>
+                <td>{{ utilisateur.name }} {{ utilisateur.firstName }}</td>
                 <td>{{ utilisateur.email }}</td>
-                <td>{{ utilisateur.statut }}</td>
-                <td>{{ utilisateur.etat }}</td>
+                <td>{{ utilisateur.isEnabled }}</td>
             </tr>
         {% else %}
             <tr>

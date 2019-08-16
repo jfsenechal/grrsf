@@ -4,7 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Security\User;
 use App\Factory\UserFactory;
-use App\Form\UserEditType;
+use App\Form\Security\UserEditType;
+use App\Form\Security\UserType;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,7 +61,7 @@ class UserController extends AbstractController
     public function new(Request $request): Response
     {
         $utilisateur = $this->userFactory->createNew();
-        $form = $this->createForm(UserEditType::class, $utilisateur);
+        $form = $this->createForm(UserType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\UserEditType;
+use App\Form\Security\UserEditType;
 use App\Form\UserPasswordType;
 use App\Manager\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;

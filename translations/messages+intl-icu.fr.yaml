@@ -38,3 +38,5 @@ user:
       label: Domaine par défaut
     room:
       label: Ressource par défaut
+    isEnabled:
+      label: Actif?

@@ -11,3 +11,6 @@
     <a href="{{ path('grr_admin_user_index') }}"><i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({},'actions') }}</a>
 
 {% endblock %}
+{% block scripts %}
+    {% include 'user/_select_room_js.html.twig' %}
+{% endblock %}
