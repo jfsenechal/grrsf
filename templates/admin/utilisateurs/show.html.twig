@@ -1,6 +1,6 @@
 {% extends '@grr_admin/layout_admin.html.twig' %}
 
-{% block title %}{{ utilisateur.nom }}{% endblock %}
+{% block title %}{{ utilisateur.name }}{% endblock %}
 
 {% block body %}
     <h1>{{ utilisateur.email }}</h1>
@@ -10,54 +10,29 @@
     <table class="table table-bordered">
         <tbody>
         <tr>
-            <th>{{ 'login.form.username.label'| trans }}</th>
-            <td>{{ utilisateur.login }}</td>
-        </tr>
-        <tr>
             <th>{{ 'user.form.nom.label'| trans }}</th>
-            <td>{{ utilisateur.nom }}</td>
+            <td>{{ utilisateur.name }}</td>
         </tr>
         <tr>
             <th>{{ 'user.form.prenom.label'| trans }}</th>
-            <td>{{ utilisateur.prenom }}</td>
+            <td>{{ utilisateur.firstName }}</td>
         </tr>
         <tr>
             <th>{{ 'user.form.email.label'| trans }}</th>
             <td>{{ utilisateur.email }}</td>
         </tr>
         <tr>
-            <th>{{ 'room.form.statutRoom.label'| trans }}</th>
-            <td>{{ utilisateur.statut }}</td>
-        </tr>
-        <tr>
             <th>{{ 'user.form.etat.label'| trans }}</th>
-            <td>{{ utilisateur.etat }}</td>
+            <td>{{ utilisateur.isEnabled }}</td>
         </tr>
         <tr>
-            <th>{{ 'user.form.defaultSite.label'| trans }}</th>
-            <td>{{ utilisateur.defaultSite }}</td>
+            <th>{{ 'entry.form.area.label'| trans }}</th>
+            <td>{{ utilisateur.areaDefault }}</td>
         </tr>
         <tr>
-            <th>{{ 'user.form.defaultArea.label'| trans }}</th>
-            <td>{{ utilisateur.defaultArea }}</td>
+            <th>{{ 'user.form.room.label'| trans }}</th>
+            <td>{{ utilisateur.roomDefault }}</td>
         </tr>
-        <tr>
-            <th>{{ 'user.form.defaultRoom.label'| trans }}</th>
-            <td>{{ utilisateur.defaultRoom }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'user.form.defaultStyle.label'| trans }}</th>
-            <td>{{ utilisateur.defaultStyle }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'user.form.defaultListType.label'| trans }}</th>
-            <td>{{ utilisateur.defaultListType }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'user.form.defaultLanguage.label'| trans }}</th>
-            <td>{{ utilisateur.defaultLanguage }}</td>
-        </tr>
-        </tbody>
     </table>
 
     {{ include('@grr_admin/utilisateurs/_delete_form.html.twig') }}

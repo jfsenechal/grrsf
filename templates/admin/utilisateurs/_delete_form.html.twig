@@ -10,12 +10,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{ 'user.delete.confirm'|trans({'name': utilisateur.login}, 'actions') }}
+                {{ 'user.delete.confirm'|trans({'name': utilisateur.email}, 'actions') }}
             </div>
             <div class="modal-footer">
                 <form method="post" action="{{ path('grr_admin_user_delete', {'id': utilisateur.id}) }}">
                     <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.login) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.email) }}">
                     <button type="button" class="btn btn-secondary"
                             data-dismiss="modal">{{ 'form.btn.cancel'|trans({}, 'actions') }}</button>
                     <button type="button" class="btn btn-primary">{{ 'form.btn.delete'|trans({}, 'actions') }}</button>

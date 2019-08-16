@@ -25,7 +25,6 @@
                     <a href="{{ path('grr_admin_user_show', {'id': utilisateur.id}) }}">{{ utilisateur.email }}</a>
                 </td>
                 <td>{{ utilisateur.name }} {{ utilisateur.firstName }}</td>
-                <td>{{ utilisateur.email }}</td>
                 <td>{{ utilisateur.isEnabled }}</td>
             </tr>
         {% else %}

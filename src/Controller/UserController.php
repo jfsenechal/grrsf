@@ -86,7 +86,7 @@ class UserController extends AbstractController
             $data = $form->getData();
             $password = $data->getPassword();
 
-            $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
+            $user->setPassword($this->userManager->encodePassword($user, $password));
 
             $this->userManager->flush();
 
