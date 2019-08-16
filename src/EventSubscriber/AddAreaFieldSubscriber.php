@@ -9,13 +9,13 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Area;
-use App\Entity\Room;
+use App\Form\Type\AreaHiddenType;
 use App\Repository\AreaRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
 class AddAreaFieldSubscriber implements EventSubscriberInterface
 {
@@ -40,10 +40,13 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
     {
         $entry = $event->getData();
         $area = $entry->getArea();
+        /**
+         * @var FormInterface $form
+         */
         $form = $event->getForm();
 
         if ($area) {
-            $form->add('area', HiddenType::class);
+            $form->add('area', AreaHiddenType::class);
         } else {
             $form->add(
                 'area',

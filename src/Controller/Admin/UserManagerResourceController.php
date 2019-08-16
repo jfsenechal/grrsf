@@ -7,9 +7,8 @@ use App\Entity\Room;
 use App\Entity\Security\User;
 use App\Entity\Security\UserManagerResource;
 use App\Form\Security\UserManagerResourceType;
-use App\Repository\AreaRepository;
-use App\Repository\RoomRepository;
-use App\Repository\Security\UserRepository;
+use App\Handler\HandlerUserManagerResource;
+use App\Model\UserManagerResourceModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,31 +16,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/security/manager/resource")
+ * @Route("/admin/manager/resource")
  */
 class UserManagerResourceController extends AbstractController
 {
     /**
-     * @var AreaRepository
+     * @var HandlerUserManagerResource
      */
-    private $areaRepository;
-    /**
-     * @var RoomRepository
-     */
-    private $roomRepository;
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
+    private $handlerUserManagerResource;
 
-    public function __construct(
-        AreaRepository $areaRepository,
-        RoomRepository $roomRepository,
-        UserRepository $userRepository
-    ) {
-        $this->areaRepository = $areaRepository;
-        $this->roomRepository = $roomRepository;
-        $this->userRepository = $userRepository;
+    public function __construct(HandlerUserManagerResource $handlerUserManagerResource)
+    {
+        $this->handlerUserManagerResource = $handlerUserManagerResource;
     }
 
     /**
@@ -55,30 +41,39 @@ class UserManagerResourceController extends AbstractController
      */
     public function new(Request $request, User $user = null, Area $area = null, Room $room = null): Response
     {
-        // $area = $this->areaRepository->findOneBy(['name' => 'E-square']);
-        // $room = $this->roomRepository->findOneBy(['name' => 'Box']);
-        // $user = $this->userRepository->findOneBy(['email' => 'jf@marche.be']);
-
-        $userManagerResource = new UserManagerResource();
-        if ($room) {
-            dump($room);
-            $userManagerResource->setRoom($room);
-        }
+        $userManagerResource = new UserManagerResourceModel();
 
         if ($area) {
-            dump($area);
             $userManagerResource->setArea($area);
         }
 
+        if ($room) {
+            $userManagerResource->setRooms([$room]);
+        }
+
         if ($user) {
-            $userManagerResource->setUser($user);
+            $userManagerResource->setUsers([$user]);
         }
 
         $form = $this->createForm(UserManagerResourceType::class, $userManagerResource);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->redirectToRoute('grr_home');
+
+            $this->handlerUserManagerResource->handleNewUserManagerResource($form, $userManagerResource);
+
+            if ($user) {
+                return $this->redirectToRoute('grr_admin_user_show', ['id' => $user->getId()]);
+            }
+
+            if ($room) {
+                return $this->redirectToRoute('grr_admin_room_show', ['id' => $room->getId()]);
+            }
+
+            if ($area) {
+                return $this->redirectToRoute('grr_admin_area_show', ['id' => $area->getId()]);
+            }
+
         }
 
         return $this->render(

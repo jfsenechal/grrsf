@@ -8,6 +8,7 @@
     {{ include('@grr_admin/room/_form.html.twig', {'button_label': 'form.btn.update'}) }}
 
     <br />
-    <a href="{{ path('grr_admin_area_show',{'id': room.area.id}) }}"><i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+    <a href="{{ path('grr_admin_area_show',{'id': room.area.id}) }}">
+        <i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
 
 {% endblock %}

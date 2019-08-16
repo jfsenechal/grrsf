@@ -8,7 +8,6 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Room;
 use App\Entity\Security\User;
 use App\Repository\Security\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -40,23 +39,23 @@ class AddUserFieldSubscriber implements EventSubscriberInterface
     public function onPreSetData(FormEvent $event)
     {
         $entry = $event->getData();
-        $area = $entry->getArea();
         $form = $event->getForm();
-        $user = $entry->getUser();
+        $user = $entry->getUsers();
 
         if ($user) {
-            $form->add('user', HiddenType::class);
+        //    $form->add('user', HiddenType::class);
         } else {
             $form->add(
-                'user',
+                'users',
                 EntityType::class,
                 [
-                    'label' => 'entry.form.user.label',
-                    'required' => false,
+                    'label' => 'entry.form.user.select.label',
                     'class' => User::class,
-                    'placeholder' => 'entry.form.user.select.placeholder',
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => true,
                     'query_builder' => $this->userRepository->getQueryBuilder(),
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
+                    'attr' => ['class' => 'custom-control custom-checkbox my-1 mr-sm-2'],
                 ]
             );
         }

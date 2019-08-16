@@ -7,6 +7,7 @@ use App\Entity\Periodicity;
 use App\GrrData\PeriodicityConstant;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 
 class PeriodicityDaysProvider
@@ -135,17 +136,39 @@ class PeriodicityDaysProvider
      */
     protected function forEveryWeek(Periodicity $periodicity): CarbonPeriod
     {
+        /**
+         * monday, tuesday, wednesday
+         * @example : [1,2,3]
+         */
         $days = $periodicity->getDays();
+        /**
+         * @example 1 for every weeks, 2 every 2 weeks, 3,4...
+         */
         $repeat_week = $periodicity->getRepeatWeek();
 
+        /**
+         * filter days of the week
+         * @param $date
+         * @return bool
+         */
         $filterDayOfWeek = function ($date) use ($days) {
             return in_array($date->dayOfWeekIso, $days, true);
         };
 
+        /**
+         * Carbon::class
+         * $this->entry_start
+         * $this->periodicity_end
+         */
         $period = Carbon::parse($this->entry_start->toDateString())->daysUntil(
             $this->periodicity_end->toDateString()
         );
 
+        /**
+         * filter every x weeks
+         * @param $date
+         * @return bool
+         */
         $filterWeek = function ($date) use($repeat_week) {
             return $date->weekOfYear % $repeat_week === 0;
         };
@@ -158,6 +181,19 @@ class PeriodicityDaysProvider
         }
 
         return $period;
+    }
+
+    protected function brouillon() {
+        $start = new \DateTime('now');
+        $end = clone $start;
+        $end->modify('+4 month');
+        $days = ['Monday', 'Tuesday'];
+        foreach (CarbonPeriod::create($start, CarbonInterval::weeks(2), $end, CarbonPeriod::IMMUTABLE) as $baseDate) {
+            foreach ($days as $dayName) {
+                $date = $baseDate->is($dayName) ? $baseDate : $baseDate->next($dayName);
+                dump($date);
+            }
+        }
     }
 
     protected function applyFilter(CarbonPeriod $period, callable $filter = null): CarbonPeriod

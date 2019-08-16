@@ -202,6 +202,7 @@ entry:
       label: Ressource
       help: Aide sur le ressource
       select:
+        label: Sélectionnez une ou plusieurs ressources
         placeholder: Toutes les ressources
     type:
       label: Type

@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Area;
-use App\GrrData\GrrConstants;
 use App\Provider\DateProvider;
 use App\Settings\SettingsArea;
 use Symfony\Component\Form\AbstractType;

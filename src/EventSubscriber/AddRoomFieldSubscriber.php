@@ -10,6 +10,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\Room;
 use App\Entity\Security\UserManagerResource;
+use App\Model\UserManagerResourceModel;
 use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -40,31 +41,33 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
     public function onPreSetData(FormEvent $event)
     {
         /**
-         * @var UserManagerResource $entry
+         * @var UserManagerResourceModel $entry
          */
         $entry = $event->getData();
         $area = $entry->getArea();
         $form = $event->getForm();
-        $room = $entry->getRoom();
+        $room = $entry->getRooms();
 
         if ($room) {
-            $form->add('room', HiddenType::class);
+           // $form->add('room', HiddenType::class);
 
             return;
         }
 
         if ($area) {
             $form->add(
-                'room',
+                'rooms',
                 EntityType::class,
                 [
-                    'label' => 'entry.form.room.label',
+                    'label' => 'entry.form.room.select.label',
                     'help' => 'entry.form.room.help',
-                    'required' => false,
                     'class' => Room::class,
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => true,
                     'placeholder' => 'entry.form.room.select.placeholder',
                     'query_builder' => $this->roomRepository->getRoomsByAreaQueryBuilder($area),
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
+                    'attr' => ['class' => 'custom-control custom-checkbox my-1 mr-sm-2'],
                 ]
             );
 
