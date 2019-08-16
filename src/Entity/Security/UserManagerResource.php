@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UserManagerResource
 {
-   use IdEntityTrait;
+    use IdEntityTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Security\User", inversedBy="users_manager_resource")
@@ -37,6 +37,11 @@ class UserManagerResource
      * @ORM\Column(type="boolean", options={"default" : false})
      */
     private $is_area_administrator = false;
+
+    public function __toString()
+    {
+        return 'couco';
+    }
 
     public function getIsAreaAdministrator(): ?bool
     {

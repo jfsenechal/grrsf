@@ -19,6 +19,7 @@ class User implements UserInterface
     use IdEntityTrait;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -68,6 +69,11 @@ class User implements UserInterface
     {
         $this->managerAreas = new ArrayCollection();
         $this->users_manager_resource = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 
     /**
@@ -237,5 +243,5 @@ class User implements UserInterface
     /**
      * STOP
      */
-    
+
 }

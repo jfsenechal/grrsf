@@ -1,6 +1,9 @@
 <a href="{{ path('grr_admin_area_edit', { 'id': area.id }) }}" role="button"
    class="btn btn-primary"><i class="far fa-edit"></i> {{ 'form.btn.edit'|trans({}, 'actions') }}</a>
 
+<a href="{{ path('grr_user_manager_from_area', { 'area': area.id }) }}" role="button"
+   class="btn btn-primary"><i class="fas fa-user-shield"></i> {{ 'form.btn.perimission'|trans({}, 'actions') }}</a>
+
 <a href="{{ path('grr_admin_room_new', { 'id': area.id }) }}" role="button"
    class="btn btn-primary"><i class="fa fa-plus"></i> {{ 'room.new.title'|trans({}, 'actions') }}</a>
 

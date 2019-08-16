@@ -8,6 +8,7 @@ form:
     see: Visualiser
     search: Rechercher
     password: Mot de passe
+    perimission: Droits
   search:
     placeholder: Rechercher
 records:
