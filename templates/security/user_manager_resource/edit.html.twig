@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit UserManagerResource{% endblock %}
+
+{% block body %}
+    <h1>Edit UserManagerResource</h1>
+
+    {{ include('security_user_manager_resource/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('security_user_manager_resource_index') }}">back to list</a>
+
+    {{ include('security_user_manager_resource/_delete_form.html.twig') }}
+{% endblock %}
