@@ -15,7 +15,7 @@ class JTypeArea
     /**
      * @var int
      *
-     * ORM\Column(name="id", type="integer", nullable=false)
+     * ORM\Column( type="integer", nullable=false)
      * ORM\Id
      * ORM\GeneratedValue(strategy="IDENTITY")
      */

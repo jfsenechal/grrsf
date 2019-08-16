@@ -6,7 +6,7 @@ class SecurityData
 {
     public static function getRoles()
     {
-        $roles = [self::getRoleVisiteur(), self::getRoleUsager(), self::getRoleGestionnaire(), self::getRoleAdmin()];
+        $roles = [self::getRoleGrr(), self::getRoleManagerUser(), self::getRoleAdministrator()];
 
         return array_combine($roles, $roles);
     }
@@ -16,37 +16,27 @@ class SecurityData
      *
      * @return string
      */
-    public static function getRoleVisiteur()
+    public static function getRoleGrr()
     {
-        return 'ROLE_GRR_VISITEUR';
+        return 'ROLE_GRR';
     }
 
     /**
-     * utilisateur.
+     * gestionnaire des utilisateurs
      *
      * @return string
      */
-    public static function getRoleUsager()
+    public static function getRoleManagerUser()
     {
-        return 'ROLE_GRR_USAGER';
+        return 'ROLE_GRR_MANAGER_USER';
     }
 
     /**
-     * gestionnaire_utilisateur.
+     * Administrateur de grr
      *
      * @return string
      */
-    public static function getRoleGestionnaire()
-    {
-        return 'ROLE_GRR_GESTIONNAIRE';
-    }
-
-    /**
-     * administrateur.
-     *
-     * @return string
-     */
-    public static function getRoleAdmin()
+    public static function getRoleAdministrator()
     {
         return 'ROLE_GRR_ADMIN';
     }

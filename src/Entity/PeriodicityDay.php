@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Doctrine\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,12 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PeriodicityDay
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+   use IdEntityTrait;
 
     /**
      * @ORM\Column(type="date_immutable")
@@ -27,11 +23,6 @@ class PeriodicityDay
      * @ORM\JoinColumn(nullable=false)
      */
     private $entry;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getDatePeriodicity(): ?\DateTimeImmutable
     {

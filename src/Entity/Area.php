@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Security\AdministratorResource;
-use App\Entity\Security\ManagerArea;
+use App\Doctrine\IdEntityTrait;
+use App\Entity\Security\UserManagerResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,14 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Area
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    use IdEntityTrait;
 
     /**
      * @var string
@@ -36,114 +29,89 @@ class Area
     /**
      * @var bool
      *
-     * @ORM\Column(name="access",type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false, options={"default": 0})
      */
-    private $access = false;
+    private $is_private = false;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="order_display", type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false, options={"default: 0"})
      */
-    private $orderDisplay;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ip_adr", type="string", length=15, nullable=true)
-     */
-    private $ipAdr;
+    private $order_display;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="morningstarts_area", type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    private $morningstartsArea;
+    private $start_time;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="eveningends_area", type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    private $eveningendsArea;
+    private $end_time;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="resolution_area", type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    private $resolutionArea;
+    private $week_start;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="eveningends_minutes_area", type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    private $eveningendsMinutesArea;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="weekstarts_area", type="smallint", nullable=false)
-     */
-    private $weekstartsArea;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="twentyfourhour_format_area", type="smallint", nullable=false)
-     */
-    private $twentyfourhourFormatArea;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="calendar_default_values", type="boolean", nullable=false, options={"default"="1"})
-     */
-    private $calendarDefaultValues;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="enable_periods", type="boolean", nullable=false, options={"default"="0"})
-     */
-    private $enablePeriods;
+    private $is_24_hour_format;
 
     /**
      * @var array
      *
      * @ORM\Column(type="array", nullable=false)
      */
-    private $displayDays;
+    private $days_of_week_to_display = [];
+
+    /**
+     * Durée de la tranche horaire
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $duration_time_slot;
+
+    /**
+     * Durée maximum qu'un utilisateur peut réserver
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=false, options={"default"="-1"})
+     */
+    private $duration_maximum_entry;
+
+    /**
+     * Durée par défaut d'une réservation
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $duration_default_entry = 900;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="id_type_par_defaut", type="integer", nullable=false, options={"default"="-1"})
+     * @ORM\Column(type="smallint", nullable=false, options={"default:0"})
      */
-    private $idTypeParDefaut;
+    private $minutes_to_add_to_end_time;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="duree_max_resa_area", type="integer", nullable=false, options={"default"="-1"})
+     * @ORM\Column(type="smallint", nullable=false, options={"default"="-1"})
      */
-    private $dureeMaxResaArea;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="duree_par_defaut_reservation_area", type="integer", nullable=false)
-     */
-    private $dureeParDefautReservationArea = 900;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="max_booking", type="smallint", nullable=false, options={"default"="-1"})
-     */
-    private $maxBooking;
+    private $max_booking;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="area")
@@ -151,30 +119,20 @@ class Area
     private $rooms;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\ManagerArea", mappedBy="area", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserManagerResource", mappedBy="area", orphanRemoval=true)
      */
-    private $managerAreas;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\AdministratorResource", mappedBy="area", orphanRemoval=true)
-     */
-    private $administratorResources;
+    private $users_manager_resource;
 
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
         $this->managerAreas = new ArrayCollection();
-        $this->administratorResources = new ArrayCollection();
+        $this->users_manager_resource = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this->name;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getName(): ?string
@@ -189,194 +147,146 @@ class Area
         return $this;
     }
 
-    public function getAccess(): ?bool
+    public function getIsPrivate(): ?bool
     {
-        return $this->access;
+        return $this->is_private;
     }
 
-    public function setAccess(bool $access): self
+    public function setIsPrivate(bool $is_private): self
     {
-        $this->access = $access;
+        $this->is_private = $is_private;
 
         return $this;
     }
 
     public function getOrderDisplay(): ?int
     {
-        return $this->orderDisplay;
+        return $this->order_display;
     }
 
-    public function setOrderDisplay(int $orderDisplay): self
+    public function setOrderDisplay(int $order_display): self
     {
-        $this->orderDisplay = $orderDisplay;
+        $this->order_display = $order_display;
 
         return $this;
     }
 
-    public function getIpAdr(): ?string
+    public function getStartTime(): ?int
     {
-        return $this->ipAdr;
+        return $this->start_time;
     }
 
-    public function setIpAdr(?string $ipAdr): self
+    public function setStartTime(int $start_time): self
     {
-        $this->ipAdr = $ipAdr;
+        $this->start_time = $start_time;
 
         return $this;
     }
 
-    public function getMorningstartsArea(): ?int
+    public function getEndTime(): ?int
     {
-        return $this->morningstartsArea;
+        return $this->end_time;
     }
 
-    public function setMorningstartsArea(int $morningstartsArea): self
+    public function setEndTime(int $end_time): self
     {
-        $this->morningstartsArea = $morningstartsArea;
+        $this->end_time = $end_time;
 
         return $this;
     }
 
-    public function getEveningendsArea(): ?int
+    public function getWeekStart(): ?int
     {
-        return $this->eveningendsArea;
+        return $this->week_start;
     }
 
-    public function setEveningendsArea(int $eveningendsArea): self
+    public function setWeekStart(int $week_start): self
     {
-        $this->eveningendsArea = $eveningendsArea;
+        $this->week_start = $week_start;
 
         return $this;
     }
 
-    public function getResolutionArea(): ?int
+    public function getIs24HourFormat(): ?int
     {
-        return $this->resolutionArea;
+        return $this->is_24_hour_format;
     }
 
-    public function setResolutionArea(int $resolutionArea): self
+    public function setIs24HourFormat(int $is_24_hour_format): self
     {
-        $this->resolutionArea = $resolutionArea;
+        $this->is_24_hour_format = $is_24_hour_format;
 
         return $this;
     }
 
-    public function getEveningendsMinutesArea(): ?int
+    public function getDaysOfWeekToDisplay(): ?array
     {
-        return $this->eveningendsMinutesArea;
+        return $this->days_of_week_to_display;
     }
 
-    public function setEveningendsMinutesArea(int $eveningendsMinutesArea): self
+    public function setDaysOfWeekToDisplay(array $days_of_week_to_display): self
     {
-        $this->eveningendsMinutesArea = $eveningendsMinutesArea;
+        $this->days_of_week_to_display = $days_of_week_to_display;
 
         return $this;
     }
 
-    public function getWeekstartsArea(): ?int
+    public function getDurationTimeSlot(): ?int
     {
-        return $this->weekstartsArea;
+        return $this->duration_time_slot;
     }
 
-    public function setWeekstartsArea(int $weekstartsArea): self
+    public function setDurationTimeSlot(int $duration_time_slot): self
     {
-        $this->weekstartsArea = $weekstartsArea;
+        $this->duration_time_slot = $duration_time_slot;
 
         return $this;
     }
 
-    public function getTwentyfourhourFormatArea(): ?int
+    public function getDurationMaximumEntry(): ?int
     {
-        return $this->twentyfourhourFormatArea;
+        return $this->duration_maximum_entry;
     }
 
-    public function setTwentyfourhourFormatArea(int $twentyfourhourFormatArea): self
+    public function setDurationMaximumEntry(int $duration_maximum_entry): self
     {
-        $this->twentyfourhourFormatArea = $twentyfourhourFormatArea;
+        $this->duration_maximum_entry = $duration_maximum_entry;
 
         return $this;
     }
 
-    public function getCalendarDefaultValues(): ?bool
+    public function getDurationDefaultEntry(): ?int
     {
-        return $this->calendarDefaultValues;
+        return $this->duration_default_entry;
     }
 
-    public function setCalendarDefaultValues(bool $calendarDefaultValues): self
+    public function setDurationDefaultEntry(int $duration_default_entry): self
     {
-        $this->calendarDefaultValues = $calendarDefaultValues;
+        $this->duration_default_entry = $duration_default_entry;
 
         return $this;
     }
 
-    public function getEnablePeriods(): ?bool
+    public function getMinutesToAddToEndTime(): ?int
     {
-        return $this->enablePeriods;
+        return $this->minutes_to_add_to_end_time;
     }
 
-    public function setEnablePeriods(bool $enablePeriods): self
+    public function setMinutesToAddToEndTime(int $minutes_to_add_to_end_time): self
     {
-        $this->enablePeriods = $enablePeriods;
-
-        return $this;
-    }
-
-    public function getDisplayDays(): ?array
-    {
-        return $this->displayDays;
-    }
-
-    public function setDisplayDays(array $displayDays): self
-    {
-        $this->displayDays = $displayDays;
-
-        return $this;
-    }
-
-    public function getIdTypeParDefaut(): ?int
-    {
-        return $this->idTypeParDefaut;
-    }
-
-    public function setIdTypeParDefaut(int $idTypeParDefaut): self
-    {
-        $this->idTypeParDefaut = $idTypeParDefaut;
-
-        return $this;
-    }
-
-    public function getDureeMaxResaArea(): ?int
-    {
-        return $this->dureeMaxResaArea;
-    }
-
-    public function setDureeMaxResaArea(int $dureeMaxResaArea): self
-    {
-        $this->dureeMaxResaArea = $dureeMaxResaArea;
-
-        return $this;
-    }
-
-    public function getDureeParDefautReservationArea(): ?int
-    {
-        return $this->dureeParDefautReservationArea;
-    }
-
-    public function setDureeParDefautReservationArea(int $dureeParDefautReservationArea): self
-    {
-        $this->dureeParDefautReservationArea = $dureeParDefautReservationArea;
+        $this->minutes_to_add_to_end_time = $minutes_to_add_to_end_time;
 
         return $this;
     }
 
     public function getMaxBooking(): ?int
     {
-        return $this->maxBooking;
+        return $this->max_booking;
     }
 
-    public function setMaxBooking(int $maxBooking): self
+    public function setMaxBooking(int $max_booking): self
     {
-        $this->maxBooking = $maxBooking;
+        $this->max_booking = $max_booking;
 
         return $this;
     }
@@ -413,64 +323,35 @@ class Area
     }
 
     /**
-     * @return Collection|ManagerArea[]
+     * @return Collection|UserManagerResource[]
      */
-    public function getManagerAreas(): Collection
+    public function getUsersManagerResource(): Collection
     {
-        return $this->managerAreas;
+        return $this->users_manager_resource;
     }
 
-    public function addManagerArea(ManagerArea $managerArea): self
+    public function addUsersManagerResource(UserManagerResource $usersManagerResource): self
     {
-        if (!$this->managerAreas->contains($managerArea)) {
-            $this->managerAreas[] = $managerArea;
-            $managerArea->setArea($this);
+        if (!$this->users_manager_resource->contains($usersManagerResource)) {
+            $this->users_manager_resource[] = $usersManagerResource;
+            $usersManagerResource->setArea($this);
         }
 
         return $this;
     }
 
-    public function removeManagerArea(ManagerArea $managerArea): self
+    public function removeUsersManagerResource(UserManagerResource $usersManagerResource): self
     {
-        if ($this->managerAreas->contains($managerArea)) {
-            $this->managerAreas->removeElement($managerArea);
+        if ($this->users_manager_resource->contains($usersManagerResource)) {
+            $this->users_manager_resource->removeElement($usersManagerResource);
             // set the owning side to null (unless already changed)
-            if ($managerArea->getArea() === $this) {
-                $managerArea->setArea(null);
+            if ($usersManagerResource->getArea() === $this) {
+                $usersManagerResource->setArea(null);
             }
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection|AdministratorResource[]
-     */
-    public function getAdministratorResources(): Collection
-    {
-        return $this->administratorResources;
-    }
 
-    public function addAdministratorResource(AdministratorResource $administratorResource): self
-    {
-        if (!$this->administratorResources->contains($administratorResource)) {
-            $this->administratorResources[] = $administratorResource;
-            $administratorResource->setArea($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAdministratorResource(AdministratorResource $administratorResource): self
-    {
-        if ($this->administratorResources->contains($administratorResource)) {
-            $this->administratorResources->removeElement($administratorResource);
-            // set the owning side to null (unless already changed)
-            if ($administratorResource->getArea() === $this) {
-                $administratorResource->setArea(null);
-            }
-        }
-
-        return $this;
-    }
 }

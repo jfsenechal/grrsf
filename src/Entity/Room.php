@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Entity\Security\AdministratorResource;
+use App\Doctrine\IdEntityTrait;
+use App\Entity\Security\UserManagerResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Room.
@@ -16,53 +17,40 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Room
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
-    /**
-     * @var
-     * @ORM\ManyToOne(targetEntity="App\Entity\Area", inversedBy="rooms")
-     */
-    private $area;
+    use IdEntityTrait;
 
     /**
      * @var string
-     *@Assert\NotBlank()
-     * @ORM\Column(name="room_name", type="string", length=60, nullable=false)
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=60, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=60, nullable=true)
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
     private $description;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="capacity", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, options={"default: 0"})
      */
     private $capacity;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="max_booking", type="smallint", nullable=false, options={"default"="-1"})
+     * @ORM\Column(type="smallint", nullable=false, options={"default"="-1"})
      */
-    private $maxBooking;
+    private $maximum_booking;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="statut_room", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $statutRoom;
 
@@ -118,9 +106,9 @@ class Room
     /**
      * @var int
      *
-     * @ORM\Column(name="order_display", type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    private $orderDisplay;
+    private $order_display;
 
     /**
      * @var int
@@ -172,29 +160,31 @@ class Room
     private $whoCanSee;
 
     /**
+     * @var Area
+     * @ORM\ManyToOne(targetEntity="App\Entity\Area", inversedBy="rooms")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $area;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="room", cascade={"remove"})
      */
     private $entries;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\AdministratorResource", mappedBy="room", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserManagerResource", mappedBy="room", orphanRemoval=true)
      */
-    private $administratorResources;
+    private $users_manager_resource;
 
     public function __construct()
     {
         $this->entries = new ArrayCollection();
-        $this->administratorResources = new ArrayCollection();
+        $this->users_manager_resource = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this->name;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getName(): ?string
@@ -233,14 +223,14 @@ class Room
         return $this;
     }
 
-    public function getMaxBooking(): ?int
+    public function getMaximumBooking(): ?int
     {
-        return $this->maxBooking;
+        return $this->maximum_booking;
     }
 
-    public function setMaxBooking(int $maxBooking): self
+    public function setMaximumBooking(int $maximum_booking): self
     {
-        $this->maxBooking = $maxBooking;
+        $this->maximum_booking = $maximum_booking;
 
         return $this;
     }
@@ -343,12 +333,12 @@ class Room
 
     public function getOrderDisplay(): ?int
     {
-        return $this->orderDisplay;
+        return $this->order_display;
     }
 
-    public function setOrderDisplay(int $orderDisplay): self
+    public function setOrderDisplay(int $order_display): self
     {
-        $this->orderDisplay = $orderDisplay;
+        $this->order_display = $order_display;
 
         return $this;
     }
@@ -481,33 +471,34 @@ class Room
     }
 
     /**
-     * @return Collection|AdministratorResource[]
+     * @return Collection|UserManagerResource[]
      */
-    public function getAdministratorResources(): Collection
+    public function getUsersManagerResource(): Collection
     {
-        return $this->administratorResources;
+        return $this->users_manager_resource;
     }
 
-    public function addAdministratorResource(AdministratorResource $administratorResource): self
+    public function addUsersManagerResource(UserManagerResource $usersManagerResource): self
     {
-        if (!$this->administratorResources->contains($administratorResource)) {
-            $this->administratorResources[] = $administratorResource;
-            $administratorResource->setRoom($this);
+        if (!$this->users_manager_resource->contains($usersManagerResource)) {
+            $this->users_manager_resource[] = $usersManagerResource;
+            $usersManagerResource->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeAdministratorResource(AdministratorResource $administratorResource): self
+    public function removeUsersManagerResource(UserManagerResource $usersManagerResource): self
     {
-        if ($this->administratorResources->contains($administratorResource)) {
-            $this->administratorResources->removeElement($administratorResource);
+        if ($this->users_manager_resource->contains($usersManagerResource)) {
+            $this->users_manager_resource->removeElement($usersManagerResource);
             // set the owning side to null (unless already changed)
-            if ($administratorResource->getRoom() === $this) {
-                $administratorResource->setRoom(null);
+            if ($usersManagerResource->getRoom() === $this) {
+                $usersManagerResource->setRoom(null);
             }
         }
 
         return $this;
     }
+
 }

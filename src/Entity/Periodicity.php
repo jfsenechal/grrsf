@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Doctrine\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,12 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Periodicity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+   use IdEntityTrait;
 
     /**
      * @ORM\Column(type="datetime")
@@ -55,11 +51,6 @@ class Periodicity
     public function getDays(): array
     {
         return $this->days;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getEndTime(): ?\DateTimeInterface

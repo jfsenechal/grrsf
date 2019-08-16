@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Booking\BookingTrait;
+use App\Doctrine\IdEntityTrait;
 use App\Model\DurationModel;
 use App\Model\TimeSlot;
 use App\Validator as AppAssert;
@@ -22,16 +23,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Entry
 {
+    use IdEntityTrait;
     use BookingTrait;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
 
     /**
      * @var string
@@ -188,6 +181,8 @@ class Entry
      */
     private $periodicityDays;
 
+    private $booking;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -285,11 +280,6 @@ class Entry
     public function setLocations(array $locations): void
     {
         $this->locations = $locations;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getStartTime(): ?\DateTimeInterface
@@ -523,6 +513,18 @@ class Entry
                 $periodicityDay->setEntry(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBooking(): ?string
+    {
+        return $this->booking;
+    }
+
+    public function setBooking(?string $booking): self
+    {
+        $this->booking = $booking;
 
         return $this;
     }

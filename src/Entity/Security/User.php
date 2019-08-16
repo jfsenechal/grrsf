@@ -2,6 +2,9 @@
 
 namespace App\Entity\Security;
 
+use App\Doctrine\IdEntityTrait;
+use App\Entity\Area;
+use App\Entity\Room;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,12 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use IdEntityTrait;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -47,6 +45,11 @@ class User implements UserInterface
     private $first_name;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": 1})
+     */
+    private $is_enabled = true;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Area")
      */
     private $area_default;
@@ -57,30 +60,14 @@ class User implements UserInterface
     private $room_default;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\ManagerArea", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserManagerResource", mappedBy="user", orphanRemoval=true)
      */
-    private $managerAreas;
+    private $users_manager_resource;
 
     public function __construct()
     {
         $this->managerAreas = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
+        $this->users_manager_resource = new ArrayCollection();
     }
 
     /**
@@ -90,7 +77,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -117,7 +104,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -144,6 +131,18 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -164,6 +163,18 @@ class User implements UserInterface
     public function setFirstName(?string $first_name): self
     {
         $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    public function getIsEnabled(): ?bool
+    {
+        return $this->is_enabled;
+    }
+
+    public function setIsEnabled(bool $is_enabled): self
+    {
+        $this->is_enabled = $is_enabled;
 
         return $this;
     }
@@ -193,33 +204,38 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|ManagerArea[]
+     * @return Collection|UserManagerResource[]
      */
-    public function getManagerAreas(): Collection
+    public function getUsersManagerResource(): Collection
     {
-        return $this->managerAreas;
+        return $this->users_manager_resource;
     }
 
-    public function addManagerArea(ManagerArea $managerArea): self
+    public function addUsersManagerResource(UserManagerResource $usersManagerResource): self
     {
-        if (!$this->managerAreas->contains($managerArea)) {
-            $this->managerAreas[] = $managerArea;
-            $managerArea->setUser($this);
+        if (!$this->users_manager_resource->contains($usersManagerResource)) {
+            $this->users_manager_resource[] = $usersManagerResource;
+            $usersManagerResource->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeManagerArea(ManagerArea $managerArea): self
+    public function removeUsersManagerResource(UserManagerResource $usersManagerResource): self
     {
-        if ($this->managerAreas->contains($managerArea)) {
-            $this->managerAreas->removeElement($managerArea);
+        if ($this->users_manager_resource->contains($usersManagerResource)) {
+            $this->users_manager_resource->removeElement($usersManagerResource);
             // set the owning side to null (unless already changed)
-            if ($managerArea->getUser() === $this) {
-                $managerArea->setUser(null);
+            if ($usersManagerResource->getUser() === $this) {
+                $usersManagerResource->setUser(null);
             }
         }
 
         return $this;
     }
+
+    /**
+     * STOP
+     */
+    
 }
