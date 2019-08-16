@@ -1,0 +1,69 @@
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>User</th>
+        <th>Area</th>
+        <th>Room</th>
+        <th>Area administrator</th>
+        <th>Area manager</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for manage in manages %}
+    <tr>
+        <td>
+            {{ manage.user }}
+        </td>
+        <td>
+            {{ manage.area }}
+        </td>
+        <td>
+            {{ manage.room }}
+        </td>
+        <td>
+            {{ manage.isAreaAdministrator }}
+        </td>
+        <td>
+            {{ manage.isAreaManager }}
+        </td>
+        <td>
+            <a href="{{ path('grr_admin_type_entry_edit', { 'id': manage.id }) }}" role="button"
+               class="btn btn-primary btn-xs"><i class="far fa-edit"></i> {{ 'form.btn.edit'|trans({}, 'actions') }}</a>
+
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteManage">
+                <i class="fas fa-trash"></i> {{ 'form.btn.delete'|trans({}, 'actions') }}
+            </button>
+        </td>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteManage" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">{{ 'modal.delete.title'|trans({}, 'actions') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ 'usermanager.delete.confirm'|trans() }}
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="{{ path('grr_admin_type_entry_delete', {'id': 1}) }}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ 1) }}">
+                    <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">{{ 'form.btn.cancel'|trans({}, 'actions') }}</button>
+                    <button type="button" class="btn btn-primary">{{ 'form.btn.delete'|trans({}, 'actions') }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

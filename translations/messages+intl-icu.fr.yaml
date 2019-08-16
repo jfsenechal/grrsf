@@ -55,6 +55,8 @@ usermanager:
         label: Administrateur du domaine (Peux modifier le domaine, ajouter des resources...)
       manager:
         label: Gestionnaire du domaine (Peux enregistrer des réservations dans toutes les ressources)
+  delete:
+    confirm: Révoquer ce droit ?
 usermanagerresource:
   new:
     title: Gestion des droits

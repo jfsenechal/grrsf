@@ -92,5 +92,10 @@
 
     {% include '@grr_admin/area/_list_rooms.html.twig' %}
 
+
+    <h3>Droits</h3>
+    {% include 'security/user_manager_resource/_detail_permissions.html.twig' with {'manages': area.usersManagerResource} %}
+
+
     {{ include('@grr_admin/area/_delete_form.html.twig') }}
 {% endblock %}
