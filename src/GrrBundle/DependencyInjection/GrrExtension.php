@@ -44,7 +44,7 @@ class GrrExtension extends Extension implements PrependExtensionInterface
     {
         $configs = $this->loadYml('security.yaml');
         foreach ($container->getExtensions() as $name => $extension) {
-            if ($name == 'security') {
+            if ($name === 'security') {
                 $container->prependExtensionConfig($name, $configs);
                 break;
             }
@@ -54,9 +54,7 @@ class GrrExtension extends Extension implements PrependExtensionInterface
     protected function loadYml($name)
     {
         try {
-            $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/'.$name));
-
-            return $configs;
+            return Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/'.$name));
         } catch (ParseException $e) {
             printf("Unable to parse the YAML string: %s", $e->getMessage());
         }

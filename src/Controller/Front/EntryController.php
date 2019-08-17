@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
+use App\Events\EntryEvent;
 use App\Factory\EntryFactory;
 use App\Form\EntryType;
 use App\Form\SearchEntryType;
@@ -18,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route("/front/entry")
@@ -44,19 +46,25 @@ class EntryController extends AbstractController
      * @var PeriodicityDaysProvider
      */
     private $periodicityDaysProvider;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     public function __construct(
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
         PeriodicityDaysProvider $periodicityService,
         HandlerEntry $handlerEntry,
-        PeriodicityDaysProvider $periodicityDaysProvider
+        PeriodicityDaysProvider $periodicityDaysProvider,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryFactory = $entryFactory;
         $this->periodicityService = $periodicityService;
         $this->handlerEntry = $handlerEntry;
         $this->periodicityDaysProvider = $periodicityDaysProvider;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -111,6 +119,9 @@ class EntryController extends AbstractController
     ): Response {
 
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
+
+        $entryEvent = new EntryEvent($entry);
+        $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_BEFORE_NEW);
 
         $form = $this->createForm(EntryType::class, $entry);
 
