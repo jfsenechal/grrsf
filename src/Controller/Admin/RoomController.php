@@ -8,6 +8,7 @@ use App\Factory\RoomFactory;
 use App\Form\RoomType;
 use App\Manager\RoomManager;
 use App\Repository\RoomRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,22 +43,8 @@ class RoomController extends AbstractController
     }
 
     /**
-     * @Route("/", name="grr_admin_room_index", methods={"GET"})
-     */
-    public function index(): Response
-    {
-        $rooms = $this->roomRepository->findAll();
-
-        return $this->render(
-            '@grr_admin/room/index.html.twig',
-            [
-                'rooms' => $rooms,
-            ]
-        );
-    }
-
-    /**
      * @Route("/new/{id}", name="grr_admin_room_new", methods={"GET","POST"})
+     * @IsGranted("new")
      */
     public function new(Request $request, Area $area): Response
     {
@@ -83,6 +70,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_admin_room_show", methods={"GET"})
+     * @IsGranted("show", subject="room")
      */
     public function show(Room $room): Response
     {
@@ -96,6 +84,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="grr_admin_room_edit", methods={"GET","POST"})
+     * @IsGranted("edit", subject="room")
      */
     public function edit(Request $request, Room $room): Response
     {
@@ -122,6 +111,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_admin_room_delete", methods={"DELETE"})
+     * @IsGranted("delete", subject="room")
      */
     public function delete(Request $request, Room $room): Response
     {

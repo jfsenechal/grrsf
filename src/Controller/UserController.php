@@ -114,6 +114,6 @@ class UserController extends AbstractController
             $this->userManager->flush();
         }
 
-        return $this->redirectToRoute('grr_front_home');
+        return $this->redirectToRoute('grr_home');
     }
 }

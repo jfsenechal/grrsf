@@ -5,12 +5,14 @@ namespace App\Controller\Admin;
 use App\Entity\Security\User;
 use App\Form\UserPasswordType;
 use App\Manager\UserManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/password")
+ * @IsGranted("ROLE_GRR_MANAGER_USER")
  */
 class PasswordController extends AbstractController
 {

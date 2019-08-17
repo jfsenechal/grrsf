@@ -2,7 +2,7 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Area;
+use App\Entity\Room;
 use App\Entity\Security\User;
 use App\Security\SecurityData;
 use App\Security\SecurityHelper;
@@ -18,12 +18,12 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  *
  * @author Yonel Ceruto <yonelceruto@gmail.com>
  */
-class AreaVoter extends Voter
+class RoomVoter extends Voter
 {
     // Defining these constants is overkill for this simple application, but for real
     // applications, it's a recommended practice to avoid relying on "magic strings"
-    const INDEX = 'index';
     const NEW = 'new';
+    const ADD_ENTRY = 'addEntry';
     const SHOW = 'show';
     const EDIT = 'edit';
     const DELETE = 'delete';
@@ -41,9 +41,9 @@ class AreaVoter extends Voter
      */
     private $securityHelper;
     /**
-     * @var Area $area
+     * @var Room $room
      */
-    private $area;
+    private $room;
     /**
      * @var TokenInterface
      */
@@ -61,18 +61,18 @@ class AreaVoter extends Voter
     protected function supports($attribute, $subject)
     {
         if ($subject) {
-            if (!$subject instanceof Area) {
+            if (!$subject instanceof Room) {
                 return false;
             }
         }
 
-        return in_array($attribute, [self::INDEX, self::NEW, self::SHOW, self::EDIT, self::DELETE], true);
+        return in_array($attribute, [self::NEW, self::ADD_ENTRY, self::SHOW, self::EDIT, self::DELETE], true);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function voteOnAttribute($attribute, $area, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $room, TokenInterface $token)
     {
         $user = $token->getUser();
 
@@ -81,7 +81,7 @@ class AreaVoter extends Voter
         }
 
         $this->user = $user;
-        $this->area = $area;
+        $this->area = $room;
         $this->token = $token;
 
         if ($this->decisionManager->decide($token, [SecurityData::getRoleGrrAdministrator()])) {
@@ -89,10 +89,10 @@ class AreaVoter extends Voter
         }
 
         switch ($attribute) {
-            case self::INDEX:
-                return $this->canIndex();
             case self::NEW:
                 return $this->canNew();
+            case self::ADD_ENTRY:
+                return $this->canAddEntry();
             case self::SHOW:
                 return $this->canView();
             case self::EDIT:
@@ -104,28 +104,17 @@ class AreaVoter extends Voter
         return false;
     }
 
-    private function canIndex()
-    {
-        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
-            return true;
-        }
-        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
-            return true;
-        }
-
-        return false;
-    }
 
     private function canNew()
     {
-        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
-            return true;
-        }
-        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
-            return true;
-        }
+        $area = $this->room->getArea();
 
-        return false;
+        return $this->securityHelper->isAreaAdministrator($this->user, $area);
+    }
+
+    private function canAddEntry()
+    {
+        return $this->securityHelper->canAddEntry($this->user, $this->room);
     }
 
     /**
@@ -138,12 +127,12 @@ class AreaVoter extends Voter
             return true;
         }
 
-        return $this->securityHelper->isAreaManager($this->user, $this->area);
+        return $this->securityHelper->isRoomManager($this->user, $this->room);
     }
 
     private function canEdit()
     {
-        return $this->securityHelper->isAreaAdministrator($this->user, $this->area);
+        return $this->securityHelper->isRoomAdministrator($this->user, $this->room);
     }
 
     private function canDelete()

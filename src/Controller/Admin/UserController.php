@@ -9,6 +9,7 @@ use App\Form\Security\UserEditType;
 use App\Form\Security\UserType;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/utilisateurs")
+ * @IsGranted("ROLE_GRR_MANAGER_USER")
  */
 class UserController extends AbstractController
 {

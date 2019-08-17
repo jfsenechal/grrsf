@@ -13,6 +13,7 @@ use App\Handler\HandlerEntry;
 use App\Provider\PeriodicityDaysProvider;
 use App\Repository\EntryRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,9 +94,10 @@ class EntryController extends AbstractController
      * @param int $month
      * @param int $day
      * @param int|null $hour
-     * @param int|null $minute
+     * @param int|null $minute *
      * @return Response
      * @throws \Exception
+     * @IsGranted("addEntry", subject="room")
      */
     public function new(
         Request $request,
@@ -138,10 +140,14 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_front_entry_show", methods={"GET"})
+     * @IsGranted("show",subject="entry")
      */
     public function show(Entry $entry): Response
     {
-        $days = $this->periodicityService->getDays($entry);
+        try {
+            $days = $this->periodicityService->getDays($entry);
+        } catch (\Exception $e) {
+        }
 
         return $this->render(
             '@grr_front/entry/show.html.twig',
@@ -154,6 +160,7 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="grr_front_entry_edit", methods={"GET","POST"})
+     * @IsGranted("edit",subject="entry")
      */
     public function edit(Request $request, Entry $entry): Response
     {
@@ -193,6 +200,7 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_front_entry_delete", methods={"DELETE"})
+     * @IsGranted("delete",subject="entry")
      */
     public function delete(Request $request, Entry $entry): Response
     {

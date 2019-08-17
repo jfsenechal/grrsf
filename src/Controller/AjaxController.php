@@ -8,7 +8,6 @@
 
 namespace App\Controller;
 
-use App\Form\Type\SelectDayOfWeekTypeField;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,17 +45,5 @@ class AjaxController extends AbstractController
         $rooms = $this->roomRepository->findByArea($area);
 
         return $this->render('ajax/_rooms_options.html.twig', ['rooms' => $rooms]);
-    }
-
-    /**
-     * @Route("/ajax/getdays", name="grr_ajax_getdays")
-     */
-    public function ajaxRequestGetDaysToSelect(Request $request)
-    {
-        $areaId = $request->get('id');
-        dump($areaId);
-        $form = $this->createForm(SelectDayOfWeekTypeField::class);
-
-        //  return $this->render('ajax/_select_days.html.twig', ['form' => $form->createView()]);
     }
 }

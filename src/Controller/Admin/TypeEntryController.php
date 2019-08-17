@@ -7,6 +7,7 @@ use App\Factory\TypeEntryFactory;
 use App\Form\TypeAreaType;
 use App\Manager\TypeAreaManager;
 use App\Repository\EntryTypeRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/type/entry")
+ * @IsGranted("ROLE_GRR_ADMINISTRATOR")
  */
 class TypeEntryController extends AbstractController
 {
