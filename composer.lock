@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a2ba35a39066d524068f138dccb36f1",
+    "content-hash": "2fb3ed361185cc0d489d6ce628b085d6",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -59,6 +59,50 @@
                 "orm"
             ],
             "time": "2019-07-25T15:08:53+00:00"
+        },
+        {
+            "name": "carbon-cli/carbon-cli",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kylekatarnls/carbon-cli.git",
+                "reference": "2a1f35e2f59ff8ff42a4a440f6ae048964364558"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kylekatarnls/carbon-cli/zipball/2a1f35e2f59ff8ff42a4a440f6ae048964364558",
+                "reference": "2a1f35e2f59ff8ff42a4a440f6ae048964364558",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^2.20",
+                "php": "^7.1 || ^8.0",
+                "simple-cli/simple-cli": "^1.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5 || ^8.2"
+            },
+            "bin": [
+                "bin/carbon"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Carbon\\": "src/Carbon/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kylekatarnls",
+                    "homepage": "http://github.com/kylekatarnls"
+                }
+            ],
+            "description": "CLI tool for Carbon",
+            "time": "2019-07-16T06:05:26+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2104,6 +2148,50 @@
                 "controllers"
             ],
             "time": "2019-07-08T08:31:25+00:00"
+        },
+        {
+            "name": "simple-cli/simple-cli",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kylekatarnls/simple-cli.git",
+                "reference": "224be0b9b1e28c22f429583655a0c9fe704a8897"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kylekatarnls/simple-cli/zipball/224be0b9b1e28c22f429583655a0c9fe704a8897",
+                "reference": "224be0b9b1e28c22f429583655a0c9fe704a8897",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2",
+                "phpstan/phpstan": "^0.11",
+                "phpunit/phpunit": "^7"
+            },
+            "bin": [
+                "bin/simple-cli"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SimpleCli\\": "src/SimpleCli/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KyleK",
+                    "email": "kylekatarnls@gmail.com"
+                }
+            ],
+            "description": "A simple command line framework",
+            "time": "2019-07-09T06:03:09+00:00"
         },
         {
             "name": "symfony/asset",
@@ -7368,6 +7456,188 @@
                 "diff"
             ],
             "time": "2018-02-15T16:58:55+00:00"
+        },
+        {
+            "name": "phpspec/php-diff",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpspec/php-diff.git",
+                "reference": "0464787bfa7cd13576c5a1e318709768798bec6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpspec/php-diff/zipball/0464787bfa7cd13576c5a1e318709768798bec6a",
+                "reference": "0464787bfa7cd13576c5a1e318709768798bec6a",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Diff": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Boulton",
+                    "homepage": "http://github.com/chrisboulton"
+                }
+            ],
+            "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
+            "time": "2016-04-07T12:29:16+00:00"
+        },
+        {
+            "name": "phpspec/phpspec",
+            "version": "5.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpspec/phpspec.git",
+                "reference": "1bf4b5a7cf5fea43288e9283d340f7e1d5b69cae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/1bf4b5a7cf5fea43288e9283d340f7e1d5b69cae",
+                "reference": "1bf4b5a7cf5fea43288e9283d340f7e1d5b69cae",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/instantiator": "^1.0.5",
+                "ext-tokenizer": "*",
+                "php": "^7.1, <7.4",
+                "phpspec/php-diff": "^1.0.0",
+                "phpspec/prophecy": "^1.7",
+                "sebastian/exporter": "^1.0 || ^2.0 || ^3.0",
+                "symfony/console": "^3.4 || ^4.0",
+                "symfony/event-dispatcher": "^3.4 || ^4.0",
+                "symfony/finder": "^3.4 || ^4.0",
+                "symfony/process": "^3.4 || ^4.0",
+                "symfony/yaml": "^3.4 || ^4.0"
+            },
+            "require-dev": {
+                "behat/behat": "^3.3",
+                "phpunit/phpunit": "^5.7 || ^6.0",
+                "symfony/filesystem": "^3.4 || ^4.0"
+            },
+            "suggest": {
+                "phpspec/nyan-formatters": "Adds Nyan formatters"
+            },
+            "bin": [
+                "bin/phpspec"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PhpSpec": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com",
+                    "homepage": "http://everzet.com"
+                },
+                {
+                    "name": "Marcello Duarte",
+                    "homepage": "http://marcelloduarte.net/"
+                },
+                {
+                    "name": "Ciaran McNulty",
+                    "homepage": "https://ciaranmcnulty.com/"
+                }
+            ],
+            "description": "Specification-oriented BDD framework for PHP 7.1+",
+            "homepage": "http://phpspec.net/",
+            "keywords": [
+                "BDD",
+                "SpecBDD",
+                "TDD",
+                "spec",
+                "specification",
+                "testing",
+                "tests"
+            ],
+            "time": "2019-08-05T10:24:38+00:00"
+        },
+        {
+            "name": "phpspec/prophecy",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpspec/prophecy.git",
+                "reference": "1927e75f4ed19131ec9bcc3b002e07fb1173ee76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/1927e75f4ed19131ec9bcc3b002e07fb1173ee76",
+                "reference": "1927e75f4ed19131ec9bcc3b002e07fb1173ee76",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/instantiator": "^1.0.2",
+                "php": "^5.3|^7.0",
+                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
+                "sebastian/comparator": "^1.1|^2.0|^3.0",
+                "sebastian/recursion-context": "^1.0|^2.0|^3.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "^2.5|^3.2",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5 || ^7.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Prophecy\\": "src/Prophecy"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com",
+                    "homepage": "http://everzet.com"
+                },
+                {
+                    "name": "Marcello Duarte",
+                    "email": "marcello.duarte@gmail.com"
+                }
+            ],
+            "description": "Highly opinionated mocking framework for PHP 5.3+",
+            "homepage": "https://github.com/phpspec/prophecy",
+            "keywords": [
+                "Double",
+                "Dummy",
+                "fake",
+                "mock",
+                "spy",
+                "stub"
+            ],
+            "time": "2019-06-13T12:50:23+00:00"
         },
         {
             "name": "phpstan/extension-installer",

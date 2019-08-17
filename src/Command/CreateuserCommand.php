@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Security\User;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
+use App\Security\SecurityData;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -53,6 +54,8 @@ class CreateuserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
+        $helper = $this->getHelper('question');
+        $roles = SecurityData::getRoles();
 
         $email = $input->getArgument('email');
         $name = $input->getArgument('name');
@@ -71,9 +74,7 @@ class CreateuserCommand extends Command
         }
 
         if (!$password) {
-            $helper = $this->getHelper('question');
-            $question = new Question('Choisissez un mot de passe');
-
+            $question = new Question("Choisissez un mot de passe: \n ");
             $password = $helper->ask($input, $output, $question);
         }
 
@@ -89,10 +90,17 @@ class CreateuserCommand extends Command
             return;
         }
 
+        $questionRoles = new Question('Quel(s) role(s): '.join(', ', $roles)." \n");
+        $roles = $helper->ask($input, $output, $questionRoles);
+
         $user = new User();
         $user->setEmail($email);
         $user->setName($name);
         $user->setPassword($this->userManager->encodePassword($user, $password));
+
+        if ($roles) {
+            $user->addRole($roles);
+        }
 
         $this->userManager->insert($user);
 

@@ -98,6 +98,26 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    public function addRole(string $role): self
+    {
+        //   if (!$this->roles->contains($role)) {
+        $this->roles[] = $role;
+
+        // }
+
+        return $this;
+    }
+
+    public function removeRoom(string $role): self
+    {
+        //todo
+        /*  if ($this->roles->contains($role)) {
+              $this->roles->removeElement($role);
+          }*/
+
+        return $this;
+    }
+
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
