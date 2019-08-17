@@ -6,7 +6,13 @@ class SecurityData
 {
     public static function getRoles()
     {
-        $roles = [self::getRoleGrr(), self::getRoleManagerUser(), self::getRoleAdministrator()];
+        $roles = [
+            self::getRoleGrr(),
+            self::getRoleManagerUser(),
+            self::getRoleManagerArea(),
+            self::getRoleAdministratorArea(),
+            self::getRoleAdministrator(),
+        ];
 
         return array_combine($roles, $roles);
     }
@@ -36,8 +42,28 @@ class SecurityData
      *
      * @return string
      */
+    public static function getRoleManagerArea()
+    {
+        return 'ROLE_GRR_MANAGER_AREA';
+    }
+
+    /**
+     * Administrateur de grr
+     *
+     * @return string
+     */
+    public static function getRoleAdministratorArea()
+    {
+        return 'ROLE_GRR_ADMINISTRATOR_AREA';
+    }
+
+    /**
+     * Administrateur de grr
+     *
+     * @return string
+     */
     public static function getRoleAdministrator()
     {
-        return 'ROLE_GRR_ADMIN';
+        return 'ROLE_GRR_ADMINISTRATOR';
     }
 }

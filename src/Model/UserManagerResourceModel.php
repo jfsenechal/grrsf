@@ -9,12 +9,14 @@ use App\Entity\Security\User;
 class UserManagerResourceModel
 {
     /**
+     * 1 => administrator
+     * 2 => manager
      * @var int|null $area_level
      */
     private $area_level;
 
     /**
-     * @var Area $area
+     * @var Area|null $area
      */
     protected $area;
 
@@ -45,17 +47,17 @@ class UserManagerResourceModel
     }
 
     /**
-     * @return Area
+     * @return Area|null
      */
-    public function getArea(): Area
+    public function getArea(): ?Area
     {
         return $this->area;
     }
 
     /**
-     * @param Area $area
+     * @param Area|null $area
      */
-    public function setArea(Area $area): void
+    public function setArea(?Area $area): void
     {
         $this->area = $area;
     }

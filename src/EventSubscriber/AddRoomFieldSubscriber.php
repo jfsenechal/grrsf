@@ -75,7 +75,7 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
         }
 
         $form->add(
-            'room',
+            'rooms',
             ChoiceType::class,
             [
                 'choices' => [],

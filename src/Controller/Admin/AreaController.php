@@ -8,6 +8,7 @@ use App\Form\AreaType;
 use App\Manager\AreaManager;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +50,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/", name="grr_admin_area_index", methods={"GET"})
+     * @IsGranted("index")
      */
     public function index(): Response
     {
@@ -64,6 +66,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/new", name="grr_admin_area_new", methods={"GET","POST"})
+     * @IsGranted("new")
      */
     public function new(Request $request): Response
     {
@@ -89,6 +92,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_admin_area_show", methods={"GET"})
+     * @IsGranted("show", subject="area")
      */
     public function show(Area $area): Response
     {
@@ -105,6 +109,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="grr_admin_area_edit", methods={"GET","POST"})
+     * @IsGranted("edit", subject="area")
      */
     public function edit(Request $request, Area $area): Response
     {
@@ -133,6 +138,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_admin_area_delete", methods={"DELETE"})
+     * @IsGranted("delete", subject="area")
      */
     public function delete(Request $request, Area $area): Response
     {

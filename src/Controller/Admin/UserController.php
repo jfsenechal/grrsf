@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Security\User;
 use App\Factory\UserFactory;
+use App\Form\Security\UserAdminEditType;
 use App\Form\Security\UserEditType;
 use App\Form\Security\UserType;
 use App\Manager\UserManager;
@@ -98,7 +99,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $utilisateur): Response
     {
-        $form = $this->createForm(UserEditType::class, $utilisateur);
+        $form = $this->createForm(UserAdminEditType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

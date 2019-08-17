@@ -4,6 +4,8 @@ namespace App\Security\Voter;
 
 use App\Entity\Area;
 use App\Entity\Security\User;
+use App\Security\SecurityData;
+use App\Security\SecurityHelper;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -21,19 +23,36 @@ class AreaVoter extends Voter
     // Defining these constants is overkill for this simple application, but for real
     // applications, it's a recommended practice to avoid relying on "magic strings"
     const INDEX = 'index';
+    const NEW = 'new';
     const SHOW = 'show';
     const EDIT = 'edit';
     const DELETE = 'delete';
+    /**
+     * @var AccessDecisionManagerInterface
+     */
     private $decisionManager;
 
     /**
      * @var User
      */
     private $user;
+    /**
+     * @var SecurityHelper
+     */
+    private $securityHelper;
+    /**
+     * @var Area $area
+     */
+    private $area;
+    /**
+     * @var TokenInterface
+     */
+    private $token;
 
-    public function __construct(AccessDecisionManagerInterface $decisionManager)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, SecurityHelper $securityHelper)
     {
         $this->decisionManager = $decisionManager;
+        $this->securityHelper = $securityHelper;
     }
 
     /**
@@ -47,16 +66,13 @@ class AreaVoter extends Voter
             }
         }
 
-        return in_array(
-            $attribute,
-            [self::INDEX, self::SHOW, self::EDIT, self::DELETE]
-        );
+        return in_array($attribute, [self::INDEX, self::NEW, self::SHOW, self::EDIT, self::DELETE], true);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function voteOnAttribute($attribute, $volontaire, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $area, TokenInterface $token)
     {
         $user = $token->getUser();
 
@@ -65,20 +81,24 @@ class AreaVoter extends Voter
         }
 
         $this->user = $user;
+        $this->area = $area;
+        $this->token = $token;
 
-        if ($this->decisionManager->decide($token, [SecurityData::getRoleAdmin()])) {
+        if ($this->decisionManager->decide($token, [SecurityData::getRoleAdministrator()])) {
             return true;
         }
 
         switch ($attribute) {
             case self::INDEX:
                 return $this->canIndex();
+            case self::NEW:
+                return $this->canNew();
             case self::SHOW:
-                return $this->canView($volontaire, $token);
+                return $this->canView();
             case self::EDIT:
-                return $this->canEdit($volontaire, $token);
+                return $this->canEdit();
             case self::DELETE:
-                return $this->canDelete($volontaire, $token);
+                return $this->canDelete();
         }
 
         return false;
@@ -86,32 +106,48 @@ class AreaVoter extends Voter
 
     private function canIndex()
     {
+        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
+            return true;
+        }
+        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function canNew()
+    {
+        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
+            return true;
+        }
+        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
-     * Voir dans l'admin.
-     *
-     * @param Area           $volontaire
-     * @param TokenInterface $token
-     *
+     * See in admin.
      * @return bool
      */
-    private function canView(Area $volontaire, TokenInterface $token)
+    private function canView()
     {
-        if ($this->canEdit($volontaire, $token)) {
+        if ($this->canEdit()) {
             return true;
         }
+
+        return $this->securityHelper->isAreaManager($this->user, $this->area);
     }
 
-    private function canEdit(Area $volontaire, TokenInterface $token)
+    private function canEdit()
     {
-        $user = $token->getUser();
-
-        return $user === $volontaire->getUser();
+        return $this->securityHelper->isAreaAdministrator($this->user, $this->area);
     }
 
-    private function canDelete(Area $volontaire, TokenInterface $token)
+    private function canDelete()
     {
-        return (bool) $this->canEdit($volontaire, $token);
+        return (bool)$this->canEdit();
     }
 }

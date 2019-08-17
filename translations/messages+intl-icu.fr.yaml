@@ -40,6 +40,9 @@ user:
       label: Ressource par défaut
     isEnabled:
       label: Actif?
+      help: Décochez pour désactiver l'utilisateur
+    roles:
+      label: Rôle(s)
 entry:
   form:
     user:
