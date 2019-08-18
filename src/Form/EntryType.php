@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\EventSubscriber\AddDurationFieldSubscriber;
-use App\EventSubscriber\AddRoomsFieldSubscriber;
+use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\Form\Type\EntryTypeField;
 use App\Repository\AreaRepository;
 use App\Repository\EntryTypeRepository;
@@ -94,7 +94,7 @@ class EntryType extends AbstractType
             )
             ->add('periodicity', PeriodicityType::class)
             ->addEventSubscriber(new AddDurationFieldSubscriber())
-            ->addEventSubscriber(new AddRoomsFieldSubscriber($this->roomRepository));
+            ->addEventSubscriber(new AddRoomFieldSubscriber());
     }
 
     public function configureOptions(OptionsResolver $resolver)

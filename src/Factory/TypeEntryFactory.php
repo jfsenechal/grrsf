@@ -17,10 +17,4 @@ class TypeEntryFactory
         return new EntryType();
     }
 
-    public static function setDefaultValues(EntryType $typeArea)
-    {
-        $typeArea
-            ->setOrderDisplay(0)
-            ->setDisponible(2);
-    }
 }

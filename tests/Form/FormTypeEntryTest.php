@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Form;
 
 use App\Form\EntryType;
 use App\Form\Type\EntryTypeField;
@@ -10,7 +10,12 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class FormTypeEntryTest extends TypeTestCase
 {
-    public function testSubmitValidData()
+    public function testSomething()
+    {
+        $this->assertTrue(true);
+    }
+
+    public function te2stSubmitValidData()
     {
         $formData = [
             'test' => 'test',

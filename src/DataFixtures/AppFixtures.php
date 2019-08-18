@@ -22,7 +22,6 @@ class AppFixtures extends Fixture
 
         foreach ($types as $index => $nom) {
             $type = TypeEntryFactory::createNew();
-            TypeEntryFactory::setDefaultValues($type);
             $type->setTypeLetter($index);
             $type->setTypeName($nom);
             $manager->persist($type);

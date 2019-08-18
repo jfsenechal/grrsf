@@ -30,7 +30,7 @@ class MenuGenerator
         $area =$this->ressourceSelectedHelper->getArea();
         $room =$this->ressourceSelectedHelper->getRoom();
 
-        $menuSelect = new MenuSelect();
+        $menuSelect = MenuSelectFactory::createNew();
         $menuSelect->setArea($area);
         $menuSelect->setRoom($room);
 

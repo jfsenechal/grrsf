@@ -8,23 +8,12 @@
 
 namespace App\Factory;
 
-use App\Entity\Area;
 use App\Entity\Setting;
-use App\Provider\DateProvider;
 
 class SettingFactory
 {
     public function createNew(): Setting
     {
         return new Setting();
-    }
-
-    public function setDefaultValues(Area $area)
-    {
-        $area->setDisplayDays(array_flip(DateProvider::getNamesDaysOfWeek()));
-        $area->setMorningstartsArea(8);
-        $area->setEveningendsArea(19);
-        $area->setResolutionArea(900);
-        $area->setDureeParDefautReservationArea(900);
     }
 }

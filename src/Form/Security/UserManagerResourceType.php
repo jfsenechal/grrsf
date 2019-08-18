@@ -3,11 +3,9 @@
 namespace App\Form\Security;
 
 use App\EventSubscriber\AddAreaFieldSubscriber;
-use App\EventSubscriber\AddRoomFieldSubscriber;
+use App\EventSubscriber\AddRoomsFieldSubscriber;
 use App\EventSubscriber\AddUserFieldSubscriber;
 use App\Model\UserManagerResourceModel;
-use App\Repository\AreaRepository;
-use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -17,25 +15,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserManagerResourceType extends AbstractType
 {
     /**
-     * @var AreaRepository
-     */
-    private $areaRepository;
-    /**
-     * @var RoomRepository
-     */
-    private $roomRepository;
-    /**
      * @var UserRepository
      */
     private $userRepository;
 
     public function __construct(
-        AreaRepository $areaRepository,
-        RoomRepository $roomRepository,
         UserRepository $userRepository
     ) {
-        $this->areaRepository = $areaRepository;
-        $this->roomRepository = $roomRepository;
         $this->userRepository = $userRepository;
     }
 
@@ -58,8 +44,8 @@ class UserManagerResourceType extends AbstractType
                     'expanded' => true,
                 ]
             )
-            ->addEventSubscriber(new AddAreaFieldSubscriber($this->areaRepository))
-            ->addEventSubscriber(new AddRoomFieldSubscriber($this->roomRepository))
+            ->addEventSubscriber(new AddAreaFieldSubscriber())
+            ->addEventSubscriber(new AddRoomsFieldSubscriber())
             ->addEventSubscriber(new AddUserFieldSubscriber($this->userRepository));
     }
 

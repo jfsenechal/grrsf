@@ -61,6 +61,8 @@ class EntryType
     public function __construct()
     {
         $this->entries = new ArrayCollection();
+        $this->orderDisplay = 0;
+        $this->disponible = 2;
     }
 
     public function __toString()

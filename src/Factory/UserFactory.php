@@ -16,13 +16,4 @@ class UserFactory
     {
         return new User();
     }
-
-    public function setDefaultValues(User $Utilisateur)
-    {
-        $Utilisateur
-            ->setDefaultSite(0)
-            ->setDefaultArea(0)
-            ->setDefaultRoom(0)
-            ->setSource('local');
-    }
 }

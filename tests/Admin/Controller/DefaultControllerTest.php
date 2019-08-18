@@ -1,19 +1,27 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Admin\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
+    public function testAdminHomePage()
+    {
+        $url = "/admin";
+        $client = self::createClient();
+        $client->request('GET', $url);
+        $this->assertTrue($client->getResponse()->isRedirect());
+    }
+
     /**
-     * @dataProvider provideUrls
-     */
+     * dataProvider provideUrls
+     *
     public function testPageIsSuccessful($url)
     {
         $client = self::createClient();
         $client->request('GET', $url);
-        var_dump($client->getResponse()->getContent());
+        //var_dump($client->getResponse()->getContent());
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
@@ -24,5 +32,5 @@ class DefaultControllerTest extends WebTestCase
             ['/front/monthview/area/3/year/2019/month/8/room'],
             ['/admin'],
         ];
-    }
+    }*/
 }

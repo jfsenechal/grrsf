@@ -29,9 +29,9 @@ class AreaRepositoryTest extends KernelTestCase
     {
         $products = $this->entityManager
             ->getRepository(Area::class)
-            ->find(1);
+            ->findOneBy(['name' => 'E-square']);
 
-        $this->assertCount(1, $products);
+        $this->assertEquals('E-square', $products->getName());
     }
 
     /**

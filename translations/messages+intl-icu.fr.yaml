@@ -13,9 +13,9 @@ menu:
   user:
     login: Se connecter
     logout: Me déconnecter
-    profile: Profil
+    account: Compte
 user:
-  profile:
+  account:
     area:
       default:
         label: Domaine par défaut
@@ -63,3 +63,18 @@ usermanager:
 usermanagerresource:
   new:
     title: Gestion des droits
+area:
+  form:
+    select:
+      label: Domaine
+      help: Aide
+      placeholder: Séléctionnez un domaine
+
+room:
+  form:
+    select:
+      label: Ressource
+      help: Help
+      placeholder: Toutes les ressources
+      empty:
+        placeholder: Sélectionnez un domaine

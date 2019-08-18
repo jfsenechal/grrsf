@@ -10,6 +10,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\Area;
 use App\Form\Type\AreaHiddenType;
+use App\Form\Type\AreaSelectType;
 use App\Repository\AreaRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -19,16 +20,6 @@ use Symfony\Component\Form\FormInterface;
 
 class AddAreaFieldSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var AreaRepository
-     */
-    private $areaRepository;
-
-    public function __construct(AreaRepository $areaRepository)
-    {
-        $this->areaRepository = $areaRepository;
-    }
-
     public static function getSubscribedEvents()
     {
         return [
@@ -50,16 +41,7 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
         } else {
             $form->add(
                 'area',
-                EntityType::class,
-                [
-                    'label' => 'entry.form.area.label',
-                    'help' => 'entry.form.area.help',
-                    'required' => true,
-                    'class' => Area::class,
-                    'placeholder' => 'entry.form.area.select.placeholder',
-                    'query_builder' => $this->areaRepository->getQueryBuilder(),
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
-                ]
+                AreaSelectType::class
             );
         }
     }

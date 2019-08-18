@@ -3,26 +3,26 @@
      * Met ajour la liste des rooms
      */
     $(document).ready(function () {
-        var $locationSelect = $('#area_menu_select_area');
-        var $specificLocationTarget = $('#area_menu_select_room');
+        var areaSelected = $('#user_edit_area_default');
+        var roomsList = $('#user_edit_room_default');
 
-        $locationSelect.on('change', function (e) {
+        areaSelected.on('change', function (e) {
             console.log("coucou");
             $.ajax({
                 url: '{{ path('grr_ajax_getrooms') }}',
                 data: {
-                    id: $locationSelect.val()
+                    id: areaSelected.val()
                 },
                 success: function (html) {
                     if (!html) {
-                        $specificLocationTarget.find('select').remove();
-                        $specificLocationTarget.addClass('d-none');
+                        roomsList.find('select').remove();
+                        roomsList.addClass('d-none');
 
                         return;
                     }
 
                     // Replace the current field and show
-                    $specificLocationTarget
+                    roomsList
                         .html(html)
                         .removeClass('d-none')
                 }

@@ -8,25 +8,15 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Room;
+use App\Form\Type\RoomSelectType;
+use App\Model\UserManagerResourceModel;
 use App\Repository\RoomRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 class AddRoomsFieldSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var RoomRepository
-     */
-    private $roomRepository;
-
-    public function __construct(RoomRepository $roomRepository)
-    {
-        $this->roomRepository = $roomRepository;
-    }
-
     public static function getSubscribedEvents()
     {
         return [
@@ -36,26 +26,38 @@ class AddRoomsFieldSubscriber implements EventSubscriberInterface
 
     public function onPreSetData(FormEvent $event)
     {
+        /**
+         * @var UserManagerResourceModel $entry
+         */
         $entry = $event->getData();
         $area = $entry->getArea();
         $form = $event->getForm();
+        $room = $entry->getRooms();
 
-        if (!$area) {
+        $default = [
+            'multiple' => true,
+            'expanded' => true,
+        ];
+
+        if ($area) {
+            $default['query_builder'] = function (RoomRepository $roomRepository) use ($area) {
+                return $roomRepository->getRoomsByAreaQueryBuilder($area);
+            };
+        } else {
+            $default['choices'] = [];
+            $default['placeholder'] = 'room.form.select.empty.placeholder';
+        }
+
+        if ($room) {
+            // $form->add('room', HiddenType::class);
+
             return;
         }
 
         $form->add(
-            'room',
-            EntityType::class,
-            [
-                'label' => 'entry.form.room.label',
-                'help' => 'entry.form.room.help',
-                'required' => false,
-                'class' => Room::class,
-                'placeholder' => 'entry.form.room.select.placeholder',
-                'query_builder' => $this->roomRepository->getRoomsByAreaQueryBuilder($area),
-                'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
-            ]
+            'rooms',
+            RoomSelectType::class,
+            $default
         );
     }
 }

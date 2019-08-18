@@ -13,10 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/user")
+ * @Route("/account")
  * @IsGranted("ROLE_GRR")
  */
-class UserController extends AbstractController
+class ProfileController extends AbstractController
 {
     /**
      * @var UserPasswordEncoderInterface
@@ -34,14 +34,14 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile", name="grr_user_show", methods={"GET"})
+     * @Route("/show", name="grr_account_show", methods={"GET"})
      */
     public function show(): Response
     {
         $user = $this->getUser();
 
         return $this->render(
-            'user/show.html.twig',
+            '@grr_front/account/show.html.twig',
             [
                 'user' => $user,
             ]
@@ -49,7 +49,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/edit", name="grr_user_edit", methods={"GET","POST"})
+     * @Route("/edit", name="grr_account_edit", methods={"GET","POST"})
      */
     public function edit(Request $request): Response
     {
@@ -61,11 +61,11 @@ class UserController extends AbstractController
 
             $this->userManager->flush();
 
-            return $this->redirectToRoute('grr_user_show');
+            return $this->redirectToRoute('grr_account_show');
         }
 
         return $this->render(
-            'user/edit.html.twig',
+            '@grr_front/account/edit.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -74,7 +74,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/password", name="grr_user_edit_password", methods={"GET","POST"})
+     * @Route("/password", name="grr_account_edit_password", methods={"GET","POST"})
      */
     public function password(Request $request): Response
     {
@@ -90,11 +90,11 @@ class UserController extends AbstractController
 
             $this->userManager->flush();
 
-            return $this->redirectToRoute('grr_user_show');
+            return $this->redirectToRoute('grr_account_show');
         }
 
         return $this->render(
-            'user/edit_password.html.twig',
+            '@grr_front/account/edit_password.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -103,7 +103,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/delete", name="grr_user_delete", methods={"DELETE"})
+     * @Route("/delete", name="grr_user_account_delete", methods={"DELETE"})
      */
     public function delete(Request $request): Response
     {

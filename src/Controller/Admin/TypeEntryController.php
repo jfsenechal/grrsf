@@ -55,7 +55,6 @@ class TypeEntryController extends AbstractController
     public function new(Request $request): Response
     {
         $typeArea = TypeEntryFactory::createNew();
-        TypeEntryFactory::setDefaultValues($typeArea);
 
         $form = $this->createForm(TypeAreaType::class, $typeArea);
         $form->handleRequest($request);

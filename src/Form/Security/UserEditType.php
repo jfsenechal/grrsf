@@ -5,6 +5,8 @@ namespace App\Form\Security;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
+use App\Form\Type\AreaSelectType;
+use App\Form\Type\RoomSelectType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -41,20 +43,18 @@ class UserEditType extends AbstractType
             )
             ->add(
                 'area_default',
-                EntityType::class,
+                AreaSelectType::class,
                 [
-                    'label' => 'user.form.area.label',
                     'required' => false,
-                    'class' => Area::class,
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )
             ->add(
                 'room_default',
-                EntityType::class,
+                RoomSelectType::class,
                 [
                     'label' => 'user.form.room.label',
                     'required' => false,
+                    'area' => null,
                     'class' => Room::class,
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
