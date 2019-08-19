@@ -109,16 +109,4 @@ class Navigation
     {
         return $this->today;
     }
-
-    /**
-     * @param CarbonInterface $today
-     * @return Navigation
-     */
-    public function setToday(CarbonInterface $today): self
-    {
-        $this->today = $today;
-
-        return $this;
-    }
-
 }

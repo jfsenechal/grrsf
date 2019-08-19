@@ -6,6 +6,8 @@ use App\Entity\Area;
 use App\Entity\Entry;
 use App\EventSubscriber\AddDurationFieldSubscriber;
 use App\EventSubscriber\AddRoomFieldSubscriber;
+use App\Factory\DurationFactory;
+use App\Form\Type\AreaSelectType;
 use App\Form\Type\EntryTypeField;
 use App\Repository\AreaRepository;
 use App\Repository\EntryTypeRepository;
@@ -21,26 +23,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class EntryType extends AbstractType
 {
     /**
-     * @var RoomRepository
+     * @var DurationFactory
      */
-    private $roomRepository;
-    /**
-     * @var AreaRepository
-     */
-    private $areaRepository;
-    /**
-     * @var EntryTypeRepository
-     */
-    private $typeAreaRepository;
+    private $durationFactory;
 
-    public function __construct(
-        RoomRepository $roomRepository,
-        AreaRepository $areaRepository,
-        EntryTypeRepository $typeAreaRepository
-    ) {
-        $this->roomRepository = $roomRepository;
-        $this->areaRepository = $areaRepository;
-        $this->typeAreaRepository = $typeAreaRepository;
+    public function __construct(DurationFactory $durationFactory)
+    {
+        $this->durationFactory = $durationFactory;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -64,15 +53,9 @@ class EntryType extends AbstractType
             )
             ->add(
                 'area',
-                EntityType::class,
+                AreaSelectType::class,
                 [
-                    'class' => Area::class,
                     'required' => true,
-                    'label' => 'entry.form.area.label',
-                    'help' => 'entry.form.area.help',
-                    'placeholder' => 'entry.form.area.label',
-                    'query_builder' => $this->areaRepository->getQueryBuilder(),
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )
             ->add(
@@ -93,7 +76,7 @@ class EntryType extends AbstractType
                 ]
             )
             ->add('periodicity', PeriodicityType::class)
-            ->addEventSubscriber(new AddDurationFieldSubscriber())
+            ->addEventSubscriber(new AddDurationFieldSubscriber($this->durationFactory))
             ->addEventSubscriber(new AddRoomFieldSubscriber());
     }
 

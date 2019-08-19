@@ -28,10 +28,6 @@ class DurationFactoryTest extends WebTestCase
      * @var RoomFactory
      */
     private $roomFactory;
-    /**
-     * @var string
-     */
-    private $format;
 
     protected function setUp(): void
     {
@@ -40,7 +36,6 @@ class DurationFactoryTest extends WebTestCase
         $this->durationFactory = new DurationFactory();
         $periodicityFactory = new PeriodicityFactory();
         $this->entryFactory = new EntryFactory($periodicityFactory);
-        $this->format = 'Y-m-d H:i';
     }
 
     public function testCreateNew()
@@ -51,7 +46,7 @@ class DurationFactoryTest extends WebTestCase
     }
 
     /**
-     * @dataProvider getData
+     * @dataProvider getDataForCreateNewFromEntry
      */
     public function testCreateNewFromEntry(
         int $year,
@@ -78,8 +73,9 @@ class DurationFactoryTest extends WebTestCase
      */
     public function testCreateByDates()
     {
-        $start = \DateTime::createFromFormat($this->format, '2019-10-22 10:00');
-        $end = \DateTime::createFromFormat($this->format, '2019-10-22 10:30');
+        $format = 'Y-m-d H:i';
+        $start = \DateTime::createFromFormat($format, '2019-10-22 10:00');
+        $end = \DateTime::createFromFormat($format, '2019-10-22 10:30');
 
         $durationModel = $this->durationFactory->createFromDates($start, $end);
         $this->assertInstanceOf(DurationModel::class, $durationModel);
@@ -217,7 +213,7 @@ class DurationFactoryTest extends WebTestCase
         ];
     }
 
-    public function getData()
+    public function getDataForCreateNewFromEntry()
     {
         return [
             [2019, 8, 19, 10, 0],
