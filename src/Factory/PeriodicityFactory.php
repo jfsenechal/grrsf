@@ -12,7 +12,7 @@ use App\Entity\Periodicity;
 
 class PeriodicityFactory
 {
-    public static function createNew(): Periodicity
+    public function createNew(): Periodicity
     {
         return new Periodicity();
     }

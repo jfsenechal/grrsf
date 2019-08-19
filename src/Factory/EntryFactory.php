@@ -16,7 +16,17 @@ use Carbon\Carbon;
 
 class EntryFactory
 {
-    public static function createNew(): Entry
+    /**
+     * @var PeriodicityFactory
+     */
+    private $periodicityFactory;
+
+    public function __construct(PeriodicityFactory $periodicityFactory)
+    {
+        $this->periodicityFactory = $periodicityFactory;
+    }
+
+    public  function createNew(): Entry
     {
         return new Entry();
     }
@@ -31,21 +41,21 @@ class EntryFactory
         int $minute
     ): Entry {
         $date = Carbon::create($year, $month, $day, $hour, $minute);
-        $entry = EntryFactory::createNew();
-        EntryFactory::setDefaultValues($entry);
+        $entry = $this->createNew();
+        $this->setDefaultValues($entry);
         $entry->setArea($area);
         $entry->setRoom($room);
         $entry->setStartTime($date);
         $endTime = $date->copy()->addSeconds($area->getDurationDefaultEntry());
         $entry->setEndTime($endTime);
-        $entry->setPeriodicity(self::initPeriodicity($entry));
+        $entry->setPeriodicity($this->initPeriodicity($entry));
 
         return $entry;
     }
 
-    protected static function initPeriodicity(Entry $entry): Periodicity
+    protected  function initPeriodicity(Entry $entry): Periodicity
     {
-        $periodicity = PeriodicityFactory::createNew();
+        $periodicity = $this->periodicityFactory->createNew();
         $periodicity->setEntry($entry);
         $periodicity->setEndTime($entry->getStartTime());
         $periodicity->setType(null);
@@ -57,7 +67,7 @@ class EntryFactory
      * @param Entry $entry
      * @deprecated
      */
-    public static function setDefaultValues(Entry $entry)
+    public  function setDefaultValues(Entry $entry)
     {
         $entry
             ->setModerate(false)

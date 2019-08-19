@@ -14,14 +14,14 @@ use Carbon\Carbon;
 
 class DurationFactory
 {
-    public static function createNew(): DurationModel
+    public function createNew(): DurationModel
     {
         return new DurationModel();
     }
 
-    public static function createByEntry(Entry $entry): DurationModel
+    public function createByEntry(Entry $entry): DurationModel
     {
-        $duration = self::createNew();
+        $duration = $this->createNew();
 
         $startTime = Carbon::instance($entry->getStartTime());
         $endTime = Carbon::instance($entry->getEndTime());

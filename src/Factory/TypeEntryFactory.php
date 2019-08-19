@@ -12,7 +12,7 @@ use App\Entity\EntryType;
 
 class TypeEntryFactory
 {
-    public static function createNew(): EntryType
+    public function createNew(): EntryType
     {
         return new EntryType();
     }

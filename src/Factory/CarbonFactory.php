@@ -19,7 +19,7 @@ class CarbonFactory
         $this->localHelper = $localHelper;
     }
 
-    public static function getToday(): CarbonInterface
+    public function getToday(): CarbonInterface
     {
         $date = Carbon::today();
         $date->locale(LocalHelper::getDefaultLocal());
@@ -27,7 +27,7 @@ class CarbonFactory
         return $date;
     }
 
-    public static function getTodayImmutable(): CarbonImmutable
+    public function getTodayImmutable(): CarbonImmutable
     {
         $date = Carbon::today();
         $date->locale(LocalHelper::getDefaultLocal());
@@ -35,7 +35,7 @@ class CarbonFactory
         return $date->toImmutable();
     }
 
-    public static function create($year = 0, $month = 1, $day = 1, $hour = 0, $minute = 0, $second = 0): Carbon
+    public function create($year = 0, $month = 1, $day = 1, $hour = 0, $minute = 0, $second = 0): Carbon
     {
         $date = Carbon::create($year, $month, $day, $hour, $minute, $second);
         $date->locale(LocalHelper::getDefaultLocal());
@@ -43,7 +43,7 @@ class CarbonFactory
         return $date;
     }
 
-    public static function createImmutable(
+    public function createImmutable(
         $year = 0,
         $month = 1,
         $day = 1,
@@ -67,7 +67,7 @@ class CarbonFactory
     /**
      * start/end of week force.
      */
-    public static function setStartEndWeek(CarbonInterface $mutable)
+    public function setStartEndWeek(CarbonInterface $mutable)
     {
         $mutable->startOfWeek(Carbon::MONDAY);
         $mutable->startOfWeek(Carbon::SUNDAY);

@@ -8,7 +8,7 @@ use App\Navigation\MenuSelect;
 
 class MenuSelectFactory
 {
-    public static function createNew(): MenuSelect
+    public function createNew(): MenuSelect
     {
         return new MenuSelect();
     }

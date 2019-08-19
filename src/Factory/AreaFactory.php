@@ -13,7 +13,7 @@ use App\Provider\DateProvider;
 
 class AreaFactory
 {
-    public static function createNew(): Area
+    public function createNew(): Area
     {
         return new Area();
     }

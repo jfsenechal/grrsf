@@ -18,19 +18,27 @@ class MenuGenerator
      * @var RessourceSelectedHelper
      */
     private $ressourceSelectedHelper;
+    /**
+     * @var MenuSelectFactory
+     */
+    private $menuSelectFactory;
 
-    public function __construct(FormFactoryInterface $formFactory, RessourceSelectedHelper $ressourceSelectedHelper)
-    {
+    public function __construct(
+        MenuSelectFactory $menuSelectFactory,
+        FormFactoryInterface $formFactory,
+        RessourceSelectedHelper $ressourceSelectedHelper
+    ) {
         $this->formFactory = $formFactory;
         $this->ressourceSelectedHelper = $ressourceSelectedHelper;
+        $this->menuSelectFactory = $menuSelectFactory;
     }
 
     public function generateMenuSelect(): FormInterface
     {
-        $area =$this->ressourceSelectedHelper->getArea();
-        $room =$this->ressourceSelectedHelper->getRoom();
+        $area = $this->ressourceSelectedHelper->getArea();
+        $room = $this->ressourceSelectedHelper->getRoom();
 
-        $menuSelect = MenuSelectFactory::createNew();
+        $menuSelect = $this->menuSelectFactory->createNew();
         $menuSelect->setArea($area);
         $menuSelect->setRoom($room);
 

@@ -13,7 +13,7 @@ use App\Entity\Room;
 
 class RoomFactory
 {
-    public static function createNew(Area $area): Room
+    public function createNew(Area $area): Room
     {
         $room = new Room();
         $room->setArea($area);
