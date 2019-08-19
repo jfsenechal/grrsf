@@ -24,7 +24,7 @@ class TimeSlotsProvider
     /**
      * Retourne les heures de l'area suivant son resolution.
      *
-     * @param Area            $area
+     * @param Area $area
      * @param CarbonInterface $dayModel
      *
      * @return CarbonPeriod
@@ -44,11 +44,11 @@ class TimeSlotsProvider
     /**
      * Crée les tranches d'heures sous forme d'objet.
      *
-     * @param CarbonPeriod $hoursPeriod
-     *
+     * @param Area $area
+     * @param CarbonInterface $daySelected
      * @return TimeSlot[]
      */
-    public function getTimeSlotsModelByAreaAndDay($area, $daySelected)
+    public function getTimeSlotsModelByAreaAndDay(Area $area, CarbonInterface $daySelected)
     {
         $timeSlots = $this->getTimeSlots($area, $daySelected);
 
@@ -62,9 +62,8 @@ class TimeSlotsProvider
             $timeSlots->next();
             $end = $timeSlots->current();
 
-            $hour = new TimeSlot();
-            $hour->setBegin($begin);
-            $hour->setEnd($end);
+            $hour = new TimeSlot($begin, $end);
+
             $hours[] = $hour;
         }
 

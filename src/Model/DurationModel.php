@@ -10,6 +10,23 @@ class DurationModel
     const UNIT_TIME_WEEKS = 4;
 
     /**
+     * Unité de temps
+     * @var integer
+     */
+    private $unit;
+
+    /**
+     * Le temps en flottant
+     * @var float;
+     */
+    private $time;
+
+    /**
+     * @var boolean
+     */
+    private $full_day;
+
+    /**
      * Encodage de la date de fin de l'entry.
      *
      * @return array
@@ -25,21 +42,6 @@ class DurationModel
 
         return $units;
     }
-
-    /**
-     * @var integer
-     */
-    private $unit;
-
-    /**
-     * @var float;
-     */
-    private $time;
-
-    /**
-     * @var boolean
-     */
-    private $full_day;
 
     public function __construct()
     {

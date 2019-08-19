@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
+use App\Factory\DayFactory;
 use App\Helper\MonthHelperDataDisplay;
 use App\Model\Day;
 use App\Model\Month;
@@ -41,17 +42,23 @@ class DefaultController extends AbstractController implements FrontControllerInt
      * @var TimeSlotsProvider
      */
     private $timeSlotsProvider;
+    /**
+     * @var DayFactory
+     */
+    private $dayFactory;
 
     public function __construct(
         SettingsProvider $settingservice,
         MonthHelperDataDisplay $monthHelperDataDisplay,
         BindDataManager $calendarDataManager,
-        TimeSlotsProvider $timeSlotsProvider
+        TimeSlotsProvider $timeSlotsProvider,
+        DayFactory $dayFactory
     ) {
         $this->calendarDataManager = $calendarDataManager;
         $this->settingservice = $settingservice;
         $this->monthHelperDataDisplay = $monthHelperDataDisplay;
         $this->timeSlotsProvider = $timeSlotsProvider;
+        $this->dayFactory = $dayFactory;
     }
 
     /**
@@ -104,11 +111,11 @@ class DefaultController extends AbstractController implements FrontControllerInt
      */
     public function day(Area $area, int $year, int $month, int $day, Room $room = null): Response
     {
-        $daySelected = CarbonFactory::createImmutable($year, $month, $day);
-        $dayModel = new Day($daySelected);
+        $dayModel = $this->dayFactory->createImmutable($year, $month, $day);
+        $daySelected = $dayModel->toImmutable();
 
         $hoursModel = $this->timeSlotsProvider->getTimeSlotsModelByAreaAndDay($area, $daySelected);
-        $roomsModel = $this->calendarDataManager->bindDay($daySelected, $area, $hoursModel,$room);
+        $roomsModel = $this->calendarDataManager->bindDay($daySelected, $area, $hoursModel, $room);
 
         return $this->render(
             '@grr_front/day/day.html.twig',

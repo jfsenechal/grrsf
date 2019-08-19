@@ -12,6 +12,7 @@ use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
+use App\Factory\DayFactory;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\RoomModel;
@@ -47,13 +48,18 @@ class BindDataManager
      * @var CarbonFactory
      */
     private $carbonFactory;
+    /**
+     * @var DayFactory
+     */
+    private $dayFactory;
 
     public function __construct(
         EntryRepository $entryRepository,
         CarbonFactory $carbonFactory,
         PeriodicityDayRepository $periodicityDayRepository,
         EntryService $entryService,
-        GeneratorEntry $generatorEntry
+        GeneratorEntry $generatorEntry,
+        DayFactory $dayFactory
     ) {
         $this->entries = [];
         $this->entryRepository = $entryRepository;
@@ -61,6 +67,7 @@ class BindDataManager
         $this->periodicityDayRepository = $periodicityDayRepository;
         $this->generatorEntry = $generatorEntry;
         $this->carbonFactory = $carbonFactory;
+        $this->dayFactory = $dayFactory;
     }
 
     /**
@@ -83,7 +90,7 @@ class BindDataManager
         $this->entries = array_merge(...$entries);
 
         foreach ($monthModel->getCalendarDays() as $date) {
-            $day = new Day($date);
+            $day = $this->dayFactory->createFromCarbon($date);
             $events = $this->extractByDate($day);
             $day->addEntries($events);
             $monthModel->addDataDay($day);
@@ -98,7 +105,7 @@ class BindDataManager
      *
      * @throws \Exception
      */
-    public function bindWeek(Week $weekModel, Area $area, Room $roomSelected)
+    public function bindWeek(Week $weekModel, Area $area, Room $roomSelected = null)
     {
         if ($roomSelected) {
             $rooms = [$roomSelected];

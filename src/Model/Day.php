@@ -9,6 +9,7 @@
 namespace App\Model;
 
 use App\Entity\Entry;
+use App\Factory\CarbonFactory;
 use Carbon\CarbonImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,14 +21,6 @@ class Day extends CarbonImmutable
      */
     protected $entries;
 
-    /**
-     * Day constructor.
-     *
-     * @param null $time
-     * @param null $tz
-     *
-     * @throws \Exception Emits Exception in case of an error
-     */
     public function __construct($time = null, $tz = null)
     {
         parent::__construct($time, $tz);

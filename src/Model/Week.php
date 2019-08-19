@@ -42,7 +42,7 @@ class Week extends Carbon
     /**
      * @return RoomModel[]|ArrayCollection
      */
-    public function getRooms()
+    public function getR2222ooms()
     {
         return $this->rooms;
     }
@@ -50,7 +50,7 @@ class Week extends Carbon
     /**
      * @param RoomModel[]|ArrayCollection $rooms
      */
-    public function setRooms($rooms): void
+    public function setRo222oms($rooms): void
     {
         $this->rooms = $rooms;
     }
@@ -100,12 +100,12 @@ class Week extends Carbon
     /**
      * @return Collection|Day[]
      */
-    public function getDataDays(): Collection
+    public function getD222ataDays(): Collection
     {
         return $this->data_days;
     }
 
-    public function addDataDay(Day $day): self
+    public function addD222ataDay(Day $day): self
     {
         if (!$this->data_days->contains($day)) {
             $this->data_days[] = $day;

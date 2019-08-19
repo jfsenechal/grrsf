@@ -22,42 +22,10 @@ class TimeSlot
      */
     protected $end;
 
-    /**
-     * @var ArrayCollection|Day[]
-     */
-    protected $data_days;
-
-    /**
-     * @var ArrayCollection|RoomModel[]
-     */
-    protected $rooms;
-
-    public function __construct()
+    public function __construct(CarbonInterface $begin, CarbonInterface $end)
     {
-        $this->data_days = new ArrayCollection();
-        $this->rooms = new ArrayCollection();
-    }
-
-    /**
-     * @return RoomModel[]|ArrayCollection
-     */
-    public function getRooms()
-    {
-        return $this->rooms;
-    }
-
-    public function addRoom(RoomModel $roomModel): self
-    {
-        if (!$this->rooms->contains($roomModel)) {
-            $this->rooms[] = $roomModel;
-        }
-
-        return $this;
-    }
-
-    public function setRooms(iterable $rooms)
-    {
-        $this->rooms = $rooms;
+        $this->begin = $begin;
+        $this->end = $end;
     }
 
     /**
@@ -69,14 +37,6 @@ class TimeSlot
     }
 
     /**
-     * @param CarbonInterface $begin
-     */
-    public function setBegin(CarbonInterface $begin): void
-    {
-        $this->begin = $begin;
-    }
-
-    /**
      * @return CarbonInterface
      */
     public function getEnd(): CarbonInterface
@@ -84,11 +44,4 @@ class TimeSlot
         return $this->end;
     }
 
-    /**
-     * @param CarbonInterface $end
-     */
-    public function setEnd(CarbonInterface $end): void
-    {
-        $this->end = $end;
-    }
 }
