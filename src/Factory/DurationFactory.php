@@ -11,6 +11,7 @@ namespace App\Factory;
 use App\Entity\Entry;
 use App\Model\DurationModel;
 use Carbon\Carbon;
+use Webmozart\Assert\Assert;
 
 class DurationFactory
 {
@@ -21,10 +22,25 @@ class DurationFactory
 
     public function createByEntry(Entry $entry): DurationModel
     {
+        return $this->createFromDates($entry->getStartTime(), $entry->getEndTime());
+    }
+
+    public function createFromDates(\DateTimeInterface $startTime, \DateTimeInterface $endTime): DurationModel
+    {
         $duration = $this->createNew();
 
-        $startTime = Carbon::instance($entry->getStartTime());
-        $endTime = Carbon::instance($entry->getEndTime());
+        $this->setUnitAndTime($duration, $startTime, $endTime);
+
+        return $duration;
+    }
+
+    protected function setUnitAndTime(
+        DurationModel $duration,
+        \DateTimeInterface $startDateTime,
+        \DateTimeInterface $endDateTime
+    ) {
+        $startTime = Carbon::instance($startDateTime);
+        $endTime = Carbon::instance($endDateTime);
 
         $minutes = $startTime->diffInMinutes($endTime);
         $hours = $startTime->diffInRealHours($endTime);
@@ -47,7 +63,5 @@ class DurationFactory
             $duration->setUnit(DurationModel::UNIT_TIME_WEEKS);
             $duration->setTime($weeks);
         }
-
-        return $duration;
     }
 }

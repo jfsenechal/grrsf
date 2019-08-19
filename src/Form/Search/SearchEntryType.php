@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Search;
 
+use App\Entity\EntryType;
 use App\Entity\Room;
-use App\GrrData\EntryData;
+use App\Form\Type\AreaSelectType;
+use App\Form\Type\RoomSelectType;
 use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -18,15 +20,11 @@ class SearchEntryType extends AbstractType
      * @var RoomRepository
      */
     private $roomRepository;
-    /**
-     * @var EntryData
-     */
-    private $entryData;
 
-    public function __construct(RoomRepository $roomRepository, EntryData $entryData)
+
+    public function __construct(RoomRepository $roomRepository)
     {
         $this->roomRepository = $roomRepository;
-        $this->entryData = $entryData;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -44,21 +42,18 @@ class SearchEntryType extends AbstractType
                 'entry_type',
                 EntityType::class,
                 [
-                    'class' => \App\Entity\EntryType::class,
+                    'class' => EntryType::class,
                     'required' => false,
                     'placeholder' => 'Entry type',
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )
+            ->add('area', AreaSelectType::class)
             ->add(
                 'room',
-                EntityType::class,
+                RoomSelectType::class,
                 [
                     'required' => false,
-                    'placeholder' => 'Room',
-                    'class' => Room::class,
-                    'query_builder' => $this->roomRepository->getQueryBuilder(),
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )
             ->add(
@@ -67,7 +62,6 @@ class SearchEntryType extends AbstractType
                 [
                     'required' => false,
                     'placeholder' => 'Type périodicité',
-
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             );

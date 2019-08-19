@@ -8,7 +8,7 @@ use App\Entity\Room;
 use App\Events\EntryEvent;
 use App\Factory\EntryFactory;
 use App\Form\EntryType;
-use App\Form\SearchEntryType;
+use App\Form\Search\SearchEntryType;
 use App\GrrData\PeriodicityConstant;
 use App\Handler\HandlerEntry;
 use App\Provider\PeriodicityDaysProvider;

@@ -18,6 +18,16 @@ use Symfony\Component\Form\FormEvents;
 class AddDurationFieldSubscriber implements EventSubscriberInterface
 {
     /**
+     * @var DurationFactory
+     */
+    private $durationFactory;
+
+    public function __construct(DurationFactory $durationFactory)
+    {
+        $this->durationFactory = $durationFactory;
+    }
+
+    /**
      * Returns an array of event names this subscriber wants to listen to.
      *
      * The array keys are event names and the value can be:
@@ -62,7 +72,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
 
         if ($type === 0) {
 
-            $duration = DurationFactory::createByEntry($entry);
+            $duration = $this->durationFactory->createByEntry($entry);
 
             $form->add(
                 'duration',
