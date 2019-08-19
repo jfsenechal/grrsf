@@ -2,9 +2,9 @@
 
 namespace App\Tests\Admin\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Panther\PantherTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends PantherTestCase
 {
     public function testAdminHomePage()
     {

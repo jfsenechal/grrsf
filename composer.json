@@ -24,6 +24,7 @@
     "symfony/mime": "^4.3",
     "symfony/monolog-bundle": "^3.4",
     "symfony/orm-pack": "*",
+    "symfony/panther": "^0.4.1",
     "symfony/phpunit-bridge": "^4.3",
     "symfony/process": "4.3.*",
     "symfony/security-bundle": "4.3.*",
