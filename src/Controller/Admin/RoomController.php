@@ -48,7 +48,7 @@ class RoomController extends AbstractController
      */
     public function new(Request $request, Area $area): Response
     {
-        $room = RoomFactory::createNew($area);
+        $room = $this->roomFactory->createNew($area);
 
         $form = $this->createForm(RoomType::class, $room);
         $form->handleRequest($request);
@@ -116,11 +116,12 @@ class RoomController extends AbstractController
     public function delete(Request $request, Room $room): Response
     {
         if ($this->isCsrfTokenValid('delete'.$room->getId(), $request->request->get('_token'))) {
+            $area = $room->getArea();
             $this->roomManager->removeEntries($room);
             $this->roomManager->remove($room);
             $this->roomManager->flush();
         }
 
-        return $this->redirectToRoute('grr_admin_room_index');
+        return $this->redirectToRoute('grr_admin_area_show', ['id' => $area->getId()]);
     }
 }

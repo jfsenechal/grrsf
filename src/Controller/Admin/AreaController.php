@@ -70,7 +70,7 @@ class AreaController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $area = AreaFactory::createNew();
+        $area = $this->areaFactory->createNew();
 
         $form = $this->createForm(AreaType::class, $area);
         $form->handleRequest($request);

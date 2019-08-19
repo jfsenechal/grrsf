@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\EntryType;
 use App\Factory\TypeEntryFactory;
-use App\Form\TypeAreaType;
-use App\Manager\TypeAreaManager;
+use App\Form\TypeEntryType;
+use App\Manager\TypeEntryManager;
 use App\Repository\EntryTypeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,18 +22,24 @@ class TypeEntryController extends AbstractController
     /**
      * @var EntryTypeRepository
      */
-    private $typeAreaRepository;
+    private $entryTypeRepository;
     /**
-     * @var TypeAreaManager
+     * @var TypeEntryManager
      */
-    private $typeAreaManager;
+    private $typeEntryManager;
+    /**
+     * @var TypeEntryFactory
+     */
+    private $typeEntryFactory;
 
     public function __construct(
-        EntryTypeRepository $typeAreaRepository,
-        TypeAreaManager $typeAreaManager
+        TypeEntryFactory $typeEntryFactory,
+        EntryTypeRepository $entryTypeRepository,
+        TypeEntryManager $typeEntryManager
     ) {
-        $this->typeAreaRepository = $typeAreaRepository;
-        $this->typeAreaManager = $typeAreaManager;
+        $this->entryTypeRepository = $entryTypeRepository;
+        $this->typeEntryManager = $typeEntryManager;
+        $this->typeEntryFactory = $typeEntryFactory;
     }
 
     /**
@@ -44,7 +50,7 @@ class TypeEntryController extends AbstractController
         return $this->render(
             '@grr_admin/type_entry/index.html.twig',
             [
-                'type_entries' => $this->typeAreaRepository->findAll(),
+                'type_entries' => $this->entryTypeRepository->findAll(),
             ]
         );
     }
@@ -54,13 +60,13 @@ class TypeEntryController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $typeArea = TypeEntryFactory::createNew();
+        $entryType = $this->typeEntryFactory->createNew();
 
-        $form = $this->createForm(TypeAreaType::class, $typeArea);
+        $form = $this->createForm(TypeEntryType::class, $entryType);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->typeAreaRepository->insert($typeArea);
+            $this->entryTypeRepository->insert($entryType);
 
             return $this->redirectToRoute('grr_admin_type_entry_index');
         }
@@ -68,7 +74,7 @@ class TypeEntryController extends AbstractController
         return $this->render(
             '@grr_admin/type_entry/new.html.twig',
             [
-                'type_entry' => $typeArea,
+                'type_entry' => $entryType,
                 'form' => $form->createView(),
             ]
         );
@@ -92,11 +98,11 @@ class TypeEntryController extends AbstractController
      */
     public function edit(Request $request, EntryType $typeArea): Response
     {
-        $form = $this->createForm(TypeAreaType::class, $typeArea);
+        $form = $this->createForm(TypeEntryType::class, $typeArea);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->typeAreaRepository->flush();
+            $this->entryTypeRepository->flush();
 
             return $this->redirectToRoute(
                 'grr_admin_type_entry_index',
@@ -118,11 +124,11 @@ class TypeEntryController extends AbstractController
     /**
      * @Route("/{id}", name="grr_admin_type_entry_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, EntryType $typeArea): Response
+    public function delete(Request $request, EntryType $entryType): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$typeArea->getId(), $request->request->get('_token'))) {
-            $this->typeAreaRepository->persist($typeArea);
-            $this->typeAreaRepository->flush();
+        if ($this->isCsrfTokenValid('delete'.$entryType->getId(), $request->request->get('_token'))) {
+            $this->entryTypeRepository->persist($entryType);
+            $this->entryTypeRepository->flush();
         }
 
         return $this->redirectToRoute('grr_admin_type_entry_index');

@@ -19,10 +19,15 @@ class EntryFixtures extends Fixture implements DependentFixtureInterface
      * @var ObjectManager
      */
     private $manager;
+    /**
+     * @var EntryFactory
+     */
+    private $entryFactory;
 
-    public function __construct(AreaFactory $areaFactory)
+    public function __construct(EntryFactory $entryFactory, AreaFactory $areaFactory)
     {
         $this->areaFactory = $areaFactory;
+        $this->entryFactory = $entryFactory;
     }
 
     public function load(ObjectManager $manager)
@@ -50,8 +55,8 @@ class EntryFixtures extends Fixture implements DependentFixtureInterface
 
     protected function createEntry($name, $start, $end, $area, $type)
     {
-        $entry = EntryFactory::createNew();
-        EntryFactory::setDefaultValues($entry);
+        $entry = $this->entryFactory->createNew();
+        $this->entryFactory->setDefaultValues($entry);
         $entry->setRoom($this->getReference($area));
         $entry->setStartTime($start);
         $entry->setEndTime($end);

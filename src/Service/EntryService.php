@@ -18,7 +18,7 @@ class EntryService
      */
     public function setCountCells(Entry $entry, Area $area)
     {
-        $resolution = $area->getResolutionArea();
+        $resolution = $area->getDurationTimeSlot();
         $start = Carbon::instance($entry->getStartTime());
         $end = Carbon::instance($entry->getEndTime());
         $diff = $start->diffInSeconds($end);
@@ -71,6 +71,6 @@ class EntryService
         $entryHourBegin = $entry->getStartTime();
         $entryHourEnd = $entry->getEndTime();
 
-        return Carbon::parse($entryHourBegin)->secondsUntil($entryHourEnd, $area->getResolutionArea());
+        return Carbon::parse($entryHourBegin)->secondsUntil($entryHourEnd, $area->getDurationTimeSlot());
     }
 }

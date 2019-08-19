@@ -8,6 +8,16 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
+    /**
+     * @var TypeEntryFactory
+     */
+    private $typeEntryFactory;
+
+    public function __construct(TypeEntryFactory $typeEntryFactory)
+    {
+        $this->typeEntryFactory = $typeEntryFactory;
+    }
+
     public function load(ObjectManager $manager)
     {
         $types = [
@@ -21,7 +31,7 @@ class AppFixtures extends Fixture
         ];
 
         foreach ($types as $index => $nom) {
-            $type = TypeEntryFactory::createNew();
+            $type = $this->typeEntryFactory->createNew();
             $type->setTypeLetter($index);
             $type->setTypeName($nom);
             $manager->persist($type);

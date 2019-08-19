@@ -43,9 +43,14 @@ class BindDataManager
      * @var GeneratorEntry
      */
     private $generatorEntry;
+    /**
+     * @var CarbonFactory
+     */
+    private $carbonFactory;
 
     public function __construct(
         EntryRepository $entryRepository,
+        CarbonFactory $carbonFactory,
         PeriodicityDayRepository $periodicityDayRepository,
         EntryService $entryService,
         GeneratorEntry $generatorEntry
@@ -55,6 +60,7 @@ class BindDataManager
         $this->entryService = $entryService;
         $this->periodicityDayRepository = $periodicityDayRepository;
         $this->generatorEntry = $generatorEntry;
+        $this->carbonFactory = $carbonFactory;
     }
 
     /**
@@ -108,7 +114,7 @@ class BindDataManager
         foreach ($rooms as $room) {
             $roomModel = new RoomModel($room);
             foreach ($days as $dayCalendar) {
-                $daySelected = CarbonFactory::createImmutable($year, $month, $dayCalendar->day);
+                $daySelected = $this->carbonFactory->createImmutable($year, $month, $dayCalendar->day);
                 $dataDay = new Day($daySelected);
                 $entries = [];
                 $entries[] = $this->entryRepository->findForWeek($dayCalendar, $room);

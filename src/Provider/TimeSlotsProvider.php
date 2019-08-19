@@ -35,8 +35,8 @@ class TimeSlotsProvider
         $heureFin = $area->getEndTime();
         $resolution = $area->getDurationTimeSlot();
 
-        $debut = $this->carbonFactory::create($dayModel->year, $dayModel->month, $dayModel->day, $heureDebut, 0);
-        $fin = $this->carbonFactory::create($dayModel->year, $dayModel->month, $dayModel->day, $heureFin, 0, 0);
+        $debut = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $heureDebut, 0);
+        $fin = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $heureFin, 0, 0);
 
         return Carbon::parse($debut)->secondsUntil($fin, $resolution);
     }

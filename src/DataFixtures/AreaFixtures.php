@@ -9,13 +9,28 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class AreaFixtures extends Fixture
 {
+    /**
+     * @var AreaFactory
+     */
+    private $areaFactory;
+    /**
+     * @var RoomFactory
+     */
+    private $roomFactory;
+
+    public function __construct(AreaFactory $areaFactory, RoomFactory $roomFactory)
+    {
+        $this->areaFactory = $areaFactory;
+        $this->roomFactory = $roomFactory;
+    }
+
     public function load(ObjectManager $manager)
     {
-        $esquare = AreaFactory::createNew();
+        $esquare = $this->areaFactory->createNew();
 
         $esquare->setName('E-square');
 
-        $hdv = AreaFactory::createNew();
+        $hdv = $this->areaFactory->createNew();
         $hdv->setName('Hdv');
 
         $manager->persist($esquare);
@@ -30,7 +45,7 @@ class AreaFixtures extends Fixture
         ];
 
         foreach ($salles as $salle) {
-            $room = RoomFactory::createNew($esquare);
+            $room = $this->roomFactory->createNew($esquare);
             $room->setName($salle);
             $manager->persist($room);
             $this->addReference($salle, $room);
@@ -43,7 +58,7 @@ class AreaFixtures extends Fixture
         ];
 
         foreach ($salles as $salle) {
-            $room = RoomFactory::createNew($hdv);
+            $room = $this->roomFactory->createNew($esquare);
             $room->setName($salle);
             $manager->persist($room);
         }

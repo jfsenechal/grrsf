@@ -222,6 +222,6 @@ class EntryController extends AbstractController
             $this->addFlash('success', 'flash.entry.delete');
         }
 
-        return $this->redirectToRoute('grr_front_home');
+        return $this->redirectToRoute('grr_home');
     }
 }
