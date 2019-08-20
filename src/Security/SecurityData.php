@@ -18,7 +18,7 @@ class SecurityData
     }
 
     /**
-     * visiteur.
+     * Role minimal pour être authentifié.
      *
      * @return string
      */
@@ -28,7 +28,7 @@ class SecurityData
     }
 
     /**
-     * gestionnaire des utilisateurs
+     * Gestionnaire des utilisateurs
      *
      * @return string
      */
@@ -48,7 +48,8 @@ class SecurityData
     }
 
     /**
-     * Administrateur de grr
+     * Administrateur d'une area
+     * Peut modifier, supprimer l'area et ses ressources
      *
      * @return string
      */

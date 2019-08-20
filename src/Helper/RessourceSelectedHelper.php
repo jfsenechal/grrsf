@@ -62,7 +62,9 @@ class RessourceSelectedHelper
         if ($this->session->has(self::AREA_DEFAULT_SESSION)) {
             $areaId = $this->session->get(self::AREA_DEFAULT_SESSION);
 
-            return $this->areaRepository->find($areaId);
+            if ($area = $this->areaRepository->find($areaId)) {
+                return $area;
+            }
         }
 
         /**

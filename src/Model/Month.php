@@ -37,7 +37,7 @@ class Month extends Carbon
         $this->data_days = new ArrayCollection();
     }
 
-    public static function init(int $year, int $month, $day = 01): self
+    public static function init(int $year, int $month, $day = 1): self
     {
         $monthModel = new self();
         $monthModel->setDate($year, $month, $day);

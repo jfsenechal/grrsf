@@ -58,7 +58,7 @@ class AreaFixtures extends Fixture
         ];
 
         foreach ($salles as $salle) {
-            $room = $this->roomFactory->createNew($esquare);
+            $room = $this->roomFactory->createNew($hdv);
             $room->setName($salle);
             $manager->persist($room);
         }

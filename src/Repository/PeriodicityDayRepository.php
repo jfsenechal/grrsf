@@ -32,11 +32,19 @@ class PeriodicityDayRepository extends ServiceEntityRepository
         $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');
         $qb->addSelect('entry');
 
-        $qb->andWhere('YEAR(periodicity_day.date_periodicity) = :year')
-            ->setParameter('year', $monthModel->getFirstDayImmutable()->year);
+        $qb->andWhere('periodicity_day.date_periodicity LIKE :time')
+            ->setParameter(
+                'time',
+                $monthModel->getFirstDayImmutable()->year.'-'.$monthModel->getFirstDayImmutable()->format(
+                    'm'
+                ).'-'.$monthModel->getFirstDayImmutable()->format('d').'%'
+            );
 
-        $qb->andWhere('MONTH(periodicity_day.date_periodicity) = :month')
-            ->setParameter('month', $monthModel->getFirstDayImmutable()->month);
+        /*    $qb->andWhere('YEAR(periodicity_day.date_periodicity) = :year')
+                ->setParameter('year', $monthModel->getFirstDayImmutable()->year);
+
+            $qb->andWhere('MONTH(periodicity_day.date_periodicity) = :month')
+                ->setParameter('month', $monthModel->getFirstDayImmutable()->month);*/
 
         if ($room !== null) {
             $qb->andWhere('entry.room = :room')
@@ -73,14 +81,18 @@ class PeriodicityDayRepository extends ServiceEntityRepository
         $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');
         $qb->addSelect('entry');
 
-        $qb->andWhere('YEAR(periodicity_day.date_periodicity) = :year')
-            ->setParameter('year', $day->year);
+        $qb->andWhere('periodicity_day.date_periodicity LIKE :time')
+            ->setParameter('time', $day->year.'-'.$day->format('m').'-'.$day->format('d').'%');
 
-        $qb->andWhere('MONTH(periodicity_day.date_periodicity) = :month')
-            ->setParameter('month', $day->month);
+        /*
+              $qb->andWhere('YEAR(periodicity_day.date_periodicity) = :year')
+                  ->setParameter('year', $day->year);
 
-        $qb->andWhere('DAY(periodicity_day.date_periodicity) = :day')
-            ->setParameter('day', $day->day);
+              $qb->andWhere('MONTH(periodicity_day.date_periodicity) = :month')
+                  ->setParameter('month', $day->month);
+
+              $qb->andWhere('DAY(periodicity_day.date_periodicity) = :day')
+                  ->setParameter('day', $day->day); */
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);

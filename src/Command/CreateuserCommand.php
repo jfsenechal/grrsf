@@ -55,7 +55,7 @@ class CreateuserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
-        $roles = SecurityData::getRoles();
+        $role = SecurityData::getRoleGrrAdministrator();
 
         $email = $input->getArgument('email');
         $name = $input->getArgument('name');
@@ -90,20 +90,20 @@ class CreateuserCommand extends Command
             return;
         }
 
-        $questionRoles = new Question('Quel(s) role(s): '.join(', ', $roles)." \n");
-        $roles = $helper->ask($input, $output, $questionRoles);
+        $questionAdministrator = new Question("Administrateur de Grr ? [Y,n] \n ");
+        $reponse = $helper->ask($input, $output, $questionAdministrator);
 
         $user = new User();
         $user->setEmail($email);
         $user->setName($name);
         $user->setPassword($this->userManager->encodePassword($user, $password));
 
-        if ($roles) {
-            $user->addRole($roles);
+        if (strtolower($reponse) === 'y') {
+            $user->addRole($role);
         }
 
         $this->userManager->insert($user);
 
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $io->success("L'utilisateur a bien été créé");
     }
 }

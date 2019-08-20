@@ -21,12 +21,6 @@ class RoomRepository extends ServiceEntityRepository
         parent::__construct($registry, Room::class);
     }
 
-    public function getQueryBuilder(): QueryBuilder
-    {
-        return $this->createQueryBuilder('room')
-            ->orderBy('room.name', 'ASC');
-    }
-
     public function getRoomsByAreaQueryBuilder(Area $area): QueryBuilder
     {
         return $this->createQueryBuilder('room')
