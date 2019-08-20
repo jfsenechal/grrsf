@@ -29,20 +29,18 @@ class EntryServiceTest extends WebTestCase
     {
         $hourBegin = 8;
         $hourEnd = 19;
-        $resolution = 1800;
+        $duration = 1800;
 
-        $area = $this->initArea($hourBegin, $hourEnd, $resolution);
+        $area = $this->initArea($hourBegin, $hourEnd, $duration);
         $room = new Room($area);
 
         $entry = new Entry();
-        $entry->setStartTime(new \DateTime());
-        $entry->setEndTime(new \DateTime());
+        $entry->setStartTime(\DateTime::createFromFormat('Y-m-d H:i', '2019-08-20 13:00'));
+        $entry->setEndTime(\DateTime::createFromFormat('Y-m-d H:i', '2019-08-20 15:30'));
         $entry->setRoom($room);
 
-        $day = Carbon::today();
-
         $timeSlotProvider = $this->initTimeSlotProvider();
-        $timesSlot = $timeSlotProvider->getTimeSlotsModelByAreaAndDay($area, $day);
+        $timesSlot = $timeSlotProvider->getTimeSlotsModelByAreaAndDay($area);
 
         $entryService = new EntryService($timeSlotProvider);
         $entryService->setLocations($entry, $timesSlot);
@@ -51,14 +49,18 @@ class EntryServiceTest extends WebTestCase
          */
         $locations = $entry->getLocations();
 
+        /**
+         * = heure de debut
+         */
+        $day = Carbon::create(2019, 8, 20, 13, 0);
+
         foreach ($locations as $location) {
             $begin = $location->getBegin();
             $end = $location->getEnd();
-            self::assertSame("$begin->hour:$begin->minute", "13:30");
-            self::assertSame("$end->hour:$end->minute", "14:0");
+            self::assertSame("$begin->hour:$begin->minute", "$day->hour:$day->minute");
+            $day->addSeconds($duration);
+            self::assertSame("$end->hour:$end->minute", "$day->hour:$day->minute");
         }
-
-
     }
 
     public function te2stIsEntryInTimeSlot()

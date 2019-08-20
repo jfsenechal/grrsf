@@ -29,13 +29,13 @@ class TimeSlotsProvider
      * @param CarbonInterface $daySelected
      * @return TimeSlot[]
      */
-    public function getTimeSlotsModelByAreaAndDay(Area $area, CarbonInterface $daySelected)
+    public function getTimeSlotsModelByAreaAndDay(Area $area, CarbonInterface $daySelected = null)
     {
         $hourBegin = $area->getStartTime();
         $hourEnd = $area->getEndTime();
         $duration = $area->getDurationTimeSlot();
 
-        $timeSlots = $this->getTimeSlots($hourBegin, $hourEnd, $duration, $daySelected);
+        $timeSlots = $this->getTimeSlots($hourBegin, $hourEnd, $duration);
 
         $hours = [];
         $timeSlots->rewind();
@@ -64,8 +64,15 @@ class TimeSlotsProvider
      *
      * @return CarbonPeriod
      */
-    public function getTimeSlots(int $hourBegin, int $hourEnd, int $duration, CarbonInterface $dayModel): CarbonPeriod
-    {
+    public function getTimeSlots(
+        int $hourBegin,
+        int $hourEnd,
+        int $duration,
+        CarbonInterface $dayModel = null
+    ): CarbonPeriod {
+        if (!$dayModel) {
+            $dayModel = Carbon::today();
+        }
         $debut = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $hourBegin, 0);
         $fin = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $hourEnd, 0, 0);
 

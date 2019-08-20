@@ -55,7 +55,7 @@ class TimeSlotsProviderTest extends WebTestCase
         $day = Carbon::today();
 
         $timeSlotProvicer = $this->initTimeSlotProvider();
-        $timesSlot = $timeSlotProvicer->getTimeSlots($hourBegin, $hourEnd, $resolution, $day);
+        $timesSlot = $timeSlotProvicer->getTimeSlots($hourBegin, $hourEnd, $resolution );
 
         $day->hour = $hourBegin;
         $day->minute = $minute;
