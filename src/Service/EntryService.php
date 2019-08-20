@@ -5,11 +5,22 @@ namespace App\Service;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Model\TimeSlot;
+use App\Provider\TimeSlotsProvider;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
 class EntryService
 {
+    /**
+     * @var TimeSlotsProvider
+     */
+    private $timeSlotsProvider;
+
+    public function __construct(TimeSlotsProvider $timeSlotsProvider)
+    {
+        $this->timeSlotsProvider = $timeSlotsProvider;
+    }
+
     /**
      * Bug si dateEnd entry > dateEndArea.
      * @deprecated
@@ -34,7 +45,7 @@ class EntryService
     public function setLocations(Entry $entry, array $dayTimeSlots)
     {
         $locations = [];
-        $entryTimeSlots = $this->getTimeSlots($entry);
+        $entryTimeSlots = $this->timeSlotsProvider->getTimeSlotsOfEntry($entry);
 
         foreach ($dayTimeSlots as $dayTimeSlot) {
             $startTimeSlot = $dayTimeSlot->getBegin();
@@ -60,17 +71,4 @@ class EntryService
         return false;
     }
 
-    /**
-     * Obtient les tranches horaires de l'entrée basée sur la résolution de l'Area
-     * @param Entry $entry
-     * @return CarbonPeriod
-     */
-    public function getTimeSlots(Entry $entry): CarbonPeriod
-    {
-        $area = $entry->getRoom()->getArea();
-        $entryHourBegin = $entry->getStartTime();
-        $entryHourEnd = $entry->getEndTime();
-
-        return Carbon::parse($entryHourBegin)->secondsUntil($entryHourEnd, $area->getDurationTimeSlot());
-    }
 }

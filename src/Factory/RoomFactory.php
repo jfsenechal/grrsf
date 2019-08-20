@@ -15,9 +15,6 @@ class RoomFactory
 {
     public function createNew(Area $area): Room
     {
-        $room = new Room();
-        $room->setArea($area);
-
-        return $room;
+       return new Room($area);
     }
 }

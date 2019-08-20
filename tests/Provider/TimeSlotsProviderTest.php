@@ -12,6 +12,8 @@ namespace App\Tests\Provider;
 
 
 use App\Entity\Area;
+use App\Entity\Entry;
+use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Helper\LocalHelper;
 use App\Provider\TimeSlotsProvider;
@@ -32,7 +34,7 @@ class TimeSlotsProviderTest extends WebTestCase
         $day->hour = $hourBegin;
         $day->minute = $minute;
 
-        $timeSlotProvicer = $this->initCarbonFactory();
+        $timeSlotProvicer = $this->initTimeSlotProvider();
         $modelsTimeSlot = $timeSlotProvicer->getTimeSlotsModelByAreaAndDay($area, $day);
 
         foreach ($modelsTimeSlot as $modelTimeSlot) {
@@ -50,12 +52,10 @@ class TimeSlotsProviderTest extends WebTestCase
      */
     public function testGetTimeSlots(int $hourBegin, int $hourEnd, int $resolution, int $minute)
     {
-        $area = $this->initArea($hourBegin, $hourEnd, $resolution);
-
         $day = Carbon::today();
 
-        $timeSlotProvicer = $this->initCarbonFactory();
-        $timesSlot = $timeSlotProvicer->getTimeSlots($area, $day);
+        $timeSlotProvicer = $this->initTimeSlotProvider();
+        $timesSlot = $timeSlotProvicer->getTimeSlots($hourBegin, $hourEnd, $resolution, $day);
 
         $day->hour = $hourBegin;
         $day->minute = $minute;
@@ -67,6 +67,31 @@ class TimeSlotsProviderTest extends WebTestCase
         }
     }
 
+    public function getTimeSlotsOfEntry()
+    {
+        $day = Carbon::today();
+        $resolution = 1800;
+
+        $area = new Area();
+        $area->setDurationTimeSlot($resolution);
+        $room = new Room($area);
+
+        $entry = new Entry();
+        $entry->setStartTime($day->toDateTime());
+        $entry->setEndTime($day->copy()->addMinutes(180)->toDateTime());
+        $entry->setRoom($room);
+
+        $timeSlotProvicer = $this->initTimeSlotProvider();
+
+        $timesSlot = $timeSlotProvicer->getTimeSlotsOfEntry($entry);
+
+        foreach ($timesSlot as $timeSlot) {
+            self::assertSame($timeSlot->hour, $day->hour);
+            self::assertSame($timeSlot->minute, $day->minute);
+            $day->addSeconds($resolution);
+        }
+
+    }
 
     public function getData()
     {
@@ -81,12 +106,12 @@ class TimeSlotsProviderTest extends WebTestCase
                 'hourBegin' => 10,
                 'hourEnd' => 20,
                 'resolution' => 900,
-                'minute' => 15,
+                'minute' => 0, //todo if != 0
             ],
         ];
     }
 
-    protected function initCarbonFactory(): TimeSlotsProvider
+    protected function initTimeSlotProvider(): TimeSlotsProvider
     {
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $localHelper = new LocalHelper($parameterBag);

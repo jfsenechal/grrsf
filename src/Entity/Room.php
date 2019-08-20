@@ -176,8 +176,9 @@ class Room
      */
     private $users_manager_resource;
 
-    public function __construct()
+    public function __construct(Area $area)
     {
+        $this->area = $area;
         $this->capacity = 0;
         $this->statutRoom = '';
         $this->showFicRoom = '';
