@@ -144,12 +144,12 @@ class BindDataManager
      *
      * @param CarbonInterface $day
      * @param Area $area
-     * @param TimeSlot[] $hoursModel
+     * @param TimeSlot[] $timeSlots
      *
      * @param Room|null $roomSelected
      * @return RoomModel[]
      */
-    public function bindDay(CarbonInterface $day, Area $area, array $hoursModel, Room $roomSelected = null)
+    public function bindDay(CarbonInterface $day, Area $area, array $timeSlots, Room $roomSelected = null)
     {
         $roomsModel = [];
 
@@ -178,7 +178,7 @@ class BindDataManager
             $entries = $roomModel->getEntries();
 
             foreach ($entries as $entry) {
-                $this->entryService->setLocations($entry, $hoursModel);
+                $this->entryService->setLocations($entry, $timeSlots);
                 $count = count($entry->getLocations());
                 $entry->setCellules($count);
             }

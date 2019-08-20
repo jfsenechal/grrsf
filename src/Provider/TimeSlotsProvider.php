@@ -22,26 +22,6 @@ class TimeSlotsProvider
     }
 
     /**
-     * Retourne les heures de l'area suivant son resolution.
-     *
-     * @param Area $area
-     * @param CarbonInterface $dayModel
-     *
-     * @return CarbonPeriod
-     */
-    public function getTimeSlots(Area $area, CarbonInterface $dayModel): CarbonPeriod
-    {
-        $heureDebut = $area->getStartTime();
-        $heureFin = $area->getEndTime();
-        $resolution = $area->getDurationTimeSlot();
-
-        $debut = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $heureDebut, 0);
-        $fin = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $heureFin, 0, 0);
-
-        return Carbon::parse($debut)->secondsUntil($fin, $resolution);
-    }
-
-    /**
      * Crée les tranches d'heures sous forme d'objet.
      *
      * @param Area $area
@@ -68,5 +48,25 @@ class TimeSlotsProvider
         }
 
         return $hours;
+    }
+
+    /**
+     * Retourne les tranches d'heures de l'area suivant son espace entre 2 time slot.
+     *
+     * @param Area $area
+     * @param CarbonInterface $dayModel
+     *
+     * @return CarbonPeriod
+     */
+    public function getTimeSlots(Area $area, CarbonInterface $dayModel): CarbonPeriod
+    {
+        $heureDebut = $area->getStartTime();
+        $heureFin = $area->getEndTime();
+        $resolution = $area->getDurationTimeSlot();
+
+        $debut = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $heureDebut, 0);
+        $fin = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $heureFin, 0, 0);
+
+        return Carbon::parse($debut)->secondsUntil($fin, $resolution);
     }
 }
