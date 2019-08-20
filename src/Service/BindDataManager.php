@@ -121,8 +121,7 @@ class BindDataManager
         foreach ($rooms as $room) {
             $roomModel = new RoomModel($room);
             foreach ($days as $dayCalendar) {
-                $daySelected = $this->carbonFactory->createImmutable($year, $month, $dayCalendar->day);
-                $dataDay = new Day($daySelected);
+                $dataDay = $this->dayFactory->createImmutable($year, $month, $dayCalendar->day);
                 $entries = [];
                 $entries[] = $this->entryRepository->findForWeek($dayCalendar, $room);
 

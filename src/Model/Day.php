@@ -9,7 +9,6 @@
 namespace App\Model;
 
 use App\Entity\Entry;
-use App\Factory\CarbonFactory;
 use Carbon\CarbonImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,8 +20,9 @@ class Day extends CarbonImmutable
      */
     protected $entries;
 
-    public function __construct($time = null, $tz = null)
+    public function construct($time = null, $tz = null)
     {
+        dump(123);
         parent::__construct($time, $tz);
         $this->entries = new ArrayCollection();
     }
@@ -33,6 +33,17 @@ class Day extends CarbonImmutable
     public function getEntries(): Collection
     {
         return $this->entries;
+    }
+
+    /**
+     * @param Entry[]|ArrayCollection $entries
+     * @return Day
+     */
+    public function setEntries($entries): self
+    {
+        $this->entries = $entries;
+
+        return $this;
     }
 
     public function addEntry(Entry $entry): self

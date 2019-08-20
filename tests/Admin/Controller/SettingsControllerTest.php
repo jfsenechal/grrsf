@@ -9,9 +9,12 @@ class SettingsControllerTest extends PantherTestCase
     public function testSomething()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/');
+        $client->request('GET', 'admin/setting/');
 
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Hello World');
+        self::assertResponseRedirects();
+        //$this->assertResponseIsSuccessful();
+        $crawler = $client->followRedirect();
+
+        self::assertSelectorTextContains('h1', 'Authentification');
     }
 }

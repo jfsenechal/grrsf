@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Factory;
-
 
 use App\Model\Day;
 use Carbon\CarbonInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class DayFactory
 {
@@ -18,12 +17,16 @@ class DayFactory
     {
         $date = $this->carbonFactory->createImmutable($year, $month, $day);
         $day = new Day($date);
+        $day->setEntries(new ArrayCollection());
 
         return $day;
     }
 
     public function createFromCarbon(CarbonInterface $carbon): Day
     {
-        return new Day($carbon);
+        $day = new Day($carbon);
+        $day->setEntries(new ArrayCollection());
+
+        return  $day;
     }
 }

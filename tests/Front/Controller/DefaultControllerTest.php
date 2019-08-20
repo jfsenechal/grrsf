@@ -17,10 +17,15 @@ class DefaultControllerTest extends PantherTestCase
     public function testSomething()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/');
+        $client->request('GET', '/');
+        self::assertResponseRedirects();
 
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Hello World');
+        $client->followRedirect();
+
+        // var_dump($client->getResponse()->getContent());
+
+        self::assertResponseIsSuccessful();
+        //self::assertSelectorTextContains('th', 'Lundi');
     }
 
     /**
