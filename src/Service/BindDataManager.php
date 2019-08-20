@@ -108,7 +108,7 @@ class BindDataManager
     public function bindWeek(Week $weekModel, Area $area, Room $roomSelected = null)
     {
         if ($roomSelected) {
-            $rooms = [$roomSelected];
+            $rooms = (array)$roomSelected;
         } else {
             $rooms = $area->getRooms();
         }
@@ -123,7 +123,7 @@ class BindDataManager
             foreach ($days as $dayCalendar) {
                 $dataDay = $this->dayFactory->createImmutable($year, $month, $dayCalendar->day);
                 $entries = [];
-                $entries[] = $this->entryRepository->findForWeek($dayCalendar, $room);
+                $entries[] = $this->entryRepository->findByDayAndRoom($dayCalendar, $room);
 
                 $periodicityDays = $this->periodicityDayRepository->findForWeek($dayCalendar, $room);
                 $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
@@ -162,7 +162,7 @@ class BindDataManager
         foreach ($rooms as $room) {
             $roomModel = new RoomModel($room);
             $entries = [];
-            $entries[] = $this->entryRepository->findForDay($day, $room);
+            $entries[] = $this->entryRepository->findByDayAndRoom($day, $room);
 
             $periodicityDays = $this->periodicityDayRepository->findForDay($day, $room);
             $entries[] = $this->generatorEntry->generateEntries($periodicityDays);

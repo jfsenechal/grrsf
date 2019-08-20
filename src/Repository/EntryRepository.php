@@ -24,19 +24,14 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param array $args
-     *
+     * @param Month $monthModel
+     * @param Area|null $area
+     * @param Room|null $room
      * @return Entry[] Returns an array of Entry objects
      */
     public function findForMonth(Month $monthModel, Area $area = null, Room $room = null)
     {
         $qb = $this->createQueryBuilder('entry');
-
-        /*      $qb->andWhere('YEAR(entry.startTime) = :year')
-                    ->setParameter('year', $monthModel->getFirstDayImmutable()->year);
-
-                $qb->andWhere('MONTH(entry.startTime) = :month')
-                    ->setParameter('month', $monthModel->getFirstDayImmutable()->month);*/
 
         $qb->andWhere('entry.startTime LIKE :time')
             ->setParameter(
@@ -61,43 +56,17 @@ class EntryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findForWeek(CarbonInterface $day, Room $room)
-    {
-        $qb = $this->createQueryBuilder('entry');
-        /*
-                $qb->andWhere('YEAR(entry.startTime) = :year')
-                    ->setParameter('year', $day->year);
-
-                $qb->andWhere('MONTH(entry.startTime) = :month')
-                    ->setParameter('month', $day->month);
-
-                $qb->andWhere('DAY(entry.startTime) = :day')
-                    ->setParameter('day', $day->day);*/
-
-        $qb->andWhere('entry.startTime LIKE :time')
-            ->setParameter('time', $day->year.'-'.$day->format('m').'-'.$day->format('d').'%');
-
-        $qb->andWhere('entry.room = :room')
-            ->setParameter('room', $room);
-
-        return $qb
-            ->orderBy('entry.startTime', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findForDay(CarbonInterface $day, Room $room)
+    /**
+     * @param CarbonInterface $day
+     * @param Room $room
+     * @return Entry[]
+     */
+    public function findByDayAndRoom(CarbonInterface $day, Room $room)
     {
         $qb = $this->createQueryBuilder('entry');
 
         $qb->andWhere('entry.startTime LIKE :begin')
             ->setParameter('begin', $day->format('Y-m-d').'%');
-
-        /* $qb->andWhere('entry.startTime = :year')
-             ->setParameter('year', $begin->year);
-
-         $qb->andWhere('MONTH(entry.endTime) = :month')
-             ->setParameter('month', $begin->month);*/
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
@@ -235,7 +204,7 @@ class EntryRepository extends ServiceEntityRepository
     {
         $roomRepository = $this->getEntityManager()->getRepository(Room::class);
 
-     //   $this->getEntityManager();
+        //   $this->getEntityManager();
 
         return $roomRepository->findByArea($area);
     }
