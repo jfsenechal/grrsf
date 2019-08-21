@@ -10,7 +10,6 @@ namespace App\Manager;
 
 use App\Entity\Area;
 use App\Entity\PeriodicityDay;
-use App\Repository\AreaRepository;
 use App\Repository\PeriodicityDayRepository;
 
 class PeriodicityDayManager

@@ -3,7 +3,6 @@
 namespace App\Form\Search;
 
 use App\Entity\EntryType;
-use App\Entity\Room;
 use App\Form\Type\AreaSelectType;
 use App\Form\Type\RoomSelectType;
 use App\Repository\RoomRepository;

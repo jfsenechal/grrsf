@@ -3,10 +3,7 @@
 namespace App\Command;
 
 use App\Repository\AreaRepository;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

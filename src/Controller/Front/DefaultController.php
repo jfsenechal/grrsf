@@ -4,10 +4,8 @@ namespace App\Controller\Front;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use App\Factory\CarbonFactory;
 use App\Factory\DayFactory;
 use App\Helper\MonthHelperDataDisplay;
-use App\Model\Day;
 use App\Model\Month;
 use App\Model\Week;
 use App\Provider\SettingsProvider;

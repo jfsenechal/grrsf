@@ -2,17 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Area;
 use App\Entity\Entry;
 use App\EventSubscriber\AddDurationFieldSubscriber;
 use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\Factory\DurationFactory;
 use App\Form\Type\AreaSelectType;
 use App\Form\Type\EntryTypeField;
-use App\Repository\AreaRepository;
-use App\Repository\EntryTypeRepository;
-use App\Repository\RoomRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

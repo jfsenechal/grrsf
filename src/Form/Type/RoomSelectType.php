@@ -3,9 +3,7 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Area;
 use App\Entity\Room;
-use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -13,7 +13,6 @@ use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Factory\DayFactory;
-use App\Model\Day;
 use App\Model\Month;
 use App\Model\RoomModel;
 use App\Model\TimeSlot;

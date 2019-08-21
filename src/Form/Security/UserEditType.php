@@ -2,12 +2,10 @@
 
 namespace App\Form\Security;
 
-use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
 use App\Form\Type\AreaSelectType;
 use App\Form\Type\RoomSelectType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

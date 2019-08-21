@@ -11,7 +11,6 @@ namespace App\Factory;
 use App\Entity\Entry;
 use App\Model\DurationModel;
 use Carbon\Carbon;
-use Webmozart\Assert\Assert;
 
 class DurationFactory
 {

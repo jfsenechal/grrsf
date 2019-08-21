@@ -4,7 +4,6 @@ namespace App\Factory;
 
 use App\Form\AreaMenuSelectType;
 use App\Helper\RessourceSelectedHelper;
-use App\Navigation\MenuSelect;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 

@@ -9,7 +9,6 @@
 namespace App\Factory;
 
 use App\Entity\Area;
-use App\Provider\DateProvider;
 
 class AreaFactory
 {

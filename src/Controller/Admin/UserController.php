@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Security\User;
 use App\Factory\UserFactory;
 use App\Form\Security\UserAdminEditType;
-use App\Form\Security\UserEditType;
 use App\Form\Security\UserType;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;

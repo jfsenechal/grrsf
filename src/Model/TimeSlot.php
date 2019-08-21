@@ -9,7 +9,6 @@
 namespace App\Model;
 
 use Carbon\CarbonInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class TimeSlot
 {
