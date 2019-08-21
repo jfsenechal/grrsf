@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -81,14 +82,21 @@ class CreateuserCommand extends Command
         }
 
         if (!$password) {
-            $question = new Question("Choisissez un mot de passe: \n ");
+            $question = new Question("Choisissez un mot de passe: \n");
+            $question->setHidden(true);
+            $question->setMaxAttempts(5);
+            $question->setValidator(
+                function ($password) {
+                    if (strlen($password) < 4) {
+                        throw new \RuntimeException(
+                            'Le mot de passe doit faire minimum 4 caractères'
+                        );
+                    }
+
+                    return $password;
+                }
+            );
             $password = $helper->ask($input, $output, $question);
-        }
-
-        if (strlen($password) < 4) {
-            $io->error('Password length minium 4');
-
-            return;
         }
 
         if ($this->userRepository->findOneBy(['email' => $email])) {
@@ -97,15 +105,15 @@ class CreateuserCommand extends Command
             return;
         }
 
-        $questionAdministrator = new Question("Administrateur de Grr ? [Y,n] \n ");
-        $reponse = $helper->ask($input, $output, $questionAdministrator);
+        $questionAdministrator = new ConfirmationQuestion("Administrateur de Grr ? [Y,n] \n", true);
+        $administrator = $helper->ask($input, $output, $questionAdministrator);
 
         $user = $this->userFactory->createNew();
         $user->setEmail($email);
         $user->setName($name);
         $user->setPassword($this->userManager->encodePassword($user, $password));
 
-        if (strtolower($reponse) === 'y') {
+        if ($administrator) {
             $user->addRole($role);
         }
 
