@@ -74,11 +74,6 @@ class EntryVoter extends Voter
     protected function voteOnAttribute($attribute, $entry, TokenInterface $token)
     {
         $user = $token->getUser();
-
-        if (!$user instanceof User) {
-            return false;
-        }
-
         $this->user = $user;
         $this->entry = $entry;
         $this->token = $token;
@@ -113,18 +108,26 @@ class EntryVoter extends Voter
     }
 
     /**
-     * See in admin.
+     *
      * @return bool
      */
     private function canView()
     {
-        if ($this->canEdit()) {
-            return true;
-        }
-
+        $area = $this->entry->getRoom()->getArea();
         $room = $this->entry->getRoom();
 
-        return $this->securityHelper->canAddEntry($this->user, $room);
+        if ($this->isAnonyme()) {
+            if ($this->securityHelper->isAreaRestricted($area)) {
+                return false;
+            }
+
+            return $this->securityHelper->canSeeRoom($room, null);
+        }
+
+        if ($this->securityHelper->isAreaRestricted($area)) {
+            return $this->securityHelper->canSeeAreaRestricted($area, $this->user);
+        }
+        return $this->securityHelper->canSeeRoom($room, $this->user);
     }
 
     private function canEdit()
@@ -137,5 +140,10 @@ class EntryVoter extends Voter
     private function canDelete()
     {
         return (bool)$this->canEdit();
+    }
+
+    private function isAnonyme(): bool
+    {
+        return !($this->user instanceof User);
     }
 }

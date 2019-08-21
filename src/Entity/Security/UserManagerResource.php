@@ -131,4 +131,14 @@ class UserManagerResource
         $this->is_area_manager = $is_area_manager;
     }
 
+    public function getIsAreaAdministrator(): ?bool
+    {
+        return $this->is_area_administrator;
+    }
+
+    public function getIsAreaManager(): ?bool
+    {
+        return $this->is_area_manager;
+    }
+
 }

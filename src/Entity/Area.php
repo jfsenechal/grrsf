@@ -113,6 +113,12 @@ class Area
     private $max_booking;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $restricted;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="area")
      */
     private $rooms;
@@ -136,6 +142,7 @@ class Area
         $this->duration_maximum_entry = -1;
         $this->minutes_to_add_to_end_time = 0;
         $this->max_booking = -1;
+        $this->restricted = false;
         $this->rooms = new ArrayCollection();
         $this->users_manager_resource = new ArrayCollection();
     }
@@ -359,6 +366,18 @@ class Area
                 $usersManagerResource->setArea(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRestricted(): ?bool
+    {
+        return $this->restricted;
+    }
+
+    public function setRestricted(bool $restricted): self
+    {
+        $this->restricted = $restricted;
 
         return $this;
     }
