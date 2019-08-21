@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Security\User;
+use App\Factory\UserFactory;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
 use App\Security\SecurityData;
@@ -29,10 +30,15 @@ class CreateuserCommand extends Command
      * @var UserRepository
      */
     private $userRepository;
+    /**
+     * @var UserFactory
+     */
+    private $userFactory;
 
     public function __construct(
         ?string $name = null,
         UserManager $userManager,
+        UserFactory $userFactory,
         UserRepository $userRepository,
         UserPasswordEncoderInterface $userPasswordEncoder
     ) {
@@ -40,6 +46,7 @@ class CreateuserCommand extends Command
         $this->userManager = $userManager;
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->userRepository = $userRepository;
+        $this->userFactory = $userFactory;
     }
 
     protected function configure()
@@ -93,7 +100,7 @@ class CreateuserCommand extends Command
         $questionAdministrator = new Question("Administrateur de Grr ? [Y,n] \n ");
         $reponse = $helper->ask($input, $output, $questionAdministrator);
 
-        $user = new User();
+        $user = $this->userFactory->createNew();
         $user->setEmail($email);
         $user->setName($name);
         $user->setPassword($this->userManager->encodePassword($user, $password));

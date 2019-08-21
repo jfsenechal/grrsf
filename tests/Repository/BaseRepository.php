@@ -11,7 +11,9 @@
 namespace App\Tests\Repository;
 
 
+use App\Entity\Area;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Fidry\AliceDataFixtures\LoaderInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BaseRepository extends WebTestCase
@@ -21,17 +23,25 @@ class BaseRepository extends WebTestCase
      */
     protected $entityManager;
 
+    /** @var LoaderInterface */
+    protected $loader;
+    /**
+     * @var \Symfony\Component\HttpKernel\KernelInterface
+     */
+    protected $kernel;
+
     /**
      * {@inheritDoc}
      */
     protected function setUp()
     {
-        $kernel = self::bootKernel();
+        $this->kernel = self::bootKernel();
 
-        $this->entityManager = $kernel->getContainer()
+        $this->entityManager = $this->kernel->getContainer()
             ->get('doctrine')
             ->getManager();
 
+        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
         //    $this->truncateEntities();
     }
 
@@ -47,6 +57,12 @@ class BaseRepository extends WebTestCase
     protected function tearDown()
     {
         parent::tearDown();
+
+        $purger = new ORMPurger($this->entityManager);
+        $purger->purge();
+
+        $this->kernel->shutdown();
+        $this->kernel = null;
 
         $this->entityManager->close();
         $this->entityManager = null; // avoid memory leaks

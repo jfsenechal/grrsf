@@ -26,6 +26,9 @@ services:
     resource: '../src/Controller'
     tags: ['controller.service_arguments']
 
+  App\Command\UpgradeCommand:
+    arguments:
+      $loader: '@fidry_alice_data_fixtures.doctrine.persister_loader'
 
   #il faut ajouter un constructeur iterable
   #App\Modules\ModuleSender:

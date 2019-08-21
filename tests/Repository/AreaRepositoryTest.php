@@ -16,4 +16,15 @@ class AreaRepositoryTest extends BaseRepository
         $this->assertEquals('E-square', $products->getName());
     }
 
+    public function testLoadAFile()
+    {
+        $this->loader->load([
+            __DIR__.'/../DataFixtures/area.yaml'
+        ]);
+
+        $result = $this->entityManager->getRepository(Area::class)->findAll();
+
+        $this->assertEquals(1, count($result));
+    }
+
 }

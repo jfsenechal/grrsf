@@ -1,0 +1,7 @@
+App\Entity\Area:
+    dummy_{1..10}:
+        name: <company()>
+        start_time: <numberBetween(7,23)>
+        end_time: <numberBetween(7,23)>
+        is_24_hour_format: <boolean(80)>
+

@@ -3,6 +3,10 @@
 namespace App\Command;
 
 use App\Repository\AreaRepository;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Fidry\AliceDataFixtures\Loader\PersisterLoader;
+use Fidry\AliceDataFixtures\LoaderInterface;
+use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,13 +23,19 @@ class UpgradeCommand extends Command
      * @var SymfonyStyle
      */
     private $io;
+    /**
+     * @var LoaderInterface
+     */
+    private $loader;
 
     public function __construct(
         ?string $name = null,
-        AreaRepository $areaRepository
+        AreaRepository $areaRepository,
+        LoaderInterface $loader
     ) {
         parent::__construct($name);
         $this->areaRepository = $areaRepository;
+        $this->loader = $loader;
     }
 
     protected function configure()
@@ -43,15 +53,18 @@ class UpgradeCommand extends Command
     protected function areaUpgrade()
     {
         $areas = $this->areaRepository->findAll();
+        $files = [__DIR__.'/../DataFixtures/users.yaml'];
 
-        foreach ($areas as $area) {
-            $displayDays = $area->getDisplayDays();
-            if (7 == strlen($displayDays)) {
-                var_dump(str_split($displayDays));
-            } else {
-                $this->io->error('La longueur dois faire 7');
-            }
-        }
-        //    $this->entryManager->flush();
+        $objectSet = $this->loader->load($files);
+
+        /*   foreach ($areas as $area) {
+               $displayDays = $area->getDisplayDays();
+               if (7 == strlen($displayDays)) {
+                   var_dump(str_split($displayDays));
+               } else {
+                   $this->io->error('La longueur dois faire 7');
+               }
+           }*/
+
     }
 }
