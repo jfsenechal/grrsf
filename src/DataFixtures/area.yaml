@@ -1,7 +1,12 @@
 App\Entity\Area:
+    area_{Esquare, Hdv}:
+        name: '<current()>'
+        start_time: <numberBetween(7,9)>
+        end_time: <numberBetween(17,23)>
+        is_24_hour_format: <boolean(95)>
     dummy_{1..10}:
         name: <company()>
-        start_time: <numberBetween(7,23)>
-        end_time: <numberBetween(7,23)>
+        start_time: <numberBetween(7,9)>
+        end_time: <numberBetween(17,23)>
         is_24_hour_format: <boolean(80)>
 

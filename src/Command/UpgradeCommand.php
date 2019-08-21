@@ -49,19 +49,14 @@ class UpgradeCommand extends Command
 
     protected function areaUpgrade()
     {
-        $areas = $this->areaRepository->findAll();
-        $files = [__DIR__.'/../DataFixtures/users.yaml'];
+        $path = __DIR__.'/../';
+
+        $files = [
+            $path.'DataFixtures/users.yaml',
+            $path.'DataFixtures/entryType.yaml',
+            $path.'DataFixtures/area.yaml',
+        ];
 
         $objectSet = $this->loader->load($files);
-
-        /*   foreach ($areas as $area) {
-               $displayDays = $area->getDisplayDays();
-               if (7 == strlen($displayDays)) {
-                   var_dump(str_split($displayDays));
-               } else {
-                   $this->io->error('La longueur dois faire 7');
-               }
-           }*/
-
     }
 }

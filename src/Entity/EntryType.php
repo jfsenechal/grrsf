@@ -21,35 +21,35 @@ class EntryType
     /**
      * @var string
      *
-     * @ORM\Column(name="type_name", type="string", length=30, nullable=false)
+     * @ORM\Column(type="string", length=30, nullable=false)
      */
-    private $typeName;
+    private $name;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="order_display", type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    private $orderDisplay;
+    private $order_display;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="couleur", type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $couleur;
+    private $color;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type_letter", type="string", length=2, nullable=false)
+     * @ORM\Column(type="string", length=2, nullable=false)
      */
-    private $typeLetter;
+    private $letter;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="disponible", type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
     private $disponible;
 
@@ -61,59 +61,59 @@ class EntryType
     public function __construct()
     {
         $this->entries = new ArrayCollection();
-        $this->orderDisplay = 0;
+        $this->order_display = 0;
         $this->disponible = 2;
     }
 
     public function __toString()
     {
-        return $this->typeName;
+        return $this->name;
     }
 
-    public function getTypeName(): ?string
+    public function getName(): ?string
     {
-        return $this->typeName;
+        return $this->name;
     }
 
-    public function setTypeName(string $typeName): self
+    public function setName(string $name): self
     {
-        $this->typeName = $typeName;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getOrderDisplay(): ?int
     {
-        return $this->orderDisplay;
+        return $this->order_display;
     }
 
-    public function setOrderDisplay(int $orderDisplay): self
+    public function setOrderDisplay(int $order_display): self
     {
-        $this->orderDisplay = $orderDisplay;
+        $this->order_display = $order_display;
 
         return $this;
     }
 
-    public function getCouleur(): ?string
+    public function getColor(): ?string
     {
-        return $this->couleur;
+        return $this->color;
     }
 
-    public function setCouleur(?string $couleur): self
+    public function setColor(?string $color): self
     {
-        $this->couleur = $couleur;
+        $this->color = $color;
 
         return $this;
     }
 
-    public function getTypeLetter(): ?string
+    public function getLetter(): ?string
     {
-        return $this->typeLetter;
+        return $this->letter;
     }
 
-    public function setTypeLetter(string $typeLetter): self
+    public function setLetter(string $letter): self
     {
-        $this->typeLetter = $typeLetter;
+        $this->letter = $letter;
 
         return $this;
     }

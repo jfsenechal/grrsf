@@ -1,0 +1,6 @@
+App\Entity\EntryType:
+  typeentry{1..5}:
+      name: '<word()>'
+      letter (unique): '<randomLetter()>'
+      color: '<hexcolor()>'
+#text($maxNbChars = 200)

@@ -32,8 +32,8 @@ class AppFixtures extends Fixture
 
         foreach ($types as $index => $nom) {
             $type = $this->typeEntryFactory->createNew();
-            $type->setTypeLetter($index);
-            $type->setTypeName($nom);
+            $type->setLetter($index);
+            $type->setName($nom);
             $manager->persist($type);
             $this->addReference('entry-type-'.$index, $type);
         }

@@ -1,0 +1,6 @@
+App\Entity\Entry:
+  entry{1..10}:
+      name: 'Test'
+      start_time: '<dateTimeBetween("-200 days", "now")>'
+      end_time: '<dateTimeBetween($start_time, "now")>'
+      room: '@room'

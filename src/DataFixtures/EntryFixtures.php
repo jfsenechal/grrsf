@@ -53,11 +53,11 @@ class EntryFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    protected function createEntry($name, $start, $end, $area, $type)
+    protected function createEntry($name, $start, $end, $room, $type)
     {
         $entry = $this->entryFactory->createNew();
         $this->entryFactory->setDefaultValues($entry);
-        $entry->setRoom($this->getReference($area));
+        $entry->setRoom($this->getReference($room));
         $entry->setStartTime($start);
         $entry->setEndTime($end);
         $entry->setName($name);

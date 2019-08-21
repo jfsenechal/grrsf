@@ -83,3 +83,6 @@ week:
   initial: s
 action:
   edit: Editer
+typeEntry:
+  new:
+    title: Nouveau type d'entrée

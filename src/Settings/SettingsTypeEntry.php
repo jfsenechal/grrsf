@@ -15,7 +15,7 @@ class SettingsTypeEntry
         ];
     }
 
-    public static function typeLettres()
+    public static function lettres()
     {
         return [
             'A' => 'A',

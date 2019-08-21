@@ -18,7 +18,7 @@ class TypeEntryType extends AbstractType
     {
         $builder
             ->add(
-                'typeName',
+                'name',
                 TextType::class,
                 [
                     'label' => 'typeArea.form.name.label',
@@ -32,18 +32,18 @@ class TypeEntryType extends AbstractType
                 ]
             )
             ->add(
-                'couleur',
+                'color',
                 ColorType::class,
                 [
                     'required' => false,
                 ]
             )
             ->add(
-                'typeLetter',
+                'letter',
                 ChoiceType::class,
                 [
                     'label' => 'typeArea.form.typeLetter.label',
-                    'choices' => array_flip(SettingsTypeEntry::typeLettres()),
+                    'choices' => array_flip(SettingsTypeEntry::lettres()),
                 ]
             )
             ->add(
