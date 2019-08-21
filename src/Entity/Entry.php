@@ -37,95 +37,86 @@ class Entry
      * @var \DateTimeInterface
      *
      * @Assert\DateTime()
-     * @Assert\LessThan(propertyPath="endTime")
-     * @ORM\Column(name="start_time", type="datetime", nullable=false)
+     * @Assert\LessThan(propertyPath="end_time")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $startTime;
+    private $start_time;
 
     /**
      * @var \DateTimeInterface
      * @Assert\DateTime()
-     * @Assert\GreaterThan(propertyPath="startTime")
-     * @ORM\Column(name="end_time", type="datetime", nullable=false)
+     * @Assert\GreaterThan(propertyPath="start_time")
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $endTime;
-
-    /**
-     * Type de periode : aucune, chaque jour, chaque semaine, chaque mois.
-     *
-     * @var int
-     *
-     * @ORM\Column(name="entry_type", type="integer", nullable=true)
-     */
-    private $entryType;
+    private $end_time;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="create_by", type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
-    private $createBy;
+    private $created_by;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="beneficiaire_ext", type="string", length=200, nullable=true)
+     * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $beneficiaireExt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="beneficiaire", type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
     private $beneficiaire;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     * @ORM\Column(type="text", length=65535, nullable=true)
      */
     private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="statut_entry", type="string", length=1, nullable=true)
+     * @ORM\Column(type="string", length=1, nullable=true)
      */
-    private $statutEntry;
+    private $statut_entry;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="option_reservation", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
-    private $optionReservation;
+    private $option_reservation;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="overload_desc", type="text", length=65535, nullable=true)
+     * @ORM\Column(type="text", length=65535, nullable=true)
      */
     private $overloadDesc;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="moderate", type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $moderate;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="private", type="boolean", options={"default" : 0})
+     * @ORM\Column(type="boolean", options={"default" : 0})
      */
-    private $private = false;
+    private $private;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="jours", type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $jours;
 
@@ -179,14 +170,18 @@ class Entry
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\PeriodicityDay", mappedBy="entry", cascade={"remove"}, orphanRemoval=true)
      */
-    private $periodicityDays;
-
-    private $booking;
+    private $periodicity_days;
 
     public function __construct()
     {
         $this->locations = new ArrayCollection();
-        $this->periodicityDays = new ArrayCollection();
+        $this->periodicity_days = new ArrayCollection();
+        $this->private = false;
+        $this->moderate = false;
+        $this->jours = false;
+        $this->created_by = 'jf';
+        $this->beneficiaire = 'jf';
+        $this->option_reservation = 0;
     }
 
     public function __toString()
@@ -200,7 +195,7 @@ class Entry
      */
     public function isStartStEnd(): bool
     {
-        return $this->startTime < $this->endTime;
+        return $this->start_time < $this->end_time;
     }
 
     /**
@@ -282,50 +277,50 @@ class Entry
         $this->locations = $locations;
     }
 
-    public function getStartTime(): ?\DateTimeInterface
+    public function getName(): ?string
     {
-        return $this->startTime;
+        return $this->name;
     }
 
-    public function setStartTime(\DateTimeInterface $startTime): self
+    public function setName(string $name): self
     {
-        $this->startTime = $startTime;
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getStartTime(): ?\DateTimeInterface
+    {
+        return $this->start_time;
+    }
+
+    public function setStartTime(\DateTimeInterface $start_time): self
+    {
+        $this->start_time = $start_time;
 
         return $this;
     }
 
     public function getEndTime(): ?\DateTimeInterface
     {
-        return $this->endTime;
+        return $this->end_time;
     }
 
-    public function setEndTime(\DateTimeInterface $endTime): self
+    public function setEndTime(\DateTimeInterface $end_time): self
     {
-        $this->endTime = $endTime;
+        $this->end_time = $end_time;
 
         return $this;
     }
 
-    public function getEntryType(): ?int
+    public function getCreatedBy(): ?string
     {
-        return $this->entryType;
+        return $this->created_by;
     }
 
-    public function setEntryType(?int $entryType): self
+    public function setCreatedBy(string $created_by): self
     {
-        $this->entryType = $entryType;
-
-        return $this;
-    }
-
-    public function getCreateBy(): ?string
-    {
-        return $this->createBy;
-    }
-
-    public function setCreateBy(string $createBy): self
-    {
-        $this->createBy = $createBy;
+        $this->created_by = $created_by;
 
         return $this;
     }
@@ -354,18 +349,6 @@ class Entry
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -380,24 +363,24 @@ class Entry
 
     public function getStatutEntry(): ?string
     {
-        return $this->statutEntry;
+        return $this->statut_entry;
     }
 
-    public function setStatutEntry(?string $statutEntry): self
+    public function setStatutEntry(?string $statut_entry): self
     {
-        $this->statutEntry = $statutEntry;
+        $this->statut_entry = $statut_entry;
 
         return $this;
     }
 
     public function getOptionReservation(): ?int
     {
-        return $this->optionReservation;
+        return $this->option_reservation;
     }
 
-    public function setOptionReservation(int $optionReservation): self
+    public function setOptionReservation(int $option_reservation): self
     {
-        $this->optionReservation = $optionReservation;
+        $this->option_reservation = $option_reservation;
 
         return $this;
     }
@@ -422,6 +405,18 @@ class Entry
     public function setModerate(?bool $moderate): self
     {
         $this->moderate = $moderate;
+
+        return $this;
+    }
+
+    public function getPrivate(): ?bool
+    {
+        return $this->private;
+    }
+
+    public function setPrivate(bool $private): self
+    {
+        $this->private = $private;
 
         return $this;
     }
@@ -462,18 +457,6 @@ class Entry
         return $this;
     }
 
-    public function getPrivate(): ?bool
-    {
-        return $this->private;
-    }
-
-    public function setPrivate(bool $private): self
-    {
-        $this->private = $private;
-
-        return $this;
-    }
-
     public function getPeriodicity(): ?Periodicity
     {
         return $this->periodicity;
@@ -491,13 +474,13 @@ class Entry
      */
     public function getPeriodicityDays(): Collection
     {
-        return $this->periodicityDays;
+        return $this->periodicity_days;
     }
 
     public function addPeriodicityDay(PeriodicityDay $periodicityDay): self
     {
-        if (!$this->periodicityDays->contains($periodicityDay)) {
-            $this->periodicityDays[] = $periodicityDay;
+        if (!$this->periodicity_days->contains($periodicityDay)) {
+            $this->periodicity_days[] = $periodicityDay;
             $periodicityDay->setEntry($this);
         }
 
@@ -506,8 +489,8 @@ class Entry
 
     public function removePeriodicityDay(PeriodicityDay $periodicityDay): self
     {
-        if ($this->periodicityDays->contains($periodicityDay)) {
-            $this->periodicityDays->removeElement($periodicityDay);
+        if ($this->periodicity_days->contains($periodicityDay)) {
+            $this->periodicity_days->removeElement($periodicityDay);
             // set the owning side to null (unless already changed)
             if ($periodicityDay->getEntry() === $this) {
                 $periodicityDay->setEntry(null);
@@ -517,15 +500,4 @@ class Entry
         return $this;
     }
 
-    public function getBooking(): ?string
-    {
-        return $this->booking;
-    }
-
-    public function setBooking(?string $booking): self
-    {
-        $this->booking = $booking;
-
-        return $this;
-    }
 }

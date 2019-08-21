@@ -19,7 +19,7 @@ class PeriodicityDay
     private $date_periodicity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Entry", inversedBy="periodicityDays")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Entry", inversedBy="periodicity_days")
      * @ORM\JoinColumn(nullable=false)
      */
     private $entry;

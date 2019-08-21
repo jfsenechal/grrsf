@@ -33,7 +33,7 @@ class EntryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('entry');
 
-        $qb->andWhere('entry.startTime LIKE :time')
+        $qb->andWhere('entry.start_time LIKE :time')
             ->setParameter(
                 'time',
                 $monthModel->getFirstDayImmutable()->year.'-'.$monthModel->getFirstDayImmutable()->format('m').'%'
@@ -51,7 +51,7 @@ class EntryRepository extends ServiceEntityRepository
         }
 
         return $qb
-            ->orderBy('entry.startTime', 'ASC')
+            ->orderBy('entry.start_time', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -65,14 +65,14 @@ class EntryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('entry');
 
-        $qb->andWhere('entry.startTime LIKE :begin')
+        $qb->andWhere('entry.start_time LIKE :begin')
             ->setParameter('begin', $day->format('Y-m-d').'%');
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
 
         return $qb
-            ->orderBy('entry.startTime', 'ASC')
+            ->orderBy('entry.start_time', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -84,7 +84,7 @@ class EntryRepository extends ServiceEntityRepository
         $begin = $entry->getStartTime();
         $end = $entry->getEndTime();
 
-        $qb->andWhere('entry.startTime BETWEEN :begin AND :end')
+        $qb->andWhere('entry.start_time BETWEEN :begin AND :end')
             ->setParameter('begin', $begin)
             ->setParameter('end', $end);
 
@@ -98,7 +98,7 @@ class EntryRepository extends ServiceEntityRepository
             ->setParameter('id', $entry->getId());
 
         return $qb
-            ->orderBy('entry.startTime', 'DESC')
+            ->orderBy('entry.start_time', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -141,7 +141,7 @@ class EntryRepository extends ServiceEntityRepository
         }
 
         return $qb
-            ->orderBy('entry.startTime', 'DESC')
+            ->orderBy('entry.start_time', 'DESC')
             ->setMaxResults(500)
             ->getQuery()
             ->getResult();
@@ -160,7 +160,7 @@ class EntryRepository extends ServiceEntityRepository
 
         if ($dateTime !== null) {
             $date = $dateTime->format('Y-m-d');
-            $qb->andWhere('entry.startTime LIKE :date')
+            $qb->andWhere('entry.start_time LIKE :date')
                 ->setParameter('date', '%'.$date.'%');
         }
 
@@ -176,7 +176,7 @@ class EntryRepository extends ServiceEntityRepository
         }
 
         return $qb
-            ->orderBy('entry.startTime', 'DESC')
+            ->orderBy('entry.start_time', 'DESC')
             ->setMaxResults(500)
             ->getQuery()
             ->getResult();

@@ -1,6 +1,6 @@
 App\Entity\Security\User:
     user0:
-        email: bobo@marche.be
+        email: jf@marche.be
         name: Bob
         password: homer
         roles: ["ROLE_GRR_ADMINISTRATOR"]

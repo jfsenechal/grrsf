@@ -22,7 +22,7 @@ class PeriodicityType extends AbstractType
 
         $builder
             ->add(
-                'end_time',
+                'endTime',
                 DateType::class,
                 [
                     'label' => 'periodicity.form.endtime.label',
@@ -32,7 +32,7 @@ class PeriodicityType extends AbstractType
                 'type',
                 ChoiceType::class,
                 [
-                    'label'=>'periodicity.type.label',
+                    'label' => 'periodicity.type.label',
                     'choices' => array_flip($types),
                     'multiple' => false,
                     'expanded' => true,
@@ -51,7 +51,7 @@ class PeriodicityType extends AbstractType
                 ]
             )
             ->add(
-                'repeat_week',
+                'repeatWeek',
                 ChoiceType::class,
                 [
                     'choices' => array_flip($weeks),

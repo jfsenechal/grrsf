@@ -8,5 +8,5 @@ App\Entity\Area:
         name: <company()>
         start_time: <numberBetween(7,9)>
         end_time: <numberBetween(17,23)>
-        is_24_hour_format: <boolean(80)>
+        is_24_hour_format: <boolean(95)>
 
