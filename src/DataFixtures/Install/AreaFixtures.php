@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Install;
 
 use App\Factory\AreaFactory;
 use App\Factory\RoomFactory;

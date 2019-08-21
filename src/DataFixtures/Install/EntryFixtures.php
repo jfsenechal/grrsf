@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Install;
 
 use App\Factory\AreaFactory;
 use App\Factory\EntryFactory;
@@ -56,7 +56,6 @@ class EntryFixtures extends Fixture implements DependentFixtureInterface
     protected function createEntry($name, $start, $end, $room, $type)
     {
         $entry = $this->entryFactory->createNew();
-        $this->entryFactory->setDefaultValues($entry);
         $entry->setRoom($this->getReference($room));
         $entry->setStartTime($start);
         $entry->setEndTime($end);

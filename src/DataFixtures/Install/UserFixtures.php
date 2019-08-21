@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Install;
 
 use App\Factory\UserFactory;
 use App\Security\SecurityData;

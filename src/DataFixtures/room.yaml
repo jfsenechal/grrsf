@@ -1,4 +1,4 @@
 App\Entity\Room:
   room{1..5}:
-      name: 'Test'
-      area:  '@user1'
+      __construct: ['@area_Esquare']
+      name: '<word()>'

@@ -42,7 +42,6 @@ class EntryFactory
     ): Entry {
         $date = Carbon::create($year, $month, $day, $hour, $minute);
         $entry = $this->createNew();
-        $this->setDefaultValues($entry);
         $entry->setArea($area);
         $entry->setRoom($room);
         $entry->setStartTime($date);
@@ -61,19 +60,5 @@ class EntryFactory
         $periodicity->setType(null);
 
         return $periodicity;
-    }
-
-    /**
-     * @param Entry $entry
-     * @deprecated
-     */
-    public  function setDefaultValues(Entry $entry)
-    {
-        $entry
-            ->setModerate(false)
-            ->setJours(false)
-            ->setCreateBy('jf')
-            ->setBeneficiaire('jf')
-            ->setOptionReservation(0);
     }
 }

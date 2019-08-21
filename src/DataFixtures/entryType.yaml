@@ -1,5 +1,5 @@
 App\Entity\EntryType:
-  typeentry{1..5}:
+  type_entry{1..5}:
       name: '<word()>'
       letter (unique): '<randomLetter()>'
       color: '<hexcolor()>'

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Install;
 
 use App\Factory\TypeEntryFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
