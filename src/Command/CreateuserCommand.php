@@ -2,7 +2,6 @@
 
 namespace App\Command;
 
-use App\Entity\Security\User;
 use App\Factory\UserFactory;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
@@ -18,7 +17,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class CreateuserCommand extends Command
 {
-    protected static $defaultName = 'grr:createuser';
+    protected static $defaultName = 'grr:create-user';
     /**
      * @var UserManager
      */
@@ -37,26 +36,25 @@ class CreateuserCommand extends Command
     private $userFactory;
 
     public function __construct(
-        ?string $name = null,
         UserManager $userManager,
         UserFactory $userFactory,
         UserRepository $userRepository,
         UserPasswordEncoderInterface $userPasswordEncoder
     ) {
-        parent::__construct($name);
         $this->userManager = $userManager;
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->userRepository = $userRepository;
         $this->userFactory = $userFactory;
+        parent::__construct();
     }
 
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
+            ->setDescription('Création d\'un utilisateur')
             ->addArgument('name', InputArgument::REQUIRED, 'Name')
-            ->addArgument('email', InputArgument::REQUIRED, 'Adresse email')
-            ->addArgument('password', InputArgument::OPTIONAL, 'Mot de passe');
+            ->addArgument('email', InputArgument::REQUIRED, 'Email')
+            ->addArgument('password', InputArgument::OPTIONAL, 'Password');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
