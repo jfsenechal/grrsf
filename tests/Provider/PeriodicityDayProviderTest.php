@@ -33,7 +33,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     public function testGetDaysByPeriodicityRepeatByDay()
     {
         $this->loadFixtures();
-        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_DAY);
+        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_DAY, '2019-12-05');
         $entry = $this->getEntry('Tous les jours pendant 3 jours');
         $periodicityDayProvider = $this->initPeriodicityDayProvier();
 
@@ -52,7 +52,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     public function testGetDaysByPeriodicityRepeatByMonthSameDay()
     {
         $this->loadFixtures();
-        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_MONTH_SAME_DAY);
+        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_MONTH_SAME_DAY, '2019-08-03');
         $entry = $this->getEntry('Tous les mois le 5');
         $periodicityDayProvider = $this->initPeriodicityDayProvier();
 
@@ -71,7 +71,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     public function testGetDaysByPeriodicityRepeatByMonthSameWeekday()
     {
         $this->loadFixtures();
-        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY);
+        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY, '2019-10-09');
         $entry = $this->getEntry('Tous les mois le 2ième mercredi');
         $periodicityDayProvider = $this->initPeriodicityDayProvier();
 
@@ -90,7 +90,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     public function testGetDaysByPeriodicityRepeatByYear()
     {
         $this->loadFixtures();
-        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_YEAR);
+        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_YEAR, '2022-10-04');
         $entry = $this->getEntry('Tous les ans le 4 octobre');
         $periodicityDayProvider = $this->initPeriodicityDayProvier();
 
@@ -109,7 +109,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     public function testGetDaysByPeriodicityRepeatByEveryWeek1()
     {
         $this->loadFixtures();
-        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_WEEK);
+        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_WEEK, '2018-08-20');
         $entry = $this->getEntry('Toutes les semaines, lundi et mardi');
         $periodicityDayProvider = $this->initPeriodicityDayProvier();
 
@@ -146,16 +146,26 @@ class PeriodicityDayProviderTest extends BaseRepository
     public function testGetDaysByPeriodicityRepeatByEveryWeek2()
     {
         $this->loadFixtures();
-        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_WEEK);
+        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_WEEK, '2017-04-15');
         $entry = $this->getEntry('Toutes les 2 semaines, mercredi et samedi');
         $periodicityDayProvider = $this->initPeriodicityDayProvier();
 
         $days = $periodicityDayProvider->getDaysByPeriodicity($periodicity, $entry->getStartTime());
-        $result = [];
+        $result = [
+            "2017-02-08",
+            "2017-02-11",
+            "2017-02-22",
+            "2017-02-25",
+            "2017-03-08",
+            "2017-03-11",
+            "2017-03-22",
+            "2017-03-25",
+            "2017-04-05",
+            "2017-04-08",
+        ];
 
         foreach ($days as $day) {
-            var_dump($day->toDateString());
-            //    self::assertContains($day->toDateString(), $result);
+            self::assertContains($day->toDateString(), $result);
         }
     }
 
@@ -179,11 +189,13 @@ class PeriodicityDayProviderTest extends BaseRepository
         );
     }
 
-    protected function getPeriodicity(int $type): Periodicity
+    protected function getPeriodicity(int $type, string $endTime): Periodicity
     {
+        $dateTime = \DateTime::createFromFormat('Y-m-d', $endTime);
+
         return $this->entityManager
             ->getRepository(Periodicity::class)
-            ->findOneBy(['type' => $type]);
+            ->findOneBy(['type' => $type, 'end_time' => $dateTime]);
     }
 
     protected function getEntry(string $name): Entry
