@@ -188,7 +188,7 @@ class PeriodicityDaysProvider
 
     /**
      * @throws \Exception
-     * @todo
+     * @todo replace for every week
      * https://stackoverflow.com/questions/57479939/php-carbon-every-monday-and-tuesday-every-2-weeks/57506714#57506714
      */
     protected function brouillon()

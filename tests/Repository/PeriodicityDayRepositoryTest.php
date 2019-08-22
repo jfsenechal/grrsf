@@ -4,6 +4,7 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Area;
+use App\Repository\PeriodicityDayRepository;
 
 class PeriodicityDayRepositoryTest extends BaseRepository
 {
@@ -18,7 +19,7 @@ class PeriodicityDayRepositoryTest extends BaseRepository
         );
 
         $area = $this->entityManager
-            ->getRepository(Area::class)
+            ->getRepository(PeriodicityDayRepository::class)
             ->findOneBy(['name' => 'Esquare']);
 
         $this->assertEquals('Esquare', $area->getName());
@@ -26,6 +27,7 @@ class PeriodicityDayRepositoryTest extends BaseRepository
 
     public function testFindForDay()
     {
+        //CarbonInterface $day, Room $room
         $this->loader->load(
             [
                 $this->pathFixtures.'area.yaml',
@@ -39,7 +41,7 @@ class PeriodicityDayRepositoryTest extends BaseRepository
 
     public function testfindFoWeek()
     {
-
+        //CarbonInterface $day, Room $room
     }
 
 }
