@@ -13,10 +13,6 @@ use Carbon\CarbonPeriod;
 class PeriodicityDaysProvider
 {
     /**
-     * @var Entry
-     */
-    protected $entry;
-    /**
      * @var CarbonInterface
      */
     private $periodicity_end;
@@ -27,12 +23,9 @@ class PeriodicityDaysProvider
 
     /**
      * @param Entry $entry
-     *
-     * @return CarbonPeriod|array
-     *
-     * @throws \Exception
+     * @return array|CarbonPeriod
      */
-    public function getDays(Entry $entry)
+    public function getDaysByEntry(Entry $entry)
     {
         $periodicity = $entry->getPeriodicity();
 
@@ -40,11 +33,21 @@ class PeriodicityDaysProvider
             return [];
         }
 
+        return $this->getDaysByPeriodicity($periodicity, $entry->getStartTime());
+    }
+
+    /**
+     * @param Periodicity $periodicity
+     * @param \DateTimeInterface $startTime
+     * @return array|CarbonPeriod
+     */
+    public function getDaysByPeriodicity(
+        Periodicity $periodicity,
+        \DateTimeInterface $startTime
+    ) {
         $typePeriodicity = $periodicity->getType();
 
-        $this->entry = $entry;
-
-        $this->entry_start = Carbon::instance($this->entry->getStartTime());
+        $this->entry_start = Carbon::instance($startTime);
         $this->periodicity_end = Carbon::instance($periodicity->getEndTime());
 
         if ($typePeriodicity === PeriodicityConstant::EVERY_DAY) {
@@ -169,7 +172,7 @@ class PeriodicityDaysProvider
          * @param $date
          * @return bool
          */
-        $filterWeek = function ($date) use($repeat_week) {
+        $filterWeek = function ($date) use ($repeat_week) {
             return $date->weekOfYear % $repeat_week === 0;
         };
 
@@ -183,7 +186,13 @@ class PeriodicityDaysProvider
         return $period;
     }
 
-    protected function brouillon() {
+    /**
+     * @throws \Exception
+     * @todo
+     * https://stackoverflow.com/questions/57479939/php-carbon-every-monday-and-tuesday-every-2-weeks/57506714#57506714
+     */
+    protected function brouillon()
+    {
         $start = new \DateTime('now');
         $end = clone $start;
         $end->modify('+4 month');

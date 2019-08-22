@@ -156,7 +156,7 @@ class EntryController extends AbstractController
     public function show(Entry $entry): Response
     {
         try {
-            $days = $this->periodicityService->getDays($entry);
+            $days = $this->periodicityService->getDaysByEntry($entry);
         } catch (\Exception $e) {
         }
 

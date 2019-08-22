@@ -4,10 +4,8 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Entry;
-use App\Faker\CarbonProvider;
 use App\Model\Month;
 use Carbon\Carbon;
-use Nelmio\Alice\Loader\NativeLoader;
 
 class EntryRepositoryTest extends BaseRepository
 {
@@ -98,11 +96,7 @@ class EntryRepositoryTest extends BaseRepository
      */
     private function dataForBusy()
     {
-        $loader = new NativeLoader();
-        $faker = $loader->getFakerGenerator();
-        $faker->addProvider(CarbonProvider::class);
-
-        $objets = $loader->loadFiles(
+        $objets = $this->loaderSimple->loadFiles(
             [
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
@@ -143,7 +137,6 @@ class EntryRepositoryTest extends BaseRepository
             ],
         ];
     }
-
 
     protected function loadFixtures($withBusy = false)
     {

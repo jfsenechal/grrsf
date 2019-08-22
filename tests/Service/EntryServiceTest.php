@@ -18,7 +18,7 @@ use App\Factory\CarbonFactory;
 use App\Helper\LocalHelper;
 use App\Model\TimeSlot;
 use App\Provider\TimeSlotsProvider;
-use App\Service\EntryService;
+use App\Service\EntryLocationService;
 use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -42,7 +42,7 @@ class EntryServiceTest extends WebTestCase
         $timeSlotProvider = $this->initTimeSlotProvider();
         $timesSlot = $timeSlotProvider->getTimeSlotsModelByAreaAndDay($area);
 
-        $entryService = new EntryService($timeSlotProvider);
+        $entryService = new EntryLocationService($timeSlotProvider);
         $entryService->setLocations($entry, $timesSlot);
         /**
          * @var TimeSlot[] $locations

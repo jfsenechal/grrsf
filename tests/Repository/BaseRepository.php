@@ -11,10 +11,9 @@
 namespace App\Tests\Repository;
 
 
-use App\Entity\Area;
 use App\Entity\Room;
+use App\Faker\CarbonProvider;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Fidry\AliceDataFixtures\Loader\SimpleLoader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -30,7 +29,7 @@ class BaseRepository extends WebTestCase
     protected $loader;
 
     /**
-     * @var SimpleLoader
+     * @var NativeLoader
      */
     protected $loaderSimple;
 
@@ -57,6 +56,11 @@ class BaseRepository extends WebTestCase
 
         $this->pathFixtures = $this->kernel2->getProjectDir().'/src/DataFixtures/';
         $this->loader = $this->kernel2->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
+
+        $loader = new NativeLoader();
+        $faker = $loader->getFakerGenerator();
+        $faker->addProvider(CarbonProvider::class);
+        $this->loaderSimple = $loader;
 
         parent::setUp();
         //    $this->truncateEntities();

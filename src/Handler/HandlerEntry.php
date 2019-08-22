@@ -63,7 +63,7 @@ class HandlerEntry
         if (null === $periodicity->getType()) {
             $entry->setPeriodicity(null);
         } else {
-            $days = $this->periodicityDaysProvider->getDays($entry);
+            $days = $this->periodicityDaysProvider->getDaysByEntry($entry);
             foreach ($days as $day) {
                 $periodicityDay = new PeriodicityDay();
                 $periodicityDay->setDatePeriodicity($day->toImmutable());

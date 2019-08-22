@@ -9,7 +9,7 @@ use App\Provider\TimeSlotsProvider;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
-class EntryService
+class EntryLocationService
 {
     /**
      * @var TimeSlotsProvider
@@ -19,22 +19,6 @@ class EntryService
     public function __construct(TimeSlotsProvider $timeSlotsProvider)
     {
         $this->timeSlotsProvider = $timeSlotsProvider;
-    }
-
-    /**
-     * Bug si dateEnd entry > dateEndArea.
-     * @deprecated
-     * @param Entry $entry
-     * @param Area  $area
-     */
-    public function setCountCells(Entry $entry, Area $area)
-    {
-        $resolution = $area->getDurationTimeSlot();
-        $start = Carbon::instance($entry->getStartTime());
-        $end = Carbon::instance($entry->getEndTime());
-        $diff = $start->diffInSeconds($end);
-        $cellules = (int) (ceil($diff / $resolution));
-        $entry->setCellules($cellules);
     }
 
     /**
@@ -69,6 +53,22 @@ class EntryService
         }
 
         return false;
+    }
+
+    /**
+     * Bug si dateEnd entry > dateEndArea.
+     * @deprecated
+     * @param Entry $entry
+     * @param Area  $area
+     */
+    public function setCountCells(Entry $entry, Area $area)
+    {
+        $resolution = $area->getDurationTimeSlot();
+        $start = Carbon::instance($entry->getStartTime());
+        $end = Carbon::instance($entry->getEndTime());
+        $diff = $start->diffInSeconds($end);
+        $cellules = (int) (ceil($diff / $resolution));
+        $entry->setCellules($cellules);
     }
 
 }

@@ -32,7 +32,7 @@ class BindDataManager
      */
     private $entryRepository;
     /**
-     * @var EntryService
+     * @var EntryLocationService
      */
     private $entryService;
     /**
@@ -56,7 +56,7 @@ class BindDataManager
         EntryRepository $entryRepository,
         CarbonFactory $carbonFactory,
         PeriodicityDayRepository $periodicityDayRepository,
-        EntryService $entryService,
+        EntryLocationService $entryService,
         GeneratorEntry $generatorEntry,
         DayFactory $dayFactory
     ) {
