@@ -26,5 +26,5 @@ App\Entity\Room:
     __construct: ['@area_Hdv']
     name: 'Salle Collège'
   room_cafetaria:
-      __construct: ['@area_Hdv']
-      name: 'Salle cafétaria'
+    __construct: ['@area_Hdv']
+    name: 'Salle cafétaria'

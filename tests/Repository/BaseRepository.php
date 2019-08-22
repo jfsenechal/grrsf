@@ -12,6 +12,7 @@ namespace App\Tests\Repository;
 
 
 use App\Entity\Area;
+use App\Entity\Room;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -52,6 +53,13 @@ class BaseRepository extends WebTestCase
 
         parent::setUp();
         //    $this->truncateEntities();
+    }
+
+    protected function getRoom(string $roomName): Room
+    {
+        return $this->entityManager
+            ->getRepository(Room::class)
+            ->findOneBy(['name' => $roomName]);
     }
 
     private function truncateEntities()

@@ -7,7 +7,7 @@ use App\Entity\Area;
 
 class AreaRepositoryTest extends BaseRepository
 {
-    public function testSearchByCategoryName()
+    public function testSearchByName()
     {
         $this->loader->load(
             [
@@ -15,11 +15,11 @@ class AreaRepositoryTest extends BaseRepository
             ]
         );
 
-        $products = $this->entityManager
+        $area = $this->entityManager
             ->getRepository(Area::class)
             ->findOneBy(['name' => 'Esquare']);
 
-        $this->assertEquals('Esquare', $products->getName());
+        $this->assertEquals('Esquare', $area->getName());
     }
 
     public function testCountArea()
