@@ -77,6 +77,12 @@ class EntryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     *
+     * @param Entry $entry
+     * @param Room $room
+     * @return Entry[]
+     */
     public function isBusy(Entry $entry, Room $room)
     {
         $qb = $this->createQueryBuilder('entry');
@@ -84,9 +90,9 @@ class EntryRepository extends ServiceEntityRepository
         $begin = $entry->getStartTime();
         $end = $entry->getEndTime();
 
-        $qb->andWhere('entry.start_time BETWEEN :begin AND :end')
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end);
+        $qb->andWhere('entry.end_time >= :begin OR entry.start_time <= :end ')
+            ->setParameter('begin', $begin->format('Y-m-d H:i'))
+            ->setParameter('end', $end->format('Y-m-d H:i'));
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
@@ -94,11 +100,13 @@ class EntryRepository extends ServiceEntityRepository
         /**
          * en cas de modif
          */
-        $qb->andWhere('entry.id != :id')
-            ->setParameter('id', $entry->getId());
+        if ($entry->getId() !== null) {
+            $qb->andWhere('entry.id != :id')
+                ->setParameter('id', $entry->getId());
+        }
 
         return $qb
-            ->orderBy('entry.start_time', 'DESC')
+            ->orderBy('entry.start_time', 'ASC')
             ->getQuery()
             ->getResult();
     }

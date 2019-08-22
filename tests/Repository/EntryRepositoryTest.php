@@ -48,26 +48,50 @@ class EntryRepositoryTest extends BaseRepository
     }
 
     /**
-     * dataProvider :  ne fonctionne pas car $this apres
+     * La date de debut de la nouvelle entry est plus grande que
+     * la date de début d'une entry existante
+     *
      */
-    public function testIsBusy()
+    public function testBusyDateBeginGreaterThanStartTime()
     {
-        $this->loadFixtures(true);
+        $this->loadFixtures();
         $entriesBusy = $this->dataForBusy();
+        $entry = $entriesBusy[0];
 
-        foreach ($entriesBusy as $entry) {
-            $room = $entry->getRoom();
+        //pour avoir un room existant en db
+        $room = $this->getRoom($entry->getRoom()->getName());
 
-            $entries = $this->entityManager
-                ->getRepository(Entry::class)
-                ->isBusy($entry, $room);
+        $entries = $this->entityManager
+            ->getRepository(Entry::class)
+            ->isBusy($entry, $room);
 
-            // var_dump(count($entries));
-            foreach ($entries as $result) {
-                // var_dump($result->getName());
-            }
+        foreach ($entries as $result) {
+            $this->assertSame('Réunion henalux', $result->getName());
         }
+    }
 
+
+    /**
+     * La date de fin de la nouvelle entry est plus petite que
+     * la date de fin d'une entry existante
+     *
+     */
+    public function testBusyDateEndIsSmallerThanEndTime()
+    {
+        $this->loadFixtures();
+        $entriesBusy = $this->dataForBusy();
+        $entry = $entriesBusy[1];
+
+        //pour avoir un room existant en db
+        $room = $this->getRoom($entry->getRoom()->getName());
+
+        $entries = $this->entityManager
+            ->getRepository(Entry::class)
+            ->isBusy($entry, $room);
+
+        foreach ($entries as $result) {
+            $this->assertSame('Réunion détente', $result->getName());
+        }
     }
 
     /**
@@ -137,7 +161,6 @@ class EntryRepositoryTest extends BaseRepository
         }
 
         $this->loader->load($files);
-
     }
 
 }
