@@ -8,8 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TypeArea
- * //depracted : grr_type_area.
  *
  * @ORM\Table(name="grr_entry_type")
  * @ORM\Entity(repositoryClass="App\Repository\EntryTypeRepository")
@@ -42,7 +40,7 @@ class EntryType
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=2, nullable=false)
+     * @ORM\Column(type="string", length=2, nullable=false, unique=true)
      */
     private $letter;
 

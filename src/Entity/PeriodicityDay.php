@@ -4,14 +4,18 @@ namespace App\Entity;
 
 use App\Doctrine\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="grr_periodicity_days")
+ * @ORM\Table(name="grr_periodicity_days", uniqueConstraints={
+ *     @ORM\UniqueConstraint(columns={"entry_id", "date_periodicity"})
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\PeriodicityDayRepository")
+ * @UniqueEntity(fields={"entry_id", "date_periodicity"}, message="Période existante")
  */
 class PeriodicityDay
 {
-   use IdEntityTrait;
+    use IdEntityTrait;
 
     /**
      * @ORM\Column(type="date_immutable")

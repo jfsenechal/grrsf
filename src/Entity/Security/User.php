@@ -8,11 +8,15 @@ use App\Entity\Room;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="grr_user")
+ * @ORM\Table(name="grr_user", uniqueConstraints={
+ *     @ORM\UniqueConstraint(columns={"email"})
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\Security\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="Un utilisateur a déjà cette adresse email")
  */
 class User implements UserInterface
 {
