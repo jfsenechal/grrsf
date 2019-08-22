@@ -1,0 +1,9 @@
+App\Entity\PeriodicityDay:
+  period_day_{2019_12_03, 2019_12_04, 2019_12_05}:
+    entry: '@entry_every_day'
+    date_periodicity: '<carbonFromFormat("Y_m_d", <current()>)>'
+  period_month_same_day{2019_12_03, 2019_12_04, 2019_12_05}:
+    entry: '@entry_every_month_same_day'
+    date_periodicity: '<carbonFromFormat("Y_m_d", <current()>)>'
+
+

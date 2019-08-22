@@ -58,6 +58,7 @@ class UpgradeCommand extends Command
             $path.'DataFixtures/room.yaml',
             $path.'DataFixtures/periodicity.yaml',
             $path.'DataFixtures/entry_with_periodicity.yaml',
+            $path.'DataFixtures/periodicity_day.yaml',
         ];
 
         $this->loader->load($files);

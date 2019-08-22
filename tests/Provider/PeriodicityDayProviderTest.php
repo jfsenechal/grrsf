@@ -171,8 +171,6 @@ class PeriodicityDayProviderTest extends BaseRepository
 
     protected function initPeriodicityDayProvier(): PeriodicityDaysProvider
     {
-        $parameterBag = $this->createMock(ParameterBagInterface::class);
-
         return new PeriodicityDaysProvider();
     }
 

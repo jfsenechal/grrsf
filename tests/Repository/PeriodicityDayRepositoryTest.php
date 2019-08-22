@@ -4,13 +4,15 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Area;
+use App\Model\Month;
 use App\Repository\PeriodicityDayRepository;
 
 class PeriodicityDayRepositoryTest extends BaseRepository
 {
     public function testFindForMonth()
     {
-        //Month $monthModel, Room $room = null
+        $monthModel = new Month();
+        $room = $this->getRoom('');
 
         $this->loader->load(
             [
@@ -20,7 +22,7 @@ class PeriodicityDayRepositoryTest extends BaseRepository
 
         $area = $this->entityManager
             ->getRepository(PeriodicityDayRepository::class)
-            ->findOneBy(['name' => 'Esquare']);
+            ->findForMonth($monthModel, $room);
 
         $this->assertEquals('Esquare', $area->getName());
     }
