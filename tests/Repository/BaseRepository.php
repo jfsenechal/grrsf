@@ -14,7 +14,9 @@ namespace App\Tests\Repository;
 use App\Entity\Area;
 use App\Entity\Room;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Fidry\AliceDataFixtures\Loader\SimpleLoader;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BaseRepository extends WebTestCase
@@ -26,6 +28,11 @@ class BaseRepository extends WebTestCase
 
     /** @var LoaderInterface */
     protected $loader;
+
+    /**
+     * @var SimpleLoader
+     */
+    protected $loaderSimple;
 
     /**
      * @var string

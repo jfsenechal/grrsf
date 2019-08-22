@@ -1,0 +1,7 @@
+App\Entity\Entry:
+  entry_busy_1:
+    name: 'Réunion occupée'
+    start_time: '<carbonDateTime(2019,8,21,16,30)>'
+    end_time: '<carbonDateTime(2019,8,21,18,20)>'
+    room: '@room_relax'
+    type: '@type_entry_D'
