@@ -1,9 +1,30 @@
 App\Entity\Room:
   room{1..5}:
-      __construct: ['@area_Esquare']
-      name: '<word()>'
-  room_{1..3}:
-   # __construct: ['@area_Hdv'] #
-   # __construct: ['@dummy_<current()>'] #prend le premier area pour le premier room, puis 2...
-    __construct: ['@dummy_*'] #au hasard
+    __construct: ['@area_*']
     name: '<word()>'
+
+  room_box:
+    __construct: ['@area_Esquare']
+    name: 'Box'
+  room_creative:
+    __construct: ['@area_Esquare']
+    name: 'Créative'
+  room_meeting:
+    __construct: ['@area_Esquare']
+    name: 'Meeting Room'
+  room_relax:
+    __construct: ['@area_Esquare']
+    name: 'Relax Room'
+  room_digital:
+    __construct: ['@area_Esquare']
+    name: 'Digital Room'
+
+  room_conseil:
+    __construct: ['@area_Hdv']
+    name: 'Salle Conseil'
+  room_college:
+    __construct: ['@area_Hdv']
+    name: 'Salle Collège'
+  room_cafetaria:
+      __construct: ['@area_Hdv']
+      name: 'Salle cafétaria'

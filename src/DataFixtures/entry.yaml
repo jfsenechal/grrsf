@@ -1,8 +1,37 @@
 App\Entity\Entry:
   entry{1..10}:
-      name: 'Test'
-      start_time: '<dateTimeBetween("-200 days", "now")>'
-      end_time: '<dateTimeBetween($start_time, "now")>'
-      room: '@room1'
-      type: '@type_entry1'
+    name: '<word()>'
+    #date($format = 'Y-m-d', $max = 'now') // '1979-06-09'
+    #time($format = 'H:i:s', $max = 'now') // '20:49:42'
+    start_time: '<dateTimeBetween("-200 days", "now")>'
+    #end_time: '<date($start_time, "now")>'
+    end_time: '<dateTimeBetween($start_time, "now")>'
+    room: '@room1'
+    type: '@type_entry_B'
+
+  entry_1:
+      name: 'Réunion cst'
+      start_time: '<carbonDateTime(2019,8,20,10,0)>'
+      end_time: '<carbonDateTime(2019,8,20,14,10)>'
+      room: '@room_box'
+      type: '@type_entry_C'
+  entry_2:
+      name: 'Réunion pssp'
+      start_time: '<carbonDateTime(2019,8,20,9,0)>'
+      end_time: '<carbonDateTime(2019,8,20,15,35)>'
+      room: '@room_relax'
+      type: '@type_entry_D'
+  entry_3:
+      name: 'Réunion henalux'
+      start_time: '<carbonDateTime(2019,8,21,16,0)>'
+      end_time: '<carbonDateTime(2019,8,21,17,20)>'
+      room: '@room_relax'
+      type: '@type_entry_A'
+  entry_4:
+      name: 'Réunion timesquare'
+      start_time: '<carbonDateTime(2019,8,19,8,0)>'
+      end_time: '<carbonDateTime(2019,8,19,12,40)>'
+      room: '@room_digital'
+      type: '@type_entry_F'
+
 

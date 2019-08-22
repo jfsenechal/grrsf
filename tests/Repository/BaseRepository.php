@@ -25,23 +25,32 @@ class BaseRepository extends WebTestCase
 
     /** @var LoaderInterface */
     protected $loader;
+
+    /**
+     * @var string
+     */
+    protected $pathFixtures;
+
     /**
      * @var \Symfony\Component\HttpKernel\KernelInterface
      */
-    protected $kernel;
+    private $kernel2;
 
     /**
      * {@inheritDoc}
      */
     protected function setUp()
     {
-        $this->kernel = self::bootKernel();
+        $this->kernel2 = self::bootKernel();
 
-        $this->entityManager = $this->kernel->getContainer()
+        $this->entityManager = $this->kernel2->getContainer()
             ->get('doctrine')
             ->getManager();
 
-        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
+        $this->pathFixtures = $this->kernel2->getProjectDir().'/src/DataFixtures/';
+        $this->loader = $this->kernel2->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
+
+        parent::setUp();
         //    $this->truncateEntities();
     }
 
@@ -61,8 +70,8 @@ class BaseRepository extends WebTestCase
         $purger = new ORMPurger($this->entityManager);
         $purger->purge();
 
-        $this->kernel->shutdown();
-        $this->kernel = null;
+        $this->kernel2->shutdown();
+        $this->kernel2 = null;
 
         $this->entityManager->close();
         $this->entityManager = null; // avoid memory leaks

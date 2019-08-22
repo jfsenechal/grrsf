@@ -2,8 +2,11 @@
 
 namespace App\DataFixtures\Install;
 
+use App\Entity\Area;
 use App\Factory\AreaFactory;
 use App\Factory\RoomFactory;
+use App\Repository\AreaRepository;
+use App\Repository\RoomRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -17,24 +20,50 @@ class AreaFixtures extends Fixture
      * @var RoomFactory
      */
     private $roomFactory;
+    /**
+     * @var AreaRepository
+     */
+    private $areaRepository;
+    /**
+     * @var RoomRepository
+     */
+    private $roomRepository;
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
 
-    public function __construct(AreaFactory $areaFactory, RoomFactory $roomFactory)
-    {
+    public function __construct(
+        AreaRepository $areaRepository,
+        AreaFactory $areaFactory,
+        RoomFactory $roomFactory,
+        RoomRepository $roomRepository
+    ) {
         $this->areaFactory = $areaFactory;
         $this->roomFactory = $roomFactory;
+        $this->areaRepository = $areaRepository;
+        $this->roomRepository = $roomRepository;
     }
 
     public function load(ObjectManager $manager)
     {
-        $esquare = $this->areaFactory->createNew();
+        $this->manager = $manager;
 
-        $esquare->setName('E-square');
+        $esquareName = 'E-square';
+        $esquare = $this->areaRepository->findOneBy(['name' => $esquareName]);
+        if (!$esquare) {
+            $esquare = $this->areaFactory->createNew();
+            $esquare->setName($esquareName);
+            $manager->persist($esquare);
+        }
 
-        $hdv = $this->areaFactory->createNew();
-        $hdv->setName('Hdv');
-
-        $manager->persist($esquare);
-        $manager->persist($hdv);
+        $hdvName = 'Hdv';
+        $hdv = $this->areaRepository->findOneBy(['name' => $hdvName]);
+        if (!$hdv) {
+            $hdv = $this->areaFactory->createNew();
+            $hdv->setName($hdvName);
+            $manager->persist($hdv);
+        }
 
         $salles = [
             'Box',
@@ -44,12 +73,7 @@ class AreaFixtures extends Fixture
             'Digital Room',
         ];
 
-        foreach ($salles as $salle) {
-            $room = $this->roomFactory->createNew($esquare);
-            $room->setName($salle);
-            $manager->persist($room);
-            $this->addReference($salle, $room);
-        }
+        $this->loadRooms($esquare, $salles);
 
         $salles = [
             'Salle Conseil',
@@ -57,12 +81,21 @@ class AreaFixtures extends Fixture
             'Salle cafétaria',
         ];
 
-        foreach ($salles as $salle) {
-            $room = $this->roomFactory->createNew($hdv);
-            $room->setName($salle);
-            $manager->persist($room);
-        }
+        $this->loadRooms($esquare, $salles);
 
         $manager->flush();
+    }
+
+    public function loadRooms(Area $area, array $salles)
+    {
+        foreach ($salles as $salle) {
+            if ($this->roomRepository->findOneBy(['name' => $salle])) {
+                continue;
+            }
+            $room = $this->roomFactory->createNew($area);
+            $room->setName($salle);
+            $this->manager->persist($room);
+            $this->addReference($salle, $room);
+        }
     }
 }

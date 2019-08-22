@@ -4,7 +4,7 @@ App\Entity\Area:
         start_time: <numberBetween(7,9)>
         end_time: <numberBetween(17,23)>
         is_24_hour_format: <boolean(95)>
-    dummy_{1..10}:
+    area_{1..10}:
         name: <company()>
         start_time: <numberBetween(7,9)>
         end_time: <numberBetween(17,23)>

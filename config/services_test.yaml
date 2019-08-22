@@ -1,2 +1,0 @@
-    App\Tests\Behat\:
-        resource: '../tests/Behat/*'

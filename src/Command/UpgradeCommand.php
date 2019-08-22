@@ -59,6 +59,6 @@ class UpgradeCommand extends Command
             $path.'DataFixtures/entry.yaml',
         ];
 
-        $objectSet = $this->loader->load($files);
+        $this->loader->load($files);
     }
 }
