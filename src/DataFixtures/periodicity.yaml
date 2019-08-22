@@ -11,7 +11,7 @@ App\Entity\Periodicity:
 
   periodicity_month_same_week_day:
     entry: '@entry_every_month_same_weekday'
-    end_time: '<carbonDate(2019,7,8)>' #2019,5,8 debut Tous les mois le 2ième mercredi
+    end_time: '<carbonDate(2019,10,9)>' #2019,5,8 debut Tous les mois le 2ième mercredi
     type: '5' #every month same week day
 
   periodicity_year:
@@ -28,7 +28,7 @@ App\Entity\Periodicity:
 
   periodicity_week_2:
     entry: '@entry_every_week_2'
-    end_time: '<carbonDate(2017,5,1)>' #debut 2017,2,1
+    end_time: '<carbonDate(2017,4,15)>' #debut 2017,2,1
     type: '2' #every week
     week_repeat: '2' #toutes les 2 semaines
-    week_days: [1,3,6] #monday, wednesday, saturday
+    week_days: [3,6] #wednesday, saturday

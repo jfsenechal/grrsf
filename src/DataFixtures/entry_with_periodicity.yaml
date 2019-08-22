@@ -30,7 +30,7 @@ App\Entity\Entry:
     room: '@room_conseil'
     type: '@type_entry_E'
   entry_every_week_2:
-    name: 'Toutes les 2 semaines, lundi mercredi et samedi'
+    name: 'Toutes les 2 semaines, mercredi et samedi'
     start_time: '<carbonDateTime(2017,2,1,11,0)>'
     end_time: '<carbonDateTime(2017,2,1,16,40)>'
     room: '@room_cafetaria'
