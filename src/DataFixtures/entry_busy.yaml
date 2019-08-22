@@ -7,7 +7,8 @@ App\Entity\Entry:
     type: '@type_entry_D'
   entry_busy_2:
     name: 'Réunion occupée par détente' #11h00 => 17h40
-    start_time: '<carbonDateTime(2019,8,21,10,30)>'
-    end_time: '<carbonDateTime(2019,8,21,15,20)>'
+    start_time: '<carbonDateTime(2019,10,1,10,30)>'
+    end_time: '<carbonDateTime(2019,10,1,15,20)>'
     room: '@room_cafetaria'
     type: '@type_entry_D'
+

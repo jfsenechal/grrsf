@@ -90,9 +90,18 @@ class EntryRepository extends ServiceEntityRepository
         $begin = $entry->getStartTime();
         $end = $entry->getEndTime();
 
-        $qb->andWhere('entry.end_time >= :begin OR entry.start_time <= :end ')
+        $qb->andWhere('entry.start_time BETWEEN :begin AND :end')
             ->setParameter('begin', $begin->format('Y-m-d H:i'))
             ->setParameter('end', $end->format('Y-m-d H:i'));
+
+        $qb->orWhere('entry.end_time BETWEEN :begin1 AND :end1')
+            ->setParameter('begin1', $begin->format('Y-m-d H:i'))
+            ->setParameter('end1', $end->format('Y-m-d H:i'));
+
+
+        /*  $qb->andWhere('entry.end_time >= :begin OR entry.start_time <= :end ')
+              ->setParameter('begin', $begin->format('Y-m-d H:i'))
+              ->setParameter('end', $end->format('Y-m-d H:i'));*/
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
