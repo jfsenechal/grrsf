@@ -1,0 +1,41 @@
+App\Entity\Entry:
+  entry_every_day:
+    name: 'Tous les jours pendant 3 jours'
+    start_time: '<carbonDateTime(2019,12,2,10,0)>'
+    end_time: '<carbonDateTime(2019,12,2,14,10)>'
+    room: '@room_college'
+    type: '@type_entry_A'
+  entry_every_month_same_day:
+    name: 'Tous les mois le 5'
+    start_time: '<carbonDateTime(2019,3,5,9,0)>'
+    end_time: '<carbonDateTime(2019,3,5,15,35)>'
+    room: '@room_digital'
+    type: '@type_entry_D'
+  entry_every_month_same_weekday:
+    name: 'Tous les mois le 2ième mercredi'
+    start_time: '<carbonDateTime(2019,5,8,13,0)>'
+    end_time: '<carbonDateTime(2019,5,8,15,20)>'
+    room: '@room_cafetaria'
+    type: '@type_entry_B'
+  entry_every_year:
+    name: 'Tous les ans le 4 octobre'
+    start_time: '<carbonDateTime(2019,10,4,9,0)>'
+    end_time: '<carbonDateTime(2019,10,4,12,40)>'
+    room: '@room_relax'
+    type: '@type_entry_F'
+  entry_every_week_1:
+    name: 'Toutes les semaines, lundi et mardi'
+    start_time: '<carbonDateTime(2018,6,20,10,15)>'
+    end_time: '<carbonDateTime(2018,6,20,14,45)>'
+    room: '@room_conseil'
+    type: '@type_entry_E'
+  entry_every_week_2:
+    name: 'Toutes les 2 semaines, lundi mercredi et samedi'
+    start_time: '<carbonDateTime(2017,2,1,11,0)>'
+    end_time: '<carbonDateTime(2017,2,1,16,40)>'
+    room: '@room_cafetaria'
+    type: '@type_entry_D'
+
+
+
+

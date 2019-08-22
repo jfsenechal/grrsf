@@ -4,7 +4,6 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Entry;
-use App\Entity\Room;
 use App\Faker\CarbonProvider;
 use App\Model\Month;
 use Carbon\Carbon;
@@ -107,7 +106,7 @@ class EntryRepositoryTest extends BaseRepository
             [
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
-                $this->pathFixtures.'entryType.yaml',
+                $this->pathFixtures.'entry_type.yaml',
                 $this->pathFixtures.'entry_busy.yaml',
             ]
         );
@@ -152,7 +151,7 @@ class EntryRepositoryTest extends BaseRepository
             [
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
-                $this->pathFixtures.'entryType.yaml',
+                $this->pathFixtures.'entry_type.yaml',
                 $this->pathFixtures.'entry.yaml',
             ];
 

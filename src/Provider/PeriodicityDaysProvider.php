@@ -140,11 +140,11 @@ class PeriodicityDaysProvider
          * monday, tuesday, wednesday
          * @example : [1,2,3]
          */
-        $days = $periodicity->getDays();
+        $days = $periodicity->getWeekDays();
         /**
          * @example 1 for every weeks, 2 every 2 weeks, 3,4...
          */
-        $repeat_week = $periodicity->getRepeatWeek();
+        $repeat_week = $periodicity->getWeekRepeat();
 
         /**
          * filter days of the week

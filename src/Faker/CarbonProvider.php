@@ -11,7 +11,6 @@
 namespace App\Faker;
 
 use Carbon\Carbon;
-use Carbon\CarbonInterface;
 use Faker\Provider\Base as BaseProvider;
 
 class CarbonProvider extends BaseProvider
@@ -22,5 +21,13 @@ class CarbonProvider extends BaseProvider
     public function carbonDateTime(int $year, int $month, int $day, int $hour, int $minute)
     {
         return Carbon::create($year, $month, $day, $hour, $minute)->toDateTime();
+    }
+
+    /**
+     * @return string Random job title.
+     */
+    public function carbonDate(int $year, int $month, int $day)
+    {
+        return Carbon::createFromDate($year, $month, $day)->toDateTime();
     }
 }

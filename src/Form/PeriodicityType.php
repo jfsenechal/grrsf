@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Periodicity;
-use App\GrrData\DateUtils;
 use App\GrrData\PeriodicityConstant;
 use App\Provider\DateProvider;
 use Symfony\Component\Form\AbstractType;
@@ -40,7 +39,7 @@ class PeriodicityType extends AbstractType
                 ]
             )
             ->add(
-                'days',
+                'weekDays',
                 ChoiceType::class,
                 [
                     'choices' => array_flip($days),
@@ -51,7 +50,7 @@ class PeriodicityType extends AbstractType
                 ]
             )
             ->add(
-                'repeatWeek',
+                'weekRepeat',
                 ChoiceType::class,
                 [
                     'choices' => array_flip($weeks),

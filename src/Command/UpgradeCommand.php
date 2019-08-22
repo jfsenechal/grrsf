@@ -53,10 +53,11 @@ class UpgradeCommand extends Command
 
         $files = [
             $path.'DataFixtures/users.yaml',
-            $path.'DataFixtures/entryType.yaml',
+            $path.'DataFixtures/entry_type.yaml',
             $path.'DataFixtures/area.yaml',
             $path.'DataFixtures/room.yaml',
-            $path.'DataFixtures/entry.yaml',
+            $path.'DataFixtures/periodicity.yaml',
+            $path.'DataFixtures/entry_with_periodicity.yaml',
         ];
 
         $this->loader->load($files);

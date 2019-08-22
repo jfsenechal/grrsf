@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Periodicity
 {
-   use IdEntityTrait;
+    use IdEntityTrait;
 
     /**
      * @ORM\Column(type="datetime")
@@ -19,6 +19,9 @@ class Periodicity
     private $end_time;
 
     /**
+     * Every month, every day, every...
+     * @see PeriodicityConstant::getTypesPeriodicite
+     *
      * @ORM\Column(type="integer", nullable=true)
      */
     private $type;
@@ -26,13 +29,15 @@ class Periodicity
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $repeat_week;
+    private $week_repeat;
 
     /**
-     * @var array
+     * Monday, tuesday, wednesday...
+     * @see DateProvider::getNamesDaysOfWeek();
+     * @var int[]
      * @ORM\Column(type="array", nullable=true)
      */
-    private $days;
+    private $week_days;
 
     /**
      * @var Entry
@@ -42,15 +47,15 @@ class Periodicity
 
     public function __construct()
     {
-        $this->days = [];
+        $this->week_days = [];
     }
 
     /**
      * @return array
      */
-    public function getDays(): array
+    public function getWeekDays(): array
     {
-        return $this->days;
+        return $this->week_days;
     }
 
     public function getEndTime(): ?\DateTimeInterface
@@ -77,21 +82,21 @@ class Periodicity
         return $this;
     }
 
-    public function getRepeatWeek(): ?int
+    public function getWeekRepeat(): ?int
     {
-        return $this->repeat_week;
+        return $this->week_repeat;
     }
 
-    public function setRepeatWeek(?int $repeat_week): self
+    public function setWeekRepeat(?int $week_repeat): self
     {
-        $this->repeat_week = $repeat_week;
+        $this->week_repeat = $week_repeat;
 
         return $this;
     }
 
-    public function setDays(array $days): self
+    public function setWeekDays(array $week_days): self
     {
-        $this->days = $days;
+        $this->week_days = $week_days;
 
         return $this;
     }

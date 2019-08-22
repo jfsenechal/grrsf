@@ -12,13 +12,13 @@ App\Entity\EntryType:
     letter (unique): 'C'
     color: '<hexcolor()>'
   type_entry_D:
-     name: 'Bureau'
-     letter (unique): 'D'
-     color: '<hexcolor()>'
+    name: 'Bureau'
+    letter (unique): 'D'
+    color: '<hexcolor()>'
   type_entry_E:
-     name: 'Mise a disposition'
-     letter (unique): 'E'
-     color: '<hexcolor()>'
+    name: 'Mise a disposition'
+    letter (unique): 'E'
+    color: '<hexcolor()>'
   type_entry_F:
     name: 'Non disponible'
     letter (unique): 'F'
