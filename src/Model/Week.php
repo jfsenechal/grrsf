@@ -13,18 +13,18 @@ use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 use Webmozart\Assert\Assert;
 
-class Week extends Carbon
+class Week
 {
     /**
      * @var CarbonInterface
      */
-    protected $startDate;
+    protected $first_day;
     /**
      * @var CarbonInterface
      */
-    protected $endDate;
+    protected $last_day;
 
-    public static function createWithLocal(int $year, int $week): self
+    public static function createWithLocal(int $year, int $week): Week
     {
         Assert::greaterThan($year, 0);
         Assert::greaterThan($week, 0);
@@ -35,8 +35,8 @@ class Week extends Carbon
 
         $weekModel = new self();
 
-        $weekModel->startDate = $date;
-        $weekModel->endDate = $date->copy()->endOfWeek();
+        $weekModel->first_day = $date;
+        $weekModel->last_day = $date->copy()->endOfWeek();
 
         return $weekModel;
     }
@@ -51,11 +51,11 @@ class Week extends Carbon
 
     public function getFirstDay(): CarbonInterface
     {
-        return $this->startDate;
+        return $this->first_day;
     }
 
     public function getLastDay(): CarbonInterface
     {
-        return $this->endDate;
+        return $this->last_day;
     }
 }

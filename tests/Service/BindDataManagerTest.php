@@ -68,22 +68,49 @@ class BindDataManagerTest extends BaseRepository
         }
     }
 
-    public function stBindWeek()
+    public function testBindWeekWithRoom()
     {
         $this->loadFixtures();
 
         $bindDataManager = $this->initBindDataManager();
 
-        $monthModel = Week::create(2019, 12);
-        $area = $this->getArea('Esquare');
-        $room = $this->getRoom('Relax Room');
+        $weekModel = Week::createWithLocal(2018, 27);
 
-        $bindDataManager->bindWeek($monthModel, $area, $room);
+        $area = $this->getArea('Hdv');
+        $room = $this->getRoom('Salle Conseil');
 
-        foreach ($monthModel->getDataDays() as $dataDay) {
-            self::assertCount(3, $dataDay->getEntries());
-            foreach ($dataDay->getEntries() as $entry) {
-                self::assertContains($entry->getName(), ResultBind::resultNamesMonthWithRoom());
+        $roomsModel = $bindDataManager->bindWeek($weekModel, $area, $room);
+
+        foreach ($roomsModel as $roomModel) {
+            foreach ($roomModel->getDataDays() as $dataDay) {
+                self::assertContains($dataDay->format('Y-m-d'), ResultBind::getDaysOfWeekWithRoom());
+                self::assertCount(ResultBind::getCountEntriesForWeekWithMonth($dataDay->day), $dataDay->getEntries());
+                foreach ($dataDay->getEntries() as $entry) {
+                    self::assertContains($entry->getName(), ResultBind::resultNamesWeekWithRoom());
+                }
+            }
+        }
+    }
+
+    public function testBindWeekWithOutRoom()
+    {
+        $this->loadFixtures();
+
+        $bindDataManager = $this->initBindDataManager();
+
+        $weekModel = Week::createWithLocal(2018, 27);
+
+        $area = $this->getArea('Hdv');
+
+        $roomsModel = $bindDataManager->bindWeek($weekModel, $area, null);
+
+        foreach ($roomsModel as $roomModel) {
+            foreach ($roomModel->getDataDays() as $dataDay) {
+                self::assertContains($dataDay->format('Y-m-d'), ResultBind::getDaysOfWeekWithRoom());
+                self::assertCount(ResultBind::getCountEntriesForWeekWithMonth($dataDay->day), $dataDay->getEntries());
+                foreach ($dataDay->getEntries() as $entry) {
+                    self::assertContains($entry->getName(), ResultBind::resultNamesWeekWithRoom());
+                }
             }
         }
     }
@@ -147,7 +174,6 @@ class BindDataManagerTest extends BaseRepository
         );
 
     }
-
 
 
 }

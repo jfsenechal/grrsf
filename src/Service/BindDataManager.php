@@ -98,20 +98,19 @@ class BindDataManager
     public function bindWeek(Week $weekModel, Area $area, Room $roomSelected = null)
     {
         if ($roomSelected) {
-            $rooms = (array)$roomSelected;
+            $rooms = [$roomSelected];
         } else {
             $rooms = $area->getRooms();
         }
 
         $days = $weekModel->getCalendarDays();
-        $year = $weekModel->year;
-        $month = $weekModel->month;
         $data = [];
 
         foreach ($rooms as $room) {
             $roomModel = new RoomModel($room);
             foreach ($days as $dayCalendar) {
-                $dataDay = $this->dayFactory->createImmutable($year, $month, $dayCalendar->day);
+                $dataDay = $this->dayFactory->createFromCarbon($dayCalendar);
+
                 $entries = [];
                 $entries[] = $this->entryRepository->findByDayAndRoom($dayCalendar, $room);
 
