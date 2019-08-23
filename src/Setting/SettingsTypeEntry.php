@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Settings;
+namespace App\Setting;
 
 
 class SettingsTypeEntry

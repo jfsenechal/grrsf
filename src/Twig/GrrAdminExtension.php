@@ -5,7 +5,7 @@ namespace App\Twig;
 use App\GrrData\GrrConstants;
 use App\Provider\DateProvider;
 use App\Repository\EntryTypeRepository;
-use App\Settings\SettingsArea;
+use App\Setting\SettingsArea;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

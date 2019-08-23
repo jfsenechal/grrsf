@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\EntryType;
-use App\Settings\SettingsTypeEntry;
+use App\Setting\SettingsTypeEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;

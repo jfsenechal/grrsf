@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Provider;
+namespace App\Setting;
 
 use App\Entity\Area;
 use App\Repository\AreaRepository;

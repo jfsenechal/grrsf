@@ -8,7 +8,7 @@ use App\Factory\DayFactory;
 use App\Helper\MonthHelperDataDisplay;
 use App\Model\Month;
 use App\Model\Week;
-use App\Provider\SettingsProvider;
+use App\Setting\SettingsProvider;
 use App\Provider\TimeSlotsProvider;
 use App\Service\BindDataManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
