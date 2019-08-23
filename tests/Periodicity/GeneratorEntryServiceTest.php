@@ -24,18 +24,19 @@ class GeneratorEntryServiceTest extends BaseRepository
 
         $this->loadFixtures();
 
-        $monthModel = Month::init(2019, 6);
-        $room = $this->getRoom('Digital Room');
+        $name = 'Entry avec une date en commun';
+        $entry = $this->getEntry($name);
 
         $periodicityDays = $this->entityManager
             ->getRepository(PeriodicityDay::class)
-            ->fin($monthModel, $room);
+            ->findBy(['entry' => $entry]);
 
         $entries = $generator->generateEntries($periodicityDays);
-        foreach ($entries as $entry) {
-            var_dump($entry->getName());
-            //    self::assertSame('2019-06-05', $day->getDatePeriodicity()->format('Y-m-d'));
-            //  self::assertSame('Tous les mois le 5', $day->getEntry()->getName());
+
+        self::assertSame(count($entries), 3);
+
+        foreach ($entries as $entryVirtual) {
+            self::assertSame($name, $entryVirtual->getName());
         }
     }
 

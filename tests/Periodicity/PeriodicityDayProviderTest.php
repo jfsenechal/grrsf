@@ -11,8 +11,6 @@
 namespace App\Tests\Periodicity;
 
 
-use App\Entity\Entry;
-use App\Entity\Periodicity;
 use App\Periodicity\PeriodicityConstant;
 use App\Periodicity\PeriodicityDaysProvider;
 use App\Tests\Repository\BaseRepository;
@@ -196,22 +194,6 @@ class PeriodicityDayProviderTest extends BaseRepository
                 $this->pathFixtures.'periodicity.yaml',
             ]
         );
-    }
-
-    protected function getPeriodicity(int $type, string $endTime): Periodicity
-    {
-        $dateTime = \DateTime::createFromFormat('Y-m-d', $endTime);
-
-        return $this->entityManager
-            ->getRepository(Periodicity::class)
-            ->findOneBy(['type' => $type, 'end_time' => $dateTime]);
-    }
-
-    protected function getEntry(string $name): Entry
-    {
-        return $this->entityManager
-            ->getRepository(Entry::class)
-            ->findOneBy(['name' => $name]);
     }
 
 }

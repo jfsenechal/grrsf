@@ -11,6 +11,8 @@
 namespace App\Tests\Repository;
 
 
+use App\Entity\Entry;
+use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Faker\CarbonProvider;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -71,6 +73,22 @@ class BaseRepository extends WebTestCase
         return $this->entityManager
             ->getRepository(Room::class)
             ->findOneBy(['name' => $roomName]);
+    }
+
+    protected function getPeriodicity(int $type, string $endTime): Periodicity
+    {
+        $dateTime = \DateTime::createFromFormat('Y-m-d', $endTime);
+
+        return $this->entityManager
+            ->getRepository(Periodicity::class)
+            ->findOneBy(['type' => $type, 'end_time' => $dateTime]);
+    }
+
+    protected function getEntry(string $name): Entry
+    {
+        return $this->entityManager
+            ->getRepository(Entry::class)
+            ->findOneBy(['name' => $name]);
     }
 
     private function truncateEntities()
