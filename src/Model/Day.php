@@ -20,10 +20,10 @@ class Day extends CarbonImmutable
      */
     protected $entries;
 
-    public function construct($time = null, $tz = null)
+    public function __construct($time = null, $tz = null)
     {
-        $this->entries = new ArrayCollection();
         parent::__construct($time, $tz);
+        $this->entries = new ArrayCollection();
     }
 
     /**

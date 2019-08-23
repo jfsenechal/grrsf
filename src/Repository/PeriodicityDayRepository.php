@@ -33,7 +33,7 @@ class PeriodicityDayRepository extends ServiceEntityRepository
         $qb->addSelect('entry');
 
         $firstDayImmutable = $monthModel->getFirstDayImmutable();
-        $timeString = $firstDayImmutable->format('Y').'-'.$firstDayImmutable->format('m').'%';
+        $timeString = $firstDayImmutable->format('Y-m').'%';
 
         $qb->andWhere('periodicity_day.date_periodicity LIKE :time')
             ->setParameter('time', $timeString);

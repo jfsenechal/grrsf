@@ -16,17 +16,12 @@ class DayFactory
     public function createImmutable(int $year, int $month, int $day): Day
     {
         $date = $this->carbonFactory->createImmutable($year, $month, $day);
-        return new Day($date);
-      //  $dayModel->setEntries(new ArrayCollection());
 
-        return $dayModel;
+        return new Day($date);
     }
 
     public function createFromCarbon(CarbonInterface $carbon): Day
     {
-       return new Day($carbon);
-        $day->setEntries(new ArrayCollection());
-
-        return  $day;
+        return new Day($carbon);
     }
 }

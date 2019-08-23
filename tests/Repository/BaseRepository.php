@@ -11,6 +11,7 @@
 namespace App\Tests\Repository;
 
 
+use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
 use App\Entity\Room;
@@ -66,6 +67,13 @@ class BaseRepository extends WebTestCase
 
         parent::setUp();
         //    $this->truncateEntities();
+    }
+
+    protected function getArea(string $name):Area
+    {
+    return $this->entityManager
+            ->getRepository(Area::class)
+            ->findOneBy(['name' => $name]);
     }
 
     protected function getRoom(string $roomName): Room

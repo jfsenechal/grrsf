@@ -27,11 +27,11 @@ class DefaultController extends AbstractController implements FrontControllerInt
     /**
      * @var BindDataManager
      */
-    private $calendarDataManager;
+    private $bindDataManager;
     /**
      * @var SettingsProvider
      */
-    private $settingservice;
+    private $settingsProvider;
     /**
      * @var MonthHelperDataDisplay
      */
@@ -52,8 +52,8 @@ class DefaultController extends AbstractController implements FrontControllerInt
         TimeSlotsProvider $timeSlotsProvider,
         DayFactory $dayFactory
     ) {
-        $this->calendarDataManager = $calendarDataManager;
-        $this->settingservice = $settingservice;
+        $this->bindDataManager = $calendarDataManager;
+        $this->settingsProvider = $settingservice;
         $this->monthHelperDataDisplay = $monthHelperDataDisplay;
         $this->timeSlotsProvider = $timeSlotsProvider;
         $this->dayFactory = $dayFactory;
@@ -67,7 +67,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
     public function month(Area $area, int $year, int $month, Room $room = null): Response
     {
         $monthModel = Month::init($year, $month);
-        $this->calendarDataManager->bindMonth($monthModel, $area, $room);
+        $this->bindDataManager->bindMonth($monthModel, $area, $room);
 
         $monthData = $this->monthHelperDataDisplay->generateHtmlMonth($monthModel);
 
@@ -90,7 +90,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
     public function week(Area $area, int $year, int $month, int $week, Room $room = null): Response
     {
         $weekModel = Week::createWithLocal($year, $week);
-        $data = $this->calendarDataManager->bindWeek($weekModel, $area, $room);
+        $data = $this->bindDataManager->bindWeek($weekModel, $area, $room);
 
         return $this->render(
             '@grr_front/week/week.html.twig',
@@ -113,7 +113,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
         $daySelected = $dayModel->toImmutable();
 
         $hoursModel = $this->timeSlotsProvider->getTimeSlotsModelByAreaAndDay($area);
-        $roomsModel = $this->calendarDataManager->bindDay($daySelected, $area, $hoursModel, $room);
+        $roomsModel = $this->bindDataManager->bindDay($daySelected, $area, $hoursModel, $room);
 
         return $this->render(
             '@grr_front/day/day.html.twig',

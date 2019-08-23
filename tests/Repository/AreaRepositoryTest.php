@@ -15,9 +15,7 @@ class AreaRepositoryTest extends BaseRepository
             ]
         );
 
-        $area = $this->entityManager
-            ->getRepository(Area::class)
-            ->findOneBy(['name' => 'Esquare']);
+        $area = $this->getArea('Esquare');
 
         $this->assertEquals('Esquare', $area->getName());
     }
