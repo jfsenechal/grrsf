@@ -6,7 +6,7 @@
  * Time: 14:43.
  */
 
-namespace App\Service;
+namespace App\Setting;
 
 class SettingConstants
 {

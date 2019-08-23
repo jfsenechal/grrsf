@@ -14,6 +14,11 @@ use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Faker\Provider\Base as BaseProvider;
 
+/**
+ * Util pour le chargement des fixtures lors des tests
+ * Class CarbonProvider
+ * @package App\Faker
+ */
 class CarbonProvider extends BaseProvider
 {
     /**

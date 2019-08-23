@@ -2,7 +2,6 @@
 
 namespace App\Twig;
 
-use App\GrrData\GrrConstants;
 use App\Provider\DateProvider;
 use App\Repository\EntryTypeRepository;
 use App\Setting\SettingsArea;
@@ -41,11 +40,6 @@ class GrrAdminExtension extends AbstractExtension
             }
             ),
             new TwigFilter(
-                'grrPeriodName', function (int $value) {
-                return $this->periodName($value);
-            }
-            ),
-            new TwigFilter(
                 'grrHourFormat', function (int $value) {
                 return $this->hourFormat($value);
             }
@@ -71,11 +65,6 @@ class GrrAdminExtension extends AbstractExtension
         $jours = DateProvider::getNamesDaysOfWeek();
 
         return isset($jours[$value]) ? $jours[$value] : $value;
-    }
-
-    public function periodName(int $value)
-    {
-        return GrrConstants::PERIOD[$value];
     }
 
     public function hourFormat(int $value)
