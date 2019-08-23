@@ -41,9 +41,9 @@ class BindDataManagerTest extends BaseRepository
 
         self::assertCount(31, $monthModel->getDataDays());
         foreach ($monthModel->getDataDays() as $dataDay) {
-            self::assertCount($this->getCountEntriesFoMonthWithRoom($dataDay->day), $dataDay->getEntries());
+            self::assertCount(ResultBind::getCountEntriesFoMonthWithRoom($dataDay->day), $dataDay->getEntries());
             foreach ($dataDay->getEntries() as $entry) {
-                self::assertContains($entry->getName(), $this->resultNamesMonthWithRoom());
+                self::assertContains($entry->getName(), ResultBind::resultNamesMonthWithRoom());
             }
         }
     }
@@ -61,9 +61,9 @@ class BindDataManagerTest extends BaseRepository
 
         self::assertCount(31, $monthModel->getDataDays());
         foreach ($monthModel->getDataDays() as $dataDay) {
-            self::assertCount($this->getCountEntriesFoMonthWithOutRoom($dataDay->day), $dataDay->getEntries());
+            self::assertCount(ResultBind::getCountEntriesFoMonthWithOutRoom($dataDay->day), $dataDay->getEntries());
             foreach ($dataDay->getEntries() as $entry) {
-                self::assertContains($entry->getName(), $this->resultNamesMonthWithOutRoom());
+                self::assertContains($entry->getName(), ResultBind::resultNamesMonthWithOutRoom());
             }
         }
     }
@@ -83,7 +83,7 @@ class BindDataManagerTest extends BaseRepository
         foreach ($monthModel->getDataDays() as $dataDay) {
             self::assertCount(3, $dataDay->getEntries());
             foreach ($dataDay->getEntries() as $entry) {
-                self::assertContains($entry->getName(), $this->resultNamesMonthWithRoom());
+                self::assertContains($entry->getName(), ResultBind::resultNamesMonthWithRoom());
             }
         }
     }
@@ -148,36 +148,6 @@ class BindDataManagerTest extends BaseRepository
 
     }
 
-    private function resultNamesMonthWithRoom()
-    {
-        return [
-            "Tous les jours pendant 3 jours",
-            "Entry avec une date en commun",
-        ];
-    }
 
-    private function resultNamesMonthWithOutRoom()
-    {
-        return [
-            "Entry avec une date en commun",
-            "Tous les jours pendant 3 jours",
-            "Entry avec une date en commun",
-        ];
-    }
-
-
-    protected function getCountEntriesFoMonthWithRoom(int $day): int
-    {
-        $result = [3 => 1, 4 => 1, 5 => 1, 6 => 1,];
-
-        return $result[$day] ?? 0;
-    }
-
-    protected function getCountEntriesFoMonthWithOutRoom(int $day): int
-    {
-        $result = [3 => 2, 4 => 1, 5 => 1, 6 => 1];
-
-        return $result[$day] ?? 0;
-    }
 
 }
