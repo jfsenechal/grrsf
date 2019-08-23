@@ -69,7 +69,7 @@ class PeriodicityDayRepositoryTest extends BaseRepository
 
     public function testfindFoWeek()
     {
-        //CarbonInterface $day, Room $room
+
     }
 
     protected function loadFixtures()

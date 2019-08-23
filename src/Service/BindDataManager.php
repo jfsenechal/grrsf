@@ -124,7 +124,7 @@ class BindDataManager
                 $entries = [];
                 $entries[] = $this->entryRepository->findByDayAndRoom($dayCalendar, $room);
 
-                $periodicityDays = $this->periodicityDayRepository->findForWeek($dayCalendar, $room);
+                $periodicityDays = $this->periodicityDayRepository->findForDay($dayCalendar, $room);
                 $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
 
                 $dataDay->addEntries(array_merge(...$entries));

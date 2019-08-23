@@ -72,29 +72,6 @@ class PeriodicityDayRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param CarbonInterface $day
-     * @param Room $room
-     * @return PeriodicityDay[]
-     */
-    public function findForWeek(CarbonInterface $day, Room $room)
-    {
-        $qb = $this->createQueryBuilder('periodicity_day');
-        $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');
-        $qb->addSelect('entry');
-
-        $qb->andWhere('periodicity_day.date_periodicity LIKE :time')
-            ->setParameter('time', $day->format('Y').'-'.$day->format('m').'-'.$day->format('d').'%');
-
-        $qb->andWhere('entry.room = :room')
-            ->setParameter('room', $room);
-
-        return $qb
-            ->orderBy('periodicity_day.date_periodicity', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
     public function persist(PeriodicityDay $periodicityDay)
     {
         $this->_em->persist($periodicityDay);
