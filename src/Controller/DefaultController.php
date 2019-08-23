@@ -15,10 +15,15 @@ class DefaultController extends AbstractController
      * @var RessourceSelectedHelper
      */
     private $ressourceSelectedHelper;
+    /**
+     * @var CarbonFactory
+     */
+    private $carbonFactory;
 
-    public function __construct(RessourceSelectedHelper $ressourceSelectedHelper)
+    public function __construct(CarbonFactory $carbonFactory,RessourceSelectedHelper $ressourceSelectedHelper)
     {
         $this->ressourceSelectedHelper = $ressourceSelectedHelper;
+        $this->carbonFactory = $carbonFactory;
     }
 
     /**
@@ -27,7 +32,7 @@ class DefaultController extends AbstractController
      */
     public function index(): Response
     {
-        $today = CarbonFactory::getToday();
+        $today = $this->carbonFactory->getToday();
 
         $area = $this->ressourceSelectedHelper->getArea();
         $room = $this->ressourceSelectedHelper->getRoom();
