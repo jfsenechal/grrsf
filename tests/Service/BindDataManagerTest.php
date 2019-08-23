@@ -13,6 +13,7 @@ namespace App\Tests\Service;
 
 use App\Entity\Entry;
 use App\Entity\PeriodicityDay;
+use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Factory\DayFactory;
 use App\Helper\LocalHelper;
@@ -98,18 +99,25 @@ class BindDataManagerTest extends BaseRepository
 
         $bindDataManager = $this->initBindDataManager();
 
-        $weekModel = Week::createWithLocal(2018, 27);
+        $weekModel = Week::createWithLocal(2019, 49);
 
         $area = $this->getArea('Hdv');
-
         $roomsModel = $bindDataManager->bindWeek($weekModel, $area, null);
+
+        self::assertCount(3, $roomsModel);
 
         foreach ($roomsModel as $roomModel) {
             foreach ($roomModel->getDataDays() as $dataDay) {
-                self::assertContains($dataDay->format('Y-m-d'), ResultBind::getDaysOfWeekWithRoom());
-                self::assertCount(ResultBind::getCountEntriesForWeekWithMonth($dataDay->day), $dataDay->getEntries());
+                self::assertContains($dataDay->format('Y-m-d'), ResultBind::getDaysOfWeekWitOuthhRoom());
+                //  if (count($dataDay->getEntries()) > 0) {
+                //    echo '['.$roomModel->getRoom()->getName().']['.$dataDay->day.']=>'.count($dataDay->getEntries()).',';
+                //  }
+                self::assertCount(
+                    ResultBind::getCountEntriesForWeekWithOutMonth($dataDay->day, $roomModel->getRoom()->getName()),
+                    $dataDay->getEntries()
+                );
                 foreach ($dataDay->getEntries() as $entry) {
-                    self::assertContains($entry->getName(), ResultBind::resultNamesWeekWithRoom());
+                    self::assertContains($entry->getName(), ResultBind::resultNamesWeekWithOutRoom());
                 }
             }
         }
@@ -161,6 +169,7 @@ class BindDataManagerTest extends BaseRepository
     {
         $entryRepository = $this->entityManager->getRepository(Entry::class);
         $periodicityDayRepository = $this->entityManager->getRepository(PeriodicityDay::class);
+        $roomRepository = $this->entityManager->getRepository(Room::class);
         $dayFactory = $this->initDayFactory();
         $entryLocationService = $this->initLocationService();
         $generatorEntry = $this->initGeneratorFactory();
@@ -168,6 +177,7 @@ class BindDataManagerTest extends BaseRepository
         return new BindDataManager(
             $entryRepository,
             $periodicityDayRepository,
+            $roomRepository,
             $entryLocationService,
             $generatorEntry,
             $dayFactory

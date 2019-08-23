@@ -57,18 +57,47 @@ class ResultBind
         ];
     }
 
+
+    public static function getDaysOfWeekWitOuthhRoom()
+    {
+        return [
+            "2019-12-02",
+            "2019-12-03",
+            "2019-12-04",
+            "2019-12-05",
+            "2019-12-06",
+            "2019-12-07",
+            "2019-12-08",
+        ];
+    }
+
     public static function getCountEntriesForWeekWithMonth(int $day): int
     {
-        $result = [2 => 1, 3 => 1,];
+        $result = [2 => 1, 3 => 1];
 
         return $result[$day] ?? 0;
     }
 
+    public static function getCountEntriesForWeekWithOutMonth(int $day, string $room): int
+    {
+        $result = [];
+        $result['Salle Collège'][2] = 1;
+        $result['Salle Collège'][3] = 1;
+
+        return $result[$room][$day] ?? 0;
+    }
 
     public static function resultNamesWeekWithRoom()
     {
         return [
-            "Toutes les semaines, lundi et mardi"
+            "Toutes les semaines, lundi et mardi",
+        ];
+    }
+
+    public static function resultNamesWeekWithOutRoom()
+    {
+        return [
+            "Tous les jours pendant 3 jours",
         ];
     }
 }

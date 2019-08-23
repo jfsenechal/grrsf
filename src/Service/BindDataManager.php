@@ -19,6 +19,7 @@ use App\Model\Week;
 use App\Periodicity\GeneratorEntry;
 use App\Repository\EntryRepository;
 use App\Repository\PeriodicityDayRepository;
+use App\Repository\RoomRepository;
 use Carbon\CarbonInterface;
 
 class BindDataManager
@@ -43,10 +44,15 @@ class BindDataManager
      * @var DayFactory
      */
     private $dayFactory;
+    /**
+     * @var RoomRepository
+     */
+    private $roomRepository;
 
     public function __construct(
         EntryRepository $entryRepository,
         PeriodicityDayRepository $periodicityDayRepository,
+        RoomRepository $roomRepository,
         EntryLocationService $entryLocationService,
         GeneratorEntry $generatorEntry,
         DayFactory $dayFactory
@@ -56,6 +62,7 @@ class BindDataManager
         $this->periodicityDayRepository = $periodicityDayRepository;
         $this->generatorEntry = $generatorEntry;
         $this->dayFactory = $dayFactory;
+        $this->roomRepository = $roomRepository;
     }
 
     /**
@@ -100,7 +107,7 @@ class BindDataManager
         if ($roomSelected) {
             $rooms = [$roomSelected];
         } else {
-            $rooms = $area->getRooms();
+            $rooms = $this->roomRepository->findByArea($area);//not $are->getRooms() sqlite not work
         }
 
         $days = $weekModel->getCalendarDays();
