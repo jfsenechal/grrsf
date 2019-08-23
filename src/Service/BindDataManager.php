@@ -118,7 +118,7 @@ class BindDataManager
             foreach ($days as $dayCalendar) {
                 $dataDay = $this->dayFactory->createFromCarbon($dayCalendar);
 
-                $entries = [];
+                $entries = [[]];
                 $entries[] = $this->entryRepository->findByDayAndRoom($dayCalendar, $room);
 
                 $periodicityDays = $this->periodicityDayRepository->findForDay($dayCalendar, $room);
