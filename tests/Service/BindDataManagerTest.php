@@ -17,6 +17,7 @@ use App\Factory\CarbonFactory;
 use App\Factory\DayFactory;
 use App\Helper\LocalHelper;
 use App\Model\Month;
+use App\Model\Week;
 use App\Periodicity\GeneratorEntry;
 use App\Provider\TimeSlotsProvider;
 use App\Service\BindDataManager;
@@ -26,7 +27,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class BindDataManagerTest extends BaseRepository
 {
-    public function testBindMonth()
+    public function testBindMonthWithRoom()
     {
         $this->loadFixtures();
 
@@ -38,8 +39,52 @@ class BindDataManagerTest extends BaseRepository
 
         $bindDataManager->bindMonth($monthModel, $area, $room);
 
+        self::assertCount(31, $monthModel->getDataDays());
         foreach ($monthModel->getDataDays() as $dataDay) {
-            var_dump($dataDay->format('Y-m-d'));
+            self::assertCount($this->getCountEntriesFoMonthWithRoom($dataDay->day), $dataDay->getEntries());
+            foreach ($dataDay->getEntries() as $entry) {
+                self::assertContains($entry->getName(), $this->resultNamesMonthWithRoom());
+            }
+        }
+    }
+
+    public function testBindMonthWithOutRoom()
+    {
+        $this->loadFixtures();
+
+        $bindDataManager = $this->initBindDataManager();
+
+        $monthModel = Month::init(2019, 12);
+        $area = $this->getArea('Esquare');
+
+        $bindDataManager->bindMonth($monthModel, $area, null);
+
+        self::assertCount(31, $monthModel->getDataDays());
+        foreach ($monthModel->getDataDays() as $dataDay) {
+            self::assertCount($this->getCountEntriesFoMonthWithOutRoom($dataDay->day), $dataDay->getEntries());
+            foreach ($dataDay->getEntries() as $entry) {
+                self::assertContains($entry->getName(), $this->resultNamesMonthWithOutRoom());
+            }
+        }
+    }
+
+    public function stBindWeek()
+    {
+        $this->loadFixtures();
+
+        $bindDataManager = $this->initBindDataManager();
+
+        $monthModel = Week::create(2019, 12);
+        $area = $this->getArea('Esquare');
+        $room = $this->getRoom('Relax Room');
+
+        $bindDataManager->bindWeek($monthModel, $area, $room);
+
+        foreach ($monthModel->getDataDays() as $dataDay) {
+            self::assertCount(3, $dataDay->getEntries());
+            foreach ($dataDay->getEntries() as $entry) {
+                self::assertContains($entry->getName(), $this->resultNamesMonthWithRoom());
+            }
         }
     }
 
@@ -102,4 +147,37 @@ class BindDataManagerTest extends BaseRepository
         );
 
     }
+
+    private function resultNamesMonthWithRoom()
+    {
+        return [
+            "Tous les jours pendant 3 jours",
+            "Entry avec une date en commun",
+        ];
+    }
+
+    private function resultNamesMonthWithOutRoom()
+    {
+        return [
+            "Entry avec une date en commun",
+            "Tous les jours pendant 3 jours",
+            "Entry avec une date en commun",
+        ];
+    }
+
+
+    protected function getCountEntriesFoMonthWithRoom(int $day): int
+    {
+        $result = [3 => 1, 4 => 1, 5 => 1, 6 => 1,];
+
+        return $result[$day] ?? 0;
+    }
+
+    protected function getCountEntriesFoMonthWithOutRoom(int $day): int
+    {
+        $result = [3 => 2, 4 => 1, 5 => 1, 6 => 1];
+
+        return $result[$day] ?? 0;
+    }
+
 }

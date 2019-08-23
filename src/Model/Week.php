@@ -8,12 +8,9 @@
 
 namespace App\Model;
 
-use App\Factory\CarbonFactory;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Webmozart\Assert\Assert;
 
 class Week extends Carbon
@@ -26,48 +23,13 @@ class Week extends Carbon
      * @var CarbonInterface
      */
     protected $endDate;
-    /**
-     * @var array
-     */
-    protected $data = [];
-    /**
-     * @var ArrayCollection|Day[]
-     */
-    protected $data_days;
-    /**
-     * @var ArrayCollection|RoomModel[]
-     */
-    protected $rooms;
-
-    /**
-     * @return RoomModel[]|ArrayCollection
-     */
-    public function getR2222ooms()
-    {
-        return $this->rooms;
-    }
-
-    /**
-     * @param RoomModel[]|ArrayCollection $rooms
-     */
-    public function setRo222oms($rooms): void
-    {
-        $this->rooms = $rooms;
-    }
-
-    public function __construct($time = null, $tz = null)
-    {
-        parent::__construct($time, $tz);
-        $this->data_days = new ArrayCollection();
-        $this->rooms = new ArrayCollection();
-    }
 
     public static function createWithLocal(int $year, int $week): self
     {
         Assert::greaterThan($year, 0);
         Assert::greaterThan($week, 0);
 
-        $date = CarbonFactory::create($year);
+        $date = Carbon::create($year);
         $date->setISODate($year, $week);
         //$date->isoWeek($week, Carbon::MONDAY);
 
@@ -95,22 +57,5 @@ class Week extends Carbon
     public function getLastDay(): CarbonInterface
     {
         return $this->endDate;
-    }
-
-    /**
-     * @return Collection|Day[]
-     */
-    public function getD222ataDays(): Collection
-    {
-        return $this->data_days;
-    }
-
-    public function addD222ataDay(Day $day): self
-    {
-        if (!$this->data_days->contains($day)) {
-            $this->data_days[] = $day;
-        }
-
-        return $this;
     }
 }
