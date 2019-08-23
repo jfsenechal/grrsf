@@ -37,3 +37,4 @@ App\Entity\Periodicity:
     entry: '@entry_with_common_date'
     end_time: '<carbonDate(2019,12,6)>' #debut 2019,12,3
     type: '1' #every day
+    #type: '!php/const:App\GrrData\PeriodicityConstant::EVERY_DAY' #not work
