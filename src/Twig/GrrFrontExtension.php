@@ -4,7 +4,7 @@ namespace App\Twig;
 
 use App\Entity\Entry;
 use App\Factory\MenuGenerator;
-use App\GrrData\PeriodicityConstant;
+use App\Periodicity\PeriodicityConstant;
 use App\Model\Day;
 use App\Model\Month;
 use App\Model\RoomModel;

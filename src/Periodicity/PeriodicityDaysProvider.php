@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Provider;
+namespace App\Periodicity;
 
 use App\Entity\Entry;
 use App\Entity\Periodicity;
-use App\GrrData\PeriodicityConstant;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;

@@ -17,6 +17,7 @@ use App\Model\Month;
 use App\Model\RoomModel;
 use App\Model\TimeSlot;
 use App\Model\Week;
+use App\Periodicity\GeneratorEntry;
 use App\Repository\EntryRepository;
 use App\Repository\PeriodicityDayRepository;
 use Carbon\CarbonInterface;

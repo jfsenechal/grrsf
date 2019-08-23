@@ -8,12 +8,12 @@
  *
  */
 
-namespace App\Tests\Service;
+namespace App\Tests\Periodicity;
 
 
 use App\Entity\PeriodicityDay;
 use App\Model\Month;
-use App\Service\GeneratorEntry;
+use App\Periodicity\GeneratorEntry;
 use App\Tests\Repository\BaseRepository;
 
 class GeneratorEntryServiceTest extends BaseRepository

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Doctrine\IdEntityTrait;
+use App\Periodicity\PeriodicityConstant;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

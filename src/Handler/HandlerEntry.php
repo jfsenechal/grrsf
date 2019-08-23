@@ -10,7 +10,7 @@ use App\Entity\PeriodicityDay;
 use App\Manager\EntryManager;
 use App\Manager\PeriodicityDayManager;
 use App\Manager\PeriodicityManager;
-use App\Provider\PeriodicityDaysProvider;
+use App\Periodicity\PeriodicityDaysProvider;
 use App\Repository\EntryRepository;
 use Symfony\Component\Form\FormInterface;
 

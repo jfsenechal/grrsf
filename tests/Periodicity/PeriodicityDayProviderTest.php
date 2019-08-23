@@ -8,22 +8,14 @@
  *
  */
 
-namespace App\Tests\Provider;
+namespace App\Tests\Periodicity;
 
 
-use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
-use App\Entity\Room;
-use App\Factory\CarbonFactory;
-use App\GrrData\PeriodicityConstant;
-use App\Helper\LocalHelper;
-use App\Provider\PeriodicityDaysProvider;
-use App\Provider\TimeSlotsProvider;
+use App\Periodicity\PeriodicityConstant;
+use App\Periodicity\PeriodicityDaysProvider;
 use App\Tests\Repository\BaseRepository;
-use Carbon\Carbon;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PeriodicityDayProviderTest extends BaseRepository
 {

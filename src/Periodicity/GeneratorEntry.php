@@ -1,8 +1,7 @@
 <?php
 
 
-namespace App\Service;
-
+namespace App\Periodicity;
 
 use App\Entity\Entry;
 use App\Entity\PeriodicityDay;

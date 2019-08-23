@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Periodicity;
-use App\GrrData\PeriodicityConstant;
+use App\Periodicity\PeriodicityConstant;
 use App\Provider\DateProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
