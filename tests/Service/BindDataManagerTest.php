@@ -99,7 +99,7 @@ class BindDataManagerTest extends BaseRepository
 
         $bindDataManager = $this->initBindDataManager();
 
-        $weekModel = Week::createWithLocal(2019, 49);
+        $weekModel = Week::createWithLocal(2019, 49);//2 december
 
         $area = $this->getArea('Hdv');
         $roomsModel = $bindDataManager->bindWeek($weekModel, $area, null);
@@ -109,9 +109,6 @@ class BindDataManagerTest extends BaseRepository
         foreach ($roomsModel as $roomModel) {
             foreach ($roomModel->getDataDays() as $dataDay) {
                 self::assertContains($dataDay->format('Y-m-d'), ResultBind::getDaysOfWeekWitOuthhRoom());
-                //  if (count($dataDay->getEntries()) > 0) {
-                //    echo '['.$roomModel->getRoom()->getName().']['.$dataDay->day.']=>'.count($dataDay->getEntries()).',';
-                //  }
                 self::assertCount(
                     ResultBind::getCountEntriesForWeekWithOutMonth($dataDay->day, $roomModel->getRoom()->getName()),
                     $dataDay->getEntries()

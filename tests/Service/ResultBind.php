@@ -32,14 +32,14 @@ class ResultBind
 
     public static function getCountEntriesFoMonthWithRoom(int $day): int
     {
-        $result = [3 => 1, 4 => 1, 5 => 1, 6 => 1,];
+        $result = [3 => 1, 4 => 2, 5 => 2, 6 => 1];
 
         return $result[$day] ?? 0;
     }
 
     public static function getCountEntriesFoMonthWithOutRoom(int $day): int
     {
-        $result = [3 => 2, 4 => 1, 5 => 1, 6 => 1];
+        $result = [3 => 2, 4 => 2, 5 => 2, 6 => 1];
 
         return $result[$day] ?? 0;
     }
@@ -81,8 +81,10 @@ class ResultBind
     public static function getCountEntriesForWeekWithOutMonth(int $day, string $room): int
     {
         $result = [];
-        $result['Salle Collège'][2] = 1;
+        $result ['Salle Collège'][2] = 1;
         $result['Salle Collège'][3] = 1;
+        $result['Salle Collège'][4] = 1;
+        $result['Salle Collège'][5] = 1;
 
         return $result[$room][$day] ?? 0;
     }

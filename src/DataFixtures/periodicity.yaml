@@ -36,5 +36,5 @@ App\Entity\Periodicity:
   periodicity_with_common_day:
     entry: '@entry_with_common_date'
     end_time: '<carbonDate(2019,12,6)>' #debut 2019,12,3
-    type2: '1' #every day
+    type: '1' #every day
     #type: !php/const App\Periodicity\PeriodicityConstant::EVERY_DAY #not work
