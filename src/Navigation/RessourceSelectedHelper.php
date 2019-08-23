@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Helper;
+namespace App\Navigation;
 
 
 use App\Entity\Area;

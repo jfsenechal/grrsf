@@ -5,7 +5,7 @@ namespace App\Command;
 use App\Factory\UserFactory;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
-use App\Security\SecurityData;
+use App\Security\SecurityRole;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -61,7 +61,7 @@ class CreateuserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
-        $role = SecurityData::getRoleGrrAdministrator();
+        $role = SecurityRole::getRoleGrrAdministrator();
 
         $email = $input->getArgument('email');
         $name = $input->getArgument('name');

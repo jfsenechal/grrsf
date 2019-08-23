@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Factory\CarbonFactory;
-use App\Helper\RessourceSelectedHelper;
+use App\Navigation\RessourceSelectedHelper;
 use App\Modules\GrrModuleSenderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

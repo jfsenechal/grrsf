@@ -4,7 +4,7 @@ namespace App\Security\Voter;
 
 use App\Entity\Area;
 use App\Entity\Security\User;
-use App\Security\SecurityData;
+use App\Security\SecurityRole;
 use App\Security\SecurityHelper;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
@@ -84,7 +84,7 @@ class AreaVoter extends Voter
         $this->area = $area;
         $this->token = $token;
 
-        if ($this->decisionManager->decide($token, [SecurityData::getRoleGrrAdministrator()])) {
+        if ($this->decisionManager->decide($token, [SecurityRole::getRoleGrrAdministrator()])) {
             return true;
         }
 
@@ -106,10 +106,10 @@ class AreaVoter extends Voter
 
     private function canIndex()
     {
-        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
+        if ($this->decisionManager->decide($this->token, [SecurityRole::getRoleManagerArea()])) {
             return true;
         }
-        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
+        if ($this->decisionManager->decide($this->token, [SecurityRole::getRoleManagerArea()])) {
             return true;
         }
 
@@ -118,10 +118,10 @@ class AreaVoter extends Voter
 
     private function canNew()
     {
-        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
+        if ($this->decisionManager->decide($this->token, [SecurityRole::getRoleManagerArea()])) {
             return true;
         }
-        if ($this->decisionManager->decide($this->token, [SecurityData::getRoleManagerArea()])) {
+        if ($this->decisionManager->decide($this->token, [SecurityRole::getRoleManagerArea()])) {
             return true;
         }
 

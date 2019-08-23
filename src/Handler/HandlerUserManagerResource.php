@@ -27,7 +27,7 @@ class HandlerUserManagerResource
         $this->userManagerResourceManager = $userManagerResourceManager;
     }
 
-    public function handleNewUserManagerResource(FormInterface $form, UserManagerResourceModel $userManagerResource)
+    public function handleNewUserManagerResource(FormInterface $form  )
     {
         /**
          * @var UserManagerResourceModel $data

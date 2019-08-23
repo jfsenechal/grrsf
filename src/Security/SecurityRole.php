@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-class SecurityData
+class SecurityRole
 {
     public static function getRoles()
     {

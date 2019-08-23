@@ -4,7 +4,7 @@ namespace App\Security\Voter;
 
 use App\Entity\Entry;
 use App\Entity\Security\User;
-use App\Security\SecurityData;
+use App\Security\SecurityRole;
 use App\Security\SecurityHelper;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
@@ -78,7 +78,7 @@ class EntryVoter extends Voter
         $this->entry = $entry;
         $this->token = $token;
 
-        if ($this->decisionManager->decide($token, [SecurityData::getRoleGrrAdministrator()])) {
+        if ($this->decisionManager->decide($token, [SecurityRole::getRoleGrrAdministrator()])) {
             return true;
         }
 

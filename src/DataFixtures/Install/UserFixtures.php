@@ -4,7 +4,7 @@ namespace App\DataFixtures\Install;
 
 use App\Factory\UserFactory;
 use App\Repository\Security\UserRepository;
-use App\Security\SecurityData;
+use App\Security\SecurityRole;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -43,7 +43,7 @@ class UserFixtures extends Fixture
             return;
         }
 
-        $roleGrrAdministrator = SecurityData::getRoleGrrAdministrator();
+        $roleGrrAdministrator = SecurityRole::getRoleGrrAdministrator();
 
         $user = $this->userFactory->createNew();
         $user->setName('Administrator');

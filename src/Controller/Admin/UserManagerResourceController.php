@@ -60,7 +60,7 @@ class UserManagerResourceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->handlerUserManagerResource->handleNewUserManagerResource($form, $userManagerResource);
+            $this->handlerUserManagerResource->handleNewUserManagerResource($form);
 
             if ($user) {
                 return $this->redirectToRoute('grr_admin_user_show', ['id' => $user->getId()]);
