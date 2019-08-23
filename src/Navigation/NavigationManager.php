@@ -35,11 +35,16 @@ class NavigationManager
      * @var RequestStack
      */
     private $requestStack;
+    /**
+     * @var NavigationFactory
+     */
+    private $navigationFactory;
 
-    public function __construct(Environment $environment, RequestStack $requestStack)
+    public function __construct(NavigationFactory $navigationFactory,Environment $environment, RequestStack $requestStack)
     {
         $this->twigEnvironment = $environment;
         $this->requestStack = $requestStack;
+        $this->navigationFactory = $navigationFactory;
     }
 
     /**
@@ -54,7 +59,7 @@ class NavigationManager
 
         Assert::greaterThan($number, 0);
 
-        $navigation = NavigationFactory::createNew();
+        $navigation = $this->navigationFactory->createNew();
         $this->today = $navigation->getToday();
 
         $navigation->setNextButton($this->nextButton());
