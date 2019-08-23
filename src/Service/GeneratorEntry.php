@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\Entity\Entry;
 use App\Entity\PeriodicityDay;
 use Carbon\Carbon;
 
@@ -12,7 +13,7 @@ class GeneratorEntry
     /**
      *
      * @param PeriodicityDay[] $periodicityDays
-     * @return array
+     * @return Entry[]
      */
     public function generateEntries(array $periodicityDays)
     {

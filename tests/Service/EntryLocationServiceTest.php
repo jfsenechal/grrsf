@@ -23,7 +23,7 @@ use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class EntryServiceTest extends WebTestCase
+class EntryLocationServiceTest extends WebTestCase
 {
     public function testSetLocations()
     {

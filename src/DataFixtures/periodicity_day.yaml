@@ -17,3 +17,6 @@ App\Entity\PeriodicityDay:
   period_week2_{2017_02_08, 2017_02_11, 2017_02_22, 2017_02_25, 2017_03_08, 2017_03_11, 2017_03_22, 2017_03_25, 2017_04_05, 2017_04_08}:
     entry: '@entry_every_week_2'
     date_periodicity: '<carbonFromFormat("Y_m_d", <current()>)>'
+  period_day_{2019_12_04, 2019_12_05, 2019_12_06}:
+    entry: '@entry_with_common_date'
+    date_periodicity: '<carbonFromFormat("Y_m_d", <current()>)>'

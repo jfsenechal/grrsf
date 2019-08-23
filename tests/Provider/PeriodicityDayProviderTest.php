@@ -169,6 +169,25 @@ class PeriodicityDayProviderTest extends BaseRepository
         }
     }
 
+    public function testGetDaysByPeriodicityWithDayCommon()
+    {
+        $this->loadFixtures();
+        $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_DAY, '2019-12-06');
+        $entry = $this->getEntry('Entry avec une date en commun');
+        $periodicityDayProvider = $this->initPeriodicityDayProvier();
+
+        $days = $periodicityDayProvider->getDaysByPeriodicity($periodicity, $entry->getStartTime());
+        $result = [
+            "2019-12-04",
+            "2019-12-05",
+            "2019-12-06",
+        ];
+
+        foreach ($days as $day) {
+            self::assertContains($day->toDateString(), $result);
+        }
+    }
+
     protected function initPeriodicityDayProvier(): PeriodicityDaysProvider
     {
         return new PeriodicityDaysProvider();

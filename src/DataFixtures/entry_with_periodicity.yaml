@@ -35,6 +35,13 @@ App\Entity\Entry:
     end_time: '<carbonDateTime(2017,2,1,16,40)>'
     room: '@room_cafetaria'
     type: '@type_entry_D'
+  entry_with_common_date:
+    name: 'Entry avec une date en commun'
+    start_time: '<carbonDateTime(2019,12,3,14,40)>'
+    end_time: '<carbonDateTime(2019,12,3,16,35)>'
+    room: '@room_meeting'
+    type: '@type_entry_D'
+
 
 
 

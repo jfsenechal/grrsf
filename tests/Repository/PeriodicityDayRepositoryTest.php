@@ -67,11 +67,6 @@ class PeriodicityDayRepositoryTest extends BaseRepository
         }
     }
 
-    public function testfindFoWeek()
-    {
-
-    }
-
     protected function loadFixtures()
     {
         $files =
