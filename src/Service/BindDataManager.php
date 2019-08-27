@@ -107,7 +107,7 @@ class BindDataManager
         if ($roomSelected) {
             $rooms = [$roomSelected];
         } else {
-            $rooms = $this->roomRepository->findByArea($area);//not $are->getRooms() sqlite not work
+            $rooms = $this->roomRepository->findByArea($area);//not $area->getRooms() sqlite not work
         }
 
         $days = $weekModel->getCalendarDays();
@@ -152,7 +152,7 @@ class BindDataManager
         if ($roomSelected) {
             $rooms = [$roomSelected];
         } else {
-            $rooms = $area->getRooms();
+            $rooms = $this->roomRepository->findByArea($area);//not $area->getRooms() sqlite not work
         }
 
         foreach ($rooms as $room) {

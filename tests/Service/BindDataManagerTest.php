@@ -120,6 +120,38 @@ class BindDataManagerTest extends BaseRepository
         }
     }
 
+
+    public function testBindDayWithOutRoom()
+    {
+        $this->loadFixtures();
+
+        $dayModel = $this->initDayFactory()->createImmutable(2019, 12, 5);
+        $daySelected = $dayModel->toImmutable();
+
+        $timeSlotsProvider = $this->initTimeSlotProvider();
+        $area = $this->getArea('Hdv');
+        $bindDataManager = $this->initBindDataManager();
+
+        $hoursModel = $timeSlotsProvider->getTimeSlotsModelByAreaAndDay($area);
+        $roomsModel = $bindDataManager->bindDay($daySelected, $area, $hoursModel, null);
+
+
+        self::assertCount(3, $roomsModel);
+
+        foreach ($roomsModel as $roomModel) {
+            foreach ($roomModel->getDataDays() as $dataDay) {
+                self::assertContains($dataDay->format('Y-m-d'), ResultBind::getDaysOfWeekWitOuthhRoom());
+                self::assertCount(
+                    ResultBind::getCountEntriesForWeekWithOutMonth($dataDay->day, $roomModel->getRoom()->getName()),
+                    $dataDay->getEntries()
+                );
+                foreach ($dataDay->getEntries() as $entry) {
+                    self::assertContains($entry->getName(), ResultBind::resultNamesWeekWithOutRoom());
+                }
+            }
+        }
+    }
+
     protected function loadFixtures()
     {
         $files =
