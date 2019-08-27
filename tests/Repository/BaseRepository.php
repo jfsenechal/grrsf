@@ -20,6 +20,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Panther\PantherTestCase;
 
 class BaseRepository extends WebTestCase
 {
@@ -69,9 +70,9 @@ class BaseRepository extends WebTestCase
         //    $this->truncateEntities();
     }
 
-    protected function getArea(string $name):Area
+    protected function getArea(string $name): Area
     {
-    return $this->entityManager
+        return $this->entityManager
             ->getRepository(Area::class)
             ->findOneBy(['name' => $name]);
     }
@@ -112,8 +113,8 @@ class BaseRepository extends WebTestCase
     {
         parent::tearDown();
 
-        $purger = new ORMPurger($this->entityManager);
-        $purger->purge();
+     //   $purger = new ORMPurger($this->entityManager);
+     //   $purger->purge();
 
         $this->kernel2->shutdown();
         $this->kernel2 = null;

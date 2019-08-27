@@ -35,7 +35,3 @@ App\Entity\Entry:
     end_time: '<carbonDateTime(2019,10,1,17,40)>'
     room: '@room_cafetaria'
     type: '@type_entry_D'
-
-
-
-

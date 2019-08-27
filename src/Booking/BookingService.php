@@ -249,7 +249,6 @@ class BookingService
         try {
             return \DateTime::createFromFormat('Y-m-d H:i:s', $date);
         } catch (\Exception $exception) {
-            var_dump($exception->getMessage());
             die();
         }
     }

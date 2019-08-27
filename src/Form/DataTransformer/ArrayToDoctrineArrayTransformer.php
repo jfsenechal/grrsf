@@ -93,7 +93,6 @@ class ArrayToDoctrineArrayTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
 
-        dump($value);
         if (null === $value) {
             return null;
         }

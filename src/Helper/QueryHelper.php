@@ -24,8 +24,6 @@ class QueryHelper
 
     public function addConstraint(\DateTimeInterface $dateTime)
     {
-        dump($this->queryBuilder->getRootAliases());
-
         $this->queryBuilder->andWhere('entry.startTime LIKE %:date%')
             ->setParameter('date', $dateTime);
     }

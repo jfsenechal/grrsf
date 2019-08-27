@@ -44,4 +44,10 @@ class CarbonProvider extends BaseProvider
     {
         return CarbonImmutable::createFromFormat($format, $date);
     }
+
+    public function carbonToday( int $hour, int $minute) {
+        $today = Carbon::today();
+        $today->setTime($hour, $minute);
+        return $today;
+    }
 }

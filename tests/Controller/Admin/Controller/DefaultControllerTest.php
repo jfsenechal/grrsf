@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Admin\Controller;
+namespace App\Tests\Controller\Admin;
 
 use Symfony\Component\Panther\PantherTestCase;
 

@@ -1,31 +1,33 @@
 <?php
 
-namespace App\Tests\Front\Controller;
+namespace App\Tests\Controller;
 
+use App\Tests\Repository\BaseRepository;
 use Symfony\Component\Panther\PantherTestCase;
 
-class DefaultControllerTest extends PantherTestCase
+class DefaultControllerTest extends BaseRepository
 {
-    public function testHomePageGrr()
+    public function testHomeGrr()
     {
+        $this->loadFixtures();
+
         $url = "/";
         $client = self::createClient();
         $client->request('GET', $url);
-        $this->assertTrue($client->getResponse()->isRedirect());
+        self::assertResponseRedirects();
+        $client->followRedirect();
+        self::assertResponseIsSuccessful();
     }
 
-    public function testSomething()
+    protected function loadFixtures()
     {
-        $client = static::createClient();
-        $client->request('GET', '/');
-        self::assertResponseRedirects();
+        $files =
+            [
+                $this->pathFixtures.'area.yaml',
+                $this->pathFixtures.'room.yaml',
+            ];
 
-        $client->followRedirect();
-
-        // var_dump($client->getResponse()->getContent());
-
-        self::assertResponseIsSuccessful();
-        //self::assertSelectorTextContains('th', 'Lundi');
+        $this->loader->load($files);
     }
 
     /**

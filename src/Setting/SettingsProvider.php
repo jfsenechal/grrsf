@@ -38,6 +38,7 @@ class SettingsProvider
      */
     public function getDefaulRoom()
     {
+        return null;
         return $this->roomRepository->findOneBy([], ['id' => 'ASC']);
     }
 }
