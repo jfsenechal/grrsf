@@ -1,0 +1,7 @@
+language: php
+
+dist: xenial
+
+env:
+    global:
+        - MIN_PHP=7.2
