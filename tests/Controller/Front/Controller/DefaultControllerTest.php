@@ -25,7 +25,7 @@ class DefaultControllerTest extends BaseRepository
     {
         $today = new \DateTime('now');
         $area = $this->getArea('Esquare');
-        //http://sallessf.local/front/monthview/area/1/year/2019/month/8/room
+
         $url = '/front/monthview/area/'.$area->getId().'/year/'.$today->format('Y').'/month/'.$today->format(
                 'm'
             ).'/room';
@@ -43,7 +43,7 @@ class DefaultControllerTest extends BaseRepository
     {
         $today = new \DateTime('now');
         $area = $this->getArea('Esquare');
-        //http://sallessf.local/front/monthview/area/1/year/2019/month/8/room
+
         $url = '/front/weekview/area/'.$area->getId().'/year/'.$today->format('Y').'/month/'.$today->format(
                 'm'
             ).'/week/'.$today->format('W').'/room';
@@ -61,7 +61,7 @@ class DefaultControllerTest extends BaseRepository
     {
         $today = new \DateTime('now');
         $area = $this->getArea('Esquare');
-        //http://sallessf.local/front/monthview/area/1/year/2019/month/8/room
+
         $url = '/front/dayview/area/'.$area->getId().'/year/'.$today->format('Y').'/month/'.$today->format(
                 'm'
             ).'/day/'.$today->format('d').'/room';
@@ -70,9 +70,9 @@ class DefaultControllerTest extends BaseRepository
         self::assertResponseIsSuccessful();
         self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
 
-        $crawler = $client->clickLink($today->format('d'))->last();
-
-        //   var_dump($client->getResponse()->getContent());
+        $crawler = $client->clickLink('Réunion a ce jour');
+        self::assertCount(1, $crawler->filter('td:contains("Box")'));
+        self::assertCount(1, $crawler->filter('td:contains("Location")'));
     }
 
     protected function loadFixtures()
