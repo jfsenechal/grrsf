@@ -10,8 +10,8 @@
 
 namespace App\Tests\Command;
 
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class CreateUserCommandTest extends KernelTestCase
@@ -24,36 +24,20 @@ class CreateUserCommandTest extends KernelTestCase
         $command = $application->find('grr:create-user');
         $commandTester = new CommandTester($command);
 
-        // Equals to a user inputting "Test" and hitting ENTER
-        $commandTester->setInputs(['Test']);
-
-        // Equals to a user inputting "This", "That" and hitting ENTER
-        // This can be used for answering two separated questions for instance
-        $commandTester->setInputs(['This', 'That']);
-
-        // For simulating a positive answer to a confirmation question, adding an
-        // additional input saying "yes" will work
-        $commandTester->setInputs(['yes']);
-
-
-        $commandTester->execute(['command' => $command->getName()]);
+        $commandTester->setInputs(['Y']);
 
         $commandTester->execute(
             [
                 'command' => $command->getName(),
 
-                // pass arguments to the helper
-                'username' => 'Wouter',
-
-                // prefix the key with two dashes when passing options,
-                // e.g: '--some-option' => 'option_value',
+                'email' => 'lolo@domainx.com',
+                'name' => 'Wouter',
+                'password' => 'mdp1234',
             ]
         );
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $this->assertContains('Username: Wouter', $output);
-
-        // $this->assertRegExp('/.../', $commandTester->getDisplay());
+        $this->assertContains("L'utilisateur a bien été créé", $output);
     }
 }

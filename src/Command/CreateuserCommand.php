@@ -36,6 +36,7 @@ class CreateuserCommand extends Command
     private $userFactory;
 
     public function __construct(
+        string $name = null,
         UserManager $userManager,
         UserFactory $userFactory,
         UserRepository $userRepository,
@@ -45,7 +46,7 @@ class CreateuserCommand extends Command
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->userRepository = $userRepository;
         $this->userFactory = $userFactory;
-        parent::__construct();
+        parent::__construct($name);
     }
 
     protected function configure()
