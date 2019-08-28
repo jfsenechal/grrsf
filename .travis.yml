@@ -5,4 +5,16 @@ php:
 
 dist: xenial
 
+before_script:
+ - composer self-update
+ - composer install --prefer-source --no-interaction --dev
+
+# Start mysql service
+services:
+ - mysql
+# Cache composer packages so "composer install" is faster
+cache:
+ directories:
+   - $HOME/.composer/cache/files
+
 script: vendor/bin/simple-phpunit tests/
