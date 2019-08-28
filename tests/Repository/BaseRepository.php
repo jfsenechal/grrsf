@@ -46,6 +46,10 @@ class BaseRepository extends WebTestCase
      * @var \Symfony\Component\HttpKernel\KernelInterface
      */
     private $kernel2;
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
+     */
+    protected $administrator;
 
     /**
      * {@inheritDoc}
@@ -65,6 +69,14 @@ class BaseRepository extends WebTestCase
         $faker = $loader->getFakerGenerator();
         $faker->addProvider(CarbonProvider::class);
         $this->loaderSimple = $loader;
+
+         $this->administrator = static::createClient(
+            array(),
+            array(
+                'PHP_AUTH_USER' => 'jf@marche.be',
+                'PHP_AUTH_PW' => 'homer',
+            )
+        );
 
         parent::setUp();
         //    $this->truncateEntities();
