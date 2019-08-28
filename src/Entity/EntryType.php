@@ -6,11 +6,15 @@ use App\Doctrine\IdEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  *
- * @ORM\Table(name="grr_entry_type")
+ * @ORM\Table(name="grr_entry_type", uniqueConstraints={
+ *     @ORM\UniqueConstraint(columns={"letter"})
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\EntryTypeRepository")
+ * @UniqueEntity(fields={"letter"}, message="entry_type.constraint.already_use")
  */
 class EntryType
 {

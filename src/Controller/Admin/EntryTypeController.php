@@ -14,10 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/type/entry")
+ * @Route("/admin/entry/type")
  * @IsGranted("ROLE_GRR_ADMINISTRATOR")
  */
-class TypeEntryController extends AbstractController
+class EntryTypeController extends AbstractController
 {
     /**
      * @var EntryTypeRepository
