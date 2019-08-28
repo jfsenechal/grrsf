@@ -5,16 +5,24 @@ php:
 
 dist: xenial
 
-before_script:
+env:
+  - DB=sqlite
+  - DB=mysql
+
+before_install:
  - composer self-update
- - composer install --prefer-source --no-interaction
 
 # Start mysql service
 services:
  - mysql
-# Cache composer packages so "composer install" is faster
-cache:
- directories:
-   - $HOME/.composer/cache/files
+
+install:
+  - rm composer.lock
+  - travis_retry composer update --prefer-dist
 
 script: vendor/bin/simple-phpunit tests/
+
+# Cache composer packages so "composer install" is faster
+cache:
+  directories:
+    - $HOME/.composer/cache
