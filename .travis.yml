@@ -20,8 +20,8 @@ services:
  - mysql
 
 install:
-  - rm composer.lock
-  - travis_retry composer update --prefer-dist
+  - composer install
+  - cp .env.travis .env.local
 
 script: vendor/bin/simple-phpunit tests/
 
