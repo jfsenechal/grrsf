@@ -52,7 +52,7 @@ class UserEditType extends AbstractType
                 [
                     'label' => 'user.form.room.label',
                     'required' => false,
-                    'area' => null,
+
                     'class' => Room::class,
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
