@@ -15,6 +15,10 @@ use App\Tests\Repository\BaseRepository;
 
 class HandlerEntryTest extends BaseRepository
 {
+    public function testBidon() {
+        self::assertTrue(true);
+
+    }
     protected function initHandler() : HandlerEntry {
         $handler = new HandlerEntry();
 
