@@ -2,11 +2,10 @@
 #https://www.cloudways.com/blog/php-continuous-integration-travis-ci/
 
 language: php
-
 php:
-  - '7.3'
+  - 7.3
 
-dist: xenial
+dist: bionic
 
 env:
   - DB=sqlite
