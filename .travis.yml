@@ -20,7 +20,7 @@ services:
 
 install:
   - composer install
-  - cp .env.travis .env.local
+  - cp .env.travis .env
 
 script: vendor/bin/simple-phpunit tests/
 
