@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Form\Security\UserType;
 use App\Form\Security\UserPasswordType;
@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * @Route("/account")
  * @IsGranted("ROLE_GRR")
  */
-class ProfileController extends AbstractController
+class AccountController extends AbstractController
 {
     /**
      * @var UserPasswordEncoderInterface
