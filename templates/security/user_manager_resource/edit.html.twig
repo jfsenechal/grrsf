@@ -5,9 +5,12 @@
 {% block body %}
     <h1>Edit UserManagerResource</h1>
 
-    {{ include('security_user_manager_resource/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('security/user_manager_resource/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('security_user_manager_resource_index') }}">back to list</a>
 
-    {{ include('security_user_manager_resource/_delete_form.html.twig') }}
+{% endblock %}
+
+
+{% block scripts %}
+    {% include '@grr_front/account/_select_room_js.html.twig' %}
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Form\Search;
 
 use App\Entity\EntryType;
+use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\Form\Type\AreaSelectType;
 use App\Form\Type\RoomSelectType;
 use App\Repository\RoomRepository;
@@ -47,12 +48,12 @@ class SearchEntryType extends AbstractType
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )
-            ->add('area', AreaSelectType::class)
             ->add(
-                'room',
-                RoomSelectType::class,
+                'area',
+                AreaSelectType::class,
                 [
                     'required' => false,
+                    'placeholder' => 'area.form.select.placeholder',
                 ]
             )
             ->add(
@@ -63,7 +64,8 @@ class SearchEntryType extends AbstractType
                     'placeholder' => 'Type périodicité',
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
-            );
+            )
+            ->addEventSubscriber(new AddRoomFieldSubscriber());
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -4,6 +4,8 @@ namespace App\Form\Security;
 
 use App\Entity\Room;
 use App\Entity\Security\User;
+use App\EventSubscriber\AddRoomDefaultFieldSubscriber;
+use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\Form\Type\AreaSelectType;
 use App\Form\Type\RoomSelectType;
 use Symfony\Component\Form\AbstractType;
@@ -43,20 +45,12 @@ class UserEditType extends AbstractType
                 'area_default',
                 AreaSelectType::class,
                 [
+                    'label' => 'user.form.area.label',
                     'required' => false,
+                    'placeholder' => 'area.form.select.placeholder',
                 ]
             )
-            ->add(
-                'room_default',
-                RoomSelectType::class,
-                [
-                    'label' => 'user.form.room.label',
-                    'required' => false,
-
-                    'class' => Room::class,
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
-                ]
-            );
+            ->addEventSubscriber(new AddRoomDefaultFieldSubscriber())            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

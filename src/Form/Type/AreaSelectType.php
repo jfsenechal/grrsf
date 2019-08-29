@@ -19,11 +19,10 @@ class AreaSelectType extends AbstractType
                 'label' => 'area.form.select.label',
                 'help' => 'area.form.select.help',
                 'class' => Area::class,
-                'placeholder' => 'area.form.select.placeholder',
                 'query_builder' => function (AreaRepository $areaRepository) {
                     return $areaRepository->getQueryBuilder();
                 },
-                'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
+                'attr' => ['class' => 'custom-select my-1 mr-sm-2 ajax-select-room'],
                 'invalid_message' => 'The selected area does not exist',
             ]
         );

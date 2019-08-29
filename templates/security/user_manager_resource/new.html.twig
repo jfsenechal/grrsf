@@ -9,5 +9,8 @@
     </h1>
     {{ include('security/user_manager_resource/_form.html.twig') }}
 
+{% endblock %}
 
+{% block scripts %}
+    {% include '@grr_front/account/_select_room_js.html.twig' %}
 {% endblock %}

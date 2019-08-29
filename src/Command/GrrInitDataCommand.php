@@ -157,7 +157,7 @@ class GrrInitDataCommand extends Command
             'Salle cafétaria',
         ];
 
-        $this->loadRooms($esquare, $salles);
+        $this->loadRooms($hdv, $salles);
 
         $this->areaRepository->flush();
         $this->roomRepository->flush();
