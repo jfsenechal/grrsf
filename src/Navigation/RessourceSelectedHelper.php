@@ -57,6 +57,10 @@ class RessourceSelectedHelper
         $this->roomRepository = $roomRepository;
     }
 
+    /**
+     * @return Area
+     * @throws \Exception
+     */
     public function getArea(): Area
     {
         if ($this->session->has(self::AREA_DEFAULT_SESSION)) {
@@ -81,7 +85,11 @@ class RessourceSelectedHelper
             return $area;
         }
 
-        return $this->areaRepository->findOneBy([], ['id' => 'ASC']);
+        $area= $this->areaRepository->findOneBy([], ['id' => 'ASC']);
+        if(!$area) {
+            throw new \Exception('No area in database, populate with php bin/console grr:init-data');
+        }
+        return  $area;
     }
 
     /**

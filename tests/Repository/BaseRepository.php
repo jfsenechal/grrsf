@@ -70,7 +70,7 @@ class BaseRepository extends WebTestCase
         $faker->addProvider(CarbonProvider::class);
         $this->loaderSimple = $loader;
 
-         $this->administrator = static::createClient(
+        $this->administrator = static::createClient(
             array(),
             array(
                 'PHP_AUTH_USER' => 'jf@marche.be',
@@ -125,8 +125,8 @@ class BaseRepository extends WebTestCase
     {
         parent::tearDown();
 
-     //   $purger = new ORMPurger($this->entityManager);
-     //   $purger->purge();
+        $purger = new ORMPurger($this->entityManager);
+        $purger->purge();
 
         $this->kernel2->shutdown();
         $this->kernel2 = null;

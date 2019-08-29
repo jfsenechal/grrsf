@@ -63,7 +63,7 @@ class EntryLocationService
      */
     public function setCountCells(Entry $entry, Area $area)
     {
-        $resolution = $area->getDurationTimeSlot();
+        $resolution = $area->getTimeInterval();
         $start = Carbon::instance($entry->getStartTime());
         $end = Carbon::instance($entry->getEndTime());
         $diff = $start->diffInSeconds($end);

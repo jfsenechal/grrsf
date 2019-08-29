@@ -19,28 +19,37 @@ use App\Helper\LocalHelper;
 use App\Model\TimeSlot;
 use App\Provider\TimeSlotsProvider;
 use App\Service\EntryLocationService;
+use App\Tests\Repository\BaseRepository;
 use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class EntryLocationServiceTest extends WebTestCase
+class EntryLocationServiceTest extends BaseRepository
 {
     public function testSetLocations()
     {
+        //  $this->loadFixtures();
+
         $hourBegin = 8;
         $hourEnd = 19;
         $duration = 1800;
+
+        $today = new \DateTime('now');
+        $today->setTime(13, 0);
+
+        $end = clone $today;
+        $end->setTime(15, 30);
 
         $area = $this->initArea($hourBegin, $hourEnd, $duration);
         $room = new Room($area);
 
         $entry = new Entry();
-        $entry->setStartTime(\DateTime::createFromFormat('Y-m-d H:i', '2019-08-20 13:00'));
-        $entry->setEndTime(\DateTime::createFromFormat('Y-m-d H:i', '2019-08-20 15:30'));
+        $entry->setStartTime($today);
+        $entry->setEndTime($end);
         $entry->setRoom($room);
 
         $timeSlotProvider = $this->initTimeSlotProvider();
-        $timesSlot = $timeSlotProvider->getTimeSlotsModelByAreaAndDay($area);
+        $timesSlot = $timeSlotProvider->getTimeSlotsModelByArea($area);
 
         $entryService = new EntryLocationService($timeSlotProvider);
         $entryService->setLocations($entry, $timesSlot);
@@ -52,7 +61,10 @@ class EntryLocationServiceTest extends WebTestCase
         /**
          * = heure de debut
          */
-        $day = Carbon::create(2019, 8, 20, 13, 0);
+        $day = Carbon::today();
+        $day->setTime(13,0);
+
+        self::assertCount(6, $locations);
 
         foreach ($locations as $location) {
             $begin = $location->getBegin();
@@ -85,8 +97,22 @@ class EntryLocationServiceTest extends WebTestCase
         $area = new Area();
         $area->setStartTime($hourBegin);
         $area->setEndTime($hourEnd);
-        $area->setDurationTimeSlot($resolution);
+        $area->setTimeInterval($resolution);
 
         return $area;
+    }
+
+    protected function loadFixtures()
+    {
+        $files =
+            [
+                $this->pathFixtures.'area.yaml',
+                $this->pathFixtures.'room.yaml',
+                $this->pathFixtures.'entry_type.yaml',
+                $this->pathFixtures.'entry_with_periodicity.yaml',
+                $this->pathFixtures.'periodicity_day.yaml',
+            ];
+
+        $this->loader->load($files);
     }
 }

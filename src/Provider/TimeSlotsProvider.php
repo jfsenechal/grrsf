@@ -26,16 +26,15 @@ class TimeSlotsProvider
      * Crée les tranches d'heures sous forme d'objet.
      *
      * @param Area $area
-     * @param CarbonInterface $daySelected
      * @return TimeSlot[]
      */
-    public function getTimeSlotsModelByAreaAndDay(Area $area, CarbonInterface $daySelected = null)
+    public function getTimeSlotsModelByArea(Area $area)
     {
         $hourBegin = $area->getStartTime();
         $hourEnd = $area->getEndTime();
-        $duration = $area->getDurationTimeSlot();
+        $timeInterval = $area->getTimeInterval();
 
-        $timeSlots = $this->getTimeSlots($hourBegin, $hourEnd, $duration);
+        $timeSlots = $this->getTimeSlots($hourBegin, $hourEnd, $timeInterval);
 
         $hours = [];
         $timeSlots->rewind();
@@ -59,24 +58,18 @@ class TimeSlotsProvider
      * Retourne les tranches d'heures d'après une heure de début, de fin et d'un interval de temps
      * @param int $hourBegin
      * @param int $hourEnd
-     * @param int $duration
-     * @param CarbonInterface $dayModel
+     * @param int $timeInterval
      *
      * @return CarbonPeriod
      */
-    public function getTimeSlots(
-        int $hourBegin,
-        int $hourEnd,
-        int $duration,
-        CarbonInterface $dayModel = null
-    ): CarbonPeriod {
-        if (!$dayModel) {
-            $dayModel = Carbon::today();
-        }
-        $debut = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $hourBegin, 0);
-        $fin = $this->carbonFactory->create($dayModel->year, $dayModel->month, $dayModel->day, $hourEnd, 0, 0);
+    public function getTimeSlots(int $hourBegin, int $hourEnd, int $timeInterval): CarbonPeriod
+    {
+        $today = Carbon::today();
 
-        return Carbon::parse($debut)->secondsUntil($fin, $duration);
+        $debut = $this->carbonFactory->create($today->year, $today->month, $today->day, $hourBegin, 0);
+        $fin = $this->carbonFactory->create($today->year, $today->month, $today->day, $hourEnd, 0, 0);
+
+        return Carbon::parse($debut)->secondsUntil($fin, $timeInterval);
     }
 
     /**
@@ -90,6 +83,6 @@ class TimeSlotsProvider
         $entryHourBegin = $entry->getStartTime();
         $entryHourEnd = $entry->getEndTime();
 
-        return Carbon::parse($entryHourBegin)->secondsUntil($entryHourEnd, $area->getDurationTimeSlot());
+        return Carbon::parse($entryHourBegin)->secondsUntil($entryHourEnd, $area->getTimeInterval());
     }
 }

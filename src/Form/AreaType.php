@@ -82,11 +82,11 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'durationTimeSlot',
+                'timeInterval',
                 IntegerType::class,
                 [
-                    'label' => 'area.form.resolutionArea.label',
-                    'help' => 'area.form.resolutionArea.help',
+                    'label' => 'area.form.timeInterval.label',
+                    'help' => 'area.form.timeInterval.help',
                 ]
             )
             ->add(

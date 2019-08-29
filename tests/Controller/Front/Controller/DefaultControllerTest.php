@@ -23,6 +23,8 @@ class DefaultControllerTest extends BaseRepository
 
     public function testMonthView()
     {
+        $this->loadFixtures();
+
         $today = new \DateTime('now');
         $area = $this->getArea('Esquare');
 
@@ -41,6 +43,8 @@ class DefaultControllerTest extends BaseRepository
 
     public function testWeekView()
     {
+        $this->loadFixtures();
+
         $today = new \DateTime('now');
         $area = $this->getArea('Esquare');
 
@@ -59,6 +63,8 @@ class DefaultControllerTest extends BaseRepository
 
     public function testDayView()
     {
+        $this->loadFixtures();
+
         $today = new \DateTime('now');
         $area = $this->getArea('Esquare');
 

@@ -20,7 +20,7 @@ class DefaultController extends AbstractController
      */
     private $carbonFactory;
 
-    public function __construct(CarbonFactory $carbonFactory,RessourceSelectedHelper $ressourceSelectedHelper)
+    public function __construct(CarbonFactory $carbonFactory, RessourceSelectedHelper $ressourceSelectedHelper)
     {
         $this->ressourceSelectedHelper = $ressourceSelectedHelper;
         $this->carbonFactory = $carbonFactory;
@@ -34,7 +34,12 @@ class DefaultController extends AbstractController
     {
         $today = $this->carbonFactory->getToday();
 
-        $area = $this->ressourceSelectedHelper->getArea();
+        try {
+            $area = $this->ressourceSelectedHelper->getArea();
+        } catch (\Exception $e) {
+            return new Response($e->getMessage());
+        }
+
         $room = $this->ressourceSelectedHelper->getRoom();
 
         $params = ['area' => $area->getId(), 'year' => $today->year, 'month' => $today->month];

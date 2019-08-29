@@ -75,12 +75,12 @@ class Area
     private $days_of_week_to_display;
 
     /**
-     * Durée de la tranche horaire
+     * Intervalle de temps 
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $duration_time_slot;
+    private $time_interval;
 
     /**
      * Durée maximum qu'un utilisateur peut réserver
@@ -137,7 +137,7 @@ class Area
         $this->order_display = 0;
         $this->week_start = 0;
         $this->days_of_week_to_display = [];
-        $this->duration_time_slot = 1800;
+        $this->time_interval = 1800;
         $this->duration_default_entry = 1800;
         $this->duration_maximum_entry = -1;
         $this->minutes_to_add_to_end_time = 0;
@@ -248,14 +248,14 @@ class Area
         return $this;
     }
 
-    public function getDurationTimeSlot(): ?int
+    public function getTimeInterval(): ?int
     {
-        return $this->duration_time_slot;
+        return $this->time_interval;
     }
 
-    public function setDurationTimeSlot(int $duration_time_slot): self
+    public function setTimeInterval(int $time_interval): self
     {
-        $this->duration_time_slot = $duration_time_slot;
+        $this->time_interval = $time_interval;
 
         return $this;
     }

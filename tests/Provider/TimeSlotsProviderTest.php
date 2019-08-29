@@ -35,7 +35,7 @@ class TimeSlotsProviderTest extends WebTestCase
         $day->minute = $minute;
 
         $timeSlotProvicer = $this->initTimeSlotProvider();
-        $modelsTimeSlot = $timeSlotProvicer->getTimeSlotsModelByAreaAndDay($area, $day);
+        $modelsTimeSlot = $timeSlotProvicer->getTimeSlotsModelByArea($area, $day);
 
         foreach ($modelsTimeSlot as $modelTimeSlot) {
             self::assertSame($modelTimeSlot->getBegin()->hour, $day->hour);
@@ -73,7 +73,7 @@ class TimeSlotsProviderTest extends WebTestCase
         $resolution = 1800;
 
         $area = new Area();
-        $area->setDurationTimeSlot($resolution);
+        $area->setTimeInterval($resolution);
         $room = new Room($area);
 
         $entry = new Entry();
@@ -125,7 +125,7 @@ class TimeSlotsProviderTest extends WebTestCase
         $area = new Area();
         $area->setStartTime($hourBegin);
         $area->setEndTime($hourEnd);
-        $area->setDurationTimeSlot($resolution);
+        $area->setTimeInterval($resolution);
 
         return $area;
     }

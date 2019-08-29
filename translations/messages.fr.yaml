@@ -77,7 +77,7 @@ area:
       label: Heure de fin de journée
     eveningendsMinutesArea:
       label: Nombre de minutes à ajouter à l'heure de fin de journée pour avoir la fin réelle d'une journée
-    resolutionArea:
+    timeInterval:
       label: Plus petit bloc réservable
       help: En secondes (1800 secondes = 1/2 heure)
     dureeParDefautReservationArea:

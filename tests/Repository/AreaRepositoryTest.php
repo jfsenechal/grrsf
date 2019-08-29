@@ -30,7 +30,7 @@ class AreaRepositoryTest extends BaseRepository
 
         $result = $this->entityManager->getRepository(Area::class)->findAll();
 
-        $this->assertEquals(12, count($result));
+        $this->assertEquals(2, count($result));
     }
 
 }
