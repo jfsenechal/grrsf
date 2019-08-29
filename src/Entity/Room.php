@@ -97,9 +97,9 @@ class Room
     private $delaisMinResaRoom;
 
     /**
-     * @var string
+     * @var bool
      *
-     * @ORM\Column(name="allow_action_in_past", type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $allowActionInPast;
 
@@ -146,9 +146,9 @@ class Room
     private $quiPeutReserverPour;
 
     /**
-     * @var string
+     * @var bool
      *
-     * @ORM\Column(name="active_ressource_empruntee", type="boolean", nullable=false)
+     * @ORM\Column( type="boolean", nullable=false)
      */
     private $activeRessourceEmpruntee;
 
@@ -183,15 +183,15 @@ class Room
         $this->statutRoom = '';
         $this->showFicRoom = '';
         $this->showComment = '';
-        $this->delaisMaxResaRoom = '';
-        $this->delaisMinResaRoom = '';
-        $this->allowActionInPast = '';
+        $this->delaisMaxResaRoom = 0;
+        $this->delaisMinResaRoom = 0;
+        $this->allowActionInPast = false;
         $this->order_display = 0;
-        $this->delaisOptionReservation = '';
+        $this->delaisOptionReservation = 0;
         $this->dontAllowModify = '';
-        $this->typeAffichageReser = '';
+        $this->typeAffichageReser = 0;
         $this->quiPeutReserverPour='';
-        $this->activeRessourceEmpruntee='';
+        $this->activeRessourceEmpruntee=false;
         $this->whoCanSee = 0;
         $this->maximum_booking = -1;
         $this->entries = new ArrayCollection();

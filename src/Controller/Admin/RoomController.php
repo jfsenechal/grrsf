@@ -24,21 +24,15 @@ class RoomController extends AbstractController
      */
     private $roomFactory;
     /**
-     * @var RoomRepository
-     */
-    private $roomRepository;
-    /**
      * @var RoomManager
      */
     private $roomManager;
 
     public function __construct(
         RoomFactory $roomFactory,
-        RoomRepository $roomRepository,
         RoomManager $roomManager
     ) {
         $this->roomFactory = $roomFactory;
-        $this->roomRepository = $roomRepository;
         $this->roomManager = $roomManager;
     }
 
@@ -62,6 +56,7 @@ class RoomController extends AbstractController
         return $this->render(
             '@grr_admin/room/new.html.twig',
             [
+                'area' => $area,
                 'room' => $room,
                 'form' => $form->createView(),
             ]

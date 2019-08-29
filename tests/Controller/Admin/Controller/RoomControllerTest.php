@@ -10,69 +10,54 @@
 
 namespace App\Tests\Controller\Admin\Controller;
 
-
 use App\Tests\Repository\BaseRepository;
 
-class EntryTypeControllerTest extends BaseRepository
+class RoomControllerTest extends BaseRepository
 {
-    public function testNewTypeLetterAlreadyUse()
+    public function testNewRoom()
     {
         $this->loadFixtures();
 
-        $this->administrator->request('GET', '/admin/entry/type/');
-        $crawler = $this->administrator->clickLink("Nouveau type d'entrée");
+        $this->administrator->request('GET', '/admin/area/');
+        $this->administrator->clickLink("Hdv");
+        $crawler = $this->administrator->clickLink("Nouvelle ressource");
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['type_entry[letter]']->setValue('F');
-        $form['type_entry[name]']->setValue('My type');
-
-        $this->administrator->submit($form);
-        //  $this->administrator->followRedirect();
-
-        $this->assertContains(
-            'Cette lettre est déjà utilisée',
-            $this->administrator->getResponse()->getContent()
-        );
-    }
-
-    public function testNewTypeLetter()
-    {
-        $this->loadFixtures();
-
-        $this->administrator->request('GET', '/admin/entry/type/');
-        $crawler = $this->administrator->clickLink("Nouveau type d'entrée");
-
-        $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['type_entry[letter]']->setValue('S');
-        $form['type_entry[name]']->setValue('My type');
+        $form['room[name]']->setValue('Room demo');
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
 
         $this->assertContains(
-            'My type',
+            'Room demo',
             $this->administrator->getResponse()->getContent()
         );
+
+        $this->administrator->request('GET', '/admin/area/');
+        $this->administrator->clickLink("Hdv");
+        $this->administrator->clickLink("Room demo");
+        self::assertResponseIsSuccessful();
     }
 
-    public function testEditType()
+    public function testEdit()
     {
         $this->loadFixtures();
 
-        $this->administrator->request('GET', '/admin/entry/type/');
-        $this->administrator->clickLink("Bureau");
+        $this->administrator->request('GET', 'admin/area/');
+        $this->administrator->clickLink("Hdv");
+        $this->administrator->clickLink("Salle Conseil");
         self::assertResponseIsSuccessful();
 
         $crawler = $this->administrator->clickLink("Modifier");
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['type_entry[name]']->setValue('Bureaux');
+        $form['room[name]']->setValue('Salle Conseil demo');
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
 
         $this->assertContains(
-            'Bureaux',
+            'Salle Conseil demo',
             $this->administrator->getResponse()->getContent()
         );
     }
@@ -83,7 +68,6 @@ class EntryTypeControllerTest extends BaseRepository
             [
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
-                $this->pathFixtures.'entry_type.yaml',
                 $this->pathFixtures.'users.yaml',
             ];
 
