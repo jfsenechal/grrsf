@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Form\Security\UserEditType;
-use App\Form\UserPasswordType;
+use App\Form\Security\UserType;
+use App\Form\Security\UserPasswordType;
 use App\Manager\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,7 +54,7 @@ class ProfileController extends AbstractController
     public function edit(Request $request): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(UserEditType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

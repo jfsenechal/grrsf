@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Security\User;
-use App\Form\UserPasswordType;
+use App\Form\Security\UserPasswordType;
 use App\Manager\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

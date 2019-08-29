@@ -3,7 +3,7 @@
 namespace App\Tests\Form;
 
 use App\Form\EntryType;
-use App\Form\Type\EntryTypeField;
+use App\Form\Type\EntryTypeSelectField;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 //https://symfony.com/doc/current/form/unit_testing.html
@@ -24,7 +24,7 @@ class FormTypeEntryTest extends TypeTestCase
 
         $objectToCompare = new EntryType();
         // $objectToCompare will retrieve data from the form submission; pass it as the second argument
-        $form = $this->factory->create(EntryTypeField::class, $objectToCompare);
+        $form = $this->factory->create(EntryTypeSelectField::class, $objectToCompare);
 
         $object = new EntryType();
         // ...populate $object properties with the data stored in $formData

@@ -7,7 +7,7 @@ use App\EventSubscriber\AddDurationFieldSubscriber;
 use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\Factory\DurationFactory;
 use App\Form\Type\AreaSelectType;
-use App\Form\Type\EntryTypeField;
+use App\Form\Type\EntryTypeSelectField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -55,7 +55,7 @@ class EntryType extends AbstractType
             )
             ->add(
                 'type',
-                EntryTypeField::class,
+                EntryTypeSelectField::class,
                 [
                     'label' => 'entry.form.type.label',
                     'help' => 'entry.form.type.help',

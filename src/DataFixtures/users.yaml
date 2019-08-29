@@ -5,7 +5,7 @@ App\Entity\Security\User:
     password: homer
     roles: ["ROLE_GRR_ADMINISTRATOR"]
   user_{alice, bob}:
-    email: '<current()>\@marche.be'
+    email: '<current()>\@domain.be'
     name: '<current()>'
     password: homer
   user{1..10}:

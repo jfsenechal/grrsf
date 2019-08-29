@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Security\User;
 use App\Factory\UserFactory;
-use App\Form\Security\UserAdminEditType;
-use App\Form\Security\UserType;
+use App\Form\Security\UserAdminType;
+use App\Form\Security\UserNewType;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/utilisateurs")
+ * @Route("/admin/user")
  * @IsGranted("ROLE_GRR_MANAGER_USER")
  */
 class UserController extends AbstractController
@@ -63,7 +63,7 @@ class UserController extends AbstractController
     public function new(Request $request): Response
     {
         $utilisateur = $this->userFactory->createNew();
-        $form = $this->createForm(UserType::class, $utilisateur);
+        $form = $this->createForm(UserNewType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -100,7 +100,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $utilisateur): Response
     {
-        $form = $this->createForm(UserAdminEditType::class, $utilisateur);
+        $form = $this->createForm(UserAdminType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -126,7 +126,7 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $utilisateur): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$utilisateur->getLogin(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$utilisateur->getEmail(), $request->request->get('_token'))) {
             $this->utilisateurRepository->remove($utilisateur);
             $this->utilisateurRepository->flush();
         }
