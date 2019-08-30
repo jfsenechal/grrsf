@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class DayFactoryTest extends WebTestCase
 {
@@ -30,7 +31,8 @@ class DayFactoryTest extends WebTestCase
     protected function setUp(): void
     {
         $parameterBag = $this->createMock(ParameterBagInterface::class);
-        $localHelper = new LocalHelper($parameterBag);
+        $requestStack = $this->createMock(RequestStack::class);
+        $localHelper = new LocalHelper($parameterBag, $requestStack);
         $carbonFactory = new CarbonFactory($localHelper);
         $this->dayFactory = new DayFactory($carbonFactory);
     }

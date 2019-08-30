@@ -20,6 +20,7 @@ use App\Provider\TimeSlotsProvider;
 use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class TimeSlotsProviderTest extends WebTestCase
 {
@@ -114,7 +115,8 @@ class TimeSlotsProviderTest extends WebTestCase
     protected function initTimeSlotProvider(): TimeSlotsProvider
     {
         $parameterBag = $this->createMock(ParameterBagInterface::class);
-        $localHelper = new LocalHelper($parameterBag);
+        $requestStack = $this->createMock(RequestStack::class);
+        $localHelper = new LocalHelper($parameterBag, $requestStack);
         $carbonFactory = new CarbonFactory($localHelper);
 
         return new TimeSlotsProvider($carbonFactory);

@@ -25,7 +25,10 @@ class LocalHelper
         $this->parameterBag = $parameterBag;
         $this->requestStack = $requestStack;
         self::$defaultLocale = $this->parameterBag->get('locale');
-        $locale = $this->requestStack->getMasterRequest()->getLocale();//navigateur
+        $master = $this->requestStack->getMasterRequest();
+        if ($master) {
+            $locale = $master->getLocale(); //navigateur
+        }
     }
 
     public static function getDefaultLocal()

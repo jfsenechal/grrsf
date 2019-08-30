@@ -13,9 +13,6 @@ class GrrBundle extends Bundle
     {
         parent::build($container);
 
-        $container->registerForAutoconfiguration(GrrModuleInterface::class)
-            ->addTag('grr_module');
-
         $container->addCompilerPass(new ModulesPass());
     }
 }
