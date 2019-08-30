@@ -25,9 +25,10 @@ class DurationValidator extends ConstraintValidator
         }
 
         $unit = $value->getUnit();
+        $time = (int) $value->getTime();
 
         if ($unit == DurationModel::UNIT_TIME_WEEKS || $unit == DurationModel::UNIT_TIME_DAYS) {
-            if (!is_int($value->getTime())) {
+            if (!is_int($time)) {
                 $this->context->buildViolation($constraint->message)
                     ->addViolation();
             }

@@ -21,6 +21,7 @@ use App\Provider\TimeSlotsProvider;
 use App\Service\EntryLocationService;
 use App\Tests\Repository\BaseRepository;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -107,6 +108,73 @@ class EntryLocationServiceTest extends BaseRepository
             ],
         ];
     }
+
+    /**
+     * @dataProvider getDataMultipleDays
+     * @param \DateTime $dateStart
+     * @param \DateTime $dateEnd
+     * @param array $countLocations
+     */
+    public function testMultipleDaysSetLocations(
+        \DateTime $dateStart,
+        \DateTime $dateEnd,
+        array $countLocations
+    ) {
+        $duration = 1800;
+
+        $area = $this->initArea(8, 19, $duration);
+        $room = new Room($area);
+
+        echo $dateStart->format('Y-m-d H:i').' '.$dateEnd->format('Y-m-d H:i')."\n \n";
+
+        $entry = new Entry();
+        $entry->setStartTime($dateStart);
+        $entry->setEndTime($dateEnd);
+        $entry->setRoom($room);
+
+        $timeSlotProvider = $this->initTimeSlotProvider();
+
+        $days = CarbonPeriod::between($dateStart, $dateEnd);
+        $i = 0;
+        foreach ($days as $daySelected) {
+            $timesSlot = $timeSlotProvider->getTimeSlotsModelByAreaAndDaySelected($area, $daySelected);
+
+            $entryService = new EntryLocationService($timeSlotProvider);
+            $locations = $entryService->getLocations($entry, $timesSlot);
+
+            /**
+             * = heure de debut
+             */
+            $day = Carbon::today();
+            //  $day->setTime($entryHourBegin, 0);
+            var_dump($i);
+            self::assertCount($countLocations[$i], $locations);
+
+            $startEntry = Carbon::instance($entry->getStartTime());
+            $endEntry = Carbon::instance($entry->getEndTime());
+
+            foreach ($locations as $location) {
+                $begin = $location->getBegin();
+                $end = $location->getEnd();
+
+                //  self::assertTrue($startEntry->greaterThanOrEqualTo($begin) || $startEntry->lessThanOrEqualTo($end));
+                //  self::assertTrue($begin->lessThanOrEqualTo($endEntry));
+            }
+            $i++;
+        }
+    }
+
+    public function getDataMultipleDays()
+    {
+        return [
+            [
+                'dayStart' => \DateTime::createFromFormat('Y-m-d H:i', '2019-08-05 09:00'),
+                'dayEnd' => \DateTime::createFromFormat('Y-m-d H:i', '2019-08-08 09:00'),
+                'countsLocations' => [20, 22, 22, 2],
+            ],
+        ];
+    }
+
 
     public function te2stIsEntryInTimeSlot()
     {

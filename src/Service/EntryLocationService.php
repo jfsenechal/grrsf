@@ -7,6 +7,7 @@ use App\Entity\Entry;
 use App\Model\TimeSlot;
 use App\Provider\TimeSlotsProvider;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 
 class EntryLocationService
@@ -30,26 +31,40 @@ class EntryLocationService
      */
     public function getLocations(Entry $entry, array $dayTimeSlots)
     {
+        /**
+         * @var TimeSlot[] $locations
+         */
         $locations = [];
         $entryTimeSlots = $this->timeSlotsProvider->getTimeSlotsOfEntry($entry);
 
         foreach ($dayTimeSlots as $dayTimeSlot) {
-            $startTimeSlot = $dayTimeSlot->getBegin();
-            $endTimeSlot = $dayTimeSlot->getEnd();
 
-            if ($this->isEntryInTimeSlot($entry, $entryTimeSlots, $startTimeSlot, $endTimeSlot)) {
+            if ($this->isEntryInTimeSlot($entry, $entryTimeSlots, $dayTimeSlot)) {
                 $locations[] = $dayTimeSlot;
             }
         }
+
+        $print = true;
+        if ($print) {
+            foreach ($locations as $location) {
+                echo ($location->getBegin()->format('Y-m-d H:i'));
+                echo " ==> ";
+                echo ($location->getEnd()->format('Y-m-d H:i'));
+                echo "\n";
+            }
+        }
+
         return $locations;
     }
 
     protected function isEntryInTimeSlot(
         Entry $entry,
         CarbonPeriod $entryTimeSlots,
-        \DateTimeInterface $startTimeSlot,
-        \DateTimeInterface $endTimeSlot
+        TimeSlot $dayTimeSlot
     ): bool {
+
+        $startTimeSlot = $dayTimeSlot->getBegin();
+        $endTimeSlot = $dayTimeSlot->getEnd();
 
         /**
          * Use case
@@ -58,21 +73,39 @@ class EntryLocationService
 
         foreach ($entryTimeSlots as $entryTimeSlot) {
 
-            //  dump( $startTimeSlot, $endTimeSlot);
+
+            if ($entryTimeSlot->greaterThanOrEqualTo($startTimeSlot) || $entryTimeSlot->lessThanOrEqualTo(
+                    $entryTimeSlot
+                )) {
+                //  return true;
+            }
 
             if ($entryTimeSlot->between($startTimeSlot, $endTimeSlot)) {
 
                 /**
-                 * si l'heure de fin de l'entrée est égale à l'heure de début de la tranche
+                 * si la tranche horaire de l'entrée est égale à l'heure de fin de la tranche journalière
+                 * 2019-08-05 09:00 compris entre 2019-08-05 08:30 et  2019-08-05 09:00
                  */
-                if ($entry->getEndTime()->format('H:i') === $startTimeSlot->format('H:i')) {
+                if ($entryTimeSlot->format('H:i') === $endTimeSlot->format('H:i')) {
                     return false;
                 }
 
+                $print = false;
+                if ($print) {
+                    echo($entryTimeSlot->format('Y-m-d H:i'));
+                    echo " compris entre ";
+                    echo($startTimeSlot->format('Y-m-d H:i'));
+                    echo " et  ";
+                    echo($endTimeSlot->format('Y-m-d H:i'));
+                    echo "\n";
+                }
+
                 /**
+                 * 2019-08-08 09:00 compris entre 2019-08-08 09:00 et 2019-08-08 09:30
                  * si l'heure de début de l'entrée est égale à l'heure de fin de la tranche horaire
                  */
-                if ($entry->getStartTime()->format('H:i') === $endTimeSlot->format('H:i')) {
+                //if ($entryTimeSlot->format('H:i') === $startTimeSlot->format('H:i')) {
+                if ($entry->getEndTime()->format('Y-m-d H:i') === $startTimeSlot->format('Y-m-d H:i')) {
                     return false;
                 }
 

@@ -24,7 +24,6 @@ class TimeSlotsProvider
 
     /**
      * Crée les tranches d'heures sous forme d'objet.
-     *
      * @param Area $area
      * @param CarbonInterface $daySelected
      * @return TimeSlot[]
@@ -64,9 +63,19 @@ class TimeSlotsProvider
      *
      * @return CarbonPeriod
      */
-    public function getTimeSlots(CarbonInterface $daySelected, int $hourBegin, int $hourEnd, int $timeInterval): CarbonPeriod
-    {
-        $debut = $this->carbonFactory->create($daySelected->year, $daySelected->month, $daySelected->day, $hourBegin, 0);
+    public function getTimeSlots(
+        CarbonInterface $daySelected,
+        int $hourBegin,
+        int $hourEnd,
+        int $timeInterval
+    ): CarbonPeriod {
+        $debut = $this->carbonFactory->create(
+            $daySelected->year,
+            $daySelected->month,
+            $daySelected->day,
+            $hourBegin,
+            0
+        );
         $fin = $this->carbonFactory->create($daySelected->year, $daySelected->month, $daySelected->day, $hourEnd, 0, 0);
 
         return Carbon::parse($debut)->secondsUntil($fin, $timeInterval);

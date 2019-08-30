@@ -65,8 +65,8 @@ class EntryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('entry');
 
-        $qb->andWhere('entry.start_time LIKE :begin')
-            ->setParameter('begin', $day->format('Y-m-d').'%');
+        $qb->andWhere('DATE(entry.start_time) <= :date AND DATE(entry.end_time) >= :date')
+            ->setParameter('date', $day->format('Y-m-d'));
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);

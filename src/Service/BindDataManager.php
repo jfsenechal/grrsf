@@ -120,6 +120,7 @@ class BindDataManager
 
                 $entries = [[]];
                 $entries[] = $this->entryRepository->findByDayAndRoom($dayCalendar, $room);
+                dump($entries);
 
                 $periodicityDays = $this->periodicityDayRepository->findForDay($dayCalendar, $room);
                 $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
