@@ -16,7 +16,7 @@ use App\Entity\PeriodicityDay;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Factory\DayFactory;
-use App\Helper\LocalHelper;
+use App\I18n\LocalHelper;
 use App\Model\Month;
 use App\Model\Week;
 use App\Periodicity\GeneratorEntry;

@@ -6,9 +6,11 @@ use App\Tests\Repository\BaseRepository;
 
 class EntryControllerTest extends BaseRepository
 {
-    public function testHomeFront()
+    public function testNew()
     {
         $this->loadFixtures();
+
+        $today = new \DateTime();
 
         $url = "/";
         $client = self::createClient();
@@ -21,65 +23,6 @@ class EntryControllerTest extends BaseRepository
         //var_dump($client->getResponse()->getContent());
     }
 
-    public function testMonthView()
-    {
-        $this->loadFixtures();
-
-        $today = new \DateTime('now');
-        $area = $this->getArea('Esquare');
-
-        $url = '/front/monthview/area/'.$area->getId().'/year/'.$today->format('Y').'/month/'.$today->format(
-                'm'
-            ).'/room';
-        $client = self::createClient();
-        $crawler = $client->request('GET', $url);
-        self::assertResponseIsSuccessful();
-        self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
-
-        $crawler = $client->clickLink($today->format('d'))->last();
-
-        //   var_dump($client->getResponse()->getContent());
-    }
-
-    public function testWeekView()
-    {
-        $this->loadFixtures();
-
-        $today = new \DateTime('now');
-        $area = $this->getArea('Esquare');
-
-        $url = '/front/weekview/area/'.$area->getId().'/year/'.$today->format('Y').'/month/'.$today->format(
-                'm'
-            ).'/week/'.$today->format('W').'/room';
-        $client = self::createClient();
-        $crawler = $client->request('GET', $url);
-        self::assertResponseIsSuccessful();
-        self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
-
-        $crawler = $client->clickLink($today->format('d'))->last();
-
-        //   var_dump($client->getResponse()->getContent());
-    }
-
-    public function testDayView()
-    {
-        $this->loadFixtures();
-
-        $today = new \DateTime('now');
-        $area = $this->getArea('Esquare');
-
-        $url = '/front/dayview/area/'.$area->getId().'/year/'.$today->format('Y').'/month/'.$today->format(
-                'm'
-            ).'/day/'.$today->format('d').'/room';
-        $client = self::createClient();
-        $crawler = $client->request('GET', $url);
-        self::assertResponseIsSuccessful();
-        self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
-
-        $crawler = $client->clickLink('Réunion a ce jour');
-        self::assertCount(1, $crawler->filter('td:contains("Box")'));
-        self::assertCount(1, $crawler->filter('td:contains("Location")'));
-    }
 
     protected function loadFixtures()
     {
@@ -88,7 +31,6 @@ class EntryControllerTest extends BaseRepository
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'entry_type.yaml',
-                $this->pathFixtures.'entry_today.yaml',
             ];
 
         $this->loader->load($files);

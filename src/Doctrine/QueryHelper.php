@@ -6,7 +6,7 @@
  * Time: 16:38.
  */
 
-namespace App\Helper;
+namespace App\Doctrine;
 
 use Doctrine\ORM\QueryBuilder;
 

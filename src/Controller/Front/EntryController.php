@@ -121,7 +121,7 @@ class EntryController extends AbstractController
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
 
         $entryEvent = new EntryEvent($entry);
-        $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_BEFORE_NEW);
+        $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_NEW_INITIALIZE);
 
         $form = $this->createForm(EntryType::class, $entry);
 
@@ -130,6 +130,9 @@ class EntryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->handlerEntry->handleNewEntry($form, $entry);
+
+            $entryEvent = new EntryEvent($entry);
+            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_NEW_SUCCESS);
 
             return $this->redirectToRoute(
                 'grr_front_entry_show',

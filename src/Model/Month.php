@@ -8,7 +8,7 @@
 
 namespace App\Model;
 
-use App\Helper\LocalHelper;
+use App\I18n\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;

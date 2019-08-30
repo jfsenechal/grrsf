@@ -13,7 +13,7 @@
         <tr>
             <th>{{ 'ressources'|trans }}</th>
             {% for day in week.calendarDays %}
-                <th>{{ day.getTranslatedDayName |trans|lower }} {{ day.day }} {{ day.monthName|trans|lower }}</th>
+                <th>{{ day.dayName|lower }} {{ day.day }} {{ day.monthName|lower }}</th>
             {% endfor %}
         </tr>
         </thead>

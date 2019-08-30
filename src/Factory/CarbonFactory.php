@@ -2,7 +2,7 @@
 
 namespace App\Factory;
 
-use App\Helper\LocalHelper;
+use App\I18n\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;

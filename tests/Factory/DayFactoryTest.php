@@ -13,7 +13,7 @@ namespace App\Tests\Factory;
 
 use App\Factory\CarbonFactory;
 use App\Factory\DayFactory;
-use App\Helper\LocalHelper;
+use App\I18n\LocalHelper;
 use App\Model\Day;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;

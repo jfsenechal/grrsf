@@ -25,7 +25,7 @@ class EntrySubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            EntryEvent::ENTRY_BEFORE_NEW => 'onCreated',
+            EntryEvent::ENTRY_NEW_INITIALIZE => 'onCreated',
         ];
     }
 }

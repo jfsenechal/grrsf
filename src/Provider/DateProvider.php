@@ -3,8 +3,8 @@
 
 namespace App\Provider;
 
-
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 
 class DateProvider
 {
@@ -14,6 +14,7 @@ class DateProvider
      */
     public static function getNamesDaysOfWeek()
     {
+        //todo translate with carbon ?
         $days = Carbon::getDays();
         //todo dynamic
         //if lundi first, on pousse dimanche a la fin
@@ -25,6 +26,6 @@ class DateProvider
 
     public static function getHours()
     {
-        return range(0, 23);
+        return range(1, CarbonInterface::HOURS_PER_DAY);
     }
 }

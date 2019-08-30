@@ -9,9 +9,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class EntryEvent extends Event
 {
-    const ENTRY_BEFORE_NEW = 'grr.entry_before_new';
-    const ENTRY_CREATED = 'grr.entry_created';
-    const ENTRY_UPDATED = 'grr.entry_updated';
+    const ENTRY_NEW_INITIALIZE = 'grr.entry.new.initialize';
+    const ENTRY_NEW_SUCCESS = 'grr.entry.new.success';
+    const ENTRY_NEW_COMPLETE = 'grr.entry.new.complete';
 
     /**
      * @var Entry

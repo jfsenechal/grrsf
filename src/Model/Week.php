@@ -8,6 +8,7 @@
 
 namespace App\Model;
 
+use App\I18n\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
@@ -31,6 +32,7 @@ class Week
 
         $date = Carbon::create($year);
         $date->setISODate($year, $week);
+        $date->locale(LocalHelper::getDefaultLocal());
         //$date->isoWeek($week, Carbon::MONDAY);
 
         $weekModel = new self();

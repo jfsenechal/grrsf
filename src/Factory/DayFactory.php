@@ -2,9 +2,9 @@
 
 namespace App\Factory;
 
+use App\I18n\LocalHelper;
 use App\Model\Day;
 use Carbon\CarbonInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class DayFactory
 {
@@ -17,11 +17,17 @@ class DayFactory
     {
         $date = $this->carbonFactory->createImmutable($year, $month, $day);
 
-        return new Day($date);
+        $dayModel = new Day($date);
+        $dayModel->locale(LocalHelper::getDefaultLocal());
+
+        return $dayModel;
     }
 
     public function createFromCarbon(CarbonInterface $carbon): Day
     {
-        return new Day($carbon);
+        $dayModel = new Day($carbon);
+        $dayModel->locale(LocalHelper::getDefaultLocal());
+
+        return $dayModel;
     }
 }

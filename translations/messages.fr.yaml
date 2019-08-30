@@ -97,13 +97,7 @@ area:
       label: 'messages'
   rooms:
     title: Nombre de ressources
-sunday: Dimanche
-monday: Lundi
-tuesday: Mardi
-wednesday: Mercredi
-thursday: Jeudi
-friday: Vendredi
-saturday: Samedi
+
 Sunday: Dimanche
 Monday: Lundi
 Tuesday: Mardi
@@ -111,18 +105,6 @@ Wednesday: Mercredi
 Thursday: Jeudi
 Friday: Vendredi
 Saturday: Samedi
-January: Janvier
-February: Février
-March: Mars
-April: Avril
-May: Mai
-June: Juin
-July: Juillet
-August: Août
-September: Septembre
-October: Octobre
-November: Novembre
-December: Décembre
 week: Semaine
 twentyfourhourFormat12: Affichage 12h
 twentyfourhourFormat24: Affichage 24h

@@ -15,7 +15,7 @@ use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
-use App\Helper\LocalHelper;
+use App\I18n\LocalHelper;
 use App\Provider\TimeSlotsProvider;
 use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

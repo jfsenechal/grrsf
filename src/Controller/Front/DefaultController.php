@@ -110,6 +110,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
     public function day(Area $area, int $year, int $month, int $day, Room $room = null): Response
     {
         $dayModel = $this->dayFactory->createImmutable($year, $month, $day);
+
         $daySelected = $dayModel->toImmutable();
 
         $hoursModel = $this->timeSlotsProvider->getTimeSlotsModelByArea($area);
