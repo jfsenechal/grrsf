@@ -174,7 +174,7 @@ class BindDataManager
             $entries = $roomModel->getEntries();
 
             foreach ($entries as $entry) {
-                $this->entryLocationService->setLocations($entry, $timeSlots);
+                $entry->setLocations($this->entryLocationService->getLocations($entry, $timeSlots));
                 $count = count($entry->getLocations());
                 $entry->setCellules($count);
             }

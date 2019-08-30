@@ -26,33 +26,17 @@ class EntryLocationService
      *
      * @param Entry $entry
      * @param TimeSlot[] $dayTimeSlots les tranches horaires de la journée
+     * @return TimeSlot[]
      */
-    public function setLocations(Entry $entry, array $dayTimeSlots)
+    public function getLocations(Entry $entry, array $dayTimeSlots)
     {
         $locations = [];
         $entryTimeSlots = $this->timeSlotsProvider->getTimeSlotsOfEntry($entry);
+        foreach ($entryTimeSlots as $entryTimeSlot) {
+            dump($entryTimeSlot->format('H:i'));
+        }
 
         foreach ($dayTimeSlots as $dayTimeSlot) {
-
-            if ($entryTimeSlots->contains($dayTimeSlot->getBegin())) {
-                /**
-                 * si l'heure de fin de l'entrée est égale à l'heure de début de la tranche
-                 */
-                if ($entry->getEndTime()->format('H:i') === $dayTimeSlot->getBegin()->format('H:i')) {
-                    continue;
-                }
-
-                /**
-                 * si l'heure de début de l'entrée est égale à l'heure de fin de la tranche horaire
-                 */
-                if ($entry->getStartTime()->format('H:i') === $dayTimeSlot->getEnd()->format('H:i')) {
-                    continue;
-                }
-                $locations[] = $dayTimeSlot;
-            }
-
-            continue;
-
             $startTimeSlot = $dayTimeSlot->getBegin();
             $endTimeSlot = $dayTimeSlot->getEnd();
 
@@ -60,8 +44,7 @@ class EntryLocationService
                 $locations[] = $dayTimeSlot;
             }
         }
-        //  dump(count($locations));
-        $entry->setLocations($locations);
+        return $locations;
     }
 
     protected function isEntryInTimeSlot(
@@ -76,14 +59,6 @@ class EntryLocationService
          * Use case
          * si tranche 9h30-10h00, entry 9h30-10h00
          */
-
-        /**
-         * si l'heure de début de l'entry est égale à l'heure de début de la tranche horaire
-         */
-        if ($entry->getStartTime()->format('H:i') === $startTimeSlot->format('H:i')) {
-            return true;
-        }
-
 
         foreach ($entryTimeSlots as $entryTimeSlot) {
 

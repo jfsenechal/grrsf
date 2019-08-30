@@ -30,23 +30,24 @@ class EntryLocationServiceTest extends BaseRepository
      * @dataProvider getData
      * @throws \Exception
      */
-    public function testSetLocations(int $hourBegin, int $hourEnd, int $duration)
-    {
+    public function testSetLocations(
+        int $entryHourBegin,
+        int $entryMinuteBegin,
+        int $entryHourEnd,
+        int $entryMinuteEnd,
+        int $countLocations
+    ) {
         //  $this->loadFixtures();
-
-        $hourBegin = 8;
-        $hourEnd = 19;
         $duration = 1800;
-
         $today = new \DateTime('now');
-        $today->setTime(13, 0);
+        $today->setTime($entryHourBegin, $entryMinuteBegin);
 
         $daySelected = Carbon::instance($today);
 
         $end = clone $today;
-        $end->setTime(15, 30);
+        $end->setTime($entryHourEnd, $entryMinuteEnd);
 
-        $area = $this->initArea($hourBegin, $hourEnd, $duration);
+        $area = $this->initArea(8, 19, $duration);
         $room = new Room($area);
 
         $entry = new Entry();
@@ -58,37 +59,53 @@ class EntryLocationServiceTest extends BaseRepository
         $timesSlot = $timeSlotProvider->getTimeSlotsModelByAreaAndDaySelected($area, $daySelected);
 
         $entryService = new EntryLocationService($timeSlotProvider);
-        $entryService->setLocations($entry, $timesSlot);
-        /**
-         * @var TimeSlot[] $locations
-         */
-        $locations = $entry->getLocations();
+        $locations = $entryService->getLocations($entry, $timesSlot);
 
         /**
          * = heure de debut
          */
         $day = Carbon::today();
-        $day->setTime(13, 0);
+        $day->setTime($entryHourBegin, 0);
 
-        foreach ($locations as $location) {
-            var_dump($location->getBegin()->format('H:i'), $location->getEnd()->format('H:i'));
-        }
+        self::assertCount($countLocations, $locations);
 
-        self::assertCount(5, $locations);
+        $startEntry = Carbon::instance($entry->getStartTime());
+        $endEntry = Carbon::instance($entry->getEndTime());
 
         foreach ($locations as $location) {
             $begin = $location->getBegin();
             $end = $location->getEnd();
-            self::assertSame("$begin->hour:$begin->minute", "$day->hour:$day->minute");
-            $day->addSeconds($duration);
-            self::assertSame("$end->hour:$end->minute", "$day->hour:$day->minute");
+
+            self::assertTrue($startEntry->greaterThanOrEqualTo($begin) || $startEntry->lessThanOrEqualTo($end));
+            self::assertTrue($begin->lessThanOrEqualTo($endEntry));
         }
     }
 
-    protected function getData() {
-        return [[
-
-        ]];
+    public function getData()
+    {
+        return [
+            [
+                'entryHourBegin' => 13,
+                'entryMinuteBegin' => 0,
+                'entryHourEnd' => 15,
+                'entryMinuteEnd' => 30,
+                'countLocations' => 5,
+            ],
+            [
+                'entryHourBegin' => 8,
+                'entryMinuteBegin' => 10,
+                'entryHourEnd' => 12,
+                'entryMinuteEnd' => 55,
+                'countLocations' => 10,
+            ],
+            [
+                'entryHourBegin' => 9,
+                'entryMinuteBegin' => 30,
+                'entryHourEnd' => 10,
+                'entryMinuteEnd' => 0,
+                'countLocations' => 1,
+            ],
+        ];
     }
 
     public function te2stIsEntryInTimeSlot()

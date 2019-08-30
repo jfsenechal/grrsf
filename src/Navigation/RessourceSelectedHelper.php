@@ -87,7 +87,7 @@ class RessourceSelectedHelper
 
         $area= $this->areaRepository->findOneBy([], ['id' => 'ASC']);
         if(!$area) {
-            throw new \Exception('No area in database, populate with php bin/console grr:init-data');
+            throw new \Exception('No area in database, populate with the command: php bin/console grr:init-data');
         }
         return  $area;
     }
