@@ -36,30 +36,12 @@ class FormTypeEntryTest extends TypeTestCase
     {
         // create a type instance with the mocked dependencies
         $type = new EntryType($this->durationFactory);
-        // $validator = Validation::createValidator();
-
-        // or if you also need to read constraints from annotations
-        $validator = Validation::createValidatorBuilder()
-            ->enableAnnotationMapping()
-            ->getValidator();
-
-        $orm = new DoctrineOrmExtension($this->createMock(ManagerRegistry::class));
 
         $t = [
-            // $orm,
-         //   new ValidatorExtension($validator),
-            // register the type instances with the PreloadedExtension
             new PreloadedExtension([$type], []),
         ];
 
         return  array_merge(parent::getExtensions(), $t);
-
-    }
-
-    public function testDeMerde() {
-        $t = false;
-        $t = true;
-        self::assertTrue($t);
     }
 
     public function testSubmitValidData()
