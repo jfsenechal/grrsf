@@ -29,6 +29,7 @@ class Entry
     /**
      * @var string
      * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @ORM\Column(name="name", type="string", length=80, nullable=false)
      */
     private $name;
@@ -155,6 +156,7 @@ class Entry
     /**
      * Pour l'affichage par jour, nbre de cellules occupees.
      *
+     * @deprecated
      * @var int
      */
     private $cellules;
@@ -187,34 +189,6 @@ class Entry
     public function __toString()
     {
         return $this->name;
-    }
-
-    /**
-     * Contrôle si la date de début est bien plus grand que la date de fin
-     * @Assert\IsTrue(message="assert.entry.startstdend")
-     */
-    public function isStartStEnd(): bool
-    {
-        return $this->start_time < $this->end_time;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCellules(): int
-    {
-        return $this->cellules;
-    }
-
-    /**
-     * @param int $cellules
-     * @return Entry
-     */
-    public function setCellules(int $cellules): self
-    {
-        $this->cellules = $cellules;
-
-        return $this;
     }
 
     public function addLocation(array $location): self

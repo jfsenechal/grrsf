@@ -26,7 +26,12 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
     public function onPreSetData(FormEvent $event)
     {
         $entry = $event->getData();
-        $area = $entry->getArea();
+        if (is_array($entry)) {//search form
+            $area = null;
+        } else {
+            $area = $entry->getArea();
+        }
+
         $form = $event->getForm();
 
         $default = ['required' => false];

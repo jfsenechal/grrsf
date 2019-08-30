@@ -79,7 +79,6 @@ class BaseRepository extends WebTestCase
         );
 
         parent::setUp();
-        //    $this->truncateEntities();
     }
 
     protected function getArea(string $name): Area
@@ -110,12 +109,6 @@ class BaseRepository extends WebTestCase
         return $this->entityManager
             ->getRepository(Entry::class)
             ->findOneBy(['name' => $name]);
-    }
-
-    private function truncateEntities()
-    {
-        $purger = new ORMPurger($this->entityManager);
-        $purger->purge();
     }
 
     /**
