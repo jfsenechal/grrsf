@@ -21,7 +21,10 @@ class DurationFactory
 
     public function createByEntry(Entry $entry): DurationModel
     {
-        return $this->createFromDates($entry->getStartTime(), $entry->getEndTime());
+        $duration = $this->createFromDates($entry->getStartTime(), $entry->getEndTime());
+        $this->setFullDay($entry, $duration);
+
+        return $duration;
     }
 
     public function createFromDates(\DateTimeInterface $startTime, \DateTimeInterface $endTime): DurationModel
@@ -61,6 +64,16 @@ class DurationFactory
         if ($weeks > 0) {
             $duration->setUnit(DurationModel::UNIT_TIME_WEEKS);
             $duration->setTime($weeks);
+        }
+    }
+
+    private function setFullDay(Entry $entry, DurationModel $duration)
+    {
+        $area = $entry->getRoom()->getArea();
+
+        if ($area->getStartTime() === (int)$entry->getStartTime()->format('G') && $area->getEndTime(
+            ) === (int)$entry->getEndTime()->format('G')) {
+            $duration->setFullDay(true);
         }
     }
 }
