@@ -32,9 +32,6 @@ class EntryLocationService
     {
         $locations = [];
         $entryTimeSlots = $this->timeSlotsProvider->getTimeSlotsOfEntry($entry);
-        foreach ($entryTimeSlots as $entryTimeSlot) {
-            dump($entryTimeSlot->format('H:i'));
-        }
 
         foreach ($dayTimeSlots as $dayTimeSlot) {
             $startTimeSlot = $dayTimeSlot->getBegin();
@@ -53,7 +50,6 @@ class EntryLocationService
         \DateTimeInterface $startTimeSlot,
         \DateTimeInterface $endTimeSlot
     ): bool {
-
 
         /**
          * Use case
