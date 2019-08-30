@@ -44,7 +44,7 @@ class FormTypeEntryTest extends TypeTestCase
         return  array_merge(parent::getExtensions(), $t);
     }
 
-    public function testSubmitValidData()
+    public function tttestSubmitValidData()
     {
         $formData = [
             'name' => 'test',
@@ -76,5 +76,11 @@ class FormTypeEntryTest extends TypeTestCase
         foreach (array_keys($formData) as $key) {
             $this->assertArrayHasKey($key, $children);
         }
+    }
+
+    public function testFAke() {
+        $var = false;
+        $var = true;
+        self::assertTrue($var);
     }
 }

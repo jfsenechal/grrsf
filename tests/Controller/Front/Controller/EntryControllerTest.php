@@ -8,7 +8,7 @@ class EntryControllerTest extends BaseRepository
 {
     public function testNewNotLogin()
     {
-        // $this->loadFixtures();
+         $this->loadFixtures();
 
         $today = new \DateTime();
         $esquare = $this->getArea('Esquare');
@@ -28,7 +28,7 @@ class EntryControllerTest extends BaseRepository
 
     public function testNew()
     {
-        //    $this->loadFixtures();
+            $this->loadFixtures();
 
         $today = new \DateTime();
         $esquare = $this->getArea('Esquare');
@@ -71,6 +71,8 @@ class EntryControllerTest extends BaseRepository
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'entry_type.yaml',
+                $this->pathFixtures.'users.yaml',
+
             ];
 
         $this->loader->load($files);

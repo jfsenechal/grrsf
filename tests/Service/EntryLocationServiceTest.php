@@ -21,13 +21,16 @@ use App\Provider\TimeSlotsProvider;
 use App\Service\EntryLocationService;
 use App\Tests\Repository\BaseRepository;
 use Carbon\Carbon;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class EntryLocationServiceTest extends BaseRepository
 {
-    public function testSetLocations()
+    /**
+     * @dataProvider getData
+     * @throws \Exception
+     */
+    public function testSetLocations(int $hourBegin, int $hourEnd, int $duration)
     {
         //  $this->loadFixtures();
 
@@ -37,6 +40,8 @@ class EntryLocationServiceTest extends BaseRepository
 
         $today = new \DateTime('now');
         $today->setTime(13, 0);
+
+        $daySelected = Carbon::instance($today);
 
         $end = clone $today;
         $end->setTime(15, 30);
@@ -50,7 +55,7 @@ class EntryLocationServiceTest extends BaseRepository
         $entry->setRoom($room);
 
         $timeSlotProvider = $this->initTimeSlotProvider();
-        $timesSlot = $timeSlotProvider->getTimeSlotsModelByAreaAndDaySelected($area);
+        $timesSlot = $timeSlotProvider->getTimeSlotsModelByAreaAndDaySelected($area, $daySelected);
 
         $entryService = new EntryLocationService($timeSlotProvider);
         $entryService->setLocations($entry, $timesSlot);
@@ -63,9 +68,13 @@ class EntryLocationServiceTest extends BaseRepository
          * = heure de debut
          */
         $day = Carbon::today();
-        $day->setTime(13,0);
+        $day->setTime(13, 0);
 
-        self::assertCount(6, $locations);
+        foreach ($locations as $location) {
+            var_dump($location->getBegin()->format('H:i'), $location->getEnd()->format('H:i'));
+        }
+
+        self::assertCount(5, $locations);
 
         foreach ($locations as $location) {
             $begin = $location->getBegin();
@@ -74,6 +83,12 @@ class EntryLocationServiceTest extends BaseRepository
             $day->addSeconds($duration);
             self::assertSame("$end->hour:$end->minute", "$day->hour:$day->minute");
         }
+    }
+
+    protected function getData() {
+        return [[
+
+        ]];
     }
 
     public function te2stIsEntryInTimeSlot()

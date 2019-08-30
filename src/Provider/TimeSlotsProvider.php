@@ -66,10 +66,8 @@ class TimeSlotsProvider
      */
     public function getTimeSlots(CarbonInterface $daySelected, int $hourBegin, int $hourEnd, int $timeInterval): CarbonPeriod
     {
-        $today = $daySelected;
-
-        $debut = $this->carbonFactory->create($today->year, $today->month, $today->day, $hourBegin, 0);
-        $fin = $this->carbonFactory->create($today->year, $today->month, $today->day, $hourEnd, 0, 0);
+        $debut = $this->carbonFactory->create($daySelected->year, $daySelected->month, $daySelected->day, $hourBegin, 0);
+        $fin = $this->carbonFactory->create($daySelected->year, $daySelected->month, $daySelected->day, $hourEnd, 0, 0);
 
         return Carbon::parse($debut)->secondsUntil($fin, $timeInterval);
     }
