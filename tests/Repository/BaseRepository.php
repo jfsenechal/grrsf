@@ -126,7 +126,7 @@ class BaseRepository extends WebTestCase
         parent::tearDown();
 
         $purger = new ORMPurger($this->entityManager);
-        $purger->purge();
+      //  $purger->purge();
 
         $this->kernel2->shutdown();
         $this->kernel2 = null;

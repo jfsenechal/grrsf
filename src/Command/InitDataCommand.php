@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class GrrInitDataCommand extends Command
+class InitDataCommand extends Command
 {
     protected static $defaultName = 'grr:init-data';
     /**
@@ -125,7 +125,7 @@ class GrrInitDataCommand extends Command
 
     public function loadArea()
     {
-        $esquareName = 'E-square';
+        $esquareName = 'Esquare';
         $esquare = $this->areaRepository->findOneBy(['name' => $esquareName]);
         if (!$esquare) {
             $esquare = $this->areaFactory->createNew();

@@ -6,23 +6,63 @@ use App\Tests\Repository\BaseRepository;
 
 class EntryControllerTest extends BaseRepository
 {
-    public function testNew()
+    public function testNewNotLogin()
     {
-        $this->loadFixtures();
+        // $this->loadFixtures();
 
         $today = new \DateTime();
+        $esquare = $this->getArea('Esquare');
+        $room = $this->getRoom('Box');
 
-        $url = "/";
+        $url = "/front/entry/new/area/".$esquare->getId()."/room/".$room->getId()."/year/".$today->format(
+                'Y'
+            )."/month/".$today->format('m')."/day/".$today->format('d')."/hour/9/minute/30";
+
         $client = self::createClient();
         $client->request('GET', $url);
-        $crawler = $client->followRedirect();
-        self::assertResponseIsSuccessful();
-        self::assertSelectorTextContains('th', 'Aujourd\'hui');
-        self::assertCount(2, $crawler->filter('th:contains("Mercredi")'));
-        //  self::assertSelectorTextContains('th', 'Mercredi');
-        //var_dump($client->getResponse()->getContent());
+        self::assertResponseStatusCodeSame(302);
+        $client->followRedirect();
+        self::assertSelectorTextContains('h1', 'Authentification');
     }
 
+
+    public function testNew()
+    {
+        //    $this->loadFixtures();
+
+        $today = new \DateTime();
+        $esquare = $this->getArea('Esquare');
+        $room = $this->getRoom('Box');
+
+        $url = "/front/entry/new/area/".$esquare->getId()."/room/".$room->getId()."/year/".$today->format(
+                'Y'
+            )."/month/".$today->format('m')."/day/".$today->format('d')."/hour/9/minute/30";
+
+        $crawler = $this->administrator->request('GET', $url);
+        self::assertResponseIsSuccessful();
+  //      var_dump($this->administrator->getResponse()->getContent());
+
+        $form = $crawler->selectButton('Sauvegarder')->form();
+        $form['entry[name]']->setValue('My reservation');
+
+        $this->administrator->submit($form);
+        $this->administrator->followRedirect();
+
+        $this->assertContains(
+            'My reservation',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            '09:30',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            '10:00',
+            $this->administrator->getResponse()->getContent()
+        );
+    }
 
     protected function loadFixtures()
     {
