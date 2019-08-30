@@ -31,6 +31,9 @@ class EntryLocationService
      */
     public function getLocations(Entry $entry, array $dayTimeSlots)
     {
+        echo " date entry : ".$entry->getStartTime()->format('Y-m-d H:i')." to ".$entry->getEndTime()->format('Y-m-d H:i');
+        echo "\n";
+
         /**
          * @var TimeSlot[] $locations
          */
