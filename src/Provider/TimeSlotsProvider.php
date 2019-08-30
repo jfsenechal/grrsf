@@ -26,15 +26,16 @@ class TimeSlotsProvider
      * Crée les tranches d'heures sous forme d'objet.
      *
      * @param Area $area
+     * @param CarbonInterface $daySelected
      * @return TimeSlot[]
      */
-    public function getTimeSlotsModelByArea(Area $area)
+    public function getTimeSlotsModelByAreaAndDaySelected(Area $area, CarbonInterface $daySelected)
     {
         $hourBegin = $area->getStartTime();
         $hourEnd = $area->getEndTime();
         $timeInterval = $area->getTimeInterval();
 
-        $timeSlots = $this->getTimeSlots($hourBegin, $hourEnd, $timeInterval);
+        $timeSlots = $this->getTimeSlots($daySelected, $hourBegin, $hourEnd, $timeInterval);
 
         $hours = [];
         $timeSlots->rewind();
@@ -56,15 +57,16 @@ class TimeSlotsProvider
 
     /**
      * Retourne les tranches d'heures d'après une heure de début, de fin et d'un interval de temps
+     * @param CarbonInterface $daySelected
      * @param int $hourBegin
      * @param int $hourEnd
      * @param int $timeInterval
      *
      * @return CarbonPeriod
      */
-    public function getTimeSlots(int $hourBegin, int $hourEnd, int $timeInterval): CarbonPeriod
+    public function getTimeSlots(CarbonInterface $daySelected, int $hourBegin, int $hourEnd, int $timeInterval): CarbonPeriod
     {
-        $today = Carbon::today();
+        $today = $daySelected;
 
         $debut = $this->carbonFactory->create($today->year, $today->month, $today->day, $hourBegin, 0);
         $fin = $this->carbonFactory->create($today->year, $today->month, $today->day, $hourEnd, 0, 0);

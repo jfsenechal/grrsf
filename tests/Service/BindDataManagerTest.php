@@ -133,7 +133,7 @@ class BindDataManagerTest extends BaseRepository
         $area = $this->getArea('Hdv');
         $bindDataManager = $this->initBindDataManager();
 
-        $hoursModel = $timeSlotsProvider->getTimeSlotsModelByArea($area);
+        $hoursModel = $timeSlotsProvider->getTimeSlotsModelByAreaAndDaySelected($area);
         $roomsModel = $bindDataManager->bindDay($daySelected, $area, $hoursModel, null);
 
 

@@ -72,6 +72,7 @@ class HandlerEntry
             }
         }
 
+        $this->fullDay($entry);
         $this->entryManager->insert($entry);
         $this->periodicityDayManager->flush();
     }
@@ -86,6 +87,21 @@ class HandlerEntry
             // $this->periodicityManager->flush();
         }
         $this->entryManager->flush();
+    }
+
+    protected function fullDay(Entry $entry)
+    {
+        $duration = $entry->getDuration();
+        if ($duration) {
+            if ($duration->isFullDay()) {
+                $area = $entry->getArea();
+                $hourStart = $area->getStartTime();
+                $hourEnd = $area->getEndTime();
+
+                $entry->getStartTime()->setTime($hourStart, 0);
+                $entry->getEndTime()->setTime($hourEnd, 0);
+            }
+        }
     }
 
     public function handleDeleteEntry(Entry $entry)

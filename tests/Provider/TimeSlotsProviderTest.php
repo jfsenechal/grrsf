@@ -36,7 +36,7 @@ class TimeSlotsProviderTest extends WebTestCase
         $day->minute = $minute;
 
         $timeSlotProvicer = $this->initTimeSlotProvider();
-        $modelsTimeSlot = $timeSlotProvicer->getTimeSlotsModelByArea($area, $day);
+        $modelsTimeSlot = $timeSlotProvicer->getTimeSlotsModelByAreaAndDaySelected($area, $day);
 
         foreach ($modelsTimeSlot as $modelTimeSlot) {
             self::assertSame($modelTimeSlot->getBegin()->hour, $day->hour);

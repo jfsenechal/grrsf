@@ -22,8 +22,9 @@ class EntryLocationService
     }
 
     /**
-     * Fixe les emplacements de l'entry pour la vue sur une journee
-     * @param Entry      $entry
+     * Fixe l'occupation des emplacements de l'entry pour la vue sur une journee
+     *
+     * @param Entry $entry
      * @param TimeSlot[] $dayTimeSlots les tranches horaires de la journée
      */
     public function setLocations(Entry $entry, array $dayTimeSlots)
@@ -32,22 +33,78 @@ class EntryLocationService
         $entryTimeSlots = $this->timeSlotsProvider->getTimeSlotsOfEntry($entry);
 
         foreach ($dayTimeSlots as $dayTimeSlot) {
+
+            if ($entryTimeSlots->contains($dayTimeSlot->getBegin())) {
+                /**
+                 * si l'heure de fin de l'entrée est égale à l'heure de début de la tranche
+                 */
+                if ($entry->getEndTime()->format('H:i') === $dayTimeSlot->getBegin()->format('H:i')) {
+                    continue;
+                }
+
+                /**
+                 * si l'heure de début de l'entrée est égale à l'heure de fin de la tranche horaire
+                 */
+                if ($entry->getStartTime()->format('H:i') === $dayTimeSlot->getEnd()->format('H:i')) {
+                    continue;
+                }
+                $locations[] = $dayTimeSlot;
+            }
+
+            continue;
+
             $startTimeSlot = $dayTimeSlot->getBegin();
             $endTimeSlot = $dayTimeSlot->getEnd();
 
-            if ($this->isEntryInTimeSlot($entryTimeSlots, $startTimeSlot, $endTimeSlot)) {
+            if ($this->isEntryInTimeSlot($entry, $entryTimeSlots, $startTimeSlot, $endTimeSlot)) {
                 $locations[] = $dayTimeSlot;
             }
         }
+        //  dump(count($locations));
         $entry->setLocations($locations);
     }
 
-    protected function isEntryInTimeSlot(CarbonPeriod $entryTimeSlots, \DateTimeInterface $startTimeSlot, \DateTimeInterface $endTimeSlot): bool
-    {
+    protected function isEntryInTimeSlot(
+        Entry $entry,
+        CarbonPeriod $entryTimeSlots,
+        \DateTimeInterface $startTimeSlot,
+        \DateTimeInterface $endTimeSlot
+    ): bool {
+
+
+        /**
+         * Use case
+         * si tranche 9h30-10h00, entry 9h30-10h00
+         */
+
+        /**
+         * si l'heure de début de l'entry est égale à l'heure de début de la tranche horaire
+         */
+        if ($entry->getStartTime()->format('H:i') === $startTimeSlot->format('H:i')) {
+            return true;
+        }
+
+
         foreach ($entryTimeSlots as $entryTimeSlot) {
-            //si tranche 09:00-10:00 et event commence a 10:00, not include
-            $entryTimeSlot->addMicrosecond();
+
+            //  dump( $startTimeSlot, $endTimeSlot);
+
             if ($entryTimeSlot->between($startTimeSlot, $endTimeSlot)) {
+
+                /**
+                 * si l'heure de fin de l'entrée est égale à l'heure de début de la tranche
+                 */
+                if ($entry->getEndTime()->format('H:i') === $startTimeSlot->format('H:i')) {
+                    return false;
+                }
+
+                /**
+                 * si l'heure de début de l'entrée est égale à l'heure de fin de la tranche horaire
+                 */
+                if ($entry->getStartTime()->format('H:i') === $endTimeSlot->format('H:i')) {
+                    return false;
+                }
+
                 return true;
             }
         }
@@ -57,9 +114,9 @@ class EntryLocationService
 
     /**
      * Bug si dateEnd entry > dateEndArea.
-     * @deprecated
      * @param Entry $entry
-     * @param Area  $area
+     * @param Area $area
+     * @deprecated
      */
     public function setCountCells(Entry $entry, Area $area)
     {
@@ -67,7 +124,7 @@ class EntryLocationService
         $start = Carbon::instance($entry->getStartTime());
         $end = Carbon::instance($entry->getEndTime());
         $diff = $start->diffInSeconds($end);
-        $cellules = (int) (ceil($diff / $resolution));
+        $cellules = (int)(ceil($diff / $resolution));
         $entry->setCellules($cellules);
     }
 

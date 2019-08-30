@@ -113,8 +113,8 @@ class DefaultController extends AbstractController implements FrontControllerInt
 
         $daySelected = $dayModel->toImmutable();
 
-        $hoursModel = $this->timeSlotsProvider->getTimeSlotsModelByArea($area);
-        $roomsModel = $this->bindDataManager->bindDay($daySelected, $area, $hoursModel, $room);
+        $timeSlots = $this->timeSlotsProvider->getTimeSlotsModelByAreaAndDaySelected($area, $daySelected);
+        $roomsModel = $this->bindDataManager->bindDay($daySelected, $area, $timeSlots, $room);
 
         return $this->render(
             '@grr_front/day/day.html.twig',
@@ -122,7 +122,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
                 'day' => $dayModel,
                 'roomsModel' => $roomsModel,
                 'area' => $area, //pour lien add entry
-                'hoursModel' => $hoursModel,
+                'hoursModel' => $timeSlots,
             ]
         );
     }

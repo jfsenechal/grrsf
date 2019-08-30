@@ -50,7 +50,7 @@ class EntryLocationServiceTest extends BaseRepository
         $entry->setRoom($room);
 
         $timeSlotProvider = $this->initTimeSlotProvider();
-        $timesSlot = $timeSlotProvider->getTimeSlotsModelByArea($area);
+        $timesSlot = $timeSlotProvider->getTimeSlotsModelByAreaAndDaySelected($area);
 
         $entryService = new EntryLocationService($timeSlotProvider);
         $entryService->setLocations($entry, $timesSlot);

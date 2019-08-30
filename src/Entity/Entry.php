@@ -156,7 +156,6 @@ class Entry
     /**
      * Pour l'affichage par jour, nbre de cellules occupees.
      *
-     * @deprecated
      * @var int
      */
     private $cellules;
@@ -189,6 +188,25 @@ class Entry
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCellules(): int
+    {
+        return $this->cellules;
+    }
+
+    /**
+     * @param int $cellules
+     * @return Entry
+     */
+    public function setCellules(int $cellules): self
+    {
+        $this->cellules = $cellules;
+
+        return $this;
     }
 
     public function addLocation(array $location): self
