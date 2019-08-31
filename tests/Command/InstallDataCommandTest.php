@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class InitDataCommandTest extends BaseRepository
+class InstallDataCommandTest extends BaseRepository
 {
     public function testExecute()
     {
@@ -24,7 +24,7 @@ class InitDataCommandTest extends BaseRepository
         $kernel = static::createKernel();
         $application = new Application($kernel);
 
-        $command = $application->find('grr:init-data');
+        $command = $application->find('grr:install-data');
         $commandTester = new CommandTester($command);
 
         $commandTester->execute(
@@ -35,7 +35,7 @@ class InitDataCommandTest extends BaseRepository
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $this->assertContains("Les donnes ont bien été initialisées.", $output);
+        $this->assertContains("Les données ont bien été initialisées.", $output);
     }
 
     protected function loadFixtures()

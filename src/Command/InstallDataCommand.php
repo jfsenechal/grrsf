@@ -18,9 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class InitDataCommand extends Command
+class InstallDataCommand extends Command
 {
-    protected static $defaultName = 'grr:init-data';
+    protected static $defaultName = 'grr:install-data';
     /**
      * @var EntryTypeRepository
      */
