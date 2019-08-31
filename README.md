@@ -3,6 +3,7 @@ GRR
 ===================
 
 [![Build Status](https://travis-ci.org/jfsenechal/grrsf.svg?branch=master)](https://travis-ci.org/jfsenechal/grrsf)
+[![DeepSource](https://static.deepsource.io/deepsource-badge-light.svg)](https://deepsource.io/gh/jfsenechal/grrsf/?ref=repository-badge)
 
 **Requiert :**
 
