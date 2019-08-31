@@ -85,7 +85,7 @@ class InitDataCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Initialize les données de la base de données lors de l\'installation');;
+            ->setDescription('Initialize les données dans la base de données lors de l\'installation');;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -96,7 +96,7 @@ class InitDataCommand extends Command
         $this->loadArea();
         $this->loadUser();
 
-        $io->success('Les donnes ont bien été initialisées.');
+        $io->success('Les données ont bien été initialisées.');
     }
 
     public function loadType()

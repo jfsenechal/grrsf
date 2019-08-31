@@ -25,7 +25,7 @@ class MonthTest extends WebTestCase
             $i++;
         }
 
-        foreach ($month->getCalendarWeeks() as $week) {
+        foreach ($month->getWeeksOfMonth() as $week) {
             foreach ($week as $day) {
                 $this->assertContains($day->format('Y-m-d'), $this->getDays());
             }

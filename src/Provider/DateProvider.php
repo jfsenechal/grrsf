@@ -15,9 +15,12 @@ class DateProvider
     public static function getNamesDaysOfWeek()
     {
         //todo translate with carbon ?
+        //https://carbon.nesbot.com/docs/#api-week
+        //$en->firstWeekDay); != $fr->firstWeekDay);
         $days = Carbon::getDays();
         //todo dynamic
         //if lundi first, on pousse dimanche a la fin
+
         $days[] = $days[0];
         unset($days[0]);
 

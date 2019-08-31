@@ -101,7 +101,7 @@ class NavigationManager
     {
         $firstDay = $month->firstOfMonth();
 
-        $weeks = $this->month->getCalendarWeeks();
+        $weeks = $this->month->getWeeksOfMonth();
         $request = $this->requestStack->getMasterRequest();
         $weekSelected = $request !== null ? $request->get('week') : 0;
         $daySelected = $request !== null ? $request->get('day') : 0;

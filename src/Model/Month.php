@@ -8,6 +8,7 @@
 
 namespace App\Model;
 
+use App\Factory\DayFactory;
 use App\I18n\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -22,7 +23,7 @@ use Doctrine\Common\Collections\Collection;
 class Month extends Carbon
 {
     /**
-     * @var ArrayCollection
+     * @var Day[]|ArrayCollection
      */
     protected $data_days;
 
@@ -75,7 +76,7 @@ class Month extends Carbon
      * Retourne la liste des semaines
      * @return CarbonPeriod[]
      */
-    public function getCalendarWeeks()
+    public function getWeeksOfMonth()
     {
         $weeks = [];
         $firstDayMonth = $this->firstOfMonth();
@@ -83,14 +84,14 @@ class Month extends Carbon
         $firstDayWeek = $firstDayMonth->copy()->startOfWeek()->toMutable();
 
         do {
-            $weeks[] = $this->getCalendarWeek($firstDayWeek); // point at end ofWeek
+            $weeks[] = $this->getWeekOfMonth($firstDayWeek); // point at end ofWeek
             $firstDayWeek->nextWeekday();
         } while ($firstDayWeek->isSameMonth($firstDayMonth));
 
         return $weeks;
     }
 
-    public function getCalendarWeek(CarbonInterface $date): CarbonPeriod
+    public function getWeekOfMonth(CarbonInterface $date): CarbonPeriod
     {
         $debut = $date->toDateString();
         $fin = $date->endOfWeek()->toDateString();
@@ -116,41 +117,41 @@ class Month extends Carbon
         return $this->data_days;
     }
 
+    /**
+     *
+     * @return array
+     * @throws \Exception
+     */
     public function groupDataDaysByWeeks()
     {
-        $dataDays = $this->getDataDays();
         $weeks = [];
-        foreach ($this->getCalendarWeeks() as $weekCalendar) {
+        foreach ($this->getWeeksOfMonth() as $weekCalendar) {
             $days = [];
             foreach ($weekCalendar as $dayCalendar) {
-                $days [] = $dayCalendar;
-                foreach ($dataDays as $dataDay) {
-                    if ($dataDay->toDateString() === $dayCalendar->toDateString()) {
-                      //  $days[] = $dataDay;
-                    }
-                }
+                $dayModel = $this->findDataDayWithDate($dayCalendar);
+                // $days [] = $dayCalendar;
+                $days [] = $dayModel;
             }
             $weeks[]['days'] = $days;
         }
+
         return $weeks;
     }
 
-    public function groupDaysByWeeks()
+    /**
+     * @param CarbonInterface $dayCalendar
+     * @return Day
+     * @throws \Exception
+     */
+    protected function findDataDayWithDate($dayCalendar)
     {
-        $weeks = [];
-        $calendarDays = $this->getCalendarDays();
-        foreach ($this->getCalendarWeeks() as $weekCalendar) {
-            $days = [];
-            foreach ($weekCalendar as $dayCalendar) {
-                foreach ($calendarDays as $dataDay) {
-                    if ($dataDay->toDateString() === $dayCalendar->toDateString()) {
-                        $days[] = $dataDay;
-                    }
-                }
+        foreach ($this->getDataDays() as $dataDay) {
+            if ($dataDay->toDateString() === $dayCalendar->toDateString()) {
+                return $dataDay;
             }
-            $weeks[]['days'] = $days;
         }
 
-        return $weeks;
+        //if month 08 and first day of week 29/07
+        return new Day($dayCalendar);
     }
 }
