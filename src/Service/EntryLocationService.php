@@ -31,8 +31,8 @@ class EntryLocationService
      */
     public function getLocations(Entry $entry, array $dayTimeSlots)
     {
-        echo " date entry : ".$entry->getStartTime()->format('Y-m-d H:i')." to ".$entry->getEndTime()->format('Y-m-d H:i');
-        echo "\n";
+     //   echo " date entry : ".$entry->getStartTime()->format('Y-m-d H:i')." to ".$entry->getEndTime()->format('Y-m-d H:i');
+      //  echo "\n";
 
         /**
          * @var TimeSlot[] $locations
@@ -47,7 +47,7 @@ class EntryLocationService
             }
         }
 
-        $print = true;
+        $print = false;
         if ($print) {
             foreach ($locations as $location) {
                 echo ($location->getBegin()->format('Y-m-d H:i'));

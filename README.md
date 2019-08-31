@@ -2,6 +2,8 @@ GRR
 
 ===================
 
+[![Build Status](https://travis-ci.org/jfsenechal/grrsf.svg?branch=master)](https://travis-ci.org/jfsenechal/grrsf)
+
 **Requiert :**
 
 PHP : > 7.3
