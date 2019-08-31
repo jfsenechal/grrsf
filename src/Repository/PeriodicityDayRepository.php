@@ -32,7 +32,7 @@ class PeriodicityDayRepository extends ServiceEntityRepository
         $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');
         $qb->addSelect('entry');
 
-        $firstDayImmutable = $monthModel->getFirstDayImmutable();
+        $firstDayImmutable = $monthModel->firstOfMonth();
         $timeString = $firstDayImmutable->format('Y-m').'%';
 
         $qb->andWhere('periodicity_day.date_periodicity LIKE :time')

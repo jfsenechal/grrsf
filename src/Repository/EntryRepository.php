@@ -36,7 +36,7 @@ class EntryRepository extends ServiceEntityRepository
         $qb->andWhere('entry.start_time LIKE :time')
             ->setParameter(
                 'time',
-                $monthModel->getFirstDayImmutable()->format('Y-m').'%'
+                $monthModel->firstOfMonth()->format('Y-m').'%'
             );
 
         if ($area !== null) {

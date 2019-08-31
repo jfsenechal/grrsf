@@ -65,7 +65,7 @@ class NavigationManager
         $navigation->setNextButton($this->nextButton());
         $navigation->setPreviousButton($this->previousButton());
 
-        $current = $this->month->getFirstDayImmutable()->toMutable();
+        $current = $this->month->firstOfMonth();
 
         for ($i = 0; $i < $number; ++$i) {
             $monthModel = Month::init($current->year, $current->month);

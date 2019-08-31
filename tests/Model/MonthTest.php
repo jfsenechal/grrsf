@@ -14,7 +14,7 @@ class MonthTest extends WebTestCase
         $month = Month::init(2019, 10, 01);
 
         $this->assertInstanceOf(Month::class, $month);
-        $this->assertSame('2019-10-01', $month->getFirstDayImmutable()->format('Y-m-d'));
+        $this->assertSame('2019-10-01', $month->firstOfMonth()->format('Y-m-d'));
         $this->assertSame('2018', $month->previousYear()->format('Y'));
         $this->assertSame('2020', $month->nextYear()->format('Y'));
         $this->assertSame('09', $month->previousMonth()->format('m'));
@@ -27,7 +27,7 @@ class MonthTest extends WebTestCase
 
         foreach ($month->getCalendarWeeks() as $week) {
             foreach ($week as $day) {
-                $this->assertTrue(in_array($day->format('Y-m-d'), $this->getDays()));
+                $this->assertContains($day->format('Y-m-d'), $this->getDays());
             }
         }
     }

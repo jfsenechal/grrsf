@@ -22,11 +22,6 @@ use Doctrine\Common\Collections\Collection;
 class Month extends Carbon
 {
     /**
-     * @var CarbonInterface
-     */
-    protected $firstDayImmutable;
-
-    /**
      * @var ArrayCollection
      */
     protected $data_days;
@@ -42,34 +37,28 @@ class Month extends Carbon
         $monthModel = new self();
         $monthModel->setDate($year, $month, $day);
         $monthModel->locale(LocalHelper::getDefaultLocal());
-        $monthModel->firstDayImmutable = $monthModel->toImmutable();
 
         return $monthModel;
     }
 
-    public function getFirstDayImmutable(): CarbonInterface
-    {
-        return $this->firstDayImmutable;
-    }
-
     public function previousYear()
     {
-        return $this->firstDayImmutable->subYear();
+        return $this->copy()->subYear();
     }
 
     public function nextYear()
     {
-        return $this->firstDayImmutable->addYear();
+        return $this->copy()->addYear();
     }
 
     public function previousMonth()
     {
-        return $this->firstDayImmutable->subMonth();
+        return $this->copy()->subMonth();
     }
 
     public function nextMonth()
     {
-        return $this->firstDayImmutable->addMonth();
+        return $this->copy()->addMonth();
     }
 
     /**
@@ -77,12 +66,13 @@ class Month extends Carbon
      */
     public function getCalendarDays(): CarbonPeriod
     {
-        return Carbon::parse($this->firstDayImmutable->firstOfMonth()->toDateString())->daysUntil(
-            $this->firstDayImmutable->endOfMonth()->toDateString()
+        return Carbon::parse($this->firstOfMonth()->toDateString())->daysUntil(
+            $this->endOfMonth()->toDateString()
         );
     }
 
     /**
+     * Retourne la liste des semaines
      * @return CarbonPeriod[]
      */
     public function getCalendarWeeks()
