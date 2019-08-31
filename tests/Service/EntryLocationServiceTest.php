@@ -125,7 +125,7 @@ class EntryLocationServiceTest extends BaseRepository
         $area = $this->initArea(8, 19, $duration);
         $room = new Room($area);
 
-        echo $dateStart->format('Y-m-d H:i').' '.$dateEnd->format('Y-m-d H:i')."\n \n";
+     //   echo $dateStart->format('Y-m-d H:i').' '.$dateEnd->format('Y-m-d H:i')."\n \n";
 
         $entry = new Entry();
         $entry->setStartTime($dateStart);
@@ -147,7 +147,7 @@ class EntryLocationServiceTest extends BaseRepository
              */
             $day = Carbon::today();
             //  $day->setTime($entryHourBegin, 0);
-            var_dump($i);
+         //   var_dump($i);
             self::assertCount($countLocations[$i], $locations);
 
             $startEntry = Carbon::instance($entry->getStartTime());
