@@ -9,6 +9,5 @@ exclude_patterns = [
 ]
 
 [[analyzers]]
-name = 'python'
+name = "test-coverage"
 enabled = true
-runtime_version = '3.x.x'
