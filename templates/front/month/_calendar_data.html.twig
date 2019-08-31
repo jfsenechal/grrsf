@@ -9,19 +9,9 @@
     <tbody>
     {% for week in weeks %}
         <tr class="">
-
-            {% if loop.first %}
-                {{ grrCompleteTr(week.days|first, 'begin') }}
-            {% endif %}
-
             {% for day in week.days %}
                 {% include '@grr_front/month/_cell_day_data.html.twig' %}
             {% endfor %}
-
-            {% if loop.last %}
-                {{ grrCompleteTr(week.days|last, 'end') }}
-            {% endif %}
-
         </tr>
     {% endfor %}
 

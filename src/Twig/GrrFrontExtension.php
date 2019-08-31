@@ -59,11 +59,6 @@ class GrrFrontExtension extends AbstractExtension
             }, ['is_safe' => ['html']]
             ),
             new TwigFilter(
-                'grrPeriodicityWeekDayName', function (int $weekday) {
-                return $this->grrPeriodicityWeekDayName($weekday);
-            }, ['is_safe' => ['html']]
-            ),
-            new TwigFilter(
                 'grrWeekNiceName', function (Week $week) {
                 return $this->grrWeekNiceName($week);
             }, ['is_safe' => ['html']]
@@ -71,7 +66,10 @@ class GrrFrontExtension extends AbstractExtension
         ];
     }
 
-
+    /**
+     * todo navigation function to same package
+     * @return array|TwigFunction[]
+     */
     public function getFunctions()
     {
         return [
@@ -83,11 +81,6 @@ class GrrFrontExtension extends AbstractExtension
             new TwigFunction(
                 'grrMenuNavigationRender', function () {
                 return $this->menuNavigationRender();
-            }, ['is_safe' => ['html']]
-            ),
-            new TwigFunction(
-                'grrCompleteTr', function (CarbonInterface $day, string $action) {
-                return $this->grrCompleteTr($day, $action);
             }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
@@ -194,32 +187,9 @@ class GrrFrontExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param Day $day
-     * @param string $action begin|end
-     *
-     * @return string
-     *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
-    public function grrCompleteTr(CarbonInterface $day, string $action)
-    {
-        return $this->twigEnvironment->render(
-            '@grr_front/navigation/_complete_tr.html.twig',
-            ['numericDay' => $day->weekday(), 'action' => $action]
-        );
-    }
-
     private function grrPeriodicityTypeName(int $type)
     {
         return PeriodicityConstant::getTypePeriodicite($type);
-    }
-
-    private function grrPeriodicityWeekDayName(int $weekday)
-    {
-
     }
 
     private function grrWeekNiceName(Week $week)

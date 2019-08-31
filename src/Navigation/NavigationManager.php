@@ -48,6 +48,7 @@ class NavigationManager
     }
 
     /**
+     *
      * @param Month $month
      * @param int $number nombre de mois
      *
@@ -62,8 +63,8 @@ class NavigationManager
         $navigation = $this->navigationFactory->createNew();
         $this->today = $navigation->getToday();
 
-        $navigation->setNextButton($this->nextButton());
-        $navigation->setPreviousButton($this->previousButton());
+        $navigation->setNextButton($this->nextButtonRender());
+        $navigation->setPreviousButton($this->previousButtonRender());
 
         $current = $this->month->firstOfMonth();
 
@@ -76,7 +77,7 @@ class NavigationManager
         return $navigation;
     }
 
-    public function previousButton()
+    public function previousButtonRender()
     {
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_button_previous.html.twig',
@@ -86,7 +87,7 @@ class NavigationManager
         );
     }
 
-    public function nextButton()
+    public function nextButtonRender()
     {
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_button_next.html.twig',
@@ -114,27 +115,6 @@ class NavigationManager
                 'weekSelected' => $weekSelected,
                 'daySelected' => $daySelected,
                 'today' => $this->today,
-            ]
-        );
-    }
-
-    public function renderMonthByDay(Month $month)
-    {
-        $firstDay = $month->firstOfMonth();
-        $days = $month->getCalendarDays();
-
-        $request = $this->requestStack->getMasterRequest();
-        $weekSelected = $request !== null ? $request->get('week') : 0;
-        $daySelected = $request !== null ? $request->get('day') : 0;
-
-        return $this->twigEnvironment->render(
-            '@grr_front/navigation/month/_month_by_days.html.twig',
-            [
-                'firstDay' => $firstDay,
-                'listDays' => DateProvider::getNamesDaysOfWeek(),
-                'days' => $days,
-                'weekSelected' => $weekSelected,
-                'daySelected' => $daySelected,
             ]
         );
     }

@@ -11,12 +11,12 @@
         <tr>
         <tr>
             <th>{{ 'periodicity.repeatWeek.label'|trans }}</th>
-            <td>{{ entry.periodicity.repeatWeek }}</td>
+            <td>{{ entry.periodicity.weekRepeat }}</td>
         <tr>
         <tr>
             <th>{{ 'periodicity.days.label'|trans }}</th>
             <td>
-                {% for day in entry.periodicity.days %}
+                {% for day in entry.periodicity.weekDays %}
                     {{ day }}
                 {% endfor %}
             </td>

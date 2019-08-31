@@ -1,11 +1,14 @@
 <td>
-    <a href="{{ grrGenerateRouteDayView(day.day) }}" class="float-right">
-        {{ day.day }}
-    </a>
-
+    {% if day.isSameMonth(firstDay) %}
+        <a href="{{ grrGenerateRouteDayView(day.day) }}" class="float-right">
+            {{ day.day }}
+        </a>
+    {% endif %}
+    {#
     {% for entry in day.entries %}
         <p>
             <a href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
         </p>
     {% endfor %}
+    #}
 </td>
