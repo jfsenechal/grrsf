@@ -21,7 +21,7 @@ class DurationTimeTypeField extends AbstractType
                 NumberType::class,
                 [
                     'label' => 'entry.form.duration_time.label',
-                    'scale' => 2,
+                    'scale' => 1,
                 ]
             )
             ->add(

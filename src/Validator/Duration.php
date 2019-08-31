@@ -13,5 +13,5 @@ class Duration extends Constraint
      * Any public properties become valid options for the annotation.
      * Then, use these in your validator class.
      */
-    public $message = 'entry.duration.time.notintergerfordaysorforweeks';
+    public $message = 'entry.duration.time.float';
 }

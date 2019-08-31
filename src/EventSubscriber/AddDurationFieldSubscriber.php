@@ -10,6 +10,7 @@ use App\Model\DurationModel;
 use App\Validator\Duration;
 use App\Validator\Duration as DurationConstraint;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormEvent;
@@ -134,7 +135,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
                     $endTime->addDays($time);
                     break;
                 case DurationModel::UNIT_TIME_HOURS:
-                    $endTime->addHours($time);
+                    $endTime->addMinutes($time * CarbonInterface::MINUTES_PER_HOUR);
                     break;
                 case DurationModel::UNIT_TIME_MINUTES:
                     $endTime->addMinutes($time);

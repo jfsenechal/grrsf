@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Si day or week uniquement chiffre rond
+ * Uniquement un float pour les heures
  * Class DurationValidator
  * @package App\Validator
  */
@@ -25,10 +25,12 @@ class DurationValidator extends ConstraintValidator
         }
 
         $unit = $value->getUnit();
-        $time = (int) $value->getTime();
+        $time = $value->getTime();
+        $whole = (int)($time);
+        $fraction = $time - $whole;
 
-        if ($unit == DurationModel::UNIT_TIME_WEEKS || $unit == DurationModel::UNIT_TIME_DAYS) {
-            if (!is_int($time)) {
+        if ($unit !== DurationModel::UNIT_TIME_HOURS) {
+            if ($fraction !== 0.0) {
                 $this->context->buildViolation($constraint->message)
                     ->addViolation();
             }

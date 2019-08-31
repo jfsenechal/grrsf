@@ -2,8 +2,8 @@ entry:
     busy: La réservation est dans une zone accupée.
     duration:
         time:
-            notintergerfordaysorforweeks: La durée doit être un entier pour les jours et semaines.
-
+            float:
+                Une nombre à virgule n'est autorisé que pour une durée par heure.
 assert:
     entry:
         startstdend: La date de début doit être plus petite que la date de fin

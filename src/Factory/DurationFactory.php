@@ -10,7 +10,9 @@ namespace App\Factory;
 
 use App\Entity\Entry;
 use App\Model\DurationModel;
+use App\Service\TimeService;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 
 class DurationFactory
 {
@@ -55,7 +57,8 @@ class DurationFactory
         }
         if ($hours > 0) {
             $duration->setUnit(DurationModel::UNIT_TIME_HOURS);
-            $duration->setTime($hours.'.'.($minutes - $hours * 60));
+            $hour = TimeService::convertMinutesToHour($hours, $minutes);
+            $duration->setTime($hour);
         }
         if ($days > 0) {
             $duration->setUnit(DurationModel::UNIT_TIME_DAYS);
