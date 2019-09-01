@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Booking\BookingTrait;
 use App\Doctrine\IdEntityTrait;
 use App\Model\DurationModel;
 use App\Model\TimeSlot;
@@ -24,7 +23,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Entry
 {
     use IdEntityTrait;
-    use BookingTrait;
 
     /**
      * @var string

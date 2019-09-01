@@ -110,8 +110,9 @@ class RoomController extends AbstractController
      */
     public function delete(Request $request, Room $room): Response
     {
+        $area = $room->getArea();
         if ($this->isCsrfTokenValid('delete'.$room->getId(), $request->request->get('_token'))) {
-            $area = $room->getArea();
+
             $this->roomManager->removeEntries($room);
             $this->roomManager->remove($room);
             $this->roomManager->flush();

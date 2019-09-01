@@ -443,12 +443,12 @@ class Room
         return $this;
     }
 
-    public function getArea(): ?Area
+    public function getArea(): Area
     {
         return $this->area;
     }
 
-    public function setArea(?Area $area): self
+    public function setArea(Area $area): self
     {
         $this->area = $area;
 

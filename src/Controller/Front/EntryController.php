@@ -114,14 +114,14 @@ class EntryController extends AbstractController
         int $year,
         int $month,
         int $day,
-        int $hour = null,
-        int $minute = null
+        int $hour ,
+        int $minute
     ): Response {
 
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
 
         $entryEvent = new EntryEvent($entry);
-        $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_NEW_INITIALIZE);
+        $this->eventDispatcher->dispatch($entryEvent);
 
         $form = $this->createForm(EntryType::class, $entry);
 
@@ -132,7 +132,7 @@ class EntryController extends AbstractController
             $this->handlerEntry->handleNewEntry($form, $entry);
 
             $entryEvent = new EntryEvent($entry);
-            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_NEW_SUCCESS);
+            $this->eventDispatcher->dispatch($entryEvent);
 
             return $this->redirectToRoute(
                 'grr_front_entry_show',
@@ -158,6 +158,7 @@ class EntryController extends AbstractController
      */
     public function show(Entry $entry): Response
     {
+        $days = [];
         try {
             $days = $this->periodicityService->getDaysByEntry($entry);
         } catch (\Exception $e) {

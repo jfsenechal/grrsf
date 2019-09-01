@@ -161,6 +161,8 @@ class InstallDataCommand extends Command
 
         $this->areaRepository->flush();
         $this->roomRepository->flush();
+
+        return null;
     }
 
     public function loadRooms(Area $area, array $salles)

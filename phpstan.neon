@@ -1,5 +1,12 @@
 parameters:
+  level: 7
+  paths:
+      - src/
+      - tests/
+  autoload_files:
+      - '%currentWorkingDirectory%/vendor/bin/.phpunit/phpunit-7.4/vendor/autoload.php'
   symfony:
     container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
   doctrine:
     objectManagerLoader: tests/object-manager.php
+  inferPrivatePropertyTypeFromConstructor: true

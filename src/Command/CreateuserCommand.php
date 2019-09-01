@@ -71,13 +71,13 @@ class CreateuserCommand extends Command
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $io->error('Adresse email non valide');
 
-            return;
+            return 1;
         }
 
         if (strlen($name) < 4) {
             $io->error('Name minium 4');
 
-            return;
+            return 1;
         }
 
         if (!$password) {
@@ -101,7 +101,7 @@ class CreateuserCommand extends Command
         if ($this->userRepository->findOneBy(['email' => $email])) {
             $io->error('Un utilisateur existe déjà avec cette adresse email');
 
-            return;
+            return 1;
         }
 
         $questionAdministrator = new ConfirmationQuestion("Administrateur de Grr ? [Y,n] \n", true);
@@ -119,5 +119,7 @@ class CreateuserCommand extends Command
         $this->userManager->insert($user);
 
         $io->success("L'utilisateur a bien été créé");
+
+        return null;
     }
 }

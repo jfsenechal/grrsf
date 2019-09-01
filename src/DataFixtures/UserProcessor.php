@@ -10,9 +10,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Security\User;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserProcessor implements ProcessorInterface
 {
@@ -31,7 +31,7 @@ class UserProcessor implements ProcessorInterface
      */
     public function preProcess(string $fixtureId, $user): void
     {
-        if (false === $user instanceof UserInterface) {
+        if (false === $user instanceof User) {
             return;
         }
 

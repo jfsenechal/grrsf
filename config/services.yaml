@@ -26,14 +26,3 @@ services:
     resource: '../src/Controller'
     tags: ['controller.service_arguments']
 
-  App\Command\UpgradeCommand:
-    arguments:
-      $loader: '@fidry_alice_data_fixtures.doctrine.persister_loader'
-
-  #il faut ajouter un constructeur iterable
-  #App\Modules\ModuleSender:
-    # inject all services tagged with app.handler as first argument
-  #  arguments: [!tagged grr_module]
-
-  # add more service definitions when explicit configuration is needed
-  # please note that last definitions always *replace* previous ones
