@@ -35,7 +35,7 @@ class EntryType
     private $order_display;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", nullable=true)
      */

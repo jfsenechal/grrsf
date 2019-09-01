@@ -129,6 +129,105 @@ class EntryControllerTest extends BaseRepository
         ];
     }
 
+    public function testNewBadMinutes()
+    {
+        $this->loadFixtures();
+
+        $today = new \DateTime();
+        $esquare = $this->getArea('Esquare');
+        $room = $this->getRoom('Box');
+
+        $url = "/front/entry/new/area/".$esquare->getId()."/room/".$room->getId()."/year/".$today->format(
+                'Y'
+            )."/month/".$today->format('m')."/day/".$today->format('d')."/hour/10/minute/10";
+
+        $crawler = $this->administrator->request('GET', $url);
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('Sauvegarder')->form();
+        $form['entry[name]']->setValue('My reservation');
+        $form['entry[duration][time]']->setValue(35.5);
+        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_MINUTES);
+
+        $this->administrator->submit($form);
+
+        var_dump($this->administrator->getResponse()->getContent());
+        $this->assertContains(
+            'Une nombre à virgule n&#039;est autorisé que pour une durée par heure.',
+            $this->administrator->getResponse()->getContent()
+        );
+    }
+
+    /**
+     * @dataProvider getHours
+     * @param int $hourBegin
+     * @param int $minuteBegin
+     * @param float $time
+     * @param string $hourEnd
+     * @throws \Exception
+     */
+    public function testNewHours(int $hourBegin, int $minuteBegin, float $time, string $hourEnd)
+    {
+        $this->loadFixtures();
+
+        $today = new \DateTime();
+        $esquare = $this->getArea('Esquare');
+        $room = $this->getRoom('Box');
+
+        $url = "/front/entry/new/area/".$esquare->getId()."/room/".$room->getId()."/year/".$today->format(
+                'Y'
+            )."/month/".$today->format('m')."/day/".$today->format('d')."/hour/".$hourBegin."/minute/".$minuteBegin;
+
+        $crawler = $this->administrator->request('GET', $url);
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('Sauvegarder')->form();
+        $form['entry[name]']->setValue('My reservation');
+        $form['entry[duration][time]']->setValue($time);
+        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+
+        $this->administrator->submit($form);
+        $this->administrator->followRedirect();
+        $this->assertContains(
+            'My reservation',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            $hourBegin.':'.$minuteBegin,
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            $hourEnd,
+            $this->administrator->getResponse()->getContent()
+        );
+    }
+
+    public function getHours()
+    {
+        return [
+            [
+                'hour_begin' => 9,
+                'minute_begin' => 30,
+                'time' => 2.5,
+                'hour_end' => '12:00',
+            ],
+            [
+                'hour_begin' => 12,
+                'minute_begin' => 20,
+                'time' => 3,
+                'hour_end' => '15:20',
+            ],
+            [
+                'hour_begin' => 14,
+                'minute_begin' => 28,
+                'time' => 3.8,
+                'hour_end' => '18:16',
+            ],
+        ];
+    }
+
     protected function loadFixtures()
     {
         $files =
