@@ -18,7 +18,7 @@ class TimeService
     public static function convertMinutesToHour(int $hours, int $minutes)
     {
         $reste = $minutes - ($hours * CarbonInterface::MINUTES_PER_HOUR);
-        $heureRestante = $reste / CarbonInterface::MINUTES_PER_HOUR;
+        $heureRestante = round($reste / CarbonInterface::MINUTES_PER_HOUR, 2);
 
         return $hours + $heureRestante;
     }

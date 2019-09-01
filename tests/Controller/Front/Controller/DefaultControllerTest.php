@@ -35,10 +35,7 @@ class DefaultControllerTest extends BaseRepository
         $crawler = $client->request('GET', $url);
         self::assertResponseIsSuccessful();
         self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
-
-        $crawler = $client->clickLink($today->format('d'))->last();
-
-        //   var_dump($client->getResponse()->getContent());
+        $client->clickLink($today->format('j'))->last();
     }
 
     public function testWeekView()
@@ -56,9 +53,7 @@ class DefaultControllerTest extends BaseRepository
         self::assertResponseIsSuccessful();
         self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
 
-        $crawler = $client->clickLink($today->format('d'))->last();
-
-        //   var_dump($client->getResponse()->getContent());
+        $client->clickLink($today->format('j'))->last();
     }
 
     public function testDayView()

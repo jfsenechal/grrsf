@@ -167,12 +167,17 @@ class DurationFactoryTest extends WebTestCase
             [
                 'start' => \DateTime::createFromFormat($format, '2019-10-22 9:00'),
                 'end' => \DateTime::createFromFormat($format, '2019-10-22 12:30'),
-                'result' => 3.3,
+                'result' => 3.5,
+            ],
+            [
+                'start' => \DateTime::createFromFormat($format, '2017-10-01 14:00'),
+                'end' => \DateTime::createFromFormat($format, '2017-10-01 16:45'),
+                'result' => 2.75,
             ],
             [
                 'start' => \DateTime::createFromFormat($format, '2019-10-22 15:17'),
                 'end' => \DateTime::createFromFormat($format, '2019-10-22 18:52'),
-                'result' => 3.35,
+                'result' => 3.58,
             ],
         ];
     }

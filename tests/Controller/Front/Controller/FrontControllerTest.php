@@ -17,8 +17,6 @@ class FrontControllerTest extends BaseRepository
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('th', 'Aujourd\'hui');
         self::assertCount(2, $crawler->filter('th:contains("Mercredi")'));
-        //  self::assertSelectorTextContains('th', 'Mercredi');
-        //var_dump($client->getResponse()->getContent());
     }
 
     public function testMonthView()
@@ -35,10 +33,7 @@ class FrontControllerTest extends BaseRepository
         $crawler = $client->request('GET', $url);
         self::assertResponseIsSuccessful();
         self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
-
-        $crawler = $client->clickLink($today->format('d'))->last();
-
-        //   var_dump($client->getResponse()->getContent());
+        $client->clickLink($today->format('j'))->last();
     }
 
     public function testWeekView()
@@ -55,10 +50,8 @@ class FrontControllerTest extends BaseRepository
         $crawler = $client->request('GET', $url);
         self::assertResponseIsSuccessful();
         self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
-
-        $crawler = $client->clickLink($today->format('d'))->last();
-
-        //   var_dump($client->getResponse()->getContent());
+        $client->clickLink($today->format('j'))->last();
+        self::assertResponseIsSuccessful();
     }
 
     public function testDayView()
