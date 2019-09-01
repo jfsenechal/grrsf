@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Front;
 
 use App\Model\DurationModel;
 use App\Tests\Repository\BaseRepository;
+use Carbon\Carbon;
 
 class EntryControllerTest extends BaseRepository
 {
@@ -15,9 +16,9 @@ class EntryControllerTest extends BaseRepository
         $esquare = $this->getArea('Esquare');
         $room = $this->getRoom('Box');
 
-        $url = "/front/entry/new/area/".$esquare->getId()."/room/".$room->getId()."/year/".$today->format(
+        $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
                 'Y'
-            )."/month/".$today->format('m')."/day/".$today->format('d')."/hour/9/minute/30";
+            ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/9/minute/30';
 
         $client = self::createClient();
         $client->request('GET', $url);
@@ -34,13 +35,12 @@ class EntryControllerTest extends BaseRepository
         $esquare = $this->getArea('Esquare');
         $room = $this->getRoom('Box');
 
-        $url = "/front/entry/new/area/".$esquare->getId()."/room/".$room->getId()."/year/".$today->format(
+        $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
                 'Y'
-            )."/month/".$today->format('m')."/day/".$today->format('d')."/hour/9/minute/30";
+            ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/9/minute/30';
 
         $crawler = $this->administrator->request('GET', $url);
         self::assertResponseIsSuccessful();
-        //      var_dump($this->administrator->getResponse()->getContent());
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['entry[name]']->setValue('My reservation');
@@ -80,9 +80,9 @@ class EntryControllerTest extends BaseRepository
         $esquare = $this->getArea('Esquare');
         $room = $this->getRoom('Box');
 
-        $url = "/front/entry/new/area/".$esquare->getId()."/room/".$room->getId()."/year/".$today->format(
+        $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
                 'Y'
-            )."/month/".$today->format('m')."/day/".$today->format('d')."/hour/".$hourBegin."/minute/".$minuteBegin;
+            ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/'.$hourBegin.'/minute/'.$minuteBegin;
 
         $crawler = $this->administrator->request('GET', $url);
         self::assertResponseIsSuccessful();
@@ -94,7 +94,7 @@ class EntryControllerTest extends BaseRepository
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
-        var_dump($this->administrator->getResponse()->getContent());
+
         $this->assertContains(
             'My reservation',
             $this->administrator->getResponse()->getContent()
@@ -141,9 +141,9 @@ class EntryControllerTest extends BaseRepository
         $esquare = $this->getArea('Esquare');
         $room = $this->getRoom('Box');
 
-        $url = "/front/entry/new/area/".$esquare->getId()."/room/".$room->getId()."/year/".$today->format(
+        $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
                 'Y'
-            )."/month/".$today->format('m')."/day/".$today->format('d')."/hour/10/minute/10";
+            ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/10/minute/10';
 
         $crawler = $this->administrator->request('GET', $url);
         self::assertResponseIsSuccessful();
@@ -192,9 +192,9 @@ class EntryControllerTest extends BaseRepository
         $esquare = $this->getArea('Esquare');
         $room = $this->getRoom('Box');
 
-        $url = "/front/entry/new/area/".$esquare->getId()."/room/".$room->getId()."/year/".$today->format(
+        $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
                 'Y'
-            )."/month/".$today->format('m')."/day/".$today->format('d')."/hour/".$hourBegin."/minute/".$minuteBegin;
+            ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/'.$hourBegin.'/minute/'.$minuteBegin;
 
         $crawler = $this->administrator->request('GET', $url);
         self::assertResponseIsSuccessful();
@@ -244,6 +244,85 @@ class EntryControllerTest extends BaseRepository
                 'hour_end' => '18:16',
             ],
         ];
+    }
+
+    public function testNewWeeks()
+    {
+        $this->loadFixtures();
+
+        $today = Carbon::today();
+        $esquare = $this->getArea('Esquare');
+        $room = $this->getRoom('Box');
+
+        $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
+                'Y'
+            ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/9/minute/0';
+
+        $crawler = $this->administrator->request('GET', $url);
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('Sauvegarder')->form();
+        $form['entry[name]']->setValue('My reservation');
+        $form['entry[duration][time]']->setValue(3);
+        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_WEEKS);
+
+        $this->administrator->submit($form);
+        $this->administrator->followRedirect();
+        $this->assertContains(
+            'My reservation',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            $today->format('d-m-Y').' 09:00',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            $today->addWeeks(3)->format('d-m-Y').' 09:00',
+            $this->administrator->getResponse()->getContent()
+        );
+    }
+
+    /**
+     *
+     */
+    public function testNewDays()
+    {
+        $this->loadFixtures();
+
+        $today = Carbon::today();
+        $esquare = $this->getArea('Esquare');
+        $room = $this->getRoom('Box');
+
+        $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
+                'Y'
+            ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/10/minute/5';
+
+        $crawler = $this->administrator->request('GET', $url);
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('Sauvegarder')->form();
+        $form['entry[name]']->setValue('My reservation');
+        $form['entry[duration][time]']->setValue(3);
+        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_DAYS);
+
+        $this->administrator->submit($form);
+        $this->administrator->followRedirect();
+        $this->assertContains(
+            'My reservation',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            $today->format('d-m-Y').' 10:05',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            $today->addDays(3)->format('d-m-Y').' 10:05',
+            $this->administrator->getResponse()->getContent()
+        );
     }
 
     protected function loadFixtures()
