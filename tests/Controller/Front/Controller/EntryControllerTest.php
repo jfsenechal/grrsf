@@ -129,7 +129,11 @@ class EntryControllerTest extends BaseRepository
         ];
     }
 
-    public function testNewBadMinutes()
+    /**
+     * @dataProvider getUnits
+     * @throws \Exception
+     */
+    public function testNewNoFloat(int $unit)
     {
         $this->loadFixtures();
 
@@ -147,15 +151,29 @@ class EntryControllerTest extends BaseRepository
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['entry[name]']->setValue('My reservation');
         $form['entry[duration][time]']->setValue(35.5);
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_MINUTES);
+        $form['entry[duration][unit]']->setValue($unit);
 
         $this->administrator->submit($form);
 
-        var_dump($this->administrator->getResponse()->getContent());
         $this->assertContains(
             'Une nombre à virgule n&#039;est autorisé que pour une durée par heure.',
             $this->administrator->getResponse()->getContent()
         );
+    }
+
+    public function getUnits()
+    {
+        return [
+            [
+                DurationModel::UNIT_TIME_MINUTES,
+            ],
+            [
+                DurationModel::UNIT_TIME_WEEKS,
+            ],
+            [
+                DurationModel::UNIT_TIME_DAYS,
+            ],
+        ];
     }
 
     /**
