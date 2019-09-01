@@ -4,9 +4,8 @@ entry:
        areatime: L'heure de {{param1}} doit être plus {{param2}} que l'heure {{param3}} de la salle.
        start_smaller_end: La date de début doit être plus grande que la date de fin
        duration:
-        time:
-            float:
-                Une nombre à virgule n'est autorisé que pour une durée par heure.
+         time:
+           float: Une nombre à virgule n'est autorisé que pour une durée par heure.
 assert:
     entry:
         startstdend: La date de début doit être plus petite que la date de fin

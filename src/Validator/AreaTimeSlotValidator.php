@@ -20,10 +20,6 @@ class AreaTimeSlotValidator extends ConstraintValidator
 
         $area = $entry->getArea();
 
-        var_dump($entry->getStartTime());
-        var_dump($entry->getEndTime());
-
-
         if ($entry->getStartTime()->format('G') < $area->getStartTime()) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{param1}}', 'début')
