@@ -325,6 +325,65 @@ class EntryControllerTest extends BaseRepository
         );
     }
 
+    /**
+     * @dataProvider getExceedTime
+     * @param int $hourBegin
+     * @param int $minuteBegin
+     * @param float $minutes
+     * @param string $hourEnd
+     * @throws \Exception
+     */
+    public function testExceedTime(int $hourBegin, int $minuteBegin, int $hours, string $message)
+    {
+        $this->loadFixtures();
+
+        $today = new \DateTime();
+        $esquare = $this->getArea('Esquare');
+        $room = $this->getRoom('Box');
+
+        $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
+                'Y'
+            ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/'.$hourBegin.'/minute/'.$minuteBegin;
+
+        $crawler = $this->administrator->request('GET', $url);
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('Sauvegarder')->form();
+        $form['entry[name]']->setValue('My reservation');
+        $form['entry[duration][time]']->setValue($hours);
+        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+
+        $this->administrator->submit($form);
+
+        $this->assertContains(
+            $message,
+            $this->administrator->getResponse()->getContent()
+        );
+    }
+
+    /**
+     * The first greater than cloture area
+     * The second smaller than open area
+     * @return array
+     */
+    public function getExceedTime()
+    {
+        return [
+            [
+                'hour_begin' => 20,
+                'minute_begin' => 30,
+                'hours' => 3,
+                'message' => 'L&#039;heure de fin doit être plus petite que l&#039;heure de fermeture de la salle.',
+            ],
+            [
+                'hour_begin' => 5,
+                'minute_begin' => 0,
+                'hours' => 4,
+                'message' => 'L&#039;heure de début doit être plus grande que l&#039;heure d&#039;ouverture de la salle.',
+            ],
+        ];
+    }
+
     protected function loadFixtures()
     {
         $files =

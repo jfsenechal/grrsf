@@ -50,7 +50,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA => 'OnPreSetData',
-            FormEvents::POST_SUBMIT => 'OnPreSubmit',
+            FormEvents::SUBMIT => 'OnSubmit',
         );
     }
 
@@ -106,7 +106,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
      * @param FormEvent $event
      * @throws \Exception
      */
-    public function OnPreSubmit(FormEvent $event)
+    public function OnSubmit(FormEvent $event)
     {
         $form = $event->getForm();
 
@@ -121,8 +121,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
              */
             $entry = $event->getData();
 
-            $startTime = Carbon::instance($entry->getStartTime());
-            $endTime = $startTime->copy();
+            $endTime = Carbon::instance($entry->getStartTime());
 
             $unit = $duration->getUnit();
             $time = $duration->getTime();
@@ -135,7 +134,8 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
                     $endTime->addDays($time);
                     break;
                 case DurationModel::UNIT_TIME_HOURS:
-                    $endTime->addMinutes($time * CarbonInterface::MINUTES_PER_HOUR);
+                    $minutes = $time * CarbonInterface::MINUTES_PER_HOUR;
+                    $endTime->addMinutes($minutes);
                     break;
                 case DurationModel::UNIT_TIME_MINUTES:
                     $endTime->addMinutes($time);

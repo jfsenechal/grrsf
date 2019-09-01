@@ -36,7 +36,7 @@ class Entry
      * @var \DateTimeInterface
      *
      * @Assert\DateTime()
-     * @Assert\LessThan(propertyPath="end_time")
+     * @Assert\LessThan(propertyPath="end_time", message="entry.constraint.start_smaller_end")
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $start_time;
@@ -44,7 +44,6 @@ class Entry
     /**
      * @var \DateTimeInterface
      * @Assert\DateTime()
-     * @Assert\GreaterThan(propertyPath="start_time")
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $end_time;

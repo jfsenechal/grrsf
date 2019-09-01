@@ -10,7 +10,7 @@ class AreaTimeSlotValidator extends ConstraintValidator
 {
     /**
      * @param Entry $entry
-     * @param Constraint $constraint
+     * @param AreaTimeSlot $constraint
      */
     public function validate($entry, Constraint $constraint)
     {
@@ -20,7 +20,11 @@ class AreaTimeSlotValidator extends ConstraintValidator
 
         $area = $entry->getArea();
 
-        if ($entry->getStartTime()->format('H:i') < $area->getStartTime()) {
+        var_dump($entry->getStartTime());
+        var_dump($entry->getEndTime());
+
+
+        if ($entry->getStartTime()->format('G') < $area->getStartTime()) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{param1}}', 'début')
                 ->setParameter('{{param2}}', 'grande')
@@ -28,7 +32,7 @@ class AreaTimeSlotValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if ($entry->getEndTime()->format('H:i') > $area->getEndTime()) {
+        if ($entry->getEndTime()->format('G') > $area->getEndTime()) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{param1}}', 'fin')
                 ->setParameter('{{param2}}', 'petite')
