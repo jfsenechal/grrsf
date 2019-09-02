@@ -205,6 +205,7 @@ class EntryControllerTest extends BaseRepository
         $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
 
         $this->administrator->submit($form);
+
         $this->administrator->followRedirect();
         $this->assertContains(
             'My reservation',
