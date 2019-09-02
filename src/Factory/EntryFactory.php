@@ -54,8 +54,7 @@ class EntryFactory
 
     protected function initPeriodicity(Entry $entry): Periodicity
     {
-        $periodicity = $this->periodicityFactory->createNew();
-        $periodicity->setEntry($entry);
+        $periodicity = $this->periodicityFactory->createNew($entry);
         $periodicity->setEndTime($entry->getStartTime());
         $periodicity->setType(null);
 

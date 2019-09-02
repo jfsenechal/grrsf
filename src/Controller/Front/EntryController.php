@@ -103,7 +103,7 @@ class EntryController extends AbstractController
      * @param int      $month
      * @param int      $day
      * @param int|null $hour
-     * @param int|null $minute  *
+     * @param int|null $minute
      *
      * @return Response
      *

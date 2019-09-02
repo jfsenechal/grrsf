@@ -208,7 +208,7 @@ class PeriodicityDaysProvider
         foreach (CarbonPeriod::create($start, CarbonInterval::weeks(2), $end, CarbonPeriod::IMMUTABLE) as $baseDate) {
             foreach ($days as $dayName) {
                 $date = $baseDate->is($dayName) ? $baseDate : $baseDate->next($dayName);
-                dump($date);
+
             }
         }
     }

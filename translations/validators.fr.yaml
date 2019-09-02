@@ -20,6 +20,6 @@ area:
 periodicity:
   constraint:
     end_time: La date de fin de la périodicité doit être plus grande que la date de fin de la réservation
-    every_day: La durée ne peut exéder une journée pour une répétition par jour
+    every_day: La durée ne peut excéder une journée pour une répétition par jour
     every_month: La date de fin de la périodicité doit au moins dépasser d'un mois par rapport à la de de fin de la réservation
     every_year: La date de fin de la périodicité doit au moins dépasser d'un an par rapport à la de de fin de la réservation

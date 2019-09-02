@@ -16,6 +16,6 @@ class Module2 implements GrrModuleInterface
 
     public function doSomething()
     {
-        var_dump('Module 1');
+        echo('Module 1');
     }
 }

@@ -58,21 +58,21 @@ class EntryPeriodicityControllerTest extends BaseRepository
         $crawler = $this->administrator->request('GET', $url);
         self::assertResponseIsSuccessful();
 
-        $today->modify('+3 days');
+        $today->modify('+5 days');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['entry[name]']->setValue('My reservation repeated');
         $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_DAYS);
         $form['entry[duration][time]']->setValue(3);
         $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_DAY);
-        $form['entry[periodicity][endTime][day]']->setValue($today->format('d'));
-        $form['entry[periodicity][endTime][month]']->setValue($today->format('m'));
+        $form['entry[periodicity][endTime][day]']->setValue($today->format('j'));
+        $form['entry[periodicity][endTime][month]']->setValue($today->format('n'));
         $form['entry[periodicity][endTime][year]']->setValue($today->format('Y'));
 
         $this->administrator->submit($form);
 
         $this->assertContains(
-            'La durée ne peut exéder une journée pour une répétition par jour',
+            'La durée ne peut excéder une journée pour une répétition par jour',
             $this->administrator->getResponse()->getContent()
         );
     }
@@ -105,7 +105,6 @@ class EntryPeriodicityControllerTest extends BaseRepository
         $form['entry[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
-        //   var_dump($this->administrator->getResponse()->getContent());
         $this->administrator->followRedirect();
 
         $this->assertContains(
@@ -119,7 +118,7 @@ class EntryPeriodicityControllerTest extends BaseRepository
         );
 
         $this->assertContains(
-            '14:30',
+            '14:00',
             $this->administrator->getResponse()->getContent()
         );
 
@@ -211,7 +210,7 @@ class EntryPeriodicityControllerTest extends BaseRepository
         );
 
         $this->assertContains(
-            '14:30',
+            '14:00',
             $this->administrator->getResponse()->getContent()
         );
 
@@ -267,7 +266,7 @@ class EntryPeriodicityControllerTest extends BaseRepository
         );
 
         $this->assertContains(
-            '14:30',
+            '14:00',
             $this->administrator->getResponse()->getContent()
         );
 
@@ -298,6 +297,7 @@ class EntryPeriodicityControllerTest extends BaseRepository
         self::assertResponseIsSuccessful();
 
         $end = clone $today;
+        $end->modify('+10 months');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['entry[name]']->setValue('My reservation repeated');
@@ -357,7 +357,7 @@ class EntryPeriodicityControllerTest extends BaseRepository
         );
 
         $this->assertContains(
-            '14:30',
+            '14:00',
             $this->administrator->getResponse()->getContent()
         );
 

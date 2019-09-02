@@ -8,12 +8,13 @@
 
 namespace App\Factory;
 
+use App\Entity\Entry;
 use App\Entity\Periodicity;
 
 class PeriodicityFactory
 {
-    public function createNew(): Periodicity
+    public function createNew(Entry $entry): Periodicity
     {
-        return new Periodicity();
+        return new Periodicity($entry);
     }
 }

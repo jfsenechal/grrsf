@@ -53,8 +53,9 @@ class Periodicity
      */
     private $entry;
 
-    public function __construct()
+    public function __construct(Entry $entry)
     {
+        $this->entry = $entry;
         $this->week_days = [];
     }
 
@@ -109,12 +110,12 @@ class Periodicity
         return $this;
     }
 
-    public function getEntry(): ?Entry
+    public function getEntry(): Entry
     {
         return $this->entry;
     }
 
-    public function setEntry(?Entry $entry): self
+    public function setEntry(Entry $entry): self
     {
         $this->entry = $entry;
 
