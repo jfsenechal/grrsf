@@ -1,40 +1,40 @@
 App\Entity\Periodicity:
   periodicity_day:
-    entry: '@entry_every_day'
+    __construct: ['@entry_every_day']
     end_time: '<carbonDate(2019,12,5)>' #2019,12,2 debut
     type: '1' #every day
 
   periodicity_month_same_day:
-    entry: '@entry_every_month_same_day'
+    __construct: ['@entry_every_month_same_day']
     end_time: '<carbonDate(2019,8,3)>' #2019,3,5 debut, tous les mois le 5
     type: '3' #every month same day
 
   periodicity_month_same_week_day:
-    entry: '@entry_every_month_same_weekday'
+    __construct: ['@entry_every_month_same_weekday']
     end_time: '<carbonDate(2019,10,9)>' #2019,5,8 debut Tous les mois le 2ième mercredi
     type: '5' #every month same week day
 
   periodicity_year:
-    entry: '@entry_every_year'
+    __construct: ['@entry_every_year']
     end_time: '<carbonDate(2022,10,4)>' #debut 2019 tous les ans le 4/10
     type: '4' #every year
 
   periodicity_week_1:
-    entry: '@entry_every_week_1'
+    __construct: ['@entry_every_week_1']
     end_time: '<carbonDate(2018,8,20)>' #debut 2018,6,20
     type: '2' #every week
     week_repeat: '1' #toutes les semaines
     week_days: [1,2] #monday tuesday
 
   periodicity_week_2:
-    entry: '@entry_every_week_2'
+    __construct: ['@entry_every_week_2']
     end_time: '<carbonDate(2017,4,15)>' #debut 2017,2,1
     type: '2' #every week
     week_repeat: '2' #toutes les 2 semaines
     week_days: [3,6] #wednesday, saturday
 
   periodicity_with_common_day:
-    entry: '@entry_with_common_date'
+    __construct: ['@entry_with_common_date']
     end_time: '<carbonDate(2019,12,6)>' #debut 2019,12,3
     type: '1' #every day
     #type: !php/const App\Periodicity\PeriodicityConstant::EVERY_DAY #not work
