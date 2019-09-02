@@ -26,7 +26,7 @@ class RessourceSelectedSubscriber implements EventSubscriberInterface
         /**
          * $controller passed can be either a class or a Closure.
          * This is not usual in Symfony but it may happen.
-         * If it is a class, it comes in array format
+         * If it is a class, it comes in array format.
          */
         if (!is_array($controller)) {
             return;
@@ -35,7 +35,7 @@ class RessourceSelectedSubscriber implements EventSubscriberInterface
         if ($controller[0] instanceof FrontControllerInterface) {
             $area = $event->getRequest()->get('area');
             $room = $event->getRequest()->get('room');
-            /**
+            /*
              * if not set in url, force by user all ressources
              */
             if (!$room) {

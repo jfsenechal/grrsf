@@ -68,7 +68,7 @@ class EntryController extends AbstractController
     }
 
     /**
-     * @Route("/", name="grr_front_entry_index", methods={"GET","POST"})
+     * @Route("/", name="grr_front_entry_index", methods={"GET", "POST"})
      */
     public function index(Request $request): Response
     {
@@ -92,18 +92,21 @@ class EntryController extends AbstractController
     }
 
     /**
-     * @Route("/new/area/{area}/room/{room}/year/{year}/month/{month}/day/{day}/hour/{hour}/minute/{minute}", name="grr_front_entry_new", methods={"GET","POST"})
+     * @Route("/new/area/{area}/room/{room}/year/{year}/month/{month}/day/{day}/hour/{hour}/minute/{minute}", name="grr_front_entry_new", methods={"GET", "POST"})
      * @Entity("area", expr="repository.find(area)")
      * @Entity("room", expr="repository.find(room)")
-     * @param Request $request
-     * @param Area $area
-     * @param Room $room
-     * @param int $year
-     * @param int $month
-     * @param int $day
+     *
+     * @param Request  $request
+     * @param Area     $area
+     * @param Room     $room
+     * @param int      $year
+     * @param int      $month
+     * @param int      $day
      * @param int|null $hour
-     * @param int|null $minute *
+     * @param int|null $minute  *
+     *
      * @return Response
+     *
      * @throws \Exception
      * @IsGranted("addEntry", subject="room")
      */
@@ -114,10 +117,9 @@ class EntryController extends AbstractController
         int $year,
         int $month,
         int $day,
-        int $hour ,
+        int $hour,
         int $minute
     ): Response {
-
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
 
         $entryEvent = new EntryEvent($entry);
@@ -128,7 +130,6 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->handlerEntry->handleNewEntry($form, $entry);
 
             $entryEvent = new EntryEvent($entry);
@@ -154,7 +155,7 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_front_entry_show", methods={"GET"})
-     * @IsGranted("show",subject="entry")
+     * @IsGranted("show", subject="entry")
      */
     public function show(Entry $entry): Response
     {
@@ -174,8 +175,8 @@ class EntryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="grr_front_entry_edit", methods={"GET","POST"})
-     * @IsGranted("edit",subject="entry")
+     * @Route("/{id}/edit", name="grr_front_entry_edit", methods={"GET", "POST"})
+     * @IsGranted("edit", subject="entry")
      */
     public function edit(Request $request, Entry $entry): Response
     {
@@ -185,7 +186,7 @@ class EntryController extends AbstractController
 
         $typePeriodicity = $periodicity ? $periodicity->getType() : 0;
 
-        if ($typePeriodicity === PeriodicityConstant::EVERY_WEEK) {
+        if (PeriodicityConstant::EVERY_WEEK === $typePeriodicity) {
             $displayOptionsWeek = true;
         }
 
@@ -194,12 +195,11 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->handlerEntry->handleEditEntry($form, $entry);
 
             return $this->redirectToRoute(
                 'grr_front_entry_show',
-                ['id' => $entry->getId(),]
+                ['id' => $entry->getId()]
             );
         }
 
@@ -215,12 +215,11 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_front_entry_delete", methods={"DELETE"})
-     * @IsGranted("delete",subject="entry")
+     * @IsGranted("delete", subject="entry")
      */
     public function delete(Request $request, Entry $entry): Response
     {
         if ($this->isCsrfTokenValid('delete'.$entry->getId(), $request->request->get('_token'))) {
-
             $this->handlerEntry->handleDeleteEntry($entry);
 
             $this->addFlash('success', 'flash.entry.delete');

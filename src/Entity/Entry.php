@@ -17,8 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="grr_entry")
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
  *
- * @AppAssert\BusyRoom()
- * @AppAssert\AreaTimeSlot()
+ * @AppAssert\BusyRoom
+ * @AppAssert\AreaTimeSlot
  */
 class Entry
 {
@@ -26,8 +26,8 @@ class Entry
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
+     * @Assert\NotBlank
+     * @Assert\NotNull
      * @ORM\Column(name="name", type="string", length=80, nullable=false)
      */
     private $name;
@@ -35,7 +35,7 @@ class Entry
     /**
      * @var \DateTimeInterface
      *
-     * @Assert\DateTime()
+     * @Assert\DateTime
      * @Assert\LessThan(propertyPath="end_time", message="entry.constraint.start_smaller_end")
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -43,7 +43,7 @@ class Entry
 
     /**
      * @var \DateTimeInterface
-     * @Assert\DateTime()
+     * @Assert\DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $end_time;
@@ -107,7 +107,7 @@ class Entry
     /**
      * @var bool|null
      *
-     * @ORM\Column(type="boolean", options={"default" : 0})
+     * @ORM\Column(type="boolean", options={"default": 0})
      */
     private $private;
 
@@ -145,7 +145,8 @@ class Entry
     private $duration;
 
     /**
-     * Pour l'affichage, TimeSlot présents
+     * Pour l'affichage, TimeSlot présents.
+     *
      * @var ArrayCollection|TimeSlot[]
      */
     private $locations = [];
@@ -197,6 +198,7 @@ class Entry
 
     /**
      * @param int $cellules
+     *
      * @return Entry
      */
     public function setCellules(int $cellules): self
@@ -225,6 +227,7 @@ class Entry
 
     /**
      * @param DurationModel|null $duration
+     *
      * @return Entry
      */
     public function setDuration(?DurationModel $duration): self
@@ -488,5 +491,4 @@ class Entry
 
         return $this;
     }
-
 }

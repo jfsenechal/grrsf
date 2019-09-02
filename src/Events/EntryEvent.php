@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Events;
-
 
 use App\Entity\Entry;
 use Symfony\Contracts\EventDispatcher\Event;
@@ -30,5 +28,4 @@ class EntryEvent extends Event
     {
         return $this->entry;
     }
-
 }

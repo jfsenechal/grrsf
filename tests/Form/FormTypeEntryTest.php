@@ -3,15 +3,8 @@
 namespace App\Tests\Form;
 
 use App\Entity\Entry;
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\Form\DoctrineOrmExtension;
-use Symfony\Bridge\Doctrine\Tests\TestManagerRegistry;
-use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
-use Symfony\Component\Validator\Validation;
 use App\Factory\DurationFactory;
 use App\Form\EntryType;
-use App\Form\Type\EntryTypeSelectField;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -78,7 +71,8 @@ class FormTypeEntryTest extends TypeTestCase
         }
     }
 
-    public function testFAke() {
+    public function testFAke()
+    {
         $var = false;
         $var = true;
         self::assertTrue($var);

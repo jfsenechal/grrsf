@@ -24,7 +24,6 @@ class AddUserFieldSubscriber implements EventSubscriberInterface
 
     public function __construct(UserRepository $userRepository)
     {
-
         $this->userRepository = $userRepository;
     }
 
@@ -42,7 +41,7 @@ class AddUserFieldSubscriber implements EventSubscriberInterface
         $user = $entry->getUsers();
 
         if ($user) {
-        //    $form->add('user', HiddenType::class);
+            //    $form->add('user', HiddenType::class);
         } else {
             $form->add(
                 'users',

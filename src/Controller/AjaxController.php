@@ -39,7 +39,7 @@ class AjaxController extends AbstractController
     {
         $areaId = $request->get('id');
         $area = $this->areaRepository->find($areaId);
-        if ($area === null) {
+        if (null === $area) {
             throw new InvalidParameterException('Area not found');
         }
         $rooms = $this->roomRepository->findByArea($area);

@@ -67,7 +67,6 @@ class DurationFactoryTest extends WebTestCase
     }
 
     /**
-     *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
      */
@@ -83,9 +82,10 @@ class DurationFactoryTest extends WebTestCase
 
     /**
      * @dataProvider getDataForMinutes
+     *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float $result
+     * @param float              $result
      */
     public function testUnitInMinutes(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -98,9 +98,10 @@ class DurationFactoryTest extends WebTestCase
 
     /**
      * @dataProvider getDataForHours
+     *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float $result
+     * @param float              $result
      */
     public function testUnitInHours(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -113,9 +114,10 @@ class DurationFactoryTest extends WebTestCase
 
     /**
      * @dataProvider getDataForDays
+     *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float $result
+     * @param float              $result
      */
     public function testUnitInDays(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -128,9 +130,10 @@ class DurationFactoryTest extends WebTestCase
 
     /**
      * @dataProvider getDataForWeeks
+     *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float $result
+     * @param float              $result
      */
     public function testUnitInWeeks(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -226,6 +229,5 @@ class DurationFactoryTest extends WebTestCase
             [2019, 31, 12, 14, 30],
             [2019, 20, 30, 16, 20],
         ];
-
     }
 }

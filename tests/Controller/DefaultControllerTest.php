@@ -3,7 +3,6 @@
 namespace App\Tests\Controller;
 
 use App\Tests\Repository\BaseRepository;
-use Symfony\Component\Panther\PantherTestCase;
 
 class DefaultControllerTest extends BaseRepository
 {
@@ -11,7 +10,7 @@ class DefaultControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $url = "/";
+        $url = '/';
         $client = self::createClient();
         $client->request('GET', $url);
         self::assertResponseRedirects();
@@ -30,7 +29,7 @@ class DefaultControllerTest extends BaseRepository
         $this->loader->load($files);
     }
 
-    /**
+    /*
      * @dataProvider provideUrls
      *
      * public function testPageIsSuccessful($url)

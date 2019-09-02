@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 28/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Controller\Admin\Controller;
@@ -19,8 +19,8 @@ class RoomControllerTest extends BaseRepository
         $this->loadFixtures();
 
         $this->administrator->request('GET', '/admin/area/');
-        $this->administrator->clickLink("Hdv");
-        $crawler = $this->administrator->clickLink("Nouvelle ressource");
+        $this->administrator->clickLink('Hdv');
+        $crawler = $this->administrator->clickLink('Nouvelle ressource');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['room[name]']->setValue('Room demo');
@@ -34,8 +34,8 @@ class RoomControllerTest extends BaseRepository
         );
 
         $this->administrator->request('GET', '/admin/area/');
-        $this->administrator->clickLink("Hdv");
-        $this->administrator->clickLink("Room demo");
+        $this->administrator->clickLink('Hdv');
+        $this->administrator->clickLink('Room demo');
         self::assertResponseIsSuccessful();
     }
 
@@ -44,11 +44,11 @@ class RoomControllerTest extends BaseRepository
         $this->loadFixtures();
 
         $this->administrator->request('GET', 'admin/area/');
-        $this->administrator->clickLink("Hdv");
-        $this->administrator->clickLink("Salle Conseil");
+        $this->administrator->clickLink('Hdv');
+        $this->administrator->clickLink('Salle Conseil');
         self::assertResponseIsSuccessful();
 
-        $crawler = $this->administrator->clickLink("Modifier");
+        $crawler = $this->administrator->clickLink('Modifier');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['room[name]']->setValue('Salle Conseil demo');

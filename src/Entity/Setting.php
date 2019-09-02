@@ -54,5 +54,4 @@ class Setting
 
         return $this;
     }
-
 }

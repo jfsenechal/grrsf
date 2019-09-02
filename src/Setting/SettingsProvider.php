@@ -25,6 +25,7 @@ class SettingsProvider
 
     /**
      * @return Area|null
+     *
      * @todo
      */
     public function getDefaultArea(): ?Area
@@ -34,11 +35,13 @@ class SettingsProvider
 
     /**
      * @return mixed
+     *
      * @todo
      */
     public function getDefaulRoom()
     {
         return null;
+
         return $this->roomRepository->findOneBy([], ['id' => 'ASC']);
     }
 }

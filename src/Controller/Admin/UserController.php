@@ -58,7 +58,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="grr_admin_user_new", methods={"GET","POST"})
+     * @Route("/new", name="grr_admin_user_new", methods={"GET", "POST"})
      */
     public function new(Request $request): Response
     {
@@ -96,7 +96,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="grr_admin_user_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="grr_admin_user_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, User $utilisateur): Response
     {

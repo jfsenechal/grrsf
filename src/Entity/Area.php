@@ -21,7 +21,7 @@ class Area
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=30, nullable=false)
      */
     private $name;
@@ -75,7 +75,8 @@ class Area
     private $days_of_week_to_display;
 
     /**
-     * Intervalle de temps 
+     * Intervalle de temps.
+     *
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
@@ -83,7 +84,8 @@ class Area
     private $time_interval;
 
     /**
-     * Durée maximum qu'un utilisateur peut réserver
+     * Durée maximum qu'un utilisateur peut réserver.
+     *
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
@@ -91,7 +93,8 @@ class Area
     private $duration_maximum_entry;
 
     /**
-     * Durée par défaut d'une réservation
+     * Durée par défaut d'une réservation.
+     *
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
@@ -381,6 +384,4 @@ class Area
 
         return $this;
     }
-
-
 }

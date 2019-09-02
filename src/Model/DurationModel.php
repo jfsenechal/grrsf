@@ -10,19 +10,21 @@ class DurationModel
     const UNIT_TIME_WEEKS = 4;
 
     /**
-     * Unité de temps
-     * @var integer
+     * Unité de temps.
+     *
+     * @var int
      */
     private $unit;
 
     /**
-     * Le temps en flottant
+     * Le temps en flottant.
+     *
      * @var float;
      */
     private $time;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $full_day;
 
@@ -60,6 +62,7 @@ class DurationModel
 
     /**
      * @param int $unit
+     *
      * @return DurationModel
      */
     public function setUnit(int $unit): self
@@ -79,6 +82,7 @@ class DurationModel
 
     /**
      * @param float $time
+     *
      * @return DurationModel
      */
     public function setTime(float $time): self
@@ -98,6 +102,7 @@ class DurationModel
 
     /**
      * @param bool $full_day
+     *
      * @return DurationModel
      */
     public function setFullDay(bool $full_day): self

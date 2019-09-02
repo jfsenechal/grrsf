@@ -38,18 +38,18 @@ class GrrhUrlHelperExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'grrGenerateRouteMonthView', function (int $year = null, int $month = null) {
-                return $this->generateRouteMonthView($year, $month);
-            }
+                    return $this->generateRouteMonthView($year, $month);
+                }
             ),
             new TwigFunction(
                 'grrGenerateRouteWeekView', function (int $week) {
-                return $this->generateRouteWeekView($week);
-            }
+                    return $this->generateRouteWeekView($week);
+                }
             ),
             new TwigFunction(
                 'grrGenerateRouteDayView', function (int $day) {
-                return $this->generateRouteDayView($day);
-            }
+                    return $this->generateRouteDayView($day);
+                }
             ),
             new TwigFunction(
                 'grrGenerateRouteAddEntry',
@@ -63,7 +63,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function generateRouteMonthView(int $year = null, int $month = null)
     {
         $request = $this->requestStack->getMasterRequest();
-        if ($request === null) {
+        if (null === $request) {
             return '';
         }
 
@@ -73,10 +73,10 @@ class GrrhUrlHelperExtension extends AbstractExtension
         $room = $attributes['room'] ?? 0;
 
         if (!$year) {
-            $year = (int)$attributes['year'];
+            $year = (int) $attributes['year'];
         }
         if (!$month) {
-            $month = (int)$attributes['month'];
+            $month = (int) $attributes['month'];
         }
 
         $params = ['area' => $area, 'year' => $year, 'month' => $month];
@@ -91,7 +91,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function generateRouteWeekView(int $week)
     {
         $request = $this->requestStack->getMasterRequest();
-        if ($request === null) {
+        if (null === $request) {
             return '';
         }
 
@@ -105,7 +105,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
         $params = ['area' => $area, 'year' => $year, 'month' => $month, 'week' => $week];
 
         if ($room) {
-            $params['room'] = (int)$room;
+            $params['room'] = (int) $room;
         }
 
         return $this->router->generate('grr_front_week', $params);
@@ -114,7 +114,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function generateRouteDayView(int $day)
     {
         $request = $this->requestStack->getMasterRequest();
-        if ($request === null) {
+        if (null === $request) {
             return '';
         }
 
@@ -137,7 +137,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
     public function generateRouteAddEntry(int $area, int $room, int $day, int $hour = null, int $minute = null)
     {
         $request = $this->requestStack->getMasterRequest();
-        if ($request === null) {
+        if (null === $request) {
             return '';
         }
 

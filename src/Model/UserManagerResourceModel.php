@@ -10,23 +10,24 @@ class UserManagerResourceModel
 {
     /**
      * 1 => administrator
-     * 2 => manager
-     * @var int|null $area_level
+     * 2 => manager.
+     *
+     * @var int|null
      */
     private $area_level;
 
     /**
-     * @var Area|null $area
+     * @var Area|null
      */
     protected $area;
 
     /**
-     * @var Room[]|array $rooms
+     * @var Room[]|array
      */
     protected $rooms;
 
     /**
-     * @var User[]|array $rooms
+     * @var User[]|array
      */
     protected $users;
 
@@ -73,7 +74,7 @@ class UserManagerResourceModel
     /**
      * @param Room[]|array $rooms
      */
-    public function setRooms( $rooms): void
+    public function setRooms($rooms): void
     {
         $this->rooms = $rooms;
     }
@@ -89,9 +90,8 @@ class UserManagerResourceModel
     /**
      * @param User[]|array $users
      */
-    public function setUsers( $users): void
+    public function setUsers($users): void
     {
         $this->users = $users;
     }
-
 }

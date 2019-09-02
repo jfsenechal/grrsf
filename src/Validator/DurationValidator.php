@@ -8,14 +8,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 /**
  * Uniquement un float pour les heures
- * Class DurationValidator
- * @package App\Validator
+ * Class DurationValidator.
  */
 class DurationValidator extends ConstraintValidator
 {
     /**
      * @param DurationModel $value
-     * @param Constraint $constraint
+     * @param Constraint    $constraint
+     *
      * @throws \Exception
      */
     public function validate($value, Constraint $constraint)
@@ -26,11 +26,11 @@ class DurationValidator extends ConstraintValidator
 
         $unit = $value->getUnit();
         $time = $value->getTime();
-        $whole = (int)($time);
+        $whole = (int) ($time);
         $fraction = $time - $whole;
 
-        if ($unit !== DurationModel::UNIT_TIME_HOURS) {
-            if ($fraction !== 0.0) {
+        if (DurationModel::UNIT_TIME_HOURS !== $unit) {
+            if (0.0 !== $fraction) {
                 $this->context->buildViolation($constraint->message)
                     ->addViolation();
             }

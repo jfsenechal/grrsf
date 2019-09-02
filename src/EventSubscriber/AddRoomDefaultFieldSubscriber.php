@@ -27,7 +27,7 @@ class AddRoomDefaultFieldSubscriber implements EventSubscriberInterface
     public function onPreSetData(FormEvent $event)
     {
         /**
-         * @var User $user
+         * @var User
          */
         $user = $event->getData();
         $area = $user->getAreaDefault();

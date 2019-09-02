@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Tests\Repository;
 
 use App\Entity\Entry;
@@ -46,8 +45,7 @@ class EntryRepositoryTest extends BaseRepository
 
     /**
      * La date de debut de la nouvelle entry est plus grande que
-     * la date de début d'une entry existante
-     *
+     * la date de début d'une entry existante.
      */
     public function testBusyDateBeginGreaterThanStartTime()
     {
@@ -67,11 +65,9 @@ class EntryRepositoryTest extends BaseRepository
         }
     }
 
-
     /**
      * La date de fin de la nouvelle entry est plus petite que
-     * la date de fin d'une entry existante
-     *
+     * la date de fin d'une entry existante.
      */
     public function testBusyDateEndIsSmallerThanEndTime()
     {
@@ -149,10 +145,9 @@ class EntryRepositoryTest extends BaseRepository
             ];
 
         if ($withBusy) {
-            $files = [$this->pathFixtures.'entry_busy.yaml',];
+            $files = [$this->pathFixtures.'entry_busy.yaml'];
         }
 
         $this->loader->load($files);
     }
-
 }

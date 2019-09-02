@@ -1,15 +1,14 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 20/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Provider;
-
 
 use App\Entity\Area;
 use App\Entity\Entry;
@@ -45,7 +44,6 @@ class TimeSlotsProviderTest extends WebTestCase
             self::assertSame($modelTimeSlot->getEnd()->hour, $day->hour);
             self::assertSame($modelTimeSlot->getEnd()->minute, $day->minute);
         }
-
     }
 
     /**
@@ -91,7 +89,6 @@ class TimeSlotsProviderTest extends WebTestCase
             self::assertSame($timeSlot->minute, $day->minute);
             $day->addSeconds($resolution);
         }
-
     }
 
     public function getData()
@@ -131,5 +128,4 @@ class TimeSlotsProviderTest extends WebTestCase
 
         return $area;
     }
-
 }

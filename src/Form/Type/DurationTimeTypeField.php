@@ -51,6 +51,4 @@ class DurationTimeTypeField extends AbstractType
     {
         $resolver->setDefault('scale', 0);
     }
-
-
 }

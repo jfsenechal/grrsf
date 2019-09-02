@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Security;
 
 use App\Entity\Area;
@@ -95,7 +94,9 @@ class SecurityHelper
     /**
      * @param Area $area
      * @param User $user
+     *
      * @return bool
+     *
      * @todo
      */
     public function canSeeArea(Area $area, User $user): bool
@@ -104,9 +105,11 @@ class SecurityHelper
     }
 
     /**
-     * @param Room $room
+     * @param Room      $room
      * @param User|null $user null => user anonyme
+     *
      * @return bool
+     *
      * @todo
      */
     public function canSeeRoom(Room $room, User $user = null): bool
@@ -115,23 +118,21 @@ class SecurityHelper
         $t = [
             0 => "
         N'importe qui allant sur le site même s'il n'est pas connecté",
-            1 => "il faut obligatoirement être connecté, même en simple visiteur.",
-            2 => "Il faut obligatoirement être connecté et avoir le statut utilisateur",
+            1 => 'il faut obligatoirement être connecté, même en simple visiteur.',
+            2 => 'Il faut obligatoirement être connecté et avoir le statut utilisateur',
             3 => "Il faut obligatoirement être connecté et être au moins gestionnaire d'une ressource",
-            4 => "Il faut obligatoirement se connecter et être au moins administrateur du domaine",
-            6 => "Il faut obligatoirement être connecté et être administrateur général",
+            4 => 'Il faut obligatoirement se connecter et être au moins administrateur du domaine',
+            6 => 'Il faut obligatoirement être connecté et être administrateur général',
         ];
-
     }
 
     /**
      * @return bool
+     *
      * @todo
      */
     public function canSeeAreaRestricted(Area $area, User $user): bool
     {
-
         return true;
     }
-
 }

@@ -56,7 +56,7 @@ class EntryTypeController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="grr_admin_type_entry_new", methods={"GET","POST"})
+     * @Route("/new", name="grr_admin_type_entry_new", methods={"GET", "POST"})
      */
     public function new(Request $request): Response
     {
@@ -94,7 +94,7 @@ class EntryTypeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="grr_admin_type_entry_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="grr_admin_type_entry_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, EntryType $typeArea): Response
     {

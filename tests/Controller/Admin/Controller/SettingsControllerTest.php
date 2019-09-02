@@ -3,7 +3,6 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Tests\Repository\BaseRepository;
-use Symfony\Component\Panther\PantherTestCase;
 
 class SettingsControllerTest extends BaseRepository
 {
@@ -17,7 +16,6 @@ class SettingsControllerTest extends BaseRepository
         $crawler = $client->followRedirect();
 
         self::assertSelectorTextContains('h1', 'Authentification');
-
     }
 
     public function testUserConnected()

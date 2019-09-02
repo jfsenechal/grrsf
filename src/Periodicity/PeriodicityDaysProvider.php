@@ -22,13 +22,14 @@ class PeriodicityDaysProvider
 
     /**
      * @param Entry $entry
+     *
      * @return array|CarbonPeriod
      */
     public function getDaysByEntry(Entry $entry)
     {
         $periodicity = $entry->getPeriodicity();
 
-        if ($periodicity === null) {
+        if (null === $periodicity) {
             return [];
         }
 
@@ -36,8 +37,9 @@ class PeriodicityDaysProvider
     }
 
     /**
-     * @param Periodicity $periodicity
+     * @param Periodicity        $periodicity
      * @param \DateTimeInterface $startTime
+     *
      * @return array|CarbonPeriod
      */
     public function getDaysByPeriodicity(
@@ -49,23 +51,23 @@ class PeriodicityDaysProvider
         $this->entry_start = Carbon::instance($startTime);
         $this->periodicity_end = Carbon::instance($periodicity->getEndTime());
 
-        if ($typePeriodicity === PeriodicityConstant::EVERY_DAY) {
+        if (PeriodicityConstant::EVERY_DAY === $typePeriodicity) {
             return $this->forEveryDays();
         }
 
-        if ($typePeriodicity === PeriodicityConstant::EVERY_YEAR) {
+        if (PeriodicityConstant::EVERY_YEAR === $typePeriodicity) {
             return $this->forEveryYears();
         }
 
-        if ($typePeriodicity === PeriodicityConstant::EVERY_MONTH_SAME_DAY) {
+        if (PeriodicityConstant::EVERY_MONTH_SAME_DAY === $typePeriodicity) {
             return $this->forEveryMonthSameDay();
         }
 
-        if ($typePeriodicity === PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY) {
+        if (PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY === $typePeriodicity) {
             return $this->forEveryMonthSameDayOfWeek();
         }
 
-        if ($typePeriodicity === PeriodicityConstant::EVERY_WEEK) {
+        if (PeriodicityConstant::EVERY_WEEK === $typePeriodicity) {
             return $this->forEveryWeek($periodicity);
         }
 
@@ -134,12 +136,14 @@ class PeriodicityDaysProvider
     /**
      * toutes les 1,2,3,4,5 semaines
      * lundi, mardi, mercredi...
+     *
      * @return CarbonPeriod
      */
     protected function forEveryWeek(Periodicity $periodicity): CarbonPeriod
     {
         /**
-         * monday, tuesday, wednesday
+         * monday, tuesday, wednesday.
+         *
          * @example : [1,2,3]
          */
         $days = $periodicity->getWeekDays();
@@ -149,8 +153,10 @@ class PeriodicityDaysProvider
         $repeat_week = $periodicity->getWeekRepeat();
 
         /**
-         * filter days of the week
+         * filter days of the week.
+         *
          * @param $date
+         *
          * @return bool
          */
         $filterDayOfWeek = function ($date) use ($days) {
@@ -160,19 +166,21 @@ class PeriodicityDaysProvider
         /**
          * Carbon::class
          * $this->entry_start
-         * $this->periodicity_end
+         * $this->periodicity_end.
          */
         $period = Carbon::parse($this->entry_start->toDateString())->daysUntil(
             $this->periodicity_end->toDateString()
         );
 
         /**
-         * filter every x weeks
+         * filter every x weeks.
+         *
          * @param $date
+         *
          * @return bool
          */
         $filterWeek = function ($date) use ($repeat_week) {
-            return $date->weekOfYear % $repeat_week === 0;
+            return 0 === $date->weekOfYear % $repeat_week;
         };
 
         $period->excludeStartDate();
@@ -187,6 +195,7 @@ class PeriodicityDaysProvider
 
     /**
      * @throws \Exception
+     *
      * @todo replace for every week
      * https://stackoverflow.com/questions/57479939/php-carbon-every-monday-and-tuesday-every-2-weeks/57506714#57506714
      */

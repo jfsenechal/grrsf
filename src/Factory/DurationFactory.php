@@ -12,7 +12,6 @@ use App\Entity\Entry;
 use App\Model\DurationModel;
 use App\Service\TimeService;
 use Carbon\Carbon;
-use Carbon\CarbonInterface;
 
 class DurationFactory
 {
@@ -74,8 +73,8 @@ class DurationFactory
     {
         $area = $entry->getRoom()->getArea();
 
-        if ($area->getStartTime() === (int)$entry->getStartTime()->format('G') && $area->getEndTime(
-            ) === (int)$entry->getEndTime()->format('G')) {
+        if ($area->getStartTime() === (int) $entry->getStartTime()->format('G') && $area->getEndTime(
+            ) === (int) $entry->getEndTime()->format('G')) {
             $duration->setFullDay(true);
         }
     }

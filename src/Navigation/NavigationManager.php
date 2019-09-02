@@ -40,7 +40,7 @@ class NavigationManager
      */
     private $navigationFactory;
 
-    public function __construct(NavigationFactory $navigationFactory,Environment $environment, RequestStack $requestStack)
+    public function __construct(NavigationFactory $navigationFactory, Environment $environment, RequestStack $requestStack)
     {
         $this->twigEnvironment = $environment;
         $this->requestStack = $requestStack;
@@ -48,9 +48,8 @@ class NavigationManager
     }
 
     /**
-     *
      * @param Month $month
-     * @param int $number nombre de mois
+     * @param int   $number nombre de mois
      *
      * @return Navigation
      */
@@ -103,8 +102,8 @@ class NavigationManager
 
         $weeks = $this->month->getWeeksOfMonth();
         $request = $this->requestStack->getMasterRequest();
-        $weekSelected = $request !== null ? $request->get('week') : 0;
-        $daySelected = $request !== null ? $request->get('day') : 0;
+        $weekSelected = null !== $request ? $request->get('week') : 0;
+        $daySelected = null !== $request ? $request->get('day') : 0;
 
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_month_by_weeks.html.twig',

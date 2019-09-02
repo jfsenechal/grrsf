@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Handler;
-
 
 use App\Entity\Entry;
 use App\Entity\Periodicity;
@@ -56,7 +54,7 @@ class HandlerEntry
         $data = $form->getData();
 
         /**
-         * @var Periodicity $periodicity
+         * @var Periodicity
          */
         $periodicity = $data->getPeriodicity();
 
@@ -109,5 +107,4 @@ class HandlerEntry
         $this->entryManager->remove($entry);
         $this->entryManager->flush();
     }
-
 }

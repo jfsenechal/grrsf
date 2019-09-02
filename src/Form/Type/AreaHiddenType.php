@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Form\Type;
-
 
 use App\Form\DataTransformer\AreaToNumberTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -37,5 +35,4 @@ class AreaHiddenType extends AbstractType
     {
         return HiddenType::class;
     }
-
 }

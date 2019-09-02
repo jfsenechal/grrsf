@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Handler;
-
 
 use App\Entity\Area;
 use App\Entity\Room;
@@ -15,7 +13,6 @@ use Symfony\Component\Form\FormInterface;
 
 class HandlerUserManagerResource
 {
-
     /**
      * @var UserManagerResourceManager
      */
@@ -27,42 +24,43 @@ class HandlerUserManagerResource
         $this->userManagerResourceManager = $userManagerResourceManager;
     }
 
-    public function handleNewUserManagerResource(FormInterface $form  )
+    public function handleNewUserManagerResource(FormInterface $form)
     {
         /**
-         * @var UserManagerResourceModel $data
+         * @var UserManagerResourceModel
          */
         $data = $form->getData();
 
         /**
-         * @var User[]|ArrayCollection $users
+         * @var User[]|ArrayCollection
          */
         $users = $data->getUsers();
         /**
-         * @var Room[]|ArrayCollection $rooms
+         * @var Room[]|ArrayCollection
          */
         $rooms = $data->getRooms();
         /**
-         * @var Area $area
+         * @var Area
          */
         $area = $data->getArea();
         /**
          * 1 => administrator
-         * 2 => manager
-         * @var int $areaLevel
+         * 2 => manager.
+         *
+         * @var int
          */
         $areaLevel = $data->getAreaLevel();
 
         foreach ($users as $user) {
             $userManagerResource = new UserManagerResource();
             $userManagerResource->setUser($user);
-            if ($areaLevel == 1) {
+            if (1 == $areaLevel) {
                 $userManagerResource->setArea($area);
                 $userManagerResource->setIsAreaAdministrator(true);
                 $this->userManagerResourceManager->insert($userManagerResource);
                 continue;
             }
-            if ($areaLevel == 2) {
+            if (2 == $areaLevel) {
                 $userManagerResource->setArea($area);
                 $userManagerResource->setIsAreaManager(true);
                 $this->userManagerResourceManager->insert($userManagerResource);

@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 28/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Controller\Admin\Controller;
@@ -19,7 +19,7 @@ class AccountControllerTest extends BaseRepository
         $this->loadFixtures();
 
         $this->administrator->request('GET', '/account/show');
-        $crawler = $this->administrator->clickLink("Modifier");
+        $crawler = $this->administrator->clickLink('Modifier');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['user[first_name]']->setValue('Raoul');

@@ -42,5 +42,4 @@ class TimeSlot
     {
         return $this->end;
     }
-
 }

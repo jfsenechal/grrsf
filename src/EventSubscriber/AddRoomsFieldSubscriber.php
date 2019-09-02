@@ -27,7 +27,7 @@ class AddRoomsFieldSubscriber implements EventSubscriberInterface
     public function onPreSetData(FormEvent $event)
     {
         /**
-         * @var UserManagerResourceModel $entry
+         * @var UserManagerResourceModel
          */
         $entry = $event->getData();
         $area = $entry->getArea();

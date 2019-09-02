@@ -69,9 +69,9 @@ class BindDataManager
      * Va chercher toutes les entrées du mois avec les repetitions
      * Parcours tous les jours du mois
      * Crée une instance Day et set les entrées.
-     * Ajouts des ces days au model Month
+     * Ajouts des ces days au model Month.
      *
-     * @param Month $param
+     * @param Month   $param
      * @param Entry[] $entries
      *
      * @throws \Exception
@@ -82,7 +82,7 @@ class BindDataManager
         $entries[] = $this->entryRepository->findForMonth($monthModel, $area, $room);
 
         $periodicityDays = $this->periodicityDayRepository->findForMonth($monthModel);
-        $entries [] = $this->generatorEntry->generateEntries($periodicityDays);
+        $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
 
         $entries = array_merge(...$entries);
 
@@ -98,6 +98,7 @@ class BindDataManager
      * @param Week $weekModel
      * @param Area $area
      * @param Room $roomSelected
+     *
      * @return RoomModel[]
      *
      * @throws \Exception
@@ -107,7 +108,7 @@ class BindDataManager
         if ($roomSelected) {
             $rooms = [$roomSelected];
         } else {
-            $rooms = $this->roomRepository->findByArea($area);//not $area->getRooms() sqlite not work
+            $rooms = $this->roomRepository->findByArea($area); //not $area->getRooms() sqlite not work
         }
 
         $days = $weekModel->getCalendarDays();
@@ -139,10 +140,10 @@ class BindDataManager
      * et sa localisation.
      *
      * @param CarbonInterface $day
-     * @param Area $area
-     * @param TimeSlot[] $timeSlots
+     * @param Area            $area
+     * @param TimeSlot[]      $timeSlots
+     * @param Room|null       $roomSelected
      *
-     * @param Room|null $roomSelected
      * @return RoomModel[]
      */
     public function bindDay(CarbonInterface $day, Area $area, array $timeSlots, Room $roomSelected = null)
@@ -152,7 +153,7 @@ class BindDataManager
         if ($roomSelected) {
             $rooms = [$roomSelected];
         } else {
-            $rooms = $this->roomRepository->findByArea($area);//not $area->getRooms() sqlite not work
+            $rooms = $this->roomRepository->findByArea($area); //not $area->getRooms() sqlite not work
         }
 
         foreach ($rooms as $room) {
@@ -169,7 +170,7 @@ class BindDataManager
 
         foreach ($roomsModel as $roomModel) {
             /**
-             * @var Entry[] $entries
+             * @var Entry[]
              */
             $entries = $roomModel->getEntries();
 

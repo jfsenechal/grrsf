@@ -5,7 +5,6 @@ namespace App\Form\Search;
 use App\Entity\EntryType;
 use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\Form\Type\AreaSelectType;
-use App\Form\Type\RoomSelectType;
 use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -20,7 +19,6 @@ class SearchEntryType extends AbstractType
      * @var RoomRepository
      */
     private $roomRepository;
-
 
     public function __construct(RoomRepository $roomRepository)
     {

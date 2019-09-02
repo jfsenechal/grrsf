@@ -1,15 +1,14 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 23/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Service;
-
 
 use App\Entity\Entry;
 use App\Entity\PeriodicityDay;
@@ -100,7 +99,7 @@ class BindDataManagerTest extends BaseRepository
 
         $bindDataManager = $this->initBindDataManager();
 
-        $weekModel = Week::createWithLocal(2019, 49);//2 december
+        $weekModel = Week::createWithLocal(2019, 49); //2 december
 
         $area = $this->getArea('Hdv');
         $roomsModel = $bindDataManager->bindWeek($weekModel, $area, null);
@@ -121,7 +120,6 @@ class BindDataManagerTest extends BaseRepository
         }
     }
 
-
     public function testBindDayWithOutRoom()
     {
         $this->loadFixtures();
@@ -135,7 +133,6 @@ class BindDataManagerTest extends BaseRepository
 
         $hoursModel = $timeSlotsProvider->getTimeSlotsModelByAreaAndDaySelected($area, $daySelected);
         $roomsModel = $bindDataManager->bindDay($daySelected, $area, $hoursModel, null);
-
 
         self::assertCount(3, $roomsModel);
 
@@ -214,8 +211,5 @@ class BindDataManagerTest extends BaseRepository
             $generatorEntry,
             $dayFactory
         );
-
     }
-
-
 }

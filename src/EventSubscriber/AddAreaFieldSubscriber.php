@@ -29,7 +29,7 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
         $entry = $event->getData();
         $area = $entry->getArea();
         /**
-         * @var FormInterface $form
+         * @var FormInterface
          */
         $form = $event->getForm();
 

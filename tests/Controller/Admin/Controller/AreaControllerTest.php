@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 28/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Controller\Admin\Controller;
@@ -19,7 +19,7 @@ class AreaControllerTest extends BaseRepository
         $this->loadFixtures();
 
         $this->administrator->request('GET', '/admin/area/');
-        $crawler = $this->administrator->clickLink("Nouveau domaine");
+        $crawler = $this->administrator->clickLink('Nouveau domaine');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['area[name]']->setValue('Area demo');
@@ -33,7 +33,7 @@ class AreaControllerTest extends BaseRepository
         );
 
         $this->administrator->request('GET', '/admin/area/');
-        $this->administrator->clickLink("Area demo");
+        $this->administrator->clickLink('Area demo');
         self::assertResponseIsSuccessful();
     }
 
@@ -42,10 +42,10 @@ class AreaControllerTest extends BaseRepository
         $this->loadFixtures();
 
         $this->administrator->request('GET', 'admin/area/');
-        $this->administrator->clickLink("Hdv");
+        $this->administrator->clickLink('Hdv');
         self::assertResponseIsSuccessful();
 
-        $crawler = $this->administrator->clickLink("Modifier");
+        $crawler = $this->administrator->clickLink('Modifier');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['area[name]']->setValue('Hdv demo');

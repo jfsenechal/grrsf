@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Form\Type;
 
 use App\Entity\Room;
@@ -23,7 +22,6 @@ class RoomSelectType extends AbstractType
                     'attr' => ['class' => 'custom-control custom-checkbox my-1 mr-sm-2 room-select'],
                 ]
             );
-
     }
 
     public function getParent()

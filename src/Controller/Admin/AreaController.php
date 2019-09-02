@@ -65,7 +65,7 @@ class AreaController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="grr_admin_area_new", methods={"GET","POST"})
+     * @Route("/new", name="grr_admin_area_new", methods={"GET", "POST"})
      * @IsGranted("new")
      */
     public function new(Request $request): Response
@@ -108,7 +108,7 @@ class AreaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="grr_admin_area_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="grr_admin_area_edit", methods={"GET", "POST"})
      * @IsGranted("edit", subject="area")
      */
     public function edit(Request $request, Area $area): Response

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\Factory;
-
 
 use App\Entity\Area;
 use App\Entity\Entry;
@@ -45,13 +43,14 @@ class EntryFactoryTest extends WebTestCase
 
     /**
      * @dataProvider getData
+     *
      * @param Area $area
      * @param Room $room
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @param int $hour
-     * @param int $minute
+     * @param int  $year
+     * @param int  $month
+     * @param int  $day
+     * @param int  $hour
+     * @param int  $minute
      */
     public function testInitEntryForNew(
         int $year,

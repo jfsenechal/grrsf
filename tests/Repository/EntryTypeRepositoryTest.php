@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Tests\Repository;
 
 use App\Entity\EntryType;
@@ -27,5 +26,4 @@ class EntryTypeRepositoryTest extends BaseRepository
 
         $this->loader->load($files);
     }
-
 }

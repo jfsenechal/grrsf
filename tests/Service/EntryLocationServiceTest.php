@@ -1,22 +1,20 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 20/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Service;
-
 
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\I18n\LocalHelper;
-use App\Model\TimeSlot;
 use App\Provider\TimeSlotsProvider;
 use App\Service\EntryLocationService;
 use App\Tests\Repository\BaseRepository;
@@ -29,6 +27,7 @@ class EntryLocationServiceTest extends BaseRepository
 {
     /**
      * @dataProvider getData
+     *
      * @throws \Exception
      */
     public function testSetLocations(
@@ -63,7 +62,7 @@ class EntryLocationServiceTest extends BaseRepository
         $locations = $entryService->getLocations($entry, $timesSlot);
 
         /**
-         * = heure de debut
+         * = heure de debut.
          */
         $day = Carbon::today();
         $day->setTime($entryHourBegin, 0);
@@ -111,9 +110,10 @@ class EntryLocationServiceTest extends BaseRepository
 
     /**
      * @dataProvider getDataMultipleDays
+     *
      * @param \DateTime $dateStart
      * @param \DateTime $dateEnd
-     * @param array $countLocations
+     * @param array     $countLocations
      */
     public function testMultipleDaysSetLocations(
         \DateTime $dateStart,
@@ -125,7 +125,7 @@ class EntryLocationServiceTest extends BaseRepository
         $area = $this->initArea(8, 19, $duration);
         $room = new Room($area);
 
-     //   echo $dateStart->format('Y-m-d H:i').' '.$dateEnd->format('Y-m-d H:i')."\n \n";
+        //   echo $dateStart->format('Y-m-d H:i').' '.$dateEnd->format('Y-m-d H:i')."\n \n";
 
         $entry = new Entry();
         $entry->setStartTime($dateStart);
@@ -143,11 +143,11 @@ class EntryLocationServiceTest extends BaseRepository
             $locations = $entryService->getLocations($entry, $timesSlot);
 
             /**
-             * = heure de debut
+             * = heure de debut.
              */
             $day = Carbon::today();
             //  $day->setTime($entryHourBegin, 0);
-         //   var_dump($i);
+            //   var_dump($i);
             self::assertCount($countLocations[$i], $locations);
 
             $startEntry = Carbon::instance($entry->getStartTime());
@@ -160,7 +160,7 @@ class EntryLocationServiceTest extends BaseRepository
                 //  self::assertTrue($startEntry->greaterThanOrEqualTo($begin) || $startEntry->lessThanOrEqualTo($end));
                 //  self::assertTrue($begin->lessThanOrEqualTo($endEntry));
             }
-            $i++;
+            ++$i;
         }
     }
 
@@ -175,14 +175,12 @@ class EntryLocationServiceTest extends BaseRepository
         ];
     }
 
-
     public function te2stIsEntryInTimeSlot()
     {
         /*  CarbonPeriod $entryTimeSlots,
           \DateTimeInterface $startTimeSlot,
           \DateTimeInterface $endTimeSlot*/
     }
-
 
     protected function initTimeSlotProvider(): TimeSlotsProvider
     {

@@ -49,7 +49,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/edit", name="grr_account_edit", methods={"GET","POST"})
+     * @Route("/edit", name="grr_account_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request): Response
     {
@@ -58,7 +58,6 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->userManager->flush();
 
             return $this->redirectToRoute('grr_account_show');
@@ -74,7 +73,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/password", name="grr_account_edit_password", methods={"GET","POST"})
+     * @Route("/password", name="grr_account_edit_password", methods={"GET", "POST"})
      */
     public function password(Request $request): Response
     {
@@ -109,7 +108,6 @@ class AccountController extends AbstractController
     {
         $user = $this->getUser();
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-
             $this->userManager->remove($user);
             $this->userManager->flush();
         }

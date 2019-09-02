@@ -8,7 +8,6 @@
 
 namespace App\Manager;
 
-
 use App\Entity\Security\UserManagerResource;
 use App\Repository\Security\UserManagerResourceRepository;
 

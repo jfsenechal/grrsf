@@ -1,15 +1,14 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 20/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Repository;
-
 
 use App\Entity\Area;
 use App\Entity\Entry;
@@ -20,7 +19,6 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Panther\PantherTestCase;
 
 class BaseRepository extends WebTestCase
 {
@@ -52,7 +50,7 @@ class BaseRepository extends WebTestCase
     protected $administrator;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function setUp()
     {
@@ -71,11 +69,11 @@ class BaseRepository extends WebTestCase
         $this->loaderSimple = $loader;
 
         $this->administrator = static::createClient(
-            array(),
-            array(
+            [],
+            [
                 'PHP_AUTH_USER' => 'jf@marche.be',
                 'PHP_AUTH_PW' => 'homer',
-            )
+            ]
         );
 
         parent::setUp();
@@ -112,7 +110,7 @@ class BaseRepository extends WebTestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function tearDown()
     {

@@ -4,7 +4,6 @@ namespace App\Modules;
 
 class Module2 implements GrrModuleInterface
 {
-
     public function getName(): string
     {
         return 'module2';

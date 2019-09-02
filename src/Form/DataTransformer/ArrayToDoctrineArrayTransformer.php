@@ -1,16 +1,13 @@
 <?php
 
-
 namespace App\Form\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-
 class ArrayToDoctrineArrayTransformer implements DataTransformerInterface
 {
-
     /**
      * Transforms a value from the original representation to a transformed representation.
      *
@@ -92,7 +89,6 @@ class ArrayToDoctrineArrayTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-
         if (null === $value) {
             return null;
         }

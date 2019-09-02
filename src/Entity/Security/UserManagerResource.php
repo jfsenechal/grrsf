@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- *
  * @ORM\Table(name="grr_manager_resource", uniqueConstraints={
  *     @ORM\UniqueConstraint(columns={"user_id", "area_id"}),
  *     @ORM\UniqueConstraint(columns={"user_id", "room_id"})
@@ -140,5 +139,4 @@ class UserManagerResource
     {
         return $this->is_area_manager;
     }
-
 }

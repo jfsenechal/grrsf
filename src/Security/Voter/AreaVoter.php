@@ -41,7 +41,7 @@ class AreaVoter extends Voter
      */
     private $securityHelper;
     /**
-     * @var Area $area
+     * @var Area
      */
     private $area;
     /**
@@ -130,6 +130,7 @@ class AreaVoter extends Voter
 
     /**
      * See in admin.
+     *
      * @return bool
      */
     private function canView()
@@ -148,6 +149,6 @@ class AreaVoter extends Voter
 
     private function canDelete()
     {
-        return (bool)$this->canEdit();
+        return (bool) $this->canEdit();
     }
 }

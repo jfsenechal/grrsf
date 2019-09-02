@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Provider;
 
 use Carbon\Carbon;
@@ -10,6 +9,7 @@ class DateProvider
 {
     /**
      * Names of days of the week.
+     *
      * @return array
      */
     public static function getNamesDaysOfWeek()

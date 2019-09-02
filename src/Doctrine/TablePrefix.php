@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Doctrine;
 
 use Doctrine\Common\EventSubscriber;
@@ -12,10 +11,9 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
  *  arguments:
  *    $prefix: '%env(string:DATABASE_PREFIX)%'
  *  tags:
- *    - { name: doctrine.event_subscriber, connection: default }
+ *    - { name: doctrine.event_subscriber, connection: default }.
  *
  * Class TablePrefix
- * @package App\Doctrine
  */
 class TablePrefix implements EventSubscriber
 {
@@ -23,7 +21,7 @@ class TablePrefix implements EventSubscriber
 
     public function __construct($prefix)
     {
-        $this->prefix = (string)$prefix;
+        $this->prefix = (string) $prefix;
     }
 
     /**
@@ -50,12 +48,10 @@ class TablePrefix implements EventSubscriber
         }
 
         foreach ($classMetadata->getAssociationMappings() as $fieldName => $mapping) {
-            if ($mapping['type'] == \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY && $mapping['isOwningSide']) {
+            if (\Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY == $mapping['type'] && $mapping['isOwningSide']) {
                 $mappedTableName = $mapping['joinTable']['name'];
                 $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = $this->prefix.$mappedTableName;
             }
         }
     }
-
-
 }

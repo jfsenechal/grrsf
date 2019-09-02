@@ -40,7 +40,7 @@ class EntryVoter extends Voter
      */
     private $securityHelper;
     /**
-     * @var Entry $entry
+     * @var Entry
      */
     private $entry;
     /**
@@ -108,7 +108,6 @@ class EntryVoter extends Voter
     }
 
     /**
-     *
      * @return bool
      */
     private function canView()
@@ -127,6 +126,7 @@ class EntryVoter extends Voter
         if ($this->securityHelper->isAreaRestricted($area)) {
             return $this->securityHelper->canSeeAreaRestricted($area, $this->user);
         }
+
         return $this->securityHelper->canSeeRoom($room, $this->user);
     }
 
@@ -139,7 +139,7 @@ class EntryVoter extends Voter
 
     private function canDelete()
     {
-        return (bool)$this->canEdit();
+        return (bool) $this->canEdit();
     }
 
     private function isAnonyme(): bool

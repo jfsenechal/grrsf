@@ -85,7 +85,7 @@ class InstallDataCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Initialize les données dans la base de données lors de l\'installation');;
+            ->setDescription('Initialize les données dans la base de données lors de l\'installation');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -118,7 +118,6 @@ class InstallDataCommand extends Command
             $type->setLetter($index);
             $type->setName($nom);
             $this->entryTypeRepository->persist($type);
-
         }
         $this->entryTypeRepository->flush();
     }

@@ -21,7 +21,7 @@ class Room
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=60, nullable=false)
      */
     private $name;
@@ -148,7 +148,7 @@ class Room
     /**
      * @var bool
      *
-     * @ORM\Column( type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $activeRessourceEmpruntee;
 
@@ -190,8 +190,8 @@ class Room
         $this->delaisOptionReservation = 0;
         $this->dontAllowModify = '';
         $this->typeAffichageReser = 0;
-        $this->quiPeutReserverPour='';
-        $this->activeRessourceEmpruntee=false;
+        $this->quiPeutReserverPour = '';
+        $this->activeRessourceEmpruntee = false;
         $this->whoCanSee = 0;
         $this->maximum_booking = -1;
         $this->entries = new ArrayCollection();
@@ -516,5 +516,4 @@ class Room
 
         return $this;
     }
-
 }

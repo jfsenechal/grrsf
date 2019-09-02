@@ -11,7 +11,6 @@ use App\Model\RoomModel;
 use App\Model\TimeSlot;
 use App\Model\Week;
 use App\Navigation\NavigationManager;
-use Carbon\CarbonInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -55,19 +54,20 @@ class GrrFrontExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'grrPeriodicityTypeName', function (int $type) {
-                return $this->grrPeriodicityTypeName($type);
-            }, ['is_safe' => ['html']]
+                    return $this->grrPeriodicityTypeName($type);
+                }, ['is_safe' => ['html']]
             ),
             new TwigFilter(
                 'grrWeekNiceName', function (Week $week) {
-                return $this->grrWeekNiceName($week);
-            }, ['is_safe' => ['html']]
+                    return $this->grrWeekNiceName($week);
+                }, ['is_safe' => ['html']]
             ),
         ];
     }
 
     /**
-     * todo navigation function to same package
+     * todo navigation function to same package.
+     *
      * @return array|TwigFunction[]
      */
     public function getFunctions()
@@ -75,24 +75,24 @@ class GrrFrontExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'grrMonthNavigationRender', function () {
-                return $this->monthNavigationRender();
-            }, ['is_safe' => ['html']]
+                    return $this->monthNavigationRender();
+                }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrMenuNavigationRender', function () {
-                return $this->menuNavigationRender();
-            }, ['is_safe' => ['html']]
+                    return $this->menuNavigationRender();
+                }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrGenerateCellDataDay', function (TimeSlot $hour, RoomModel $roomModel, Day $day) {
-                return $this->grrGenerateCellDataDay($hour, $roomModel, $day);
-            }, ['is_safe' => ['html']]
+                    return $this->grrGenerateCellDataDay($hour, $roomModel, $day);
+                }, ['is_safe' => ['html']]
             ),
         ];
     }
 
     /**
-     * @param TimeSlot $hour
+     * @param TimeSlot  $hour
      * @param RoomModel $roomModel
      *
      * @return string|void
@@ -148,7 +148,7 @@ class GrrFrontExtension extends AbstractExtension
     {
         $request = $this->requestStack->getMasterRequest();
 
-        if ($request === null) {
+        if (null === $request) {
             return new Response('');
         }
 

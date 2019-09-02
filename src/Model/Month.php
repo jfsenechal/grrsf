@@ -8,7 +8,6 @@
 
 namespace App\Model;
 
-use App\Factory\DayFactory;
 use App\I18n\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -73,7 +72,8 @@ class Month extends Carbon
     }
 
     /**
-     * Retourne la liste des semaines
+     * Retourne la liste des semaines.
+     *
      * @return CarbonPeriod[]
      */
     public function getWeeksOfMonth()
@@ -109,7 +109,8 @@ class Month extends Carbon
     }
 
     /**
-     * Tous les jours du mois sous forme de DayModel avec les entrées
+     * Tous les jours du mois sous forme de DayModel avec les entrées.
+     *
      * @return Collection|Day[]
      */
     public function getDataDays(): Collection
@@ -118,8 +119,8 @@ class Month extends Carbon
     }
 
     /**
-     *
      * @return array
+     *
      * @throws \Exception
      */
     public function groupDataDaysByWeeks()
@@ -130,7 +131,7 @@ class Month extends Carbon
             foreach ($weekCalendar as $dayCalendar) {
                 $dayModel = $this->findDataDayWithDate($dayCalendar);
                 // $days [] = $dayCalendar;
-                $days [] = $dayModel;
+                $days[] = $dayModel;
             }
             $weeks[]['days'] = $days;
         }
@@ -140,7 +141,9 @@ class Month extends Carbon
 
     /**
      * @param CarbonInterface $dayCalendar
+     *
      * @return Day
+     *
      * @throws \Exception
      */
     protected function findDataDayWithDate($dayCalendar)

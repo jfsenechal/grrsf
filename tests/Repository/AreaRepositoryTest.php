@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Tests\Repository;
 
 use App\Entity\Area;
@@ -32,5 +31,4 @@ class AreaRepositoryTest extends BaseRepository
 
         $this->assertEquals(2, count($result));
     }
-
 }

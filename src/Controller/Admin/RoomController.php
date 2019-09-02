@@ -7,7 +7,6 @@ use App\Entity\Room;
 use App\Factory\RoomFactory;
 use App\Form\RoomType;
 use App\Manager\RoomManager;
-use App\Repository\RoomRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +36,7 @@ class RoomController extends AbstractController
     }
 
     /**
-     * @Route("/new/{id}", name="grr_admin_room_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="grr_admin_room_new", methods={"GET", "POST"})
      * @IsGranted("new")
      */
     public function new(Request $request, Area $area): Response
@@ -78,7 +77,7 @@ class RoomController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="grr_admin_room_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="grr_admin_room_edit", methods={"GET", "POST"})
      * @IsGranted("edit", subject="room")
      */
     public function edit(Request $request, Room $room): Response
@@ -112,7 +111,6 @@ class RoomController extends AbstractController
     {
         $area = $room->getArea();
         if ($this->isCsrfTokenValid('delete'.$room->getId(), $request->request->get('_token'))) {
-
             $this->roomManager->removeEntries($room);
             $this->roomManager->remove($room);
             $this->roomManager->flush();

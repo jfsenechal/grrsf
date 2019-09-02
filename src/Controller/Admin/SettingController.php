@@ -41,7 +41,7 @@ class SettingController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="grr_admin_setting_new", methods={"GET","POST"})
+     * @Route("/new", name="grr_admin_setting_new", methods={"GET", "POST"})
      */
     public function new(Request $request): Response
     {
@@ -77,7 +77,7 @@ class SettingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="grr_admin_setting_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="grr_admin_setting_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Setting $setting): Response
     {

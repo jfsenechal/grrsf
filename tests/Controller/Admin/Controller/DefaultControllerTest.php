@@ -8,13 +8,13 @@ class DefaultControllerTest extends PantherTestCase
 {
     public function testAdminHomePage()
     {
-        $url = "/admin";
+        $url = '/admin';
         $client = self::createClient();
         $client->request('GET', $url);
         $this->assertTrue($client->getResponse()->isRedirect());
     }
 
-    /**
+    /*
      * dataProvider provideUrls
      *
     public function testPageIsSuccessful($url)

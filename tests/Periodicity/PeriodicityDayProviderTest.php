@@ -1,15 +1,14 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 20/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Periodicity;
-
 
 use App\Periodicity\PeriodicityConstant;
 use App\Periodicity\PeriodicityDaysProvider;
@@ -18,7 +17,7 @@ use App\Tests\Repository\BaseRepository;
 class PeriodicityDayProviderTest extends BaseRepository
 {
     /**
-     * Test repeat every day
+     * Test repeat every day.
      */
     public function testGetDaysByPeriodicityRepeatByDay()
     {
@@ -37,7 +36,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     }
 
     /**
-     * Test repeat every month same day
+     * Test repeat every month same day.
      */
     public function testGetDaysByPeriodicityRepeatByMonthSameDay()
     {
@@ -56,7 +55,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     }
 
     /**
-     * Test repeat every month same week day
+     * Test repeat every month same week day.
      */
     public function testGetDaysByPeriodicityRepeatByMonthSameWeekday()
     {
@@ -75,7 +74,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     }
 
     /**
-     * Test repeat every year
+     * Test repeat every year.
      */
     public function testGetDaysByPeriodicityRepeatByYear()
     {
@@ -94,7 +93,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     }
 
     /**
-     * Test repeat every week
+     * Test repeat every week.
      */
     public function testGetDaysByPeriodicityRepeatByEveryWeek1()
     {
@@ -106,23 +105,23 @@ class PeriodicityDayProviderTest extends BaseRepository
         $days = $periodicityDayProvider->getDaysByPeriodicity($periodicity, $entry->getStartTime());
 
         $result = [
-            "2018-06-25",
-            "2018-06-26",
-            "2018-07-02",
-            "2018-07-03",
-            "2018-07-09",
-            "2018-07-10",
-            "2018-07-16",
-            "2018-07-17",
-            "2018-07-23",
-            "2018-07-24",
-            "2018-07-30",
-            "2018-07-31",
-            "2018-08-06",
-            "2018-08-07",
-            "2018-08-13",
-            "2018-08-14",
-            "2018-08-20",
+            '2018-06-25',
+            '2018-06-26',
+            '2018-07-02',
+            '2018-07-03',
+            '2018-07-09',
+            '2018-07-10',
+            '2018-07-16',
+            '2018-07-17',
+            '2018-07-23',
+            '2018-07-24',
+            '2018-07-30',
+            '2018-07-31',
+            '2018-08-06',
+            '2018-08-07',
+            '2018-08-13',
+            '2018-08-14',
+            '2018-08-20',
         ];
 
         foreach ($days as $day) {
@@ -131,7 +130,7 @@ class PeriodicityDayProviderTest extends BaseRepository
     }
 
     /**
-     * Test repeat every 2 week
+     * Test repeat every 2 week.
      */
     public function testGetDaysByPeriodicityRepeatByEveryWeek2()
     {
@@ -142,16 +141,16 @@ class PeriodicityDayProviderTest extends BaseRepository
 
         $days = $periodicityDayProvider->getDaysByPeriodicity($periodicity, $entry->getStartTime());
         $result = [
-            "2017-02-08",
-            "2017-02-11",
-            "2017-02-22",
-            "2017-02-25",
-            "2017-03-08",
-            "2017-03-11",
-            "2017-03-22",
-            "2017-03-25",
-            "2017-04-05",
-            "2017-04-08",
+            '2017-02-08',
+            '2017-02-11',
+            '2017-02-22',
+            '2017-02-25',
+            '2017-03-08',
+            '2017-03-11',
+            '2017-03-22',
+            '2017-03-25',
+            '2017-04-05',
+            '2017-04-08',
         ];
 
         foreach ($days as $day) {
@@ -168,9 +167,9 @@ class PeriodicityDayProviderTest extends BaseRepository
 
         $days = $periodicityDayProvider->getDaysByPeriodicity($periodicity, $entry->getStartTime());
         $result = [
-            "2019-12-04",
-            "2019-12-05",
-            "2019-12-06",
+            '2019-12-04',
+            '2019-12-05',
+            '2019-12-06',
         ];
 
         foreach ($days as $day) {
@@ -195,5 +194,4 @@ class PeriodicityDayProviderTest extends BaseRepository
             ]
         );
     }
-
 }

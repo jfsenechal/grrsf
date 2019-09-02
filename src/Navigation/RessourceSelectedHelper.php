@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Navigation;
-
 
 use App\Entity\Area;
 use App\Entity\Room;
@@ -14,8 +12,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Security;
 
 /**
- * Class RessourceSelectedHelper
- * @package App\Helper
+ * Class RessourceSelectedHelper.
  */
 class RessourceSelectedHelper
 {
@@ -59,6 +56,7 @@ class RessourceSelectedHelper
 
     /**
      * @return Area
+     *
      * @throws \Exception
      */
     public function getArea(): Area
@@ -72,10 +70,10 @@ class RessourceSelectedHelper
         }
 
         /**
-         * @var User $user
+         * @var User
          */
         $user = $this->security->getUser();
-        if ($user !== null) {
+        if (null !== $user) {
             if ($area = $user->getAreaDefault()) {
                 return $area;
             }
@@ -96,14 +94,15 @@ class RessourceSelectedHelper
     }
 
     /**
-     * -1 = force all ressource
+     * -1 = force all ressource.
+     *
      * @return Room|null
      */
     public function getRoom(): ?Room
     {
         if ($this->session->has(self::ROOM_DEFAULT_SESSION)) {
             $roomId = $this->session->get(self::ROOM_DEFAULT_SESSION);
-            if ($roomId === -1) {
+            if (-1 === $roomId) {
                 return null;
             }
             if ($roomId) {
@@ -112,10 +111,10 @@ class RessourceSelectedHelper
         }
 
         /**
-         * @var User $user
+         * @var User
          */
         $user = $this->security->getUser();
-        if ($user !== null) {
+        if (null !== $user) {
             if ($room = $user->getRoomDefault()) {
                 return $room;
             }
@@ -137,5 +136,4 @@ class RessourceSelectedHelper
             $this->session->remove(self::ROOM_DEFAULT_SESSION);
         }
     }
-
 }

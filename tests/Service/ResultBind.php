@@ -1,32 +1,31 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 23/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Service;
-
 
 class ResultBind
 {
     public static function resultNamesMonthWithRoom()
     {
         return [
-            "Tous les jours pendant 3 jours",
-            "Entry avec une date en commun",
+            'Tous les jours pendant 3 jours',
+            'Entry avec une date en commun',
         ];
     }
 
     public static function resultNamesMonthWithOutRoom()
     {
         return [
-            "Entry avec une date en commun",
-            "Tous les jours pendant 3 jours",
-            "Entry avec une date en commun",
+            'Entry avec une date en commun',
+            'Tous les jours pendant 3 jours',
+            'Entry avec une date en commun',
         ];
     }
 
@@ -47,27 +46,26 @@ class ResultBind
     public static function getDaysOfWeekWithRoom()
     {
         return [
-            "2018-07-02",
-            "2018-07-03",
-            "2018-07-04",
-            "2018-07-05",
-            "2018-07-06",
-            "2018-07-07",
-            "2018-07-08",
+            '2018-07-02',
+            '2018-07-03',
+            '2018-07-04',
+            '2018-07-05',
+            '2018-07-06',
+            '2018-07-07',
+            '2018-07-08',
         ];
     }
-
 
     public static function getDaysOfWeekWitOuthhRoom()
     {
         return [
-            "2019-12-02",
-            "2019-12-03",
-            "2019-12-04",
-            "2019-12-05",
-            "2019-12-06",
-            "2019-12-07",
-            "2019-12-08",
+            '2019-12-02',
+            '2019-12-03',
+            '2019-12-04',
+            '2019-12-05',
+            '2019-12-06',
+            '2019-12-07',
+            '2019-12-08',
         ];
     }
 
@@ -81,7 +79,7 @@ class ResultBind
     public static function getCountEntriesForWeekWithOutMonth(int $day, string $room): int
     {
         $result = [];
-        $result ['Salle Collège'][2] = 1;
+        $result['Salle Collège'][2] = 1;
         $result['Salle Collège'][3] = 1;
         $result['Salle Collège'][4] = 1;
         $result['Salle Collège'][5] = 1;
@@ -92,14 +90,14 @@ class ResultBind
     public static function resultNamesWeekWithRoom()
     {
         return [
-            "Toutes les semaines, lundi et mardi",
+            'Toutes les semaines, lundi et mardi',
         ];
     }
 
     public static function resultNamesWeekWithOutRoom()
     {
         return [
-            "Tous les jours pendant 3 jours",
+            'Tous les jours pendant 3 jours',
         ];
     }
 }

@@ -10,7 +10,7 @@ class DefaultControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $url = "/";
+        $url = '/';
         $client = self::createClient();
         $client->request('GET', $url);
         $crawler = $client->followRedirect();
@@ -88,5 +88,4 @@ class DefaultControllerTest extends BaseRepository
 
         $this->loader->load($files);
     }
-
 }

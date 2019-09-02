@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\Model;
-
 
 use App\Model\TimeSlot;
 use Carbon\Carbon;

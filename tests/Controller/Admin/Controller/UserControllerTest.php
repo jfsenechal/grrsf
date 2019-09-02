@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 28/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Controller\Admin\Controller;
@@ -19,7 +19,7 @@ class UserControllerTest extends BaseRepository
         $this->loadFixtures();
 
         $this->administrator->request('GET', '/admin/user/');
-        $crawler = $this->administrator->clickLink("Nouvelle utilisateur");
+        $crawler = $this->administrator->clickLink('Nouvelle utilisateur');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['user_new[name]']->setValue('Doe');
@@ -36,7 +36,7 @@ class UserControllerTest extends BaseRepository
         );
 
         $this->administrator->request('GET', '/admin/user/');
-        $this->administrator->clickLink("raoul@domain.com");
+        $this->administrator->clickLink('raoul@domain.com');
         self::assertResponseIsSuccessful();
     }
 
@@ -45,8 +45,8 @@ class UserControllerTest extends BaseRepository
         $this->loadFixtures();
 
         $this->administrator->request('GET', '/admin/user/');
-        $this->administrator->clickLink("alice@domain.be")->first();
-        $crawler = $this->administrator->clickLink("Modifier");
+        $this->administrator->clickLink('alice@domain.be')->first();
+        $crawler = $this->administrator->clickLink('Modifier');
         self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();

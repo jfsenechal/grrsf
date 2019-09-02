@@ -24,6 +24,7 @@ class PeriodicityDayRepository extends ServiceEntityRepository
 
     /**
      * @param Month $monthModel
+     *
      * @return PeriodicityDay[]
      */
     public function findForMonth(Month $monthModel, Room $room = null)
@@ -38,7 +39,7 @@ class PeriodicityDayRepository extends ServiceEntityRepository
         $qb->andWhere('periodicity_day.date_periodicity LIKE :time')
             ->setParameter('time', $timeString);
 
-        if ($room !== null) {
+        if (null !== $room) {
             $qb->andWhere('entry.room = :room')
                 ->setParameter('room', $room);
         }
@@ -51,7 +52,8 @@ class PeriodicityDayRepository extends ServiceEntityRepository
 
     /**
      * @param CarbonInterface $day
-     * @param Room $room
+     * @param Room            $room
+     *
      * @return PeriodicityDay[]
      */
     public function findForDay(CarbonInterface $day, Room $room)

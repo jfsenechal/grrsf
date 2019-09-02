@@ -43,6 +43,4 @@ class PeriodicityDayManager
     {
         $this->periodicityDayRepository->insert($area);
     }
-
-
 }

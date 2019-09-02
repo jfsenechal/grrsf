@@ -51,8 +51,8 @@ class UserManager
         $this->UtilisateurRepository->insert($user);
     }
 
-    public function encodePassword(UserInterface $user, string $clearPassword) : string
+    public function encodePassword(UserInterface $user, string $clearPassword): string
     {
-       return $this->userPasswordEncoder->encodePassword($user, $clearPassword);
+        return $this->userPasswordEncoder->encodePassword($user, $clearPassword);
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\EventSubscriber;
 
 use App\Entity\Entry;
@@ -48,34 +47,33 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             FormEvents::PRE_SET_DATA => 'OnPreSetData',
             FormEvents::SUBMIT => 'OnSubmit',
-        );
+        ];
     }
 
     /**
      * Verifie si nouveau objet
      * Remplis les champs jours, heures, minutes
-     * donne le bon label au submit
+     * donne le bon label au submit.
      *
      * @param FormEvent $event
      */
     public function OnPreSetData(FormEvent $event)
     {
         /**
-         * @var Entry $entry
+         * @var Entry
          */
         $entry = $event->getData();
         $form = $event->getForm();
         $room = $entry->getRoom();
         $type = $room ? $room->getTypeAffichageReser() : 0;
 
-        if ($type === 0) {
-
+        if (0 === $type) {
             $scale = 0;
             $duration = $this->durationFactory->createByEntry($entry);
-            if ($duration->getUnit() == DurationModel::UNIT_TIME_HOURS) {
+            if (DurationModel::UNIT_TIME_HOURS == $duration->getUnit()) {
                 $scale = 1;
             }
 
@@ -93,7 +91,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
             );
         }
 
-        if ($type === 1) {
+        if (1 === $type) {
             $form->add(
                 'endTime',
                 DateTimeType::class,
@@ -103,12 +101,13 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
                 ]
             );
         }
-
     }
 
     /**
-     * Modifie la date de fin de réservation suivant les données de la Duration
+     * Modifie la date de fin de réservation suivant les données de la Duration.
+     *
      * @param FormEvent $event
+     *
      * @throws \Exception
      */
     public function OnSubmit(FormEvent $event)
@@ -116,13 +115,13 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
 
         /**
-         * @var DurationModel $duration
+         * @var DurationModel
          */
         $duration = $form->getData()->getDuration();
 
         if ($duration) {
             /**
-             * @var Entry $entry
+             * @var Entry
              */
             $entry = $event->getData();
 
@@ -151,5 +150,4 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
             $entry->setEndTime($endTime);
         }
     }
-
 }

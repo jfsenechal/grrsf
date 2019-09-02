@@ -1,14 +1,15 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 30/08/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 //https://symfony.com/doc/current/session/locale_sticky_session.html
+
 namespace App\I18n;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

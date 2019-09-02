@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Form\DataTransformer;
-
 
 use App\Entity\Area;
 use App\Repository\AreaRepository;
@@ -25,6 +23,7 @@ class AreaToNumberTransformer implements DataTransformerInterface
      * Transforms an object (area) to a string (number).
      *
      * @param Area|null $area
+     *
      * @return string
      */
     public function transform($area)
@@ -40,8 +39,10 @@ class AreaToNumberTransformer implements DataTransformerInterface
      * Transforms a string (number) to an object (area).
      *
      * @param string $areaNumber
+     *
      * @return Area|null
-     * @throws TransformationFailedException if object (area) is not found.
+     *
+     * @throws TransformationFailedException if object (area) is not found
      */
     public function reverseTransform($areaNumber)
     {
@@ -66,5 +67,4 @@ class AreaToNumberTransformer implements DataTransformerInterface
 
         return $area;
     }
-
 }

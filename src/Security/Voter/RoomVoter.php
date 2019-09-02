@@ -41,7 +41,7 @@ class RoomVoter extends Voter
      */
     private $securityHelper;
     /**
-     * @var Room $room
+     * @var Room
      */
     private $room;
     /**
@@ -104,7 +104,6 @@ class RoomVoter extends Voter
         return false;
     }
 
-
     private function canNew()
     {
         $area = $this->room->getArea();
@@ -119,6 +118,7 @@ class RoomVoter extends Voter
 
     /**
      * See in admin.
+     *
      * @return bool
      */
     private function canView()
@@ -137,6 +137,6 @@ class RoomVoter extends Voter
 
     private function canDelete()
     {
-        return (bool)$this->canEdit();
+        return (bool) $this->canEdit();
     }
 }

@@ -10,7 +10,7 @@ class FrontControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $url = "/";
+        $url = '/';
         $client = self::createClient();
         $client->request('GET', $url);
         $crawler = $client->followRedirect();
@@ -86,5 +86,4 @@ class FrontControllerTest extends BaseRepository
 
         $this->loader->load($files);
     }
-
 }

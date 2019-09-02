@@ -28,7 +28,7 @@ class SecurityRole
     }
 
     /**
-     * Gestionnaire des utilisateurs
+     * Gestionnaire des utilisateurs.
      *
      * @return string
      */
@@ -38,7 +38,7 @@ class SecurityRole
     }
 
     /**
-     * Administrateur de grr
+     * Administrateur de grr.
      *
      * @return string
      */
@@ -49,7 +49,7 @@ class SecurityRole
 
     /**
      * Administrateur d'une area
-     * Peut modifier, supprimer l'area et ses ressources
+     * Peut modifier, supprimer l'area et ses ressources.
      *
      * @return string
      */
@@ -59,7 +59,7 @@ class SecurityRole
     }
 
     /**
-     * Administrateur de grr
+     * Administrateur de grr.
      *
      * @return string
      */

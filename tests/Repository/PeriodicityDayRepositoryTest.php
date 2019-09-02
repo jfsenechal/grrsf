@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Tests\Repository;
 
 use App\Entity\PeriodicityDay;
@@ -44,9 +43,8 @@ class PeriodicityDayRepositoryTest extends BaseRepository
         foreach ($days as $day) {
             self::assertSame($result[$i][0], $day->getEntry()->getName());
             self::assertSame($result[$i][1], $day->getDatePeriodicity()->format('Y-m-d'));
-            $i++;
+            ++$i;
         }
-
     }
 
     public function testFindForDay()

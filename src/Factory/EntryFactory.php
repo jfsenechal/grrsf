@@ -26,7 +26,7 @@ class EntryFactory
         $this->periodicityFactory = $periodicityFactory;
     }
 
-    public  function createNew(): Entry
+    public function createNew(): Entry
     {
         return new Entry();
     }
@@ -52,7 +52,7 @@ class EntryFactory
         return $entry;
     }
 
-    protected  function initPeriodicity(Entry $entry): Periodicity
+    protected function initPeriodicity(Entry $entry): Periodicity
     {
         $periodicity = $this->periodicityFactory->createNew();
         $periodicity->setEntry($entry);

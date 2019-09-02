@@ -66,10 +66,12 @@ class EntryControllerTest extends BaseRepository
 
     /**
      * @dataProvider getMinutes
-     * @param int $hourBegin
-     * @param int $minuteBegin
-     * @param float $minutes
+     *
+     * @param int    $hourBegin
+     * @param int    $minuteBegin
+     * @param float  $minutes
      * @param string $hourEnd
+     *
      * @throws \Exception
      */
     public function testNewMinutes(int $hourBegin, int $minuteBegin, float $minutes, string $hourEnd)
@@ -131,6 +133,7 @@ class EntryControllerTest extends BaseRepository
 
     /**
      * @dataProvider getUnits
+     *
      * @throws \Exception
      */
     public function testNewNoFloat(int $unit)
@@ -178,10 +181,12 @@ class EntryControllerTest extends BaseRepository
 
     /**
      * @dataProvider getHours
-     * @param int $hourBegin
-     * @param int $minuteBegin
-     * @param float $time
+     *
+     * @param int    $hourBegin
+     * @param int    $minuteBegin
+     * @param float  $time
      * @param string $hourEnd
+     *
      * @throws \Exception
      */
     public function testNewHours(int $hourBegin, int $minuteBegin, float $time, string $hourEnd)
@@ -285,9 +290,6 @@ class EntryControllerTest extends BaseRepository
         );
     }
 
-    /**
-     *
-     */
     public function testNewDays()
     {
         $this->loadFixtures();
@@ -328,10 +330,12 @@ class EntryControllerTest extends BaseRepository
 
     /**
      * @dataProvider getExceedTime
-     * @param int $hourBegin
-     * @param int $minuteBegin
-     * @param float $minutes
+     *
+     * @param int    $hourBegin
+     * @param int    $minuteBegin
+     * @param float  $minutes
      * @param string $hourEnd
+     *
      * @throws \Exception
      */
     public function testExceedTime(int $hourBegin, int $minuteBegin, int $hours, string $message)
@@ -364,7 +368,8 @@ class EntryControllerTest extends BaseRepository
 
     /**
      * The first greater than cloture area
-     * The second smaller than open area
+     * The second smaller than open area.
+     *
      * @return array
      */
     public function getExceedTime()
@@ -393,10 +398,8 @@ class EntryControllerTest extends BaseRepository
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'entry_type.yaml',
                 $this->pathFixtures.'users.yaml',
-
             ];
 
         $this->loader->load($files);
     }
-
 }

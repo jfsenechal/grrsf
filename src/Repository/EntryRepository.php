@@ -24,9 +24,10 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Month $monthModel
+     * @param Month     $monthModel
      * @param Area|null $area
      * @param Room|null $room
+     *
      * @return Entry[] Returns an array of Entry objects
      */
     public function findForMonth(Month $monthModel, Area $area = null, Room $room = null)
@@ -39,13 +40,13 @@ class EntryRepository extends ServiceEntityRepository
                 $monthModel->firstOfMonth()->format('Y-m').'%'
             );
 
-        if ($area !== null) {
+        if (null !== $area) {
             $rooms = $this->getRooms($area);
             $qb->andWhere('entry.room IN (:rooms)')
                 ->setParameter('rooms', $rooms);
         }
 
-        if ($room !== null) {
+        if (null !== $room) {
             $qb->andWhere('entry.room = :room')
                 ->setParameter('room', $room);
         }
@@ -58,7 +59,8 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param CarbonInterface $day
-     * @param Room $room
+     * @param Room            $room
+     *
      * @return Entry[]
      */
     public function findByDayAndRoom(CarbonInterface $day, Room $room)
@@ -78,9 +80,9 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @param Entry $entry
-     * @param Room $room
+     * @param Room  $room
+     *
      * @return Entry[]
      */
     public function isBusy(Entry $entry, Room $room)
@@ -101,10 +103,10 @@ class EntryRepository extends ServiceEntityRepository
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
 
-        /**
+        /*
          * en cas de modif
          */
-        if ($entry->getId() !== null) {
+        if (null !== $entry->getId()) {
             $qb->andWhere('entry.id != :id')
                 ->setParameter('id', $entry->getId());
         }
@@ -161,8 +163,8 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param \DateTimeInterface|null $dateTime
-     * @param Area|null $area
-     * @param Room|null $room
+     * @param Area|null               $area
+     * @param Room|null               $room
      *
      * @return Entry[] Returns an array of Entry objects
      */
@@ -170,7 +172,7 @@ class EntryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('entry');
 
-        if ($dateTime !== null) {
+        if (null !== $dateTime) {
             $date = $dateTime->format('Y-m-d');
             $qb->andWhere('entry.start_time LIKE :date')
                 ->setParameter('date', '%'.$date.'%');

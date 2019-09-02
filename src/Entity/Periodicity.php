@@ -21,6 +21,7 @@ class Periodicity
 
     /**
      * Every month, every day, every...
+     *
      * @see PeriodicityConstant::getTypesPeriodicite
      *
      * @ORM\Column(type="integer", nullable=true)
@@ -34,7 +35,9 @@ class Periodicity
 
     /**
      * Monday, tuesday, wednesday...
+     *
      * @see DateProvider::getNamesDaysOfWeek();
+     *
      * @var int[]
      * @ORM\Column(type="array", nullable=true)
      */
@@ -112,12 +115,11 @@ class Periodicity
         $this->entry = $entry;
 
         // set (or unset) the owning side of the relation if necessary
-        $newPeriodicity = $entry === null ? null : $this;
+        $newPeriodicity = null === $entry ? null : $this;
         if ($newPeriodicity !== $entry->getPeriodicity()) {
             $entry->setPeriodicity($newPeriodicity);
         }
 
         return $this;
     }
-
 }

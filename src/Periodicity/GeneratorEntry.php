@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Periodicity;
 
 use App\Entity\Entry;
@@ -10,15 +9,15 @@ use Carbon\Carbon;
 class GeneratorEntry
 {
     /**
-     *
      * @param PeriodicityDay[] $periodicityDays
+     *
      * @return Entry[]
      */
     public function generateEntries(array $periodicityDays)
     {
         $entries = [];
         foreach ($periodicityDays as $periodicityDay) {
-            $entry = clone($periodicityDay->getEntry());
+            $entry = clone $periodicityDay->getEntry();
             $date = Carbon::instance($periodicityDay->getDatePeriodicity());
 
             $startTime = Carbon::instance($entry->getStartTime());

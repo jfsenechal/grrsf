@@ -31,13 +31,13 @@ class UserManagerResourceController extends AbstractController
     }
 
     /**
-     * @Route("/new/index", name="grr_user_manager_index", methods={"GET","POST"})
-     * @Route("/new/user/{user}", name="grr_user_manager_from_user", methods={"GET","POST"})
-     * @Route("/new/area/{area}", name="grr_user_manager_from_area", methods={"GET","POST"})
-     * @Route("/new/room/{room}", name="grr_user_manager_from_room", methods={"GET","POST"})
-     * @ParamConverter("user", options={"mapping"={"user"="id"}})
-     * @ParamConverter("area", options={"mapping"={"area"="id"}})
-     * @ParamConverter("room", options={"mapping"={"room"="id"}})
+     * @Route("/new/index", name="grr_user_manager_index", methods={"GET", "POST"})
+     * @Route("/new/user/{user}", name="grr_user_manager_from_user", methods={"GET", "POST"})
+     * @Route("/new/area/{area}", name="grr_user_manager_from_area", methods={"GET", "POST"})
+     * @Route("/new/room/{room}", name="grr_user_manager_from_room", methods={"GET", "POST"})
+     * @ParamConverter("user", options={"mapping": {"user": "id"}})
+     * @ParamConverter("area", options={"mapping": {"area": "id"}})
+     * @ParamConverter("room", options={"mapping": {"room": "id"}})
      */
     public function new(Request $request, User $user = null, Area $area = null, Room $room = null): Response
     {
@@ -59,7 +59,6 @@ class UserManagerResourceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->handlerUserManagerResource->handleNewUserManagerResource($form);
 
             if ($user) {
@@ -73,7 +72,6 @@ class UserManagerResourceController extends AbstractController
             if ($area) {
                 return $this->redirectToRoute('grr_admin_area_show', ['id' => $area->getId()]);
             }
-
         }
 
         return $this->render(
@@ -99,7 +97,7 @@ class UserManagerResourceController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="security_user_manager_resource_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="security_user_manager_resource_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, UserManagerResource $userManagerResource): Response
     {
@@ -107,7 +105,6 @@ class UserManagerResourceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             return $this->redirectToRoute('security_user_manager_resource_index');
         }
 

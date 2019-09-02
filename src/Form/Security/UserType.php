@@ -35,7 +35,6 @@ class UserType extends AbstractType
                 'email',
                 EmailType::class,
                 [
-
                 ]
             )
             ->add(

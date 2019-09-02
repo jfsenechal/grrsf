@@ -2,8 +2,6 @@
 
 namespace App\Tests\Factory;
 
-
-use App\Entity\Area;
 use App\Entity\Room;
 use App\Factory\AreaFactory;
 use App\Factory\RoomFactory;

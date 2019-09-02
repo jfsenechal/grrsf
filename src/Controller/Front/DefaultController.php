@@ -62,7 +62,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
     /**
      * @Route("/monthview/area/{area}/year/{year}/month/{month}/room/{room}", name="grr_front_month", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
-     * @ParamConverter("room", options={"mapping"={"room"="id"}})
+     * @ParamConverter("room", options={"mapping": {"room": "id"}})
      */
     public function month(Area $area, int $year, int $month, Room $room = null): Response
     {
@@ -85,7 +85,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
     /**
      * @Route("/weekview/area/{area}/year/{year}/month/{month}/week/{week}/room/{room}", name="grr_front_week", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
-     * @ParamConverter("room", options={"mapping"={"room"="id"}})
+     * @ParamConverter("room", options={"mapping": {"room": "id"}})
      */
     public function week(Area $area, int $year, int $month, int $week, Room $room = null): Response
     {
@@ -105,7 +105,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
     /**
      * @Route("/dayview/area/{area}/year/{year}/month/{month}/day/{day}/room/{room}", name="grr_front_day", methods={"GET"})
      * @Entity("area", expr="repository.find(area)")
-     * @ParamConverter("room", options={"mapping"={"room"="id"}})
+     * @ParamConverter("room", options={"mapping": {"room": "id"}})
      */
     public function day(Area $area, int $year, int $month, int $day, Room $room = null): Response
     {

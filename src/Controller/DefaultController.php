@@ -27,7 +27,6 @@ class DefaultController extends AbstractController
     }
 
     /**
-     *
      * @Route("/", name="grr_home", methods={"GET"})
      */
     public function index(): Response

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Setting;
-
 
 class SettingsTypeEntry
 {
@@ -120,5 +118,4 @@ class SettingsTypeEntry
             'CV' => 'CV',
         ];
     }
-
 }

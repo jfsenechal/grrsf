@@ -36,6 +36,7 @@ class Day extends CarbonImmutable
 
     /**
      * @param Entry[]|ArrayCollection $entries
+     *
      * @return Day
      */
     public function setEntries($entries): self

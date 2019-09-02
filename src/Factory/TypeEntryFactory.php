@@ -16,5 +16,4 @@ class TypeEntryFactory
     {
         return new EntryType();
     }
-
 }

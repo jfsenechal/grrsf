@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\GrrBundle\DependencyInjection;
 
 use App\Modules\GrrModuleInterface;
@@ -48,7 +47,7 @@ class GrrExtension extends Extension implements PrependExtensionInterface
     {
         $configs = $this->loadYml('security.yaml');
         foreach ($container->getExtensions() as $name => $extension) {
-            if ($name === 'security') {
+            if ('security' === $name) {
                 $container->prependExtensionConfig($name, $configs);
                 break;
             }
@@ -60,7 +59,7 @@ class GrrExtension extends Extension implements PrependExtensionInterface
         try {
             return Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/'.$name));
         } catch (ParseException $e) {
-            printf("Unable to parse the YAML string: %s", $e->getMessage());
+            printf('Unable to parse the YAML string: %s', $e->getMessage());
         }
 
         return [];
