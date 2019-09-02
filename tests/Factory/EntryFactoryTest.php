@@ -65,7 +65,7 @@ class EntryFactoryTest extends WebTestCase
         $room->setName('Salle1');
 
         $date = Carbon::create($year, $month, $day, $hour, $minute);
-        $endTime = $date->copy()->addSeconds($area->getDurationDefaultEntry());
+        $endTime = $date->copy()->addMinutes($area->getDurationDefaultEntry());
 
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
 

@@ -45,7 +45,7 @@ class EntryFactory
         $entry->setArea($area);
         $entry->setRoom($room);
         $entry->setStartTime($date);
-        $endTime = $date->copy()->addSeconds($area->getDurationDefaultEntry());
+        $endTime = $date->copy()->addMinutes($area->getDurationDefaultEntry());
         $entry->setEndTime($endTime);
         $entry->setPeriodicity($this->initPeriodicity($entry));
 

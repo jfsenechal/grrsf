@@ -80,3 +80,5 @@ room:
         placeholder: Sélectionnez d'abord un domaine
 settings:
   title: Paramètres de Grr
+yes: oui
+no: non

@@ -60,6 +60,7 @@ area:
       label: Nom
     access:
       label: Accès restreint
+      help: Seul les personnes autorisées pourront consulter
     orderDisplay:
       label: Ordre d'affichage
     ipAdr:
@@ -79,12 +80,12 @@ area:
       label: Nombre de minutes à ajouter à l'heure de fin de journée pour avoir la fin réelle d'une journée
     timeInterval:
       label: Plus petit bloc réservable
-      help: En secondes (1800 secondes = 1/2 heure)
+      help: En minutes
     dureeParDefautReservationArea:
       label: Durée par défaut d'une réservation
-      help: En secondes, doit être un multiple de la valeur précédente
-    twentyfourhourFormatArea:
-      label: Format d'affichage du temps
+      help: En minutes, doit être un multiple de la valeur précédente
+    hour_in_24h:
+      label: Heure, au format 24h
     dureeMaxResaArea:
       label: Durée maximale en minutes
       help: Une journée = 1440 minutes) pour une réservation (-1 si pas de restriction)
@@ -119,7 +120,7 @@ login:
   password: Mot de passe
   title: Authentification
   remember:
-    me: 'messages'
+    me: Se souvenir de moi
 btn:
   login: S'identifier
   entry:

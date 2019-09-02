@@ -30,6 +30,7 @@ class AreaType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => 'area.form.access.label',
+                    'help' => 'area.form.access.help',
                     'required' => false,
                 ]
             )
@@ -107,12 +108,9 @@ class AreaType extends AbstractType
             )
             ->add(
                 'is24HourFormat',
-                ChoiceType::class,
+                CheckboxType::class,
                 [
-                    'label' => 'area.form.twentyfourhourFormatArea.label',
-                    'choices' => array_flip(SettingsArea::getAffichageFormat()),
-                    'multiple' => false,
-                    'expanded' => true,
+                    'label' => 'area.form.hour_in_24h.label',
                 ]
             )
             ->add(

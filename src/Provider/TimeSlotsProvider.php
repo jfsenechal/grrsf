@@ -81,7 +81,7 @@ class TimeSlotsProvider
         );
         $fin = $this->carbonFactory->create($daySelected->year, $daySelected->month, $daySelected->day, $hourEnd, 0, 0);
 
-        return Carbon::parse($debut)->secondsUntil($fin, $timeInterval);
+        return Carbon::parse($debut)->minutesUntil($fin, $timeInterval);
     }
 
     /**
@@ -97,6 +97,6 @@ class TimeSlotsProvider
         $entryHourBegin = $entry->getStartTime();
         $entryHourEnd = $entry->getEndTime();
 
-        return Carbon::parse($entryHourBegin)->secondsUntil($entryHourEnd, $area->getTimeInterval());
+        return Carbon::parse($entryHourBegin)->minutesUntil($entryHourEnd, $area->getTimeInterval());
     }
 }

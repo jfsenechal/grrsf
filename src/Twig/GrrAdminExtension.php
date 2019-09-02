@@ -4,7 +4,6 @@ namespace App\Twig;
 
 use App\Provider\DateProvider;
 use App\Repository\EntryTypeRepository;
-use App\Setting\SettingsArea;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -36,18 +35,13 @@ class GrrAdminExtension extends AbstractExtension
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
             new TwigFilter(
                 'grrJoursSemaine', function ($value) {
-                    return $this->joursSemaine($value);
-                }
-            ),
-            new TwigFilter(
-                'grrHourFormat', function (int $value) {
-                    return $this->hourFormat($value);
-                }
+                return $this->joursSemaine($value);
+            }
             ),
             new TwigFilter(
                 'grrDisplayColor', function (string $value) {
-                    return $this->displayColor($value);
-                }, ['is_safe' => ['html']]
+                return $this->displayColor($value);
+            }, ['is_safe' => ['html']]
             ),
         ];
     }
@@ -65,11 +59,6 @@ class GrrAdminExtension extends AbstractExtension
         $jours = DateProvider::getNamesDaysOfWeek();
 
         return isset($jours[$value]) ? $jours[$value] : $value;
-    }
-
-    public function hourFormat(int $value)
-    {
-        return SettingsArea::getAffichageFormat()[$value];
     }
 
     public function displayColor(string $value)

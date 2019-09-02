@@ -62,9 +62,9 @@ class Area
     private $week_start;
 
     /**
-     * @var int
+     * @var bool
      *
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $is_24_hour_format;
     /**
@@ -140,8 +140,8 @@ class Area
         $this->order_display = 0;
         $this->week_start = 0;
         $this->days_of_week_to_display = [1,2,3,4,5];
-        $this->time_interval = 1800;
-        $this->duration_default_entry = 1800;
+        $this->time_interval = 30;
+        $this->duration_default_entry = 30;
         $this->duration_maximum_entry = -1;
         $this->minutes_to_add_to_end_time = 0;
         $this->max_booking = -1;
@@ -223,18 +223,6 @@ class Area
     public function setWeekStart(int $week_start): self
     {
         $this->week_start = $week_start;
-
-        return $this;
-    }
-
-    public function getIs24HourFormat(): ?int
-    {
-        return $this->is_24_hour_format;
-    }
-
-    public function setIs24HourFormat(int $is_24_hour_format): self
-    {
-        $this->is_24_hour_format = $is_24_hour_format;
 
         return $this;
     }
@@ -381,6 +369,18 @@ class Area
     public function setRestricted(bool $restricted): self
     {
         $this->restricted = $restricted;
+
+        return $this;
+    }
+
+    public function getIs24HourFormat(): ?bool
+    {
+        return $this->is_24_hour_format;
+    }
+
+    public function setIs24HourFormat(bool $is_24_hour_format): self
+    {
+        $this->is_24_hour_format = $is_24_hour_format;
 
         return $this;
     }
