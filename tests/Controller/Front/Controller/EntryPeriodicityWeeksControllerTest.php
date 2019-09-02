@@ -150,7 +150,6 @@ class EntryPeriodicityWeeksControllerTest extends BaseRepository
         $form['entry[periodicity][weekRepeat]']->setValue(1);
 
         $this->administrator->submit($form);
-        var_dump($this->administrator->getResponse()->getContent());
         $this->administrator->followRedirect();
 
         $this->assertContains(
@@ -175,7 +174,7 @@ class EntryPeriodicityWeeksControllerTest extends BaseRepository
         self::assertResponseIsSuccessful();
 
         $end = clone $today;
-        $end->modify('+5 days');
+        $end->modify('+5 weeks');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['entry[name]']->setValue('My reservation repeated');
@@ -192,10 +191,45 @@ class EntryPeriodicityWeeksControllerTest extends BaseRepository
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
 
-        //var_dump($this->administrator->getResponse()->getContent());
-
         $this->assertContains(
             'Chaque semaine',
+            $this->administrator->getResponse()->getContent()
+        );
+    }
+
+    public function testMore24h()
+    {
+        $this->loadFixtures();
+
+        $today = new \DateTime();
+        $esquare = $this->getArea('Hdv');
+        $room = $this->getRoom('Salle Conseil');
+
+        $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
+                'Y'
+            ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/9/minute/30';
+
+        $crawler = $this->administrator->request('GET', $url);
+        self::assertResponseIsSuccessful();
+
+        $today->modify('+5 weeks');
+
+        $form = $crawler->selectButton('Sauvegarder')->form();
+        $form['entry[name]']->setValue('My reservation repeated');
+        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_DAYS);
+        $form['entry[duration][time]']->setValue(3);
+        $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
+        $form['entry[periodicity][endTime][day]']->setValue($today->format('j'));
+        $form['entry[periodicity][endTime][month]']->setValue($today->format('n'));
+        $form['entry[periodicity][endTime][year]']->setValue($today->format('Y'));
+        $form['entry[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
+        $form['entry[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
+        $form['entry[periodicity][weekRepeat]']->setValue(1);
+
+        $this->administrator->submit($form);
+
+        $this->assertContains(
+            'La durée ne peut excéder une journée pour une répétition par semaine',
             $this->administrator->getResponse()->getContent()
         );
     }

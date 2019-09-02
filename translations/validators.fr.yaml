@@ -25,5 +25,6 @@ periodicity:
     every_year: La date de fin de la périodicité doit au moins dépasser d'un an par rapport à la de de fin de la réservation
     every_weeks:
       endtime: La date de fin de la périodicité doit au moins dépasser d'une semaine par rapport à la de de fin de la réservation
+      more24h: La durée ne peut excéder une journée pour une répétition par semaine
       no_day: Aucun jours de la semaine sélectionnés
       no_repeat: Aucune répétition choisie

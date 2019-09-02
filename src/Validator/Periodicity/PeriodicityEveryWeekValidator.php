@@ -32,6 +32,7 @@ class PeriodicityEveryWeekValidator extends ConstraintValidator
         $entryEndTime = Carbon::instance($entry->getEndTime());
         $daysSelected = $value->getWeekDays();
         $weekRepeat = $value->getWeekRepeat();
+        $entryStartTime = Carbon::instance($entry->getStartTime());
 
         /**
          * Si aucun jour de la semaine sélectionné
@@ -58,6 +59,14 @@ class PeriodicityEveryWeekValidator extends ConstraintValidator
                 ->addViolation();
 
             return;
+        }
+
+        /**
+         * En répétion par semaine, la réservation ne peut s'étaler sur plusieurs jours
+         */
+        if ($entryStartTime->diffInDays($entryEndTime) > 1) {
+            $this->context->buildViolation('periodicity.constraint.every_weeks.more24h')
+                ->addViolation();
         }
     }
 }
