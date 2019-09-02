@@ -197,10 +197,10 @@ class EntryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handlerEntry->handleEditEntry($form, $entry);
 
-            return $this->redirectToRoute(
+       /*     return $this->redirectToRoute(
                 'grr_front_entry_show',
                 ['id' => $entry->getId()]
-            );
+            );*/
         }
 
         return $this->render(

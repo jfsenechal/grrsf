@@ -17,8 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="grr_entry")
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
  *
- * @AppAssert\BusyRoom
- * @AppAssert\AreaTimeSlot
+ * @AppAssert\BusyRoom()
+ * @AppAssert\AreaTimeSlot()
  */
 class Entry
 {

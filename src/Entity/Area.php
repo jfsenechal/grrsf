@@ -42,7 +42,7 @@ class Area
 
     /**
      * @var int
-     *
+     * @Assert\LessThan(propertyPath="end_time", message="area.constraint.start_smaller_end")
      * @ORM\Column(type="smallint", nullable=false)
      */
     private $start_time;
@@ -139,7 +139,7 @@ class Area
         $this->is_24_hour_format = true;
         $this->order_display = 0;
         $this->week_start = 0;
-        $this->days_of_week_to_display = [];
+        $this->days_of_week_to_display = [1,2,3,4,5];
         $this->time_interval = 1800;
         $this->duration_default_entry = 1800;
         $this->duration_maximum_entry = -1;

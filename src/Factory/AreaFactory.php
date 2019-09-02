@@ -16,4 +16,5 @@ class AreaFactory
     {
         return new Area();
     }
+
 }

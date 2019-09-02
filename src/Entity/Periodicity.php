@@ -5,10 +5,14 @@ namespace App\Entity;
 use App\Doctrine\IdEntityTrait;
 use App\Periodicity\PeriodicityConstant;
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator as AppAssert;
 
 /**
  * @ORM\Table(name="grr_periodicity")
  * @ORM\Entity(repositoryClass="App\Repository\PeriodicityRepository")
+ *
+ *
+ * @AppAssert\Periodicity()
  */
 class Periodicity
 {
