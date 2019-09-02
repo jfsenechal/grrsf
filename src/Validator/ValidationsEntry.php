@@ -3,6 +3,7 @@
 namespace App\Validator;
 
 use App\Entity\Entry;
+use App\Validator\Entry\BusyRoom;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

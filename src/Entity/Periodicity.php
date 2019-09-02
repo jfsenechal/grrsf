@@ -13,7 +13,10 @@ use App\Validator\Periodicity as AppAssertPeriodicity;
  *
  *
  * @AppAssertPeriodicity\Periodicity()
- * @AppAssertPeriodicity\PeriodicityWeek()
+ * @AppAssertPeriodicity\PeriodicityEveryDay()
+ * @AppAssertPeriodicity\PeriodicityEveryMonth()
+ * @AppAssertPeriodicity\PeriodicityEveryYear()
+ * @AppAssertPeriodicity\PeriodicityEveryWeek()
  */
 class Periodicity
 {

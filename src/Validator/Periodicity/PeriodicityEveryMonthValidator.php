@@ -2,15 +2,16 @@
 
 namespace App\Validator\Periodicity;
 
+use App\Periodicity\PeriodicityConstant;
 use Carbon\Carbon;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class PeriodicityValidator extends ConstraintValidator
+class PeriodicityEveryMonthValidator extends ConstraintValidator
 {
     /**
      * @param \App\Entity\Periodicity $value
-     * @param \App\Validator\\Periodicity\Periodicity $constraint
+     * @param PeriodicityEveryWeek $constraint
      */
     public function validate($value, Constraint $constraint)
     {
@@ -24,7 +25,7 @@ class PeriodicityValidator extends ConstraintValidator
 
         $typePeriodicity = $value->getType();
 
-        if (null === $typePeriodicity) {
+        if ($typePeriodicity !== PeriodicityConstant::EVERY_MONTH_SAME_DAY && $typePeriodicity !== PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY) {
             return;
         }
 
@@ -33,10 +34,11 @@ class PeriodicityValidator extends ConstraintValidator
         $entryEndTime = Carbon::instance($entry->getEndTime());
 
         /**
-         * La date de fin de la periodicité doit être plus grande que la date de fin de la réservation
+         * En répétition par mois, il y doit y avoir au moins un mois de différence entre la fin de la périodicité
+         * et la fin de la réservation
          */
-        if ($endPeriodicity->format('Y-m-d') <= $entryEndTime->format('Y-m-d')) {
-            $this->context->buildViolation('periodicity.constraint.end_time')
+        if ($entryEndTime->diffInMonths($endPeriodicity) < 1) {
+            $this->context->buildViolation('periodicity.constraint.every_month')
                 ->addViolation();
 
             return;

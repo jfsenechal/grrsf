@@ -2,15 +2,16 @@
 
 namespace App\Validator\Periodicity;
 
+use App\Periodicity\PeriodicityConstant;
 use Carbon\Carbon;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class PeriodicityValidator extends ConstraintValidator
+class PeriodicityEveryDayValidator extends ConstraintValidator
 {
     /**
      * @param \App\Entity\Periodicity $value
-     * @param \App\Validator\\Periodicity\Periodicity $constraint
+     * @param PeriodicityEveryWeek $constraint
      */
     public function validate($value, Constraint $constraint)
     {
@@ -22,24 +23,33 @@ class PeriodicityValidator extends ConstraintValidator
             throw new \UnexpectedValueException($value, 'Periodicity');
         }
 
-        $typePeriodicity = $value->getType();
-
-        if (null === $typePeriodicity) {
+        if ($value->getType() !== PeriodicityConstant::EVERY_DAY) {
             return;
         }
 
         $endPeriodicity = Carbon::instance($value->getEndTime());
         $entry = $value->getEntry();
+        $entryStartTime = Carbon::instance($entry->getStartTime());
         $entryEndTime = Carbon::instance($entry->getEndTime());
 
         /**
-         * La date de fin de la periodicité doit être plus grande que la date de fin de la réservation
+         * En répétion tous les jours, la réservation ne peut s'étaler sur plusieurs jours
          */
-        if ($endPeriodicity->format('Y-m-d') <= $entryEndTime->format('Y-m-d')) {
+        if ($entryStartTime->diffInDays($entryEndTime) > 1) {
+            $this->context->buildViolation('periodicity.constraint.every_day')
+                ->addViolation();
+        }
+
+        /**
+         * En répétition par jour, il y doit y avoir au moins un jour de différence entre la fin de la périodicité
+         * et la fin de la réservation
+         */
+        if ($entryEndTime->diffInDays($endPeriodicity) < 1) {
             $this->context->buildViolation('periodicity.constraint.end_time')
                 ->addViolation();
 
             return;
         }
+
     }
 }
