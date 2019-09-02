@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Doctrine\IdEntityTrait;
 use App\Model\DurationModel;
 use App\Model\TimeSlot;
-use App\Validator as AppAssert;
+use App\Validator\Entry as AppAssertEntry;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,8 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="grr_entry")
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
  *
- * @AppAssert\BusyRoom()
- * @AppAssert\AreaTimeSlot()
+ * @AppAssertEntry\BusyRoom()
+ * @AppAssertEntry\AreaTimeSlot()
  */
 class Entry
 {

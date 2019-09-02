@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validator;
+namespace App\Validator\Entry;
 
 use App\Entity\Entry;
 use Symfony\Component\Validator\Constraint;
@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class AreaTimeSlotValidator extends ConstraintValidator
 {
     /**
-     * @param Entry        $entry
+     * @param Entry $entry
      * @param AreaTimeSlot $constraint
      */
     public function validate($entry, Constraint $constraint)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validator;
+namespace App\Validator\Periodicity;
 
 use App\Periodicity\PeriodicityConstant;
 use Carbon\Carbon;
@@ -11,7 +11,7 @@ class PeriodicityValidator extends ConstraintValidator
 {
     /**
      * @param \App\Entity\Periodicity $value
-     * @param \App\Validator\Periodicity $constraint
+     * @param \App\Validator\\Periodicity\Periodicity $constraint
      */
     public function validate($value, Constraint $constraint)
     {

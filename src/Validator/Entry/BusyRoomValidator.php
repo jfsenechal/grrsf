@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validator;
+namespace App\Validator\Entry;
 
 use App\Entity\Entry;
 use App\Repository\EntryRepository;
