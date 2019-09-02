@@ -3,9 +3,16 @@
 {% block title %}{{ 'entry.new.title'|trans({},'actions') }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'entry.new.title'|trans({},'actions') }}</h1>
 
-    {% include('@grr_front/entry/form/_form.html.twig') %}
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            <h3>{{ 'entry.new.title'|trans({},'actions') }}</h3>
+        </div>
+
+        <div class="card-body">
+            {% include('@grr_front/entry/form/_form.html.twig') %}
+        </div>
+    </div>
 
     <br/>
     <a href="{{ path('grr_front_entry_index') }}"><i
