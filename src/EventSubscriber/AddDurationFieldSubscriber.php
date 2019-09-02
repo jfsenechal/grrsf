@@ -73,7 +73,11 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
 
         if ($type === 0) {
 
+            $scale = 0;
             $duration = $this->durationFactory->createByEntry($entry);
+            if ($duration->getUnit() == DurationModel::UNIT_TIME_HOURS) {
+                $scale = 1;
+            }
 
             $form->add(
                 'duration',
@@ -81,6 +85,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
                 [
                     'label' => false,
                     'data' => $duration,
+                    'scale' => $scale,
                     'constraints' => [
                         new DurationConstraint(),
                     ],
