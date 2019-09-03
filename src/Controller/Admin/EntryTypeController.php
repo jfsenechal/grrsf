@@ -73,7 +73,7 @@ class EntryTypeController extends AbstractController
             $this->entryTypeRepository->insert($entryType);
 
             $entryTypeEvent = new EntryTypeEvent($entryType);
-            $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::ENTRY_TYPE_NEW_SUCCESS);
+            $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::NEW_SUCCESS);
 
             return $this->redirectToRoute('grr_admin_type_entry_index');
         }
@@ -112,7 +112,7 @@ class EntryTypeController extends AbstractController
             $this->entryTypeRepository->flush();
 
             $entryTypeEvent = new EntryTypeEvent($entryType);
-            $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::ENTRY_TYPE_EDIT_SUCCESS);
+            $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::EDIT_SUCCESS);
 
             return $this->redirectToRoute(
                 'grr_admin_type_entry_index',
@@ -141,7 +141,7 @@ class EntryTypeController extends AbstractController
             $this->entryTypeRepository->flush();
 
             $entryTypeEvent = new EntryTypeEvent($entryType);
-            $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::ENTRY_TYPE_DELETE_SUCCESS);
+            $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_admin_type_entry_index');

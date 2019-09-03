@@ -2,17 +2,14 @@
 
 namespace App\Events;
 
-use App\Entity\Entry;
 use App\Entity\Security\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event
 {
-    const USER_NEW_INITIALIZE = 'grr.user.new.initialize';
-    const USER_NEW_SUCCESS = 'grr.user.new.success';
-    const USER_NEW_COMPLETE = 'grr.user.new.complete';
-    const USER_EDIT_SUCCESS = 'grr.user.edit.success';
-    const USER_DELETE_SUCCESS = 'grr.user.delete.success';
+    const NEW_SUCCESS = 'grr.user.new.success';
+    const EDIT_SUCCESS = 'grr.user.edit.success';
+    const DELETE_SUCCESS = 'grr.user.delete.success';
 
     /**
      * @var User

@@ -79,7 +79,7 @@ class UserController extends AbstractController
             $this->utilisateurRepository->insert($utilisateur);
 
             $userEvent = new UserEvent($utilisateur);
-            $this->eventDispatcher->dispatch($userEvent, UserEvent::USER_NEW_SUCCESS);
+            $this->eventDispatcher->dispatch($userEvent, UserEvent::NEW_SUCCESS);
 
             return $this->redirectToRoute('grr_admin_user_show', ['id' => $utilisateur->getId()]);
         }
@@ -118,7 +118,7 @@ class UserController extends AbstractController
             $this->utilisateurRepository->flush();
 
             $userEvent = new UserEvent($utilisateur);
-            $this->eventDispatcher->dispatch($userEvent, UserEvent::USER_EDIT_SUCCESS);
+            $this->eventDispatcher->dispatch($userEvent, UserEvent::EDIT_SUCCESS);
 
             return $this->redirectToRoute(
                 'grr_admin_user_show',
@@ -145,7 +145,7 @@ class UserController extends AbstractController
             $this->utilisateurRepository->flush();
 
             $userEvent = new UserEvent($utilisateur);
-            $this->eventDispatcher->dispatch($userEvent, UserEvent::USER_DELETE_SUCCESS);
+            $this->eventDispatcher->dispatch($userEvent, UserEvent::DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_admin_user_index');

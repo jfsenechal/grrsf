@@ -7,11 +7,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class EntryEvent extends Event
 {
-    const ENTRY_NEW_INITIALIZE = 'grr.entry.new.initialize';
-    const ENTRY_NEW_SUCCESS = 'grr.entry.new.success';
-    const ENTRY_NEW_COMPLETE = 'grr.entry.new.complete';
-    const ENTRY_EDIT_SUCCESS = 'grr.entry.edit.success';
-    const ENTRY_DELETE_SUCCESS = 'grr.entry.delete.success';
+    const NEW_INITIALIZE = 'grr.entry.new.initialize';
+    const NEW_SUCCESS = 'grr.entry.new.success';
+    const EDIT_SUCCESS = 'grr.entry.edit.success';
+    const DELETE_SUCCESS = 'grr.entry.delete.success';
 
     /**
      * @var Entry

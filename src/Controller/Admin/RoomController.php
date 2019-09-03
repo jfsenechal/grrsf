@@ -59,7 +59,7 @@ class RoomController extends AbstractController
             $this->roomManager->insert($room);
 
             $roomEvent = new RoomEvent($room);
-            $this->eventDispatcher->dispatch($roomEvent, RoomEvent::ROOM_NEW_SUCCESS);
+            $this->eventDispatcher->dispatch($roomEvent, RoomEvent::NEW_SUCCESS);
 
             return $this->redirectToRoute('grr_admin_room_show', ['id' => $room->getId()]);
         }
@@ -101,7 +101,7 @@ class RoomController extends AbstractController
             $this->roomManager->flush();
 
             $roomEvent = new RoomEvent($room);
-            $this->eventDispatcher->dispatch($roomEvent, RoomEvent::ROOM_EDIT_SUCCESS);
+            $this->eventDispatcher->dispatch($roomEvent, RoomEvent::EDIT_SUCCESS);
 
             return $this->redirectToRoute(
                 'grr_admin_room_show',
@@ -131,7 +131,7 @@ class RoomController extends AbstractController
             $this->roomManager->flush();
 
             $roomEvent = new RoomEvent($room);
-            $this->eventDispatcher->dispatch($roomEvent, RoomEvent::ROOM_DELETE_SUCCESS);
+            $this->eventDispatcher->dispatch($roomEvent, RoomEvent::DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_admin_area_show', ['id' => $area->getId()]);

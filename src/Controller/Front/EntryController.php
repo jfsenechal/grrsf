@@ -123,7 +123,7 @@ class EntryController extends AbstractController
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
 
         $entryEvent = new EntryEvent($entry);
-        $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_NEW_INITIALIZE);
+        $this->eventDispatcher->dispatch($entryEvent, EntryEvent::NEW_INITIALIZE);
 
         $form = $this->createForm(EntryType::class, $entry);
 
@@ -133,7 +133,7 @@ class EntryController extends AbstractController
             $this->handlerEntry->handleNewEntry($form, $entry);
 
             $entryEvent = new EntryEvent($entry);
-            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_NEW_SUCCESS);
+            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::NEW_SUCCESS);
 
             return $this->redirectToRoute(
                 'grr_front_entry_show',
@@ -198,7 +198,7 @@ class EntryController extends AbstractController
             $this->handlerEntry->handleEditEntry($form, $entry);
 
             $entryEvent = new EntryEvent($entry);
-            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_EDIT_SUCCESS);
+            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::EDIT_SUCCESS);
 
             return $this->redirectToRoute(
                 'grr_front_entry_show',
@@ -226,7 +226,7 @@ class EntryController extends AbstractController
             $this->handlerEntry->handleDeleteEntry($entry);
 
             $entryEvent = new EntryEvent($entry);
-            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_DELETE_SUCCESS);
+            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_home');

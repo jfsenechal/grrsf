@@ -82,7 +82,7 @@ area:
   flash:
     new: Le domaine a bien été ajouté
     edit: Le domaine a bien été modifié
-    delte: Le domaine a bien été supprimé
+    delete: Le domaine a bien été supprimé
   form:
     select:
       label: Domaine

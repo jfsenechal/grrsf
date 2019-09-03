@@ -7,11 +7,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class RoomEvent extends Event
 {
-    const ROOM_NEW_INITIALIZE = 'grr.room.new.initialize';
-    const ROOM_NEW_SUCCESS = 'grr.room.new.success';
-    const ROOM_NEW_COMPLETE = 'grr.room.new.complete';
-    const ROOM_EDIT_SUCCESS = 'grr.room.edit.success';
-    const ROOM_DELETE_SUCCESS = 'grr.room.delete.success';
+    const NEW_SUCCESS = 'grr.room.new.success';
+    const EDIT_SUCCESS = 'grr.room.edit.success';
+    const DELETE_SUCCESS = 'grr.room.delete.success';
 
     /**
      * @var Room

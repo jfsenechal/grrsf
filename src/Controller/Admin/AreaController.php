@@ -88,7 +88,7 @@ class AreaController extends AbstractController
             $this->areaManager->insert($area);
 
             $areaEvent = new AreaEvent($area);
-            $this->eventDispatcher->dispatch($areaEvent, AreaEvent::AREA_NEW_SUCCESS);
+            $this->eventDispatcher->dispatch($areaEvent, AreaEvent::NEW_SUCCESS);
 
             return $this->redirectToRoute('grr_admin_area_show', ['id' => $area->getId()]);
         }
@@ -132,7 +132,7 @@ class AreaController extends AbstractController
             $this->areaManager->flush();
 
             $areaEvent = new AreaEvent($area);
-            $this->eventDispatcher->dispatch($areaEvent, AreaEvent::AREA_EDIT_SUCCESS);
+            $this->eventDispatcher->dispatch($areaEvent, AreaEvent::EDIT_SUCCESS);
 
             return $this->redirectToRoute(
                 'grr_admin_area_show',
@@ -163,7 +163,7 @@ class AreaController extends AbstractController
             $this->areaManager->flush();
 
             $areaEvent = new AreaEvent($area);
-            $this->eventDispatcher->dispatch($areaEvent, AreaEvent::AREA_DELETE_SUCCESS);
+            $this->eventDispatcher->dispatch($areaEvent, AreaEvent::DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_admin_area_index');
