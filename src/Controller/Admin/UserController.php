@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Security\User;
+use App\Events\UserEvent;
 use App\Factory\UserFactory;
 use App\Form\Security\UserAdminType;
 use App\Form\Security\UserNewType;
@@ -10,6 +11,7 @@ use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,15 +35,21 @@ class UserController extends AbstractController
      * @var UserFactory
      */
     private $userFactory;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     public function __construct(
         UserRepository $utilisateurRepository,
         UserFactory $userFactory,
-        UserManager $utilisateurManager
+        UserManager $utilisateurManager,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->utilisateurRepository = $utilisateurRepository;
         $this->utilisateurManager = $utilisateurManager;
         $this->userFactory = $userFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -69,6 +77,9 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->utilisateurManager->encodePassword($utilisateur, $utilisateur->getPassword());
             $this->utilisateurRepository->insert($utilisateur);
+
+            $userEvent = new UserEvent($utilisateur);
+            $this->eventDispatcher->dispatch($userEvent, UserEvent::USER_NEW_SUCCESS);
 
             return $this->redirectToRoute('grr_admin_user_show', ['id' => $utilisateur->getId()]);
         }
@@ -106,6 +117,9 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->utilisateurRepository->flush();
 
+            $userEvent = new UserEvent($utilisateur);
+            $this->eventDispatcher->dispatch($userEvent, UserEvent::USER_EDIT_SUCCESS);
+
             return $this->redirectToRoute(
                 'grr_admin_user_show',
                 ['id' => $utilisateur->getId()]
@@ -129,6 +143,9 @@ class UserController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getEmail(), $request->request->get('_token'))) {
             $this->utilisateurRepository->remove($utilisateur);
             $this->utilisateurRepository->flush();
+
+            $userEvent = new UserEvent($utilisateur);
+            $this->eventDispatcher->dispatch($userEvent, UserEvent::USER_DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_admin_user_index');

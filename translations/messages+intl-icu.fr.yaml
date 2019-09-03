@@ -15,6 +15,9 @@ menu:
     logout: Me déconnecter
     account: Compte
 user:
+  flash:
+    new: L'utilisateur a bien été ajouté
+    edit: L'utilisateur a bien été modifié
   title: Utilisateur
   account:
     area:
@@ -45,6 +48,10 @@ user:
     roles:
       label: Rôle(s)
 entry:
+  flash:
+    new: La réservation a bien été ajoutée
+    edit: La réservation a bien été modifiée
+    delte: La réservation a bien été supprimée
   form:
     user:
       select:
@@ -72,6 +79,10 @@ authorization:
 usermanagerresource:
     title: Gestion des droits
 area:
+  flash:
+    new: Le domaine a bien été ajouté
+    edit: Le domaine a bien été modifié
+    delte: Le domaine a bien été supprimé
   form:
     select:
       label: Domaine
@@ -81,6 +92,10 @@ area:
   resource: Administrateur de resource
 
 room:
+  flash:
+    new: La ressource a bien été ajoutée
+    edit: La ressource a bien été modifiée
+    delete: La ressource a bien été supprimé
   form:
     select:
       label: Ressource
@@ -97,3 +112,8 @@ not:
   found: Rien de trouvé
 Yes: Oui
 actions: Actions
+typeEntry:
+  flash:
+    new: Le type de réservation a bien été ajouté
+    edit: Le type de réservation a bien été modifié
+    delete: Le type de réservatio a bien été supprimée

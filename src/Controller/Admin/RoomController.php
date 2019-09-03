@@ -4,11 +4,14 @@ namespace App\Controller\Admin;
 
 use App\Entity\Area;
 use App\Entity\Room;
+use App\Events\AreaEvent;
+use App\Events\RoomEvent;
 use App\Factory\RoomFactory;
 use App\Form\RoomType;
 use App\Manager\RoomManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,13 +29,19 @@ class RoomController extends AbstractController
      * @var RoomManager
      */
     private $roomManager;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     public function __construct(
         RoomFactory $roomFactory,
-        RoomManager $roomManager
+        RoomManager $roomManager,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->roomFactory = $roomFactory;
         $this->roomManager = $roomManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -48,6 +57,9 @@ class RoomController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->roomManager->insert($room);
+
+            $roomEvent = new RoomEvent($room);
+            $this->eventDispatcher->dispatch($roomEvent, RoomEvent::ROOM_NEW_SUCCESS);
 
             return $this->redirectToRoute('grr_admin_room_show', ['id' => $room->getId()]);
         }
@@ -88,6 +100,9 @@ class RoomController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->roomManager->flush();
 
+            $roomEvent = new RoomEvent($room);
+            $this->eventDispatcher->dispatch($roomEvent, RoomEvent::ROOM_EDIT_SUCCESS);
+
             return $this->redirectToRoute(
                 'grr_admin_room_show',
                 ['id' => $room->getId()]
@@ -114,6 +129,9 @@ class RoomController extends AbstractController
             $this->roomManager->removeEntries($room);
             $this->roomManager->remove($room);
             $this->roomManager->flush();
+
+            $roomEvent = new RoomEvent($room);
+            $this->eventDispatcher->dispatch($roomEvent, RoomEvent::ROOM_DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_admin_area_show', ['id' => $area->getId()]);

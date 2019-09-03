@@ -10,6 +10,8 @@ class EntryEvent extends Event
     const ENTRY_NEW_INITIALIZE = 'grr.entry.new.initialize';
     const ENTRY_NEW_SUCCESS = 'grr.entry.new.success';
     const ENTRY_NEW_COMPLETE = 'grr.entry.new.complete';
+    const ENTRY_EDIT_SUCCESS = 'grr.entry.edit.success';
+    const ENTRY_DELETE_SUCCESS = 'grr.entry.delete.success';
 
     /**
      * @var Entry

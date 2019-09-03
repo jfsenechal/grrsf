@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Area;
+use App\Events\AreaEvent;
 use App\Factory\AreaFactory;
 use App\Form\AreaType;
 use App\Manager\AreaManager;
@@ -10,6 +11,7 @@ use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,17 +37,23 @@ class AreaController extends AbstractController
      * @var RoomRepository
      */
     private $roomRepository;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     public function __construct(
         AreaFactory $areaFactory,
         AreaRepository $areaRepository,
         AreaManager $areaManager,
-        RoomRepository $roomRepository
+        RoomRepository $roomRepository,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->areaFactory = $areaFactory;
         $this->areaManager = $areaManager;
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -76,7 +84,11 @@ class AreaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->areaManager->insert($area);
+
+            $areaEvent = new AreaEvent($area);
+            $this->eventDispatcher->dispatch($areaEvent, AreaEvent::AREA_NEW_SUCCESS);
 
             return $this->redirectToRoute('grr_admin_area_show', ['id' => $area->getId()]);
         }
@@ -119,6 +131,9 @@ class AreaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->areaManager->flush();
 
+            $areaEvent = new AreaEvent($area);
+            $this->eventDispatcher->dispatch($areaEvent, AreaEvent::AREA_EDIT_SUCCESS);
+
             return $this->redirectToRoute(
                 'grr_admin_area_show',
                 [
@@ -146,6 +161,9 @@ class AreaController extends AbstractController
             $this->areaManager->removeRooms($area);
             $this->areaManager->remove($area);
             $this->areaManager->flush();
+
+            $areaEvent = new AreaEvent($area);
+            $this->eventDispatcher->dispatch($areaEvent, AreaEvent::AREA_DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_admin_area_index');

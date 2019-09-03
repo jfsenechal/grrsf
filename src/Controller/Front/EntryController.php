@@ -96,12 +96,12 @@ class EntryController extends AbstractController
      * @Entity("area", expr="repository.find(area)")
      * @Entity("room", expr="repository.find(room)")
      *
-     * @param Request  $request
-     * @param Area     $area
-     * @param Room     $room
-     * @param int      $year
-     * @param int      $month
-     * @param int      $day
+     * @param Request $request
+     * @param Area $area
+     * @param Room $room
+     * @param int $year
+     * @param int $month
+     * @param int $day
      * @param int|null $hour
      * @param int|null $minute
      *
@@ -123,7 +123,7 @@ class EntryController extends AbstractController
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
 
         $entryEvent = new EntryEvent($entry);
-        $this->eventDispatcher->dispatch($entryEvent);
+        $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_NEW_INITIALIZE);
 
         $form = $this->createForm(EntryType::class, $entry);
 
@@ -133,7 +133,7 @@ class EntryController extends AbstractController
             $this->handlerEntry->handleNewEntry($form, $entry);
 
             $entryEvent = new EntryEvent($entry);
-            $this->eventDispatcher->dispatch($entryEvent);
+            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_NEW_SUCCESS);
 
             return $this->redirectToRoute(
                 'grr_front_entry_show',
@@ -197,10 +197,13 @@ class EntryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handlerEntry->handleEditEntry($form, $entry);
 
-       /*     return $this->redirectToRoute(
+            $entryEvent = new EntryEvent($entry);
+            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_EDIT_SUCCESS);
+
+            return $this->redirectToRoute(
                 'grr_front_entry_show',
                 ['id' => $entry->getId()]
-            );*/
+            );
         }
 
         return $this->render(
@@ -222,7 +225,8 @@ class EntryController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$entry->getId(), $request->request->get('_token'))) {
             $this->handlerEntry->handleDeleteEntry($entry);
 
-            $this->addFlash('success', 'flash.entry.delete');
+            $entryEvent = new EntryEvent($entry);
+            $this->eventDispatcher->dispatch($entryEvent, EntryEvent::ENTRY_DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_home');

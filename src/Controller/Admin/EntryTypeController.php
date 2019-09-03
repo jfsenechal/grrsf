@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\EntryType;
+use App\Events\EntryTypeEvent;
+use App\Events\UserEvent;
 use App\Factory\TypeEntryFactory;
 use App\Form\TypeEntryType;
 use App\Manager\TypeEntryManager;
@@ -12,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route("/admin/entry/type")
@@ -35,7 +38,8 @@ class EntryTypeController extends AbstractController
     public function __construct(
         TypeEntryFactory $typeEntryFactory,
         EntryTypeRepository $entryTypeRepository,
-        TypeEntryManager $typeEntryManager
+        TypeEntryManager $typeEntryManager,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->entryTypeRepository = $entryTypeRepository;
         $this->typeEntryManager = $typeEntryManager;
@@ -68,6 +72,9 @@ class EntryTypeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entryTypeRepository->insert($entryType);
 
+            $entryTypeEvent = new EntryTypeEvent($entryType);
+            $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::ENTRY_TYPE_NEW_SUCCESS);
+
             return $this->redirectToRoute('grr_admin_type_entry_index');
         }
 
@@ -96,18 +103,21 @@ class EntryTypeController extends AbstractController
     /**
      * @Route("/{id}/edit", name="grr_admin_type_entry_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, EntryType $typeArea): Response
+    public function edit(Request $request, EntryType $entryType): Response
     {
-        $form = $this->createForm(TypeEntryType::class, $typeArea);
+        $form = $this->createForm(TypeEntryType::class, $entryType);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entryTypeRepository->flush();
 
+            $entryTypeEvent = new EntryTypeEvent($entryType);
+            $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::ENTRY_TYPE_EDIT_SUCCESS);
+
             return $this->redirectToRoute(
                 'grr_admin_type_entry_index',
                 [
-                    'id' => $typeArea->getId(),
+                    'id' => $entryType->getId(),
                 ]
             );
         }
@@ -115,7 +125,7 @@ class EntryTypeController extends AbstractController
         return $this->render(
             '@grr_admin/type_entry/edit.html.twig',
             [
-                'type_entry' => $typeArea,
+                'type_entry' => $entryType,
                 'form' => $form->createView(),
             ]
         );
@@ -129,6 +139,9 @@ class EntryTypeController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$entryType->getId(), $request->request->get('_token'))) {
             $this->entryTypeRepository->persist($entryType);
             $this->entryTypeRepository->flush();
+
+            $entryTypeEvent = new EntryTypeEvent($entryType);
+            $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::ENTRY_TYPE_DELETE_SUCCESS);
         }
 
         return $this->redirectToRoute('grr_admin_type_entry_index');
