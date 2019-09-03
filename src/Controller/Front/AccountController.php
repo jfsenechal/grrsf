@@ -2,11 +2,13 @@
 
 namespace App\Controller\Front;
 
-use App\Form\Security\UserType;
+use App\Events\UserEvent;
 use App\Form\Security\UserPasswordType;
+use App\Form\Security\UserType;
 use App\Manager\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,11 +28,19 @@ class AccountController extends AbstractController
      * @var UserManager
      */
     private $userManager;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
-    public function __construct(UserManager $userManager, UserPasswordEncoderInterface $userPasswordEncoder)
-    {
+    public function __construct(
+        UserManager $userManager,
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->userManager = $userManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -88,6 +98,9 @@ class AccountController extends AbstractController
             $user->setPassword($this->userManager->encodePassword($user, $password));
 
             $this->userManager->flush();
+
+            $userEvent = new UserEvent($user);
+            $this->eventDispatcher->dispatch($userEvent, UserEvent::CHANGE_PASSWORD_SUCCESS);
 
             return $this->redirectToRoute('grr_account_show');
         }

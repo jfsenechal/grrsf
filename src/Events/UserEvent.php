@@ -10,6 +10,7 @@ class UserEvent extends Event
     const NEW_SUCCESS = 'grr.user.new.success';
     const EDIT_SUCCESS = 'grr.user.edit.success';
     const DELETE_SUCCESS = 'grr.user.delete.success';
+    const CHANGE_PASSWORD_SUCCESS = 'grr.user.password.success';
 
     /**
      * @var User

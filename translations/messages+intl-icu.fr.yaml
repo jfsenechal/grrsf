@@ -18,6 +18,8 @@ user:
   flash:
     new: L'utilisateur a bien été ajouté
     edit: L'utilisateur a bien été modifié
+    delete: L'utilisateur a bien été supprimé
+    password: Le mot de passe a bien été changé
   title: Utilisateur
   account:
     area:

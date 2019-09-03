@@ -97,6 +97,11 @@ class FlashSubscriber implements EventSubscriberInterface
         $this->flashBag->add('success', 'area.flash.new');
     }
 
+    public function onUserPassword(UserEvent $userEvent)
+    {
+        $this->flashBag->add('success', 'user.flash.password');
+    }
+
     public static function getSubscribedEvents()
     {
         return [
@@ -119,6 +124,7 @@ class FlashSubscriber implements EventSubscriberInterface
             UserEvent::NEW_SUCCESS => 'onUserNew',
             UserEvent::EDIT_SUCCESS => 'onUserEdit',
             UserEvent::DELETE_SUCCESS => 'onUserDelete',
+            UserEvent::CHANGE_PASSWORD_SUCCESS => 'onUserPassword',
         ];
 
     }

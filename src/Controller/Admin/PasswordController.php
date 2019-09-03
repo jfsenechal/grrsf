@@ -3,10 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Security\User;
+use App\Events\UserEvent;
 use App\Form\Security\UserPasswordType;
 use App\Manager\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,10 +22,17 @@ class PasswordController extends AbstractController
      * @var UserManager
      */
     private $userManager;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
-    public function __construct(UserManager $userManager)
-    {
+    public function __construct(
+        UserManager $userManager,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->userManager = $userManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -39,6 +48,9 @@ class PasswordController extends AbstractController
             $password = $data->getPassword();
             $user->setPassword($this->userManager->encodePassword($user, $password));
             $this->userManager->flush();
+
+            $userEvent = new UserEvent($user);
+            $this->eventDispatcher->dispatch($userEvent, UserEvent::CHANGE_PASSWORD_SUCCESS);
         }
 
         return $this->render(
