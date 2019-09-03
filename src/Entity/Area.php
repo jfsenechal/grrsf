@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Doctrine\IdEntityTrait;
-use App\Entity\Security\UserManagerResource;
+use App\Entity\Security\UserAuthorization;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -127,9 +127,9 @@ class Area
     private $rooms;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserManagerResource", mappedBy="area", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserAuthorization", mappedBy="area", orphanRemoval=true)
      */
-    private $users_manager_resource;
+    private $authorizations;
 
     public function __construct()
     {
@@ -147,7 +147,7 @@ class Area
         $this->max_booking = -1;
         $this->restricted = false;
         $this->rooms = new ArrayCollection();
-        $this->users_manager_resource = new ArrayCollection();
+        $this->authorizations = new ArrayCollection();
     }
 
     public function __toString()
@@ -331,27 +331,27 @@ class Area
     }
 
     /**
-     * @return Collection|UserManagerResource[]
+     * @return Collection|UserAuthorization[]
      */
-    public function getUsersManagerResource(): Collection
+    public function getAuthorizations(): Collection
     {
-        return $this->users_manager_resource;
+        return $this->authorizations;
     }
 
-    public function addUsersManagerResource(UserManagerResource $usersManagerResource): self
+    public function addUsersManagerResource(UserAuthorization $usersManagerResource): self
     {
-        if (!$this->users_manager_resource->contains($usersManagerResource)) {
-            $this->users_manager_resource[] = $usersManagerResource;
+        if (!$this->authorizations->contains($usersManagerResource)) {
+            $this->authorizations[] = $usersManagerResource;
             $usersManagerResource->setArea($this);
         }
 
         return $this;
     }
 
-    public function removeUsersManagerResource(UserManagerResource $usersManagerResource): self
+    public function removeUsersManagerResource(UserAuthorization $usersManagerResource): self
     {
-        if ($this->users_manager_resource->contains($usersManagerResource)) {
-            $this->users_manager_resource->removeElement($usersManagerResource);
+        if ($this->authorizations->contains($usersManagerResource)) {
+            $this->authorizations->removeElement($usersManagerResource);
             // set the owning side to null (unless already changed)
             if ($usersManagerResource->getArea() === $this) {
                 $usersManagerResource->setArea(null);
@@ -381,6 +381,29 @@ class Area
     public function setIs24HourFormat(bool $is_24_hour_format): self
     {
         $this->is_24_hour_format = $is_24_hour_format;
+
+        return $this;
+    }
+
+    public function addAuthorization(UserAuthorization $authorization): self
+    {
+        if (!$this->authorizations->contains($authorization)) {
+            $this->authorizations[] = $authorization;
+            $authorization->setArea($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthorization(UserAuthorization $authorization): self
+    {
+        if ($this->authorizations->contains($authorization)) {
+            $this->authorizations->removeElement($authorization);
+            // set the owning side to null (unless already changed)
+            if ($authorization->getArea() === $this) {
+                $authorization->setArea(null);
+            }
+        }
 
         return $this;
     }

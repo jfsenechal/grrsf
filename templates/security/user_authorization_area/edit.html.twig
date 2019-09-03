@@ -1,4 +1,4 @@
-{% extends '@grr_admin/layout_admin.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}{{'usermanagerresource.title'|trans}}{% endblock %}
 
@@ -9,10 +9,10 @@
         </div>
 
         <div class="card-body">
-            {# {{ user_manager_resource.room }} {{ user_manager_resource.user }}#}
-            {{ include('security/user_manager_resource/_form.html.twig') }}
+            {{ include('security/user_authorization_area/_form.html.twig', {'button_label': 'Update'}) }}
         </div>
     </div>
+
 {% endblock %}
 
 {% block scripts %}

@@ -9,7 +9,7 @@
 namespace App\EventSubscriber;
 
 use App\Form\Type\RoomSelectType;
-use App\Model\UserManagerResourceModel;
+use App\Model\AuthorizationResourceModel;
 use App\Repository\RoomRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -27,7 +27,7 @@ class AddRoomsFieldSubscriber implements EventSubscriberInterface
     public function onPreSetData(FormEvent $event)
     {
         /**
-         * @var UserManagerResourceModel
+         * @var AuthorizationResourceModel
          */
         $entry = $event->getData();
         $area = $entry->getArea();

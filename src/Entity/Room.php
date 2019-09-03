@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Doctrine\IdEntityTrait;
-use App\Entity\Security\UserManagerResource;
+use App\Entity\Security\UserAuthorization;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -172,9 +172,9 @@ class Room
     private $entries;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserManagerResource", mappedBy="room", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserAuthorization", mappedBy="room", orphanRemoval=true)
      */
-    private $users_manager_resource;
+    private $authorizations;
 
     public function __construct(Area $area)
     {
@@ -195,7 +195,7 @@ class Room
         $this->whoCanSee = 0;
         $this->maximum_booking = -1;
         $this->entries = new ArrayCollection();
-        $this->users_manager_resource = new ArrayCollection();
+        $this->authorizations = new ArrayCollection();
     }
 
     public function __toString()
@@ -487,30 +487,53 @@ class Room
     }
 
     /**
-     * @return Collection|UserManagerResource[]
+     * @return Collection|UserAuthorization[]
      */
-    public function getUsersManagerResource(): Collection
+    public function getAuthorizations(): Collection
     {
-        return $this->users_manager_resource;
+        return $this->authorizations;
     }
 
-    public function addUsersManagerResource(UserManagerResource $usersManagerResource): self
+    public function addUsersManagerResource(UserAuthorization $usersManagerResource): self
     {
-        if (!$this->users_manager_resource->contains($usersManagerResource)) {
-            $this->users_manager_resource[] = $usersManagerResource;
+        if (!$this->authorizations->contains($usersManagerResource)) {
+            $this->authorizations[] = $usersManagerResource;
             $usersManagerResource->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeUsersManagerResource(UserManagerResource $usersManagerResource): self
+    public function removeUsersManagerResource(UserAuthorization $usersManagerResource): self
     {
-        if ($this->users_manager_resource->contains($usersManagerResource)) {
-            $this->users_manager_resource->removeElement($usersManagerResource);
+        if ($this->authorizations->contains($usersManagerResource)) {
+            $this->authorizations->removeElement($usersManagerResource);
             // set the owning side to null (unless already changed)
             if ($usersManagerResource->getRoom() === $this) {
                 $usersManagerResource->setRoom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addAuthorization(UserAuthorization $authorization): self
+    {
+        if (!$this->authorizations->contains($authorization)) {
+            $this->authorizations[] = $authorization;
+            $authorization->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthorization(UserAuthorization $authorization): self
+    {
+        if ($this->authorizations->contains($authorization)) {
+            $this->authorizations->removeElement($authorization);
+            // set the owning side to null (unless already changed)
+            if ($authorization->getRoom() === $this) {
+                $authorization->setRoom(null);
             }
         }
 

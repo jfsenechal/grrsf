@@ -5,10 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
-use App\Entity\Security\UserManagerResource;
-use App\Form\Security\UserManagerResourceType;
-use App\Handler\HandlerUserManagerResource;
-use App\Model\UserManagerResourceModel;
+use App\Entity\Security\UserAuthorization;
+use App\Form\Security\AuthorizationResourceType;
+use App\Handler\HandlerAuthorizationResource;
+use App\Model\AuthorizationResourceModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,30 +18,30 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/admin/manager/resource")
  */
-class UserManagerResourceController extends AbstractController
+class AuthorizationResourceController extends AbstractController
 {
     /**
-     * @var HandlerUserManagerResource
+     * @var HandlerAuthorizationResource
      */
     private $handlerUserManagerResource;
 
-    public function __construct(HandlerUserManagerResource $handlerUserManagerResource)
+    public function __construct(HandlerAuthorizationResource $handlerUserManagerResource)
     {
         $this->handlerUserManagerResource = $handlerUserManagerResource;
     }
 
     /**
-     * @Route("/new/index", name="grr_user_manager_index", methods={"GET", "POST"})
-     * @Route("/new/user/{user}", name="grr_user_manager_from_user", methods={"GET", "POST"})
-     * @Route("/new/area/{area}", name="grr_user_manager_from_area", methods={"GET", "POST"})
-     * @Route("/new/room/{room}", name="grr_user_manager_from_room", methods={"GET", "POST"})
+     * @Route("/new/index", name="grr_user_manager_room_index", methods={"GET", "POST"})
+     * @Route("/new/user/{user}", name="grr_user_manager_room_from_user", methods={"GET", "POST"})
+     * @Route("/new/area/{area}", name="grr_user_manager_room_from_area", methods={"GET", "POST"})
+     * @Route("/new/room/{room}", name="grr_user_manager_room_from_room", methods={"GET", "POST"})
      * @ParamConverter("user", options={"mapping": {"user": "id"}})
      * @ParamConverter("area", options={"mapping": {"area": "id"}})
      * @ParamConverter("room", options={"mapping": {"room": "id"}})
      */
     public function new(Request $request, User $user = null, Area $area = null, Room $room = null): Response
     {
-        $userManagerResource = new UserManagerResourceModel();
+        $userManagerResource = new AuthorizationResourceModel();
 
         if ($area) {
             $userManagerResource->setArea($area);
@@ -55,7 +55,7 @@ class UserManagerResourceController extends AbstractController
             $userManagerResource->setUsers([$user]);
         }
 
-        $form = $this->createForm(UserManagerResourceType::class, $userManagerResource);
+        $form = $this->createForm(AuthorizationResourceType::class, $userManagerResource);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,7 +86,7 @@ class UserManagerResourceController extends AbstractController
     /**
      * @Route("/{id}", name="security_user_manager_resource_show", methods={"GET"})
      */
-    public function show(UserManagerResource $userManagerResource): Response
+    public function show(UserAuthorization $userManagerResource): Response
     {
         return $this->render(
             'security/user_manager_resource/show.html.twig',
@@ -99,9 +99,9 @@ class UserManagerResourceController extends AbstractController
     /**
      * @Route("/{id}/edit", name="security_user_manager_resource_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, UserManagerResource $userManagerResource): Response
+    public function edit(Request $request, UserAuthorization $userManagerResource): Response
     {
-        $form = $this->createForm(UserManagerResourceType::class, $userManagerResource);
+        $form = $this->createForm(AuthorizationResourceType::class, $userManagerResource);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -120,7 +120,7 @@ class UserManagerResourceController extends AbstractController
     /**
      * @Route("/{id}", name="security_user_manager_resource_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, UserManagerResource $userManagerResource): Response
+    public function delete(Request $request, UserAuthorization $userManagerResource): Response
     {
         if ($this->isCsrfTokenValid('delete'.$userManagerResource->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

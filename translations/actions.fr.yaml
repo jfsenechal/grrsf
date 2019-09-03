@@ -9,6 +9,7 @@ form:
     search: Rechercher
     password: Mot de passe
     perimission: Droits
+    new: Ajouter
   search:
     placeholder: Rechercher
 records:

@@ -5,14 +5,14 @@ namespace App\Form\Security;
 use App\EventSubscriber\AddAreaFieldSubscriber;
 use App\EventSubscriber\AddRoomsFieldSubscriber;
 use App\EventSubscriber\AddUserFieldSubscriber;
-use App\Model\UserManagerResourceModel;
+use App\Model\AuthorizationResourceModel;
 use App\Repository\Security\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserManagerResourceType extends AbstractType
+class AuthorizationResourceType extends AbstractType
 {
     /**
      * @var UserRepository
@@ -27,10 +27,12 @@ class UserManagerResourceType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $choices = [
             1 => 'usermanager.form.area_level.administrator.label',
             2 => 'usermanager.form.area_level.manager.label',
         ];
+
         $builder
             ->add(
                 'area_level',
@@ -39,7 +41,7 @@ class UserManagerResourceType extends AbstractType
                     'label' => 'usermanager.form.area_level.label',
                     'help' => 'usermanager.form.area_level.help',
                     'choices' => array_flip($choices),
-                    'placeholder' => 'None',
+                    'placeholder' => 'usermanager.form.area_level.placeholder',
                     'required' => false,
                     'expanded' => true,
                 ]
@@ -53,7 +55,7 @@ class UserManagerResourceType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => UserManagerResourceModel::class,
+                'data_class' => AuthorizationResourceModel::class,
             ]
         );
     }

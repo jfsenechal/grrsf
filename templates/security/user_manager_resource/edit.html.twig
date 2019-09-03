@@ -1,15 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit UserManagerResource{% endblock %}
+{% block title %}{{'usermanagerresource.title'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>Edit UserManagerResource</h1>
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            <h3>{{ 'usermanagerresource.title'|trans }}  {{ user_manager_resource.area }}</h3>
+        </div>
 
-    {{ include('security/user_manager_resource/_form.html.twig', {'button_label': 'Update'}) }}
-
+        <div class="card-body">
+            {{ include('security/user_manager_resource/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+    </div>
 
 {% endblock %}
-
 
 {% block scripts %}
     {% include '@grr_front/account/_select_room_js.html.twig' %}

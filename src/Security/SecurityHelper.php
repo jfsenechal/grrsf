@@ -5,23 +5,23 @@ namespace App\Security;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
-use App\Repository\Security\UserManagerResourceRepository;
+use App\Repository\Security\AuthorizationRepository;
 
 class SecurityHelper
 {
     /**
-     * @var UserManagerResourceRepository
+     * @var AuthorizationRepository
      */
-    private $userManagerResourceRepository;
+    private $authorizationRepository;
 
-    public function __construct(UserManagerResourceRepository $userManagerResourceRepository)
+    public function __construct(AuthorizationRepository $authorizationRepository)
     {
-        $this->userManagerResourceRepository = $userManagerResourceRepository;
+        $this->authorizationRepository = $authorizationRepository;
     }
 
     public function isAreaAdministrator(User $user, Area $area): bool
     {
-        if ($this->userManagerResourceRepository->findOneBy(
+        if ($this->authorizationRepository->findOneBy(
             ['user' => $user, 'area' => $area, 'is_area_administrator' => true]
         )) {
             return true;
@@ -32,7 +32,7 @@ class SecurityHelper
 
     public function isAreaManager(User $user, Area $area): bool
     {
-        if ($this->userManagerResourceRepository->findOneBy(
+        if ($this->authorizationRepository->findOneBy(
             ['user' => $user, 'area' => $area, 'is_area_manager' => true]
         )) {
             return true;
@@ -45,7 +45,7 @@ class SecurityHelper
     {
         $area = $room->getArea();
 
-        if ($this->userManagerResourceRepository->findOneBy(['user' => $user, 'area' => $area])) {
+        if ($this->authorizationRepository->findOneBy(['user' => $user, 'area' => $area])) {
             return true;
         }
 
@@ -56,7 +56,7 @@ class SecurityHelper
     {
         $area = $room->getArea();
 
-        if ($this->userManagerResourceRepository->findOneBy(['user' => $user, 'area' => $area])) {
+        if ($this->authorizationRepository->findOneBy(['user' => $user, 'area' => $area])) {
             return true;
         }
 
@@ -79,7 +79,7 @@ class SecurityHelper
             return true;
         }
 
-        if ($this->userManagerResourceRepository->findOneBy(['user' => $user, 'room' => $room])) {
+        if ($this->authorizationRepository->findOneBy(['user' => $user, 'room' => $room])) {
             return true;
         }
 
@@ -105,7 +105,7 @@ class SecurityHelper
     }
 
     /**
-     * @param Room      $room
+     * @param Room $room
      * @param User|null $user null => user anonyme
      *
      * @return bool

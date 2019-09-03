@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="card bg-light1 mb-3">
+    <div class="card bg-light mb-3">
         <div class="card-header">
            <h2>{{ area.name }}</h2>
         </div>
@@ -52,11 +52,7 @@
                         <tr>
                             <th>{{ 'area.form.hour_in_24h.label'|trans }}</th>
                             <td>
-                                {% if area.is24HourFormat %}
-                                    {{ 'yes'|trans }}
-                                {% else %}
-                                    {{ 'no'|trans }}
-                                {% endif %}
+                                {{ area.is24HourFormat ? 'Yes' : 'No' | trans }}
                             </td>
                         </tr>
                         </tbody>
@@ -100,12 +96,7 @@
                 </div>
             </div>
 
-
             {% include '@grr_admin/area/_list_rooms.html.twig' %}
-
-
-            <h3 class="text-success">Droits</h3>
-            {% include 'security/user_manager_resource/_detail_permissions.html.twig' with {'manages': area.usersManagerResource} %}
 
         </div>
     </div>

@@ -6,7 +6,7 @@ use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
 
-class UserManagerResourceModel
+class AuthorizationResourceModel
 {
     /**
      * 1 => administrator

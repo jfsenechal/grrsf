@@ -1,16 +1,16 @@
 {% extends '@grr_admin/layout_admin.html.twig' %}
 
-{% block title %}{{'usermanagerresource.title'|trans}}{% endblock %}
+{% block title %}{{'usermanager.area.title'|trans}}{% endblock %}
 
 {% block body %}
     <div class="card bg-light mb-3">
         <div class="card-header">
-            <h3>{{ 'usermanagerresource.title'|trans }}  {{ user_manager_resource.area }}</h3>
+            <h3>{{ 'usermanager.area.title'|trans }}  {{ authorizationArea.area }}</h3>
         </div>
 
         <div class="card-body">
             {# {{ user_manager_resource.room }} {{ user_manager_resource.user }}#}
-            {{ include('security/user_manager_resource/_form.html.twig') }}
+            {{ include('security/user_authorization_area/_form.html.twig') }}
         </div>
     </div>
 {% endblock %}

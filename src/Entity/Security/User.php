@@ -65,14 +65,13 @@ class User implements UserInterface
     private $room_default;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserManagerResource", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserAuthorization", mappedBy="user", orphanRemoval=true)
      */
-    private $users_manager_resource;
+    private $authorizations;
 
     public function __construct()
     {
-        $this->managerAreas = new ArrayCollection();
-        $this->users_manager_resource = new ArrayCollection();
+        $this->authorizations = new ArrayCollection();
     }
 
     public function __toString()
@@ -234,35 +233,37 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|UserManagerResource[]
+     * @return Collection|UserAuthorization[]
      */
-    public function getUsersManagerResource(): Collection
+    public function getAuthorizations(): Collection
     {
-        return $this->users_manager_resource;
+        return $this->authorizations;
     }
 
-    public function addUsersManagerResource(UserManagerResource $usersManagerResource): self
+    public function addAuthorization(UserAuthorization $authorization): self
     {
-        if (!$this->users_manager_resource->contains($usersManagerResource)) {
-            $this->users_manager_resource[] = $usersManagerResource;
-            $usersManagerResource->setUser($this);
+        if (!$this->authorizations->contains($authorization)) {
+            $this->authorizations[] = $authorization;
+            $authorization->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeUsersManagerResource(UserManagerResource $usersManagerResource): self
+    public function removeAuthorization(UserAuthorization $authorization): self
     {
-        if ($this->users_manager_resource->contains($usersManagerResource)) {
-            $this->users_manager_resource->removeElement($usersManagerResource);
+        if ($this->authorizations->contains($authorization)) {
+            $this->authorizations->removeElement($authorization);
             // set the owning side to null (unless already changed)
-            if ($usersManagerResource->getUser() === $this) {
-                $usersManagerResource->setUser(null);
+            if ($authorization->getUser() === $this) {
+                $authorization->setUser(null);
             }
         }
 
         return $this;
     }
+
+
 
     /*
      * STOP

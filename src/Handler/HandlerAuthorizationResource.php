@@ -5,21 +5,21 @@ namespace App\Handler;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
-use App\Entity\Security\UserManagerResource;
-use App\Manager\UserManagerResourceManager;
-use App\Model\UserManagerResourceModel;
+use App\Entity\Security\UserAuthorization;
+use App\Manager\AuthorizationManager;
+use App\Model\AuthorizationResourceModel;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
 
-class HandlerUserManagerResource
+class HandlerAuthorizationResource
 {
     /**
-     * @var UserManagerResourceManager
+     * @var AuthorizationManager
      */
     private $userManagerResourceManager;
 
     public function __construct(
-        UserManagerResourceManager $userManagerResourceManager
+        AuthorizationManager $userManagerResourceManager
     ) {
         $this->userManagerResourceManager = $userManagerResourceManager;
     }
@@ -27,7 +27,7 @@ class HandlerUserManagerResource
     public function handleNewUserManagerResource(FormInterface $form)
     {
         /**
-         * @var UserManagerResourceModel
+         * @var AuthorizationResourceModel
          */
         $data = $form->getData();
 
@@ -52,7 +52,7 @@ class HandlerUserManagerResource
         $areaLevel = $data->getAreaLevel();
 
         foreach ($users as $user) {
-            $userManagerResource = new UserManagerResource();
+            $userManagerResource = new UserAuthorization();
             $userManagerResource->setUser($user);
             if (1 == $areaLevel) {
                 $userManagerResource->setArea($area);
@@ -62,13 +62,13 @@ class HandlerUserManagerResource
             }
             if (2 == $areaLevel) {
                 $userManagerResource->setArea($area);
-                $userManagerResource->setIsAreaManager(true);
+                $userManagerResource->setIsRoomadministrator(true);
                 $this->userManagerResourceManager->insert($userManagerResource);
                 continue;
             }
 
             foreach ($rooms as $room) {
-                $userManagerResource = new UserManagerResource();
+                $userManagerResource = new UserAuthorization();
                 $userManagerResource->setUser($user);
                 $userManagerResource->setRoom($room);
                 $this->userManagerResourceManager->insert($userManagerResource);
