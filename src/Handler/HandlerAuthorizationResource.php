@@ -27,54 +27,31 @@ class HandlerAuthorizationResource
     public function handleNewUserManagerResource(FormInterface $form)
     {
         /**
-         * @var AuthorizationResourceModel
+         * @var AuthorizationResourceModel $data
          */
         $data = $form->getData();
-
         /**
-         * @var User[]|ArrayCollection
+         * @var User[]|ArrayCollection $users
          */
         $users = $data->getUsers();
-        /**
-         * @var Room[]|ArrayCollection
-         */
-        $rooms = $data->getRooms();
         /**
          * @var Area
          */
         $area = $data->getArea();
         /**
-         * 1 => administrator
-         * 2 => manager.
-         *
-         * @var int
+         * @var Room[]|ArrayCollection $rooms
          */
-        $areaLevel = $data->getAreaLevel();
+        $rooms = $data->getRooms();
 
         foreach ($users as $user) {
-            $userManagerResource = new UserAuthorization();
-            $userManagerResource->setUser($user);
-            if (1 == $areaLevel) {
-                $userManagerResource->setArea($area);
-                $userManagerResource->setIsAreaAdministrator(true);
-                $this->userManagerResourceManager->insert($userManagerResource);
-                continue;
-            }
-            if (2 == $areaLevel) {
-                $userManagerResource->setArea($area);
-                $userManagerResource->setIsRoomadministrator(true);
-                $this->userManagerResourceManager->insert($userManagerResource);
-                continue;
-            }
-
+            $userAuthorization = new UserAuthorization();
+            $userAuthorization->setUser($user);
             foreach ($rooms as $room) {
-                $userManagerResource = new UserAuthorization();
-                $userManagerResource->setUser($user);
-                $userManagerResource->setRoom($room);
-                $this->userManagerResourceManager->insert($userManagerResource);
+                $userAuthorization = new UserAuthorization();
+                $userAuthorization->setUser($user);
+                $userAuthorization->setRoom($room);
+                $this->userManagerResourceManager->insert($userAuthorization);
             }
         }
     }
-
-    // $this->userManagerResourceManager->insert($userManagerResource);
 }

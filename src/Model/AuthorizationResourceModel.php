@@ -5,24 +5,17 @@ namespace App\Model;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class AuthorizationResourceModel
 {
-    /**
-     * 1 => administrator
-     * 2 => manager.
-     *
-     * @var int|null
-     */
-    private $area_level;
-
     /**
      * @var Area|null
      */
     protected $area;
 
     /**
-     * @var Room[]|array
+     * @var Room[]|ArrayCollection
      */
     protected $rooms;
 
@@ -32,19 +25,14 @@ class AuthorizationResourceModel
     protected $users;
 
     /**
-     * @return int|null
+     * @var bool
      */
-    public function getAreaLevel(): ?int
-    {
-        return $this->area_level;
-    }
+    private $resource_administrator;
 
-    /**
-     * @param int|null $area_level
-     */
-    public function setAreaLevel(?int $area_level): void
+    public function __construct()
     {
-        $this->area_level = $area_level;
+        $this->resource_administrator = false;
+        $this->rooms = new ArrayCollection();
     }
 
     /**
@@ -64,7 +52,7 @@ class AuthorizationResourceModel
     }
 
     /**
-     * @return Room[]|array
+     * @return Room[]|ArrayCollection
      */
     public function getRooms()
     {
@@ -74,9 +62,27 @@ class AuthorizationResourceModel
     /**
      * @param Room[]|array $rooms
      */
-    public function setRooms($rooms): void
+    public function setRooms(array $rooms): void
     {
         $this->rooms = $rooms;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->rooms->contains($room)) {
+            $this->rooms[] = $room;
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        if ($this->rooms->contains($room)) {
+            $this->rooms->removeElement($room);
+        }
+
+        return $this;
     }
 
     /**
@@ -94,4 +100,21 @@ class AuthorizationResourceModel
     {
         $this->users = $users;
     }
+
+    /**
+     * @return bool
+     */
+    public function isResourceAdministrator(): bool
+    {
+        return $this->resource_administrator;
+    }
+
+    /**
+     * @param bool $resource_administrator
+     */
+    public function setResourceAdministrator(bool $resource_administrator): void
+    {
+        $this->resource_administrator = $resource_administrator;
+    }
+
 }

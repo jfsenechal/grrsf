@@ -38,13 +38,22 @@ class HandlerAuthorizationArea
          * @var Area
          */
         $area = $data->getArea();
+        /**
+         * @var int $role
+         */
+        $role = $data->getRole();
 
         foreach ($users as $user) {
-            $userManagerResource = new UserAuthorization();
-            $userManagerResource->setUser($user);
-            $userManagerResource->setArea($area);
-            $userManagerResource->setIsAreaAdministrator(true);
-            $this->authorizationManager->insert($userManagerResource);
+            $userAuthorization = new UserAuthorization();
+            if ($role === 1) {
+                $userAuthorization->setIsAreaAdministrator(true);
+            }
+            if ($role === 2) {
+                $userAuthorization->setIsResourceAdministrator(true);
+            }
+            $userAuthorization->setUser($user);
+            $userAuthorization->setArea($area);
+            $this->authorizationManager->insert($userAuthorization);
         }
     }
 

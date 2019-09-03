@@ -49,17 +49,41 @@ class UserAuthorization
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $is_room_administrator;
+    private $is_resource_administrator;
 
     public function __construct()
     {
         $this->is_area_administrator = false;
-        $this->is_room_administrator = false;
+        $this->is_resource_administrator = false;
     }
 
     public function __toString()
     {
         return '';
+    }
+
+    public function getIsAreaAdministrator(): ?bool
+    {
+        return $this->is_area_administrator;
+    }
+
+    public function setIsAreaAdministrator(bool $is_area_administrator): self
+    {
+        $this->is_area_administrator = $is_area_administrator;
+
+        return $this;
+    }
+
+    public function getIsResourceAdministrator(): ?bool
+    {
+        return $this->is_resource_administrator;
+    }
+
+    public function setIsResourceAdministrator(bool $is_resource_administrator): self
+    {
+        $this->is_resource_administrator = $is_resource_administrator;
+
+        return $this;
     }
 
     public function getUser(): ?User
@@ -98,47 +122,6 @@ class UserAuthorization
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isIsAreaAdministrator(): bool
-    {
-        return $this->is_area_administrator;
-    }
-
-    /**
-     * @param bool $is_area_administrator
-     */
-    public function setIsAreaAdministrator(bool $is_area_administrator): void
-    {
-        $this->is_area_administrator = $is_area_administrator;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isIsRoomadministrator(): bool
-    {
-        return $this->is_room_administrator;
-    }
-
-    /**
-     * @param bool $is_room_administrator
-     */
-    public function setIsRoomadministrator(bool $is_room_administrator): void
-    {
-        $this->is_room_administrator = $is_room_administrator;
-    }
-
-    public function getIsAreaAdministrator(): ?bool
-    {
-        return $this->is_area_administrator;
-    }
-
-    public function getIsRoomAdministrator(): ?bool
-    {
-        return $this->is_room_administrator;
-    }
 
 
 }

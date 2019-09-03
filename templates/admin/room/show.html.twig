@@ -121,8 +121,5 @@
         </tbody>
     </table>
 
-    <h3>Droits</h3>
-    {% include 'security/user_manager_resource/_detail_permissions.html.twig' with {'manages': room.usersManagerResource} %}
-
     {{ include('@grr_admin/room/_delete_form.html.twig') }}
 {% endblock %}

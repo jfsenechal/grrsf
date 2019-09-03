@@ -21,7 +21,7 @@
         </tr>
     {% else %}
         <tr>
-            <td colspan="2">{{ 'not.found'|trans }}</td>
+            <td colspan="3">{{ 'not.found'|trans }}</td>
         </tr>
     {% endfor %}
     </tbody>
@@ -42,7 +42,7 @@
                 {{ 'authorization.delete.confirm'|trans() }}
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{ path('grr_user_authorization_area_delete') }}">
+                <form method="post" action="{{ path('grr_user_authorization_delete') }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="text" name="idauth" id="idauth" value="">
                     <input type="text" name="_tokenauth" id="tokenauth" value="">

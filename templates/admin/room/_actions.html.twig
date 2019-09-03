@@ -1,7 +1,7 @@
 <a href="{{ path('grr_admin_room_edit', { 'id': room.id }) }}" role="button"
    class="btn btn-primary"><i class="far fa-edit"></i> {{ 'form.btn.edit'|trans({}, 'actions') }}</a>
 
-<a href="{{ path('grr_user_manager_room_from_room', { 'room': room.id }) }}" role="button"
+<a href="{{ path('grr_authorization_resource_show', { 'id': room.id }) }}" role="button"
    class="btn btn-primary"><i class="fas fa-user-shield"></i> {{ 'form.btn.perimission'|trans({}, 'actions') }}</a>
 
 <a href="{{ path('grr_admin_room_edit', { 'id': room.id }) }}" role="button"

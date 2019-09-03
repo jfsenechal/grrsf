@@ -1,0 +1,23 @@
+{% extends '@grr_admin/layout_admin.html.twig' %}
+
+{% block title %}{{'authorization.area.title'|trans}}{% endblock %}
+
+{% block body %}
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            <h3>{{ 'authorization.area.new.title'|trans }}  {{ authorizationArea.area }}</h3>
+        </div>
+
+        <div class="card-body">
+            {# {{ authorization_resource.room }} {{ authorization_resource.user }}#}
+            {{ include('security/authorization_area/_form.html.twig') }}
+        </div>
+    </div>  <br />
+    <a href="{{ path('grr_authorization_area_show',{'id': authorizationArea.area.id}) }}">
+        <i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
+
+{% endblock %}
+
+{% block scripts %}
+    {% include '@grr_front/account/_select_room_js.html.twig' %}
+{% endblock %}

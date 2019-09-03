@@ -8,7 +8,7 @@ use App\EventSubscriber\AddUserFieldSubscriber;
 use App\Model\AuthorizationResourceModel;
 use App\Repository\Security\UserRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,25 +27,7 @@ class AuthorizationResourceType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $choices = [
-            1 => 'usermanager.form.area_level.administrator.label',
-            2 => 'usermanager.form.area_level.manager.label',
-        ];
-
         $builder
-            ->add(
-                'area_level',
-                ChoiceType::class,
-                [
-                    'label' => 'usermanager.form.area_level.label',
-                    'help' => 'usermanager.form.area_level.help',
-                    'choices' => array_flip($choices),
-                    'placeholder' => 'usermanager.form.area_level.placeholder',
-                    'required' => false,
-                    'expanded' => true,
-                ]
-            )
             ->addEventSubscriber(new AddAreaFieldSubscriber())
             ->addEventSubscriber(new AddRoomsFieldSubscriber())
             ->addEventSubscriber(new AddUserFieldSubscriber($this->userRepository));

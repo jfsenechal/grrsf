@@ -4,9 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Area;
 use App\Entity\Security\User;
-use App\Entity\Security\UserAuthorization;
 use App\Form\Security\AuthorizationAreaType;
-use App\Form\Security\AuthorizationResourceType;
 use App\Handler\HandlerAuthorizationArea;
 use App\Model\AuthorizationAreaModel;
 use App\Repository\Security\AuthorizationRepository;
@@ -39,7 +37,25 @@ class AuthorizationAreaController extends AbstractController
     }
 
     /**
-     * @Route("/new/index", name="grr_authorization_area_index", methods={"GET", "POST"})
+     * @Route("/index", name="grr_authorization_area_index", methods={"GET"})
+     * @param Area $area
+     * @return Response
+     */
+    public function index(Area $area)
+    {
+        $authorizations = $this->userAuthorizationRepository->findBy(['area' => $area]);
+
+        return $this->render(
+            'security/authorization_area/index.html.twig',
+            [
+                'area' => $area,
+                'authorizations' => $authorizations,
+            ]
+        );
+    }
+
+    /**
+     *
      * @Route("/new/user/{user}", name="grr_authorization_area_from_user", methods={"GET", "POST"})
      * @Route("/new/area/{area}", name="grr_authorization_area_from_area", methods={"GET", "POST"})
      * @ParamConverter("user", options={"mapping": {"user": "id"}})
@@ -61,8 +77,6 @@ class AuthorizationAreaController extends AbstractController
             $authorizationAreaModel->setUsers([$user]);
         }
 
-        $authorizationAreaModel->setAreaAdministrator(true);
-
         $form = $this->createForm(AuthorizationAreaType::class, $authorizationAreaModel);
 
         $form->handleRequest($request);
@@ -76,12 +90,12 @@ class AuthorizationAreaController extends AbstractController
             }
 
             if ($area) {
-                return $this->redirectToRoute('grr_user_authorization_area_show', ['id' => $area->getId()]);
+               return $this->redirectToRoute('grr_authorization_area_show', ['id' => $area->getId()]);
             }
         }
 
         return $this->render(
-            'security/user_authorization_area/new.html.twig',
+            'security/authorization_area/new.html.twig',
             [
                 'authorizationArea' => $authorizationAreaModel,
                 'form' => $form->createView(),
@@ -90,14 +104,15 @@ class AuthorizationAreaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="grr_user_authorization_area_show", methods={"GET"})
+     * @Route("/{id}", name="grr_authorization_area_show", methods={"GET"})
      */
     public function show(Area $area): Response
     {
-        $authorizations = $this->userAuthorizationRepository->findAll();
+        $authorizations = $this->userAuthorizationRepository->findBy(['area' => $area]);
+        //$managers = $this->userAuthorizationRepository->findBy(['area' => $area, 'is_area_administrator'=>false]);
 
         return $this->render(
-            'security/user_authorization_area/show.html.twig',
+            'security/authorization_area/show.html.twig',
             [
                 'area' => $area,
                 'authorizations' => $authorizations,
@@ -106,7 +121,7 @@ class AuthorizationAreaController extends AbstractController
     }
 
     /**
-     * @Route("/delete", name="grr_user_authorization_area_delete", methods={"DELETE"})
+     * @Route("/delete", name="grr_user_authorization_delete", methods={"DELETE"})
      */
     public function delete(Request $request): Response
     {
@@ -127,6 +142,6 @@ class AuthorizationAreaController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('grr_user_authorization_area_show', ['id' => $area->getId()]);
+        return $this->redirectToRoute('grr_authorization_area_show', ['id' => $area->getId()]);
     }
 }
