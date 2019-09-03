@@ -37,24 +37,6 @@ class AuthorizationAreaController extends AbstractController
     }
 
     /**
-     * @Route("/index", name="grr_authorization_area_index", methods={"GET"})
-     * @param Area $area
-     * @return Response
-     */
-    public function index(Area $area)
-    {
-        $authorizations = $this->userAuthorizationRepository->findBy(['area' => $area]);
-
-        return $this->render(
-            'security/authorization_area/index.html.twig',
-            [
-                'area' => $area,
-                'authorizations' => $authorizations,
-            ]
-        );
-    }
-
-    /**
      *
      * @Route("/new/user/{user}", name="grr_authorization_area_from_user", methods={"GET", "POST"})
      * @Route("/new/area/{area}", name="grr_authorization_area_from_area", methods={"GET", "POST"})
@@ -98,6 +80,7 @@ class AuthorizationAreaController extends AbstractController
             'security/authorization_area/new.html.twig',
             [
                 'authorizationArea' => $authorizationAreaModel,
+                'user'=>$user,
                 'form' => $form->createView(),
             ]
         );
@@ -109,7 +92,6 @@ class AuthorizationAreaController extends AbstractController
     public function show(Area $area): Response
     {
         $authorizations = $this->userAuthorizationRepository->findBy(['area' => $area]);
-        //$managers = $this->userAuthorizationRepository->findBy(['area' => $area, 'is_area_administrator'=>false]);
 
         return $this->render(
             'security/authorization_area/show.html.twig',

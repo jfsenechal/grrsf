@@ -19,13 +19,13 @@
         </tr>
         </thead>
         <tbody>
-        {% for utilisateur in utilisateurs %}
+        {% for user in users %}
             <tr>
                 <td>
-                    <a href="{{ path('grr_admin_user_show', {'id': utilisateur.id}) }}">{{ utilisateur.email }}</a>
+                    <a href="{{ path('grr_admin_user_show', {'id': user.id}) }}">{{ user.email }}</a>
                 </td>
-                <td>{{ utilisateur.name }} {{ utilisateur.firstName }}</td>
-                <td>{{ utilisateur.isEnabled }}</td>
+                <td>{{ user.name }} {{ user.firstName }}</td>
+                <td>{{ user.isEnabled }}</td>
             </tr>
         {% else %}
             <tr>

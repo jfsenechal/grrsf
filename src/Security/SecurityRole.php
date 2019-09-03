@@ -28,7 +28,7 @@ class SecurityRole
     }
 
     /**
-     * Gestionnaire des utilisateurs.
+     * Gestionnaire des user.
      *
      * @return string
      */

@@ -48,7 +48,7 @@ entry:
   form:
     user:
       select:
-        label: Sélectionnez un ou plusieurs utilisateurs
+        label: Sélectionnez un ou plusieurs user
 
 authorization:
   role:

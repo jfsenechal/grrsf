@@ -50,9 +50,9 @@ class UserController extends AbstractController
     public function index(): Response
     {
         return $this->render(
-            '@grr_admin/utilisateurs/index.html.twig',
+            '@grr_admin/user/index.html.twig',
             [
-                'utilisateurs' => $this->utilisateurRepository->findAll(),
+                'users' => $this->utilisateurRepository->findAll(),
             ]
         );
     }
@@ -74,9 +74,9 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            '@grr_admin/utilisateurs/new.html.twig',
+            '@grr_admin/user/new.html.twig',
             [
-                'utilisateur' => $utilisateur,
+                'user' => $utilisateur,
                 'form' => $form->createView(),
             ]
         );
@@ -88,9 +88,9 @@ class UserController extends AbstractController
     public function show(User $utilisateur): Response
     {
         return $this->render(
-            '@grr_admin/utilisateurs/show.html.twig',
+            '@grr_admin/user/show.html.twig',
             [
-                'utilisateur' => $utilisateur,
+                'user' => $utilisateur,
             ]
         );
     }
@@ -113,9 +113,9 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            '@grr_admin/utilisateurs/edit.html.twig',
+            '@grr_admin/user/edit.html.twig',
             [
-                'utilisateur' => $utilisateur,
+                'user' => $utilisateur,
                 'form' => $form->createView(),
             ]
         );

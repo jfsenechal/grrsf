@@ -42,7 +42,7 @@ class PasswordController extends AbstractController
         }
 
         return $this->render(
-            '@grr_admin/utilisateurs/edit_password.html.twig',
+            '@grr_admin/user/edit_password.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),

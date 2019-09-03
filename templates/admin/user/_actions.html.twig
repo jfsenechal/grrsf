@@ -1,10 +1,10 @@
-<a href="{{ path('grr_admin_user_edit', { 'id': utilisateur.id }) }}" role="button"
+<a href="{{ path('grr_admin_user_edit', { 'id': user.id }) }}" role="button"
    class="btn btn-primary"><i class="fas fa-user-edit"></i> {{ 'form.btn.edit'|trans({}, 'actions') }}</a>
 
-<a href="{{ path('grr_user_manager_from_user', { 'user': utilisateur.id }) }}" role="button"
+<a href="{{ path('grr_authorization_show_by_user', { 'id': user.id }) }}" role="button"
    class="btn btn-primary"><i class="fas fa-user-shield"></i> {{ 'form.btn.perimission'|trans({}, 'actions') }}</a>
 
-<a href="{{ path('grr_admin_user_password', { 'id': utilisateur.id }) }}" role="button"
+<a href="{{ path('grr_admin_user_password', { 'id': user.id }) }}" role="button"
    class="btn btn-primary"><i class="fas fa-user-secret"></i> {{ 'form.btn.password'|trans({}, 'actions') }}</a>
 
 <a href="{{ path('grr_admin_user_index') }}" class="btn btn-primary" role='button'>

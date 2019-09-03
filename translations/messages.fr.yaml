@@ -39,7 +39,7 @@ room:
       help: Indiquer une valeur différente de 0 pour activer cette fonctionnalité. La valeur ci-contre désigne le nombre maximal de jours dont dispose le réservant pour confirmer une réservation.
     dontAllowModify:
       label: Ne pas modifier
-      help: Ne pas permettre aux utilisateurs de modifier ou de supprimer leurs propres réservations
+      help: Ne pas permettre aux user de modifier ou de supprimer leurs propres réservations
     typeAffichageReser:
       label: Pour une nouvelle réservation ou modification d'une réservation
       help: L'utilisateur spécifie la date/heure de début de réservation et
@@ -48,7 +48,7 @@ room:
       help: Une réservation n'est effective qu'après validation par un administrateur du domaine ou un gestionnaire de la ressource
     quiPeutReserverPour:
       label: Qui peut réserver pour
-      help: Hormis les administrateurs, précisez ci-contre quels types d'utilisateurs ont le droit de faire des réservations au nom d'autres utilisateurs.
+      help: Hormis les administrateurs, précisez ci-contre quels types d'user ont le droit de faire des réservations au nom d'autres user.
     activeRessourceEmpruntee:
       label: Activer fonctionalite ressource empruntee restituee
     whoCanSee:
@@ -128,7 +128,7 @@ btn:
       title: Ajouter une entrée
 user:
   index:
-    title: Liste des utilisateurs
+    title: Liste des user
   form:
     nom:
       label: Nom

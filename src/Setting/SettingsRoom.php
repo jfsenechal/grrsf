@@ -34,7 +34,7 @@ class SettingsRoom
             5 => 'personne',
             4 => 'uniquement les administrateurs restreints',
             3 => 'les gestionnaires de la ressource',
-            2 => 'tous les utilisateurs',
+            2 => 'tous les user',
         ];
     }
 }
