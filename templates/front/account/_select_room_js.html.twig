@@ -7,11 +7,14 @@
         var roomsList = $('.room-select');
 
         areaSelected.on('change', function (e) {
-            console.log("coucou");
+
+           var isRequired = !!roomsList.prop('required');
+
             $.ajax({
                 url: '{{ path('grr_ajax_getrooms') }}',
                 data: {
-                    id: areaSelected.val()
+                    id: areaSelected.val(),
+                    isRequired: isRequired
                 },
                 success: function (html) {
                     if (!html) {

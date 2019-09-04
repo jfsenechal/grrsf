@@ -17,6 +17,16 @@ use Symfony\Component\Form\FormInterface;
 
 class AddAreaFieldSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var bool
+     */
+    private $required;
+
+    public function __construct(bool $required = false)
+    {
+        $this->required = $required;
+    }
+
     public static function getSubscribedEvents()
     {
         return [
@@ -33,12 +43,21 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
          */
         $form = $event->getForm();
 
+        $options = [
+            'required' => $this->required,
+        ];
+
+        if (!$this->required) {
+            $options['placeholder'] = 'area.form.select.placeholder';
+        }
+
         if ($area) {
             $form->add('area', AreaHiddenType::class);
         } else {
             $form->add(
                 'area',
-                AreaSelectType::class
+                AreaSelectType::class,
+                    $options,
             );
         }
     }

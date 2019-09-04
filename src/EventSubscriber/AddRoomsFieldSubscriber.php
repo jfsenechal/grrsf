@@ -9,6 +9,7 @@
 namespace App\EventSubscriber;
 
 use App\Form\Type\RoomSelectType;
+use App\Model\AuthorizationModel;
 use App\Model\AuthorizationResourceModel;
 use App\Repository\RoomRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -27,12 +28,11 @@ class AddRoomsFieldSubscriber implements EventSubscriberInterface
     public function onPreSetData(FormEvent $event)
     {
         /**
-         * @var AuthorizationResourceModel
+         * @var AuthorizationModel
          */
         $entry = $event->getData();
         $area = $entry->getArea();
         $form = $event->getForm();
-        $room = $entry->getRooms();
 
         $default = [
             'multiple' => true,
@@ -46,12 +46,6 @@ class AddRoomsFieldSubscriber implements EventSubscriberInterface
         } else {
             $default['choices'] = [];
             $default['placeholder'] = 'room.form.select.empty.placeholder';
-        }
-
-        if ($room) {
-            // $form->add('room', HiddenType::class);
-
-            return;
         }
 
         $form->add(

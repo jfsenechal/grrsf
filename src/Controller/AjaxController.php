@@ -38,12 +38,14 @@ class AjaxController extends AbstractController
     public function ajaxRequestGetRooms(Request $request)
     {
         $areaId = $request->get('id');
+        $required = $request->get('isRequired');
+
         $area = $this->areaRepository->find($areaId);
         if (null === $area) {
             throw new InvalidParameterException('Area not found');
         }
         $rooms = $this->roomRepository->findByArea($area);
 
-        return $this->render('ajax/_rooms_options.html.twig', ['rooms' => $rooms]);
+        return $this->render('ajax/_rooms_options.html.twig', ['rooms' => $rooms, 'required' => $required]);
     }
 }

@@ -38,7 +38,7 @@ class AuthorizationAreaController extends AbstractController
 
     /**
      *
-     * @Route("/new/user/{user}", name="grr_authorization_area_from_user", methods={"GET", "POST"})
+     *
      * @Route("/new/area/{area}", name="grr_authorization_area_from_area", methods={"GET", "POST"})
      * @ParamConverter("user", options={"mapping": {"user": "id"}})
      * @ParamConverter("area", options={"mapping": {"area": "id"}})

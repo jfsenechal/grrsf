@@ -3,9 +3,12 @@
 namespace App\EventSubscriber;
 
 use App\Events\AreaEvent;
+use App\Events\AuthorizationModelEvent;
+use App\Events\AuthorizationUserEvent;
 use App\Events\EntryTypeEvent;
 use App\Events\RoomEvent;
 use App\Events\UserEvent;
+use App\Model\AuthorizationModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use App\Events\EntryEvent;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -97,6 +100,26 @@ class FlashSubscriber implements EventSubscriberInterface
         $this->flashBag->add('success', 'area.flash.new');
     }
 
+    public function onAuthorizationModelDelete(AuthorizationModelEvent $event)
+    {
+        $this->flashBag->add('success', 'authorization.flash.model.delete');
+    }
+
+    public function onAuthorizationModelNew(AuthorizationModelEvent $event)
+    {
+        $this->flashBag->add('success', 'authorization.flash.model.new');
+    }
+
+     public function onAuthorizationUserDelete(AuthorizationUserEvent $event)
+    {
+        $this->flashBag->add('success', 'authorization.flash.user.delete');
+    }
+
+    public function onAuthorizationUserNew(AuthorizationUserEvent $event)
+    {
+        $this->flashBag->add('success', 'authorization.flash.user.new');
+    }
+
     public function onUserPassword(UserEvent $userEvent)
     {
         $this->flashBag->add('success', 'user.flash.password');
@@ -125,6 +148,12 @@ class FlashSubscriber implements EventSubscriberInterface
             UserEvent::EDIT_SUCCESS => 'onUserEdit',
             UserEvent::DELETE_SUCCESS => 'onUserDelete',
             UserEvent::CHANGE_PASSWORD_SUCCESS => 'onUserPassword',
+
+            AuthorizationModelEvent::DELETE_SUCCESS => 'onAuthorizationModelDelete',
+            AuthorizationModelEvent::NEW_SUCCESS => 'onAuthorizationModelNew',
+
+            AuthorizationUserEvent::NEW_SUCCESS => 'onAuthorizationUserNew',
+            AuthorizationUserEvent::DELETE_SUCCESS => 'onAuthorizationUserDelete',
         ];
 
     }

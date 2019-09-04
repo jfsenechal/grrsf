@@ -17,8 +17,6 @@ class RoomSelectType extends AbstractType
                     'label' => 'room.form.select.label',
                     'help' => 'room.form.select.help',
                     'class' => Room::class,
-                    'required' => false,
-                    'placeholder' => 'room.form.select.placeholder',
                     'attr' => ['class' => 'custom-control custom-checkbox my-1 mr-sm-2 room-select'],
                 ]
             );

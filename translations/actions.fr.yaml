@@ -88,3 +88,6 @@ action:
 typeEntry:
   new:
     title: Nouveau type d'entrée
+link:
+  back:
+    touser: Retour à l'utilisateur

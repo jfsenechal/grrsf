@@ -71,13 +71,26 @@ authorization:
       title: Nouvelle autorisation pour
     role:
       label: Quel rôle ?
+    exist: Cette autorisation de domaine existe déjà pour cet utilisateur
   resource:
     title: Administrateur(s)
   delete:
     confirm: Révoquer ce droit ?
   room:
+    exist: Cette autorisation de ressource existe déjà pour cet utilisateur
     new:
       title: Nouvelle autorisation pour
+  user:
+    new:
+      title: Nouvelle autorisation pour l'utilisateur
+  flash:
+    model:
+      new: Nouvelle authorisation bien ajoutée
+      delete: Nouvelle authorisation bien supprimée
+    user:
+      new: Nouvelle authorisation bien ajoutée
+      delete: Nouvelle authorisation bien supprimée
+
 usermanagerresource:
     title: Gestion des droits
 area:
@@ -92,6 +105,7 @@ area:
       placeholder: Séléctionnez un domaine
   administrator: Administrateur du domaine
   resource: Administrateur de resource
+  title: Domaine
 
 room:
   flash:
@@ -105,6 +119,7 @@ room:
       placeholder: Toutes les ressources
       empty:
         placeholder: Sélectionnez d'abord un domaine
+  title: Ressource
 settings:
   title: Paramètres de Grr
 yes: oui
@@ -113,6 +128,8 @@ No: Non
 not:
   found: Rien de trouvé
 Yes: Oui
+none:
+  male: Aucun
 actions: Actions
 typeEntry:
   flash:

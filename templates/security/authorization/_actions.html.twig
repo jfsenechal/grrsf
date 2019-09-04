@@ -1,9 +1,9 @@
-<a href="{{ path('grr_authorization_area_from_user', { 'user': user.id }) }}" role="button"
+<a href="{{ path('grr_authorization_from_user', { 'id': user.id }) }}" role="button"
    class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'form.btn.new'|trans({}, 'actions') }}</a>
 
 <a href="{{ path('grr_admin_user_show',{'id': user.id}) }}" class="btn btn-primary" role='button'><i
-            class="fas fa-list"></i>
-    {{ 'room.back.toarea'|trans({}, 'actions') }}
+            class="fas fa-arrow-left"></i>
+    {{ 'link.back.touser'|trans({}, 'actions') }}
 </a>
 
 <br/>
