@@ -4,8 +4,6 @@ namespace App\Form\Security;
 
 use App\EventSubscriber\AddAreaFieldSubscriber;
 use App\EventSubscriber\AddRoomFieldSubscriber;
-use App\Form\DataTransformer\NumberToRoomTransformer;
-use App\Form\Type\RoomSelectType;
 use App\Model\AuthorizationModel;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
@@ -53,8 +51,8 @@ class AuthorizationType extends AbstractType
                 new AddRoomFieldSubscriber('rooms', true, true, false, 'room.form.select.multiple.label')
             );
 
-       // $builder->add('rooms');//add this because AddRoomFieldSubscriber after
-       // $builder->get('rooms')->addModelTransformer(new NumberToRoomTransformer());
+        // $builder->add('rooms');//add this because AddRoomFieldSubscriber after
+        // $builder->get('rooms')->addModelTransformer(new NumberToRoomTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)
