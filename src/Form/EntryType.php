@@ -72,7 +72,7 @@ class EntryType extends AbstractType
             )
             ->add('periodicity', PeriodicityType::class)
             ->addEventSubscriber(new AddDurationFieldSubscriber($this->durationFactory))
-            ->addEventSubscriber(new AddRoomFieldSubscriber());
+            ->addEventSubscriber(new AddRoomFieldSubscriber('room', true, false, false));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -21,7 +21,7 @@ class AreaMenuSelectType extends AbstractType
                     'required' => true,
                 ]
             )
-            ->addEventSubscriber(new AddRoomFieldSubscriber());
+            ->addEventSubscriber(new AddRoomFieldSubscriber('room', false, false, false));
     }
 
     public function configureOptions(OptionsResolver $resolver)

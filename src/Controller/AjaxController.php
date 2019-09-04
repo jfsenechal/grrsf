@@ -37,8 +37,8 @@ class AjaxController extends AbstractController
      */
     public function ajaxRequestGetRooms(Request $request)
     {
-        $areaId = $request->get('id');
-        $required = $request->get('isRequired');
+        $areaId = (int)$request->get('id');
+        $required = filter_var($request->get('isRequired'), FILTER_VALIDATE_BOOLEAN);;
 
         $area = $this->areaRepository->find($areaId);
         if (null === $area) {

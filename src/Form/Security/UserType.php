@@ -4,6 +4,7 @@ namespace App\Form\Security;
 
 use App\Entity\Security\User;
 use App\EventSubscriber\AddRoomDefaultFieldSubscriber;
+use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\Form\Type\AreaSelectType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -46,7 +47,17 @@ class UserType extends AbstractType
                     'placeholder' => 'area.form.select.placeholder',
                 ]
             )
-            ->addEventSubscriber(new AddRoomDefaultFieldSubscriber());
+            ->addEventSubscriber(
+                new AddRoomFieldSubscriber(
+                    'room_default',
+                    false,
+                    false,
+                    false,
+                    'user.form.room.label',
+                    'room.form.select.empty.placeholder'
+                )
+            );
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -2,8 +2,8 @@
  * Disabled option rooms if area administrator or manger resource
  */
 $(document).ready(function () {
-    var typeList = $('#authorization_role');
-    var authorization_rooms = $('#authorization_rooms');
+    let typeList = $('#authorization_role');
+    let authorization_rooms = $('#authorization_rooms');
     typeList.on('click', function (e) {
         loadOptionsWeeks()
     });
@@ -11,12 +11,12 @@ $(document).ready(function () {
     loadOptionsWeeks();
 
     function loadOptionsWeeks() {
-        var radioValue = $("input[name='authorization[role]']:checked").val();
-        console.log(radioValue);
+        let radioValue = $("input[name='authorization[role]']:checked").val();
+
         if (radioValue === '1' || radioValue === '2') {
-             authorization_rooms.prop('disabled', true);
+            authorization_rooms.prop('disabled', true);
         } else {
-             authorization_rooms.prop('disabled', false);
+            authorization_rooms.prop('disabled', false);
         }
     }
 });

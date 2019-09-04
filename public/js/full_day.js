@@ -2,9 +2,9 @@
  * Enabled/disabled input
  */
 $(document).ready(function () {
-    var fullDayCheckbox = $('#entry_duration_full_day');
-    var durationTime = $('#entry_duration_time');
-    var durationUnit = $('#entry_duration_unit');
+    let fullDayCheckbox = $('#entry_duration_full_day');
+    let durationTime = $('#entry_duration_time');
+    let durationUnit = $('#entry_duration_unit');
 
     fullDayCheckbox.on('click', function (e) {
        setProp();

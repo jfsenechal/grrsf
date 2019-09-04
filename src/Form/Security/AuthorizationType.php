@@ -3,9 +3,7 @@
 namespace App\Form\Security;
 
 use App\EventSubscriber\AddAreaFieldSubscriber;
-use App\EventSubscriber\AddRoomField2Subscriber;
-use App\Form\DataTransformer\AreaToNumberTransformer;
-use App\Form\DataTransformer\NumberToRoomTransformer;
+use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\Model\AuthorizationModel;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
@@ -48,7 +46,7 @@ class AuthorizationType extends AbstractType
         );
         $builder
             ->addEventSubscriber(new AddAreaFieldSubscriber(false))
-            ->addEventSubscriber(new AddRoomField2Subscriber('rooms', true, true, false));
+            ->addEventSubscriber(new AddRoomFieldSubscriber('rooms', true, true, false));
 
     }
 

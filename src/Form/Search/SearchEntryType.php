@@ -63,7 +63,8 @@ class SearchEntryType extends AbstractType
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )
-            ->addEventSubscriber(new AddRoomFieldSubscriber());
+            ->addEventSubscriber(new AddRoomFieldSubscriber('room', false, false, false));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
