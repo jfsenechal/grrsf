@@ -71,13 +71,13 @@ authorization:
       title: Nouvelle autorisation pour
     role:
       label: Quel rôle ?
-    exist: Cette autorisation de domaine existe déjà pour cet utilisateur
+    exist: L' autorisation pour {area} existe déjà pour {user}
   resource:
     title: Administrateur(s)
   delete:
     confirm: Révoquer ce droit ?
   room:
-    exist: Cette autorisation de ressource existe déjà pour cet utilisateur
+    exist: L' autorisation pour {room} existe déjà pour {user}
     new:
       title: Nouvelle autorisation pour
   user:

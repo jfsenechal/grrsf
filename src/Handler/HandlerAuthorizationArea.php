@@ -12,6 +12,7 @@ use App\Repository\Security\AuthorizationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HandlerAuthorizationArea
 {
@@ -27,15 +28,25 @@ class HandlerAuthorizationArea
      * @var FlashBagInterface
      */
     private $flashBag;
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+    /**
+     * @var bool
+     */
+    private $error;
 
     public function __construct(
         AuthorizationRepository $authorizationRepository,
         AuthorizationManager $authorizationManager,
-        FlashBagInterface $flashBag
+        FlashBagInterface $flashBag,
+        TranslatorInterface $translator
     ) {
         $this->authorizationManager = $authorizationManager;
         $this->authorizationRepository = $authorizationRepository;
         $this->flashBag = $flashBag;
+        $this->translator = $translator;
     }
 
     public function handleNewUserManagerResource(FormInterface $form)
@@ -65,46 +76,97 @@ class HandlerAuthorizationArea
          */
         $role = $data->getRole();
 
+        $this->error = false;
+
         foreach ($users as $user) {
             $userAuthorization = new UserAuthorization();
+            $userAuthorization->setUser($user);
+
             if ($role === 1) {
                 $userAuthorization->setIsAreaAdministrator(true);
             }
             if ($role === 2) {
                 $userAuthorization->setIsResourceAdministrator(true);
             }
-            $userAuthorization->setUser($user);
-            $userAuthorization->setArea($area);
 
-            if ($this->existArea($user, $area, $rooms)) {
-                $this->flashBag->add('danger', 'authorization.area.exist');
+            if (count($rooms) > 0) {
+                $this->executeForRooms($userAuthorization, $area, $rooms, $user);
             } else {
-                if (count($rooms) > 0) {
-                    foreach ($rooms as $room) {
-                        if ($this->existRoom($user, $area, $room)) {
-                            $this->flashBag->add('danger', 'authorization.room.exist');
-                        } else {
-                            $userAuthorization->setRoom($room);
-                            $this->authorizationManager->insert($userAuthorization);
-                        }
-                    }
-                } else {
-                    $this->authorizationManager->insert($userAuthorization);
-                }
+                $this->executeForArea($userAuthorization, $area, $user);
+            }
+        }
+
+        if (!$this->error) {
+            $this->flashBag->add('success', 'authorization.flash.model.new');
+        }
+    }
+
+    protected function executeForRooms(
+        UserAuthorization $userAuthorization,
+        Area $area,
+        iterable $rooms,
+        $user
+    ) {
+        if ($this->existArea($user, $area)) {
+            $this->error = true;
+            $this->flashBag->add(
+                'danger',
+                $this->translator->trans(
+                    'authorization.area.exist',
+                    [
+                        'user' => $user,
+                        'area' => $area,
+                    ]
+                )
+            );
+
+            return;
+        }
+        foreach ($rooms as $room) {
+            $copy = clone($userAuthorization);
+            if ($this->existRoom($user, $room)) {
+                $this->error = true;
+                $this->flashBag->add(
+                    'danger',
+                    $this->translator->trans('authorization.room.exist', ['user' => $user, 'room' => $room])
+                );
+            } else {
+                $copy->setRoom($room);
+                $this->authorizationManager->insert($copy);
             }
         }
     }
 
-    protected function existArea(User $user, Area $area, iterable $rooms): bool
+    protected function executeForArea(UserAuthorization $userAuthorization, Area $area, User $user)
+    {
+        if ($this->existArea($user, $area)) {
+            $this->error = true;
+            $this->flashBag->add(
+                'danger',
+                $this->translator->trans(
+                    'authorization.area.exist',
+                    [
+                        'user' => $user,
+                        'area' => $area,
+                    ]
+                )
+            );
+        } else {
+            $userAuthorization->setArea($area);
+            $this->authorizationManager->insert($userAuthorization);
+        }
+    }
+
+    protected function existArea(User $user, Area $area): bool
     {
         $count = count($this->authorizationRepository->findBy(['user' => $user, 'area' => $area]));
 
         return $count > 0;
     }
 
-    protected function existRoom(User $user, Area $area, Room $room): bool
+    protected function existRoom(User $user, Room $room): bool
     {
-        $count = count($this->authorizationRepository->findBy(['user' => $user, 'area' => $area, 'room' => $room]));
+        $count = count($this->authorizationRepository->findBy(['user' => $user, 'room' => $room]));
 
         return $count > 0;
     }

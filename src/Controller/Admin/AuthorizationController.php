@@ -73,7 +73,6 @@ class AuthorizationController extends AbstractController
             $authorizationEvent = new AuthorizationModelEvent($authorizationAreaModel);
             $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationModelEvent::NEW_SUCCESS);
 
-
           //  return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
         }
 

@@ -9,7 +9,6 @@
 namespace App\EventSubscriber;
 
 use App\Form\Type\RoomSelectType;
-use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Event\PreSubmitEvent;
@@ -42,10 +41,6 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
      * @var string
      */
     private $placeholder;
-    /**
-     * @var AreaRepository
-     */
-    private $areaRepository;
 
     public function __construct(
         string $name_field = 'room',

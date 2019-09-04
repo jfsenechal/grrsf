@@ -15,7 +15,7 @@ class AuthorizationModel
     protected $area;
 
     /**
-     * @var Room[]|ArrayCollection
+     * @var Room[]|array
      */
     protected $rooms;
 
