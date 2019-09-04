@@ -2,18 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Area;
 use App\Entity\Security\User;
 use App\Events\AuthorizationModelEvent;
 use App\Events\AuthorizationUserEvent;
-use App\Form\Security\AuthorizationAreaType;
 use App\Form\Security\AuthorizationType;
 use App\Handler\HandlerAuthorizationArea;
 use App\Manager\AuthorizationManager;
-use App\Model\AuthorizationAreaModel;
 use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +74,7 @@ class AuthorizationController extends AbstractController
             $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationModelEvent::NEW_SUCCESS);
 
 
-             return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
+          //  return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
         }
 
         return $this->render(
@@ -124,14 +120,14 @@ class AuthorizationController extends AbstractController
         $user = $userAuthorization->getUser();
 
         if ($this->isCsrfTokenValid('delete'.$userAuthorization->getId(), $token)) {
-            dump($id, $token);
+
             $this->authorizationManager->remove($userAuthorization);
             $this->authorizationManager->flush();
 
             $authorizationEvent = new AuthorizationUserEvent($userAuthorization);
-            $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationUserEvent::EDIT_SUCCESS);
+            $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationUserEvent::DELETE_SUCCESS);
         }
 
-           return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
+        return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
     }
 }

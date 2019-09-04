@@ -115,28 +115,5 @@ class AuthorizationResourceController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/delete", name="grr_authorization_resource_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request): Response
-    {
-        $id = $request->get('idauth');
-        $token = $request->get('_tokenauth');
 
-        $userAuthorization = $this->userAuthorizationRepository->find($id);
-
-        if (!$userAuthorization) {
-            $this->createNotFoundException();
-        }
-
-        $room = $userAuthorization->getRoom();
-
-        if ($this->isCsrfTokenValid('delete'.$userAuthorization->getId(), $token)) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($userAuthorization);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('grr_authorization_resource_show', ['id' => $room->getId()]);
-    }
 }

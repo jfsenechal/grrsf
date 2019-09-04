@@ -115,6 +115,8 @@ room:
   form:
     select:
       label: Ressource
+      multiple:
+        label: Ressources
       help: Help
       placeholder: Toutes les ressources
       empty:

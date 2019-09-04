@@ -15,9 +15,9 @@ class NumberToRoomTransformer implements DataTransformerInterface
      */
     private $roomRepository;
 
-    public function __construct(RoomRepository $roomRepository)
+    public function __construct()
     {
-        $this->roomRepository = $roomRepository;
+      //  $this->roomRepository = $roomRepository;
     }
 
     /**
