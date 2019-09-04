@@ -11,9 +11,7 @@ namespace App\EventSubscriber;
 use App\Form\Type\RoomSelectType;
 use App\Repository\RoomRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\Event\PreSubmitEvent;
-use Symfony\Component\Form\Event\SubmitEvent;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
@@ -64,48 +62,14 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
     {
         return [
             FormEvents::PRE_SET_DATA => 'onPreSetData',
-            FormEvents::POST_SUBMIT => 'onPostSubmit',
-            FormEvents::POST_SET_DATA => 'onPostSetData',
             FormEvents::PRE_SUBMIT => 'onPreSubmit',
-            FormEvents::SUBMIT => 'onSubmit',
         ];
-    }
-
-    //no
-    public function onPreSubmit(PreSubmitEvent $event)
-    {
-        dump(3);
-        $sport = $event->getForm()->getData();
-        dump($sport);
-    }
-
-    public function onSubmit(SubmitEvent $event)
-    {
-        dump(4);
-        $sport = $event->getForm()->getData();
-        dump($sport);
-    }
-
-    //init
-    public function onPostSetData(FormEvent $event)
-    {
-        dump(2);
-        $sport = $event->getForm()->getData();
-        dump($sport);
-    }
-
-    public function onPostSubmit(PostSubmitEvent $event)
-    {
-        dump(5);
-        $sport = $event->getForm()->getData();
-        dump($sport);
     }
 
 
     //init
     public function onPreSetData(FormEvent $event)
     {
-        dump(1);
         $object = $event->getData();
 
         if (is_array($object)) { // is_array = search form
@@ -151,6 +115,18 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
             RoomSelectType::class,
             $default
         );
+
+    }
+
+    /**
+     * test
+     * @param PreSubmitEvent $event
+     */
+    public function onPreSubmit(PreSubmitEvent $event)
+    {
+        $user = $event->getData();
+        $form = $event->getForm();
+
 
     }
 
