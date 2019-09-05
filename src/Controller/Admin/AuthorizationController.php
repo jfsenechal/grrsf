@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Room;
 use App\Events\AuthorizationUserEvent;
 use App\Manager\AuthorizationManager;
 use App\Repository\Security\AuthorizationRepository;
@@ -66,5 +67,21 @@ class AuthorizationController extends AbstractController
         }
 
         return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
+    }
+
+    /**
+     * @Route("/room/{id}", name="grr_authorization_show_by_room", methods={"GET"})
+     */
+    public function show(Room $room): Response
+    {
+        $authorizations = $this->userAuthorizationRepository->findByRoom($room);
+
+        return $this->render(
+            'security/authorization/room/show.html.twig',
+            [
+                'room' => $room,
+                'authorizations' => $authorizations,
+            ]
+        );
     }
 }
