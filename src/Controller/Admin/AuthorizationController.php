@@ -6,6 +6,7 @@ use App\Entity\Security\User;
 use App\Events\AuthorizationModelEvent;
 use App\Events\AuthorizationUserEvent;
 use App\Form\Security\AuthorizationType;
+use App\Form\Security\AuthorizationUserType;
 use App\Handler\HandlerAuthorizationArea;
 use App\Manager\AuthorizationManager;
 use App\Model\AuthorizationModel;
@@ -62,7 +63,7 @@ class AuthorizationController extends AbstractController
         $authorizationAreaModel = new AuthorizationModel();
         $authorizationAreaModel->setUsers([$user]);
 
-        $form = $this->createForm(AuthorizationType::class, $authorizationAreaModel);
+        $form = $this->createForm(AuthorizationUserType::class, $authorizationAreaModel);
 
         $form->handleRequest($request);
 
@@ -73,7 +74,7 @@ class AuthorizationController extends AbstractController
             $authorizationEvent = new AuthorizationModelEvent($authorizationAreaModel);
             $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationModelEvent::NEW_SUCCESS);
 
-          //  return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
+            return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
         }
 
         return $this->render(

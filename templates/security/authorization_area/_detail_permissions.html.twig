@@ -44,7 +44,7 @@
                 {{ 'authorization.delete.confirm'|trans() }}
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{ path('grr_user_authorization_delete') }}">
+                <form method="post" action="{{ path('grr_authorization_delete') }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="idauth" id="idauth" value="">
                     <input type="hidden" name="_tokenauth" id="tokenauth" value="">

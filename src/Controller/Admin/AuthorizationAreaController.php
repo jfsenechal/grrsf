@@ -5,8 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\Area;
 use App\Entity\Security\User;
 use App\Form\Security\AuthorizationAreaType;
+use App\Form\Security\AuthorizationType;
 use App\Handler\HandlerAuthorizationArea;
 use App\Model\AuthorizationAreaModel;
+use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,7 +51,7 @@ class AuthorizationAreaController extends AbstractController
      */
     public function new(Request $request, User $user = null, Area $area = null): Response
     {
-        $authorizationAreaModel = new AuthorizationAreaModel();
+        $authorizationAreaModel = new AuthorizationModel();
 
         if ($area) {
             $authorizationAreaModel->setArea($area);
@@ -68,11 +70,11 @@ class AuthorizationAreaController extends AbstractController
             $this->handlerAuthorizationArea->handleNewUserManagerResource($form);
 
             if ($user) {
-                return $this->redirectToRoute('grr_admin_user_show', ['id' => $user->getId()]);
+         //       return $this->redirectToRoute('grr_admin_user_show', ['id' => $user->getId()]);
             }
 
             if ($area) {
-               return $this->redirectToRoute('grr_authorization_area_show', ['id' => $area->getId()]);
+        //       return $this->redirectToRoute('grr_authorization_area_show', ['id' => $area->getId()]);
             }
         }
 
@@ -91,7 +93,7 @@ class AuthorizationAreaController extends AbstractController
      */
     public function show(Area $area): Response
     {
-        $authorizations = $this->userAuthorizationRepository->findBy(['area' => $area]);
+        $authorizations = $this->userAuthorizationRepository->findByArea($area);
 
         return $this->render(
             'security/authorization_area/show.html.twig',

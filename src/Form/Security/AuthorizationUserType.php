@@ -1,13 +1,22 @@
 <?php
+/**
+ * This file is part of GrrSf application
+ * @author jfsenechal <jfsenechal@gmail.com>
+ * @date 5/09/19
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ */
 
 namespace App\Form\Security;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use App\Form\DataTransformer\AreaToNumberTransformer;
+use App\EventSubscriber\AddAreaFieldSubscriber;
+use App\EventSubscriber\AddUserFieldSubscriber;
 use App\Form\Type\AreaHiddenType;
 use App\Form\Type\AreaSelectType;
-use App\Model\AuthorizationModel;
+use App\Model\AuthorizationAreaModel;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -20,7 +29,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AuthorizationType extends AbstractType
+
+class AuthorizationUserType extends AbstractType
 {
     /**
      * @var RoomRepository
@@ -37,22 +47,6 @@ class AuthorizationType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $choices = array_flip(
-            [1 => 'authorization.role.area.administrator', 2 => 'authorization.role.resource.administrator']
-        );
-        $builder->add(
-            'role',
-            ChoiceType::class,
-            [
-                'choices' => $choices,
-                'label' => 'authorization.area.role.label',
-                'placeholder' => 'none.male',
-                'required' => false,
-                'multiple' => false,
-                'expanded' => true,
-            ]
-        );
-
         $builder->add(
             'area',
             AreaSelectType::class,
@@ -113,12 +107,10 @@ class AuthorizationType extends AbstractType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function getParent()
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => AuthorizationModel::class,
-            ]
-        );
+        return AuthorizationType::class;
     }
+
+
 }

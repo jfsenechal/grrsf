@@ -2,6 +2,8 @@
 
 namespace App\Repository\Security;
 
+use App\Entity\Area;
+use App\Entity\Room;
 use App\Entity\Security\UserAuthorization;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -17,6 +19,23 @@ class AuthorizationRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, UserAuthorization::class);
+    }
+
+    public function findByArea(Area $area)
+    {
+        $queryBuilder = $this->createQueryBuilder('authorization')
+            ->orWhere('authorization.area = :area')
+            ->setParameter('area', $area);
+
+        $repository = $this->getEntityManager()->getRepository(Room::class);
+        $rooms = $repository->findByArea($area);
+
+        $queryBuilder->orWhere('authorization.room IN (:rooms)')
+            ->setParameter('rooms', $rooms);
+
+        $queryBuilder->orderBy('authorization.user', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     public function persist(UserAuthorization $userAuthorization)
