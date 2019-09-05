@@ -2,16 +2,11 @@
 
 namespace App\Form\Security;
 
-use App\EventSubscriber\AddAreaFieldSubscriber;
 use App\EventSubscriber\AddUserFieldSubscriber;
 use App\Form\Type\AreaHiddenType;
-use App\Model\AuthorizationAreaModel;
 use App\Repository\Security\UserRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AuthorizationAreaType extends AbstractType
 {
@@ -31,15 +26,6 @@ class AuthorizationAreaType extends AbstractType
         $builder->add('area', AreaHiddenType::class)
             //->addEventSubscriber(new AddAreaFieldSubscriber())
             ->addEventSubscriber(new AddUserFieldSubscriber($this->userRepository));
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            [
-                'data_class' => AuthorizationAreaModel::class,
-            ]
-        );
     }
 
     public function getParent()

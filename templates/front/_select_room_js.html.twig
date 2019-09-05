@@ -9,7 +9,6 @@
         areaSelected.on('change', function (e) {
 
            var isRequired = !!roomsList.prop('required');
-           console.log(isRequired);
 
             $.ajax({
                 url: '{{ path('grr_ajax_getrooms') }}',

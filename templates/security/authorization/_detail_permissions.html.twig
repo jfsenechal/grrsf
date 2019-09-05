@@ -32,33 +32,5 @@
     {% endfor %}
     </tbody>
 </table>
-
-<!-- Modal -->
-<div class="modal fade" id="deleteAuthorization" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">{{ 'modal.delete.title'|trans({}, 'actions') }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                {{ 'authorization.delete.confirm'|trans() }}
-            </div>
-            <div class="modal-footer">
-                <form method="post" action="{{ path('grr_authorization_delete') }}">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="idauth" id="idauth" value="">
-                    <input type="hidden" name="_tokenauth" id="tokenauth" value="">
-                    <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">{{ 'form.btn.cancel'|trans({}, 'actions') }}</button>
-                    <button type="submit" class="btn btn-danger">{{ 'form.btn.delete'|trans({}, 'actions') }}</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+{% include 'security/authorization/_delete_form.html.twig' %}
 

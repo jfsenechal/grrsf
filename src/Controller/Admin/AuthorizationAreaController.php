@@ -3,14 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Area;
-use App\Entity\Security\User;
 use App\Form\Security\AuthorizationAreaType;
-use App\Form\Security\AuthorizationType;
 use App\Handler\HandlerAuthorizationArea;
-use App\Model\AuthorizationAreaModel;
 use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,26 +35,17 @@ class AuthorizationAreaController extends AbstractController
     }
 
     /**
-     *
-     *
-     * @Route("/new/area/{area}", name="grr_authorization_area_from_area", methods={"GET", "POST"})
-     * @ParamConverter("user", options={"mapping": {"user": "id"}})
-     * @ParamConverter("area", options={"mapping": {"area": "id"}})
+     * @Route("/new/area/{id}", name="grr_authorization_from_area", methods={"GET", "POST"})
      * @param Request $request
-     * @param User|null $user
      * @param Area|null $area
      * @return Response
      */
-    public function new(Request $request, User $user = null, Area $area = null): Response
+    public function new(Request $request, Area $area = null): Response
     {
         $authorizationAreaModel = new AuthorizationModel();
 
         if ($area) {
             $authorizationAreaModel->setArea($area);
-        }
-
-        if ($user) {
-            $authorizationAreaModel->setUsers([$user]);
         }
 
         $form = $this->createForm(AuthorizationAreaType::class, $authorizationAreaModel);
@@ -69,20 +56,15 @@ class AuthorizationAreaController extends AbstractController
 
             $this->handlerAuthorizationArea->handleNewUserManagerResource($form);
 
-            if ($user) {
-         //       return $this->redirectToRoute('grr_admin_user_show', ['id' => $user->getId()]);
-            }
-
             if ($area) {
-        //       return $this->redirectToRoute('grr_authorization_area_show', ['id' => $area->getId()]);
+                return $this->redirectToRoute('grr_authorization_area_show', ['id' => $area->getId()]);
             }
         }
 
         return $this->render(
-            'security/authorization_area/new.html.twig',
+            'security/authorization/area/new.html.twig',
             [
-                'authorizationArea' => $authorizationAreaModel,
-                'user'=>$user,
+                'area' => $area,
                 'form' => $form->createView(),
             ]
         );
@@ -96,7 +78,7 @@ class AuthorizationAreaController extends AbstractController
         $authorizations = $this->userAuthorizationRepository->findByArea($area);
 
         return $this->render(
-            'security/authorization_area/show.html.twig',
+            'security/authorization/area/show.html.twig',
             [
                 'area' => $area,
                 'authorizations' => $authorizations,

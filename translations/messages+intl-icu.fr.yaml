@@ -79,10 +79,12 @@ authorization:
   room:
     exist: L' autorisation pour {room} existe déjà pour {user}
     new:
-      title: Nouvelle autorisation pour
+      title: Nouvelle autorisation pour la ressource
+    title: Autorisations pour la ressource
   user:
     new:
       title: Nouvelle autorisation pour l'utilisateur
+    title: Autorisations pour l'utilisateur
   flash:
     model:
       new: Nouvelle authorisation bien ajoutée

@@ -4,6 +4,7 @@ namespace App\Repository\Security;
 
 use App\Entity\Area;
 use App\Entity\Room;
+use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -21,6 +22,10 @@ class AuthorizationRepository extends ServiceEntityRepository
         parent::__construct($registry, UserAuthorization::class);
     }
 
+    /**
+     * @param Area $area
+     * @return UserAuthorization[]
+     */
     public function findByArea(Area $area)
     {
         $queryBuilder = $this->createQueryBuilder('authorization')
@@ -33,7 +38,29 @@ class AuthorizationRepository extends ServiceEntityRepository
         $queryBuilder->orWhere('authorization.room IN (:rooms)')
             ->setParameter('rooms', $rooms);
 
-        $queryBuilder->orderBy('authorization.user', 'ASC')
+        return $queryBuilder->orderBy('authorization.user', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByUser(User $user)
+    {
+        $queryBuilder = $this->createQueryBuilder('authorization')
+            ->andWhere('authorization.user = :user')
+            ->setParameter('user', $user);
+
+        return $queryBuilder->orderBy('authorization.user', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByRoom(Room $room)
+    {
+        $queryBuilder = $this->createQueryBuilder('authorization')
+            ->andWhere('authorization.room = :room')
+            ->setParameter('room', $room);
+
+        return $queryBuilder->orderBy('authorization.user', 'ASC')
             ->getQuery()
             ->getResult();
     }

@@ -1,34 +1,12 @@
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th>{{ 'user.title'|trans }}</th>
-        <th>{{ 'area.administrator'|trans }}</th>
-        <th>{{ 'area.resource'|trans }}</th>
-        <th>{{ 'actions'|trans }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for authorization in authorizations %}
-        <tr>
-            <td>{{ authorization.user }}</td>
-            <td>{{ authorization.isAreaAdministrator ? 'Yes' | trans : 'No' | trans }}</td>
-            <td>{{ authorization.isResourceAdministrator ? 'Yes' | trans : 'No' | trans }}</td>
-            <td>
-                <button name="coucou" type="button" class="btnDelete btn btn-danger btn-sm" data-toggle="modal"
-                        data-target="#deleteAuthorization" data-id="{{ authorization.id }}"
-                        data-token="{{ csrf_token('delete' ~ authorization.id) }}">
-                    <i class="fas fa-trash"></i> {{ 'form.btn.delete'|trans({}, 'actions') }}
-                </button>
-            </td>
-        </tr>
-    {% else %}
-        <tr>
-            <td colspan="4">{{ 'not.found'|trans }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
+<script>
+    $('.btnDelete').on('click', function (event) {
+        var button = $(event.relatedTarget);
+        var id = $(this).data("id");
+        var token = $(this).data("token");
+        $("#tokenauth").val(token);
+        $("#idauth").val(id);
+    })
+</script>
 <!-- Modal -->
 <div class="modal fade" id="deleteAuthorization" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
      aria-hidden="true">
@@ -56,5 +34,3 @@
         </div>
     </div>
 </div>
-
-

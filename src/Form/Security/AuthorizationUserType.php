@@ -12,22 +12,15 @@ namespace App\Form\Security;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use App\EventSubscriber\AddAreaFieldSubscriber;
-use App\EventSubscriber\AddUserFieldSubscriber;
-use App\Form\Type\AreaHiddenType;
 use App\Form\Type\AreaSelectType;
-use App\Model\AuthorizationAreaModel;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 class AuthorizationUserType extends AbstractType

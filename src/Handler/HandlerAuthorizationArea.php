@@ -7,7 +7,7 @@ use App\Entity\Room;
 use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;
 use App\Manager\AuthorizationManager;
-use App\Model\AuthorizationAreaModel;
+use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
@@ -52,7 +52,7 @@ class HandlerAuthorizationArea
     public function handleNewUserManagerResource(FormInterface $form)
     {
         /**
-         * @var AuthorizationAreaModel
+         * @var AuthorizationModel
          */
         $data = $form->getData();
 
@@ -77,8 +77,9 @@ class HandlerAuthorizationArea
         $role = $data->getRole();
 
         $this->error = false;
-dump($users);
-        foreach ($users as $user) {dump($rooms);
+        dump($users);
+        foreach ($users as $user) {
+            dump($rooms);
             $userAuthorization = new UserAuthorization();
             $userAuthorization->setUser($user);
 
@@ -122,7 +123,8 @@ dump($users);
 
             return;
         }
-        foreach ($rooms as $room) {dump($area);
+        foreach ($rooms as $room) {
+            dump($area);
             $copy = clone($userAuthorization);
             if ($this->existRoom($user, $room)) {
                 $this->error = true;

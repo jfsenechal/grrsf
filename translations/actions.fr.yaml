@@ -34,6 +34,8 @@ room:
     title: Liste des ressources
   back:
     toarea: Retour au domaine
+    toroom: Retour à la ressource
+    touser: Retour à l'utilisateur
   delete:
     confirm: Êtes vous sur de supprimer la ressource %name%
   fonctions:

@@ -5,21 +5,20 @@
 {% block body %}
     <div class="card bg-light mb-3">
         <div class="card-header">
-            <h3>{{ 'authorization.room.new.title'|trans }}  {{ authorizationResource.area }} {% if room %} => {{ room }} {% endif %} </h3>
+            <h3>{{ 'authorization.room.new.title'|trans }}  {{ area }}</h3>
         </div>
 
         <div class="card-body">
-            {# {{ authorization_resource.room }} {{ authorization_resource.user }}#}
-            {{ include('security/authorization_area/_form.html.twig') }}
+            {{ include('security/authorization/_form.html.twig') }}
         </div>
-    </div>
+    </div>  <br />
 
-    <br />
-    <a href="{{ path('grr_authorization_resource_show',{'id': room.id}) }}">
+    <a href="{{ path('grr_authorization_show_by_room',{'id': room.id}) }}">
         <i class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>
 
 {% endblock %}
 
 {% block scripts %}
     {% include '@grr_front/_select_room_js.html.twig' %}
+    <script src="{{ asset('js/authorization_rooms.js') }}"></script>
 {% endblock %}
