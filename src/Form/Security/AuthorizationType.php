@@ -50,6 +50,7 @@ class AuthorizationType extends AbstractType
                 'required' => false,
                 'multiple' => false,
                 'expanded' => true,
+                'attr' => ['class' => 'authorization_role']//for js
             ]
         );
 

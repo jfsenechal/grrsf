@@ -112,5 +112,4 @@ class AuthorizationUserType extends AbstractType
         return AuthorizationType::class;
     }
 
-
 }

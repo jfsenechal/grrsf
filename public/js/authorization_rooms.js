@@ -2,8 +2,8 @@
  * Disabled option rooms if area administrator or manger resource
  */
 $(document).ready(function () {
-    let typeList = $('#authorization_user_role');
-    let authorization_rooms = $('#authorization_user_rooms');
+    let typeList = $('.authorization_role');
+    let authorization_rooms = $('.room-select');
     typeList.on('click', function (e) {
         loadOptionsWeeks()
     });
@@ -11,12 +11,10 @@ $(document).ready(function () {
     loadOptionsWeeks();
 
     function loadOptionsWeeks() {
-        let radioValue = $("input[name='authorization_user[role]']:checked").val();
-        console.log(radioValue);
-        let t = $("input:radio.form-check-input:checked");
-        console.log(t);
+        var radioValue = $(".form-check-input:checked").val();
 
         if (radioValue === '1' || radioValue === '2') {
+            console.log(radioValue);
             authorization_rooms.prop('disabled', true);
         } else {
             authorization_rooms.prop('disabled', false);
