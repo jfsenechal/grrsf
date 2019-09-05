@@ -8,34 +8,32 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Controller\Admin\Controller;
+namespace App\Tests\Controller\Admin;
 
 use App\Tests\Repository\BaseRepository;
 
-class RoomControllerTest extends BaseRepository
+class AreaControllerTest extends BaseRepository
 {
-    public function testNewRoom()
+    public function testNewArea()
     {
         $this->loadFixtures();
 
         $this->administrator->request('GET', '/admin/area/');
-        $this->administrator->clickLink('Hdv');
-        $crawler = $this->administrator->clickLink('Nouvelle ressource');
+        $crawler = $this->administrator->clickLink('Nouveau domaine');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['room[name]']->setValue('Room demo');
+        $form['area[name]']->setValue('Area demo');
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
 
         $this->assertContains(
-            'Room demo',
+            'Area demo',
             $this->administrator->getResponse()->getContent()
         );
 
         $this->administrator->request('GET', '/admin/area/');
-        $this->administrator->clickLink('Hdv');
-        $this->administrator->clickLink('Room demo');
+        $this->administrator->clickLink('Area demo');
         self::assertResponseIsSuccessful();
     }
 
@@ -45,19 +43,18 @@ class RoomControllerTest extends BaseRepository
 
         $this->administrator->request('GET', 'admin/area/');
         $this->administrator->clickLink('Hdv');
-        $this->administrator->clickLink('Salle Conseil');
         self::assertResponseIsSuccessful();
 
         $crawler = $this->administrator->clickLink('Modifier');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['room[name]']->setValue('Salle Conseil demo');
+        $form['area[name]']->setValue('Hdv demo');
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
 
         $this->assertContains(
-            'Salle Conseil demo',
+            'Hdv demo',
             $this->administrator->getResponse()->getContent()
         );
     }
@@ -67,7 +64,6 @@ class RoomControllerTest extends BaseRepository
         $files =
             [
                 $this->pathFixtures.'area.yaml',
-                $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'users.yaml',
             ];
 

@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Controller\Admin\Controller;
+namespace App\Tests\Controller\Front;
 
 use App\Tests\Repository\BaseRepository;
 
