@@ -86,12 +86,10 @@ authorization:
       title: Nouvelle autorisation pour l'utilisateur
     title: Autorisations pour l'utilisateur
   flash:
-    model:
-      new: Nouvelle authorisation bien ajoutée
-      delete: Nouvelle authorisation bien supprimée
-    user:
-      new: Nouvelle authorisation bien ajoutée
-      delete: Nouvelle authorisation bien supprimée
+    new: Nouvelle autorisation bien ajoutée
+    delete:
+      success: Nouvelle autorisation bien supprimée
+      error: L'autorisation n' a pas été supprimée
 
 usermanagerresource:
     title: Gestion des droits

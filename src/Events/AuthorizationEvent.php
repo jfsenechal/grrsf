@@ -5,7 +5,7 @@ namespace App\Events;
 use App\Entity\Security\UserAuthorization;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class AuthorizationUserEvent extends Event
+class AuthorizationEvent extends Event
 {
     const NEW_SUCCESS = 'grr.authorization.new.success';
     const EDIT_SUCCESS = 'grr.authorization.edit.success';

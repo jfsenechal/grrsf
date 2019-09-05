@@ -3,8 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Security\User;
-use App\Events\AuthorizationModelEvent;
-use App\Events\AuthorizationUserEvent;
+use App\Events\AuthorizationEvent;
 use App\Form\Security\AuthorizationUserType;
 use App\Handler\HandlerAuthorizationArea;
 use App\Manager\AuthorizationManager;
@@ -70,8 +69,8 @@ class AuthorizationUserController extends AbstractController
 
             $this->handlerAuthorizationArea->handleNewUserManagerResource($form);
 
-            $authorizationEvent = new AuthorizationModelEvent($authorizationAreaModel);
-            $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationModelEvent::NEW_SUCCESS);
+            $authorizationEvent = new AuthorizationEvent($authorizationAreaModel);
+            $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationEvent::NEW_SUCCESS);
 
             return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
         }
@@ -92,12 +91,14 @@ class AuthorizationUserController extends AbstractController
     public function show(User $user): Response
     {
         $authorizations = $this->userAuthorizationRepository->findByUser($user);
+        $urlBack = $this->generateUrl('grr_authorization_show_by_user', ['id' => $user->getId()]);
 
         return $this->render(
             'security/authorization/user/show.html.twig',
             [
                 'user' => $user,
                 'authorizations' => $authorizations,
+                'url_back' => $urlBack,
             ]
         );
     }

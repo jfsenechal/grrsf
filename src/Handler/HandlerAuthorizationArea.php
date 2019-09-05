@@ -98,7 +98,7 @@ class HandlerAuthorizationArea
         }
 
         if (!$this->error) {
-            $this->flashBag->add('success', 'authorization.flash.model.new');
+            $this->flashBag->add('success', 'authorization.flash.new');
         }
     }
 

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Room;
-use App\Events\AuthorizationUserEvent;
+use App\Events\AuthorizationEvent;
 use App\Manager\AuthorizationManager;
 use App\Repository\Security\AuthorizationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,7 +47,7 @@ class AuthorizationController extends AbstractController
     {
         $id = $request->get('idauth');
         $token = $request->get('_tokenauth');
-        $urlBack = $request->get('_urlback');
+        $urlBack = $request->get('_urlback', '/');
 
         $userAuthorization = $this->userAuthorizationRepository->find($id);
 
@@ -55,18 +55,18 @@ class AuthorizationController extends AbstractController
             $this->createNotFoundException();
         }
 
-        $user = $userAuthorization->getUser();
-
         if ($this->isCsrfTokenValid('delete'.$userAuthorization->getId(), $token)) {
 
             $this->authorizationManager->remove($userAuthorization);
             $this->authorizationManager->flush();
 
-            $authorizationEvent = new AuthorizationUserEvent($userAuthorization);
-            $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationUserEvent::DELETE_SUCCESS);
+            $authorizationEvent = new AuthorizationEvent($userAuthorization);
+            $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationEvent::DELETE_SUCCESS);
+        } else {
+            $this->addFlash('danger', 'authorization.flash.model.delete.error');
         }
 
-        return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
+        return $this->redirect($urlBack);
     }
 
     /**
@@ -75,13 +75,16 @@ class AuthorizationController extends AbstractController
     public function show(Room $room): Response
     {
         $authorizations = $this->userAuthorizationRepository->findByRoom($room);
+        $urlBack = $this->generateUrl('grr_authorization_show_by_user', ['id' => $room->getId()]);
 
         return $this->render(
             'security/authorization/room/show.html.twig',
             [
                 'room' => $room,
                 'authorizations' => $authorizations,
+                'url_back' => $urlBack,
             ]
         );
     }
+
 }

@@ -3,14 +3,12 @@
 namespace App\EventSubscriber;
 
 use App\Events\AreaEvent;
-use App\Events\AuthorizationModelEvent;
-use App\Events\AuthorizationUserEvent;
+use App\Events\AuthorizationEvent;
+use App\Events\EntryEvent;
 use App\Events\EntryTypeEvent;
 use App\Events\RoomEvent;
 use App\Events\UserEvent;
-use App\Model\AuthorizationModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use App\Events\EntryEvent;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class FlashSubscriber implements EventSubscriberInterface
@@ -100,19 +98,14 @@ class FlashSubscriber implements EventSubscriberInterface
         $this->flashBag->add('success', 'area.flash.new');
     }
 
-    public function onAuthorizationModelDelete(AuthorizationModelEvent $event)
+    public function onAuthorizationDelete(AuthorizationEvent $event)
     {
-        $this->flashBag->add('success', 'authorization.flash.model.delete');
+        $this->flashBag->add('success', 'authorization.flash.delete.success');
     }
 
-     public function onAuthorizationUserDelete(AuthorizationUserEvent $event)
+    public function onAuthorizationNew(AuthorizationEvent $event)
     {
-        $this->flashBag->add('success', 'authorization.flash.user.delete');
-    }
-
-    public function onAuthorizationUserNew(AuthorizationUserEvent $event)
-    {
-        $this->flashBag->add('success', 'authorization.flash.user.new');
+        $this->flashBag->add('success', 'authorization.flash.new');
     }
 
     public function onUserPassword(UserEvent $userEvent)
@@ -144,10 +137,8 @@ class FlashSubscriber implements EventSubscriberInterface
             UserEvent::DELETE_SUCCESS => 'onUserDelete',
             UserEvent::CHANGE_PASSWORD_SUCCESS => 'onUserPassword',
 
-            AuthorizationModelEvent::DELETE_SUCCESS => 'onAuthorizationModelDelete',
-
-            AuthorizationUserEvent::NEW_SUCCESS => 'onAuthorizationUserNew',
-            AuthorizationUserEvent::DELETE_SUCCESS => 'onAuthorizationUserDelete',
+            AuthorizationEvent::NEW_SUCCESS => 'onAuthorizationNew',
+            AuthorizationEvent::DELETE_SUCCESS => 'onAuthorizationDelete',
         ];
 
     }

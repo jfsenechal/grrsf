@@ -28,7 +28,6 @@ class UserSelectType extends AbstractType
             [
                 'label' => 'entry.form.user.select.label',
                 'class' => User::class,
-                'required' => true,
                 'multiple' => true,
                 'expanded' => true,
                 'query_builder' => $this->userRepository->getQueryBuilder(),
