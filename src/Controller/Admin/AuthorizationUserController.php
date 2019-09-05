@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Security\User;
 use App\Events\AuthorizationEvent;
 use App\Form\Security\AuthorizationUserType;
-use App\Handler\HandlerAuthorizationArea;
+use App\Handler\HandlerAuthorization;
 use App\Manager\AuthorizationManager;
 use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
@@ -21,9 +21,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthorizationUserController extends AbstractController
 {
     /**
-     * @var HandlerAuthorizationArea
+     * @var HandlerAuthorization
      */
-    private $handlerAuthorizationArea;
+    private $handlerAuthorization;
     /**
      * @var AuthorizationRepository
      */
@@ -39,11 +39,11 @@ class AuthorizationUserController extends AbstractController
 
     public function __construct(
         AuthorizationManager $authorizationManager,
-        HandlerAuthorizationArea $handlerUserManagerArea,
+        HandlerAuthorization $handlerAuthorization,
         AuthorizationRepository $userAuthorizationRepository,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->handlerAuthorizationArea = $handlerUserManagerArea;
+        $this->handlerAuthorization = $handlerAuthorization;
         $this->userAuthorizationRepository = $userAuthorizationRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->authorizationManager = $authorizationManager;
@@ -67,7 +67,7 @@ class AuthorizationUserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->handlerAuthorizationArea->handleNewUserManagerResource($form);
+            $this->handlerAuthorization->handle($form);
 
             $authorizationEvent = new AuthorizationEvent($authorizationAreaModel);
             $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationEvent::NEW_SUCCESS);

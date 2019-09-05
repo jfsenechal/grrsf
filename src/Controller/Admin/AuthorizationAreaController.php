@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Area;
 use App\Form\Security\AuthorizationAreaType;
-use App\Handler\HandlerAuthorizationArea;
+use App\Handler\HandlerAuthorization;
 use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,19 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthorizationAreaController extends AbstractController
 {
     /**
-     * @var HandlerAuthorizationArea
+     * @var HandlerAuthorization
      */
-    private $handlerAuthorizationArea;
+    private $handlerAuthorization;
     /**
      * @var AuthorizationRepository
      */
     private $userAuthorizationRepository;
 
     public function __construct(
-        HandlerAuthorizationArea $handlerUserManagerArea,
+        HandlerAuthorization $handlerAuthorization,
         AuthorizationRepository $userAuthorizationRepository
     ) {
-        $this->handlerAuthorizationArea = $handlerUserManagerArea;
+        $this->handlerAuthorization = $handlerAuthorization;
         $this->userAuthorizationRepository = $userAuthorizationRepository;
     }
 
@@ -54,7 +54,7 @@ class AuthorizationAreaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->handlerAuthorizationArea->handleNewUserManagerResource($form);
+            $this->handlerAuthorization->handle($form);
 
             if ($area) {
                 return $this->redirectToRoute('grr_authorization_area_show', ['id' => $area->getId()]);

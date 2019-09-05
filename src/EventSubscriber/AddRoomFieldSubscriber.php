@@ -11,7 +11,6 @@ namespace App\EventSubscriber;
 use App\Form\Type\RoomSelectType;
 use App\Repository\RoomRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
@@ -62,11 +61,9 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
     {
         return [
             FormEvents::PRE_SET_DATA => 'onPreSetData',
-            FormEvents::PRE_SUBMIT => 'onPreSubmit',
         ];
     }
 
-    //init
     public function onPreSetData(FormEvent $event)
     {
         $object = $event->getData();
@@ -114,14 +111,6 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
             RoomSelectType::class,
             $default
         );
-    }
-
-    public function onPreSubmit(PreSubmitEvent $event)
-    {
-        $user = $event->getData();
-        $form = $event->getForm();
-        $areaId = $user['area'];
-
     }
 
 }

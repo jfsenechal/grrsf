@@ -36,11 +36,12 @@ class TimeSlotsProviderTest extends WebTestCase
 
         $timeSlotProvicer = $this->initTimeSlotProvider();
         $modelsTimeSlot = $timeSlotProvicer->getTimeSlotsModelByAreaAndDaySelected($area, $day);
+        self::assertGreaterThan(0, count($modelsTimeSlot));
 
         foreach ($modelsTimeSlot as $modelTimeSlot) {
             self::assertSame($modelTimeSlot->getBegin()->hour, $day->hour);
             self::assertSame($modelTimeSlot->getBegin()->minute, $day->minute);
-            $day->addSeconds($resolution);
+            $day->addMinutes($resolution);
             self::assertSame($modelTimeSlot->getEnd()->hour, $day->hour);
             self::assertSame($modelTimeSlot->getEnd()->minute, $day->minute);
         }
@@ -62,14 +63,14 @@ class TimeSlotsProviderTest extends WebTestCase
         foreach ($timesSlot as $timeSlot) {
             self::assertSame($timeSlot->hour, $day->hour);
             self::assertSame($timeSlot->minute, $day->minute);
-            $day->addSeconds($resolution);
+            $day->addMinutes($resolution);
         }
     }
 
     public function getTimeSlotsOfEntry()
     {
         $day = Carbon::today();
-        $resolution = 1800;
+        $resolution = 30;
 
         $area = new Area();
         $area->setTimeInterval($resolution);
@@ -87,7 +88,7 @@ class TimeSlotsProviderTest extends WebTestCase
         foreach ($timesSlot as $timeSlot) {
             self::assertSame($timeSlot->hour, $day->hour);
             self::assertSame($timeSlot->minute, $day->minute);
-            $day->addSeconds($resolution);
+            $day->addMinutes($resolution);
         }
     }
 
@@ -97,13 +98,13 @@ class TimeSlotsProviderTest extends WebTestCase
             [
                 'hourBegin' => 8,
                 'hourEnd' => 19,
-                'resolution' => 1800,
+                'resolution' => 30,
                 'minute' => 0,
             ],
             [
                 'hourBegin' => 10,
                 'hourEnd' => 20,
-                'resolution' => 900,
+                'resolution' => 15,
                 'minute' => 0, //todo if != 0
             ],
         ];

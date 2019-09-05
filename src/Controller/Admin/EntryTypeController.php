@@ -34,6 +34,10 @@ class EntryTypeController extends AbstractController
      * @var TypeEntryFactory
      */
     private $typeEntryFactory;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     public function __construct(
         TypeEntryFactory $typeEntryFactory,
@@ -44,6 +48,7 @@ class EntryTypeController extends AbstractController
         $this->entryTypeRepository = $entryTypeRepository;
         $this->typeEntryManager = $typeEntryManager;
         $this->typeEntryFactory = $typeEntryFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

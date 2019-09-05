@@ -3,7 +3,6 @@
 namespace App\Form\Security;
 
 use App\Entity\Security\User;
-use App\EventSubscriber\AddRoomDefaultFieldSubscriber;
 use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\Form\Type\AreaSelectType;
 use Symfony\Component\Form\AbstractType;

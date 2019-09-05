@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class HandlerAuthorizationArea
+class HandlerAuthorization
 {
     /**
      * @var AuthorizationManager
@@ -49,7 +49,7 @@ class HandlerAuthorizationArea
         $this->translator = $translator;
     }
 
-    public function handleNewUserManagerResource(FormInterface $form)
+    public function handle(FormInterface $form)
     {
         /**
          * @var AuthorizationModel

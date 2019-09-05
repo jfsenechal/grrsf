@@ -55,7 +55,7 @@ menu:
   search: Rechercher
 user:
   index:
-    title: Liste des user
+    title: Liste des utilisateurs
   delete:
     confirm: Êtes vous sur de supprimer l'utilisateur %name%
   new:
@@ -89,7 +89,7 @@ action:
   edit: Editer
 typeEntry:
   new:
-    title: Nouveau type d'entrée
+    title: Nouveau type
 link:
   back:
     touser: Retour à l'utilisateur

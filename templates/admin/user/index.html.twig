@@ -1,38 +1,44 @@
 {% extends '@grr_admin/layout_admin.html.twig' %}
 
-{% block title %}GrrUtilisateurs index{% endblock %}
+{% block title %}{{ 'user.index.title'|trans({}, 'actions') }}{% endblock %}
 
 {% block body %}
 
-    <h1>{{ 'user.index.title'|trans({}, 'actions') }}</h1>
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            <h3>{{ 'user.index.title'|trans({}, 'actions') }}</h3>
+        </div>
+        <div class="card-body">
 
-    <a class="btn btn-primary" href="{{ path('grr_admin_user_new') }}">
-        <i class="fas fa-plus"></i> {{ 'user.new.title'| trans({}, 'actions') }}</a>
-    <br/> <br/>
+            <a class="btn btn-primary" href="{{ path('grr_admin_user_new') }}">
+                <i class="fas fa-plus"></i> {{ 'user.new.title'| trans({}, 'actions') }}</a>
+            <br/> <br/>
 
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>{{ 'user.account.email.label'| trans }}</th>
-            <th>{{ 'user.form.nom.label'| trans }}</th>
-            <th>{{ 'user.form.isEnabled.label'| trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>
-                    <a href="{{ path('grr_admin_user_show', {'id': user.id}) }}">{{ user.email }}</a>
-                </td>
-                <td>{{ user.name }} {{ user.firstName }}</td>
-                <td>{{ user.isEnabled }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">{{ 'records.notfound'|trans({}, 'actions') }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{{ 'user.account.email.label'| trans }}</th>
+                    <th>{{ 'user.form.nom.label'| trans }}</th>
+                    <th>{{ 'user.form.isEnabled.label'| trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('grr_admin_user_show', {'id': user.id}) }}">{{ user.email }}</a>
+                        </td>
+                        <td>{{ user.name }} {{ user.firstName }}</td>
+                        <td>{{ user.isEnabled }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">{{ 'records.notfound'|trans({}, 'actions') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}

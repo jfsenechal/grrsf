@@ -21,14 +21,14 @@ class TypeEntryType extends AbstractType
                 'name',
                 TextType::class,
                 [
-                    'label' => 'typeArea.form.name.label',
+                    'label' => 'typeEntry.form.name.label',
                 ]
             )
             ->add(
                 'orderDisplay',
                 IntegerType::class,
                 [
-                    'label' => 'typeArea.form.orderDisplay.label',
+                    'label' => 'typeEntry.form.orderDisplay.label',
                 ]
             )
             ->add(
@@ -42,7 +42,7 @@ class TypeEntryType extends AbstractType
                 'letter',
                 ChoiceType::class,
                 [
-                    'label' => 'typeArea.form.typeLetter.label',
+                    'label' => 'typeEntry.form.typeLetter.label',
                     'choices' => array_flip(SettingsTypeEntry::lettres()),
                 ]
             )
@@ -50,7 +50,7 @@ class TypeEntryType extends AbstractType
                 'disponible',
                 ChoiceType::class,
                 [
-                    'label' => 'typeArea.form.disponible.label',
+                    'label' => 'typeEntry.form.disponible.label',
                     'choices' => array_flip(SettingsTypeEntry::disponibleFor()),
                 ]
             );

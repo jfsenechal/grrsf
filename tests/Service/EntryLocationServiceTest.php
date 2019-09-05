@@ -37,8 +37,8 @@ class EntryLocationServiceTest extends BaseRepository
         int $entryMinuteEnd,
         int $countLocations
     ) {
-        //  $this->loadFixtures();
-        $duration = 1800;
+        $this->loadFixtures();
+        $duration = 30;
         $today = new \DateTime('now');
         $today->setTime($entryHourBegin, $entryMinuteBegin);
 
@@ -113,14 +113,14 @@ class EntryLocationServiceTest extends BaseRepository
      *
      * @param \DateTime $dateStart
      * @param \DateTime $dateEnd
-     * @param array     $countLocations
+     * @param array $countLocations
      */
     public function testMultipleDaysSetLocations(
         \DateTime $dateStart,
         \DateTime $dateEnd,
         array $countLocations
     ) {
-        $duration = 1800;
+        $duration = 30;
 
         $area = $this->initArea(8, 19, $duration);
         $room = new Room($area);

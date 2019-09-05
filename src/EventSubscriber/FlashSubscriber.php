@@ -25,17 +25,17 @@ class FlashSubscriber implements EventSubscriberInterface
 
     public function onEntryTypeDelete(EntryTypeEvent $entryTypeEvent)
     {
-        $this->flashBag->add('success', 'entryType.flash.delete');
+        $this->flashBag->add('success', 'typeEntry.flash.delete');
     }
 
     public function onEntryTypeEdit(EntryTypeEvent $entryTypeEvent)
     {
-        $this->flashBag->add('success', 'entryType.flash.edit');
+        $this->flashBag->add('success', 'typeEntry.flash.edit');
     }
 
     public function onEntryTypeNew(EntryTypeEvent $entryTypeEvent)
     {
-        $this->flashBag->add('success', 'entryType.flash.new');
+        $this->flashBag->add('success', 'typeEntry.flash.new');
     }
 
     public function onRoomDelete(RoomEvent $roomEvent)
