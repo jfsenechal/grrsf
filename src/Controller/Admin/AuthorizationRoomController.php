@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Room;
 use App\Events\AuthorizationModelEvent;
+use App\Form\Security\AuthorizationRoomType;
 use App\Handler\HandlerAuthorizationArea;
 use App\Manager\AuthorizationManager;
 use App\Model\AuthorizationModel;
