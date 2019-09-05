@@ -26,9 +26,4 @@ class AreaFactoryTest extends WebTestCase
         $this->assertInstanceOf(Area::class, $area);
         $this->assertSame('Lolo', $area->getName());
     }
-
-    public function testZe()
-    {
-        $this->markTestIncomplete('');
-    }
 }
