@@ -21,7 +21,7 @@ class SecurityHelper
 
     public function isAreaAdministrator(User $user, Area $area): bool
     {
-        if ($this->authorizationRepository->findOneBy(
+        if ( $this->authorizationRepository->findOneBy(
             ['user' => $user, 'area' => $area, 'is_area_administrator' => true]
         )) {
             return true;

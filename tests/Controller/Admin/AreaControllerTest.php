@@ -64,7 +64,7 @@ class AreaControllerTest extends BaseRepository
         $files =
             [
                 $this->pathFixtures.'area.yaml',
-                $this->pathFixtures.'users.yaml',
+                $this->pathFixtures.'user.yaml',
             ];
 
         $this->loader->load($files);

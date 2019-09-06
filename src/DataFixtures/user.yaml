@@ -1,15 +1,11 @@
 App\Entity\Security\User:
   user0:
     email: jf@marche.be
-    name: Bob
+    name: Jf
     password: homer
     roles: ["ROLE_GRR_ADMINISTRATOR"]
-  user_{alice, bob}:
+  user_{alice, bob, fred, raoul, joseph, kevin}:
     email: '<current()>\@domain.be'
     name: '<current()>'
     password: homer
-  user{1..10}:
-    name: '<name()>'
-    first_name: '<firstName()>'
-    email (unique): '<email()>'
-    password: 'homer'
+

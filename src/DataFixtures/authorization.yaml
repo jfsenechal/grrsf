@@ -1,0 +1,21 @@
+App\Entity\Security\UserAuthorization:
+  auth0:
+    user: '@user_bob'
+    area: '@area_Esquare'
+    is_area_administrator: true
+    is_resource_administrator: false
+  auth1:
+    user: '@user_alice'
+    area: '@area_Esquare'
+    is_area_administrator: false
+    is_resource_administrator: false
+  auth2:
+    user: '@user_fred'
+    room: '@room_cafetaria'
+    is_area_administrator: false
+    is_resource_administrator: false
+  auth3:
+    user: '@user_raoul'
+    room: '@room_relax'
+    is_area_administrator: true
+    is_resource_administrator: false

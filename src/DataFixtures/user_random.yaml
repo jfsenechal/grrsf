@@ -1,0 +1,6 @@
+App\Entity\Security\User:
+  user{1..10}:
+    name: '<name()>'
+    first_name: '<firstName()>'
+    email (unique): '<email()>'
+    password: 'homer'

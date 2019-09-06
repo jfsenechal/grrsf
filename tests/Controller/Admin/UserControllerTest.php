@@ -67,7 +67,7 @@ class UserControllerTest extends BaseRepository
             [
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
-                $this->pathFixtures.'users.yaml',
+                $this->pathFixtures.'user.yaml',
             ];
 
         $this->loader->load($files);

@@ -83,7 +83,7 @@ class EntryTypeControllerTest extends BaseRepository
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'entry_type.yaml',
-                $this->pathFixtures.'users.yaml',
+                $this->pathFixtures.'user.yaml',
             ];
 
         $this->loader->load($files);
