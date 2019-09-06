@@ -77,9 +77,9 @@ class HandlerAuthorization
         $role = $data->getRole();
 
         $this->error = false;
-        dump($users);
+
         foreach ($users as $user) {
-            dump($rooms);
+
             $userAuthorization = new UserAuthorization();
             $userAuthorization->setUser($user);
 
@@ -124,7 +124,7 @@ class HandlerAuthorization
             return;
         }
         foreach ($rooms as $room) {
-            dump($area);
+
             $copy = clone($userAuthorization);
             if ($this->existRoom($user, $room)) {
                 $this->error = true;

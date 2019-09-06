@@ -12,11 +12,11 @@ class AuthorizationEvent extends Event
     const DELETE_SUCCESS = 'grr.authorization.delete.success';
 
     /**
-     * @var UserAuthorization
+     * @var UserAuthorization|null
      */
     private $userAuthorization;
 
-    public function __construct(UserAuthorization $userAuthorization)
+    public function __construct(?UserAuthorization $userAuthorization = null)
     {
         $this->userAuthorization = $userAuthorization;
     }

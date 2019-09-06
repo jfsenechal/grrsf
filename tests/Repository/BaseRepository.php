@@ -14,6 +14,7 @@ use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
 use App\Entity\Room;
+use App\Entity\Security\User;
 use App\Faker\CarbonProvider;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Fidry\AliceDataFixtures\LoaderInterface;
@@ -107,6 +108,13 @@ class BaseRepository extends WebTestCase
         return $this->entityManager
             ->getRepository(Entry::class)
             ->findOneBy(['name' => $name]);
+    }
+
+    protected function getUser(string $email): User
+    {
+        return $this->entityManager
+            ->getRepository(User::class)
+            ->findOneBy(['email' => $email]);
     }
 
     /**

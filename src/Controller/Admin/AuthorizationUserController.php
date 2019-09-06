@@ -58,10 +58,10 @@ class AuthorizationUserController extends AbstractController
      */
     public function new(Request $request, User $user): Response
     {
-        $authorizationAreaModel = new AuthorizationModel();
-        $authorizationAreaModel->setUsers([$user]);
+        $authorizationModel = new AuthorizationModel();
+        $authorizationModel->setUsers([$user]);
 
-        $form = $this->createForm(AuthorizationUserType::class, $authorizationAreaModel);
+        $form = $this->createForm(AuthorizationUserType::class, $authorizationModel);
 
         $form->handleRequest($request);
 
@@ -69,16 +69,13 @@ class AuthorizationUserController extends AbstractController
 
             $this->handlerAuthorization->handle($form);
 
-            $authorizationEvent = new AuthorizationEvent($authorizationAreaModel);
-            $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationEvent::NEW_SUCCESS);
-
             return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
         }
 
         return $this->render(
             'security/authorization/user/new.html.twig',
             [
-                'authorizationArea' => $authorizationAreaModel,
+                'authorizationArea' => $authorizationModel,
                 'user' => $user,
                 'form' => $form->createView(),
             ]
