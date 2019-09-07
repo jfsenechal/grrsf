@@ -11,7 +11,7 @@ class PdoGrr
      */
     private $prefix;
 
-    public function __construct($host, $port, $dbName, $username, $password, $prefix)
+    public function __construct($host, $port = 3306, $dbName, $username, $password, $prefix = 'grr')
     {
         $dsn = $this->generateDsn($host, $port, $dbName);
         $options = array(

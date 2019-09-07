@@ -2,6 +2,7 @@
 
 include_once __DIR__.'/../include/connect.inc.php';
 include __DIR__.'/../include/config.inc.php';
+include __DIR__.'/../include/settings.inc.php';
 include __DIR__.'/../include/misc.inc.php';
 include __DIR__.'/../include/functions.inc.php';
 include __DIR__.'/../include/'.$dbsys.'.inc.php';
