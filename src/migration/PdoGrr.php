@@ -11,8 +11,9 @@ class PdoGrr
      */
     private $prefix;
 
-    public function __construct($dsn, $username, $password, $prefix)
+    public function __construct($host, $port, $dbName, $username, $password, $prefix)
     {
+        $dsn = $this->generateDsn($host, $port, $dbName);
         $options = array(
             \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
@@ -20,6 +21,11 @@ class PdoGrr
 
         $this->dbh = new \PDO($dsn, $username, $password, $options);
         $this->prefix = $prefix.'_';
+    }
+
+    public function generateDsn($dbHost, $dbPort, $dbDb)
+    {
+        return 'mysql:host='.$dbHost.';port='.$dbPort.';dbname='.$dbDb;
     }
 
     /**
