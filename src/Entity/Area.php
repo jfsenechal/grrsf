@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Doctrine\IdEntityTrait;
+use App\Doctrine\Traits\IdEntityTrait;
 use App\Entity\Security\UserAuthorization;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

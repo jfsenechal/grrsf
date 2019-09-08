@@ -49,7 +49,7 @@ class RequestData
      * @return \Symfony\Contracts\HttpClient\ResponseInterface
      *
      */
-    public function getEntries()
+    public function getEntries(?string $date)
     {
         return $this->request('entry.php');
     }

@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Doctrine\IdEntityTrait;
+use App\Doctrine\Traits\IdEntityTrait;
 use App\Periodicity\PeriodicityConstant;
-use Doctrine\ORM\Mapping as ORM;
 use App\Validator\Periodicity as AppAssertPeriodicity;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="grr_periodicity")

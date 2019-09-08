@@ -2,7 +2,8 @@
 
 namespace App\Entity\Security;
 
-use App\Doctrine\IdEntityTrait;
+use App\Doctrine\Traits\IdEntityTrait;
+use App\Doctrine\Traits\TimestampableEntityTrait;
 use App\Entity\Area;
 use App\Entity\Room;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,6 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     use IdEntityTrait;
+    use TimestampableEntityTrait;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -82,6 +84,8 @@ class User implements UserInterface
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->is_enabled = true;
         $this->authorizations = new ArrayCollection();
     }

@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Doctrine\IdEntityTrait;
+use App\Doctrine\Traits\IdEntityTrait;
+use App\Doctrine\Traits\TimestampableEntityTrait;
 use App\Model\DurationModel;
 use App\Model\TimeSlot;
 use App\Validator\Entry as AppAssertEntry;
@@ -23,6 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Entry
 {
     use IdEntityTrait;
+    use TimestampableEntityTrait;
 
     /**
      * @var string
@@ -173,6 +175,8 @@ class Entry
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->locations = new ArrayCollection();
         $this->periodicity_days = new ArrayCollection();
         $this->private = false;

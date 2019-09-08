@@ -17,6 +17,7 @@ use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
 use App\Security\SecurityRole;
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -173,6 +174,15 @@ class MigrationUtil
         return null;
     }
 
+    public function convertToUf8(string $text): string
+    {
+        $charset = mb_detect_encoding($text, null, true);
+        if ($charset != 'UTF-8') {
+            return mb_convert_encoding($text, 'UTF-8', $charset);
+        }
+
+        return $text;
+    }
 
     public function tabColor(int $index)
     {
@@ -210,5 +220,12 @@ class MigrationUtil
         }
 
         return $tab_couleur;
+    }
+
+    public function converToDateTime(string $start_time): \DateTime
+    {
+        $date = Carbon::createFromTimestamp($start_time);
+
+        return $date->toDateTime();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Doctrine\IdEntityTrait;
+use App\Doctrine\Traits\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

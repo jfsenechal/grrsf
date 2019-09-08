@@ -2,7 +2,8 @@
 
 namespace App\Entity\Security;
 
-use App\Doctrine\IdEntityTrait;
+use App\Doctrine\Traits\IdEntityTrait;
+use App\Doctrine\Traits\TimestampableEntityTrait;
 use App\Entity\Area;
 use App\Entity\Room;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class UserAuthorization
 {
     use IdEntityTrait;
+    use TimestampableEntityTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Security\User", inversedBy="authorizations")
@@ -53,6 +55,8 @@ class UserAuthorization
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->is_area_administrator = false;
         $this->is_resource_administrator = false;
     }
@@ -121,7 +125,6 @@ class UserAuthorization
 
         return $this;
     }
-
 
 
 }

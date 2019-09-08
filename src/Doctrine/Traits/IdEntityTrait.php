@@ -6,7 +6,7 @@
  * Time: 14:45.
  */
 
-namespace App\Doctrine;
+namespace App\Doctrine\Traits;
 
 trait IdEntityTrait
 {

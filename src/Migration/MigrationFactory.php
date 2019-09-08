@@ -32,7 +32,7 @@ class MigrationFactory
     public function createArea(array $data): Area
     {
         $area = new Area();
-        $area->setName($data['area_name']);
+        $area->setName($this->migrationUtil->convertToUf8($data['area_name']));
         $area->setIsPrivate($this->migrationUtil->transformBoolean($data['access']));
         //$area->set($data['ip_adr']);
         $area->setOrderDisplay($data['order_display']);
@@ -86,17 +86,30 @@ class MigrationFactory
     {
         $entry = $entry = new Entry();
         $entry->setName($data['name']);
-        $entry->setStartTime();
-        $entry->setEndTime();
-        $entry->setRoom();
-        $entry->setBeneficiaire();
-        $entry->setDescription();
-        $entry->setCreatedBy();
-        $entry->setStatutEntry();
-        $entry->setType();
-        $entry->setJours();
+        $entry->setStartTime($this->migrationUtil->converToDateTime($data['start_time']));
+        $entry->setEndTime($this->migrationUtil->converToDateTime($data['end_time']));
+        $entry->setType($data['entry_type']);
+        //  $entry->setPeriodicity($data['repeat_id']);
+        $entry->setRoom($data['room_id']);
+        $entry->setCreatedAt($this->migrationUtil->converToDateTime($data['timestamp']));
+        $entry->setUpdatedAt(new \DateTime());
+        $entry->setCreatedBy($data['create_by']);
+        $entry->setBeneficiaire($data['beneficiaire_ext']);
+        $entry->setBeneficiaireExt($data['beneficiaire']);
+        $entry->setType($data['type']);
+        $entry->setDescription($data['description']);
+        $entry->setStatutEntry($data['statut_entry']);
+        $entry->setOptionReservation($data['option_reservation']);
+        $entry->setOverloadDesc($data['overload_desc']);
+        $entry->setModerate($data['moderate']);
+        $entry->setJours($data['jours']);
 
         return $entry;
+    }
+
+    public function createRepeat()
+    {
+
     }
 
     public function createTypeEntry(array $data): EntryType

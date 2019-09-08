@@ -6,6 +6,9 @@ use App\Entity\Area;
 use App\Migration\MigrationFactory;
 use App\Migration\MigrationUtil;
 use App\Migration\RequestData;
+use Carbon\Carbon;
+use Carbon\Exceptions\InvalidDateException;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -103,11 +106,45 @@ class MigrationCommand extends Command
             $password = $helper->ask($input, $output, $question);
         }
 
+        $date = null;
+        $questionDate = new Question(
+            "A partir de quelle date voulez vous importer les entrées, par exemple: 2017-11-25. Laissez vide pour importer tout: \n"
+        );
+        $questionDate->setValidator(
+            function ($date) {
+                if ($date == null) {
+                    return $date;
+                }
+
+                try {
+                    var_dump($date);
+
+                    return Carbon::createFromFormat('Y-m-d', $date);
+
+                } catch (InvalidDateException $exception) {
+                    throw new \RuntimeException(
+                        'La date n\'a pas un format valable: '.$exception->getMessage()
+                    );
+                }
+
+                return $date;
+            }
+        );
+        $date = $helper->ask($input, $output, $questionDate);
+
+        if ($date) {
+            $this->io->success('Date choisie : '.$date->format('Y-m-d'));
+        }
+
+        $purger = new ORMPurger($this->entityManager);
+        $purger->purge();
+
         $this->requestData->connect($url, $user, $password);
 
         $this->handleArea();
         $this->handleEntryType();
-        $this->handleUser();
+        //  $this->handleUser();
+        $this->handleEntry($date);
 
         $this->entityManager->flush();
 
@@ -161,6 +198,16 @@ class MigrationCommand extends Command
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
             }
+        }
+    }
+
+    protected function handleEntry(?string $date)
+    {
+        $entries = $this->decompress($this->requestData->getEntries($date));
+
+        foreach ($entries as $data) {
+            $entry = $this->migrationFactory->createEntry($data);
+            $this->entityManager->persist($entry);
         }
     }
 
