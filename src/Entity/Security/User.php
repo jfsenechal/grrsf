@@ -13,14 +13,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="grr_user", uniqueConstraints={
- *     @ORM\UniqueConstraint(columns={"email"})
+ *     @ORM\UniqueConstraint(columns={"email"}),
+ *     @ORM\UniqueConstraint(columns={"username"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\Security\UserRepository")
  * @UniqueEntity(fields={"email"}, message="Un utilisateur a déjà cette adresse email")
+ * @UniqueEntity(fields={"username"}, message="Un utilisateur a déjà ce nom d'utilisateur")
  */
 class User implements UserInterface
 {
     use IdEntityTrait;
+
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $username;
 
     /**
      * @var string
@@ -34,8 +41,8 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @var string|null The hashed password
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
 
@@ -50,9 +57,13 @@ class User implements UserInterface
     private $first_name;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": 1})
+     * @ORM\Column(type="boolean")
      */
-    private $is_enabled = true;
+    private $is_enabled;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $language_default;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Area")
@@ -71,6 +82,7 @@ class User implements UserInterface
 
     public function __construct()
     {
+        $this->is_enabled = true;
         $this->authorizations = new ArrayCollection();
     }
 
@@ -86,7 +98,14 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string)$this->email;
+        return (string)$this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -111,6 +130,13 @@ class User implements UserInterface
         return $this;
     }
 
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
     /**
      * Alias
      * @return Area|null
@@ -120,44 +146,12 @@ class User implements UserInterface
         return $this->area_default;
     }
 
-    public function removeRoom(string $role): self
-    {
-        //todo
-        /*  if ($this->roles->contains($role)) {
-              $this->roles->removeElement($role);
-          }*/
-
-        return $this;
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
-    {
-        return (string)$this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
     /**
      * @see UserInterface
      */
     public function getSalt()
     {
-        // not needed when using the "bcrypt" algorithm in security.yaml
+        // not needed for apps that do not check user passwords
     }
 
     /**
@@ -167,6 +161,21 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): ?string
+    {
+        return (string)$this->password;
+    }
+
+    public function setPassword(?string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -272,8 +281,16 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getLanguageDefault(): ?string
+    {
+        return $this->language_default;
+    }
 
-    /*
-     * STOP
-     */
+    public function setLanguageDefault(?string $language_default): self
+    {
+        $this->language_default = $language_default;
+
+        return $this;
+    }
+
 }

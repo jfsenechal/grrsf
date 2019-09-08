@@ -15,9 +15,45 @@ use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\EntryType;
 use App\Entity\Room;
+use App\Entity\Security\User;
+use App\Repository\AreaRepository;
+use App\Repository\RoomRepository;
+use App\Repository\Security\UserRepository;
+use App\Security\SecurityRole;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class MigrationUtil
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
+    /**
+     * @var AreaRepository
+     */
+    private $areaRepository;
+    /**
+     * @var RoomRepository
+     */
+    private $roomRepository;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    public function __construct(
+        UserPasswordEncoderInterface $passwordEncoder,
+        AreaRepository $areaRepository,
+        RoomRepository $roomRepository,
+        UserRepository $userRepository
+    ) {
+        $this->passwordEncoder = $passwordEncoder;
+        $this->areaRepository = $areaRepository;
+        $this->roomRepository = $roomRepository;
+        $this->userRepository = $userRepository;
+    }
+
+
     public static function createArea(array $data): Area
     {
         $area = new Area();
@@ -86,7 +122,7 @@ class MigrationUtil
         return $entry;
     }
 
-    public static function createTypeEntry(array $data) : EntryType
+    public static function createTypeEntry(array $data): EntryType
     {
         $type = new EntryType();
         $type->setName($data['type_name']);
@@ -144,6 +180,107 @@ class MigrationUtil
         }
 
         return false;
+    }
+
+    public static function createUser(array $data): User
+    {
+        $user = new User();
+        $user->setUsername($data['login']);
+        $user->setName($data['nom']);
+        $user->setFirstName($data['prenom']);
+        $user->setEmail($data['email']);
+        $user->setRoles(self::transformRole($data['statut']));
+        $user->setIsEnabled(self::transformEtat($data['etat']));
+        $user->setLanguageDefault($data['default_language']);
+        //  $user->set($data['default_site']);
+        //  $user->set($data['default_style']);
+        //  $user->set($data['default_list_type']);
+        //  $user->set($data['source']);
+
+        return $user;
+    }
+
+    public function transformDefaultArea(array $areas, int $areaId): ?Area
+    {
+        if ($areaId < 1) {
+            return null;
+        }
+
+        foreach ($areas as $data) {
+            if ($data['id'] == $areaId) {
+                $nameArea = $data['area_name'];
+                $area = $this->areaRepository->findOneBy(['name' => $nameArea]);
+                if ($area) {
+                    return $area;
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+    public function transformDefaultRoom(array $rooms, int $roomId): ?Room
+    {
+        if ($roomId < 1) {
+            return null;
+        }
+
+        foreach ($rooms as $data) {
+            if ($data['id'] == $roomId) {
+                $nameRoom = $data['room_name'];
+                $room = $this->roomRepository->findOneBy(['name' => $nameRoom]);
+                if ($room) {
+                    return $room;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private static function transformEtat(string $etat): bool
+    {
+        return $etat === 'actif';
+    }
+
+    public function transformPassword($user, $password)
+    {
+        if ($password === '' || $password === null) {
+            return null;
+        }
+
+        return $this->passwordEncoder->encodePassword($user, 123456);
+    }
+
+    private static function transformRole(string $statut)
+    {
+        switch ($statut) {
+            case 'administrateur' :
+                $role = SecurityRole::getRoleGrrAdministrator();
+                break;
+            case 'utilisateur':
+                $role = SecurityRole::getRoleGrr();
+                break;
+            case 'visiteur':
+                $role = SecurityRole::getRoleGrr();
+                break;
+            default:
+                break;
+        }
+
+        return [$role];
+    }
+
+    public function checkUser($data) :?string
+    {
+        if ($data['email'] == '') {
+            return 'Pas de mail pour '.$data['login'];
+        }
+        if ($this->userRepository->findOneBy(['email' => $data['email']])) {
+            return $data['login'].' : Il exsite déjà un utilisateur avec cette email: '.$data['email'];
+        }
+        return null;
     }
 
 }

@@ -3,9 +3,6 @@
 namespace App\Command;
 
 use App\Entity\Area;
-use App\Entity\Entry;
-use App\Entity\Room;
-use App\Migration\AreaMigration;
 use App\Migration\MigrationUtil;
 use App\Migration\RequestData;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,12 +32,25 @@ class MigrationCommand extends Command
      * @var array|null
      */
     private $rooms;
+    /**
+     * @var MigrationUtil
+     */
+    private $migrationUtil;
+    /**
+     * @var array|null
+     */
+    private $areas;
 
-    public function __construct(string $name = null, RequestData $requestData, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        string $name = null,
+        RequestData $requestData,
+        EntityManagerInterface $entityManager,
+        MigrationUtil $migrationUtil
+    ) {
         parent::__construct($name);
         $this->requestData = $requestData;
         $this->entityManager = $entityManager;
+        $this->migrationUtil = $migrationUtil;
     }
 
     protected function configure()
@@ -90,6 +100,7 @@ class MigrationCommand extends Command
 
         $this->handleArea();
         $this->handleEntryType();
+        $this->handleUser();
 
         $this->entityManager->flush();
 
@@ -98,10 +109,10 @@ class MigrationCommand extends Command
 
     protected function handleArea()
     {
-        $entries = $this->decompress($this->requestData->getAreas());
-        $this->rooms =  $this->decompress($this->requestData->getRooms());
+        $this->areas = $this->decompress($this->requestData->getAreas());
+        $this->rooms = $this->decompress($this->requestData->getRooms());
 
-        foreach ($entries as $data) {
+        foreach ($this->areas as $data) {
             $area = MigrationUtil::createArea($data);
             $this->entityManager->persist($area);
             $this->handleRoom($area, $data['id']);
@@ -125,6 +136,24 @@ class MigrationCommand extends Command
         foreach ($types as $data) {
             $type = MigrationUtil::createTypeEntry($data);
             $this->entityManager->persist($type);
+        }
+    }
+
+    protected function handleUser()
+    {
+        $users = $this->decompress($this->requestData->getUsers());
+
+        foreach ($users as $data) {
+            if ($error = $this->migrationUtil->checkUser($data)) {
+                $this->io->note('Utilisateur non ajouté: '.$error);
+            } else {
+                $user = MigrationUtil::createUser($data);
+                $user->setPassword($this->migrationUtil->transformPassword($user, $data['password']));
+                $user->setAreaDefault($this->migrationUtil->transformDefaultArea($this->areas, $data['default_area']));
+                $user->setRoomDefault($this->migrationUtil->transformDefaultRoom($this->rooms, $data['default_room']));
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+            }
         }
     }
 
