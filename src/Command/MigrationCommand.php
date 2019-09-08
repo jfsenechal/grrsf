@@ -11,6 +11,7 @@ use Carbon\Exceptions\InvalidDateException;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -48,6 +49,10 @@ class MigrationCommand extends Command
      * @var MigrationFactory
      */
     private $migrationFactory;
+    /**
+     * @var ProgressBar
+     */
+    private $progressBar;
 
     public function __construct(
         string $name = null,
@@ -75,6 +80,8 @@ class MigrationCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->io = new SymfonyStyle($input, $output);
+        $this->progressBar = new ProgressBar($output, 50);
+
         $helper = $this->getHelper('question');
         $user = $input->getArgument('user');
         $password = $input->getArgument('password');
@@ -138,8 +145,11 @@ class MigrationCommand extends Command
 
         $this->handleArea();
         $this->handleEntryType();
-      //  $this->handleUser();
+        //  $this->handleUser();
+
+        $this->progressBar->start();
         $this->handleEntry($date);
+        $this->progressBar->finish();
 
         $this->io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
@@ -215,6 +225,7 @@ class MigrationCommand extends Command
 
                 return;
             }
+            $this->progressBar->advance();
         }
 
         $this->entityManager->flush();
