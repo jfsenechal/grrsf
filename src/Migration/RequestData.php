@@ -12,6 +12,9 @@ namespace App\Migration;
 
 
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -29,7 +32,7 @@ class RequestData
     private function setBaseUrl(string $url)
     {
         $url = rtrim($url, '/');
-        $this->base_url = $url.'/migration/';
+        $this->base_url = $url.DIRECTORY_SEPARATOR.'migration'.DIRECTORY_SEPARATOR;
     }
 
     public function connect(string $url, string $user, string $password)
@@ -51,6 +54,21 @@ class RequestData
         return $this->request('entry.php');
     }
 
+    public function getAreas()
+    {
+        return $this->request('area.php');
+    }
+
+    public function getRooms()
+    {
+        return $this->request('room.php');
+    }
+
+    public function getUsers()
+    {
+        return $this->request('user.php');
+    }
+
     /**
      * @param string $file
      * @return false|string|\Symfony\Contracts\HttpClient\ResponseInterface
@@ -58,10 +76,22 @@ class RequestData
     private function request(string $file)
     {
         try {
-            return $this->httpClient->request('GET', $this->base_url.$file);
+            $response = $this->httpClient->request('GET', $this->base_url.$file);
+            try {
+                return $response->getContent();
+            } catch (ClientExceptionInterface $e) {
+                return json_encode(['error' => $e->getMessage()]);
+            } catch (RedirectionExceptionInterface $e) {
+                return json_encode(['error' => $e->getMessage()]);
+            } catch (ServerExceptionInterface $e) {
+                return json_encode(['error' => $e->getMessage()]);
+            } catch (TransportExceptionInterface $e) {
+                return json_encode(['error' => $e->getMessage()]);
+            }
         } catch (TransportExceptionInterface $e) {
             return json_encode(['error' => $e->getMessage()]);
         }
+
     }
 
 
