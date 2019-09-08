@@ -13,6 +13,7 @@ namespace App\Migration;
 
 use App\Entity\Area;
 use App\Entity\Entry;
+use App\Entity\EntryType;
 use App\Entity\Room;
 
 class MigrationUtil
@@ -21,7 +22,8 @@ class MigrationUtil
     {
         $area = new Area();
         $area->setName($data['area_name']);
-        $area->setIsPrivate(AreaMigration::transformBoolean($data['access']));
+        $area->setIsPrivate(self::transformBoolean($data['access']));
+        //$area->set($data['ip_adr']);
         $area->setOrderDisplay($data['order_display']);
         $area->setStartTime($data['morningstarts_area']);
         $area->setEndTime($data['eveningends_area']);
@@ -43,20 +45,26 @@ class MigrationUtil
     public static function createRoom(Area $area, array $data): Room
     {
         $room = new Room($area);
-        $room->setName($data['name']);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
-        $room->set($data[]);
+        $room->setName($data['room_name']);
+        $room->setDescription($data['description']);
+        $room->setCapacity($data['capacity']);
+        $room->setMaximumBooking($data['max_booking']);
+        $room->setStatutRoom($data['statut_room']);
+        $room->setShowFicRoom(self::transformBoolean($data['show_fic_room']));
+        $room->setPictureRoom($data['picture_room']);
+        $room->setCommentRoom($data['comment_room']);
+        $room->setShowComment(self::transformBoolean($data['show_comment']));
+        $room->setDelaisMaxResaRoom($data['delais_max_resa_room']);
+        $room->setDelaisMinResaRoom($data['delais_min_resa_room']);
+        $room->setAllowActionInPast(self::transformBoolean($data['allow_action_in_past']));
+        $room->setOrderDisplay($data['order_display']);
+        $room->setDelaisOptionReservation($data['delais_option_reservation']);
+        $room->setDontAllowModify(self::transformBoolean($data['dont_allow_modify']));
+        $room->setTypeAffichageReser($data['type_affichage_reser']);
+        $room->setModerate(self::transformBoolean($data['moderate']));
+        $room->setQuiPeutReserverPour($data['qui_peut_reserver_pour']);
+        $room->setActiveRessourceEmpruntee(self::transformBoolean($data['active_ressource_empruntee']));
+        $room->setWhoCanSee($data['who_can_see']);
 
         return $room;
     }
@@ -76,6 +84,66 @@ class MigrationUtil
         $entry->setJours();
 
         return $entry;
+    }
+
+    public static function createTypeEntry(array $data) : EntryType
+    {
+        $type = new EntryType();
+        $type->setName($data['type_name']);
+        $type->setOrderDisplay($data['order_display']);
+        $type->setColor(self::tabColor($data['couleur']));
+        $type->setLetter($data['type_letter']);
+        $type->setDisponible($data['disponible']);
+
+        return $type;
+    }
+
+    protected static function tabColor(int $index)
+    {
+        $tab_couleur[1] = "#FFCCFF";
+        $tab_couleur[2] = "#99CCCC";
+        $tab_couleur[3] = "#FF9999";
+        $tab_couleur[4] = "#FFFF99"; # jaune p�le
+        $tab_couleur[5] = "#C0E0FF"; # bleu-vert
+        $tab_couleur[6] = "#FFCC99"; # p�che
+        $tab_couleur[7] = "#FF6666"; # rouge
+        $tab_couleur[8] = "#66FFFF"; # bleu "aqua"
+        $tab_couleur[9] = "#DDFFDD"; # vert clair
+        $tab_couleur[10] = "#CCCCCC"; # gris
+        $tab_couleur[11] = "#7EFF7E"; # vert p�le
+        $tab_couleur[12] = "#8000FF"; # violet
+        $tab_couleur[13] = "#FFFF00"; # jaune
+        $tab_couleur[14] = "#FF00DE"; # rose
+        $tab_couleur[15] = "#00FF00"; # vert
+        $tab_couleur[16] = "#FF8000"; # orange
+        $tab_couleur[17] = "#DEDEDE"; # gris clair
+        $tab_couleur[18] = "#C000FF"; # Mauve
+        $tab_couleur[19] = "#FF0000"; # rouge vif
+        $tab_couleur[20] = "#FFFFFF"; # blanc
+        $tab_couleur[21] = "#A0A000"; # Olive verte
+        $tab_couleur[22] = "#DAA520"; # marron goldenrod
+        $tab_couleur[23] = "#40E0D0"; # turquoise
+        $tab_couleur[24] = "#FA8072"; # saumon
+        $tab_couleur[25] = "#4169E1";
+        $tab_couleur[26] = "#6A5ACD";
+        $tab_couleur[27] = "#AA5050";
+        $tab_couleur[28] = "#FFBB20";
+
+        if ($index) {
+            return $tab_couleur[$index];
+        }
+
+        return $tab_couleur;
+    }
+
+    public static function transformBoolean(string $value): bool
+    {
+        $value = strtolower($value);
+        if ($value == 'y' OR $value == 'a') {
+            return true;
+        }
+
+        return false;
     }
 
 }

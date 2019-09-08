@@ -69,6 +69,10 @@ class RequestData
         return $this->request('user.php');
     }
 
+    public function getTypesEntry() {
+        return $this->request('type.php');
+    }
+
     /**
      * @param string $file
      * @return false|string|\Symfony\Contracts\HttpClient\ResponseInterface

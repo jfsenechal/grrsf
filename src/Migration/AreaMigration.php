@@ -35,16 +35,6 @@ class AreaMigration
         return $days;
     }
 
-    public static function transformBoolean(string $value): bool
-    {
-        $value = strtolower($value);
-        if ($value == 'y' OR $value == 'a') {
-            return true;
-        }
-
-        return false;
-    }
-
     public static function transformToMinutes(int $time)
     {
         if ($time <= 0) {

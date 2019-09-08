@@ -31,6 +31,10 @@ class MigrationCommand extends Command
      * @var SymfonyStyle
      */
     private $io;
+    /**
+     * @var array|null
+     */
+    private $rooms;
 
     public function __construct(string $name = null, RequestData $requestData, EntityManagerInterface $entityManager)
     {
@@ -85,6 +89,7 @@ class MigrationCommand extends Command
         $this->requestData->connect($url, $user, $password);
 
         $this->handleArea();
+        $this->handleEntryType();
 
         $this->entityManager->flush();
 
@@ -94,25 +99,36 @@ class MigrationCommand extends Command
     protected function handleArea()
     {
         $entries = $this->decompress($this->requestData->getAreas());
+        $this->rooms =  $this->decompress($this->requestData->getRooms());
 
         foreach ($entries as $data) {
             $area = MigrationUtil::createArea($data);
             $this->entityManager->persist($area);
-            $this->handleRoom($area);
+            $this->handleRoom($area, $data['id']);
         }
     }
 
-    protected function handleRoom(Area $area)
+    protected function handleRoom(Area $area, int $areaId)
     {
-        $rooms = $this->decompress($this->requestData->getRooms());
-
-        foreach ($rooms as $data) {
-            $area = MigrationUtil::createRoom($area,$data);
-            $this->entityManager->persist($area);
+        foreach ($this->rooms as $data) {
+            if ($data['area_id'] == $areaId) {
+                $room = MigrationUtil::createRoom($area, $data);
+                $this->entityManager->persist($room);
+            }
         }
     }
 
-    private function decompress(string $content) : ?array
+    protected function handleEntryType()
+    {
+        $types = $this->decompress($this->requestData->getTypesEntry());
+
+        foreach ($types as $data) {
+            $type = MigrationUtil::createTypeEntry($data);
+            $this->entityManager->persist($type);
+        }
+    }
+
+    private function decompress(string $content): ?array
     {
         $data = json_decode($content, true);
 
