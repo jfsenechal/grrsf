@@ -117,17 +117,12 @@ class MigrationCommand extends Command
                 }
 
                 try {
-                    var_dump($date);
-
                     return Carbon::createFromFormat('Y-m-d', $date);
-
                 } catch (InvalidDateException $exception) {
                     throw new \RuntimeException(
                         'La date n\'a pas un format valable: '.$exception->getMessage()
                     );
                 }
-
-                return $date;
             }
         );
         $date = $helper->ask($input, $output, $questionDate);
@@ -143,24 +138,24 @@ class MigrationCommand extends Command
 
         $this->handleArea();
         $this->handleEntryType();
-        //  $this->handleUser();
+      //  $this->handleUser();
         $this->handleEntry($date);
-
-        $this->entityManager->flush();
 
         $this->io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
 
     protected function handleArea()
     {
-        $this->areas = $this->decompress($this->requestData->getAreas());
-        $this->rooms = $this->decompress($this->requestData->getRooms());
+        $this->areas = $this->decompress($this->requestData->getAreas(), 'area');
+        $this->rooms = $this->decompress($this->requestData->getRooms(), 'room');
 
         foreach ($this->areas as $data) {
             $area = $this->migrationFactory->createArea($data);
             $this->entityManager->persist($area);
             $this->handleRoom($area, $data['id']);
         }
+
+        $this->entityManager->flush();
     }
 
     protected function handleRoom(Area $area, int $areaId)
@@ -171,21 +166,25 @@ class MigrationCommand extends Command
                 $this->entityManager->persist($room);
             }
         }
+
+        $this->entityManager->flush();
     }
 
     protected function handleEntryType()
     {
-        $types = $this->decompress($this->requestData->getTypesEntry());
+        $types = $this->decompress($this->requestData->getTypesEntry(), 'entry_type');
 
         foreach ($types as $data) {
             $type = $this->migrationFactory->createTypeEntry($data);
             $this->entityManager->persist($type);
         }
+
+        $this->entityManager->flush();
     }
 
     protected function handleUser()
     {
-        $users = $this->decompress($this->requestData->getUsers());
+        $users = $this->decompress($this->requestData->getUsers(), 'user');
 
         foreach ($users as $data) {
             if ($error = $this->migrationUtil->checkUser($data)) {
@@ -203,28 +202,38 @@ class MigrationCommand extends Command
 
     protected function handleEntry(?string $date)
     {
-        $entries = $this->decompress($this->requestData->getEntries($date));
+        $entries = $this->decompress($this->requestData->getEntries($date), 'entry');
 
         foreach ($entries as $data) {
             $entry = $this->migrationFactory->createEntry($data);
-            $this->entityManager->persist($entry);
+            $room = $this->migrationUtil->transformDefaultRoom($this->rooms, $data['room_id']);
+            if ($room) {
+                $entry->setRoom($room);
+                $this->entityManager->persist($entry);
+            } else {
+                $this->io->error('Room non trouvé pour '.$data['name']);
+
+                return;
+            }
         }
+
+        $this->entityManager->flush();
     }
 
-    private function decompress(string $content): ?array
+    private function decompress(string $content, string $type): array
     {
         $data = json_decode($content, true);
 
         if (!is_array($data)) {
-            $this->io->error('La réponse doit être un json: '.$content);
+            $this->io->error($type.' La réponse doit être un json: '.$content);
 
-            return null;
+            return [];
         }
 
         if (isset($data['error'])) {
             $this->io->error('Une erreur est survenue: '.$data['error']);
 
-            return null;
+            return [];
         }
 
         return $data;

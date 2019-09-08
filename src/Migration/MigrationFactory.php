@@ -88,21 +88,20 @@ class MigrationFactory
         $entry->setName($data['name']);
         $entry->setStartTime($this->migrationUtil->converToDateTime($data['start_time']));
         $entry->setEndTime($this->migrationUtil->converToDateTime($data['end_time']));
-        $entry->setType($data['entry_type']);
+        //  $entry->set($data['entry_type']);
         //  $entry->setPeriodicity($data['repeat_id']);
-        $entry->setRoom($data['room_id']);
         $entry->setCreatedAt($this->migrationUtil->converToDateTime($data['timestamp']));
         $entry->setUpdatedAt(new \DateTime());
         $entry->setCreatedBy($data['create_by']);
         $entry->setBeneficiaire($data['beneficiaire_ext']);
         $entry->setBeneficiaireExt($data['beneficiaire']);
-        $entry->setType($data['type']);
+        $entry->setType($this->migrationUtil->convertToTypeEntry($data['type']));
         $entry->setDescription($data['description']);
         $entry->setStatutEntry($data['statut_entry']);
         $entry->setOptionReservation($data['option_reservation']);
         $entry->setOverloadDesc($data['overload_desc']);
-        $entry->setModerate($data['moderate']);
-        $entry->setJours($data['jours']);
+        $entry->setModerate($this->migrationUtil->transformBoolean($data['moderate']));
+        $entry->setJours($this->migrationUtil->transformBoolean($data['jours']));
 
         return $entry;
     }

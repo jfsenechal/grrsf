@@ -12,8 +12,10 @@ namespace App\Migration;
 
 
 use App\Entity\Area;
+use App\Entity\EntryType;
 use App\Entity\Room;
 use App\Repository\AreaRepository;
+use App\Repository\EntryTypeRepository;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
 use App\Security\SecurityRole;
@@ -39,17 +41,23 @@ class MigrationUtil
      * @var UserRepository
      */
     public $userRepository;
+    /**
+     * @var EntryTypeRepository
+     */
+    private $entryTypeRepository;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        EntryTypeRepository $entryTypeRepository
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
         $this->userRepository = $userRepository;
+        $this->entryTypeRepository = $entryTypeRepository;
     }
 
     public function transformBoolean(string $value): bool
@@ -227,5 +235,15 @@ class MigrationUtil
         $date = Carbon::createFromTimestamp($start_time);
 
         return $date->toDateTime();
+    }
+
+    public function convertToTypeEntry(string $letter): ?EntryType
+    {
+        return $this->entryTypeRepository->findOneBy(['letter' => $letter]);
+    }
+
+    public function convertToRoom($room_id)
+    {
+        $room = $this->roomRepository->findOneBy(['name' => $nameRoom]);
     }
 }
