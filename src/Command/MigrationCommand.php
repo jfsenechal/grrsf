@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Area;
+use App\Migration\MigrationFactory;
 use App\Migration\MigrationUtil;
 use App\Migration\RequestData;
 use Doctrine\ORM\EntityManagerInterface;
@@ -40,17 +41,23 @@ class MigrationCommand extends Command
      * @var array|null
      */
     private $areas;
+    /**
+     * @var MigrationFactory
+     */
+    private $migrationFactory;
 
     public function __construct(
         string $name = null,
         RequestData $requestData,
         EntityManagerInterface $entityManager,
-        MigrationUtil $migrationUtil
+        MigrationUtil $migrationUtil,
+        MigrationFactory $migrationFactory
     ) {
         parent::__construct($name);
         $this->requestData = $requestData;
         $this->entityManager = $entityManager;
         $this->migrationUtil = $migrationUtil;
+        $this->migrationFactory = $migrationFactory;
     }
 
     protected function configure()
@@ -113,7 +120,7 @@ class MigrationCommand extends Command
         $this->rooms = $this->decompress($this->requestData->getRooms());
 
         foreach ($this->areas as $data) {
-            $area = MigrationUtil::createArea($data);
+            $area = $this->migrationFactory->createArea($data);
             $this->entityManager->persist($area);
             $this->handleRoom($area, $data['id']);
         }
@@ -123,7 +130,7 @@ class MigrationCommand extends Command
     {
         foreach ($this->rooms as $data) {
             if ($data['area_id'] == $areaId) {
-                $room = MigrationUtil::createRoom($area, $data);
+                $room = $this->migrationFactory->createRoom($area, $data);
                 $this->entityManager->persist($room);
             }
         }
@@ -134,7 +141,7 @@ class MigrationCommand extends Command
         $types = $this->decompress($this->requestData->getTypesEntry());
 
         foreach ($types as $data) {
-            $type = MigrationUtil::createTypeEntry($data);
+            $type = $this->migrationFactory->createTypeEntry($data);
             $this->entityManager->persist($type);
         }
     }
@@ -147,7 +154,7 @@ class MigrationCommand extends Command
             if ($error = $this->migrationUtil->checkUser($data)) {
                 $this->io->note('Utilisateur non ajouté: '.$error);
             } else {
-                $user = MigrationUtil::createUser($data);
+                $user = $this->migrationFactory->createUser($data);
                 $user->setPassword($this->migrationUtil->transformPassword($user, $data['password']));
                 $user->setAreaDefault($this->migrationUtil->transformDefaultArea($this->areas, $data['default_area']));
                 $user->setRoomDefault($this->migrationUtil->transformDefaultRoom($this->rooms, $data['default_room']));

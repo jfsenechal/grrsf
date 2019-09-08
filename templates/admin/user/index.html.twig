@@ -6,7 +6,7 @@
 
     <div class="card bg-light mb-3">
         <div class="card-header">
-            <h3>{{ 'user.index.title'|trans({}, 'actions') }}</h3>
+            <h3>{{ 'user.index.title'|trans({'length': users|length}, 'actions') }}</h3>
         </div>
         <div class="card-body">
 

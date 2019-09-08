@@ -55,7 +55,7 @@ menu:
   search: Rechercher
 user:
   index:
-    title: Liste des utilisateurs
+    title: Liste des length utilisateurs
   delete:
     confirm: Êtes vous sur de supprimer l'utilisateur %name%
   new:

@@ -25,6 +25,16 @@ class UserRepository extends ServiceEntityRepository
             ->orderBy('user.name', 'ASC');
     }
 
+    /**
+     * @return User[]
+     */
+    public function search()
+    {
+        return $this->createQueryBuilder('user')
+            ->orderBy('user.name', 'ASC')
+            ->getQuery()->getResult();
+    }
+
     public function persist(User $Utilisateur)
     {
         $this->_em->persist($Utilisateur);
@@ -45,4 +55,5 @@ class UserRepository extends ServiceEntityRepository
     {
         $this->_em->flush();
     }
+
 }
