@@ -50,9 +50,9 @@ class MigrationCommand extends Command
      */
     private $migrationFactory;
     /**
-     * @var ProgressBar
+     * @var OutputInterface
      */
-    private $progressBar;
+    private $output;
 
     public function __construct(
         string $name = null,
@@ -80,7 +80,7 @@ class MigrationCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->io = new SymfonyStyle($input, $output);
-        $this->progressBar = new ProgressBar($output, 50);
+        $this->output = $output;
 
         $helper = $this->getHelper('question');
         $user = $input->getArgument('user');
@@ -143,29 +143,38 @@ class MigrationCommand extends Command
 
         $this->requestData->connect($url, $user, $password);
 
+        $this->io->section('Importation des Areas et rooms');
         $this->handleArea();
+        $this->io->writeln('');
+        $this->io->section('Importation des types d\'entrée');
         $this->handleEntryType();
-        //  $this->handleUser();
-
-        $this->progressBar->start();
+        $this->io->writeln('');
+        $this->io->section('Importation des utilisateurs');
+        $this->handleUser();
+        $this->io->writeln('');
+        $this->io->section('Importation des entrées');
         $this->handleEntry($date);
-        $this->progressBar->finish();
+        $this->io->writeln('');
 
-        $this->io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $this->io->success('Importation terminée :-) .');
     }
 
     protected function handleArea()
     {
         $this->areas = $this->decompress($this->requestData->getAreas(), 'area');
         $this->rooms = $this->decompress($this->requestData->getRooms(), 'room');
+        $count = count($this->areas) + count($this->rooms);
+        $progressBar = new ProgressBar($this->output, $count);
 
+        $progressBar->start();
         foreach ($this->areas as $data) {
             $area = $this->migrationFactory->createArea($data);
             $this->entityManager->persist($area);
             $this->handleRoom($area, $data['id']);
+            $progressBar->advance();
         }
-
         $this->entityManager->flush();
+        $progressBar->finish();
     }
 
     protected function handleRoom(Area $area, int $areaId)
@@ -183,19 +192,27 @@ class MigrationCommand extends Command
     protected function handleEntryType()
     {
         $types = $this->decompress($this->requestData->getTypesEntry(), 'entry_type');
+        $progressBar = new ProgressBar($this->output, count($types));
+
+        $progressBar->start();
 
         foreach ($types as $data) {
             $type = $this->migrationFactory->createTypeEntry($data);
             $this->entityManager->persist($type);
+            $progressBar->advance();
         }
 
         $this->entityManager->flush();
+        $progressBar->finish();
     }
 
     protected function handleUser()
     {
         $users = $this->decompress($this->requestData->getUsers(), 'user');
 
+        $progressBar = new ProgressBar($this->output, count($users));
+
+        $progressBar->start();
         foreach ($users as $data) {
             if ($error = $this->migrationUtil->checkUser($data)) {
                 $this->io->note('Utilisateur non ajouté: '.$error);
@@ -206,14 +223,19 @@ class MigrationCommand extends Command
                 $user->setRoomDefault($this->migrationUtil->transformDefaultRoom($this->rooms, $data['default_room']));
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
+                $progressBar->advance();
             }
         }
+        $progressBar->finish();
     }
 
     protected function handleEntry(?string $date)
     {
         $entries = $this->decompress($this->requestData->getEntries($date), 'entry');
 
+        $progressBar = new ProgressBar($this->output, count($entries));
+
+        $progressBar->start();
         foreach ($entries as $data) {
             $entry = $this->migrationFactory->createEntry($data);
             $room = $this->migrationUtil->transformDefaultRoom($this->rooms, $data['room_id']);
@@ -225,10 +247,11 @@ class MigrationCommand extends Command
 
                 return;
             }
-            $this->progressBar->advance();
+            $progressBar->advance();
         }
 
         $this->entityManager->flush();
+        $progressBar->finish();
     }
 
     private function decompress(string $content, string $type): array
