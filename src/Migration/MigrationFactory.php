@@ -16,6 +16,7 @@ use App\Entity\Entry;
 use App\Entity\EntryType;
 use App\Entity\Room;
 use App\Entity\Security\User;
+use App\Entity\Security\UserAuthorization;
 
 class MigrationFactory
 {
@@ -139,6 +140,11 @@ class MigrationFactory
         //  $user->set($data['source']);
 
         return $user;
+    }
+
+    public function createAuthorization(array $data): UserAuthorization
+    {
+        return new UserAuthorization();
     }
 
 }

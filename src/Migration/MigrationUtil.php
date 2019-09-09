@@ -14,9 +14,11 @@ namespace App\Migration;
 use App\Entity\Area;
 use App\Entity\EntryType;
 use App\Entity\Room;
+use App\Entity\Security\User;
 use App\Repository\AreaRepository;
 use App\Repository\EntryTypeRepository;
 use App\Repository\RoomRepository;
+use App\Repository\Security\AuthorizationRepository;
 use App\Repository\Security\UserRepository;
 use App\Security\SecurityRole;
 use Carbon\Carbon;
@@ -45,19 +47,25 @@ class MigrationUtil
      * @var EntryTypeRepository
      */
     private $entryTypeRepository;
+    /**
+     * @var AuthorizationRepository
+     */
+    private $authorizationRepository;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
         AreaRepository $areaRepository,
         RoomRepository $roomRepository,
         UserRepository $userRepository,
-        EntryTypeRepository $entryTypeRepository
+        EntryTypeRepository $entryTypeRepository,
+        AuthorizationRepository $authorizationRepository
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
         $this->userRepository = $userRepository;
         $this->entryTypeRepository = $entryTypeRepository;
+        $this->authorizationRepository = $authorizationRepository;
     }
 
     public function transformBoolean(string $value): bool
@@ -99,7 +107,7 @@ class MigrationUtil
         return $time / CarbonInterface::MINUTES_PER_HOUR;
     }
 
-    public function transformDefaultArea(array $areas, int $areaId): ?Area
+    public function transformToArea(array $areas, int $areaId): ?Area
     {
         if ($areaId < 1) {
             return null;
@@ -118,7 +126,7 @@ class MigrationUtil
         return null;
     }
 
-    public function transformDefaultRoom(array $rooms, int $roomId): ?Room
+    public function transformToRoom(array $rooms, int $roomId): ?Room
     {
         if ($roomId < 1) {
             return null;
@@ -135,6 +143,12 @@ class MigrationUtil
         }
 
         return null;
+    }
+
+
+    public function transformToUser(string $username): ?User
+    {
+        return $this->userRepository->findOneBy(['username' => $username]);
     }
 
     public function transformEtat(string $etat): bool
@@ -177,6 +191,15 @@ class MigrationUtil
         }
         if ($this->userRepository->findOneBy(['email' => $data['email']])) {
             return $data['login'].' : Il exsite déjà un utilisateur avec cette email: '.$data['email'];
+        }
+
+        return null;
+    }
+
+    public function checkAuthorizationRoom(User $user, Room $room): ?string
+    {
+        if ($this->authorizationRepository->findOneBy(['user' => $user, 'room' => $room])) {
+            return $user->getUsername().' à déjà un rôle pour la room: '.$room->getName();
         }
 
         return null;
@@ -242,8 +265,5 @@ class MigrationUtil
         return $this->entryTypeRepository->findOneBy(['letter' => $letter]);
     }
 
-    public function convertToRoom($room_id)
-    {
-        $room = $this->roomRepository->findOneBy(['name' => $nameRoom]);
-    }
+
 }

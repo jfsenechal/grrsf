@@ -74,6 +74,16 @@ class RequestData
         return $this->request('type.php');
     }
 
+    public function getAreaAdmin()
+    {
+        return $this->request('user_admin_area.php');
+    }
+
+    public function getRoomAdmin()
+    {
+        return $this->request('user_room.php');
+    }
+
     /**
      * @param string $file
      * @return false|string|\Symfony\Contracts\HttpClient\ResponseInterface

@@ -14,6 +14,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -75,7 +76,7 @@ class MigrationCommand extends Command
             ->addArgument('url', InputArgument::REQUIRED, "L'Url http de l'ancien Grr")
             ->addArgument('user', InputArgument::REQUIRED, "Le nom d'utilisateur d'un compte locale grr administrator")
             ->addArgument('password', InputArgument::OPTIONAL, "Le mot de passe de l'utilisateur")
-            ->addArgument('date', InputArgument::OPTIONAL, "Date à partir de laquelle les données seront ajoutées");
+            ->addOption('date', null, InputOption::VALUE_NONE, "Date à partir de laquelle les données seront ajoutées");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -92,7 +93,7 @@ class MigrationCommand extends Command
             if (!isset($parts['scheme'])) {
                 $this->io->error(sprintf('L\'url n\'est pas valide: %s', $url));
 
-                return;
+                return 1;
             }
         }
 
@@ -134,6 +135,7 @@ class MigrationCommand extends Command
             }
         );
         $date = $helper->ask($input, $output, $questionDate);
+        $date = Carbon::createFromFormat('Y-m-d', '2019-09-01');
 
         if ($date) {
             $this->io->success('Date choisie : '.$date->format('Y-m-d'));
@@ -153,10 +155,15 @@ class MigrationCommand extends Command
         $this->io->section('Importation des utilisateurs');
         $this->handleUser();
         $this->io->writeln('');
-        $this->io->section('Importation des entrées');
-        $this->handleEntry($date);
+        $this->io->section('Importation des area admin');
+        $this->handleAreaAdmin();
         $this->io->writeln('');
-
+        $this->io->section('Importation des rooms admin');
+        $this->handleRoomAdmin();
+        $this->io->writeln('');
+        $this->io->section('Importation des entrées');
+        //$this->handleEntry($date);
+        $this->io->writeln('');
         $this->io->success('Importation terminée :-) .');
     }
 
@@ -212,8 +219,8 @@ class MigrationCommand extends Command
             } else {
                 $user = $this->migrationFactory->createUser($data);
                 $user->setPassword($this->migrationUtil->transformPassword($user, $data['password']));
-                $user->setAreaDefault($this->migrationUtil->transformDefaultArea($this->areas, $data['default_area']));
-                $user->setRoomDefault($this->migrationUtil->transformDefaultRoom($this->rooms, $data['default_room']));
+                $user->setAreaDefault($this->migrationUtil->transformToArea($this->areas, $data['default_area']));
+                $user->setRoomDefault($this->migrationUtil->transformToRoom($this->rooms, $data['default_room']));
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
             }
@@ -228,7 +235,7 @@ class MigrationCommand extends Command
 
         foreach ($progressBar->iterate($entries) as $data) {
             $entry = $this->migrationFactory->createEntry($data);
-            $room = $this->migrationUtil->transformDefaultRoom($this->rooms, $data['room_id']);
+            $room = $this->migrationUtil->transformToRoom($this->rooms, $data['room_id']);
             if ($room) {
                 $entry->setRoom($room);
                 $this->entityManager->persist($entry);
@@ -240,6 +247,71 @@ class MigrationCommand extends Command
         }
 
         $this->entityManager->flush();
+    }
+
+    private function handleAreaAdmin()
+    {
+        $users = $this->decompress($this->requestData->getAreaAdmin(), 'area admin');
+
+        $progressBar = new ProgressBar($this->output);
+
+        foreach ($progressBar->iterate($users) as $data) {
+            $authorization = $this->migrationFactory->createAuthorization($data);
+            $user = $this->migrationUtil->transformToUser($data['login']);
+            if (!$user) {
+                $this->io->error('Utilisateur non trouvé pour l\'ajouter en tant que area admin:'.$data['username']);
+                continue;
+            }
+            $authorization->setUser($user);
+            $area = $this->migrationUtil->transformToArea($this->areas, $data['id_area']);
+            if (!$area) {
+                $this->io->error('Area non trouvé pour l\'ajouter en tant que area admin: '.$data['id_area']);
+                continue;
+            }
+            $authorization->setArea($area);
+            $authorization->setRoom(null);
+            $authorization->setIsAreaAdministrator(true);
+            $authorization->setIsResourceAdministrator(false);
+            $this->entityManager->persist($authorization);
+            $this->entityManager->flush();
+        }
+
+    }
+
+    private function handleRoomAdmin()
+    {
+        $users = $this->decompress($this->requestData->getRoomAdmin(), 'room admin');
+
+        $progressBar = new ProgressBar($this->output);
+
+        foreach ($progressBar->iterate($users) as $data) {
+            $authorization = $this->migrationFactory->createAuthorization($data);
+            $user = $this->migrationUtil->transformToUser($data['login']);
+
+            if (!$user) {
+                $this->io->note('Utilisateur non trouvé: '.$data['login']);
+                continue;
+            }
+            $authorization->setUser($user);
+            $room = $this->migrationUtil->transformToRoom($this->rooms, $data['id_room']);
+
+            if (!$room) {
+                $this->io->note('Room non trouvé: '.$data['id_room']);
+                continue;
+            }
+
+            if ($message = $this->migrationUtil->checkAuthorizationRoom($user, $room)) {
+                $this->io->note($message);
+                continue;
+            }
+
+            $authorization->setArea(null);
+            $authorization->setRoom($room);
+            $authorization->setIsAreaAdministrator(false);
+            $authorization->setIsResourceAdministrator(true);
+            $this->entityManager->persist($authorization);
+            $this->entityManager->flush();
+        }
     }
 
     private function decompress(string $content, string $type): array
