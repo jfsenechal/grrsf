@@ -62,9 +62,13 @@ entry:
 authorization:
   role:
     area:
-      administrator: Administrateur du domaine (Peux modifier, supprimer le domaine. Ajouter, modifier des resources...)
+      administrator:
+        label: Administrateur du domaine
+        help: "En plus de ses droits normaux, l'administrateur d'un domaine a la possibilité de gérer entièrement un domaine: création, suppression, modification d'une ressource, ajout et suppression de gestionnaires des réservations, gestion des mails automatiques"
     resource:
-      administrator: Gestionnaire des ressources (Peux enregistrer des réservations dans toutes les ressources)
+      administrator:
+        label: Gestionnaire des ressources
+        help: En plus de ses droits normaux, le gestionnaire d'une ressource a la possibilité de modifier ou supprimer n'importe quelle réservation de cette ressource. De plus les restrictions relatives au nombre maximum de réservations de la ressource ne s'appliquent pas
   area:
     title: Autorisations de
     new:

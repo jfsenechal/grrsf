@@ -191,6 +191,7 @@ class InstallDataCommand extends Command
         $user->setName('Administrator');
         $user->setFirstName('Grr');
         $user->setEmail($email);
+        $user->setUsername($email);
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
         $user->addRole($roleGrrAdministrator);
 

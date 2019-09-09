@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\DataFixtures;
+namespace App\Fixtures;
 
 use App\Entity\Security\User;
 use Fidry\AliceDataFixtures\ProcessorInterface;

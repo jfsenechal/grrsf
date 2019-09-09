@@ -49,9 +49,9 @@ class RequestData
      * @return \Symfony\Contracts\HttpClient\ResponseInterface
      *
      */
-    public function getEntries(?string $date)
+    public function getEntries(array $params = [])
     {
-        return $this->request('entry.php');
+        return $this->request('entry.php', $params);
     }
 
     public function getAreas()
@@ -69,7 +69,8 @@ class RequestData
         return $this->request('user.php');
     }
 
-    public function getTypesEntry() {
+    public function getTypesEntry()
+    {
         return $this->request('type.php');
     }
 
@@ -77,10 +78,10 @@ class RequestData
      * @param string $file
      * @return false|string|\Symfony\Contracts\HttpClient\ResponseInterface
      */
-    private function request(string $file)
+    private function request(string $file, array $params = [])
     {
         try {
-            $response = $this->httpClient->request('GET', $this->base_url.$file);
+            $response = $this->httpClient->request('GET', $this->base_url.$file, ['query' => $params]);
             try {
                 return $response->getContent();
             } catch (ClientExceptionInterface $e) {

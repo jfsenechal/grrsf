@@ -7,6 +7,7 @@ use App\Entity\Room;
 use App\Form\DataTransformer\AreaToNumberTransformer;
 use App\Form\Type\AreaHiddenType;
 use App\Form\Type\AreaSelectType;
+use App\Form\Type\RoleSelectType;
 use App\Model\AuthorizationModel;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
@@ -37,22 +38,10 @@ class AuthorizationType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $choices = array_flip(
-            [1 => 'authorization.role.area.administrator', 2 => 'authorization.role.resource.administrator']
-        );
         $builder->add(
             'role',
-            ChoiceType::class,
-            [
-                'choices' => $choices,
-                'label' => 'authorization.area.role.label',
-                'placeholder' => 'none.male',
-                'required' => false,
-                'multiple' => false,
-                'expanded' => true,
-                'attr' => ['class' => 'authorization_role']//for js
-            ]
-        );
+            RoleSelectType::class,
+            );
 
         $builder->add(
             'area',

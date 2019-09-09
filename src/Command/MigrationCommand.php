@@ -74,7 +74,8 @@ class MigrationCommand extends Command
             ->setDescription('Migrations des données depuis un ancien Grr')
             ->addArgument('url', InputArgument::REQUIRED, "L'Url http de l'ancien Grr")
             ->addArgument('user', InputArgument::REQUIRED, "Le nom d'utilisateur d'un compte locale grr administrator")
-            ->addArgument('password', InputArgument::OPTIONAL, "Le mot de passe de l'utilisateur");
+            ->addArgument('password', InputArgument::OPTIONAL, "Le mot de passe de l'utilisateur")
+            ->addArgument('date', InputArgument::OPTIONAL, "Date à partir de laquelle les données seront ajoutées");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -166,15 +167,12 @@ class MigrationCommand extends Command
         $count = count($this->areas) + count($this->rooms);
         $progressBar = new ProgressBar($this->output, $count);
 
-        $progressBar->start();
-        foreach ($this->areas as $data) {
+        foreach ($progressBar->iterate($this->areas) as $data) {
             $area = $this->migrationFactory->createArea($data);
             $this->entityManager->persist($area);
             $this->handleRoom($area, $data['id']);
-            $progressBar->advance();
         }
         $this->entityManager->flush();
-        $progressBar->finish();
     }
 
     protected function handleRoom(Area $area, int $areaId)
@@ -192,28 +190,23 @@ class MigrationCommand extends Command
     protected function handleEntryType()
     {
         $types = $this->decompress($this->requestData->getTypesEntry(), 'entry_type');
-        $progressBar = new ProgressBar($this->output, count($types));
+        $progressBar = new ProgressBar($this->output);
 
-        $progressBar->start();
-
-        foreach ($types as $data) {
+        foreach ($progressBar->iterate($types) as $data) {
             $type = $this->migrationFactory->createTypeEntry($data);
             $this->entityManager->persist($type);
-            $progressBar->advance();
         }
 
         $this->entityManager->flush();
-        $progressBar->finish();
     }
 
     protected function handleUser()
     {
         $users = $this->decompress($this->requestData->getUsers(), 'user');
 
-        $progressBar = new ProgressBar($this->output, count($users));
+        $progressBar = new ProgressBar($this->output);
 
-        $progressBar->start();
-        foreach ($users as $data) {
+        foreach ($progressBar->iterate($users) as $data) {
             if ($error = $this->migrationUtil->checkUser($data)) {
                 $this->io->note('Utilisateur non ajouté: '.$error);
             } else {
@@ -223,20 +216,17 @@ class MigrationCommand extends Command
                 $user->setRoomDefault($this->migrationUtil->transformDefaultRoom($this->rooms, $data['default_room']));
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
-                $progressBar->advance();
             }
         }
-        $progressBar->finish();
     }
 
     protected function handleEntry(?string $date)
     {
-        $entries = $this->decompress($this->requestData->getEntries($date), 'entry');
+        $entries = $this->decompress($this->requestData->getEntries(['date' => $date]), 'entry');
 
-        $progressBar = new ProgressBar($this->output, count($entries));
+        $progressBar = new ProgressBar($this->output);
 
-        $progressBar->start();
-        foreach ($entries as $data) {
+        foreach ($progressBar->iterate($entries) as $data) {
             $entry = $this->migrationFactory->createEntry($data);
             $room = $this->migrationUtil->transformDefaultRoom($this->rooms, $data['room_id']);
             if ($room) {
@@ -247,11 +237,9 @@ class MigrationCommand extends Command
 
                 return;
             }
-            $progressBar->advance();
         }
 
         $this->entityManager->flush();
-        $progressBar->finish();
     }
 
     private function decompress(string $content, string $type): array
