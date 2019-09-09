@@ -6,6 +6,7 @@ use App\Entity\Security\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Ldap\Entry;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -19,7 +20,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class AppGrrAuthenticator extends AbstractFormLoginAuthenticator
+class LdapAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
@@ -27,17 +28,23 @@ class AppGrrAuthenticator extends AbstractFormLoginAuthenticator
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    /**
+     * @var GrrLdap
+     */
+    private $grrLdap;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        GrrLdap $grrLdap
     ) {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->grrLdap = $grrLdap;
     }
 
     public function supports(Request $request)
@@ -80,7 +87,26 @@ class AppGrrAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        var_dump(12345);
+        exit();
+        try {
+            $entry = $this->grrLdap->getEntry($user->getUsername());
+            var_dump($entry);
+            exit();
+            if ($entry instanceof Entry) {
+                $dn = $entry->getDn();
+
+                try {
+                    $this->grrLdap->bind($dn, $credentials['password']);
+
+                    return true;
+                } catch (\Exception $exception) {
+                    //throw new BadCredentialsException($exception->getMessage());
+                }
+            }
+        } catch (\Exception $exception) {
+
+        }
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -97,3 +123,5 @@ class AppGrrAuthenticator extends AbstractFormLoginAuthenticator
         return $this->urlGenerator->generate('app_login');
     }
 }
+
+

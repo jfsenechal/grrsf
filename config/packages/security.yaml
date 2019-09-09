@@ -10,15 +10,31 @@ security:
             entity:
                 class: App\Entity\Security\User
                 property: email
+        my_ldap:
+            ldap:
+                service: Symfony\Component\Ldap\Ldap
+                base_dn: "%env(GRR_LDAP_BASE)%"
+                search_dn: "%env(GRR_LDAP_ADMIN)%"
+                search_password: "%env(GRR_LDAP_PWD)%"
+                default_roles: ROLE_USER
+                uid_key: sAMAccountName
+        all_users:
+            chain:
+                providers: ['app_user_provider', 'my_ldap']
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+            provider: all_users
+            #form_login_ldap:
+             #   service: Symfony\Component\Ldap\Ldap
             guard:
                 authenticators:
                     - App\Security\AppGrrAuthenticator
+                    - App\Security\LdapAuthenticator
+                entry_point: App\Security\AppGrrAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout

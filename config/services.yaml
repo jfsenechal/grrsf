@@ -26,3 +26,19 @@ services:
     resource: '../src/Controller'
     tags: ['controller.service_arguments']
 
+  App\Security\GrrLdap:
+      $host: '%env(GRR_LDAP_URL)%'
+      $dn: "%env(GRR_LDAP_BASE)%"
+      $user: '%env(GRR_LDAP_ADMIN)%'
+      $password: '%env(GRR_LDAP_PWD)%'
+
+  Symfony\Component\Ldap\Ldap:
+    arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
+  Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
+    arguments:
+      - host: "%env(GRR_LDAP_URL)%"
+        port: 636
+        encryption: tls
+        options:
+          protocol_version: 3
+          referrals: false
