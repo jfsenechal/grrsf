@@ -29,9 +29,9 @@ class UserSelectType extends AbstractType
                 'label' => 'entry.form.user.select.label',
                 'class' => User::class,
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
                 'query_builder' => $this->userRepository->getQueryBuilder(),
-                'attr' => ['class' => 'custom-control custom-checkbox my-1 mr-sm-2'],
+                'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
             ]
         );
     }
