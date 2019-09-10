@@ -13,8 +13,7 @@ $(document).ready(function () {
     function loadOptionsWeeks() {
         var radioValue = $(".form-check-input:checked").val();
 
-        if (radioValue === '1' || radioValue === '2') {
-            console.log(radioValue);
+        if (radioValue === '1') {
             authorization_rooms.prop('disabled', true);
         } else {
             authorization_rooms.prop('disabled', false);

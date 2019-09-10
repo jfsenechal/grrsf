@@ -17,9 +17,10 @@ class AuthorizationAreaType extends AbstractType
                 UserSelectType::class,
                 [
                     'required' => true,
+
                     'constraints' => [
-                        new NotBlank()
-                    ]
+                        new NotBlank(),
+                    ],
                 ]
             );
     }

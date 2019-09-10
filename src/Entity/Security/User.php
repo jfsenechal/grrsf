@@ -92,7 +92,7 @@ class User implements UserInterface
 
     public function __toString()
     {
-        return $this->email;
+        return mb_strtoupper($this->name).' '.$this->first_name;
     }
 
     /**
