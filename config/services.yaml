@@ -34,13 +34,13 @@ services:
         $searchPassword: '%env(GRR_LDAP_PWD)%'
         $defaultRoles: 'GRR_ROLE'
 
-  App\Security\GrrLdap:
+  App\Security\Ldap\GrrLdap:
       $host: '%env(GRR_LDAP_URL)%'
       $dn: "%env(GRR_LDAP_BASE)%"
       $user: '%env(GRR_LDAP_ADMIN)%'
       $password: '%env(GRR_LDAP_PWD)%'
 
-  App\Security\LdapAuth:
+  App\Security\Ldap\LdapAuth:
     arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
   Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
     arguments:

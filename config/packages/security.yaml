@@ -29,12 +29,12 @@ security:
             anonymous: true
             provider: all_users
             form_login_ldap:
-                service: App\Security\LdapAuth
+                service: App\Security\Ldap\LdapAuth
                 provider: ldapsf
             guard:
                 authenticators:
                     - App\Security\GrrAuthenticator
-                    - App\Security\LdapAuthenticator
+                    - App\Security\Ldap\LdapAuthenticator
                 entry_point: App\Security\GrrAuthenticator
             logout:
                 path: app_logout

@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\Security\User;
+use App\Security\Ldap\GrrLdap;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

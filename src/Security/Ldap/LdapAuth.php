@@ -8,7 +8,7 @@
  *
  */
 
-namespace App\Security;
+namespace App\Security\Ldap;
 
 
 use Symfony\Component\Ldap\Adapter\AdapterInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Security\Ldap;
 
 use Symfony\Component\Ldap\Exception\LdapException;
 use Symfony\Component\Ldap\Ldap;
