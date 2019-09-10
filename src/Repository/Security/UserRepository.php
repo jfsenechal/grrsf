@@ -25,6 +25,16 @@ class UserRepository extends ServiceEntityRepository
             ->orderBy('user.name', 'ASC');
     }
 
+    public function loadByUserNameOrEmail(string $username)
+    {
+        return $this->createQueryBuilder('user')
+            ->andWhere('user.email = :username')
+            ->orWhere('user.username = :username')
+            ->setParameter('username', $username)
+            ->orderBy('user.name', 'ASC')
+            ->getQuery()->getOneOrNullResult();
+    }
+
     /**
      * @return User[]
      */

@@ -65,6 +65,45 @@ class AuthorizationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param User $user
+     * @return UserAuthorization[]
+     */
+    public function findByUserAndAreaNotNull(User $user)
+    {
+        $queryBuilder = $this->createQueryBuilder('authorization');
+
+        $queryBuilder->andWhere('authorization.user = :user')
+            ->setParameter('user', $user);
+
+        $queryBuilder->andWhere('authorization.area IS NOT NULL');
+
+        return $queryBuilder->orderBy('authorization.user', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @param Room $room
+     * @return UserAuthorization
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findOneByUserAndRoom(User $user, Room $room)
+    {
+        $queryBuilder = $this->createQueryBuilder('authorization');
+
+        $queryBuilder->andWhere('authorization.user = :user')
+            ->setParameter('user', $user);
+
+        $queryBuilder->andWhere('authorization.room = :room')
+            ->setParameter('room', $room);
+
+        return $queryBuilder->orderBy('authorization.user', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function persist(UserAuthorization $userAuthorization)
     {
         $this->_em->persist($userAuthorization);

@@ -12,7 +12,10 @@ use App\Repository\EntryTypeRepository;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
 use App\Security\SecurityRole;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -57,16 +60,21 @@ class InstallDataCommand extends Command
      * @var UserPasswordEncoderInterface
      */
     private $userPasswordEncoder;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     public function __construct(
         string $name = null,
+        EntityManagerInterface $entityManager,
         EntryTypeRepository $entryTypeRepository,
+        RoomRepository $roomRepository,
+        UserRepository $userRepository,
         TypeEntryFactory $typeEntryFactory,
         AreaRepository $areaRepository,
         AreaFactory $areaFactory,
         RoomFactory $roomFactory,
-        RoomRepository $roomRepository,
-        UserRepository $userRepository,
         UserFactory $userFactory,
         UserPasswordEncoderInterface $userPasswordEncoder
     ) {
@@ -80,17 +88,25 @@ class InstallDataCommand extends Command
         $this->userRepository = $userRepository;
         $this->userFactory = $userFactory;
         $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->entityManager = $entityManager;
     }
 
     protected function configure()
     {
         $this
-            ->setDescription('Initialize les données dans la base de données lors de l\'installation');
+            ->setDescription('Initialize les données dans la base de données lors de l\'installation')
+            ->addArgument('purge', InputArgument::OPTIONAL, "Remettre la base de données à zéro", false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
+        $purge = $input->getArgument('purge');
+
+        if ($purge) {
+            $purger = new ORMPurger($this->entityManager);
+            $purger->purge();
+        }
 
         $this->loadType();
         $this->loadArea();

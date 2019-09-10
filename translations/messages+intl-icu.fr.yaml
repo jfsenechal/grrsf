@@ -142,3 +142,7 @@ typeEntry:
     new: Le type de réservation a bien été ajouté
     edit: Le type de réservation a bien été modifié
     delete: Le type de réservatio a bien été supprimée
+login:
+  form:
+    username:
+      placeholder: Email ou nom d'utilisateur

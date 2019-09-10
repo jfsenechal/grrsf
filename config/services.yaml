@@ -26,6 +26,14 @@ services:
     resource: '../src/Controller'
     tags: ['controller.service_arguments']
 
+  Symfony\Component\Security\Core\User\LdapUserProvider:
+      arguments:
+        $ldap: Symfony\Component\Ldap\Ldap
+        $baseDn: "%env(GRR_LDAP_BASE)%"
+        $searchDn: '%env(GRR_LDAP_ADMIN)%'
+        $searchPassword: '%env(GRR_LDAP_PWD)%'
+        $defaultRoles: 'GRR_ROLE'
+
   App\Security\GrrLdap:
       $host: '%env(GRR_LDAP_URL)%'
       $dn: "%env(GRR_LDAP_BASE)%"

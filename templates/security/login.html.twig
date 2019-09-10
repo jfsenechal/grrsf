@@ -32,8 +32,8 @@
             {% endif %}
             <label for="inputEmail"
                    class="sr-only">{{ 'login.form.username.label'|trans() }}</label>
-            <input type="email" name="email" value="{{ last_username }}" id="inputEmail" class="form-control"
-                   placeholder="Email address" required autofocus>
+            <input type="text" name="username" value="{{ last_username }}" id="inputEmail" class="form-control"
+                   placeholder="{{ 'login.form.username.placeholder'|trans }}" required autofocus>
             <label for="inputPassword"
                    class="sr-only">{{ 'login.form.password.label'|trans() }}</label>
             <input name="password" type="password" id="inputPassword" class="form-control"
