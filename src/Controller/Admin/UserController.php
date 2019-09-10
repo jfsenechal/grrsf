@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Security\User;
 use App\Events\UserEvent;
 use App\Factory\UserFactory;
+use App\Form\Search\SearchUserType;
 use App\Form\Security\UserAdminType;
 use App\Form\Security\UserNewType;
 use App\Manager\UserManager;
@@ -53,14 +54,26 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/", name="grr_admin_user_index", methods={"GET"})
+     * @Route("/", name="grr_admin_user_index", methods={"GET","POST"})
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $args = $users = [];
+        $form = $this->createForm(SearchUserType::class, $args);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $args = $form->getData();
+        }
+
+        $users = $this->utilisateurRepository->search($args);
+
         return $this->render(
             '@grr_admin/user/index.html.twig',
             [
-                'users' => $this->utilisateurRepository->search(),
+                'users' => $users,
+                'form' => $form->createView(),
             ]
         );
     }

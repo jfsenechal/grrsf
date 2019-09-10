@@ -14,7 +14,12 @@
         <tr>
             <td>{{ authorization.user }}</td>
             <td>{{ authorization.area }}</td>
-            <td>{{ authorization.room }}</td>
+            <td>
+                {% if authorization.room %}
+                    {{ authorization.room }}<br/>
+                    <span class="text-muted">{{ authorization.room.area }}</span>
+                {% endif %}
+            </td>
             <td>{{ authorization.isAreaAdministrator ? 'Yes' | trans : 'No' | trans }}</td>
             <td>{{ authorization.isResourceAdministrator ? 'Yes' | trans : 'No' | trans }}</td>
             <td>

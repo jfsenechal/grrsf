@@ -38,11 +38,18 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @return User[]
      */
-    public function search()
+    public function search(array $args)
     {
-        return $this->createQueryBuilder('user')
-            ->orderBy('user.name', 'ASC')
-            ->getQuery()->getResult();
+        $qb = $this->createQueryBuilder('user')
+            ->orderBy('user.name', 'ASC');
+
+        $name = $args['name'] ?? null;
+        if ($name) {
+            $qb->andWhere('user.email LIKE :name OR user.name LIKE :name OR user.username LIKE :name')
+                ->setParameter('name', '%'.$name.'%');
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     public function persist(User $Utilisateur)

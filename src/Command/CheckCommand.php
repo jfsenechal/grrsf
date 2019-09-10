@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Checker\MigrationChecker;
 use App\Repository\RoomRepository;
 use App\Repository\Security\AuthorizationRepository;
 use App\Repository\Security\UserRepository;
@@ -10,34 +11,23 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CheckCommand extends Command
 {
     protected static $defaultName = 'grr:check';
     /**
-     * @var AuthorizationRepository
+     * @var MigrationChecker
      */
-    private $authorizationRepository;
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
-    /**
-     * @var RoomRepository
-     */
-    private $roomRepository;
+    private $migrationChecker;
 
     public function __construct(
         string $name = null,
-        UserRepository $userRepository,
-        AuthorizationRepository $authorizationRepository,
-        RoomRepository $roomRepository
+        MigrationChecker $migrationChecker
     ) {
         parent::__construct($name);
-        $this->authorizationRepository = $authorizationRepository;
-        $this->userRepository = $userRepository;
-        $this->roomRepository = $roomRepository;
+        $this->migrationChecker = $migrationChecker;
     }
 
     protected function configure()
@@ -51,24 +41,27 @@ class CheckCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
+        $helper = $this->getHelper('question');
         $what = $input->getArgument('what');
 
-        $users = $this->userRepository->findAll();
-        foreach ($users as $user) {
-            $authorizations = $this->authorizationRepository->findByUserAndAreaNotNull($user);
+        $authorizations = $this->migrationChecker->checkAreaAndRoomAdministrator();
+        if (count($authorizations) > 0) {
+            $io->warning('Ces authorizations sont en double');
             foreach ($authorizations as $authorization) {
-                $area = $authorization->getArea();
-                $rooms = $this->roomRepository->findByArea($area);
-                foreach ($rooms as $room) {
-                    $admin = $this->authorizationRepository->findOneByUserAndRoom($user, $room);
-                    if ($admin) {
-                        echo $area->getName().' ==> ';
-                        echo $admin->getRoom()->getName()." \n ";
-                    }
-                }
+                $user = $authorization['user'] != null ? $authorization['user']->getEmail() : '';
+                $area = $authorization['area'] != null ? $authorization['area']->getName() : '';
+                $room = $authorization['room'] != null ? $authorization['room']->getName() : '';
+
+                $io->note($user.' ==> '.$area.' ==> '.$room." \n ");
+            }
+            $questionDelete = new ConfirmationQuestion("Les supprimer ? [y,N] \n", false);
+            $delete = $helper->ask($input, $output, $questionDelete);
+            if ($delete) {
+                $this->migrationChecker->deleteDoublone();
+                $io->success("Doublons supprimés");
             }
         }
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
+
+
 }

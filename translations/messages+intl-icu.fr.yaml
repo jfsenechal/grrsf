@@ -49,6 +49,10 @@ user:
       help: Décochez pour désactiver l'utilisateur
     roles:
       label: Rôle(s)
+    search:
+      name:
+        label: Mot clef
+        placeholder: Nom,email, login
 entry:
   flash:
     new: La réservation a bien été ajoutée

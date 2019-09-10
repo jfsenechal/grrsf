@@ -148,10 +148,10 @@ class MigrationCommand extends Command
 
         $this->io->section('Importation des Areas et rooms');
         $this->handleArea();
-        $this->io->writeln('');
+        $this->io->newLine();
         $this->io->section('Importation des types d\'entrée');
         $this->handleEntryType();
-        $this->io->writeln('');
+        $this->io->newLine();
         $this->io->section('Importation des utilisateurs');
         $this->handleUser();
         $this->io->writeln('');

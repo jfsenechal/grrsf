@@ -26,30 +26,8 @@ services:
     resource: '../src/Controller'
     tags: ['controller.service_arguments']
 
-  Symfony\Component\Security\Core\User\LdapUserProvider:
-      arguments:
-        $ldap: Symfony\Component\Ldap\Ldap
-        $baseDn: "%env(GRR_LDAP_BASE)%"
-        $searchDn: '%env(GRR_LDAP_ADMIN)%'
-        $searchPassword: '%env(GRR_LDAP_PWD)%'
-        $defaultRoles: 'GRR_ROLE'
-
   App\Security\Ldap\GrrLdap:
       $host: '%env(GRR_LDAP_URL)%'
       $dn: "%env(GRR_LDAP_BASE)%"
       $user: '%env(GRR_LDAP_ADMIN)%'
       $password: '%env(GRR_LDAP_PWD)%'
-
-  App\Security\Ldap\LdapAuth:
-    arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
-  Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
-    arguments:
-      - host: "%env(GRR_LDAP_URL)%"
-        port: 636
-        encryption: tls
-        options:
-          protocol_version: 3
-          referrals: false
-
-  Symfony\Component\Ldap\Ldap:
-    arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']

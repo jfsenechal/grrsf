@@ -6,12 +6,22 @@
 
     <div class="card bg-light mb-3">
         <div class="card-header">
-            <h3>{{ 'user.index.title'|trans({'length': users|length}, 'actions') }}</h3>
+            <div class="row">
+                <div class="col">
+                    <h3>{{ 'user.index.title'|trans({'length': users|length}, 'actions') }}</h3>
+                </div>
+                <div class="col">
+                    <a class="float-right btn btn-primary" href="{{ path('grr_admin_user_new') }}">
+                        <i class="fas fa-plus"></i> {{ 'user.new.title'| trans({}, 'actions') }}</a>
+                </div>
+            </div>
         </div>
         <div class="card-body">
 
-            <a class="btn btn-primary" href="{{ path('grr_admin_user_new') }}">
-                <i class="fas fa-plus"></i> {{ 'user.new.title'| trans({}, 'actions') }}</a>
+            <br/> <br/>
+
+            {% include '@grr_admin/search/_user.html.twig' %}
+
             <br/> <br/>
 
             <table class="table table-bordered">
@@ -19,6 +29,7 @@
                 <tr>
                     <th>{{ 'user.account.email.label'| trans }}</th>
                     <th>{{ 'user.form.nom.label'| trans }}</th>
+                    <th>{{ 'user.form.username.label'| trans }}</th>
                     <th>{{ 'user.form.isEnabled.label'| trans }}</th>
                 </tr>
                 </thead>
@@ -29,6 +40,7 @@
                             <a href="{{ path('grr_admin_user_show', {'id': user.id}) }}">{{ user.email }}</a>
                         </td>
                         <td>{{ user.name }} {{ user.firstName }}</td>
+                        <td>{{ user.username }}</td>
                         <td>{{ user.isEnabled }}</td>
                     </tr>
                 {% else %}

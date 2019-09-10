@@ -10,31 +10,15 @@ security:
             entity:
                 class: App\Entity\Security\User
                 property: username
-        ldapsf:
-            ldap:
-                service: Symfony\Component\Security\Core\User\LdapUserProvider
-                base_dn: "%env(GRR_LDAP_BASE)%"
-                search_dn: '%env(GRR_LDAP_ADMIN)%'
-                search_password: '%env(GRR_LDAP_PWD)%'
-                default_roles: 'GRR_ROLE'
-                uid_key: 'sAMAccountName'
-        all_users:
-            chain:
-                providers: ['app_user_provider', 'ldapsf']
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
-            provider: all_users
-            form_login_ldap:
-                service: App\Security\Ldap\LdapAuth
-                provider: ldapsf
             guard:
                 authenticators:
                     - App\Security\GrrAuthenticator
-                    - App\Security\Ldap\LdapAuthenticator
                 entry_point: App\Security\GrrAuthenticator
             logout:
                 path: app_logout

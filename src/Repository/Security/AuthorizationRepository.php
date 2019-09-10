@@ -38,7 +38,10 @@ class AuthorizationRepository extends ServiceEntityRepository
         $queryBuilder->orWhere('authorization.room IN (:rooms)')
             ->setParameter('rooms', $rooms);
 
-        return $queryBuilder->orderBy('authorization.user', 'ASC')
+        return $queryBuilder
+            ->addOrderBy('authorization.user', 'ASC')
+            ->orderBy('authorization.area', 'ASC')
+            ->orderBy('authorization.room', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -49,7 +52,9 @@ class AuthorizationRepository extends ServiceEntityRepository
             ->andWhere('authorization.user = :user')
             ->setParameter('user', $user);
 
-        return $queryBuilder->orderBy('authorization.user', 'ASC')
+        return $queryBuilder
+            ->orderBy('authorization.room', 'ASC')
+            ->orderBy('authorization.area', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -60,7 +65,10 @@ class AuthorizationRepository extends ServiceEntityRepository
             ->andWhere('authorization.room = :room')
             ->setParameter('room', $room);
 
-        return $queryBuilder->orderBy('authorization.user', 'ASC')
+        return $queryBuilder
+            ->addOrderBy('authorization.user', 'ASC')
+            ->orderBy('authorization.area', 'ASC')
+            ->orderBy('authorization.room', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -69,7 +77,7 @@ class AuthorizationRepository extends ServiceEntityRepository
      * @param User $user
      * @return UserAuthorization[]
      */
-    public function findByUserAndAreaNotNull(User $user)
+    public function findByUserAndAreaNotNull(User $user, bool $isAreaAdministrator)
     {
         $queryBuilder = $this->createQueryBuilder('authorization');
 
@@ -78,7 +86,13 @@ class AuthorizationRepository extends ServiceEntityRepository
 
         $queryBuilder->andWhere('authorization.area IS NOT NULL');
 
-        return $queryBuilder->orderBy('authorization.user', 'ASC')
+        $queryBuilder->andWhere('authorization.is_area_administrator = :bool')
+            ->setParameter('bool', $isAreaAdministrator);
+
+        return $queryBuilder
+            ->addOrderBy('authorization.user', 'ASC')
+            ->orderBy('authorization.area', 'ASC')
+            ->orderBy('authorization.room', 'ASC')
             ->getQuery()
             ->getResult();
     }
