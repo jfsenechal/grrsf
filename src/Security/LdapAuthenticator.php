@@ -20,6 +20,12 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+/**
+ * @see  LdapBindAuthenticationProvider
+ *
+ * Class LdapAuthenticator
+ * @package App\Security
+ */
 class LdapAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
