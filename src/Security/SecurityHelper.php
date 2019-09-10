@@ -19,9 +19,15 @@ class SecurityHelper
         $this->authorizationRepository = $authorizationRepository;
     }
 
+    /**
+     * Tous les droits sur l'Area et ses ressources modifier ses paramètres, la supprimer
+     * @param User $user
+     * @param Area $area
+     * @return bool
+     */
     public function isAreaAdministrator(User $user, Area $area): bool
     {
-        if ( $this->authorizationRepository->findOneBy(
+        if ($this->authorizationRepository->findOneBy(
             ['user' => $user, 'area' => $area, 'is_area_administrator' => true]
         )) {
             return true;
@@ -30,10 +36,17 @@ class SecurityHelper
         return false;
     }
 
+    /**
+     * Peux gérer les ressources de l'Area
+     *
+     * @param User $user
+     * @param Area $area
+     * @return bool
+     */
     public function isAreaManager(User $user, Area $area): bool
     {
         if ($this->authorizationRepository->findOneBy(
-            ['user' => $user, 'area' => $area, 'is_area_manager' => true]
+            ['user' => $user, 'area' => $area]
         )) {
             return true;
         }
@@ -41,45 +54,56 @@ class SecurityHelper
         return false;
     }
 
+    /**
+     * Peux gérer la room (modifier les paramètres)
+     * @param User $user
+     * @param Room $room
+     * @return bool
+     */
     public function isRoomAdministrator(User $user, Room $room): bool
     {
-        $area = $room->getArea();
-
-        if ($this->authorizationRepository->findOneBy(['user' => $user, 'area' => $area])) {
+        if ($this->authorizationRepository->findOneBy(
+            ['user' => $user, 'room' => $room, 'is_resource_administrator' => true]
+        )) {
             return true;
         }
 
         return false;
     }
 
+    /**
+     * Peux gérer toutes les entrées
+     * @param User $user
+     * @param Room $room
+     * @return bool
+     */
     public function isRoomManager(User $user, Room $room): bool
     {
-        $area = $room->getArea();
-
-        if ($this->authorizationRepository->findOneBy(['user' => $user, 'area' => $area])) {
+        if ($this->authorizationRepository->findOneBy(['user' => $user, 'room' => $room])) {
             return true;
         }
 
         return false;
     }
 
+    /**
+     * @param User $user
+     * @param Room $room
+     * @return bool
+     */
     public function canAddEntry(User $user, Room $room)
     {
         $area = $room->getArea();
-        if ($this->isRoomManager($user, $room)) {
-            return true;
-        }
-        if ($this->isRoomAdministrator($user, $room)) {
-            return true;
-        }
         if ($this->isAreaAdministrator($user, $area)) {
             return true;
         }
         if ($this->isAreaManager($user, $area)) {
             return true;
         }
-
-        if ($this->authorizationRepository->findOneBy(['user' => $user, 'room' => $room])) {
+        if ($this->isRoomAdministrator($user, $room)) {
+            return true;
+        }
+        if ($this->isRoomManager($user, $room)) {
             return true;
         }
 
@@ -88,7 +112,7 @@ class SecurityHelper
 
     public function isAreaRestricted(Area $area): bool
     {
-        return false;
+        return $area->getIsPrivate();
     }
 
     /**

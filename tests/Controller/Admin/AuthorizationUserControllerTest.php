@@ -10,7 +10,7 @@ class AuthorizationUserControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $user = $this->getUser('jf@marche.be');
+        $user = $this->getUser('grr@domain.be');
         $area = $this->getArea('Esquare');
 
         $url = '/admin/user/'.$user->getId();
@@ -37,7 +37,7 @@ class AuthorizationUserControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $user = $this->getUser('jf@marche.be');
+        $user = $this->getUser('grr@domain.be');
         $area = $this->getArea('Esquare');
 
         $url = '/admin/user/'.$user->getId();
@@ -64,7 +64,7 @@ class AuthorizationUserControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $user = $this->getUser('jf@marche.be');
+        $user = $this->getUser('grr@domain.be');
         $area = $this->getArea('Esquare');
 
         $url = '/admin/user/'.$user->getId();
@@ -104,7 +104,7 @@ class AuthorizationUserControllerTest extends BaseRepository
         $this->administrator->followRedirect();
 
         $this->assertContains(
-            'L&#039; autorisation pour Esquare existe déjà pour jf@marche.be',
+            'L&#039; autorisation pour Esquare existe déjà pour JF',
             $this->administrator->getResponse()->getContent()
         );
     }
@@ -116,7 +116,7 @@ class AuthorizationUserControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $user = $this->getUser('jf@marche.be');
+        $user = $this->getUser('grr@domain.be');
         $area = $this->getArea('Esquare');
         $hdv = $this->getArea('Hdv');
 

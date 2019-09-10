@@ -109,6 +109,7 @@ class CreateuserCommand extends Command
 
         $user = $this->userFactory->createNew();
         $user->setEmail($email);
+        $user->setUsername($email);
         $user->setName($name);
         $user->setPassword($this->userManager->encodePassword($user, $password));
 

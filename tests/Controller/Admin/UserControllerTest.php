@@ -25,6 +25,7 @@ class UserControllerTest extends BaseRepository
         $form['user_new[name]']->setValue('Doe');
         $form['user_new[first_name]']->setValue('Raoul');
         $form['user_new[email]']->setValue('raoul@domain.com');
+        $form['user_new[username]']->setValue('raoul');
         $form['user_new[password]']->setValue('123456789');
 
         $this->administrator->submit($form);

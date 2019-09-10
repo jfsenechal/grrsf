@@ -61,7 +61,7 @@ class BaseRepository extends WebTestCase
             ->get('doctrine')
             ->getManager();
 
-        $this->pathFixtures = $this->kernel2->getProjectDir().'/src/DataFixtures/';
+        $this->pathFixtures = $this->kernel2->getProjectDir().'/src/Fixtures/';
         $this->loader = $this->kernel2->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
 
         $loader = new NativeLoader();
@@ -72,7 +72,7 @@ class BaseRepository extends WebTestCase
         $this->administrator = static::createClient(
             [],
             [
-                'PHP_AUTH_USER' => 'jf@marche.be',
+                'PHP_AUTH_USER' => 'grr@domain.be',
                 'PHP_AUTH_PW' => 'homer',
             ]
         );

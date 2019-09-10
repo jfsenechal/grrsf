@@ -1,7 +1,7 @@
 App\Entity\Security\User:
   user0:
-    email: jf@marche.be
-    username: jf@marche.be
+    email: grr@domain.be
+    username: grr@domain.be
     name: Jf
     password: homer
     roles: ["ROLE_GRR_ADMINISTRATOR"]

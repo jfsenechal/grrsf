@@ -19,6 +19,7 @@ class AreaControllerTest extends BaseRepository
         $this->loadFixtures();
 
         $this->administrator->request('GET', '/admin/area/');
+        self::assertResponseIsSuccessful();
         $crawler = $this->administrator->clickLink('Nouveau domaine');
 
         $form = $crawler->selectButton('Sauvegarder')->form();

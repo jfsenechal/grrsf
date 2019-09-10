@@ -32,9 +32,18 @@ class UserType extends AbstractType
                 ]
             )
             ->add(
+                'username',
+                TextType::class,
+                [
+                    'required' => true,
+                    'label'=> 'user.form.username.label',
+                ]
+            )
+            ->add(
                 'email',
                 EmailType::class,
                 [
+                    'required' => true,
                 ]
             )
             ->add(

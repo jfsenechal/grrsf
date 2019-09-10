@@ -10,7 +10,8 @@ class AuthorizationAreaControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $user = $this->getUser('jf@marche.be');
+        $alice = $this->getUser('alice@domain.be');
+        $bob = $this->getUser('bob@domain.be');
         $area = $this->getArea('Esquare');
 
         $url = '/admin/area/'.$area->getId();
@@ -22,15 +23,23 @@ class AuthorizationAreaControllerTest extends BaseRepository
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['authorization_area[role]']->setValue(1);
-        $form['authorization_area[users][0]']->tick();
-        $form['authorization_area[users][1]']->tick();
-        // $form->setValues(['authorization_area[users]' => [$user->getId()]]);
+        $form['authorization_area[users]'] = [$bob->getId(), $alice->getId()];
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
 
         $this->assertContains(
             'Nouvelle autorisation bien ajoutée',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            'BOB',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            'ALICE',
             $this->administrator->getResponse()->getContent()
         );
     }
@@ -39,7 +48,8 @@ class AuthorizationAreaControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $user = $this->getUser('jf@marche.be');
+        $alice = $this->getUser('alice@domain.be');
+        $bob = $this->getUser('bob@domain.be');
         $area = $this->getArea('Esquare');
 
         $url = '/admin/area/'.$area->getId();
@@ -51,8 +61,7 @@ class AuthorizationAreaControllerTest extends BaseRepository
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['authorization_area[role]']->setValue(2);
-        $form['authorization_area[users][0]']->tick();
-        $form['authorization_area[users][1]']->tick();
+        $form['authorization_area[users]'] = [$bob->getId(), $alice->getId()];
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -61,13 +70,23 @@ class AuthorizationAreaControllerTest extends BaseRepository
             'Nouvelle autorisation bien ajoutée',
             $this->administrator->getResponse()->getContent()
         );
+        $this->assertContains(
+            'BOB',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            'ALICE',
+            $this->administrator->getResponse()->getContent()
+        );
     }
 
     public function testAlreadyManager()
     {
         $this->loadFixtures();
 
-        $user = $this->getUser('jf@marche.be');
+        $alice = $this->getUser('alice@domain.be');
+        $bob = $this->getUser('bob@domain.be');
         $area = $this->getArea('Esquare');
 
         $url = '/admin/area/'.$area->getId();
@@ -79,13 +98,23 @@ class AuthorizationAreaControllerTest extends BaseRepository
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['authorization_area[role]']->setValue(2);
-        $form['authorization_area[users][0]']->tick();
+        $form['authorization_area[users]'] = [$bob->getId(), $alice->getId()];
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
 
         $this->assertContains(
             'Nouvelle autorisation bien ajoutée',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            'BOB',
+            $this->administrator->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            'ALICE',
             $this->administrator->getResponse()->getContent()
         );
 
@@ -101,7 +130,7 @@ class AuthorizationAreaControllerTest extends BaseRepository
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['authorization_area[role]']->setValue(2);
-        $form['authorization_area[users][0]']->tick();
+        $form['authorization_area[users]'] = [$bob->getId()];
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -119,7 +148,7 @@ class AuthorizationAreaControllerTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $user = $this->getUser('jf@marche.be');
+        $user = $this->getUser('grr@domain.be');
         $area = $this->getArea('Esquare');
         $hdv = $this->getArea('Hdv');
 

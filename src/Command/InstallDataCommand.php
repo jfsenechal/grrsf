@@ -64,6 +64,10 @@ class InstallDataCommand extends Command
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var SymfonyStyle
+     */
+    private $io;
 
     public function __construct(
         string $name = null,
@@ -100,7 +104,7 @@ class InstallDataCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output);
+        $this->io = new SymfonyStyle($input, $output);
         $purge = $input->getArgument('purge');
 
         if ($purge) {
@@ -112,7 +116,7 @@ class InstallDataCommand extends Command
         $this->loadArea();
         $this->loadUser();
 
-        $io->success('Les données ont bien été initialisées.');
+        $this->io->success('Les données ont bien été initialisées.');
     }
 
     public function loadType()
@@ -194,8 +198,8 @@ class InstallDataCommand extends Command
 
     public function loadUser()
     {
-        $email = 'jf@marche.be';
-        $password = 'homer';
+        $email = 'grr@domain.be';
+        $password = random_int(100000, 999999);
 
         if ($this->userRepository->findOneBy(['email' => $email])) {
             return;
@@ -212,5 +216,7 @@ class InstallDataCommand extends Command
         $user->addRole($roleGrrAdministrator);
 
         $this->userRepository->insert($user);
+
+        $this->io->success("L'utilisateur $email avec le mot de passe $password a bien été créé");
     }
 }
