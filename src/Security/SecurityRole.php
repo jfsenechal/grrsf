@@ -67,4 +67,18 @@ class SecurityRole
     {
         return 'ROLE_GRR_ADMINISTRATOR';
     }
+
+    public static function getRolesForAuthorization() {
+        $areaAdministrator = new \stdClass();
+        $areaAdministrator->value = 1;
+        $areaAdministrator->name = 'authorization.role.area.administrator.label';
+        $areaAdministrator->description = 'authorization.role.area.administrator.help';
+
+        $resourceAdministrator = new \stdClass();
+        $resourceAdministrator->value = 2;
+        $resourceAdministrator->name = 'authorization.role.resource.administrator.label';
+        $resourceAdministrator->description = 'authorization.role.resource.administrator.help';
+
+        return [$areaAdministrator, $resourceAdministrator];
+    }
 }

@@ -10,31 +10,39 @@
 
 namespace App\Form\Type;
 
+use App\Form\DataTransformer\StdClassToNumberTransformer;
+use App\Security\SecurityRole;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RoleSelectType extends AbstractType
 {
+    /**
+     * @var StdClassToNumberTransformer
+     */
+    private $transformer;
+
+    public function __construct(StdClassToNumberTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addModelTransformer($this->transformer);
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
-        $areaAdministrator = new \stdClass();
-        $areaAdministrator->value = 1;
-        $areaAdministrator->name = 'authorization.role.area.administrator.label';
-        $areaAdministrator->description = 'authorization.role.area.administrator.help';
-
-        $resourceAdministrator = new \stdClass();
-        $resourceAdministrator->value = 2;
-        $resourceAdministrator->name = 'authorization.role.resource.administrator.label';
-        $resourceAdministrator->description = 'authorization.role.resource.administrator.help';
-
-        $choices = [$areaAdministrator, $resourceAdministrator];
+        $roles = SecurityRole::getRolesForAuthorization();
 
         $resolver->setDefaults(
             [
-                'choices' => $choices,
+                'choices' => $roles,
                 'label' => 'authorization.area.role.label',
                 'placeholder' => 'none.male',
                 'choice_label' => function ($role) {
@@ -60,7 +68,7 @@ class RoleSelectType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-
+        //j'essaie d'afficher la description
     }
 
 

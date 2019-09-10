@@ -4,8 +4,6 @@ namespace App\Form\Security;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use App\Form\DataTransformer\AreaToNumberTransformer;
-use App\Form\Type\AreaHiddenType;
 use App\Form\Type\AreaSelectType;
 use App\Form\Type\RoleSelectType;
 use App\Model\AuthorizationModel;
@@ -13,8 +11,6 @@ use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -101,6 +97,12 @@ class AuthorizationType extends AbstractType
                 $formModifier($event->getForm()->getParent(), $area);
             }
         );
+    }
+
+    public function onPresetData(FormEvent $event) {
+
+    }  public function onPostSubmit(FormEvent $event) {
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
