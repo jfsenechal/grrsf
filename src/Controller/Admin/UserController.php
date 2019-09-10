@@ -6,7 +6,7 @@ use App\Entity\Security\User;
 use App\Events\UserEvent;
 use App\Factory\UserFactory;
 use App\Form\Search\SearchUserType;
-use App\Form\Security\UserAdminType;
+use App\Form\Security\UserAdvanceType;
 use App\Form\Security\UserNewType;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
@@ -124,7 +124,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $utilisateur): Response
     {
-        $form = $this->createForm(UserAdminType::class, $utilisateur);
+        $form = $this->createForm(UserAdvanceType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

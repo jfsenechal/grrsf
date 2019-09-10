@@ -33,6 +33,6 @@ class UserNewType extends AbstractType
 
     public function getParent()
     {
-        return  UserAdminType::class;
+        return  UserAdvanceType::class;
     }
 }
