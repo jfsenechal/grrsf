@@ -10,12 +10,22 @@ App\Entity\Security\UserAuthorization:
     is_area_administrator: false
     is_resource_administrator: false
   auth2:
+    user: '@user_joseph'
+    area: '@area_Hdv'
+    is_area_administrator: true
+    is_resource_administrator: false
+  auth3:
+    user: '@user_kevin'
+    area: '@area_Hdv'
+    is_area_administrator: false
+    is_resource_administrator: false
+  auth4:
     user: '@user_fred'
     room: '@room_cafetaria'
     is_area_administrator: false
-    is_resource_administrator: false
-  auth3:
+    is_resource_administrator: true
+  auth5:
     user: '@user_raoul'
     room: '@room_relax'
-    is_area_administrator: true
-    is_resource_administrator: false
+    is_area_administrator: true #not valid
+    is_resource_administrator: true

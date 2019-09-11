@@ -62,6 +62,9 @@ class SecurityHelper
      */
     public function isRoomAdministrator(User $user, Room $room): bool
     {
+        if ($this->isAreaAdministrator($user, $room->getArea())) {
+            return true;
+        }
         if ($this->authorizationRepository->findOneBy(
             ['user' => $user, 'room' => $room, 'is_resource_administrator' => true]
         )) {

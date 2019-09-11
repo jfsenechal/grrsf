@@ -20,7 +20,7 @@ class SecurityHelperTest extends BaseRepository
     /**
      * @dataProvider provideAdministrator
      */
-    public function testIsAreaAdministrator(string $email, bool $access)
+    public function testIsAreaAdministrator(string $email, bool $accessAraAdministrator, bool $accessRoomAdministrator)
     {
         $this->loadFixtures();
 
@@ -28,7 +28,12 @@ class SecurityHelperTest extends BaseRepository
         $securityHelper = $this->initSecurityHelper();
         $user = $this->getUser($email);
 
-        self::assertSame($access, $securityHelper->isAreaAdministrator($user, $area));
+        self::assertSame($accessAraAdministrator, $securityHelper->isAreaAdministrator($user, $area));
+
+        $room = $this->getRoom('Salle cafétaria');
+
+        self::assertSame($accessRoomAdministrator, $securityHelper->isRoomAdministrator($user, $room));
+
     }
 
     public function provideAdministrator()
@@ -47,6 +52,16 @@ class SecurityHelperTest extends BaseRepository
             'fred@domain.be',
             false,
         ];
+
+         yield 'admin area of Hdv' => [
+            'joseph@domain.be',
+            false,
+        ];
+
+           yield 'not admin area of Hdv' => [
+            'kevin@domain.be',
+            false,
+        ];
     }
 
     /**
@@ -56,27 +71,37 @@ class SecurityHelperTest extends BaseRepository
     {
         $this->loadFixtures();
 
-        $area = $this->getArea('Esquare');
+        $room = $this->getRoom('Salle cafétaria');
         $securityHelper = $this->initSecurityHelper();
         $user = $this->getUser($email);
 
-        self::assertSame($access, $securityHelper->isRoomAdministrator($user, $area));
+        self::assertSame($access, $securityHelper->isRoomAdministrator($user, $room));
     }
 
     public function provideRoomAdministrator()
     {
-        yield 'administrator' => [
+        yield 'not room admin' => [
             'bob@domain.be',
-            true,
+            false,
         ];
 
-        yield 'not admin' => [
+        yield 'esquare admin' => [
             'alice@domain.be',
             false,
         ];
 
-        yield 'not admin' => [
+        yield 'ressource admin cafet' => [
             'fred@domain.be',
+            true,
+        ];
+
+         yield 'admin area of Hdv' => [
+            'joseph@domain.be',
+            true,
+        ];
+
+           yield 'not admin area of Hdv' => [
+            'kevin@domain.be',
             false,
         ];
     }

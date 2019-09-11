@@ -51,7 +51,7 @@ class UserControllerTest extends BaseRepository
         self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['user_admin[name]']->setValue('Doen');
+        $form['user_advance[name]']->setValue('Doen');
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
