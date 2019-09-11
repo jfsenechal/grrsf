@@ -22,11 +22,11 @@ class AreaVoter extends Voter
 {
     // Defining these constants is overkill for this simple application, but for real
     // applications, it's a recommended practice to avoid relying on "magic strings"
-    const INDEX = 'index';
-    const NEW = 'new';
-    const SHOW = 'show';
-    const EDIT = 'edit';
-    const DELETE = 'delete';
+    const INDEX = 'grr.area.index';
+    const NEW = 'grr.area.new';
+    const SHOW = 'grr.area.show';
+    const EDIT = 'grr.area.edit';
+    const DELETE = 'grr.area.delete';
     /**
      * @var AccessDecisionManagerInterface
      */
@@ -84,8 +84,15 @@ class AreaVoter extends Voter
         $this->area = $area;
         $this->token = $token;
 
-        if ($this->decisionManager->decide($token, [SecurityRole::getRoleGrrAdministrator()])) {
+        if ($user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
             return true;
+        }
+
+        /**
+         * not work
+         */
+        if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {
+         //   return true;
         }
 
         switch ($attribute) {
@@ -106,25 +113,11 @@ class AreaVoter extends Voter
 
     private function canIndex()
     {
-        if ($this->decisionManager->decide($this->token, [SecurityRole::getRoleManagerArea()])) {
-            return true;
-        }
-        if ($this->decisionManager->decide($this->token, [SecurityRole::getRoleManagerArea()])) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     private function canNew()
     {
-        if ($this->decisionManager->decide($this->token, [SecurityRole::getRoleManagerArea()])) {
-            return true;
-        }
-        if ($this->decisionManager->decide($this->token, [SecurityRole::getRoleManagerArea()])) {
-            return true;
-        }
-
         return false;
     }
 
@@ -149,6 +142,6 @@ class AreaVoter extends Voter
 
     private function canDelete()
     {
-        return (bool) $this->canEdit();
+        return (bool)$this->canEdit();
     }
 }
