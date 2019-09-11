@@ -26,6 +26,8 @@ class InstallDataCommandTest extends BaseRepository
         $command = $application->find('grr:install-data');
         $commandTester = new CommandTester($command);
 
+        $commandTester->setInputs(['Y']);
+
         $commandTester->execute(
             [
                 'command' => $command->getName(),

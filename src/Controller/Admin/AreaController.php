@@ -58,7 +58,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/", name="grr_admin_area_index", methods={"GET"})
-     * @IsGranted("index")
+     * @IsGranted("grr.area.index")
      */
     public function index(): Response
     {
@@ -74,7 +74,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/new", name="grr_admin_area_new", methods={"GET", "POST"})
-     * @IsGranted("new")
+     * @IsGranted("grr.area.new")
      */
     public function new(Request $request): Response
     {
@@ -104,7 +104,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_admin_area_show", methods={"GET"})
-     * @IsGranted("show", subject="area")
+     * @IsGranted("grr.area.show", subject="area")
      */
     public function show(Area $area): Response
     {
@@ -121,7 +121,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="grr_admin_area_edit", methods={"GET", "POST"})
-     * @IsGranted("edit", subject="area")
+     * @IsGranted("grr.area.edit", subject="area")
      */
     public function edit(Request $request, Area $area): Response
     {
@@ -153,7 +153,7 @@ class AreaController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_admin_area_delete", methods={"DELETE"})
-     * @IsGranted("delete", subject="area")
+     * @IsGranted("grr.area.delete", subject="area")
      */
     public function delete(Request $request, Area $area): Response
     {

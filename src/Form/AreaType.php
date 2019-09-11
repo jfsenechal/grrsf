@@ -26,7 +26,7 @@ class AreaType extends AbstractType
                 ]
             )
             ->add(
-                'isPrivate',
+                'isRestricted',
                 CheckboxType::class,
                 [
                     'label' => 'area.form.access.label',

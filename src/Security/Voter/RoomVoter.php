@@ -16,17 +16,17 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  *
  * See http://symfony.com/doc/current/security/voters.html
  *
- * @author Yonel Ceruto <yonelceruto@gmail.com>
+ *
  */
 class RoomVoter extends Voter
 {
     // Defining these constants is overkill for this simple application, but for real
     // applications, it's a recommended practice to avoid relying on "magic strings"
-    const NEW = 'new';
-    const ADD_ENTRY = 'addEntry';
-    const SHOW = 'show';
-    const EDIT = 'edit';
-    const DELETE = 'delete';
+    const NEW = 'grr.room.new';
+    const ADD_ENTRY = 'grr.addEntry';
+    const SHOW = 'grr.room.show';
+    const EDIT = 'grr.room.edit';
+    const DELETE = 'grr.room.delete';
     /**
      * @var AccessDecisionManagerInterface
      */
@@ -84,7 +84,7 @@ class RoomVoter extends Voter
         $this->area = $room;
         $this->token = $token;
 
-        if ($this->decisionManager->decide($token, [SecurityRole::getRoleGrrAdministrator()])) {
+        if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {
             return true;
         }
 
@@ -113,7 +113,7 @@ class RoomVoter extends Voter
 
     private function canAddEntry()
     {
-        return $this->securityHelper->canAddEntry($this->user, $this->room);
+        return $this->securityHelper->canAddEntry($this->room, $this->user);
     }
 
     /**
@@ -137,6 +137,6 @@ class RoomVoter extends Voter
 
     private function canDelete()
     {
-        return (bool) $this->canEdit();
+        return (bool)$this->canEdit();
     }
 }

@@ -46,7 +46,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/new/{id}", name="grr_admin_room_new", methods={"GET", "POST"})
-     * @IsGranted("new")
+     * @IsGranted("grr.room.new")
      */
     public function new(Request $request, Area $area): Response
     {
@@ -76,7 +76,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_admin_room_show", methods={"GET"})
-     * @IsGranted("show", subject="room")
+     * @IsGranted("grr.room.show", subject="room")
      */
     public function show(Room $room): Response
     {
@@ -90,7 +90,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="grr_admin_room_edit", methods={"GET", "POST"})
-     * @IsGranted("edit", subject="room")
+     * @IsGranted("grr.room.edit", subject="room")
      */
     public function edit(Request $request, Room $room): Response
     {
@@ -120,7 +120,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_admin_room_delete", methods={"DELETE"})
-     * @IsGranted("delete", subject="room")
+     * @IsGranted("grr.room.delete", subject="room")
      */
     public function delete(Request $request, Room $room): Response
     {

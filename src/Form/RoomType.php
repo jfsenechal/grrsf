@@ -164,7 +164,7 @@ class RoomType extends AbstractType
                 ]
             )
             ->add(
-                'whoCanAddFor',
+                'quiPeutReserverPour',
                 ChoiceType::class,
                 [
                     'label' => 'room.form.quiPeutReserverPour.label',
@@ -180,7 +180,7 @@ class RoomType extends AbstractType
                 ]
             )
             ->add(
-                'authorization',
+                'ruleToAdd',
                 ChoiceType::class,
                 [
                     'label' => 'room.form.authorization.label',
