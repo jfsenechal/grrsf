@@ -89,7 +89,7 @@ class AreaVoter extends Voter
         }
 
         /**
-         * not work
+         * not work with test
          */
         if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {
          //   return true;

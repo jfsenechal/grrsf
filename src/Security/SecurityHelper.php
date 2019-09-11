@@ -235,6 +235,11 @@ class SecurityHelper
         return false;
     }
 
+    public function canSeeRoom(Room $room, User $user = null): bool
+    {
+        return true;
+    }
+
     public function isAreaRestricted(Area $area): bool
     {
         return $area->getIsRestricted();

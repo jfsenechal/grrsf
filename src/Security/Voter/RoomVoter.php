@@ -11,17 +11,10 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
- * It grants or denies permissions for actions related to blog posts (such as
- * showing, editing and deleting posts).
- *
- * See http://symfony.com/doc/current/security/voters.html
- *
  *
  */
 class RoomVoter extends Voter
 {
-    // Defining these constants is overkill for this simple application, but for real
-    // applications, it's a recommended practice to avoid relying on "magic strings"
     const NEW = 'grr.room.new';
     const ADD_ENTRY = 'grr.addEntry';
     const SHOW = 'grr.room.show';
@@ -31,7 +24,6 @@ class RoomVoter extends Voter
      * @var AccessDecisionManagerInterface
      */
     private $decisionManager;
-
     /**
      * @var User
      */
@@ -84,8 +76,15 @@ class RoomVoter extends Voter
         $this->area = $room;
         $this->token = $token;
 
-        if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {
+        if ($user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
             return true;
+        }
+
+        /**
+         * not work with test
+         */
+        if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {
+            //    return true;
         }
 
         switch ($attribute) {

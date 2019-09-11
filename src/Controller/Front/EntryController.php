@@ -108,7 +108,7 @@ class EntryController extends AbstractController
      * @return Response
      *
      * @throws \Exception
-     * @IsGranted("addEntry", subject="room")
+     * @IsGranted("grr.addEntry", subject="room")
      */
     public function new(
         Request $request,
@@ -155,7 +155,7 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_front_entry_show", methods={"GET"})
-     * @IsGranted("show", subject="entry")
+     * @IsGranted("grr.entry.show", subject="entry")
      */
     public function show(Entry $entry): Response
     {
@@ -176,7 +176,7 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="grr_front_entry_edit", methods={"GET", "POST"})
-     * @IsGranted("edit", subject="entry")
+     * @IsGranted("grr.entry.edit", subject="entry")
      */
     public function edit(Request $request, Entry $entry): Response
     {
@@ -218,7 +218,7 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_front_entry_delete", methods={"DELETE"})
-     * @IsGranted("delete", subject="entry")
+     * @IsGranted("grr.entry.delete", subject="entry")
      */
     public function delete(Request $request, Entry $entry): Response
     {

@@ -8,7 +8,7 @@
  *
  */
 
-namespace App\Tests\Security;
+namespace App\Tests\Security\Voter;
 
 use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;

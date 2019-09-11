@@ -4,33 +4,25 @@ namespace App\Security\Voter;
 
 use App\Entity\Entry;
 use App\Entity\Security\User;
-use App\Security\SecurityRole;
 use App\Security\SecurityHelper;
+use App\Security\SecurityRole;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
- * It grants or denies permissions for actions related to blog posts (such as
- * showing, editing and deleting posts).
  *
- * See http://symfony.com/doc/current/security/voters.html
- *
- * @author Yonel Ceruto <yonelceruto@gmail.com>
  */
 class EntryVoter extends Voter
 {
-    // Defining these constants is overkill for this simple application, but for real
-    // applications, it's a recommended practice to avoid relying on "magic strings"
-    const NEW = 'new';
-    const SHOW = 'show';
-    const EDIT = 'edit';
-    const DELETE = 'delete';
+    const NEW = 'grr.entry.new';
+    const SHOW = 'grr.entry.show';
+    const EDIT = 'grr.entry.edit';
+    const DELETE = 'grr.entry.delete';
     /**
      * @var AccessDecisionManagerInterface
      */
     private $decisionManager;
-
     /**
      * @var User
      */
@@ -78,13 +70,19 @@ class EntryVoter extends Voter
         $this->entry = $entry;
         $this->token = $token;
 
-        if ($this->decisionManager->decide($token, [SecurityRole::getRoleGrrAdministrator()])) {
+
+        if (!$this->isAnonyme() && $user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
             return true;
         }
 
+        /**
+         * not work with test
+         */
+        if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {
+            // return true;
+        }
+
         switch ($attribute) {
-            case self::NEW:
-                return $this->canNew();
             case self::SHOW:
                 return $this->canView();
             case self::EDIT:
@@ -94,17 +92,6 @@ class EntryVoter extends Voter
         }
 
         return false;
-    }
-
-    private function canNew()
-    {
-        if ($this->canEdit()) {
-            return true;
-        }
-
-        $room = $this->entry->getRoom();
-
-        return $this->securityHelper->canAddEntry($this->user, $room);
     }
 
     /**
@@ -134,12 +121,12 @@ class EntryVoter extends Voter
     {
         $room = $this->entry->getRoom();
 
-        return $this->securityHelper->canAddEntry($this->user, $room);
+        return $this->securityHelper->canAddEntry($room, $this->user);
     }
 
     private function canDelete()
     {
-        return (bool) $this->canEdit();
+        return (bool)$this->canEdit();
     }
 
     private function isAnonyme(): bool
