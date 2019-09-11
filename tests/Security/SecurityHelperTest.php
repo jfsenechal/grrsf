@@ -80,7 +80,7 @@ class SecurityHelperTest extends BaseRepository
             false,
         ];
 
-        yield 'not admin' => [
+        yield 'admin cafet' => [
             'fred@domain.be',
             false,
             false,
@@ -162,7 +162,7 @@ class SecurityHelperTest extends BaseRepository
             true,
         ];
 
-        yield 'not admin' => [
+        yield 'admin cafet' => [
             'fred@domain.be',
             false,
             false,
@@ -183,6 +183,68 @@ class SecurityHelperTest extends BaseRepository
             false,
             true,
             false,
+            false,
+        ];
+    }
+
+    /**
+     * @dataProvider provideAddEntry
+     */
+    public function testAddEntry(string $email, bool $access1, bool $access2)
+    {
+        $this->loadFixtures();
+
+        $securityHelper = $this->initSecurityHelper();
+        $user = $this->getUser($email);
+
+        $room = $this->getRoom('Box');
+        self::assertSame($access1, $securityHelper->canAddEntry($room, $user));
+
+        $room = $this->getRoom('Salle cafétaria');
+        self::assertSame($access2, $securityHelper->canAddEntry($room, $user));
+    }
+
+    public function provideAddEntry()
+    {
+        yield 'administrator' => [
+            'bob@domain.be',
+            true,
+            false,
+        ];
+
+        yield 'not admin' => [
+            'alice@domain.be',
+            true,
+            false,
+        ];
+
+        yield 'admin area of Hdv' => [
+            'joseph@domain.be',
+            false,
+            true,
+        ];
+
+        yield 'not admin area of Hdv' => [
+            'kevin@domain.be',
+            false,
+            true,
+        ];
+
+        yield 'admin cafet' => [
+            'fred@domain.be',
+            false,
+            true,
+        ];
+
+        yield 'box admin' => [
+            'raoul@domain.be',
+            true,
+            false,
+        ];
+
+        yield 'box ' => [
+            'charle@domain.be',
+            true,
             false,
         ];
     }

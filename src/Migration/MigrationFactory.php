@@ -78,7 +78,7 @@ class MigrationFactory
         $room->setModerate($this->migrationUtil->transformBoolean($data['moderate']));
         $room->setQuiPeutReserverPour($data['qui_peut_reserver_pour']);
         $room->setActiveRessourceEmpruntee($this->migrationUtil->transformBoolean($data['active_ressource_empruntee']));
-        $room->setWhocanadd($this->migrationUtil->tranformToAuthorization($data['who_can_see']));
+        $room->setRuletoAdd($this->migrationUtil->tranformToAuthorization($data['who_can_see']));
 
         return $room;
     }

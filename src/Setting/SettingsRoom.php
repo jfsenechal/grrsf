@@ -18,26 +18,28 @@ class SettingsRoom
     /**
      * Qui peut ajouter une entrée
      */
-    const  EVERY_BODY = 0;
-    const  EVERY_CONNECTED = 1;
-    const  EVERY_USER_ACTIVE = 2;
-    const  EVERY_ROOM_ADMINISTRATOR = 3;
-    const  EVERY_ROOM_MANAGER = 4;
-    const  EVERY_AREA_ADMINISTRATOR = 5;
-    const  EVERY_AREA_MANAGER = 6;
-    const  EVERY_GRR_ADMINISTRATOR_SITE = 7;
-    const  EVERY_GRR_ADMINISTRATOR = 8;
+    const  CAN_ADD_NO_RULE = 0;
+    const  CAN_ADD_EVERY_BODY = 1;
+    const  CAN_ADD_EVERY_CONNECTED = 2;
+    const  CAN_ADD_EVERY_USER_ACTIVE = 3;
+    const  CAN_ADD_EVERY_ROOM_ADMINISTRATOR = 4;
+    const  CAN_ADD_EVERY_ROOM_MANAGER = 5;
+    const  CAN_ADD_EVERY_AREA_ADMINISTRATOR = 6;
+    const  CAN_ADD_EVERY_AREA_MANAGER = 7;
+    const  CAN_ADD_EVERY_GRR_ADMINISTRATOR_SITE = 8;
+    const  CAN_ADD_EVERY_GRR_ADMINISTRATOR = 9;
 
     public static function whoCanAdd()
     {
         return [
-            self::EVERY_BODY => 'room.authorization.form.select.everybody',
-            self::EVERY_CONNECTED => 'room.authorization.form.select.everyconnected',
-            self::EVERY_USER_ACTIVE => 'room.authorization.form.select.everyactive',
-            self::EVERY_ROOM_MANAGER => 'room.authorization.form.select.everyroommanager',
-            self::EVERY_AREA_ADMINISTRATOR => 'room.authorization.form.select.everyareaadministrator',
-            self::EVERY_GRR_ADMINISTRATOR_SITE => 'room.authorization.form.select.everysite',
-            self::EVERY_GRR_ADMINISTRATOR => 'room.authorization.form.select.everygrradministrator',
+            self::CAN_ADD_NO_RULE => 'room.authorization.form.select.norule',
+            self::CAN_ADD_EVERY_BODY => 'room.authorization.form.select.everybody',
+            self::CAN_ADD_EVERY_CONNECTED => 'room.authorization.form.select.everyconnected',
+            self::CAN_ADD_EVERY_USER_ACTIVE => 'room.authorization.form.select.everyactive',
+            self::CAN_ADD_EVERY_ROOM_MANAGER => 'room.authorization.form.select.everyroommanager',
+            self::CAN_ADD_EVERY_AREA_ADMINISTRATOR => 'room.authorization.form.select.everyareaadministrator',
+            self::CAN_ADD_EVERY_GRR_ADMINISTRATOR_SITE => 'room.authorization.form.select.everysite',
+            self::CAN_ADD_EVERY_GRR_ADMINISTRATOR => 'room.authorization.form.select.everygrradministrator',
         ];
     }
 

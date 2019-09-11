@@ -119,13 +119,14 @@ room:
   authorization:
     form:
       select:
+        norule: Il faut être manager d'une ressource
         everybody: N'importe qui allant sur le site même s'il n'est pas connecté
         everyconnected: Il faut obligatoirement être connecté, même en simple visiteur
-        everyactive: Il faut obligatoirement être connecté et avoir le statut "utilisateur
-        everyroommanager: Il faut obligatoirement être connecté et être au moins gestionnaire d'une ressource
-        everyareaadministrator: Il faut obligatoirement se connecter et être au moins administrateur du domaine
-        everysite: Il faut obligatoirement être connecté et être administrateur de site
-        everygrradministrator: Il faut obligatoirement être connecté et être administrateur général
+        everyactive: Il faut avoir le rôle utilisateur actif
+        everyroommanager: Il faut être administrateur d'une ressource
+        everyareaadministrator: Il faut être  administrateur du domaine
+        everysite: Il faut être administrateur de site
+        everygrradministrator: Il faut être administrateur général de Grr
   addfor:
     none: Personne
     administratorrestricted: Uniquement les administrateurs restreints

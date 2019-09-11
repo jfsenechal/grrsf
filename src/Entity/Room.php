@@ -157,7 +157,7 @@ class Room
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $who_can_add;
+    private $rule_to_add;
 
     /**
      * @var Area
@@ -192,7 +192,7 @@ class Room
         $this->typeAffichageReser = 0;
         $this->quiPeutReserverPour = '';
         $this->activeRessourceEmpruntee = false;
-        $this->who_can_add = 0;
+        $this->rule_to_add = 0;
         $this->maximum_booking = -1;
         $this->entries = new ArrayCollection();
         $this->authorizations = new ArrayCollection();
@@ -528,16 +528,18 @@ class Room
         return $this;
     }
 
-    public function getWhoCanAdd(): ?int
+    public function getRuleToAdd(): ?int
     {
-        return $this->who_can_add;
+        return $this->rule_to_add;
     }
 
-    public function setWhoCanAdd(int $who_can_add): self
+    public function setRuleToAdd(int $rule_to_add): self
     {
-        $this->who_can_add = $who_can_add;
+        $this->rule_to_add = $rule_to_add;
 
         return $this;
     }
+
+    
 
 }
