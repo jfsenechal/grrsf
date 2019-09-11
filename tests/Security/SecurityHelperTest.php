@@ -249,6 +249,196 @@ class SecurityHelperTest extends BaseRepository
         ];
     }
 
+
+    /**
+     * @dataProvider provideRoom
+     * @param string $email
+     * @param bool $access1
+     * @param bool $access2
+     */
+    public function testAddEntryWithRule(string $name, array $users)
+    {
+        $this->loadFixtures(true);
+        $securityHelper = $this->initSecurityHelper();
+        $room = $this->getRoom($name);
+
+        foreach ($users as $data) {
+            $user = $this->getUser($data[0]);
+            $access = $data[1];
+            self::assertSame($access, $securityHelper->canAddEntry($room, $user), $user->getEmail().' for '.$name);
+        }
+
+    }
+
+    public function provideRoom()
+    {
+        /**
+         * every body
+         */
+        yield [
+            'Room 1',
+            [
+                [
+                    'bob@domain.be',
+                    true,
+                ],
+                [
+                    'alice@domain.be',
+                    true,
+                ],
+                [
+                    'joseph@domain.be',
+                    true,
+                ],
+                [
+                    'raoul@domain.be',
+                    true,
+                ],
+                [
+                    'kevin@domain.be',
+                    true,
+                ],
+                [
+                    'fred@domain.be',
+                    true,
+                ],
+            ],
+        ];
+
+        /**
+         * every connected
+         */
+        yield [
+            'Room 2',
+            [
+                [
+                    'bob@domain.be',
+                    true,
+                ],
+                [
+                    'alice@domain.be',
+                    true,
+                ],
+                [
+                    'joseph@domain.be',
+                    true,
+                ],
+                [
+                    'raoul@domain.be',
+                    true,
+                ],
+                [
+                    'kevin@domain.be',
+                    true,
+                ],
+                [
+                    'fred@domain.be',
+                    true,
+                ],
+            ],
+        ];
+
+        /**
+         * every actif user
+         */
+        yield [
+            'Room 3',
+            [
+                [
+                    'bob@domain.be',
+                    false,
+                ],
+                [
+                    'alice@domain.be',
+                    false,
+                ],
+                [
+                    'joseph@domain.be',
+                    false,
+                ],
+                [
+                    'raoul@domain.be',
+                    false,
+                ],
+                [
+                    'kevin@domain.be',
+                    false,
+                ],
+                [
+                    'fred@domain.be',
+                    true,
+                ],
+            ],
+        ];
+
+        /**
+         * every room administrator
+         */
+        yield [
+            'Room 4',
+            [
+                [
+                    'bob@domain.be',
+                    true,
+                ],
+                [
+                    'alice@domain.be',
+                    false,
+                ],
+                [
+                    'joseph@domain.be',
+                    false,
+                ],
+                [
+                    'raoul@domain.be',
+                    true,
+                ],
+                [
+                    'kevin@domain.be',
+                    false,
+                ],
+                [
+                    'fred@domain.be',
+                    false,
+                ],
+            ],
+        ];
+
+        /**
+         * every room manager
+         */
+        yield [
+            'Room 5',
+            [
+                [
+                    'bob@domain.be',
+                    true,
+                ],
+                [
+                    'alice@domain.be',
+                    true,
+                ],
+                [
+                    'joseph@domain.be',
+                    false,
+                ],
+                [
+                    'raoul@domain.be',
+                    false,
+                ],
+                [
+                    'kevin@domain.be',
+                    true,
+                ],
+                [
+                    'fred@domain.be',
+                    false,
+                ],
+            ],
+        ];
+
+    }
+
     /**
      * @dataProvider provideGrrAdministrator
      */
@@ -290,15 +480,22 @@ class SecurityHelperTest extends BaseRepository
         return new SecurityHelper($this->entityManager->getRepository(UserAuthorization::class));
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures($rule = false)
     {
         $files =
             [
                 $this->pathFixtures.'area.yaml',
-                $this->pathFixtures.'room.yaml',
-                $this->pathFixtures.'user.yaml',
-                $this->pathFixtures.'authorization_administrator.yaml',
             ];
+
+        if ($rule) {
+            $files[] = $this->pathFixtures.'room_with_rule.yaml';
+            $files[] = $this->pathFixtures.'authorization_rule.yaml';
+            $files[] = $this->pathFixtures.'user_rule.yaml';
+        } else {
+            $files[] = $this->pathFixtures.'room.yaml';
+            $files[] = $this->pathFixtures.'user.yaml';
+            $files[] = $this->pathFixtures.'authorization.yaml';
+        }
 
         $this->loader->load($files);
     }
