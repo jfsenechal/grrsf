@@ -164,11 +164,11 @@ class RoomType extends AbstractType
                 ]
             )
             ->add(
-                'quiPeutReserverPour',
+                'whoCanAddFor',
                 ChoiceType::class,
                 [
                     'label' => 'room.form.quiPeutReserverPour.label',
-                    'choices' => array_flip(SettingsRoom::qui_peut_reserver_pour()),
+                    'choices' => array_flip(SettingsRoom::whoCanAddFor()),
                 ]
             )
             ->add(
@@ -180,11 +180,11 @@ class RoomType extends AbstractType
                 ]
             )
             ->add(
-                'whoCanSee',
+                'authorization',
                 ChoiceType::class,
                 [
-                    'label' => 'room.form.whoCanSee.label',
-                    'choices' => array_flip(SettingsRoom::whoCanSee()),
+                    'label' => 'room.form.authorization.label',
+                    'choices' => array_flip(SettingsRoom::whoCanAdd()),
                 ]
             );
     }

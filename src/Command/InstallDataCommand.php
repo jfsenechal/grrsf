@@ -15,9 +15,9 @@ use App\Security\SecurityRole;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -98,18 +98,22 @@ class InstallDataCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Initialize les données dans la base de données lors de l\'installation')
-            ->addArgument('purge', InputArgument::OPTIONAL, "Remettre la base de données à zéro", false);
+            ->setDescription('Initialize les données dans la base de données lors de l\'installation');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->io = new SymfonyStyle($input, $output);
-        $purge = $input->getArgument('purge');
+        $helper = $this->getHelper('question');
+
+        $questionPurge = new ConfirmationQuestion("Voulez vous vider la base de données ? [y,N] \n", false);
+        $purge = $helper->ask($input, $output, $questionPurge);
 
         if ($purge) {
             $purger = new ORMPurger($this->entityManager);
             $purger->purge();
+
+            $this->io->success('La base de données a bien été vidée.');
         }
 
         $this->loadType();
@@ -171,8 +175,8 @@ class InstallDataCommand extends Command
         $this->loadRooms($esquare, $salles);
 
         $salles = [
-            'Salle Conseil',
-            'Salle Collège',
+            'Salle du Conseil',
+            'Salle du Collège',
             'Salle cafétaria',
         ];
 
@@ -205,7 +209,8 @@ class InstallDataCommand extends Command
             return;
         }
 
-        $roleGrrAdministrator = SecurityRole::getRoleGrrAdministrator();
+        $password = 'homer';//todo remove
+        $roleGrrAdministrator = SecurityRole::ROLE_GRR_ADMINISTRATOR;
 
         $user = $this->userFactory->createNew();
         $user->setName('Administrator');

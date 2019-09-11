@@ -26,6 +26,11 @@ App\Entity\Security\UserAuthorization:
     is_resource_administrator: true
   auth5:
     user: '@user_raoul'
-    room: '@room_relax'
-    is_area_administrator: true #not valid
+    room: '@room_box'
+    is_area_administrator: true #not valid because no area
     is_resource_administrator: true
+  auth6:
+    user: '@user_charle'
+    room: '@room_box'
+    is_area_administrator: false
+    is_resource_administrator: false

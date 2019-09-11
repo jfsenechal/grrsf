@@ -155,9 +155,9 @@ class Room
     /**
      * @var int
      *
-     * @ORM\Column(name="who_can_see", type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    private $whoCanSee;
+    private $who_can_add;
 
     /**
      * @var Area
@@ -192,7 +192,7 @@ class Room
         $this->typeAffichageReser = 0;
         $this->quiPeutReserverPour = '';
         $this->activeRessourceEmpruntee = false;
-        $this->whoCanSee = 0;
+        $this->who_can_add = 0;
         $this->maximum_booking = -1;
         $this->entries = new ArrayCollection();
         $this->authorizations = new ArrayCollection();
@@ -431,18 +431,6 @@ class Room
         return $this;
     }
 
-    public function getWhoCanSee(): ?int
-    {
-        return $this->whoCanSee;
-    }
-
-    public function setWhoCanSee(int $whoCanSee): self
-    {
-        $this->whoCanSee = $whoCanSee;
-
-        return $this;
-    }
-
     public function getArea(): Area
     {
         return $this->area;
@@ -539,4 +527,17 @@ class Room
 
         return $this;
     }
+
+    public function getWhoCanAdd(): ?int
+    {
+        return $this->who_can_add;
+    }
+
+    public function setWhoCanAdd(int $who_can_add): self
+    {
+        $this->who_can_add = $who_can_add;
+
+        return $this;
+    }
+
 }

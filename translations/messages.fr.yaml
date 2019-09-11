@@ -51,9 +51,9 @@ room:
       help: Hormis les administrateurs, précisez ci-contre quels types d'user ont le droit de faire des réservations au nom d'autres user.
     activeRessourceEmpruntee:
       label: Activer fonctionalite ressource empruntee restituee
-    whoCanSee:
-      label: Qui peut voir cette ressource ?
-      help: Et éventuellement réserver selon les droits attribués
+    authorization:
+      label: Qui encoder pour cette ressource ?
+      help: Si pas déterminé processus classique
 area:
   form:
     name:

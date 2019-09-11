@@ -62,7 +62,7 @@ class CreateuserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
-        $role = SecurityRole::getRoleGrrAdministrator();
+        $role = SecurityRole::ROLE_GRR_ADMINISTRATOR;
 
         $email = $input->getArgument('email');
         $name = $input->getArgument('name');

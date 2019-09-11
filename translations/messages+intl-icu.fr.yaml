@@ -116,6 +116,21 @@ area:
   title: Domaine
 
 room:
+  authorization:
+    form:
+      select:
+        everybody: N'importe qui allant sur le site même s'il n'est pas connecté
+        everyconnected: Il faut obligatoirement être connecté, même en simple visiteur
+        everyactive: Il faut obligatoirement être connecté et avoir le statut "utilisateur
+        everyroommanager: Il faut obligatoirement être connecté et être au moins gestionnaire d'une ressource
+        everyareaadministrator: Il faut obligatoirement se connecter et être au moins administrateur du domaine
+        everysite: Il faut obligatoirement être connecté et être administrateur de site
+        everygrradministrator: Il faut obligatoirement être connecté et être administrateur général
+  addfor:
+    none: Personne
+    administratorrestricted: Uniquement les administrateurs restreints
+    roommanager: les gestionnaires de la ressource
+    everybody: Tout les utilisateurs
   flash:
     new: La ressource a bien été ajoutée
     edit: La ressource a bien été modifiée

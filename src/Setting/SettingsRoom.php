@@ -7,16 +7,37 @@ class SettingsRoom
     const DISPLAY_TYPE_FORM_RESERVATION_DURATION = 0;
     const DISPLAY_TYPE_FORM_RESERVATION_DATE_END = 1;
 
-    public static function whoCanSee()
+    /**
+     * qui peux réserver pour
+     */
+    const BOOKING_FOR_NONE = 1;
+    const BOOKING_FOR_EVERY_BODY = 5;
+    const BOOKING_FOR_ROOM_MANAGER = 3;
+    const BOOKING_FOR_ADMINISTRATOR_RESTRICTED = 4;
+
+    /**
+     * Qui peut ajouter une entrée
+     */
+    const  EVERY_BODY = 0;
+    const  EVERY_CONNECTED = 1;
+    const  EVERY_USER_ACTIVE = 2;
+    const  EVERY_ROOM_ADMINISTRATOR = 3;
+    const  EVERY_ROOM_MANAGER = 4;
+    const  EVERY_AREA_ADMINISTRATOR = 5;
+    const  EVERY_AREA_MANAGER = 6;
+    const  EVERY_GRR_ADMINISTRATOR_SITE = 7;
+    const  EVERY_GRR_ADMINISTRATOR = 8;
+
+    public static function whoCanAdd()
     {
         return [
-            "N'importe qui allant sur le site même s'il n'est pas connecté",
-            'Il faut obligatoirement être connecté, même en simple visiteur.',
-            'Il faut obligatoirement être connecté et avoir le statut "utilisateur',
-            "Il faut obligatoirement être connecté et être au moins gestionnaire d'une ressource",
-            'Il faut obligatoirement se connecter et être au moins administrateur du domaine',
-            'Il faut obligatoirement être connecté et être administrateur de site',
-            'Il faut obligatoirement être connecté et être administrateur général',
+            self::EVERY_BODY => 'room.authorization.form.select.everybody',
+            self::EVERY_CONNECTED => 'room.authorization.form.select.everyconnected',
+            self::EVERY_USER_ACTIVE => 'room.authorization.form.select.everyactive',
+            self::EVERY_ROOM_MANAGER => 'room.authorization.form.select.everyroommanager',
+            self::EVERY_AREA_ADMINISTRATOR => 'room.authorization.form.select.everyareaadministrator',
+            self::EVERY_GRR_ADMINISTRATOR_SITE => 'room.authorization.form.select.everysite',
+            self::EVERY_GRR_ADMINISTRATOR => 'room.authorization.form.select.everygrradministrator',
         ];
     }
 
@@ -28,13 +49,13 @@ class SettingsRoom
         ];
     }
 
-    public static function qui_peut_reserver_pour()
+    public static function whoCanAddFor()
     {
         return [
-            5 => 'personne',
-            4 => 'uniquement les administrateurs restreints',
-            3 => 'les gestionnaires de la ressource',
-            2 => 'tous les user',
+            self::BOOKING_FOR_NONE => 'room.addfor.none',
+            self::BOOKING_FOR_ADMINISTRATOR_RESTRICTED => 'room.addfor.administratorrestricted',
+            self::BOOKING_FOR_ROOM_MANAGER => 'room.addfor.roommanager',
+            self::BOOKING_FOR_EVERY_BODY => 'room.addfor.everybody',
         ];
     }
 }

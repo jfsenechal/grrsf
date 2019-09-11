@@ -134,8 +134,8 @@ class MigrationCommand extends Command
                 }
             }
         );
+
         $date = $helper->ask($input, $output, $questionDate);
-        $date = Carbon::createFromFormat('Y-m-d', '2019-09-01');
 
         if ($date) {
             $this->io->success('Date choisie : '.$date->format('Y-m-d'));

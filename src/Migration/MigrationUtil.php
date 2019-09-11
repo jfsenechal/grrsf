@@ -21,6 +21,7 @@ use App\Repository\RoomRepository;
 use App\Repository\Security\AuthorizationRepository;
 use App\Repository\Security\UserRepository;
 use App\Security\SecurityRole;
+use App\Tests\Security\SecurityRoomHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -145,7 +146,6 @@ class MigrationUtil
         return null;
     }
 
-
     public function transformToUser(string $username): ?User
     {
         return $this->userRepository->findOneBy(['username' => $username]);
@@ -169,13 +169,13 @@ class MigrationUtil
     {
         switch ($statut) {
             case 'administrateur' :
-                $role = SecurityRole::getRoleGrrAdministrator();
+                $role = SecurityRole::ROLE_GRR_ADMINISTRATOR;
                 break;
             case 'utilisateur':
-                $role = SecurityRole::getRoleGrr();
+                $role = SecurityRole::ROLE_GRR_ACTIVE_USER;
                 break;
             case 'visiteur':
-                $role = SecurityRole::getRoleGrr();
+                $role = null;//par defaut dipose de @see SecurityRole::ROLE_GRR
                 break;
             default:
                 break;
@@ -263,6 +263,38 @@ class MigrationUtil
     public function convertToTypeEntry(string $letter): ?EntryType
     {
         return $this->entryTypeRepository->findOneBy(['letter' => $letter]);
+    }
+
+    public function tranformToAuthorization(int $who_can_see) :int
+    {
+        switch ($who_can_see) {
+            case 0:
+                $auth = SecurityRoomHelper::EVERY_BODY;
+                break;
+            case 1:
+                $auth = SecurityRoomHelper::EVERY_CONNECTED;
+                break;
+            case 2:
+                $auth = SecurityRoomHelper::EVERY_USER_ACTIVE;
+                break;
+            case 3:
+                $auth = SecurityRoomHelper::EVERY_ROOM_MANAGER;
+                break;
+            case 4:
+                $auth = SecurityRoomHelper::EVERY_AREA_ADMINISTRATOR;
+                break;
+            case 5:
+                $auth = SecurityRoomHelper::EVERY_GRR_ADMINISTRATOR_SITE;
+                break;
+            case 6:
+                $auth = SecurityRoomHelper::EVERY_GRR_ADMINISTRATOR;
+                break;
+            default:
+                $auth = 0;
+                break;
+        }
+
+        return $auth;
     }
 
 

@@ -27,13 +27,6 @@ class Area
     private $name;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $is_private;
-
-    /**
      * @var int
      *
      * @ORM\Column(type="smallint", nullable=false)
@@ -119,7 +112,7 @@ class Area
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $restricted;
+    private $is_restricted;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="area")
@@ -135,7 +128,6 @@ class Area
     {
         $this->start_time = 8;
         $this->end_time = 19;
-        $this->is_private = false;
         $this->is_24_hour_format = true;
         $this->order_display = 0;
         $this->week_start = 0;
@@ -145,7 +137,7 @@ class Area
         $this->duration_maximum_entry = -1;
         $this->minutes_to_add_to_end_time = 0;
         $this->max_booking = -1;
-        $this->restricted = false;
+        $this->is_restricted = false;
         $this->rooms = new ArrayCollection();
         $this->authorizations = new ArrayCollection();
     }
@@ -163,18 +155,6 @@ class Area
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getIsPrivate(): ?bool
-    {
-        return $this->is_private;
-    }
-
-    public function setIsPrivate(bool $is_private): self
-    {
-        $this->is_private = $is_private;
 
         return $this;
     }
@@ -361,18 +341,6 @@ class Area
         return $this;
     }
 
-    public function getRestricted(): ?bool
-    {
-        return $this->restricted;
-    }
-
-    public function setRestricted(bool $restricted): self
-    {
-        $this->restricted = $restricted;
-
-        return $this;
-    }
-
     public function getIs24HourFormat(): ?bool
     {
         return $this->is_24_hour_format;
@@ -407,4 +375,18 @@ class Area
 
         return $this;
     }
+
+    public function getIsRestricted(): ?bool
+    {
+        return $this->is_restricted;
+    }
+
+    public function setIsRestricted(bool $is_restricted): self
+    {
+        $this->is_restricted = $is_restricted;
+
+        return $this;
+    }
+
+
 }

@@ -10,9 +10,10 @@
 
 namespace App\Tests\Security;
 
-
+use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;
 use App\Security\SecurityHelper;
+use App\Security\SecurityRole;
 use App\Tests\Repository\BaseRepository;
 
 class SecurityHelperTest extends BaseRepository
@@ -20,20 +21,29 @@ class SecurityHelperTest extends BaseRepository
     /**
      * @dataProvider provideAdministrator
      */
-    public function testIsAreaAdministrator(string $email, bool $accessAraAdministrator, bool $accessRoomAdministrator)
-    {
+    public function testIsAdministrator(
+        string $email,
+        bool $access1,
+        bool $access2,
+        bool $access3,
+        bool $access4
+    ) {
         $this->loadFixtures();
 
         $area = $this->getArea('Esquare');
         $securityHelper = $this->initSecurityHelper();
         $user = $this->getUser($email);
 
-        self::assertSame($accessAraAdministrator, $securityHelper->isAreaAdministrator($user, $area));
+        self::assertSame($access1, $securityHelper->isAreaAdministrator($user, $area));
+
+        $room = $this->getRoom('Box');
+        self::assertSame($access2, $securityHelper->isRoomAdministrator($user, $room));
 
         $room = $this->getRoom('Salle cafétaria');
+        self::assertSame($access3, $securityHelper->isRoomAdministrator($user, $room));
 
-        self::assertSame($accessRoomAdministrator, $securityHelper->isRoomAdministrator($user, $room));
-
+        $area = $this->getArea('Hdv');
+        self::assertSame($access4, $securityHelper->isAreaAdministrator($user, $area));
     }
 
     public function provideAdministrator()
@@ -41,67 +51,174 @@ class SecurityHelperTest extends BaseRepository
         yield 'administrator' => [
             'bob@domain.be',
             true,
+            true,
+            false,
+            false,
         ];
 
         yield 'not admin' => [
             'alice@domain.be',
+            false,
+            false,
+            false,
+            false,
+        ];
+
+        yield 'admin area of Hdv' => [
+            'joseph@domain.be',
+            false,
+            false,
+            true,
+            true,
+        ];
+
+        yield 'not admin area of Hdv' => [
+            'kevin@domain.be',
+            false,
+            false,
+            false,
             false,
         ];
 
         yield 'not admin' => [
             'fred@domain.be',
             false,
-        ];
-
-         yield 'admin area of Hdv' => [
-            'joseph@domain.be',
+            false,
+            true,
             false,
         ];
 
-           yield 'not admin area of Hdv' => [
-            'kevin@domain.be',
+        yield 'not admin' => [
+            'raoul@domain.be',
+            false,
+            true,
+            false,
+            false,
+        ];
+
+        yield 'box ' => [
+            'charle@domain.be',
+            false,
+            false,
+            false,
             false,
         ];
     }
 
     /**
-     * @dataProvider provideRoomAdministrator
+     * @dataProvider provideManager
      */
-    public function testIsRoomAdministrator(string $email, bool $access)
+    public function testIsManager(string $email, bool $access1, bool $access2, bool $access3, bool $access4)
     {
         $this->loadFixtures();
 
-        $room = $this->getRoom('Salle cafétaria');
         $securityHelper = $this->initSecurityHelper();
         $user = $this->getUser($email);
 
-        self::assertSame($access, $securityHelper->isRoomAdministrator($user, $room));
+        $area = $this->getArea('Esquare');
+        self::assertSame($access1, $securityHelper->isAreaManager($user, $area));
+
+        $room = $this->getRoom('Box');
+        self::assertSame($access2, $securityHelper->isRoomManager($user, $room));
+
+        $room = $this->getRoom('Salle cafétaria');
+        self::assertSame($access3, $securityHelper->isRoomManager($user, $room));
+
+        $area = $this->getArea('Hdv');
+        self::assertSame($access4, $securityHelper->isAreaManager($user, $area));
     }
 
-    public function provideRoomAdministrator()
+    public function provideManager()
     {
-        yield 'not room admin' => [
+        yield 'administrator' => [
             'bob@domain.be',
+            true,
+            true,
+            false,
             false,
         ];
 
-        yield 'esquare admin' => [
+        yield 'not admin' => [
             'alice@domain.be',
+            true,
+            true,
+            false,
             false,
         ];
 
-        yield 'ressource admin cafet' => [
-            'fred@domain.be',
-            true,
-        ];
-
-         yield 'admin area of Hdv' => [
+        yield 'admin area of Hdv' => [
             'joseph@domain.be',
+            false,
+            false,
+            true,
             true,
         ];
 
-           yield 'not admin area of Hdv' => [
+        yield 'not admin area of Hdv' => [
             'kevin@domain.be',
+            false,
+            false,
+            false,
+            true,
+        ];
+
+        yield 'not admin' => [
+            'fred@domain.be',
+            false,
+            false,
+            true,
+            false,
+        ];
+
+        yield 'not admin' => [
+            'raoul@domain.be',
+            false,
+            true,
+            false,
+            false,
+        ];
+
+        yield 'box ' => [
+            'charle@domain.be',
+            false,
+            true,
+            false,
+            false,
+        ];
+    }
+
+    /**
+     * @dataProvider provideGrrAdministrator
+     */
+    public function testIsGrrAdministrator(User $user, bool $administrator)
+    {
+        $this->loadFixtures();
+        $securityHelper = $this->initSecurityHelper();
+
+        self::assertSame($administrator, $securityHelper->isGrrAdministrator($user));
+    }
+
+    public function provideGrrAdministrator()
+    {
+        $user = new User();
+        $user->addRole(SecurityRole::ROLE_GRR_ADMINISTRATOR);
+
+        yield 'administrator' => [
+            $user,
+            true,
+        ];
+
+        $user = new User();
+        $user->setRoles(SecurityRole::getRoles());
+        $user->removeRole(SecurityRole::ROLE_GRR_ADMINISTRATOR);
+
+        yield 'not administrator' => [
+            $user,
+            false,
+        ];
+
+        yield 'not administrator' => [
+            new User(),
             false,
         ];
     }
@@ -118,7 +235,7 @@ class SecurityHelperTest extends BaseRepository
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'user.yaml',
-                $this->pathFixtures.'authorization.yaml',
+                $this->pathFixtures.'authorization_administrator.yaml',
             ];
 
         $this->loader->load($files);

@@ -34,7 +34,7 @@ class MigrationFactory
     {
         $area = new Area();
         $area->setName($this->migrationUtil->convertToUf8($data['area_name']));
-        $area->setIsPrivate($this->migrationUtil->transformBoolean($data['access']));
+        $area->setIsRestricted($this->migrationUtil->transformBoolean($data['access']));
         //$area->set($data['ip_adr']);
         $area->setOrderDisplay($data['order_display']);
         $area->setStartTime($data['morningstarts_area']);
@@ -78,7 +78,7 @@ class MigrationFactory
         $room->setModerate($this->migrationUtil->transformBoolean($data['moderate']));
         $room->setQuiPeutReserverPour($data['qui_peut_reserver_pour']);
         $room->setActiveRessourceEmpruntee($this->migrationUtil->transformBoolean($data['active_ressource_empruntee']));
-        $room->setWhoCanSee($data['who_can_see']);
+        $room->setWhocanadd($this->migrationUtil->tranformToAuthorization($data['who_can_see']));
 
         return $room;
     }
