@@ -302,6 +302,10 @@ class SecurityHelperTest extends BaseRepository
                     'fred@domain.be',
                     true,
                 ],
+                [
+                    'grr@domain.be',
+                    true,
+                ],
             ],
         ];
 
@@ -333,6 +337,10 @@ class SecurityHelperTest extends BaseRepository
                 ],
                 [
                     'fred@domain.be',
+                    true,
+                ],
+                [
+                    'grr@domain.be',
                     true,
                 ],
             ],
@@ -368,6 +376,10 @@ class SecurityHelperTest extends BaseRepository
                     'fred@domain.be',
                     true,
                 ],
+                [
+                    'grr@domain.be',
+                    true,
+                ],
             ],
         ];
 
@@ -401,6 +413,10 @@ class SecurityHelperTest extends BaseRepository
                     'fred@domain.be',
                     false,
                 ],
+                [
+                    'grr@domain.be',
+                    true,
+                ],
             ],
         ];
 
@@ -433,6 +449,117 @@ class SecurityHelperTest extends BaseRepository
                 [
                     'fred@domain.be',
                     false,
+                ],
+                [
+                    'grr@domain.be',
+                    true,
+                ],
+            ],
+        ];
+
+        /**
+         * every area administator
+         */
+        yield [
+            'Room 6',
+            [
+                [
+                    'bob@domain.be',
+                    true,
+                ],
+                [
+                    'alice@domain.be',
+                    false,
+                ],
+                [
+                    'joseph@domain.be',
+                    false,
+                ],
+                [
+                    'raoul@domain.be',
+                    false,
+                ],
+                [
+                    'kevin@domain.be',
+                    false,
+                ],
+                [
+                    'fred@domain.be',
+                    false,
+                ],
+                [
+                    'grr@domain.be',
+                    true,
+                ],
+            ],
+        ];
+
+        /**
+         * every area manager
+         */
+        yield [
+            'Room 7',
+            [
+                [
+                    'bob@domain.be',
+                    true,
+                ],
+                [
+                    'alice@domain.be',
+                    true,
+                ],
+                [
+                    'joseph@domain.be',
+                    false,
+                ],
+                [
+                    'raoul@domain.be',
+                    false,
+                ],
+                [
+                    'kevin@domain.be',
+                    false,
+                ],
+                [
+                    'fred@domain.be',
+                    false,
+                ],
+                [
+                    'grr@domain.be',
+                    true,
+                ],
+            ],
+        ];
+
+        /**
+         * every GRR_ADMINISTRATOR
+         */
+        yield [
+            'Room 9',
+            [
+                [
+                    'bob@domain.be',
+                    false,
+                ],
+                [
+                    'alice@domain.be',
+                    false,
+                ],
+                [
+                    'joseph@domain.be',
+                    false,
+                ],
+                [
+                    'raoul@domain.be',
+                    false,
+                ],
+                [
+                    'kevin@domain.be',
+                    false,
+                ],
+                [
+                    'grr@domain.be',
+                    true,
                 ],
             ],
         ];

@@ -72,6 +72,7 @@ class SecurityHelper
         if ($this->isAreaAdministrator($user, $room->getArea())) {
             return true;
         }
+
         if ($this->authorizationRepository->findOneBy(
             ['user' => $user, 'room' => $room, 'is_resource_administrator' => true]
         )) {
@@ -205,10 +206,17 @@ class SecurityHelper
     {
         $who = $room->getRuleToAdd();
 
+        if ($user && $this->isGrrAdministrator($user)) {
+            return true;
+        }
+
         if (!$user || $who > SettingsRoom::CAN_ADD_NO_RULE) {
             return $this->checkAuthorizationRoomToAddEntry($room, $user);
         }
 
+        if ($this->isGrrAdministrator($user)) {
+            return true;
+        }
 
         $area = $room->getArea();
         if ($this->isAreaAdministrator($user, $area)) {
