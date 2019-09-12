@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Security;
 
 class EntryLocationServiceTest extends BaseTesting
 {
@@ -186,7 +187,8 @@ class EntryLocationServiceTest extends BaseTesting
     {
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $requestStack = $this->createMock(RequestStack::class);
-        $localHelper = new LocalHelper($parameterBag, $requestStack);
+        $security = $this->createMock(Security::class);
+        $localHelper = new LocalHelper($parameterBag, $requestStack,$security);
         $carbonFactory = new CarbonFactory($localHelper);
 
         return new TimeSlotsProvider($carbonFactory);

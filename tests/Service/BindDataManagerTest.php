@@ -25,6 +25,7 @@ use App\Service\EntryLocationService;
 use App\Tests\BaseTesting;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Security;
 
 class BindDataManagerTest extends BaseTesting
 {
@@ -168,7 +169,8 @@ class BindDataManagerTest extends BaseTesting
     {
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $requestStack = $this->createMock(RequestStack::class);
-        $localHelper = new LocalHelper($parameterBag, $requestStack);
+        $security = $this->createMock(Security::class);
+        $localHelper = new LocalHelper($parameterBag, $requestStack,$security);
         $carbonFactory = new CarbonFactory($localHelper);
 
         return new TimeSlotsProvider($carbonFactory);
@@ -178,7 +180,8 @@ class BindDataManagerTest extends BaseTesting
     {
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $requestStack = $this->createMock(RequestStack::class);
-        $localHelper = new LocalHelper($parameterBag, $requestStack);
+        $security = $this->createMock(Security::class);
+        $localHelper = new LocalHelper($parameterBag, $requestStack,$security);
         $carbonFactory = new CarbonFactory($localHelper);
 
         return new DayFactory($carbonFactory);

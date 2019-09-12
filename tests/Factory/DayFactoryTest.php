@@ -20,6 +20,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Security;
 
 class DayFactoryTest extends BaseTesting
 {
@@ -33,7 +34,8 @@ class DayFactoryTest extends BaseTesting
         parent::setUp();
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $requestStack = $this->createMock(RequestStack::class);
-        $localHelper = new LocalHelper($parameterBag, $requestStack);
+        $security = $this->createMock(Security::class);
+        $localHelper = new LocalHelper($parameterBag, $requestStack, $security);
         $carbonFactory = new CarbonFactory($localHelper);
         $this->dayFactory = new DayFactory($carbonFactory);
     }
