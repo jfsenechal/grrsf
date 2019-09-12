@@ -166,3 +166,6 @@ login:
   form:
     username:
       placeholder: Email ou nom d'utilisateur
+page:
+  notfound: Page non trouvée
+  notauthorized: Accès non autorisé

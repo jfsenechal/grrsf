@@ -6,36 +6,36 @@ use App\Tests\BaseTesting;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
-class AccessControllerTest extends BaseTesting
+class AccessRoomControllerTest extends BaseTesting
 {
     /**
      * @dataProvider provideCases
      * @param string $url
      * @param array $datas
      */
-    public function testArea(string $action, ?string $areaName = null, array $datas)
+    public function testArea(string $action, ?string $roomName = null, array $datas)
     {
         $this->loadFixtures();
-        $area = $token = null;
-        if ($areaName) {
-            $area = $this->getArea($areaName);
+        $room = $token = null;
+        if ($roomName) {
+            $room = $this->getRoom($roomName);
             $tokenManager = new CsrfTokenManager();
-            $token = $tokenManager->getToken('delete'.$area->getId())->getValue();
+            $token = $tokenManager->getToken('delete'.$room->getId())->getValue();
         }
 
         $method = 'GET';
         switch ($action) {
             case 'index':
-                $url = '/admin/area/';
+                $url = '/admin/room/';
                 break;
             case 'show' :
-                $url = '/admin/area/'.$area->getId();
+                $url = '/admin/room/'.$room->getId();
                 break;
             case 'edit' :
-                $url = '/admin/area/'.$area->getId().'/edit';
+                $url = '/admin/room/'.$room->getId().'/edit';
                 break;
             case 'delete' :
-                $url = '/admin/area/'.$area->getId();
+                $url = '/admin/room/'.$room->getId();
                 $method = 'DELETE';
                 break;
             default:
@@ -63,7 +63,7 @@ class AccessControllerTest extends BaseTesting
             null,
             [
                 [
-                    Response::HTTP_FOUND,
+                    Response::HTTP_OK,
                     null,
                 ],
                 [
@@ -90,7 +90,7 @@ class AccessControllerTest extends BaseTesting
         ];
         yield [
             'edit',
-            'Esquare',
+            'Box',
             [
                 [
                     Response::HTTP_FOUND,
@@ -121,7 +121,7 @@ class AccessControllerTest extends BaseTesting
 
         yield [
             'delete',
-            'Esquare',
+            'Box',
             [
                 [
                     Response::HTTP_FOUND,
@@ -159,9 +159,7 @@ class AccessControllerTest extends BaseTesting
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'user.yaml',
-                $this->pathFixtures.'authorization.yaml',
-                $this->pathFixtures.'entry_type.yaml',
-                $this->pathFixtures.'entry.yaml',
+                $this->pathFixtures.'authorization.yaml'
             ];
 
         $this->loader->load($files);

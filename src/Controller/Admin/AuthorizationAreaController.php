@@ -70,7 +70,7 @@ class AuthorizationAreaController extends AbstractController
         }
 
         return $this->render(
-            'security/authorization/area/new.html.twig',
+            '@grr_security/authorization/area/new.html.twig',
             [
                 'area' => $area,
                 'form' => $form->createView(),
@@ -87,7 +87,7 @@ class AuthorizationAreaController extends AbstractController
         $urlBack = $this->generateUrl('grr_authorization_show_by_user', ['id' => $area->getId()]);
 
         return $this->render(
-            'security/authorization/area/show.html.twig',
+            '@grr_security/authorization/area/show.html.twig',
             [
                 'area' => $area,
                 'authorizations' => $authorizations,

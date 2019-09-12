@@ -7,6 +7,14 @@
     {
       "namespace": "grr_front",
       "path": "templates/front"
+    },
+    {
+      "namespace": "grr_default",
+      "path": "templates/default"
+    },
+    {
+      "namespace": "grr_security",
+      "path": "templates/security"
     }
   ]
 }
