@@ -14,6 +14,7 @@ use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;
 use App\Security\SecurityHelper;
 use App\Security\Voter\AreaVoter;
+use App\Security\Voter\RoomVoter;
 use App\Tests\BaseTesting;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -91,6 +92,42 @@ class AreaVoterTest extends BaseTesting
                     'Esquare',
                     Voter::ACCESS_DENIED,
                     'alice@domain.be',
+                ],
+                [
+                    'Esquare',
+                    Voter::ACCESS_GRANTED,
+                    'grr@domain.be',
+                ],
+            ],
+        ];
+
+        yield [
+            AreaVoter::NEW_ROOM,
+            [
+                [
+                    'Esquare',
+                    Voter::ACCESS_DENIED,
+                    null,
+                ],
+                [
+                    'Esquare',
+                    Voter::ACCESS_GRANTED,
+                    'bob@domain.be',
+                ],
+                [
+                    'Esquare',
+                    Voter::ACCESS_DENIED,
+                    'alice@domain.be',
+                ],
+                [
+                    'Esquare',
+                    Voter::ACCESS_DENIED,
+                    'raoul@domain.be',
+                ],
+                [
+                    'Esquare',
+                    Voter::ACCESS_DENIED,
+                    'fred@domain.be',
                 ],
                 [
                     'Esquare',

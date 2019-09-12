@@ -85,42 +85,6 @@ class RoomVoterTest extends BaseTesting
         ];
 
         yield [
-            RoomVoter::NEW,
-            [
-                [
-                    'Box',
-                    Voter::ACCESS_DENIED,
-                    null,
-                ],
-                [
-                    'Box',
-                    Voter::ACCESS_GRANTED,
-                    'bob@domain.be',
-                ],
-                [
-                    'Box',
-                    Voter::ACCESS_DENIED,
-                    'alice@domain.be',
-                ],
-                [
-                    'Box',
-                    Voter::ACCESS_DENIED,
-                    'raoul@domain.be',
-                ],
-                [
-                    'Box',
-                    Voter::ACCESS_DENIED,
-                    'fred@domain.be',
-                ],
-                [
-                    'Box',
-                    Voter::ACCESS_GRANTED,
-                    'grr@domain.be',
-                ],
-            ],
-        ];
-
-        yield [
             RoomVoter::EDIT,
             [
                 [
