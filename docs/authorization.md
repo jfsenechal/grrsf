@@ -1,8 +1,6 @@
 ## Les autorisations
 
-### Administrator et manager
-
-#### Administrator
+### Administrator
 
 **Un administreur de domaine (Area) peux:** 
 - Modifier/supprimer le domaine
@@ -13,7 +11,7 @@
 - Modifier/supprimer la ressource
 - Gérer toutes les entrées de la ressource sans restriction
 
-#### Manager
+### Manager
 
 **Un manager de domaine (Area) peux:** 
 - Gérer toutes les entrées des différentes ressources sans restriction

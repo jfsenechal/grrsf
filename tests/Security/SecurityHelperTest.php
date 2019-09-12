@@ -158,7 +158,7 @@ class SecurityHelperTest extends BaseRepository
             'kevin@domain.be',
             false,
             false,
-            false,
+            true,
             true,
         ];
 
