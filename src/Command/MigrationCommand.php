@@ -3,6 +3,8 @@
 namespace App\Command;
 
 use App\Entity\Area;
+use App\Entity\Entry;
+use App\Entity\Periodicity;
 use App\Migration\MigrationFactory;
 use App\Migration\MigrationUtil;
 use App\Migration\RequestData;
@@ -74,7 +76,7 @@ class MigrationCommand extends Command
         $this
             ->setDescription('Migrations des données depuis un ancien Grr')
             ->addArgument('url', InputArgument::REQUIRED, "L'Url http de l'ancien Grr")
-            ->addArgument('user', InputArgument::REQUIRED, "Le nom d'utilisateur d'un compte locale grr administrator")
+            ->addArgument('user', InputArgument::REQUIRED, "Le nom d'utilisateur d'un compte LOCALE grr administrator")
             ->addArgument('password', InputArgument::OPTIONAL, "Le mot de passe de l'utilisateur")
             ->addOption('date', null, InputOption::VALUE_NONE, "Date à partir de laquelle les données seront ajoutées");
     }
@@ -153,18 +155,20 @@ class MigrationCommand extends Command
         $this->handleEntryType();
         $this->io->newLine();
         $this->io->section('Importation des utilisateurs');
-        $this->handleUser();
+        //   $this->handleUser();
         $this->io->writeln('');
         $this->io->section('Importation des area admin');
-        $this->handleAreaAdmin();
+        //    $this->handleAreaAdmin();
         $this->io->writeln('');
         $this->io->section('Importation des rooms admin');
-        $this->handleRoomAdmin();
+        //     $this->handleRoomAdmin();
         $this->io->writeln('');
         $this->io->section('Importation des entrées');
-        //$this->handleEntry($date);
+        $this->handleEntry($date);
         $this->io->writeln('');
         $this->io->success('Importation terminée :-) .');
+
+        return null;
     }
 
     protected function handleArea()
@@ -227,9 +231,13 @@ class MigrationCommand extends Command
         }
     }
 
-    protected function handleEntry(?string $date)
+    protected function handleEntry(?\DateTime $date)
     {
-        $entries = $this->decompress($this->requestData->getEntries(['date' => $date]), 'entry');
+        $params = [];
+        if ($date) {
+            $params = ['date' => $date->format('Y-m-d')];
+        }
+        $entries = $this->decompress($this->requestData->getEntries($params), 'entry');
 
         $progressBar = new ProgressBar($this->output);
 
@@ -239,6 +247,10 @@ class MigrationCommand extends Command
             if ($room) {
                 $entry->setRoom($room);
                 $this->entityManager->persist($entry);
+                $id = $id = (int)$data['repeat_id'];
+                if ($id > 0) {
+                    $this->handlerRepeat($entry, $id);
+                }
             } else {
                 $this->io->error('Room non trouvé pour '.$data['name']);
 
@@ -246,7 +258,16 @@ class MigrationCommand extends Command
             }
         }
 
-        $this->entityManager->flush();
+        //   $this->entityManager->flush();
+    }
+
+    private function handlerRepeat(Entry $entry, int $id)
+    {
+        $repeats = $this->decompress($this->requestData->getRepeats(['id' => $id]), 'repeat');
+        foreach ($repeats as $repeat) {
+            $periodicity = $this->migrationFactory->createRepeat($entry, $repeat);
+            $this->entityManager->persist($periodicity);
+        }
     }
 
     private function handleAreaAdmin()
@@ -275,7 +296,6 @@ class MigrationCommand extends Command
             $this->entityManager->persist($authorization);
             $this->entityManager->flush();
         }
-
     }
 
     private function handleRoomAdmin()

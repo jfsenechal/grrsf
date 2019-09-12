@@ -10,7 +10,6 @@
 
 namespace App\Migration;
 
-
 use App\Entity\Area;
 use App\Entity\EntryType;
 use App\Entity\Room;
@@ -21,7 +20,7 @@ use App\Repository\RoomRepository;
 use App\Repository\Security\AuthorizationRepository;
 use App\Repository\Security\UserRepository;
 use App\Security\SecurityRole;
-use App\Tests\Security\SecurityRoomHelper;
+use App\Setting\SettingsRoom;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -95,6 +94,29 @@ class MigrationUtil
             },
             $tab
         );
+
+        return $days;
+    }
+
+    /***
+     * Transforme un string : 0011001 en array
+     * @param string $datas
+     * @return array
+     * @throws \Exception
+     */
+    public function transformRepOpt(int $id,string $datas): array
+    {
+        if (strlen($datas) !== 7) {
+            throw new \Exception('Répétition pas 7 jours Repeat id :'. $id);
+        }
+
+        $days = [];
+        $tab = str_split(strtolower($datas), 1);
+        foreach ($tab as $key => $data) {
+            if ($data === 1) {
+                $days[] = $key;
+            }
+        }
 
         return $days;
     }
@@ -265,29 +287,29 @@ class MigrationUtil
         return $this->entryTypeRepository->findOneBy(['letter' => $letter]);
     }
 
-    public function tranformToAuthorization(int $who_can_see) :int
+    public function tranformToAuthorization(int $who_can_see): int
     {
         switch ($who_can_see) {
             case 0:
-                $auth = SecurityRoomHelper::EVERY_BODY;
+                $auth = SettingsRoom::CAN_ADD_EVERY_BODY;
                 break;
             case 1:
-                $auth = SecurityRoomHelper::EVERY_CONNECTED;
+                $auth = SettingsRoom::CAN_ADD_EVERY_CONNECTED;
                 break;
             case 2:
-                $auth = SecurityRoomHelper::EVERY_USER_ACTIVE;
+                $auth = SettingsRoom::CAN_ADD_EVERY_USER_ACTIVE;
                 break;
             case 3:
-                $auth = SecurityRoomHelper::EVERY_ROOM_MANAGER;
+                $auth = SettingsRoom::CAN_ADD_EVERY_ROOM_MANAGER;
                 break;
             case 4:
-                $auth = SecurityRoomHelper::EVERY_AREA_ADMINISTRATOR;
+                $auth = SettingsRoom::CAN_ADD_EVERY_AREA_ADMINISTRATOR;
                 break;
             case 5:
-                $auth = SecurityRoomHelper::EVERY_GRR_ADMINISTRATOR_SITE;
+                $auth = SettingsRoom::CAN_ADD_EVERY_GRR_ADMINISTRATOR_SITE;
                 break;
             case 6:
-                $auth = SecurityRoomHelper::EVERY_GRR_ADMINISTRATOR;
+                $auth = SettingsRoom::CAN_ADD_EVERY_GRR_ADMINISTRATOR;
                 break;
             default:
                 $auth = 0;

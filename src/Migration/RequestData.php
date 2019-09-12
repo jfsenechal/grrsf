@@ -84,6 +84,11 @@ class RequestData
         return $this->request('user_room.php');
     }
 
+    public function getRepeats(array $params)
+    {
+        return $this->request('repeat.php',$params);
+    }
+
     /**
      * @param string $file
      * @return false|string|\Symfony\Contracts\HttpClient\ResponseInterface
@@ -108,6 +113,5 @@ class RequestData
         }
 
     }
-
 
 }

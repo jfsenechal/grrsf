@@ -14,9 +14,11 @@ namespace App\Migration;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\EntryType;
+use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;
+use App\Periodicity\PeriodicityConstant;
 
 class MigrationFactory
 {
@@ -107,9 +109,17 @@ class MigrationFactory
         return $entry;
     }
 
-    public function createRepeat()
+    public function createRepeat(Entry $entry, array $data): Periodicity
     {
+        $periodicity = new Periodicity($entry);
+        $periodicity->setWeekRepeat($data['rep_num_weeks']);
+        $periodicity->setType($data['rep_type']);
+        $periodicity->setEndTime($this->migrationUtil->converToDateTime($data['end_date']));
+        if ($data['rep_type'] === PeriodicityConstant::EVERY_WEEK) {
+            $periodicity->setWeekDays($this->migrationUtil->transformRepOpt($data['id'], $data['rep_opt']));
+        }
 
+        return $periodicity;
     }
 
     public function createTypeEntry(array $data): EntryType
