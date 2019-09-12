@@ -17,7 +17,7 @@
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ area.id) }}">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'form.btn.cancel'|trans({}, 'actions') }}</button>
-                    <button type="button" class="btn btn-primary">{{ 'form.btn.delete'|trans({}, 'actions') }}</button>
+                    <button type="submit" class="btn btn-danger">{{ 'form.btn.delete'|trans({}, 'actions') }}</button>
                 </form>
             </div>
         </div>

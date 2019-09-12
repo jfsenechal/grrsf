@@ -21,7 +21,7 @@ area:
   new:
     title: Nouveau domaine
   delete:
-    confirm: Êtes vous sur de supprimer le domaine %name%
+    confirm: Êtes vous sur de supprimer le domaine name
   index:
     title: Les domaines
   rooms:
@@ -37,7 +37,7 @@ room:
     toroom: Retour à la ressource
     touser: Retour à l'utilisateur
   delete:
-    confirm: Êtes vous sur de supprimer la ressource %name%
+    confirm: Êtes vous sur de supprimer la ressource name
   fonctions:
     title: Configuration des fonctionnalités
   informations:
@@ -57,14 +57,14 @@ user:
   index:
     title: Liste des length utilisateurs
   delete:
-    confirm: Êtes vous sur de supprimer l'utilisateur %name%
+    confirm: Êtes vous sur de supprimer l'utilisateur name
   new:
     title: Nouvelle utilisateur
   password:
     title: Changer le mot de passe
 typeArea:
   delete:
-    confirm: Êtes vous sur de supprimer le type de réservation %name%
+    confirm: Êtes vous sur de supprimer le type de réservation name
   new:
     title: Ajouter un type de réservation
 entry:

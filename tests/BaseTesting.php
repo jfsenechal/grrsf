@@ -47,6 +47,7 @@ class BaseTesting extends WebTestCase
      * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
     protected $administrator;
+
     /**
      * {@inheritdoc}
      */
@@ -75,6 +76,17 @@ class BaseTesting extends WebTestCase
         );
 
         parent::setUp();
+    }
+
+    protected function createGrrClient(string $email, string $password = 'homer')
+    {
+        return static::createClient(
+            [],
+            [
+                'PHP_AUTH_USER' => $email,
+                'PHP_AUTH_PW' => $password,
+            ]
+        );
     }
 
     protected function getArea(string $name): Area
