@@ -92,7 +92,7 @@ class AreaVoter extends Voter
          * not work with test
          */
         if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {
-         //   return true;
+            //   return true;
         }
 
         switch ($attribute) {
@@ -111,12 +111,12 @@ class AreaVoter extends Voter
         return false;
     }
 
-    private function canIndex()
+    private function canIndex(): bool
     {
         return true;
     }
 
-    private function canNew()
+    private function canNew(): bool
     {
         return false;
     }
@@ -126,7 +126,7 @@ class AreaVoter extends Voter
      *
      * @return bool
      */
-    private function canView()
+    private function canView(): bool
     {
         if ($this->canEdit()) {
             return true;
@@ -135,13 +135,13 @@ class AreaVoter extends Voter
         return $this->securityHelper->isAreaManager($this->user, $this->area);
     }
 
-    private function canEdit()
+    private function canEdit(): bool
     {
         return $this->securityHelper->isAreaAdministrator($this->user, $this->area);
     }
 
-    private function canDelete()
+    private function canDelete(): bool
     {
-        return (bool)$this->canEdit();
+        return $this->canEdit();
     }
 }

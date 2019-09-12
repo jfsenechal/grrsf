@@ -13,14 +13,14 @@ namespace App\Tests\Security\Voter;
 use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;
 use App\Security\SecurityHelper;
-use App\Security\Voter\AreaVoter;
+use App\Security\Voter\RoomVoter;
 use App\Tests\Repository\BaseRepository;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class AreaVoterTest extends BaseRepository
+class RoomVoterTest extends BaseRepository
 {
     /**
      * @dataProvider provideCases
@@ -31,11 +31,11 @@ class AreaVoterTest extends BaseRepository
         $voter = $this->initVoter();
 
         foreach ($datas as $data) {
-            $areaName = $data[0];
+            $roomName = $data[0];
             $result = $data[1];
             $email = $data[2];
 
-            $area = $this->getArea($areaName);
+            $area = $this->getRoom($roomName);
             $user = null;
             if ($email) {
                 $user = $this->getUser($email);
@@ -49,25 +49,35 @@ class AreaVoterTest extends BaseRepository
     public function provideCases()
     {
         yield [
-            AreaVoter::INDEX,
+            RoomVoter::INDEX,
             [
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_DENIED,
                     null,
                 ],
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_GRANTED,
                     'bob@domain.be',
                 ],
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_GRANTED,
                     'alice@domain.be',
                 ],
                 [
-                    'Esquare',
+                    'Box',
+                    Voter::ACCESS_GRANTED,
+                    'raoul@domain.be',
+                ],
+                [
+                    'Box',
+                    Voter::ACCESS_GRANTED,
+                    'fred@domain.be',
+                ],
+                [
+                    'Box',
                     Voter::ACCESS_GRANTED,
                     'grr@domain.be',
                 ],
@@ -75,25 +85,35 @@ class AreaVoterTest extends BaseRepository
         ];
 
         yield [
-            AreaVoter::NEW,
+            RoomVoter::NEW,
             [
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_DENIED,
                     null,
                 ],
                 [
-                    'Esquare',
-                    Voter::ACCESS_DENIED,
+                    'Box',
+                    Voter::ACCESS_GRANTED,
                     'bob@domain.be',
                 ],
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_DENIED,
                     'alice@domain.be',
                 ],
                 [
-                    'Esquare',
+                    'Box',
+                    Voter::ACCESS_DENIED,
+                    'raoul@domain.be',
+                ],
+                [
+                    'Box',
+                    Voter::ACCESS_DENIED,
+                    'fred@domain.be',
+                ],
+                [
+                    'Box',
                     Voter::ACCESS_GRANTED,
                     'grr@domain.be',
                 ],
@@ -101,25 +121,35 @@ class AreaVoterTest extends BaseRepository
         ];
 
         yield [
-            AreaVoter::EDIT,
+            RoomVoter::EDIT,
             [
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_DENIED,
                     null,
                 ],
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_GRANTED,
                     'bob@domain.be',
                 ],
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_DENIED,
                     'alice@domain.be',
                 ],
                 [
-                    'Esquare',
+                    'Box',
+                    Voter::ACCESS_GRANTED,
+                    'raoul@domain.be',
+                ],
+                [
+                    'Box',
+                    Voter::ACCESS_DENIED,
+                    'fred@domain.be',
+                ],
+                [
+                    'Box',
                     Voter::ACCESS_GRANTED,
                     'grr@domain.be',
                 ],
@@ -127,25 +157,71 @@ class AreaVoterTest extends BaseRepository
         ];
 
         yield [
-            AreaVoter::DELETE,
+            RoomVoter::DELETE,
             [
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_DENIED,
                     null,
                 ],
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_GRANTED,
                     'bob@domain.be',
                 ],
                 [
-                    'Esquare',
+                    'Box',
                     Voter::ACCESS_DENIED,
                     'alice@domain.be',
                 ],
                 [
-                    'Esquare',
+                    'Box',
+                    Voter::ACCESS_GRANTED,
+                    'raoul@domain.be',
+                ],
+                [
+                    'Box',
+                    Voter::ACCESS_DENIED,
+                    'fred@domain.be',
+                ],
+                [
+                    'Box',
+                    Voter::ACCESS_GRANTED,
+                    'grr@domain.be',
+                ],
+            ],
+        ];
+
+        yield [
+            RoomVoter::ADD_ENTRY,
+            [
+                [
+                    'Box',
+                    Voter::ACCESS_DENIED,
+                    null,
+                ],
+                [
+                    'Box',
+                    Voter::ACCESS_GRANTED,
+                    'bob@domain.be',
+                ],
+                [
+                    'Box',
+                    Voter::ACCESS_GRANTED,
+                    'alice@domain.be',
+                ],
+                [
+                    'Box',
+                    Voter::ACCESS_GRANTED,
+                    'raoul@domain.be',
+                ],
+                [
+                    'Box',
+                    Voter::ACCESS_DENIED,
+                    'fred@domain.be',
+                ],
+                [
+                    'Box',
                     Voter::ACCESS_GRANTED,
                     'grr@domain.be',
                 ],
@@ -162,14 +238,7 @@ class AreaVoterTest extends BaseRepository
     {
         $mock = $this->createMock(AccessDecisionManager::class);
 
-        /*   $accessDecisionManager
-               ->expects($this->once())
-               ->method('decide')
-               ->with($this->equalTo($token), $this->equalTo(['foo' => 'bar']), $this->equalTo($request))
-               ->willReturn(false);
-   */
-
-        return new AreaVoter($mock, $this->initSecurityHelper());
+        return new RoomVoter($mock, $this->initSecurityHelper());
     }
 
     private function initToken(?User $user)

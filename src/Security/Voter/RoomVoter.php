@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 class RoomVoter extends Voter
 {
+    const INDEX = 'grr.room.index';
     const NEW = 'grr.room.new';
     const ADD_ENTRY = 'grr.addEntry';
     const SHOW = 'grr.room.show';
@@ -58,7 +59,11 @@ class RoomVoter extends Voter
             }
         }
 
-        return in_array($attribute, [self::NEW, self::ADD_ENTRY, self::SHOW, self::EDIT, self::DELETE], true);
+        return in_array(
+            $attribute,
+            [self::INDEX, self::NEW, self::ADD_ENTRY, self::SHOW, self::EDIT, self::DELETE],
+            true
+        );
     }
 
     /**
@@ -73,7 +78,7 @@ class RoomVoter extends Voter
         }
 
         $this->user = $user;
-        $this->area = $room;
+        $this->room = $room;
         $this->token = $token;
 
         if ($user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
@@ -88,6 +93,8 @@ class RoomVoter extends Voter
         }
 
         switch ($attribute) {
+            case self::INDEX:
+                return $this->canIndex();
             case self::NEW:
                 return $this->canNew();
             case self::ADD_ENTRY:
@@ -103,7 +110,16 @@ class RoomVoter extends Voter
         return false;
     }
 
-    private function canNew()
+    /**
+     * No rule
+     * @return bool
+     */
+    private function canIndex(): bool
+    {
+        return true;
+    }
+
+    private function canNew(): bool
     {
         $area = $this->room->getArea();
 
@@ -120,7 +136,7 @@ class RoomVoter extends Voter
      *
      * @return bool
      */
-    private function canView()
+    private function canView(): bool
     {
         if ($this->canEdit()) {
             return true;
@@ -129,13 +145,13 @@ class RoomVoter extends Voter
         return $this->securityHelper->isRoomManager($this->user, $this->room);
     }
 
-    private function canEdit()
+    private function canEdit(): bool
     {
         return $this->securityHelper->isRoomAdministrator($this->user, $this->room);
     }
 
-    private function canDelete()
+    private function canDelete(): bool
     {
-        return (bool)$this->canEdit();
+        return $this->canEdit();
     }
 }

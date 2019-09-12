@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 class EntryVoter extends Voter
 {
+    const INDEX = 'grr.entry.index';
     const NEW = 'grr.entry.new';
     const SHOW = 'grr.entry.show';
     const EDIT = 'grr.entry.edit';
@@ -39,6 +40,14 @@ class EntryVoter extends Voter
      * @var TokenInterface
      */
     private $token;
+    /**
+     * @var \App\Entity\Room|null
+     */
+    private $room;
+    /**
+     * @var \App\Entity\Area
+     */
+    private $area;
 
     public function __construct(AccessDecisionManagerInterface $decisionManager, SecurityHelper $securityHelper)
     {
@@ -57,7 +66,7 @@ class EntryVoter extends Voter
             }
         }
 
-        return in_array($attribute, [self::NEW, self::SHOW, self::EDIT, self::DELETE], true);
+        return in_array($attribute, [self::INDEX, self::NEW, self::SHOW, self::EDIT, self::DELETE], true);
     }
 
     /**
@@ -69,7 +78,8 @@ class EntryVoter extends Voter
         $this->user = $user;
         $this->entry = $entry;
         $this->token = $token;
-
+        $this->room = $this->entry->getRoom();
+        $this->area = $this->room->getArea();
 
         if (!$this->isAnonyme() && $user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
             return true;
@@ -83,6 +93,8 @@ class EntryVoter extends Voter
         }
 
         switch ($attribute) {
+            case self::INDEX:
+                return $this->canIndex();
             case self::SHOW:
                 return $this->canView();
             case self::EDIT:
@@ -94,39 +106,47 @@ class EntryVoter extends Voter
         return false;
     }
 
+    public function canIndex(): bool
+    {
+        return true;
+    }
+
     /**
      * @return bool
      */
-    private function canView()
+    private function canView(): bool
     {
-        $area = $this->entry->getRoom()->getArea();
-        $room = $this->entry->getRoom();
-
         if ($this->isAnonyme()) {
-            if ($this->securityHelper->isAreaRestricted($area)) {
+            if ($this->securityHelper->isAreaRestricted($this->area)) {
                 return false;
             }
 
-            return $this->securityHelper->canSeeRoom($room, null);
+            return $this->securityHelper->canSeeRoom($this->room, null);
         }
 
-        if ($this->securityHelper->isAreaRestricted($area)) {
-            return $this->securityHelper->canSeeAreaRestricted($area, $this->user);
+        if ($this->securityHelper->isAreaRestricted($this->area)) {
+            return $this->securityHelper->canSeeAreaRestricted($this->area, $this->user);
         }
 
-        return $this->securityHelper->canSeeRoom($room, $this->user);
+        return $this->securityHelper->canSeeRoom($this->room, $this->user);
     }
 
-    private function canEdit()
+    private function canEdit(): bool
     {
-        $room = $this->entry->getRoom();
+        if ($this->isAnonyme()) {
+            return false;
+        }
 
-        return $this->securityHelper->canAddEntry($room, $this->user);
+        return $this->securityHelper->canAddEntry($this->room, $this->user);
     }
 
-    private function canDelete()
+    private function canDelete(): bool
     {
-        return (bool)$this->canEdit();
+        if ($this->isAnonyme()) {
+            return false;
+        }
+
+        return $this->canEdit();
     }
 
     private function isAnonyme(): bool

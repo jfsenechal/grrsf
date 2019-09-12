@@ -69,6 +69,7 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/", name="grr_front_entry_index", methods={"GET", "POST"})
+     * @IsGranted("grr.entry.index")
      */
     public function index(Request $request): Response
     {
