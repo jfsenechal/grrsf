@@ -24,6 +24,7 @@ class AreaVoter extends Voter
     // applications, it's a recommended practice to avoid relying on "magic strings"
     const INDEX = 'grr.area.index';
     const NEW = 'grr.area.new';
+    const NEW_ROOM = 'grr.area.new.room';
     const SHOW = 'grr.area.show';
     const EDIT = 'grr.area.edit';
     const DELETE = 'grr.area.delete';
@@ -66,7 +67,11 @@ class AreaVoter extends Voter
             }
         }
 
-        return in_array($attribute, [self::INDEX, self::NEW, self::SHOW, self::EDIT, self::DELETE], true);
+        return in_array(
+            $attribute,
+            [self::INDEX, self::NEW, self::NEW_ROOM, self::SHOW, self::EDIT, self::DELETE],
+            true
+        );
     }
 
     /**
@@ -100,6 +105,8 @@ class AreaVoter extends Voter
                 return $this->canIndex();
             case self::NEW:
                 return $this->canNew();
+            case self::NEW_ROOM:
+                return $this->canNewRoom();
             case self::SHOW:
                 return $this->canView();
             case self::EDIT:
@@ -119,6 +126,11 @@ class AreaVoter extends Voter
     private function canNew(): bool
     {
         return false;
+    }
+
+    private function canNewRoom(): bool
+    {
+        return $this->securityHelper->isAreaAdministrator($this->user, $this->area);
     }
 
     /**

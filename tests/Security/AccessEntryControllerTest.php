@@ -6,37 +6,41 @@ use App\Tests\BaseTesting;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
-class AccessRoomControllerTest extends BaseTesting
+class AccessEntryControllerTest extends BaseTesting
 {
     /**
      * @dataProvider provideCases
-     * @param string $url
+     * @param string $action
+     * @param string $entryName
      * @param array $datas
+     * @throws \Exception
      */
-    public function testArea(string $action, string $roomName , array $datas)
+    public function testArea(string $action, string $entryName, array $datas)
     {
         $this->loadFixtures();
-        $room = $token = null;
-        if ($roomName) {
-            $room = $this->getRoom($roomName);
+        $token = null;
+            $entry = $this->getEntry($entryName);
             $tokenManager = new CsrfTokenManager();
-            $token = $tokenManager->getToken('delete'.$room->getId())->getValue();
-        }
+            $token = $tokenManager->getToken('delete'.$entry->getId())->getValue();
 
         $method = 'GET';
         switch ($action) {
-            case 'new' :
-                $area = $this->getArea('Esquare');
-                $url = '/admin/room/new/'.$area->getId();
+            case 'new':
+                $today = new \DateTime();
+                $esquare = $this->getArea('Esquare');
+                $room = $this->getRoom('Box');
+                $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
+                        'Y'
+                    ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/9/minute/30';
                 break;
             case 'show' :
-                $url = '/admin/room/'.$room->getId();
+                $url = '/front/entry/'.$entry->getId();
                 break;
             case 'edit' :
-                $url = '/admin/room/'.$room->getId().'/edit';
+                $url = '/front/entry/'.$entry->getId().'/edit';
                 break;
             case 'delete' :
-                $url = '/admin/room/'.$room->getId();
+                $url = '/front/entry/'.$entry->getId();
                 $method = 'DELETE';
                 break;
             default:
@@ -61,7 +65,7 @@ class AccessRoomControllerTest extends BaseTesting
     {
         yield [
             'new',
-            'Box',
+            'Réunion cst',
             [
                 [
                     Response::HTTP_FOUND,
@@ -72,11 +76,11 @@ class AccessRoomControllerTest extends BaseTesting
                     'bob@domain.be',
                 ],
                 [
-                    Response::HTTP_FORBIDDEN,
+                    Response::HTTP_OK,
                     'alice@domain.be',
                 ],
                 [
-                    Response::HTTP_FORBIDDEN,
+                    Response::HTTP_OK,
                     'raoul@domain.be',
                 ],
                 [
@@ -92,10 +96,10 @@ class AccessRoomControllerTest extends BaseTesting
 
         yield [
             'show',
-            'Box',
+            'Réunion cst',
             [
                 [
-                    Response::HTTP_FOUND,
+                    Response::HTTP_OK,
                     null,
                 ],
                 [
@@ -111,7 +115,7 @@ class AccessRoomControllerTest extends BaseTesting
                     'raoul@domain.be',
                 ],
                 [
-                    Response::HTTP_FORBIDDEN,
+                    Response::HTTP_OK,
                     'fred@domain.be',
                 ],
                 [
@@ -123,7 +127,7 @@ class AccessRoomControllerTest extends BaseTesting
 
         yield [
             'edit',
-            'Box',
+            'Réunion cst',
             [
                 [
                     Response::HTTP_FOUND,
@@ -134,7 +138,7 @@ class AccessRoomControllerTest extends BaseTesting
                     'bob@domain.be',
                 ],
                 [
-                    Response::HTTP_FORBIDDEN,
+                    Response::HTTP_OK,
                     'alice@domain.be',
                 ],
                 [
@@ -154,7 +158,7 @@ class AccessRoomControllerTest extends BaseTesting
 
         yield [
             'delete',
-            'Box',
+            'Réunion cst',
             [
                 [
                     Response::HTTP_FOUND,
@@ -165,7 +169,7 @@ class AccessRoomControllerTest extends BaseTesting
                     'bob@domain.be',
                 ],
                 [
-                    Response::HTTP_FORBIDDEN,
+                    Response::HTTP_FOUND,
                     'alice@domain.be',
                 ],
                 [
@@ -193,6 +197,8 @@ class AccessRoomControllerTest extends BaseTesting
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'user.yaml',
                 $this->pathFixtures.'authorization.yaml',
+                $this->pathFixtures.'entry_type.yaml',
+                $this->pathFixtures.'entry.yaml',
             ];
 
         $this->loader->load($files);

@@ -28,6 +28,9 @@ class AccessAreaControllerTest extends BaseTesting
             case 'index':
                 $url = '/admin/area/';
                 break;
+            case 'new':
+                $url = '/admin/area/new';
+                break;
             case 'show' :
                 $url = '/admin/area/'.$area->getId();
                 break;
@@ -88,6 +91,69 @@ class AccessAreaControllerTest extends BaseTesting
                 ],
             ],
         ];
+
+        yield [
+            'new',
+            'Esquare',
+            [
+                [
+                    Response::HTTP_FOUND,
+                    null,
+                ],
+                [
+                    Response::HTTP_FORBIDDEN,
+                    'bob@domain.be',
+                ],
+                [
+                    Response::HTTP_FORBIDDEN,
+                    'alice@domain.be',
+                ],
+                [
+                    Response::HTTP_FORBIDDEN,
+                    'raoul@domain.be',
+                ],
+                [
+                    Response::HTTP_FORBIDDEN,
+                    'fred@domain.be',
+                ],
+                [
+                    Response::HTTP_OK,
+                    'grr@domain.be',
+                ],
+            ],
+        ];
+
+        yield [
+            'show',
+            'Esquare',
+            [
+                [
+                    Response::HTTP_FOUND,
+                    null,
+                ],
+                [
+                    Response::HTTP_OK,
+                    'bob@domain.be',
+                ],
+                [
+                    Response::HTTP_OK,
+                    'alice@domain.be',
+                ],
+                [
+                    Response::HTTP_FORBIDDEN,
+                    'raoul@domain.be',
+                ],
+                [
+                    Response::HTTP_FORBIDDEN,
+                    'fred@domain.be',
+                ],
+                [
+                    Response::HTTP_OK,
+                    'grr@domain.be',
+                ],
+            ],
+        ];
+
         yield [
             'edit',
             'Esquare',
@@ -149,7 +215,6 @@ class AccessAreaControllerTest extends BaseTesting
                 ],
             ],
         ];
-
     }
 
     protected function loadFixtures()
@@ -159,7 +224,7 @@ class AccessAreaControllerTest extends BaseTesting
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'user.yaml',
-                $this->pathFixtures.'authorization.yaml'
+                $this->pathFixtures.'authorization.yaml',
             ];
 
         $this->loader->load($files);

@@ -16,7 +16,6 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class RoomVoter extends Voter
 {
     const INDEX = 'grr.room.index';
-    const NEW = 'grr.room.new';
     const ADD_ENTRY = 'grr.addEntry';
     const SHOW = 'grr.room.show';
     const EDIT = 'grr.room.edit';
@@ -61,7 +60,7 @@ class RoomVoter extends Voter
 
         return in_array(
             $attribute,
-            [self::INDEX, self::NEW, self::ADD_ENTRY, self::SHOW, self::EDIT, self::DELETE],
+            [self::INDEX, self::ADD_ENTRY, self::SHOW, self::EDIT, self::DELETE],
             true
         );
     }
@@ -95,8 +94,6 @@ class RoomVoter extends Voter
         switch ($attribute) {
             case self::INDEX:
                 return $this->canIndex();
-            case self::NEW:
-                return $this->canNew();
             case self::ADD_ENTRY:
                 return $this->canAddEntry();
             case self::SHOW:
@@ -117,13 +114,6 @@ class RoomVoter extends Voter
     private function canIndex(): bool
     {
         return true;
-    }
-
-    private function canNew(): bool
-    {
-        $area = $this->room->getArea();
-
-        return $this->securityHelper->isAreaAdministrator($this->user, $area);
     }
 
     private function canAddEntry()

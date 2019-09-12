@@ -46,7 +46,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/new/{id}", name="grr_admin_room_new", methods={"GET", "POST"})
-     * @IsGranted("grr.room.new")
+     * @IsGranted("grr.area.new.room", subject="area")
      */
     public function new(Request $request, Area $area): Response
     {
