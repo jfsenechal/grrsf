@@ -14,13 +14,13 @@ use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;
 use App\Security\SecurityHelper;
 use App\Security\Voter\AreaVoter;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class AreaVoterTest extends BaseRepository
+class AreaVoterTest extends BaseTesting
 {
     /**
      * @dataProvider provideCases

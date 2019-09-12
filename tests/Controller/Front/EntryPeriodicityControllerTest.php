@@ -4,10 +4,10 @@ namespace App\Tests\Controller\Front;
 
 use App\Model\DurationModel;
 use App\Periodicity\PeriodicityConstant;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 use Carbon\Carbon;
 
-class EntryPeriodicityControllerTest extends BaseRepository
+class EntryPeriodicityControllerTest extends BaseTesting
 {
     public function testBadEndTime()
     {

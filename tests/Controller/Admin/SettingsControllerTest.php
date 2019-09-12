@@ -2,9 +2,9 @@
 
 namespace App\Tests\Controller\Admin;
 
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class SettingsControllerTest extends BaseRepository
+class SettingsControllerTest extends BaseTesting
 {
     public function testAnonyme()
     {

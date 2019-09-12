@@ -17,13 +17,13 @@ use App\Factory\CarbonFactory;
 use App\I18n\LocalHelper;
 use App\Provider\TimeSlotsProvider;
 use App\Service\EntryLocationService;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class EntryLocationServiceTest extends BaseRepository
+class EntryLocationServiceTest extends BaseTesting
 {
     /**
      * @dataProvider getData

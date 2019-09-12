@@ -10,9 +10,9 @@
 
 namespace App\Tests\Controller\Admin;
 
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class EntryTypeControllerTest extends BaseRepository
+class EntryTypeControllerTest extends BaseTesting
 {
     public function testNewTypeLetterAlreadyUse()
     {

@@ -5,8 +5,9 @@ namespace App\Tests\Repository;
 use App\Entity\Area;
 use App\Entity\Room;
 use Doctrine\ORM\QueryBuilder;
+use App\Tests\BaseTesting;
 
-class RoomRepositoryTest extends BaseRepository
+class RoomRepositoryTest extends BaseTesting
 {
     public function testSearchByName()
     {

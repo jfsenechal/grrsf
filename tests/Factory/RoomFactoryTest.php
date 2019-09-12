@@ -5,9 +5,10 @@ namespace App\Tests\Factory;
 use App\Entity\Room;
 use App\Factory\AreaFactory;
 use App\Factory\RoomFactory;
+use App\Tests\BaseTesting;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RoomFactoryTest extends WebTestCase
+class RoomFactoryTest extends BaseTesting
 {
     /**
      * @var AreaFactory
@@ -20,6 +21,7 @@ class RoomFactoryTest extends WebTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->areaFactory = new AreaFactory();
         $this->roomFactory = new RoomFactory();
     }

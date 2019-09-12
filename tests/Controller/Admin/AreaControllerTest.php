@@ -10,9 +10,9 @@
 
 namespace App\Tests\Controller\Admin;
 
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class AreaControllerTest extends BaseRepository
+class AreaControllerTest extends BaseTesting
 {
     public function testNewArea()
     {

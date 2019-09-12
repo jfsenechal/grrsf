@@ -11,9 +11,9 @@
 namespace App\Tests\Handler;
 
 use App\Handler\HandlerEntry;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class HandlerEntryTest extends BaseRepository
+class HandlerEntryTest extends BaseTesting
 {
     public function testBidon()
     {

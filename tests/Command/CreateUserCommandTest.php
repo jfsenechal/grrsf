@@ -10,11 +10,11 @@
 
 namespace App\Tests\Command;
 
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class CreateUserCommandTest extends BaseRepository
+class CreateUserCommandTest extends BaseTesting
 {
     public function testExecute()
     {

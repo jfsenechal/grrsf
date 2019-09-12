@@ -3,8 +3,9 @@
 namespace App\Tests\Repository;
 
 use App\Entity\EntryType;
+use App\Tests\BaseTesting;
 
-class EntryTypeRepositoryTest extends BaseRepository
+class EntryTypeRepositoryTest extends BaseTesting
 {
     public function testFindByName()
     {

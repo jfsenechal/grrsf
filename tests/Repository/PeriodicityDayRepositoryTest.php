@@ -4,9 +4,10 @@ namespace App\Tests\Repository;
 
 use App\Entity\PeriodicityDay;
 use App\Model\Month;
+use App\Tests\BaseTesting;
 use Carbon\CarbonImmutable;
 
-class PeriodicityDayRepositoryTest extends BaseRepository
+class PeriodicityDayRepositoryTest extends BaseTesting
 {
     public function testFindForMonth()
     {

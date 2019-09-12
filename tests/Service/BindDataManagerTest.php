@@ -22,11 +22,11 @@ use App\Periodicity\GeneratorEntry;
 use App\Provider\TimeSlotsProvider;
 use App\Service\BindDataManager;
 use App\Service\EntryLocationService;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class BindDataManagerTest extends BaseRepository
+class BindDataManagerTest extends BaseTesting
 {
     public function testBindMonthWithRoom()
     {

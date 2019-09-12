@@ -10,11 +10,11 @@
 
 namespace App\Tests\Command;
 
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class InstallDataCommandTest extends BaseRepository
+class InstallDataCommandTest extends BaseTesting
 {
     public function testExecute()
     {

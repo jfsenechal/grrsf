@@ -10,9 +10,9 @@
 
 namespace App\Tests\Controller\Admin;
 
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class UserControllerTest extends BaseRepository
+class UserControllerTest extends BaseTesting
 {
     public function testNew()
     {

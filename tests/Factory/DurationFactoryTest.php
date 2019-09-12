@@ -8,9 +8,10 @@ use App\Factory\EntryFactory;
 use App\Factory\PeriodicityFactory;
 use App\Factory\RoomFactory;
 use App\Model\DurationModel;
+use App\Tests\BaseTesting;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DurationFactoryTest extends WebTestCase
+class DurationFactoryTest extends BaseTesting
 {
     /**
      * @var DurationFactory
@@ -31,6 +32,7 @@ class DurationFactoryTest extends WebTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->areaFactory = new AreaFactory();
         $this->roomFactory = new RoomFactory();
         $this->durationFactory = new DurationFactory();

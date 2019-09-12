@@ -3,9 +3,10 @@
 namespace App\Tests\Model;
 
 use App\Model\Week;
+use App\Tests\BaseTesting;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class WeekModelTest extends WebTestCase
+class WeekModelTest extends BaseTesting
 {
     public function testCreate()
     {

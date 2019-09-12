@@ -3,8 +3,9 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Area;
+use App\Tests\BaseTesting;
 
-class AreaRepositoryTest extends BaseRepository
+class AreaRepositoryTest extends BaseTesting
 {
     public function testSearchByName()
     {

@@ -2,9 +2,9 @@
 
 namespace App\Tests\Controller\Front;
 
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class DefaultControllerTest extends BaseRepository
+class DefaultControllerTest extends BaseTesting
 {
     public function testHomeFront()
     {

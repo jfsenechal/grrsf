@@ -10,9 +10,9 @@
 
 namespace App\Tests\Controller\Front;
 
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class AccountControllerTest extends BaseRepository
+class AccountControllerTest extends BaseTesting
 {
     public function testNew()
     {

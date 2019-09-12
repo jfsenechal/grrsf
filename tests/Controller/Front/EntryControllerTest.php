@@ -3,10 +3,10 @@
 namespace App\Tests\Controller\Front;
 
 use App\Model\DurationModel;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 use Carbon\Carbon;
 
-class EntryControllerTest extends BaseRepository
+class EntryControllerTest extends BaseTesting
 {
     public function testNewNotLogin()
     {

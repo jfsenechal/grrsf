@@ -12,9 +12,9 @@ namespace App\Tests\Periodicity;
 
 use App\Entity\PeriodicityDay;
 use App\Periodicity\GeneratorEntry;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class GeneratorEntryServiceTest extends BaseRepository
+class GeneratorEntryServiceTest extends BaseTesting
 {
     public function testGenerate()
     {

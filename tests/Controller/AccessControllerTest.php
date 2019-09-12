@@ -4,7 +4,7 @@ namespace App\Tests\Controller;
 
 use App\Tests\BaseTesting;
 
-class DefaultControllerTest extends BaseTesting
+class AccessControllerTest extends BaseTesting
 {
     public function testHomeGrr()
     {

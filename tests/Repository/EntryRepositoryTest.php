@@ -4,9 +4,10 @@ namespace App\Tests\Repository;
 
 use App\Entity\Entry;
 use App\Model\Month;
+use App\Tests\BaseTesting;
 use Carbon\Carbon;
 
-class EntryRepositoryTest extends BaseRepository
+class EntryRepositoryTest extends BaseTesting
 {
     public function testFindForMonth()
     {

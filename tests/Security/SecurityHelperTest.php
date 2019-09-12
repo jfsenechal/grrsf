@@ -14,9 +14,9 @@ use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;
 use App\Security\SecurityHelper;
 use App\Security\SecurityRole;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class SecurityHelperTest extends BaseRepository
+class SecurityHelperTest extends BaseTesting
 {
     /**
      * @dataProvider provideAdministrator

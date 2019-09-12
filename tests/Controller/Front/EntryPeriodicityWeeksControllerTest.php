@@ -4,11 +4,11 @@ namespace App\Tests\Controller\Front;
 
 use App\Model\DurationModel;
 use App\Periodicity\PeriodicityConstant;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 
-class EntryPeriodicityWeeksControllerTest extends BaseRepository
+class EntryPeriodicityWeeksControllerTest extends BaseTesting
 {
     public function testNoDaysSelected()
     {

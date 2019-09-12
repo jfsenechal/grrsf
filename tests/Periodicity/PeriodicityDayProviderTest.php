@@ -12,9 +12,9 @@ namespace App\Tests\Periodicity;
 
 use App\Periodicity\PeriodicityConstant;
 use App\Periodicity\PeriodicityDaysProvider;
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class PeriodicityDayProviderTest extends BaseRepository
+class PeriodicityDayProviderTest extends BaseTesting
 {
     /**
      * Test repeat every day.

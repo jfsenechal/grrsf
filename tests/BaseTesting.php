@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Repository;
+namespace App\Tests;
 
 use App\Entity\Area;
 use App\Entity\Entry;
@@ -21,26 +21,24 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class BaseRepository extends WebTestCase
+class BaseTesting extends WebTestCase
 {
     /**
      * @var \Doctrine\ORM\EntityManager
      */
     protected $entityManager;
-
-    /** @var LoaderInterface */
+    /**
+     * @var LoaderInterface
+     */
     protected $loader;
-
     /**
      * @var NativeLoader
      */
     protected $loaderSimple;
-
     /**
      * @var string
      */
     protected $pathFixtures;
-
     /**
      * @var \Symfony\Component\HttpKernel\KernelInterface
      */
@@ -49,7 +47,6 @@ class BaseRepository extends WebTestCase
      * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
     protected $administrator;
-
     /**
      * {@inheritdoc}
      */

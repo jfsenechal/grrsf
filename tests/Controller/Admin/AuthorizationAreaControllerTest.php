@@ -2,9 +2,9 @@
 
 namespace App\Tests\Controller\Admin;
 
-use App\Tests\Repository\BaseRepository;
+use App\Tests\BaseTesting;
 
-class AuthorizationAreaControllerTest extends BaseRepository
+class AuthorizationAreaControllerTest extends BaseTesting
 {
     public function testAreaAdministrator()
     {

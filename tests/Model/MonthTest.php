@@ -3,9 +3,10 @@
 namespace App\Tests\Model;
 
 use App\Model\Month;
+use App\Tests\BaseTesting;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class MonthTest extends WebTestCase
+class MonthTest extends BaseTesting
 {
     public function testCreateNew()
     {

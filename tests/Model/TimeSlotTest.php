@@ -3,10 +3,11 @@
 namespace App\Tests\Model;
 
 use App\Model\TimeSlot;
+use App\Tests\BaseTesting;
 use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TimeSlotTest extends WebTestCase
+class TimeSlotTest extends BaseTesting
 {
     public function testTimeSlot()
     {

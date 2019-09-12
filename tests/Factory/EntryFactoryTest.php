@@ -9,10 +9,11 @@ use App\Factory\AreaFactory;
 use App\Factory\EntryFactory;
 use App\Factory\PeriodicityFactory;
 use App\Factory\RoomFactory;
+use App\Tests\BaseTesting;
 use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class EntryFactoryTest extends WebTestCase
+class EntryFactoryTest extends BaseTesting
 {
     /**
      * @var EntryFactory
@@ -29,6 +30,7 @@ class EntryFactoryTest extends WebTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $periodicityFactory = new PeriodicityFactory();
         $this->entryFactory = new EntryFactory($periodicityFactory);
         $this->areaFactory = new AreaFactory();
