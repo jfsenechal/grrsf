@@ -24,7 +24,7 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Month     $monthModel
+     * @param Month $monthModel
      * @param Area|null $area
      * @param Room|null $room
      *
@@ -59,7 +59,7 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param CarbonInterface $day
-     * @param Room            $room
+     * @param Room $room
      *
      * @return Entry[]
      */
@@ -81,7 +81,7 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param Entry $entry
-     * @param Room  $room
+     * @param Room $room
      *
      * @return Entry[]
      */
@@ -162,9 +162,24 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Entry[]
+     */
+    public function withPeriodicity()
+    {
+        $qb = $this->createQueryBuilder('entry');
+
+        $qb->andWhere('entry.periodicity IS NOT NULL');
+
+        return $qb
+            ->orderBy('entry.start_time', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param \DateTimeInterface|null $dateTime
-     * @param Area|null               $area
-     * @param Room|null               $room
+     * @param Area|null $area
+     * @param Room|null $room
      *
      * @return Entry[] Returns an array of Entry objects
      */
@@ -197,19 +212,6 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Pour wordpress.
-     *
-     * @return Entry[]
-     */
-    public function getBookings()
-    {
-        return $this->createQueryBuilder('entry')
-            ->andWhere('entry.booking IS NOT NULL')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
      * @param Area $area
      *
      * @return Room[]|iterable
@@ -217,8 +219,6 @@ class EntryRepository extends ServiceEntityRepository
     private function getRooms(Area $area)
     {
         $roomRepository = $this->getEntityManager()->getRepository(Room::class);
-
-        //   $this->getEntityManager();
 
         return $roomRepository->findByArea($area);
     }

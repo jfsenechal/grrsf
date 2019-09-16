@@ -3,7 +3,7 @@
 namespace App\Controller\Front;
 
 /**
- * Pour le MenuSelect::class
+ * Pour  @see MenuSelect::class
  * Interface FrontControllerInterface.
  */
 interface FrontControllerInterface

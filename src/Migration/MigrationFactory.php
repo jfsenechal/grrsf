@@ -85,7 +85,7 @@ class MigrationFactory
         return $room;
     }
 
-    public function createEntry(array $data): Entry
+    public function createEntry(array $resolveTypeEntries, array $data): Entry
     {
         $entry = $entry = new Entry();
         $entry->setName($data['name']);
@@ -98,7 +98,7 @@ class MigrationFactory
         $entry->setCreatedBy($data['create_by']);
         $entry->setBeneficiaire($data['beneficiaire_ext']);
         $entry->setBeneficiaireExt($data['beneficiaire']);
-        $entry->setType($this->migrationUtil->convertToTypeEntry($data['type']));
+        $entry->setType($this->migrationUtil->convertToTypeEntry($resolveTypeEntries, $data['type']));
         $entry->setDescription($data['description']);
         $entry->setStatutEntry($data['statut_entry']);
         $entry->setOptionReservation($data['option_reservation']);

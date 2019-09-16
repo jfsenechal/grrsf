@@ -4,10 +4,12 @@ namespace App\Command;
 
 use App\Entity\Area;
 use App\Entity\Entry;
-use App\Entity\Periodicity;
+use App\Entity\PeriodicityDay;
+use App\Manager\PeriodicityDayManager;
 use App\Migration\MigrationFactory;
 use App\Migration\MigrationUtil;
 use App\Migration\RequestData;
+use App\Periodicity\PeriodicityDaysProvider;
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidDateException;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -56,19 +58,45 @@ class MigrationCommand extends Command
      * @var OutputInterface
      */
     private $output;
+    /**
+     * Fait la correspondance entre l'ancien id et le nouveau id des rooms
+     * @var array
+     */
+    private $resolveRooms = [];
+    /**
+     * Fait la correspondance entre l'ancien id et le nouveau id des types d'entrées
+     * @var array
+     */
+    private $resolveTypeEntries = [];
+    /**
+     * @var array $repeats
+     */
+    private $repeats;
+    /**
+     * @var PeriodicityDaysProvider
+     */
+    private $periodicityDaysProvider;
+    /**
+     * @var PeriodicityDayManager
+     */
+    private $periodicityDayManager;
 
     public function __construct(
         string $name = null,
         RequestData $requestData,
         EntityManagerInterface $entityManager,
         MigrationUtil $migrationUtil,
-        MigrationFactory $migrationFactory
+        MigrationFactory $migrationFactory,
+        PeriodicityDaysProvider $periodicityDaysProvider,
+        PeriodicityDayManager $periodicityDayManager
     ) {
         parent::__construct($name);
         $this->requestData = $requestData;
         $this->entityManager = $entityManager;
         $this->migrationUtil = $migrationUtil;
         $this->migrationFactory = $migrationFactory;
+        $this->periodicityDaysProvider = $periodicityDaysProvider;
+        $this->periodicityDayManager = $periodicityDayManager;
     }
 
     protected function configure()
@@ -148,6 +176,10 @@ class MigrationCommand extends Command
 
         $this->requestData->connect($url, $user, $password);
 
+        $this->requestData->getRepeats([]);
+        $fileHandler = file_get_contents(__DIR__.'/../../var/cache/repeat.json');
+        $this->repeats = json_decode($fileHandler, true);
+
         $this->io->section('Importation des Areas et rooms');
         $this->handleArea();
         $this->io->newLine();
@@ -155,17 +187,20 @@ class MigrationCommand extends Command
         $this->handleEntryType();
         $this->io->newLine();
         $this->io->section('Importation des utilisateurs');
-        //   $this->handleUser();
+        $this->handleUser();
         $this->io->writeln('');
         $this->io->section('Importation des area admin');
-        //    $this->handleAreaAdmin();
-        $this->io->writeln('');
+        $this->handleAreaAdmin();
+        $this->io->newLine();
         $this->io->section('Importation des rooms admin');
-        //     $this->handleRoomAdmin();
-        $this->io->writeln('');
+        $this->handleRoomAdmin();
+        $this->io->newLine();
         $this->io->section('Importation des entrées');
         $this->handleEntry($date);
-        $this->io->writeln('');
+        $this->io->newLine();
+        $this->io->section('Génération des répétitions');
+        $this->handleMakeRepeat($date);
+        $this->io->newLine();
         $this->io->success('Importation terminée :-) .');
 
         return null;
@@ -192,10 +227,10 @@ class MigrationCommand extends Command
             if ($data['area_id'] == $areaId) {
                 $room = $this->migrationFactory->createRoom($area, $data);
                 $this->entityManager->persist($room);
+                $this->entityManager->flush();
+                $this->resolveRooms[$data['id']] = $room;
             }
         }
-
-        $this->entityManager->flush();
     }
 
     protected function handleEntryType()
@@ -206,9 +241,9 @@ class MigrationCommand extends Command
         foreach ($progressBar->iterate($types) as $data) {
             $type = $this->migrationFactory->createTypeEntry($data);
             $this->entityManager->persist($type);
+            $this->entityManager->flush();
+            $this->resolveTypeEntries[$data['type_letter']] = $type;
         }
-
-        $this->entityManager->flush();
     }
 
     protected function handleUser()
@@ -224,7 +259,9 @@ class MigrationCommand extends Command
                 $user = $this->migrationFactory->createUser($data);
                 $user->setPassword($this->migrationUtil->transformPassword($user, $data['password']));
                 $user->setAreaDefault($this->migrationUtil->transformToArea($this->areas, $data['default_area']));
-                $user->setRoomDefault($this->migrationUtil->transformToRoom($this->rooms, $data['default_room']));
+                $user->setRoomDefault(
+                    $this->migrationUtil->transformToRoom($this->resolveRooms, $data['default_room'])
+                );
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
             }
@@ -238,12 +275,13 @@ class MigrationCommand extends Command
             $params = ['date' => $date->format('Y-m-d')];
         }
         $entries = $this->decompress($this->requestData->getEntries($params), 'entry');
+        $entries = $this->migrationUtil->groupByRepeat($entries);
 
         $progressBar = new ProgressBar($this->output);
 
         foreach ($progressBar->iterate($entries) as $data) {
-            $entry = $this->migrationFactory->createEntry($data);
-            $room = $this->migrationUtil->transformToRoom($this->rooms, $data['room_id']);
+            $entry = $this->migrationFactory->createEntry($this->resolveTypeEntries, $data);
+            $room = $this->migrationUtil->transformToRoom($this->resolveRooms, $data['room_id']);
             if ($room) {
                 $entry->setRoom($room);
                 $this->entityManager->persist($entry);
@@ -251,23 +289,24 @@ class MigrationCommand extends Command
                 if ($id > 0) {
                     $this->handlerRepeat($entry, $id);
                 }
+                $this->entityManager->flush();
+                //  $this->io->note(memory_get_usage());
+                $room = null;
+                $entry = null;
             } else {
                 $this->io->error('Room non trouvé pour '.$data['name']);
 
                 return;
             }
         }
-
-        //   $this->entityManager->flush();
     }
 
     private function handlerRepeat(Entry $entry, int $id)
     {
-        $repeats = $this->decompress($this->requestData->getRepeats(['id' => $id]), 'repeat');
-        foreach ($repeats as $repeat) {
-            $periodicity = $this->migrationFactory->createRepeat($entry, $repeat);
-            $this->entityManager->persist($periodicity);
-        }
+        $key = array_search($id, array_column($this->repeats, 'id'));
+        $repeat = $this->repeats[$key];
+        $periodicity = $this->migrationFactory->createRepeat($entry, $repeat);
+        $this->entityManager->persist($periodicity);
     }
 
     private function handleAreaAdmin()
@@ -313,7 +352,7 @@ class MigrationCommand extends Command
                 continue;
             }
             $authorization->setUser($user);
-            $room = $this->migrationUtil->transformToRoom($this->rooms, $data['id_room']);
+            $room = $this->migrationUtil->transformToRoom($this->resolveRooms, $data['id_room']);
 
             if (!$room) {
                 $this->io->note('Room non trouvé: '.$data['id_room']);
@@ -334,6 +373,7 @@ class MigrationCommand extends Command
         }
     }
 
+
     private function decompress(string $content, string $type): array
     {
         $data = json_decode($content, true);
@@ -351,6 +391,20 @@ class MigrationCommand extends Command
         }
 
         return $data;
+    }
+
+    private function handleMakeRepeat()
+    {
+        $entries = $this->migrationUtil->entryRepository->withPeriodicity();
+        foreach ($entries as $entry) {
+            $days = $this->periodicityDaysProvider->getDaysByEntry($entry);
+            foreach ($days as $day) {
+                $periodicityDay = new PeriodicityDay();
+                $periodicityDay->setDatePeriodicity($day->toImmutable());
+                $periodicityDay->setEntry($entry);
+                $this->periodicityDayManager->persist($periodicityDay);
+            }
+        }
     }
 
 

@@ -37,3 +37,56 @@ Le mot de passe de celui-ci vous sera demandé.
 Vous pouvez également indiquer le mot de passe en dernier paramètre de la ligne de commande
 
 Suivez la progression de la synchronisation et les éventuels messages d'erreur.
+
+
+## Détails du script de migration
+
+**1) On troncate les tables**
+
+On repart d'une db vierge
+
+    $purger = new ORMPurger($this->entityManager);  
+    $purger->purge();
+    
+**2) Enregistrements de la table repeat dans un fichier temporaire**  
+
+Pour des raisons de perfomances  
+
+     $fileHandler = file_get_contents(__DIR__.'/../../var/cache/repeat.json');
+     
+**3) Importation des Domaines(Area) et ressources(Room)**
+
+Les listes sont enregistrées dans les propriétés de la classe pour réutilisation ultérieur
+
+     $this->areas = ...
+     $this->rooms = ...
+     
+La résolution ancien room et nouvelle est room est sauvegardé
+
+    $this->resolveRooms[$data['id']] = $room;
+     
+**4) Importation des types d'entrées**
+
+J'enregistre une référence depuis la lettre vers les nouvelles instances
+
+    $this->resolveTypeEntries[$data['type_letter']] = $type;
+
+**5) Importation des utilisateurs**
+
+Pour les utilisateurs locaux, pour le moment le mp est le même
+
+**6) Importation des Users Area**
+
+**7) Importation des Users Room**
+
+**8) Importation des entries**
+
+Je les regroupe par repeat_Id 
+
+    $entries = $this->migrationUtil->groupByRepeat($entries);
+    
+La nouvelle structure est par "Entry" 
+* 1 entrée dans la table entry
+* 1 entrée dans la table periodicity 
+* x entrées dans la table "periodicity_days"     
+ 

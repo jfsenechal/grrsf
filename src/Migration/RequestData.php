@@ -86,7 +86,25 @@ class RequestData
 
     public function getRepeats(array $params)
     {
-        return $this->request('repeat.php',$params);
+        $fileHandler = fopen(__DIR__.'/../../var/cache/repeat.json', 'w');
+      //  $response = $this->request('repeat.php', $params);
+         $args = [
+            'buffer' => false,
+        ];
+         $response = $this->httpClient->request('GET', $this->base_url.'repeat.php', $args);
+
+        // Responses are lazy: this code is executed as soon as headers are received
+        if (200 !== $response->getStatusCode()) {
+            throw new \Exception('...');
+        }
+
+        foreach ($this->httpClient->stream($response) as $chunk) {
+            fwrite($fileHandler, $chunk->getContent());
+        }
+
+        // $this->httpClient = null;
+
+        // return $content;
     }
 
     /**
@@ -95,8 +113,17 @@ class RequestData
      */
     private function request(string $file, array $params = [])
     {
+        // don't want to buffer the response in memory
+        $args = [
+            'buffer' => false,
+        ];
+
+        if (count($params) > 0) {
+            $args['query'] = $params;
+        }
+
         try {
-            $response = $this->httpClient->request('GET', $this->base_url.$file, ['query' => $params]);
+            $response = $this->httpClient->request('GET', $this->base_url.$file, $args);
             try {
                 return $response->getContent();
             } catch (ClientExceptionInterface $e) {

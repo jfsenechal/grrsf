@@ -15,6 +15,7 @@ use App\Entity\EntryType;
 use App\Entity\Room;
 use App\Entity\Security\User;
 use App\Repository\AreaRepository;
+use App\Repository\EntryRepository;
 use App\Repository\EntryTypeRepository;
 use App\Repository\RoomRepository;
 use App\Repository\Security\AuthorizationRepository;
@@ -23,7 +24,10 @@ use App\Security\SecurityRole;
 use App\Setting\SettingsRoom;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class MigrationUtil
 {
@@ -51,6 +55,10 @@ class MigrationUtil
      * @var AuthorizationRepository
      */
     private $authorizationRepository;
+    /**
+     * @var EntryRepository
+     */
+    public $entryRepository;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -58,6 +66,7 @@ class MigrationUtil
         RoomRepository $roomRepository,
         UserRepository $userRepository,
         EntryTypeRepository $entryTypeRepository,
+        EntryRepository $entryRepository,
         AuthorizationRepository $authorizationRepository
     ) {
         $this->passwordEncoder = $passwordEncoder;
@@ -66,6 +75,7 @@ class MigrationUtil
         $this->userRepository = $userRepository;
         $this->entryTypeRepository = $entryTypeRepository;
         $this->authorizationRepository = $authorizationRepository;
+        $this->entryRepository = $entryRepository;
     }
 
     public function transformBoolean(string $value): bool
@@ -104,10 +114,10 @@ class MigrationUtil
      * @return array
      * @throws \Exception
      */
-    public function transformRepOpt(int $id,string $datas): array
+    public function transformRepOpt(int $id, string $datas): array
     {
         if (strlen($datas) !== 7) {
-            throw new \Exception('Répétition pas 7 jours Repeat id :'. $id);
+            throw new \Exception('Répétition pas 7 jours Repeat id :'.$id);
         }
 
         $days = [];
@@ -155,14 +165,8 @@ class MigrationUtil
             return null;
         }
 
-        foreach ($rooms as $data) {
-            if ($data['id'] == $roomId) {
-                $nameRoom = $data['room_name'];
-                $room = $this->roomRepository->findOneBy(['name' => $nameRoom]);
-                if ($room) {
-                    return $room;
-                }
-            }
+        if (isset($rooms[$roomId])) {
+            return $rooms[$roomId];
         }
 
         return null;
@@ -282,9 +286,13 @@ class MigrationUtil
         return $date->toDateTime();
     }
 
-    public function convertToTypeEntry(string $letter): ?EntryType
+    public function convertToTypeEntry(array $resolveTypes, string $letter): ?EntryType
     {
-        return $this->entryTypeRepository->findOneBy(['letter' => $letter]);
+        if (isset($resolveTypes[$letter])) {
+            return $resolveTypes[$letter];
+        }
+
+        return null;
     }
 
     public function tranformToAuthorization(int $who_can_see): int
@@ -317,6 +325,23 @@ class MigrationUtil
         }
 
         return $auth;
+    }
+
+    public function groupByRepeat(array $entries)
+    {
+        $new = [];
+        foreach ($entries as $entry) {
+            $reatId = (int)$entry['repeat_id'];
+            if ($reatId === 0) {
+                $new[] = $entry;
+                continue;
+            }
+            if (!isset($new[$reatId])) {
+                $new[] = $entry;
+            }
+        }
+
+        return $new;
     }
 
 
