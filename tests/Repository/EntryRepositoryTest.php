@@ -14,10 +14,11 @@ class EntryRepositoryTest extends BaseTesting
         $this->loadFixtures();
 
         $month = Month::init(2019, 8, 1);
+        $area = $this->getArea('Esquare');
 
         $entries = $this->entityManager
             ->getRepository(Entry::class)
-            ->findForMonth($month);
+            ->findForMonth($month->toDateTime(), $area);
 
         $count = count($entries);
 
@@ -27,7 +28,7 @@ class EntryRepositoryTest extends BaseTesting
     /**
      * @dataProvider dataForDay
      */
-    public function testFindByDayAndRoom(int $year, int $month, int $day, string $room, int $count, string $title)
+    public function testFindForDay(int $year, int $month, int $day, string $room, int $count, string $title)
     {
         $this->loadFixtures();
 
