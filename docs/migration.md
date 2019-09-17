@@ -84,9 +84,11 @@ Pour les utilisateurs locaux, pour le moment le mp est le même
 Je les regroupe par repeat_Id 
 
     $entries = $this->migrationUtil->groupByRepeat($entries);
-    
-La nouvelle structure est par "Entry" 
-* 1 entrée dans la table entry
-* 1 entrée dans la table periodicity 
-* x entrées dans la table "periodicity_days"     
+       
+ [Voir le nouveau schéma de la db](schemadb.md)
+ 
+ **9) Création des répétitions**
+ 
+ Je génère les dates de répétitions suivant les données dans la table périodicity
+ 
  

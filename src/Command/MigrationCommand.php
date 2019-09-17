@@ -172,6 +172,7 @@ class MigrationCommand extends Command
         }
 
         $purger = new ORMPurger($this->entityManager);
+        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
         $purger->purge();
 
         $this->requestData->connect($url, $user, $password);
@@ -199,7 +200,7 @@ class MigrationCommand extends Command
         $this->handleEntry($date);
         $this->io->newLine();
         $this->io->section('Génération des répétitions');
-        $this->handleMakeRepeat($date);
+        $this->handleGenerateRepeat();
         $this->io->newLine();
         $this->io->success('Importation terminée :-) .');
 
@@ -307,6 +308,7 @@ class MigrationCommand extends Command
         $repeat = $this->repeats[$key];
         $periodicity = $this->migrationFactory->createRepeat($entry, $repeat);
         $this->entityManager->persist($periodicity);
+        $entry->setPeriodicity($periodicity);
     }
 
     private function handleAreaAdmin()
@@ -373,6 +375,24 @@ class MigrationCommand extends Command
         }
     }
 
+    private function handleGenerateRepeat()
+    {
+        $entries = $this->migrationUtil->entryRepository->withPeriodicity();
+
+        $progressBar = new ProgressBar($this->output);
+
+        foreach ($progressBar->iterate($entries) as $entry) {
+            $days = $this->periodicityDaysProvider->getDaysByEntry($entry);
+            foreach ($days as $day) {
+                $periodicityDay = new PeriodicityDay();
+                $periodicityDay->setDatePeriodicity($day->toImmutable());
+                $periodicityDay->setEntry($entry);
+                $this->periodicityDayManager->persist($periodicityDay);
+            }
+        }
+        $this->entityManager->flush();
+    }
+
 
     private function decompress(string $content, string $type): array
     {
@@ -392,20 +412,5 @@ class MigrationCommand extends Command
 
         return $data;
     }
-
-    private function handleMakeRepeat()
-    {
-        $entries = $this->migrationUtil->entryRepository->withPeriodicity();
-        foreach ($entries as $entry) {
-            $days = $this->periodicityDaysProvider->getDaysByEntry($entry);
-            foreach ($days as $day) {
-                $periodicityDay = new PeriodicityDay();
-                $periodicityDay->setDatePeriodicity($day->toImmutable());
-                $periodicityDay->setEntry($entry);
-                $this->periodicityDayManager->persist($periodicityDay);
-            }
-        }
-    }
-
 
 }
