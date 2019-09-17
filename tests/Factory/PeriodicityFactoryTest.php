@@ -71,6 +71,7 @@ class PeriodicityFactoryTest extends BaseTesting
 
         $this->assertInstanceOf(Entry::class, $entry);
         $periodicity = $this->periodicityFactory->createNew($entry);
+        $periodicity->setEndTime(new \DateTime('+3 days'));
 
         $this->assertInstanceOf(Periodicity::class, $entry->getPeriodicity());
         $this->assertInstanceOf(Entry::class, $periodicity->getEntry());

@@ -117,7 +117,7 @@ class TimeSlotsProviderTest extends BaseTesting
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $requestStack = $this->createMock(RequestStack::class);
         $security = $this->createMock(Security::class);
-        $localHelper = new LocalHelper($parameterBag, $requestStack,$security);
+        $localHelper = new LocalHelper($parameterBag, $security,$requestStack);
         $carbonFactory = new CarbonFactory($localHelper);
 
         return new TimeSlotsProvider($carbonFactory);

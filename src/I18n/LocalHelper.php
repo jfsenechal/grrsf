@@ -21,10 +21,6 @@ class LocalHelper
      * @var RequestStack
      */
     private $requestStack;
-    /**
-     * @var Security
-     */
-    private $security;
 
     public function __construct(ParameterBagInterface $parameterBag, Security $security, RequestStack $requestStack)
     {
