@@ -84,10 +84,10 @@ class RequestData
         return $this->request('user_room.php');
     }
 
-    public function getRepeats(array $params)
+    public function downloadRepeats(array $params)
     {
         $fileHandler = fopen(__DIR__.'/../../var/cache/repeat.json', 'w');
-      //  $response = $this->request('repeat.php', $params);
+
          $args = [
             'buffer' => false,
         ];
@@ -101,10 +101,6 @@ class RequestData
         foreach ($this->httpClient->stream($response) as $chunk) {
             fwrite($fileHandler, $chunk->getContent());
         }
-
-        // $this->httpClient = null;
-
-        // return $content;
     }
 
     /**

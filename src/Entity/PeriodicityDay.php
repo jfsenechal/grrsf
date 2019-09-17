@@ -23,8 +23,8 @@ class PeriodicityDay
     private $date_periodicity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Entry", inversedBy="periodicity_days")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Entry", inversedBy="periodicity_days", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $entry;
 

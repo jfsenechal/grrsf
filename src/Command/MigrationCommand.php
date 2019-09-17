@@ -155,13 +155,13 @@ class MigrationCommand extends Command
                     return $date;
                 }
 
-                try {
-                    return Carbon::createFromFormat('Y-m-d', $date);
-                } catch (InvalidDateException $exception) {
+                if (!$date = \DateTime::createFromFormat('Y-m-d', $date)) {
                     throw new \RuntimeException(
-                        'La date n\'a pas un format valable: '.$exception->getMessage()
+                        'La date n\'a pas un format valable: '
                     );
                 }
+
+                return $date;
             }
         );
 
@@ -172,12 +172,12 @@ class MigrationCommand extends Command
         }
 
         $purger = new ORMPurger($this->entityManager);
-        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+       // $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
         $purger->purge();
 
         $this->requestData->connect($url, $user, $password);
 
-        $this->requestData->getRepeats([]);
+        $this->requestData->downloadRepeats([]);
         $fileHandler = file_get_contents(__DIR__.'/../../var/cache/repeat.json');
         $this->repeats = json_decode($fileHandler, true);
 

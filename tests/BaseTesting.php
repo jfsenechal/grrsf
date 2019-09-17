@@ -134,6 +134,7 @@ class BaseTesting extends WebTestCase
         parent::tearDown();
 
         $purger = new ORMPurger($this->entityManager);
+        //$purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
         $purger->purge();
 
         $this->kernel2->shutdown();

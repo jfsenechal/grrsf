@@ -59,7 +59,7 @@ class Periodicity
 
     public function __construct(Entry $entry)
     {
-        $this->entry = $entry;
+        $this->setEntry($entry);
         $this->week_days = [];
     }
 

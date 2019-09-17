@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Entry;
 use App\Entity\PeriodicityDay;
 use App\Entity\Room;
 use App\Model\Month;
@@ -23,18 +24,21 @@ class PeriodicityDayRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Month $monthModel
-     *
+     * @param Entry $entry
+     * @param \DateTimeInterface $date
+     * @param Room|null $room
      * @return PeriodicityDay[]
      */
-    public function findForMonth(Month $monthModel, Room $room = null)
+    public function findByEntryAndMonthMayBeByRoom(Entry $entry, \DateTimeInterface $date, Room $room = null)
     {
         $qb = $this->createQueryBuilder('periodicity_day');
         $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');
         $qb->addSelect('entry');
 
-        $firstDayImmutable = $monthModel->firstOfMonth();
-        $timeString = $firstDayImmutable->format('Y-m').'%';
+        $qb->andWhere('entry.id LIKE :entry')
+            ->setParameter('entry', $entry);
+
+        $timeString = $date->format('Y-m').'%';
 
         $qb->andWhere('periodicity_day.date_periodicity LIKE :time')
             ->setParameter('time', $timeString);
@@ -51,12 +55,12 @@ class PeriodicityDayRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param CarbonInterface $day
-     * @param Room            $room
+     * @param \DateTimeInterface $day
+     * @param Room $room
      *
      * @return PeriodicityDay[]
      */
-    public function findForDay(CarbonInterface $day, Room $room)
+    public function findForDay(\DateTimeInterface $day, Room $room)
     {
         $qb = $this->createQueryBuilder('periodicity_day');
         $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');

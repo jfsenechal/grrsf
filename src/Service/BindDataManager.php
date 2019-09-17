@@ -71,20 +71,23 @@ class BindDataManager
      * Crée une instance Day et set les entrées.
      * Ajouts des ces days au model Month.
      *
-     * @param Month   $param
+     * @param Month $param
      * @param Entry[] $entries
      *
      * @throws \Exception
      */
     public function bindMonth(Month $monthModel, Area $area, Room $room = null)
     {
-        $entries = [];
-        $entries[] = $this->entryRepository->findForMonth($monthModel, $area, $room);
+        $data = [];
+        $entries = $this->entryRepository->findForMonth($monthModel, $area, $room);
+        $data[] = $entries;
 
-        $periodicityDays = $this->periodicityDayRepository->findForMonth($monthModel);
-        $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
+        foreach ($entries as $entry) {
+            $periodicityDays = $this->periodicityDayRepository->findByEntryAndMonthMayBeByRoom($entry, $monthModel->firstOfMonth(), $room);
+            $data[] = $this->generatorEntry->generateEntries($periodicityDays);
+        }
 
-        $entries = array_merge(...$entries);
+        $entries = array_merge(...$data);
 
         foreach ($monthModel->getCalendarDays() as $date) {
             $day = $this->dayFactory->createFromCarbon($date);
@@ -122,7 +125,7 @@ class BindDataManager
                 $entries = [[]];
                 $entries[] = $this->entryRepository->findByDayAndRoom($dayCalendar, $room);
 
-                $periodicityDays = $this->periodicityDayRepository->findForDay($dayCalendar, $room);
+                $periodicityDays = $this->periodicityDayRepository->findForDay($dayCalendar->toDateTime(), $room);
                 $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
 
                 $dataDay->addEntries(array_merge(...$entries));
@@ -140,9 +143,9 @@ class BindDataManager
      * et sa localisation.
      *
      * @param CarbonInterface $day
-     * @param Area            $area
-     * @param TimeSlot[]      $timeSlots
-     * @param Room|null       $roomSelected
+     * @param Area $area
+     * @param TimeSlot[] $timeSlots
+     * @param Room|null $roomSelected
      *
      * @return RoomModel[]
      */
@@ -161,7 +164,7 @@ class BindDataManager
             $entries = [];
             $entries[] = $this->entryRepository->findByDayAndRoom($day, $room);
 
-            $periodicityDays = $this->periodicityDayRepository->findForDay($day, $room);
+            $periodicityDays = $this->periodicityDayRepository->findForDay($day->toDateTime(), $room);
             $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
 
             $roomModel->setEntries(array_merge(...$entries));
