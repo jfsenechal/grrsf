@@ -101,7 +101,7 @@ class BindDataManagerTest extends BaseTesting
 
         $bindDataManager = $this->initBindDataManager();
 
-        $weekModel = Week::createWithLocal(2019, 49); //2 december
+        $weekModel = Week::createWithLocal(2019, 49); //2 december to 8 december
 
         $area = $this->getArea('Hdv');
         $roomsModel = $bindDataManager->bindWeek($weekModel, $area, null);

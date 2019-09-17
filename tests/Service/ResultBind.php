@@ -86,6 +86,14 @@ class ResultBind
         return $result[$day] ?? 0;
     }
 
+    /**
+     *
+     * 2019-12-02 => 2019-12-03, 2019-12-04, 2019-12-05
+     * 2019-12-03 => 2019-12-04, 2019-12-05, 2019-12-06
+     * @param int $day
+     * @param string $room
+     * @return int
+     */
     public static function getCountEntriesForWeekWithOutMonth(int $day, string $room): int
     {
         $result = [];
@@ -93,6 +101,10 @@ class ResultBind
         $result['Salle Collège'][3] = 1;
         $result['Salle Collège'][4] = 1;
         $result['Salle Collège'][5] = 1;
+        $result['Salle Conseil'][3] = 1;
+        $result['Salle Conseil'][4] = 1;
+        $result['Salle Conseil'][5] = 1;
+        $result['Salle Conseil'][6] = 1;
 
         return $result[$room][$day] ?? 0;
     }
@@ -108,6 +120,7 @@ class ResultBind
     {
         return [
             'Tous les jours pendant 3 jours',
+            'Entry avec une date en commun autre room'
         ];
     }
 }

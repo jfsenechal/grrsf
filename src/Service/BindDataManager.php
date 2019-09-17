@@ -80,26 +80,26 @@ class BindDataManager
         $entries = [];
         $entries[] = $this->entryRepository->findForMonth($monthModel->firstOfMonth(), $area, $room);
         foreach ($entries[0] as $entry) {
-        //    var_dump($entry->getName());
+            //    var_dump($entry->getName());
         }
-      //  var_dump(123);
+        //  var_dump(123);
 
         $periodicityDays = $this->periodicityDayRepository->findForMonth($monthModel->firstOfMonth(), $area, $room);
         foreach ($periodicityDays as $dai) {
-        //    var_dump($dai->getDatePeriodicity()->format('Y-m-d'));
+            //    var_dump($dai->getDatePeriodicity()->format('Y-m-d'));
         }
 
-       // var_dump(123);
+        // var_dump(123);
 
         $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
         foreach ($entries[1] as $entry) {
-       //     var_dump($entry->getName());
+            //     var_dump($entry->getName());
         }
 
-     //   var_dump(123);
+        //   var_dump(123);
         $entries = array_merge(...$entries);
         foreach ($entries as $entry) {
-         //   var_dump($entry->getName());
+            //   var_dump($entry->getName());
         }
 
         foreach ($monthModel->getCalendarDays() as $date) {
@@ -136,7 +136,7 @@ class BindDataManager
                 $dataDay = $this->dayFactory->createFromCarbon($dayCalendar);
 
                 $entries = [[]];
-                $entries[] = $this->entryRepository->findByDayAndRoom($dayCalendar, $room);
+                $entries[] = $this->entryRepository->findForDay($dayCalendar, $room);
 
                 $periodicityDays = $this->periodicityDayRepository->findForDay($dayCalendar->toDateTime(), $room);
                 $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
@@ -175,7 +175,7 @@ class BindDataManager
         foreach ($rooms as $room) {
             $roomModel = new RoomModel($room);
             $entries = [];
-            $entries[] = $this->entryRepository->findByDayAndRoom($day, $room);
+            $entries[] = $this->entryRepository->findForDay($day, $room);
 
             $periodicityDays = $this->periodicityDayRepository->findForDay($day->toDateTime(), $room);
             $entries[] = $this->generatorEntry->generateEntries($periodicityDays);

@@ -36,7 +36,7 @@ class EntryRepositoryTest extends BaseTesting
 
         $entries = $this->entityManager
             ->getRepository(Entry::class)
-            ->findByDayAndRoom($day, $room);
+            ->findForDay($day, $room);
 
         $countResult = count($entries);
         $this->assertEquals($count, $countResult);

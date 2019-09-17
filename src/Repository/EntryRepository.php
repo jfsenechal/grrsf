@@ -61,7 +61,7 @@ class EntryRepository extends ServiceEntityRepository
      *
      * @return Entry[]
      */
-    public function findByDayAndRoom(CarbonInterface $day, Room $room)
+    public function findForDay(CarbonInterface $day, Room $room)
     {
         $qb = $this->createQueryBuilder('entry');
 
