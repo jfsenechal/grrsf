@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\PeriodicityDay;
 use App\Entity\Room;
@@ -24,19 +25,16 @@ class PeriodicityDayRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Entry $entry
      * @param \DateTimeInterface $date
+     * @param Area $area
      * @param Room|null $room
      * @return PeriodicityDay[]
      */
-    public function findByEntryAndMonthMayBeByRoom(Entry $entry, \DateTimeInterface $date, Room $room = null)
+    public function findForMonth(\DateTimeInterface $date, Area $area, Room $room = null)
     {
         $qb = $this->createQueryBuilder('periodicity_day');
         $qb->leftJoin('periodicity_day.entry', 'entry', 'WITH');
         $qb->addSelect('entry');
-
-        $qb->andWhere('entry.id LIKE :entry')
-            ->setParameter('entry', $entry);
 
         $timeString = $date->format('Y-m').'%';
 
@@ -46,6 +44,10 @@ class PeriodicityDayRepository extends ServiceEntityRepository
         if (null !== $room) {
             $qb->andWhere('entry.room = :room')
                 ->setParameter('room', $room);
+        } else {
+            $rooms = $this->getRooms($area);
+            $qb->andWhere('entry.room IN (:rooms)')
+                ->setParameter('rooms', $rooms);
         }
 
         return $qb
@@ -76,6 +78,19 @@ class PeriodicityDayRepository extends ServiceEntityRepository
             ->orderBy('periodicity_day.date_periodicity', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Ajouter pour sqlLite
+     * @param Area $area
+     *
+     * @return Room[]|iterable
+     */
+    private function getRooms(Area $area)
+    {
+        $roomRepository = $this->getEntityManager()->getRepository(Room::class);
+
+        return $roomRepository->findByArea($area);
     }
 
     public function persist(PeriodicityDay $periodicityDay)

@@ -38,3 +38,8 @@ App\Entity\Periodicity:
     end_time: '<carbonDate(2019,12,6)>' #debut 2019,12,3
     type: '1' #every day
     #type: !php/const App\Periodicity\PeriodicityConstant::EVERY_DAY #not work
+  periodicity_with_common_day_other_room:
+    __construct: ['@entry_with_common_date_other_room']
+    end_time: '<carbonDate(2019,12,6)>' #debut 2019,12,3
+    type: '1' #every day
+    #type: !php/const App\Periodicity\PeriodicityConstant::EVERY_DAY #not work

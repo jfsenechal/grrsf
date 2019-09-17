@@ -1,6 +1,7 @@
 ## Tests
 
-Il sont dans le répertoire [tests](/tests)
+Il sont dans le répertoire [tests](/tests)  
+Les fixtures sont dans le répertoire [Fixtures](/src/Fixtures)
 
 Ils peuvent être lancé avec la commande 
 

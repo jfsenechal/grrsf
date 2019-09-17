@@ -20,3 +20,6 @@ App\Entity\PeriodicityDay:
   period_day_common{2019_12_04, 2019_12_05, 2019_12_06}:
     entry: '@entry_with_common_date'
     date_periodicity: '<carbonFromFormat("Y_m_d", <current()>)>'
+  period_day_common_other_room{2019_12_04, 2019_12_05, 2019_12_06}:
+    entry: '@entry_with_common_date_other_room'
+    date_periodicity: '<carbonFromFormat("Y_m_d", <current()>)>'

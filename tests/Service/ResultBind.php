@@ -16,29 +16,39 @@ class ResultBind
     {
         return [
             'Tous les jours pendant 3 jours',
-            'Entry avec une date en commun',
         ];
     }
 
     public static function resultNamesMonthWithOutRoom()
     {
         return [
-            'Entry avec une date en commun',
             'Tous les jours pendant 3 jours',
-            'Entry avec une date en commun',
+            'Entry avec une date en commun autre room',
         ];
     }
 
+    /**
+     * 2019-12-02 => 2019-12-03, 2019-12-04, 2019-12-05
+     * @param int $day
+     * @return int
+     */
     public static function getCountEntriesFoMonthWithRoom(int $day): int
     {
-        $result = [3 => 1, 4 => 2, 5 => 2, 6 => 1];
+        $result = [2 => 1, 3 => 1, 4 => 1, 5 => 1];
 
         return $result[$day] ?? 0;
     }
 
+    /**
+     * 2019-12-02 => 2019-12-03, 2019-12-04, 2019-12-05
+     * 2019-12-03 => 2019-12-04, 2019-12-05, 2019-12-06
+     *
+     * @param int $day
+     * @return int
+     */
     public static function getCountEntriesFoMonthWithOutRoom(int $day): int
     {
-        $result = [3 => 2, 4 => 2, 5 => 2, 6 => 1];
+        $result = [2 => 1, 3 => 2, 4 => 2, 5 => 2, 6 => 1];
 
         return $result[$day] ?? 0;
     }

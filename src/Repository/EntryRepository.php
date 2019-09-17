@@ -24,31 +24,29 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Month $monthModel
+     * @param \DateTimeInterface $date
      * @param Area|null $area
      * @param Room|null $room
      *
      * @return Entry[] Returns an array of Entry objects
      */
-    public function findForMonth(Month $monthModel, Area $area = null, Room $room = null)
+    public function findForMonth(\DateTimeInterface $date, Area $area, Room $room = null)
     {
         $qb = $this->createQueryBuilder('entry');
+        $end = clone $date;
+        $end->modify('last day of this month');
 
-        $qb->andWhere('entry.start_time LIKE :time')
-            ->setParameter(
-                'time',
-                $monthModel->firstOfMonth()->format('Y-m').'%'
-            );
-
-        if (null !== $area) {
-            $rooms = $this->getRooms($area);
-            $qb->andWhere('entry.room IN (:rooms)')
-                ->setParameter('rooms', $rooms);
-        }
+        $qb->andWhere('entry.start_time >= :begin AND entry.end_time <= :end')
+            ->setParameter('begin', $date->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'));
 
         if (null !== $room) {
             $qb->andWhere('entry.room = :room')
                 ->setParameter('room', $room);
+        } else {
+            $rooms = $this->getRooms($area);
+            $qb->andWhere('entry.room IN (:rooms)')
+                ->setParameter('rooms', $rooms);
         }
 
         return $qb
@@ -212,6 +210,7 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
+     * Ajouter pour sqlLite
      * @param Area $area
      *
      * @return Room[]|iterable

@@ -71,23 +71,36 @@ class BindDataManager
      * Crée une instance Day et set les entrées.
      * Ajouts des ces days au model Month.
      *
-     * @param Month $param
-     * @param Entry[] $entries
-     *
-     * @throws \Exception
+     * @param Month $monthModel
+     * @param Area $area
+     * @param Room|null $room
      */
     public function bindMonth(Month $monthModel, Area $area, Room $room = null)
     {
-        $data = [];
-        $entries = $this->entryRepository->findForMonth($monthModel, $area, $room);
-        $data[] = $entries;
+        $entries = [];
+        $entries[] = $this->entryRepository->findForMonth($monthModel->firstOfMonth(), $area, $room);
+        foreach ($entries[0] as $entry) {
+        //    var_dump($entry->getName());
+        }
+      //  var_dump(123);
 
-        foreach ($entries as $entry) {
-            $periodicityDays = $this->periodicityDayRepository->findByEntryAndMonthMayBeByRoom($entry, $monthModel->firstOfMonth(), $room);
-            $data[] = $this->generatorEntry->generateEntries($periodicityDays);
+        $periodicityDays = $this->periodicityDayRepository->findForMonth($monthModel->firstOfMonth(), $area, $room);
+        foreach ($periodicityDays as $dai) {
+        //    var_dump($dai->getDatePeriodicity()->format('Y-m-d'));
         }
 
-        $entries = array_merge(...$data);
+       // var_dump(123);
+
+        $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
+        foreach ($entries[1] as $entry) {
+       //     var_dump($entry->getName());
+        }
+
+     //   var_dump(123);
+        $entries = array_merge(...$entries);
+        foreach ($entries as $entry) {
+         //   var_dump($entry->getName());
+        }
 
         foreach ($monthModel->getCalendarDays() as $date) {
             $day = $this->dayFactory->createFromCarbon($date);

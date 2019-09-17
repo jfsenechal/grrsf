@@ -36,8 +36,8 @@ class BindDataManagerTest extends BaseTesting
         $bindDataManager = $this->initBindDataManager();
 
         $monthModel = Month::init(2019, 12);
-        $area = $this->getArea('Esquare');
-        $room = $this->getRoom('Relax Room');
+        $area = $this->getArea('Hdv');
+        $room = $this->getRoom('Salle Collège');
 
         $bindDataManager->bindMonth($monthModel, $area, $room);
 
@@ -57,12 +57,13 @@ class BindDataManagerTest extends BaseTesting
         $bindDataManager = $this->initBindDataManager();
 
         $monthModel = Month::init(2019, 12);
-        $area = $this->getArea('Esquare');
+        $area = $this->getArea('Hdv');
 
         $bindDataManager->bindMonth($monthModel, $area, null);
 
         self::assertCount(31, $monthModel->getDataDays());
         foreach ($monthModel->getDataDays() as $dataDay) {
+
             self::assertCount(ResultBind::getCountEntriesFoMonthWithOutRoom($dataDay->day), $dataDay->getEntries());
             foreach ($dataDay->getEntries() as $entry) {
                 self::assertContains($entry->getName(), ResultBind::resultNamesMonthWithOutRoom());
@@ -159,6 +160,7 @@ class BindDataManagerTest extends BaseTesting
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'entry_type.yaml',
                 $this->pathFixtures.'entry_with_periodicity.yaml',
+                $this->pathFixtures.'periodicity.yaml',
                 $this->pathFixtures.'periodicity_day.yaml',
             ];
 
@@ -170,7 +172,7 @@ class BindDataManagerTest extends BaseTesting
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $requestStack = $this->createMock(RequestStack::class);
         $security = $this->createMock(Security::class);
-        $localHelper = new LocalHelper($parameterBag, $security,$requestStack);
+        $localHelper = new LocalHelper($parameterBag, $security, $requestStack);
         $carbonFactory = new CarbonFactory($localHelper);
 
         return new TimeSlotsProvider($carbonFactory);
@@ -181,7 +183,7 @@ class BindDataManagerTest extends BaseTesting
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $requestStack = $this->createMock(RequestStack::class);
         $security = $this->createMock(Security::class);
-        $localHelper = new LocalHelper($parameterBag, $security,$requestStack);
+        $localHelper = new LocalHelper($parameterBag, $security, $requestStack);
         $carbonFactory = new CarbonFactory($localHelper);
 
         return new DayFactory($carbonFactory);

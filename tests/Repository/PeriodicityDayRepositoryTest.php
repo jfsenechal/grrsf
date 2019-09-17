@@ -12,10 +12,10 @@ class PeriodicityDayRepositoryTest extends BaseTesting
     /**
      * @dataProvider getData
      */
-    public function testFindByEntryAndMonthMayBeByRoom(
+    public function testfindForMonth(
         int $year,
         int $month,
-        string $entryName,
+        string $areaName,
         int $count,
         array $daysResult,
         ?string $roomName = null
@@ -30,17 +30,17 @@ class PeriodicityDayRepositoryTest extends BaseTesting
             $room = $this->getRoom($roomName);
         }
 
-        $entry = $this->getEntry($entryName);
+        $area = $this->getArea($areaName);
 
         $days = $this->entityManager
             ->getRepository(PeriodicityDay::class)
-            ->findByEntryAndMonthMayBeByRoom($entry, $monthModel->firstOfMonth(), $room);
+            ->findForMonth($monthModel->firstOfMonth(), $area, $room);
 
         self::assertCount($count, $days);
 
         foreach ($days as $day) {
             self::assertContains($day->getDatePeriodicity()->format('Y-m-d'), $daysResult);
-            self::assertSame($entryName, $day->getEntry()->getName());
+            self::assertSame($areaName, $day->getEntry()->getRoom()->getArea()->getName());
         }
     }
 
@@ -49,7 +49,7 @@ class PeriodicityDayRepositoryTest extends BaseTesting
         yield [
             2019,
             6,
-            'Tous les mois le 5',
+            'Esquare',
             1,
             ['2019-06-05'],
             'Digital Room',
@@ -58,7 +58,7 @@ class PeriodicityDayRepositoryTest extends BaseTesting
         yield [
             2017,
             3,
-            'Toutes les 2 semaines, mercredi et samedi',
+            'Hdv',
             4,
             ['2017-03-08', '2017-03-11', '2017-03-22', '2017-03-25'],
             null,
