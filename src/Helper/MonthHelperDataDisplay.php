@@ -8,6 +8,7 @@
 
 namespace App\Helper;
 
+use App\Entity\Area;
 use App\Model\Month;
 use App\Provider\DateProvider;
 use Twig\Environment;
@@ -33,7 +34,7 @@ class MonthHelperDataDisplay
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function generateHtmlMonth(Month $month)
+    public function generateHtmlMonth(Month $month, Area $area)
     {
         $weeks = $month->groupDataDaysByWeeks();
 
@@ -44,6 +45,7 @@ class MonthHelperDataDisplay
                 'firstDay' => $month->firstOfMonth(),
                 'dataDays' => $month->getDataDays(),
                 'weeks' => $weeks,
+                'area' => $area, //for legend entry type
             ]
         );
     }

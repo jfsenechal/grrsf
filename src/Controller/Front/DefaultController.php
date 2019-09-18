@@ -69,7 +69,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
         $monthModel = Month::init($year, $month);
         $this->bindDataManager->bindMonth($monthModel, $area, $room);
 
-        $monthData = $this->monthHelperDataDisplay->generateHtmlMonth($monthModel);
+        $monthData = $this->monthHelperDataDisplay->generateHtmlMonth($monthModel, $area);
 
         return $this->render(
             '@grr_front/month/month.html.twig',

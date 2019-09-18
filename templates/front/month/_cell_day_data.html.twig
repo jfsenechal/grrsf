@@ -1,14 +1,35 @@
-<td>
-    {% if day.isSameMonth(firstDay) %}
-        <a href="{{ grrGenerateRouteDayView(day.day) }}" class="float-right">
-            {{ day.day }}
-        </a>
-    {% endif %}
+{% if day.isSameMonth(firstDay) %}
+    <a href="{{ grrGenerateRouteDayView(day.day) }}" class="float-right">
+        {{ day.day }}
+    </a>
+{% else %}
+
+{% endif %}
 
     {% for entry in day.entries %}
-        <p>
-            <a href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
-        </p>
-    {% endfor %}
 
-</td>
+        <div class="card bg-light w-100 m-1">
+            <div class="card-header">
+                <h6>
+                    <a class="card-link" href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">
+                        {{ entry.name }}
+                    </a>
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-10">
+                        <h6 class="card-subtitle mb-2 text-muted">{{ entry.startTime|date('d H:i') }}
+                            - {{ entry.endtime|date('H:i') }}</h6>
+                        <p class="card-text">
+                            <strong>{{ entry.room }}</strong><br/>
+                        </p>
+                    </div>
+                    <div class="col-2">
+                        <div style="background-color: {{ entry.type.color }}">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}

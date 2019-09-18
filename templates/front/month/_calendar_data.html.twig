@@ -1,19 +1,19 @@
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        {% for dayName in listDays %}
-            <th scope="col">{{ dayName|trans }}</th>
-        {% endfor %}
-    </tr>
-    </thead>
-    <tbody>
-    {% for week in weeks %}
-        <tr class="">
-            {% for day in week.days %}
-                {% include '@grr_front/month/_cell_day_data.html.twig' %}
-            {% endfor %}
-        </tr>
+<div class="container-fluid">
+<div class="row">
+    {% for dayName in listDays %}
+        <div class="col table-bordered borde2r-info">{{ dayName|trans }}</div>
     {% endfor %}
+</div>
 
-    </tbody>
-</table>
+{% for week in weeks %}
+    <div class="row">
+        {% for day in week.days %}
+            <div class="col border">
+                {% include '@grr_front/month/_cell_day_data.html.twig' %}
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+</div>
+
+{{ grrLegendEntryType(area) }}

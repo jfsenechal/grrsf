@@ -182,7 +182,6 @@ class Entry
         $this->private = false;
         $this->moderate = false;
         $this->jours = false;
-        $this->created_by = 'jf';
         $this->beneficiaire = 'jf';
         $this->option_reservation = 0;
     }

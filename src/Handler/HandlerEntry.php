@@ -11,6 +11,7 @@ use App\Manager\PeriodicityManager;
 use App\Periodicity\PeriodicityDaysProvider;
 use App\Repository\EntryRepository;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Security\Core\Security;
 
 class HandlerEntry
 {
@@ -34,19 +35,25 @@ class HandlerEntry
      * @var PeriodicityDayManager
      */
     private $periodicityDayManager;
+    /**
+     * @var Security
+     */
+    private $security;
 
     public function __construct(
         EntryRepository $entryRepository,
         EntryManager $entryManager,
         PeriodicityManager $periodicityManager,
         PeriodicityDaysProvider $periodicityDaysProvider,
-        PeriodicityDayManager $periodicityDayManager
+        PeriodicityDayManager $periodicityDayManager,
+        Security $security
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryManager = $entryManager;
         $this->periodicityManager = $periodicityManager;
         $this->periodicityDaysProvider = $periodicityDaysProvider;
         $this->periodicityDayManager = $periodicityDayManager;
+        $this->security = $security;
     }
 
     public function handleNewEntry(FormInterface $form, Entry $entry)
@@ -70,6 +77,7 @@ class HandlerEntry
             }
         }
 
+        $this->setUserAdd($entry);
         $this->fullDay($entry);
         $this->entryManager->insert($entry);
         $this->periodicityDayManager->flush();
@@ -100,6 +108,13 @@ class HandlerEntry
                 $entry->getEndTime()->setTime($hourEnd, 0);
             }
         }
+    }
+
+    protected function setUserAdd(Entry $entry)
+    {
+        $user = $this->security->getUser();
+        $username = isset($user) ? $user->getUsername() : null;
+        $entry->setCreatedBy($username);
     }
 
     public function handleDeleteEntry(Entry $entry)

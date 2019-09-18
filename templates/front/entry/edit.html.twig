@@ -3,9 +3,15 @@
 {% block title %}{{ 'action.edit'|trans({},'actions') }} {{ entry.name }}{% endblock %}
 
 {% block body %}
-    <h1>{{ entry.name }}</h1>
 
-    {{ include('@grr_front/entry/form/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            <h2>{{ entry.name }}</h2>
+        </div>
+        <div class="card-body">
+            {{ include('@grr_front/entry/form/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+    </div>
 
     <br/>
     <a href="{{ path('grr_front_entry_show',{'id': entry.id}) }}"><i
