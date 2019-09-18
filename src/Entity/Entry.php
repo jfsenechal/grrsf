@@ -163,15 +163,10 @@ class Entry
     /**
      * @Assert\Type(type="App\Entity\Periodicity")
      * @Assert\Valid
-     * @ORM\OneToOne(targetEntity="App\Entity\Periodicity", inversedBy="entry", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Periodicity", inversedBy="entries", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $periodicity;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PeriodicityDay", mappedBy="entry", cascade={"remove"}, orphanRemoval=true)
-     */
-    private $periodicity_days;
 
     public function __construct()
     {
@@ -464,34 +459,4 @@ class Entry
         return $this;
     }
 
-    /**
-     * @return Collection|PeriodicityDay[]
-     */
-    public function getPeriodicityDays(): Collection
-    {
-        return $this->periodicity_days;
-    }
-
-    public function addPeriodicityDay(PeriodicityDay $periodicityDay): self
-    {
-        if (!$this->periodicity_days->contains($periodicityDay)) {
-            $this->periodicity_days[] = $periodicityDay;
-            $periodicityDay->setEntry($this);
-        }
-
-        return $this;
-    }
-
-    public function removePeriodicityDay(PeriodicityDay $periodicityDay): self
-    {
-        if ($this->periodicity_days->contains($periodicityDay)) {
-            $this->periodicity_days->removeElement($periodicityDay);
-            // set the owning side to null (unless already changed)
-            if ($periodicityDay->getEntry() === $this) {
-                $periodicityDay->setEntry(null);
-            }
-        }
-
-        return $this;
-    }
 }

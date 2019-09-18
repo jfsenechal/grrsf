@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Doctrine\Traits\IdEntityTrait;
 use App\Periodicity\PeriodicityConstant;
 use App\Validator\Periodicity as AppAssertPeriodicity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,15 +54,37 @@ class Periodicity
     private $week_days;
 
     /**
-     * @var Entry
-     * @ORM\OneToOne(targetEntity="App\Entity\Entry", mappedBy="periodicity")
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="periodicity")
      */
-    private $entry;
+    private $entries;
+
+    /**
+     * @var Entry|null
+     */
+    private $entry_reference;
 
     public function __construct(Entry $entry)
     {
-        $this->setEntry($entry);
         $this->week_days = [];
+        $this->entries = new ArrayCollection();
+        $this->entry_reference = $entry;
+    }
+
+    /**
+     * @return Entry|null
+     */
+    public function getEntryReference(): ?Entry
+    {
+        return $this->entry_reference;
+    }
+
+    /**
+     * @param Entry|null $entry_reference
+     */
+    public function setEntryReference(?Entry $entry_reference): void
+    {
+        $this->entry_reference = $entry_reference;
     }
 
     /**
@@ -114,19 +138,32 @@ class Periodicity
         return $this;
     }
 
-    public function getEntry(): Entry
+    /**
+     * @return Collection|Entry[]
+     */
+    public function getEntries(): Collection
     {
-        return $this->entry;
+        return $this->entries;
     }
 
-    public function setEntry(Entry $entry): self
+    public function addEntry(Entry $entry): self
     {
-        $this->entry = $entry;
+        if (!$this->entries->contains($entry)) {
+            $this->entries[] = $entry;
+            $entry->setPeriodicity($this);
+        }
 
-        // set (or unset) the owning side of the relation if necessary
-        $newPeriodicity = null === $entry ? null : $this;
-        if ($newPeriodicity !== $entry->getPeriodicity()) {
-            $entry->setPeriodicity($newPeriodicity);
+        return $this;
+    }
+
+    public function removeEntry(Entry $entry): self
+    {
+        if ($this->entries->contains($entry)) {
+            $this->entries->removeElement($entry);
+            // set the owning side to null (unless already changed)
+            if ($entry->getPeriodicity() === $this) {
+                $entry->setPeriodicity(null);
+            }
         }
 
         return $this;

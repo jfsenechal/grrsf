@@ -3,39 +3,33 @@
 namespace App\Periodicity;
 
 use App\Entity\Entry;
-use App\Entity\PeriodicityDay;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 
 class GeneratorEntry
 {
     /**
-     * @param PeriodicityDay[] $periodicityDays
-     *
-     * @return Entry[]
+     * @param Entry $entry
+     * @param CarbonInterface $day
+     * @return Entry
      */
-    public function generateEntries(array $periodicityDays)
+    public function generateEntry(Entry $entry, CarbonInterface $day)
     {
-        $entries = [];
-        foreach ($periodicityDays as $periodicityDay) {
-            $entry = clone $periodicityDay->getEntry();
-            $date = Carbon::instance($periodicityDay->getDatePeriodicity());
+        $newEntry = clone($entry);
 
-            $startTime = Carbon::instance($entry->getStartTime());
-            $startTime->setYear($date->year);
-            $startTime->setMonth($date->month);
-            $startTime->setDay($date->day);
+        $startTime = Carbon::instance($entry->getStartTime());
+        $startTime->setYear($day->year);
+        $startTime->setMonth($day->month);
+        $startTime->setDay($day->day);
 
-            $endTime = Carbon::instance($entry->getEndTime());
-            $endTime->setYear($date->year);
-            $endTime->setMonth($date->month);
-            $endTime->setDay($date->day);
+        $endTime = Carbon::instance($entry->getEndTime());
+        $endTime->setYear($day->year);
+        $endTime->setMonth($day->month);
+        $endTime->setDay($day->day);
 
-            $entry->setStartTime($startTime->toDateTime());
-            $entry->setEndTime($endTime->toDateTime());
+        $newEntry->setStartTime($startTime->toDateTime());
+        $newEntry->setEndTime($endTime->toDateTime());
 
-            $entries[] = $entry;
-        }
-
-        return $entries;
+        return $newEntry;
     }
 }

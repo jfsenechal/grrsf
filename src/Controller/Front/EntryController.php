@@ -9,8 +9,8 @@ use App\Events\EntryEvent;
 use App\Factory\EntryFactory;
 use App\Form\EntryType;
 use App\Form\Search\SearchEntryType;
-use App\Periodicity\PeriodicityConstant;
 use App\Handler\HandlerEntry;
+use App\Periodicity\PeriodicityConstant;
 use App\Periodicity\PeriodicityDaysProvider;
 use App\Repository\EntryRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -43,10 +43,6 @@ class EntryController extends AbstractController
      */
     private $handlerEntry;
     /**
-     * @var PeriodicityDaysProvider
-     */
-    private $periodicityDaysProvider;
-    /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
@@ -56,14 +52,12 @@ class EntryController extends AbstractController
         EntryRepository $entryRepository,
         PeriodicityDaysProvider $periodicityService,
         HandlerEntry $handlerEntry,
-        PeriodicityDaysProvider $periodicityDaysProvider,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryFactory = $entryFactory;
         $this->periodicityService = $periodicityService;
         $this->handlerEntry = $handlerEntry;
-        $this->periodicityDaysProvider = $periodicityDaysProvider;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -160,17 +154,10 @@ class EntryController extends AbstractController
      */
     public function show(Entry $entry): Response
     {
-        $days = [];
-        try {
-            $days = $this->periodicityService->getDaysByEntry($entry);
-        } catch (\Exception $e) {
-        }
-
         return $this->render(
             '@grr_front/entry/show.html.twig',
             [
                 'entry' => $entry,
-                'days' => $days,
             ]
         );
     }

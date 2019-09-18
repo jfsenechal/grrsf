@@ -4,14 +4,10 @@ namespace App\Command;
 
 use App\Entity\Area;
 use App\Entity\Entry;
-use App\Entity\PeriodicityDay;
-use App\Manager\PeriodicityDayManager;
 use App\Migration\MigrationFactory;
 use App\Migration\MigrationUtil;
 use App\Migration\RequestData;
 use App\Periodicity\PeriodicityDaysProvider;
-use Carbon\Carbon;
-use Carbon\Exceptions\InvalidDateException;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -76,10 +72,6 @@ class MigrationCommand extends Command
      * @var PeriodicityDaysProvider
      */
     private $periodicityDaysProvider;
-    /**
-     * @var PeriodicityDayManager
-     */
-    private $periodicityDayManager;
 
     public function __construct(
         string $name = null,
@@ -87,8 +79,7 @@ class MigrationCommand extends Command
         EntityManagerInterface $entityManager,
         MigrationUtil $migrationUtil,
         MigrationFactory $migrationFactory,
-        PeriodicityDaysProvider $periodicityDaysProvider,
-        PeriodicityDayManager $periodicityDayManager
+        PeriodicityDaysProvider $periodicityDaysProvider
     ) {
         parent::__construct($name);
         $this->requestData = $requestData;
@@ -96,7 +87,6 @@ class MigrationCommand extends Command
         $this->migrationUtil = $migrationUtil;
         $this->migrationFactory = $migrationFactory;
         $this->periodicityDaysProvider = $periodicityDaysProvider;
-        $this->periodicityDayManager = $periodicityDayManager;
     }
 
     protected function configure()
@@ -172,7 +162,7 @@ class MigrationCommand extends Command
         }
 
         $purger = new ORMPurger($this->entityManager);
-       // $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        // $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
         $purger->purge();
 
         $this->requestData->connect($url, $user, $password);
@@ -281,12 +271,25 @@ class MigrationCommand extends Command
         $progressBar = new ProgressBar($this->output);
 
         foreach ($progressBar->iterate($entries) as $data) {
+
+            if ($data['name'] != 'PMTIC G4 MG') {
+                continue;
+            }
+
             $entry = $this->migrationFactory->createEntry($this->resolveTypeEntries, $data);
+
             $room = $this->migrationUtil->transformToRoom($this->resolveRooms, $data['room_id']);
             if ($room) {
                 $entry->setRoom($room);
                 $this->entityManager->persist($entry);
                 $id = $id = (int)$data['repeat_id'];
+
+                if ($data['entry_type'] >= 1) // il s'agit d'une reservation a laquelle est associee une periodicite
+                {
+
+                }
+
+
                 if ($id > 0) {
                     $this->handlerRepeat($entry, $id);
                 }

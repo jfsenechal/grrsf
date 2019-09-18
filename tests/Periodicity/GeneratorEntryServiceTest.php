@@ -29,7 +29,7 @@ class GeneratorEntryServiceTest extends BaseTesting
             ->getRepository(PeriodicityDay::class)
             ->findBy(['entry' => $entry]);
 
-        $entries = $generator->generateEntries($periodicityDays);
+        $entries = $generator->generateEntry($periodicityDays);
 
         self::assertSame(count($entries), 3);
 

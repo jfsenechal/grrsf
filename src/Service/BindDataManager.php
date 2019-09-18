@@ -16,9 +16,7 @@ use App\Model\Month;
 use App\Model\RoomModel;
 use App\Model\TimeSlot;
 use App\Model\Week;
-use App\Periodicity\GeneratorEntry;
 use App\Repository\EntryRepository;
-use App\Repository\PeriodicityDayRepository;
 use App\Repository\RoomRepository;
 use Carbon\CarbonInterface;
 
@@ -33,14 +31,6 @@ class BindDataManager
      */
     private $entryLocationService;
     /**
-     * @var PeriodicityDayRepository
-     */
-    private $periodicityDayRepository;
-    /**
-     * @var GeneratorEntry
-     */
-    private $generatorEntry;
-    /**
      * @var DayFactory
      */
     private $dayFactory;
@@ -51,16 +41,12 @@ class BindDataManager
 
     public function __construct(
         EntryRepository $entryRepository,
-        PeriodicityDayRepository $periodicityDayRepository,
         RoomRepository $roomRepository,
         EntryLocationService $entryLocationService,
-        GeneratorEntry $generatorEntry,
         DayFactory $dayFactory
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryLocationService = $entryLocationService;
-        $this->periodicityDayRepository = $periodicityDayRepository;
-        $this->generatorEntry = $generatorEntry;
         $this->dayFactory = $dayFactory;
         $this->roomRepository = $roomRepository;
     }
@@ -77,30 +63,7 @@ class BindDataManager
      */
     public function bindMonth(Month $monthModel, Area $area, Room $room = null)
     {
-        $entries = [];
-        $entries[] = $this->entryRepository->findForMonth($monthModel->firstOfMonth(), $area, $room);
-        foreach ($entries[0] as $entry) {
-            //    var_dump($entry->getName());
-        }
-        //  var_dump(123);
-
-        $periodicityDays = $this->periodicityDayRepository->findForMonth($monthModel->firstOfMonth(), $area, $room);
-        foreach ($periodicityDays as $dai) {
-            //    var_dump($dai->getDatePeriodicity()->format('Y-m-d'));
-        }
-
-        // var_dump(123);
-
-        $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
-        foreach ($entries[1] as $entry) {
-            //     var_dump($entry->getName());
-        }
-
-        //   var_dump(123);
-        $entries = array_merge(...$entries);
-        foreach ($entries as $entry) {
-            //   var_dump($entry->getName());
-        }
+        $entries = $this->entryRepository->findForMonth($monthModel->firstOfMonth(), $area, $room);
 
         foreach ($monthModel->getCalendarDays() as $date) {
             $day = $this->dayFactory->createFromCarbon($date);
@@ -134,14 +97,8 @@ class BindDataManager
             $roomModel = new RoomModel($room);
             foreach ($days as $dayCalendar) {
                 $dataDay = $this->dayFactory->createFromCarbon($dayCalendar);
-
-                $entries = [[]];
-                $entries[] = $this->entryRepository->findForDay($dayCalendar, $room);
-
-                $periodicityDays = $this->periodicityDayRepository->findForDay($dayCalendar->toDateTime(), $room);
-                $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
-
-                $dataDay->addEntries(array_merge(...$entries));
+                $entries = $this->entryRepository->findForDay($dayCalendar, $room);
+                $dataDay->addEntries($entries);
                 $roomModel->addDataDay($dataDay);
             }
             $data[] = $roomModel;
@@ -174,13 +131,8 @@ class BindDataManager
 
         foreach ($rooms as $room) {
             $roomModel = new RoomModel($room);
-            $entries = [];
-            $entries[] = $this->entryRepository->findForDay($day, $room);
-
-            $periodicityDays = $this->periodicityDayRepository->findForDay($day->toDateTime(), $room);
-            $entries[] = $this->generatorEntry->generateEntries($periodicityDays);
-
-            $roomModel->setEntries(array_merge(...$entries));
+            $entries = $this->entryRepository->findForDay($day, $room);
+            $roomModel->setEntries($entries);
             $roomsModel[] = $roomModel;
         }
 

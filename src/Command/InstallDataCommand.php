@@ -134,6 +134,8 @@ class InstallDataCommand extends Command
             'F' => 'Non disponible',
         ];
 
+        $colors = ["#FFCCFF", "#99CCCC", "#FF9999", "#FFFF99", "#C0E0FF", "#FFCC99", "#FF6666", "#66FFFF", "#DDFFDD"];
+
         foreach ($types as $index => $nom) {
             if ($this->entryTypeRepository->findOneBy(['name' => $nom])) {
                 continue;
@@ -141,6 +143,7 @@ class InstallDataCommand extends Command
             $type = $this->typeEntryFactory->createNew();
             $type->setLetter($index);
             $type->setName($nom);
+            $type->setColor($colors[random_int(0, count($colors))]);
             $this->entryTypeRepository->persist($type);
         }
         $this->entryTypeRepository->flush();

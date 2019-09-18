@@ -127,7 +127,7 @@ class MigrationUtil
                 $days[] = $key;
             }
         }
-
+var_dump($days);
         return $days;
     }
 

@@ -3,12 +3,7 @@
 namespace App\Handler;
 
 use App\Entity\Entry;
-use App\Entity\Periodicity;
-use App\Entity\PeriodicityDay;
 use App\Manager\EntryManager;
-use App\Manager\PeriodicityDayManager;
-use App\Manager\PeriodicityManager;
-use App\Periodicity\PeriodicityDaysProvider;
 use App\Repository\EntryRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Security;
@@ -24,63 +19,42 @@ class HandlerEntry
      */
     private $entryManager;
     /**
-     * @var PeriodicityManager
-     */
-    private $periodicityManager;
-    /**
-     * @var PeriodicityDaysProvider
-     */
-    private $periodicityDaysProvider;
-    /**
-     * @var PeriodicityDayManager
-     */
-    private $periodicityDayManager;
-    /**
      * @var Security
      */
     private $security;
+    /**
+     * @var HandlerPeriodicity
+     */
+    private $handlerPeriodicity;
 
     public function __construct(
         EntryRepository $entryRepository,
         EntryManager $entryManager,
-        PeriodicityManager $periodicityManager,
-        PeriodicityDaysProvider $periodicityDaysProvider,
-        PeriodicityDayManager $periodicityDayManager,
+        HandlerPeriodicity $handlerPeriodicity,
         Security $security
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryManager = $entryManager;
-        $this->periodicityManager = $periodicityManager;
-        $this->periodicityDaysProvider = $periodicityDaysProvider;
-        $this->periodicityDayManager = $periodicityDayManager;
         $this->security = $security;
+        $this->handlerPeriodicity = $handlerPeriodicity;
     }
 
     public function handleNewEntry(FormInterface $form, Entry $entry)
     {
         $data = $form->getData();
 
-        /**
-         * @var Periodicity
-         */
-        $periodicity = $data->getPeriodicity();
+        $this->setUserAdd($entry);
+        $this->fullDay($entry);
+        $periodicity = $entry->getPeriodicity();
 
-        if (null === $periodicity->getType()) {
-            $entry->setPeriodicity(null);
-        } else {
-            $days = $this->periodicityDaysProvider->getDaysByEntry($entry);
-            foreach ($days as $day) {
-                $periodicityDay = new PeriodicityDay();
-                $periodicityDay->setDatePeriodicity($day->toImmutable());
-                $periodicityDay->setEntry($entry);
-                $this->periodicityDayManager->persist($periodicityDay);
+        if ($periodicity) {
+            if (null === $periodicity->getType()) {
+                $entry->setPeriodicity(null);
             }
         }
 
-        $this->setUserAdd($entry);
-        $this->fullDay($entry);
         $this->entryManager->insert($entry);
-        $this->periodicityDayManager->flush();
+        $this->handlerPeriodicity->handleNewEntry($entry);
     }
 
     public function handleEditEntry(FormInterface $form, Entry $entry)

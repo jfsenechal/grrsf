@@ -28,7 +28,7 @@ class PeriodicityEveryDayValidator extends ConstraintValidator
         }
 
         $endPeriodicity = Carbon::instance($value->getEndTime());
-        $entry = $value->getEntry();
+        $entry = $value->getEntryReference();
         $entryStartTime = Carbon::instance($entry->getStartTime());
         $entryEndTime = Carbon::instance($entry->getEndTime());
 
