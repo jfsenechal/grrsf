@@ -54,7 +54,7 @@ class HandlerEntry
         }
 
         $this->entryManager->insert($entry);
-        $this->handlerPeriodicity->handleNewEntry($entry);
+        $this->handlerPeriodicity->handleNewPeriodicity($entry);
     }
 
     public function handleEditEntry(FormInterface $form, Entry $entry)

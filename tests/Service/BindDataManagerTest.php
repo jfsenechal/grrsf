@@ -11,14 +11,12 @@
 namespace App\Tests\Service;
 
 use App\Entity\Entry;
-use App\Entity\PeriodicityDay;
 use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\Factory\DayFactory;
 use App\I18n\LocalHelper;
 use App\Model\Month;
 use App\Model\Week;
-use App\Periodicity\GeneratorEntry;
 use App\Provider\TimeSlotsProvider;
 use App\Service\BindDataManager;
 use App\Service\EntryLocationService;
@@ -159,9 +157,8 @@ class BindDataManagerTest extends BaseTesting
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'entry_type.yaml',
-                $this->pathFixtures.'entry_with_periodicity.yaml',
                 $this->pathFixtures.'periodicity.yaml',
-                $this->pathFixtures.'periodicity_day.yaml',
+                $this->pathFixtures.'entry_with_periodicity.yaml',
             ];
 
         $this->loader->load($files);
@@ -194,26 +191,17 @@ class BindDataManagerTest extends BaseTesting
         return new EntryLocationService($this->initTimeSlotProvider());
     }
 
-    private function initGeneratorFactory(): GeneratorEntry
-    {
-        return new GeneratorEntry();
-    }
-
     private function initBindDataManager(): BindDataManager
     {
         $entryRepository = $this->entityManager->getRepository(Entry::class);
-        $periodicityDayRepository = $this->entityManager->getRepository(PeriodicityDay::class);
         $roomRepository = $this->entityManager->getRepository(Room::class);
         $dayFactory = $this->initDayFactory();
         $entryLocationService = $this->initLocationService();
-        $generatorEntry = $this->initGeneratorFactory();
 
         return new BindDataManager(
             $entryRepository,
-            $periodicityDayRepository,
             $roomRepository,
             $entryLocationService,
-            $generatorEntry,
             $dayFactory
         );
     }

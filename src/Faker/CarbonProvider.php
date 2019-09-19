@@ -40,7 +40,7 @@ class CarbonProvider extends BaseProvider
      * @return string random job title
      */
     public function carbonFromFormat(string $format, string $date)
-    {
+    {var_dump($format, $date);
         return CarbonImmutable::createFromFormat($format, $date);
     }
 

@@ -10,8 +10,8 @@
 
 namespace App\Tests\Periodicity;
 
-use App\Entity\PeriodicityDay;
 use App\Periodicity\GeneratorEntry;
+use App\Periodicity\PeriodicityDaysProvider;
 use App\Tests\BaseTesting;
 
 class GeneratorEntryServiceTest extends BaseTesting
@@ -25,17 +25,23 @@ class GeneratorEntryServiceTest extends BaseTesting
         $name = 'Entry avec une date en commun';
         $entry = $this->getEntry($name);
 
-        $periodicityDays = $this->entityManager
-            ->getRepository(PeriodicityDay::class)
-            ->findBy(['entry' => $entry]);
+        $days = $this->initPeriodicityDayProvier()->getDaysByEntry($entry);
+        $entries = [];
 
-        $entries = $generator->generateEntry($periodicityDays);
+        foreach ($days as $day) {
+            $entries[] = $generator->generateEntry($entry, $day);
+        }
 
         self::assertSame(count($entries), 3);
 
         foreach ($entries as $entryVirtual) {
             self::assertSame($name, $entryVirtual->getName());
         }
+    }
+
+    protected function initPeriodicityDayProvier(): PeriodicityDaysProvider
+    {
+        return new PeriodicityDaysProvider();
     }
 
     protected function loadFixtures()
@@ -46,7 +52,6 @@ class GeneratorEntryServiceTest extends BaseTesting
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'entry_type.yaml',
                 $this->pathFixtures.'entry_with_periodicity.yaml',
-                $this->pathFixtures.'periodicity_day.yaml',
             ];
 
         $this->loader->load($files);

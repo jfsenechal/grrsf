@@ -212,7 +212,6 @@ class EntryLocationServiceTest extends BaseTesting
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'entry_type.yaml',
                 $this->pathFixtures.'entry_with_periodicity.yaml',
-                $this->pathFixtures.'periodicity_day.yaml',
             ];
 
         $this->loader->load($files);

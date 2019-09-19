@@ -113,7 +113,7 @@ class MigrationFactory
         return $entry;
     }
 
-    public function createRepeat(Entry $entry, array $data): Periodicity
+    public function createPeriodicity(Entry $entry, array $data): Periodicity
     {
         $periodicity = new Periodicity($entry);
         var_dump($data['rep_opt']);

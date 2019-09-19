@@ -7,6 +7,7 @@ use App\Entity\Entry;
 use App\Migration\MigrationFactory;
 use App\Migration\MigrationUtil;
 use App\Migration\RequestData;
+use App\Periodicity\GeneratorEntry;
 use App\Periodicity\PeriodicityDaysProvider;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
@@ -72,6 +73,14 @@ class MigrationCommand extends Command
      * @var PeriodicityDaysProvider
      */
     private $periodicityDaysProvider;
+    /**
+     * @var GeneratorEntry
+     */
+    private $generatorEntry;
+    /**
+     * @var array
+     */
+    private $resolveRepeats = [];
 
     public function __construct(
         string $name = null,
@@ -79,7 +88,8 @@ class MigrationCommand extends Command
         EntityManagerInterface $entityManager,
         MigrationUtil $migrationUtil,
         MigrationFactory $migrationFactory,
-        PeriodicityDaysProvider $periodicityDaysProvider
+        PeriodicityDaysProvider $periodicityDaysProvider,
+        GeneratorEntry $generatorEntry
     ) {
         parent::__construct($name);
         $this->requestData = $requestData;
@@ -87,6 +97,7 @@ class MigrationCommand extends Command
         $this->migrationUtil = $migrationUtil;
         $this->migrationFactory = $migrationFactory;
         $this->periodicityDaysProvider = $periodicityDaysProvider;
+        $this->generatorEntry = $generatorEntry;
     }
 
     protected function configure()
@@ -190,7 +201,7 @@ class MigrationCommand extends Command
         $this->handleEntry($date);
         $this->io->newLine();
         $this->io->section('Génération des répétitions');
-        $this->handleGenerateRepeat();
+        //  $this->handleGenerateRepeatEntries();
         $this->io->newLine();
         $this->io->success('Importation terminée :-) .');
 
@@ -266,7 +277,7 @@ class MigrationCommand extends Command
             $params = ['date' => $date->format('Y-m-d')];
         }
         $entries = $this->decompress($this->requestData->getEntries($params), 'entry');
-        $entries = $this->migrationUtil->groupByRepeat($entries);
+        // $entries = $this->migrationUtil->groupByRepeat($entries);
 
         $progressBar = new ProgressBar($this->output);
 
@@ -289,10 +300,10 @@ class MigrationCommand extends Command
 
                 }
 
-
                 if ($id > 0) {
-                    $this->handlerRepeat($entry, $id);
+                    $this->handlerPeriodicity($entry, $id);
                 }
+
                 $this->entityManager->flush();
                 //  $this->io->note(memory_get_usage());
                 $room = null;
@@ -305,13 +316,19 @@ class MigrationCommand extends Command
         }
     }
 
-    private function handlerRepeat(Entry $entry, int $id)
+    private function handlerPeriodicity(Entry $entry, int $id)
     {
-        $key = array_search($id, array_column($this->repeats, 'id'));
-        $repeat = $this->repeats[$key];
-        $periodicity = $this->migrationFactory->createRepeat($entry, $repeat);
-        $this->entityManager->persist($periodicity);
+        if (isset($this->resolveRepeats[$id])) {
+            $periodicity = $this->resolveRepeats[$id];
+        } else {
+            $key = array_search($id, array_column($this->repeats, 'id'));
+            $repeat = $this->repeats[$key];
+            $periodicity = $this->migrationFactory->createPeriodicity($entry, $repeat);
+            $this->entityManager->persist($periodicity);
+        }
         $entry->setPeriodicity($periodicity);
+        $this->entityManager->flush();
+        $this->resolveRepeats[$id] = $periodicity;
     }
 
     private function handleAreaAdmin()
@@ -378,7 +395,7 @@ class MigrationCommand extends Command
         }
     }
 
-    private function handleGenerateRepeat()
+    private function handleGenerateRepeatEntries()
     {
         $entries = $this->migrationUtil->entryRepository->withPeriodicity();
 
@@ -387,15 +404,12 @@ class MigrationCommand extends Command
         foreach ($progressBar->iterate($entries) as $entry) {
             $days = $this->periodicityDaysProvider->getDaysByEntry($entry);
             foreach ($days as $day) {
-                $periodicityDay = new PeriodicityDay();
-                $periodicityDay->setDatePeriodicity($day->toImmutable());
-                $periodicityDay->setEntry($entry);
-                $this->periodicityDayManager->persist($periodicityDay);
+                $newEntry = $this->generatorEntry->generateEntry($entry, $day);
+                $this->entityManager->persist($newEntry);
             }
         }
         $this->entityManager->flush();
     }
-
 
     private function decompress(string $content, string $type): array
     {

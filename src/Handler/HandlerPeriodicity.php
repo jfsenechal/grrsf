@@ -48,7 +48,7 @@ class HandlerPeriodicity
         $this->generatorEntry = $generatorEntry;
     }
 
-    public function handleNewEntry(Entry $entry)
+    public function handleNewPeriodicity(Entry $entry)
     {
         $periodicity = $entry->getPeriodicity();
         if ($periodicity) {

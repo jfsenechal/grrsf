@@ -60,11 +60,12 @@ class Periodicity
     private $entries;
 
     /**
+     * Use for validator form
      * @var Entry|null
      */
     private $entry_reference;
 
-    public function __construct(Entry $entry)
+    public function __construct(?Entry $entry = null)
     {
         $this->week_days = [];
         $this->entries = new ArrayCollection();
