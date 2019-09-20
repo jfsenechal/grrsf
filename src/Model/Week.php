@@ -25,7 +25,7 @@ class Week
      */
     protected $last_day;
 
-    public static function createWithLocal(int $year, int $week): Week
+    public static function create(int $year, int $week): Week
     {
         Assert::greaterThan($year, 0);
         Assert::greaterThan($week, 0);
@@ -44,11 +44,14 @@ class Week
     }
 
     /**
+     * Retourne la liste des jours de la semaines
      * @return CarbonPeriod
      */
     public function getCalendarDays(): CarbonPeriod
     {
-        return Carbon::parse($this->getFirstDay()->toDateString())->daysUntil($this->getLastDay()->toDateString());
+        return Carbon::parse($this->getFirstDay()->toDateString())->daysUntil(
+            $this->getLastDay()->toDateString()
+        )->locale(LocalHelper::getDefaultLocal());
     }
 
     public function getFirstDay(): CarbonInterface

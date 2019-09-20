@@ -13,12 +13,12 @@
         <tr>
             <th>{{ 'ressources'|trans }}</th>
             {% for day in week.calendarDays %}
-                <th>{{ day.dayName|lower }} {{ day.day }} {{ day.monthName|lower }}</th>
+                <th>{{ day.dayName|capitalize }} {{ day.day }}</th>
             {% endfor %}
         </tr>
         </thead>
         <tbody>
-        {% for roomModel in data %}
+        {% for roomModel in roomModels %}
             {% set room = roomModel.room %}
             <tr>
                 <td>{{ room.name }}</td>

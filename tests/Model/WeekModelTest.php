@@ -10,7 +10,7 @@ class WeekModelTest extends BaseTesting
 {
     public function testCreate()
     {
-        $week = Week::createWithLocal(2019, 34);
+        $week = Week::create(2019, 34);
 
         $this->assertInstanceOf(Week::class, $week);
         $this->assertSame('2019-08-19', $week->getFirstDay()->toDateString());

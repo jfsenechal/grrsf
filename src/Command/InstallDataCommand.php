@@ -143,7 +143,7 @@ class InstallDataCommand extends Command
             $type = $this->typeEntryFactory->createNew();
             $type->setLetter($index);
             $type->setName($nom);
-            $type->setColor($colors[random_int(0, count($colors))]);
+            $type->setColor($colors[random_int(0, count($colors)-1)]);
             $this->entryTypeRepository->persist($type);
         }
         $this->entryTypeRepository->flush();

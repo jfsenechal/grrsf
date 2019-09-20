@@ -1,8 +1,6 @@
 <td>
     {% for entry in day.entries %}
-        <p>
-            <a href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">{{ entry.name }}</a>
-        </p>
+        {% include '@grr_front/week/_entry_line.html.twig' %}
     {% else %}
         <a href="{{ grrGenerateRouteAddEntry(area.id,room.id, day.day) }}" class="float-right"
            title="{{ 'btn.entry.add.title'|trans }}"> <i

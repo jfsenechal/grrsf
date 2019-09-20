@@ -6,6 +6,8 @@ use App\Tests\BaseTesting;
 
 class DefaultControllerTest extends BaseTesting
 {
+    private $name_entry = 'Réunion a ce jour';
+
     public function testHomeFront()
     {
         $this->loadFixtures();
@@ -13,12 +15,12 @@ class DefaultControllerTest extends BaseTesting
         $url = '/';
         $client = self::createClient();
         $client->request('GET', $url);
-        $crawler = $client->followRedirect();
+        $client->followRedirect();
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('th', 'Aujourd\'hui');
-        self::assertCount(2, $crawler->filter('th:contains("Mercredi")'));
+        //self::assertCount(1, $crawler->filter('th:contains("Mercredi")'));
+        self::assertSelectorTextContains('tr', 'Mercredi');
         //  self::assertSelectorTextContains('th', 'Mercredi');
-        //var_dump($client->getResponse()->getContent());
     }
 
     public function testMonthView()
@@ -32,10 +34,12 @@ class DefaultControllerTest extends BaseTesting
                 'm'
             ).'/room';
         $client = self::createClient();
-        $crawler = $client->request('GET', $url);
+        $client->request('GET', $url);
         self::assertResponseIsSuccessful();
-        self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
+        self::assertSelectorTextContains('h6', $this->name_entry);
+        //self::assertCount(1, $crawler->filter('div:contains("Réunion a ce jour")'));
         $client->clickLink($today->format('j'))->last();
+        self::assertResponseIsSuccessful();
     }
 
     public function testWeekView()
@@ -49,11 +53,11 @@ class DefaultControllerTest extends BaseTesting
                 'm'
             ).'/week/'.$today->format('W').'/room';
         $client = self::createClient();
-        $crawler = $client->request('GET', $url);
+        $client->request('GET', $url);
         self::assertResponseIsSuccessful();
-        self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
-
+        self::assertSelectorTextContains('h6', $this->name_entry);
         $client->clickLink($today->format('j'))->last();
+        self::assertResponseIsSuccessful();
     }
 
     public function testDayView()
@@ -69,11 +73,12 @@ class DefaultControllerTest extends BaseTesting
         $client = self::createClient();
         $crawler = $client->request('GET', $url);
         self::assertResponseIsSuccessful();
-        self::assertCount(1, $crawler->filter('td:contains("Réunion a ce jour")'));
-
-        $crawler = $client->clickLink('Réunion a ce jour');
-        self::assertCount(1, $crawler->filter('td:contains("Box")'));
-        self::assertCount(1, $crawler->filter('td:contains("Location")'));
+        self::assertSelectorTextContains('html', $this->name_entry);
+        $client->clickLink($this->name_entry);
+        self::assertCount(1, $crawler->filter('th:contains("Box")'));
+        self::assertSelectorTextContains('html', 'Box');
+        //   self::assertCount(1, $crawler->filter('div:contains("Location")'));
+        self::assertSelectorTextContains('html', 'Location');
     }
 
     protected function loadFixtures()

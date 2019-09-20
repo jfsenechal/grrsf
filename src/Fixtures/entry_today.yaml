@@ -5,3 +5,4 @@ App\Entity\Entry:
     end_time: '<carbonToday(14,10)>'
     room: '@room_box'
     type: '@type_entry_C'
+    created_by: 'jf'

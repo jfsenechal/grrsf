@@ -89,15 +89,15 @@ class DefaultController extends AbstractController implements FrontControllerInt
      */
     public function week(Area $area, int $year, int $month, int $week, Room $room = null): Response
     {
-        $weekModel = Week::createWithLocal($year, $week);
-        $data = $this->bindDataManager->bindWeek($weekModel, $area, $room);
+        $weekModel = Week::create($year, $week);
+        $roomModels = $this->bindDataManager->bindWeek($weekModel, $area, $room);
 
         return $this->render(
             '@grr_front/week/week.html.twig',
             [
                 'week' => $weekModel,
                 'area' => $area, //pour lien add entry
-                'data' => $data,
+                'roomModels' => $roomModels,
             ]
         );
     }
