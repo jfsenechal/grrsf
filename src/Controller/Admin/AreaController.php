@@ -165,7 +165,7 @@ class AreaController extends AbstractController
             $areaEvent = new AreaEvent($area);
             $this->eventDispatcher->dispatch($areaEvent, AreaEvent::DELETE_SUCCESS);
         }
-var_dump(123);
+
         return $this->redirectToRoute('grr_admin_area_index');
     }
 }

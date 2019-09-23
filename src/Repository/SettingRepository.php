@@ -19,21 +19,6 @@ class SettingRepository extends ServiceEntityRepository
         parent::__construct($registry, Setting::class);
     }
 
-    public function persist(Setting $Setting)
-    {
-        $this->_em->persist($Setting);
-    }
-
-    public function remove(Setting $Setting)
-    {
-        $this->_em->remove($Setting);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
     /**
      * @param string $name
      *

@@ -33,7 +33,7 @@ class GrrFrontExtension extends AbstractExtension
     /**
      * @var NavigationManager
      */
-    private $calendarNavigationDisplay;
+    private $navigationManager;
     /**
      * @var MenuGenerator
      */
@@ -47,11 +47,11 @@ class GrrFrontExtension extends AbstractExtension
         RequestStack $requestStack,
         MenuGenerator $menuGenerator,
         Environment $twigEnvironment,
-        NavigationManager $calendarNavigationDisplay,
+        NavigationManager $navigationManager,
         EntryTypeRepository $entryTypeRepository
     ) {
         $this->twigEnvironment = $twigEnvironment;
-        $this->calendarNavigationDisplay = $calendarNavigationDisplay;
+        $this->navigationManager = $navigationManager;
         $this->requestStack = $requestStack;
         $this->menuGenerator = $menuGenerator;
         $this->entryTypeRepository = $entryTypeRepository;
@@ -103,6 +103,8 @@ class GrrFrontExtension extends AbstractExtension
             ),
         ];
     }
+
+
 
     /**
      * @param TimeSlot $hour
@@ -170,7 +172,7 @@ class GrrFrontExtension extends AbstractExtension
 
         $monthModel = Month::init($year, $month);
 
-        $navigation = $this->calendarNavigationDisplay->createMonth($monthModel);
+        $navigation = $this->navigationManager->createMonth($monthModel);
 
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_calendar_navigation.html.twig',
@@ -218,7 +220,7 @@ class GrrFrontExtension extends AbstractExtension
        $types = $this->entryTypeRepository->findAll();
 
         return $this->twigEnvironment->render(
-            '@grr_front/month/_legend_entry_type.html.twig',
+            '@grr_front/_legend_entry_type.html.twig',
             ['types' => $types]
         );
 

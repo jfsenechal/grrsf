@@ -9,43 +9,20 @@
 namespace App\Manager;
 
 use App\Entity\Area;
-use App\Repository\AreaRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
-class AreaManager
+class AreaManager extends BaseManager
 {
-    /**
-     * @var AreaRepository
-     */
-    private $areaRepository;
     /**
      * @var RoomManager
      */
     private $roomManager;
 
-    public function __construct(AreaRepository $areaRepository, RoomManager $roomManager)
+    public function __construct(EntityManagerInterface $entityManager, RoomManager $roomManager)
     {
-        $this->areaRepository = $areaRepository;
+        parent::__construct($entityManager);
+        $this->entityManager = $entityManager;
         $this->roomManager = $roomManager;
-    }
-
-    public function persist(Area $area)
-    {
-        $this->areaRepository->persist($area);
-    }
-
-    public function remove(Area $area)
-    {
-        $this->areaRepository->remove($area);
-    }
-
-    public function flush()
-    {
-        $this->areaRepository->flush();
-    }
-
-    public function insert(Area $area)
-    {
-        $this->areaRepository->insert($area);
     }
 
     public function removeRooms(Area $area)
@@ -53,6 +30,6 @@ class AreaManager
         foreach ($area->getRooms() as $room) {
             $this->roomManager->remove($room);
         }
-        $this->roomManager->flush();
+        $this->flush();
     }
 }

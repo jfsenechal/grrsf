@@ -34,21 +34,22 @@ class LocalHelper
         /**
          * Parameter from config symfony framework.yaml
          * */
-        $locale = $this->parameterBag->get('locale');
+        self::$defaultLocale = $this->parameterBag->get('locale');
         /**
          * Navigator
          */
         $master = $this->requestStack->getMasterRequest();
         if ($master) {
-            $locale = $master->getLocale();
+            self::$defaultLocale = $master->getLocale();
         }
         /**
          * user preference
          */
         if ($user) {
-            $locale = $user->getLanguageDefault();
+            if ($user->getLanguageDefault()) {
+                self::$defaultLocale = $user->getLanguageDefault();
+            }
         }
-        self::$defaultLocale = $locale;
     }
 
     public static function getDefaultLocal()

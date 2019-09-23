@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Handler;
+namespace App\Entry;
 
 use App\Entity\Entry;
 use App\Manager\EntryManager;
+use App\Periodicity\HandlerPeriodicity;
 use App\Repository\EntryRepository;
+use App\Service\PropertyUtil;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Security;
 
@@ -26,23 +28,27 @@ class HandlerEntry
      * @var HandlerPeriodicity
      */
     private $handlerPeriodicity;
+    /**
+     * @var PropertyUtil
+     */
+    private $propertyUtil;
 
     public function __construct(
         EntryRepository $entryRepository,
         EntryManager $entryManager,
         HandlerPeriodicity $handlerPeriodicity,
-        Security $security
+        Security $security,
+        PropertyUtil $propertyUtil
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryManager = $entryManager;
         $this->security = $security;
         $this->handlerPeriodicity = $handlerPeriodicity;
+        $this->propertyUtil = $propertyUtil;
     }
 
     public function handleNewEntry(FormInterface $form, Entry $entry)
     {
-        $data = $form->getData();
-
         $this->setUserAdd($entry);
         $this->fullDay($entry);
         $periodicity = $entry->getPeriodicity();
@@ -57,16 +63,19 @@ class HandlerEntry
         $this->handlerPeriodicity->handleNewPeriodicity($entry);
     }
 
-    public function handleEditEntry(FormInterface $form, Entry $entry)
+    public function handleEditEntry()
     {
-        $data = $form->getData();
-        $type = $data->getPeriodicity()->getType();
-        if (null === $type) {
-            $entry->setPeriodicity(null);
-            //   $this->periodicityManager->remove($periodicity);
-            // $this->periodicityManager->flush();
-        }
         $this->entryManager->flush();
+    }
+
+    public function handleEditEntryWithPeriodicity(Entry $oldEntry, Entry $entry)
+    {
+        if ($this->handlerPeriodicity->periodicityHasChange($oldEntry, $entry)) {
+            $this->handlerPeriodicity->handleEditPeriodicity($oldEntry, $entry);
+        } else {
+            $this->updateEntriesWithSamePeriodicity($entry);
+            $this->entryManager->flush();
+        }
     }
 
     protected function fullDay(Entry $entry)
@@ -84,6 +93,12 @@ class HandlerEntry
         }
     }
 
+    public function handleDeleteEntry(Entry $entry)
+    {
+        $this->entryManager->remove($entry);
+        $this->entryManager->flush();
+    }
+
     protected function setUserAdd(Entry $entry)
     {
         $user = $this->security->getUser();
@@ -91,9 +106,33 @@ class HandlerEntry
         $entry->setCreatedBy($username);
     }
 
-    public function handleDeleteEntry(Entry $entry)
+    /**
+     * @param Entry $entry
+     */
+    protected function updateEntriesWithSamePeriodicity(Entry $entry)
     {
-        $this->entryManager->remove($entry);
-        $this->entryManager->flush();
+        $propertyAccessor = $this->propertyUtil->getPropertyAccessor();
+        $excludes = ['id', 'createdAt'];
+
+        foreach ($this->entryRepository->findByPeriodicity($entry->getPeriodicity()) as $entry2) {
+            foreach ($this->propertyUtil->getProperties(Entry::class) as $property) {
+                if (!in_array($property, $excludes, true)) {
+                    $value = $propertyAccessor->getValue($entry, $property);
+                    $propertyAccessor->setValue($entry2, $property, $value);
+                }
+            }
+        }
     }
+
+    public function prepareToEditWithPeriodicity(Entry $entry): Entry
+    {
+        $entryReference = $this->entryRepository->getBaseEntryForPeriodicity($entry->getPeriodicity());
+
+        $entryReference->setArea($entryReference->getRoom()->getArea());
+        $periodicity = $entryReference->getPeriodicity();
+        $periodicity->setEntryReference($entryReference);//use for validator
+
+        return $entryReference;
+    }
+
 }

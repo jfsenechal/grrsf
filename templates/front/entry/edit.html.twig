@@ -9,7 +9,19 @@
             <h2>{{ entry.name }}</h2>
         </div>
         <div class="card-body">
-            {{ include('@grr_front/entry/form/_form.html.twig', {'button_label': 'Update'}) }}
+            <div class="row">
+                <div class="col-6">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    {% include '@grr_front/entry/form/_form_entry.html.twig' %}
+                    <button class="btn btn-primary" type="submit"><i
+                                class="far fa-save"></i> {{ 'form.btn.save'|trans({}, 'actions') }}</button>
+                    {{ form_end(form) }}
+                </div>
+                <div class="col-6">
+                    {% include '@grr_front/periodicity/_show.html.twig' %}
+                </div>
+            </div>
         </div>
     </div>
 

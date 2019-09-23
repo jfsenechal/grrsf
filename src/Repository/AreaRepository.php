@@ -24,26 +24,4 @@ class AreaRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('area')
             ->orderBy('area.name', 'ASC');
     }
-
-    public function persist(Area $area)
-    {
-        $this->_em->persist($area);
-    }
-
-    public function insert(Area $area)
-    {
-        $this->persist($area);
-        $this->flush();
-    }
-
-    public function remove(Area $area)
-    {
-        $this->_em->remove($area);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
 }

@@ -2,8 +2,14 @@ form:
   btn:
     save: Sauvegarder
     update: Sauvegarder
-    edit: Modifier
-    delete: Supprimer
+    edit:
+      label: Modifier
+      entry: Modifier la réservation
+      periodicity: Modifier la périodicité
+    delete:
+      label: Supprimer
+      entry: Supprimer la réservation
+      periodicity: Supprimer la périodicité
     cancel: Annuler
     see: Visualiser
     search: Rechercher
@@ -93,3 +99,6 @@ typeEntry:
 link:
   back:
     touser: Retour à l'utilisateur
+periodicity:
+  delete:
+    confirm: Supprimer la périodicité et toutes les réservations associées

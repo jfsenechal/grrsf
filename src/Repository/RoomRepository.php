@@ -50,24 +50,4 @@ class RoomRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function persist(Room $room)
-    {
-        $this->_em->persist($room);
-    }
-
-    public function insert(Room $room)
-    {
-        $this->persist($room);
-        $this->flush();
-    }
-
-    public function remove(Room $room)
-    {
-        $this->_em->remove($room);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
 }

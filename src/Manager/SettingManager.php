@@ -8,38 +8,7 @@
 
 namespace App\Manager;
 
-use App\Entity\Area;
-use App\Repository\SettingRepository;
-
-class SettingManager
+class SettingManager extends BaseManager
 {
-    /**
-     * @var SettingRepository
-     */
-    private $SettingRepository;
 
-    public function __construct(SettingRepository $SettingRepository)
-    {
-        $this->SettingRepository = $SettingRepository;
-    }
-
-    public function persist(Area $area)
-    {
-        $this->SettingRepository->persist($area);
-    }
-
-    public function remove(Area $area)
-    {
-        $this->SettingRepository->remove($area);
-    }
-
-    public function flush()
-    {
-        $this->SettingRepository->flush();
-    }
-
-    public function insert(Area $area)
-    {
-        $this->SettingRepository->insert($area);
-    }
 }

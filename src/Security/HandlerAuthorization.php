@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Handler;
+namespace App\Security;
 
 use App\Entity\Area;
 use App\Entity\Room;

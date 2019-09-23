@@ -2,8 +2,15 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Entry;
 use App\Entity\Periodicity;
+use App\Entry\HandlerEntry;
+use App\Events\EntryEvent;
+use App\Form\EntryWithPeriodicityType;
 use App\Manager\PeriodicityManager;
+use App\Periodicity\PeriodicityConstant;
+use App\Repository\EntryRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +25,68 @@ class PeriodicityController extends AbstractController
      * @var PeriodicityManager
      */
     private $periodicityManager;
+    /**
+     * @var HandlerEntry
+     */
+    private $handlerEntry;
+    /**
+     * @var EntryRepository
+     */
+    private $entryRepository;
 
-    public function __construct(PeriodicityManager $periodicityManager)
-    {
+    public function __construct(
+        PeriodicityManager $periodicityManager,
+        HandlerEntry $handlerEntry,
+        EntryRepository $entryRepository
+    ) {
         $this->periodicityManager = $periodicityManager;
+        $this->handlerEntry = $handlerEntry;
+        $this->entryRepository = $entryRepository;
+    }
+
+    /**
+     * @Route("/{id}/edit", name="grr_front_periodicity_edit", methods={"GET", "POST"})
+     * @IsGranted("grr.entry.edit", subject="entry")
+     */
+    public function edit(Request $request, Entry $entry): Response
+    {
+        $displayOptionsWeek = false;
+        $entry = $this->handlerEntry->prepareToEditWithPeriodicity($entry);
+
+        $periodicity = $entry->getPeriodicity();
+        $typePeriodicity = $periodicity ? $periodicity->getType() : 0;
+
+        if (PeriodicityConstant::EVERY_WEEK === $typePeriodicity) {
+            $displayOptionsWeek = true;
+        }
+
+        $oldEntry = clone $entry;
+
+        $form = $this->createForm(EntryWithPeriodicityType::class, $entry);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->handlerEntry->handleEditEntryWithPeriodicity($oldEntry, $entry);
+
+            $entryEvent = new EntryEvent($entry);
+            //$this->eventDispatcher->dispatch($entryEvent, EntryEvent::EDIT_SUCCESS);
+
+            /*   return $this->redirectToRoute(
+                   'grr_front_entry_show',
+                   ['id' => $entry->getId()]
+               );*/
+        }
+
+        return $this->render(
+            '@grr_front/periodicity/edit.html.twig',
+            [
+                'entry' => $entry,
+                'displayOptionsWeek' => $displayOptionsWeek,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -29,7 +94,7 @@ class PeriodicityController extends AbstractController
      */
     public function delete(Request $request, Periodicity $periodicity): Response
     {
-        $entry = $periodicity->getEntry();
+        $entry = $this->entryRepository->getBaseEntryForPeriodicity($periodicity);
 
         if ($this->isCsrfTokenValid('delete'.$periodicity->getId(), $request->request->get('_token'))) {
             $this->periodicityManager->remove($periodicity);

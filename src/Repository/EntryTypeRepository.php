@@ -19,24 +19,4 @@ class EntryTypeRepository extends ServiceEntityRepository
         parent::__construct($registry, EntryType::class);
     }
 
-    public function persist(EntryType $typeArea)
-    {
-        $this->_em->persist($typeArea);
-    }
-
-    public function insert(EntryType $typeArea)
-    {
-        $this->persist($typeArea);
-        $this->flush();
-    }
-
-    public function remove(EntryType $typeArea)
-    {
-        $this->_em->remove($typeArea);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
 }

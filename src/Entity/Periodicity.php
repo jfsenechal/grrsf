@@ -34,7 +34,7 @@ class Periodicity
      *
      * @see PeriodicityConstant::getTypesPeriodicite
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $type;
 
@@ -67,6 +67,7 @@ class Periodicity
 
     public function __construct(?Entry $entry = null)
     {
+        $this->type = 0;
         $this->week_days = [];
         $this->entries = new ArrayCollection();
         $this->entry_reference = $entry;

@@ -70,7 +70,6 @@ class EntryType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('periodicity', PeriodicityType::class)
             ->addEventSubscriber(new AddDurationFieldSubscriber($this->durationFactory))
             ->addEventSubscriber(new AddRoomFieldSubscriber('room', true, false, false));
     }

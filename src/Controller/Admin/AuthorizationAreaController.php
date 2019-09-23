@@ -3,11 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Area;
-use App\Events\AuthorizationEvent;
 use App\Form\Security\AuthorizationAreaType;
-use App\Handler\HandlerAuthorization;
 use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
+use App\Security\HandlerAuthorization;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

@@ -3,12 +3,15 @@
     <table class="table table-bordered">
         <tr>
             <th>{{ 'periodicity.endtime.label' |trans }}</th>
-            <td>{{ entry.periodicity.endTime|date('d-m-Y') }}</td>
+            <td>
+                {{ entry.periodicity.endTime|date('d-m-Y') }}
+            </td>
         <tr>
         <tr>
             <th>{{ 'periodicity.type.label'|trans }}</th>
             <td>{{ entry.periodicity.type|grrPeriodicityTypeName|trans }}</td>
         <tr>
+            {% if entry.periodicity.type == constant('App\\Periodicity\\PeriodicityConstant::EVERY_WEEK') %}
         <tr>
             <th>{{ 'periodicity.repeatWeek.label'|trans }}</th>
             <td>{{ entry.periodicity.weekRepeat }}</td>
@@ -21,6 +24,7 @@
                 {% endfor %}
             </td>
         <tr>
+            {% endif %}
     </table>
 
 {% endif %}

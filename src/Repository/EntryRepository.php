@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Area;
 use App\Entity\Entry;
+use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Model\Month;
 use Carbon\CarbonInterface;
@@ -175,36 +176,17 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param \DateTimeInterface|null $dateTime
-     * @param Area|null $area
-     * @param Room|null $room
-     *
-     * @return Entry[] Returns an array of Entry objects
+     * @return Entry[]
      */
-    public function search2(\DateTimeInterface $dateTime = null, Area $area = null, Room $room = null)
+    public function findByPeriodicity(Periodicity $periodicity)
     {
         $qb = $this->createQueryBuilder('entry');
 
-        if (null !== $dateTime) {
-            $date = $dateTime->format('Y-m-d');
-            $qb->andWhere('entry.start_time LIKE :date')
-                ->setParameter('date', '%'.$date.'%');
-        }
-
-        if ($area instanceof Area) {
-            $rooms = $this->getRooms($area);
-            $qb->andWhere('entry.roomId IN (:rooms)')
-                ->setParameter('rooms', $rooms);
-        }
-
-        if ($room instanceof Room) {
-            $qb->andWhere('entry.roomId = :room')
-                ->setParameter('room', $room);
-        }
+        $qb->andWhere('entry.periodicity = :periodicity')
+            ->setParameter('periodicity', $periodicity);
 
         return $qb
-            ->orderBy('entry.start_time', 'DESC')
-            ->setMaxResults(500)
+            ->orderBy('entry.start_time', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -222,24 +204,24 @@ class EntryRepository extends ServiceEntityRepository
         return $roomRepository->findByArea($area);
     }
 
-    public function persist(Entry $entry)
+    /**
+     * Retourne l'entry de base de la repetition
+     * @param Periodicity $periodicity
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getBaseEntryForPeriodicity(Periodicity $periodicity)
     {
-        $this->_em->persist($entry);
+        $qb = $this->createQueryBuilder('entry');
+
+        $qb->andWhere('entry.periodicity = :periodicity')
+            ->setParameter('periodicity', $periodicity)
+            ->orderBy('entry.start_time', 'ASC');
+
+        return $qb->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
     }
 
-    public function insert(Entry $entry)
-    {
-        $this->persist($entry);
-        $this->flush();
-    }
-
-    public function remove(Entry $entry)
-    {
-        $this->_em->remove($entry);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
 }

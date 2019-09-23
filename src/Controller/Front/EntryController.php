@@ -5,14 +5,15 @@ namespace App\Controller\Front;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
+use App\Entry\HandlerEntry;
 use App\Events\EntryEvent;
 use App\Factory\EntryFactory;
 use App\Form\EntryType;
+use App\Form\EntryWithPeriodicityType;
 use App\Form\Search\SearchEntryType;
-use App\Handler\HandlerEntry;
-use App\Periodicity\PeriodicityConstant;
 use App\Periodicity\PeriodicityDaysProvider;
 use App\Repository\EntryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -120,7 +121,7 @@ class EntryController extends AbstractController
         $entryEvent = new EntryEvent($entry);
         $this->eventDispatcher->dispatch($entryEvent, EntryEvent::NEW_INITIALIZE);
 
-        $form = $this->createForm(EntryType::class, $entry);
+        $form = $this->createForm(EntryWithPeriodicityType::class, $entry);
 
         $form->handleRequest($request);
 
@@ -166,24 +167,16 @@ class EntryController extends AbstractController
      * @Route("/{id}/edit", name="grr_front_entry_edit", methods={"GET", "POST"})
      * @IsGranted("grr.entry.edit", subject="entry")
      */
-    public function edit(Request $request, Entry $entry): Response
+    public function edit(Request $request, Entry $entry, EntityManagerInterface $entityManager): Response
     {
-        $displayOptionsWeek = false;
         $entry->setArea($entry->getRoom()->getArea());
-        $periodicity = $entry->getPeriodicity();
-
-        $typePeriodicity = $periodicity ? $periodicity->getType() : 0;
-
-        if (PeriodicityConstant::EVERY_WEEK === $typePeriodicity) {
-            $displayOptionsWeek = true;
-        }
 
         $form = $this->createForm(EntryType::class, $entry);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->handlerEntry->handleEditEntry($form, $entry);
+            $this->handlerEntry->handleEditEntry();
 
             $entryEvent = new EntryEvent($entry);
             $this->eventDispatcher->dispatch($entryEvent, EntryEvent::EDIT_SUCCESS);
@@ -198,7 +191,6 @@ class EntryController extends AbstractController
             '@grr_front/entry/edit.html.twig',
             [
                 'entry' => $entry,
-                'displayOptionsWeek' => $displayOptionsWeek,
                 'form' => $form->createView(),
             ]
         );

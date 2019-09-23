@@ -8,38 +8,27 @@
 
 namespace App\Manager;
 
-use App\Entity\Entry;
+use App\Entity\Periodicity;
 use App\Repository\EntryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
-class EntryManager
+class EntryManager extends BaseManager
 {
     /**
      * @var EntryRepository
      */
     private $entryRepository;
 
-    public function __construct(EntryRepository $entryRepository)
-    {
-        $this->entryRepository = $entryRepository;
-    }
+    public function __construct(EntityManagerInterface $entityManager, EntryRepository $entryRepository)
+   {
+       parent::__construct($entityManager);
+       $this->entryRepository = $entryRepository;
+   }
 
-    public function persist(Entry $entry)
+    public function removeEntriesByPeriodicity(?Periodicity $periodicity)
     {
-        $this->entryRepository->persist($entry);
-    }
-
-    public function remove(Entry $entry)
-    {
-        $this->entryRepository->remove($entry);
-    }
-
-    public function flush()
-    {
-        $this->entryRepository->flush();
-    }
-
-    public function insert(Entry $entry)
-    {
-        $this->entryRepository->insert($entry);
+        foreach ($this->entryRepository->findBy(['periodicity' => $periodicity]) as $entry) {
+            $this->remove($entry);
+        }
     }
 }

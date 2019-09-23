@@ -144,9 +144,9 @@ class InstallDataCommand extends Command
             $type->setLetter($index);
             $type->setName($nom);
             $type->setColor($colors[random_int(0, count($colors)-1)]);
-            $this->entryTypeRepository->persist($type);
+            $this->entityManager->persist($type);
         }
-        $this->entryTypeRepository->flush();
+        $this->entityManager->flush();
     }
 
     public function loadArea()
@@ -156,7 +156,7 @@ class InstallDataCommand extends Command
         if (!$esquare) {
             $esquare = $this->areaFactory->createNew();
             $esquare->setName($esquareName);
-            $this->areaRepository->persist($esquare);
+            $this->entityManager->persist($esquare);
         }
 
         $hdvName = 'Hdv';
@@ -164,7 +164,7 @@ class InstallDataCommand extends Command
         if (!$hdv) {
             $hdv = $this->areaFactory->createNew();
             $hdv->setName($hdvName);
-            $this->areaRepository->persist($hdv);
+            $this->entityManager->persist($hdv);
         }
 
         $salles = [
@@ -185,8 +185,7 @@ class InstallDataCommand extends Command
 
         $this->loadRooms($hdv, $salles);
 
-        $this->areaRepository->flush();
-        $this->roomRepository->flush();
+        $this->entityManager->flush();
 
         return null;
     }
@@ -199,7 +198,7 @@ class InstallDataCommand extends Command
             }
             $room = $this->roomFactory->createNew($area);
             $room->setName($salle);
-            $this->roomRepository->persist($room);
+            $this->entityManager->persist($room);
         }
     }
 
@@ -223,7 +222,8 @@ class InstallDataCommand extends Command
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
         $user->addRole($roleGrrAdministrator);
 
-        $this->userRepository->insert($user);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         $this->io->success("L'utilisateur $email avec le mot de passe $password a bien été créé");
     }
