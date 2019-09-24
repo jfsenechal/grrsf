@@ -43,7 +43,7 @@ class EntryControllerTest extends BaseTesting
         self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation');
+        $form['entry_with_periodicity[name]']->setValue('My reservation');
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -90,9 +90,9 @@ class EntryControllerTest extends BaseTesting
         self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation');
-        $form['entry[duration][time]']->setValue($minutes);
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_MINUTES);
+        $form['entry_with_periodicity[name]']->setValue('My reservation');
+        $form['entry_with_periodicity[duration][time]']->setValue($minutes);
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_MINUTES);
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -152,9 +152,9 @@ class EntryControllerTest extends BaseTesting
         self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation');
-        $form['entry[duration][time]']->setValue(35.5);
-        $form['entry[duration][unit]']->setValue($unit);
+        $form['entry_with_periodicity[name]']->setValue('My reservation');
+        $form['entry_with_periodicity[duration][time]']->setValue(35.5);
+        $form['entry_with_periodicity[duration][unit]']->setValue($unit);
 
         $this->administrator->submit($form);
 
@@ -205,9 +205,9 @@ class EntryControllerTest extends BaseTesting
         self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation');
-        $form['entry[duration][time]']->setValue($time);
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[name]']->setValue('My reservation');
+        $form['entry_with_periodicity[duration][time]']->setValue($time);
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
 
         $this->administrator->submit($form);
 
@@ -268,9 +268,9 @@ class EntryControllerTest extends BaseTesting
         self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation');
-        $form['entry[duration][time]']->setValue(3);
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_WEEKS);
+        $form['entry_with_periodicity[name]']->setValue('My reservation');
+        $form['entry_with_periodicity[duration][time]']->setValue(3);
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_WEEKS);
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -306,9 +306,9 @@ class EntryControllerTest extends BaseTesting
         self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation');
-        $form['entry[duration][time]']->setValue(3);
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_DAYS);
+        $form['entry_with_periodicity[name]']->setValue('My reservation');
+        $form['entry_with_periodicity[duration][time]']->setValue(3);
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_DAYS);
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -354,9 +354,9 @@ class EntryControllerTest extends BaseTesting
         self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation');
-        $form['entry[duration][time]']->setValue($hours);
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[name]']->setValue('My reservation');
+        $form['entry_with_periodicity[duration][time]']->setValue($hours);
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
 
         $this->administrator->submit($form);
 

@@ -6,6 +6,7 @@ use App\Entity\Security\User;
 use App\Events\UserEvent;
 use App\Form\Security\UserPasswordType;
 use App\Manager\UserManager;
+use App\Security\PasswordHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -26,13 +27,19 @@ class PasswordController extends AbstractController
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
+    /**
+     * @var PasswordHelper
+     */
+    private $passwordEncoder;
 
     public function __construct(
         UserManager $userManager,
+        PasswordHelper $passwordEncoder,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->userManager = $userManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
@@ -46,7 +53,7 @@ class PasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $password = $data->getPassword();
-            $user->setPassword($this->userManager->encodePassword($user, $password));
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
             $this->userManager->flush();
 
             $userEvent = new UserEvent($user);

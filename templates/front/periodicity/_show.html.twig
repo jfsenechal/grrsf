@@ -27,7 +27,8 @@
             {% endif %}
     </table>
     <br/>
-    {% for child in periodicities %}
-        <span class="text-muted">{{ child.startTime |date('d-m-Y H:i') }}</span>
+    <h5>{{ 'periodicity.repeats.title'|trans }}</h5>
+    {% for repeat in repeats %}
+        <span class="text-muted">{{ repeat.startTime |date('d-m-Y H:i') }}</span>
     {% endfor %}
 {% endif %}

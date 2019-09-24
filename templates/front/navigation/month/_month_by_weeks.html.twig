@@ -6,7 +6,7 @@
                 {{ firstDay.monthName|upper }} {{ firstDay.year }}
             </a>
             <hr>
-            <a href="{{ grrGenerateRouteDayView(today.day) }}">
+            <a href="{{ grrGenerateRouteDayView(today.day, today) }}">
                 {{ 'Today' | trans}}
             </a>
         </th>

@@ -163,16 +163,16 @@ class EntryController extends AbstractController
     public function show(Entry $entry): Response
     {
         $urlList = $this->frontRouterHelper->generateMonthView($entry);
-        $periodicities = [];
+        $repeats = [];
         if ($periodicity = $entry->getPeriodicity()) {
-            $periodicities = $this->entryRepository->findByPeriodicity($periodicity);
+            $repeats = $this->entryRepository->findByPeriodicity($periodicity);
         }
 
         return $this->render(
             '@grr_front/entry/show.html.twig',
             [
                 'entry' => $entry,
-                'periodicities' => $periodicities,
+                'repeats' => $repeats,
                 'url_back' => $urlList,
             ]
         );
@@ -210,7 +210,7 @@ class EntryController extends AbstractController
             '@grr_front/entry/edit.html.twig',
             [
                 'entry' => $entry,
-                'periodicities' => [],
+                'repeats' => [],
                 'form' => $form->createView(),
             ]
         );

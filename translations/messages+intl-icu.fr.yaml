@@ -8,6 +8,8 @@ periodicity:
     label: Répétition par semaine
   days:
     label: Jour(s) de la semaine
+  repeats:
+    title: Répétition(s)
 Today: Aujourd'hui
 menu:
   user:

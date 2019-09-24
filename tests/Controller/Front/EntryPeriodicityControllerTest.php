@@ -27,13 +27,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $end = clone $today;
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2.5);
-        $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_DAY);
-        $form['entry[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['entry[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['entry[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2.5);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_DAY);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
 
@@ -61,13 +61,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $today->modify('+5 days');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_DAYS);
-        $form['entry[duration][time]']->setValue(3);
-        $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_DAY);
-        $form['entry[periodicity][endTime][day]']->setValue($today->format('j'));
-        $form['entry[periodicity][endTime][month]']->setValue($today->format('n'));
-        $form['entry[periodicity][endTime][year]']->setValue($today->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_DAYS);
+        $form['entry_with_periodicity[duration][time]']->setValue(3);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_DAY);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($today->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($today->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($today->format('Y'));
 
         $this->administrator->submit($form);
 
@@ -96,13 +96,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $end->modify('+3 days');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2.5);
-        $form['periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_DAY);
-        $form['periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2.5);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_DAY);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -122,16 +122,19 @@ class EntryPeriodicityControllerTest extends BaseTesting
             $this->administrator->getResponse()->getContent()
         );
 
-        $this->assertContains(
-            $today->format($end->format('Y-m-d')),
-            $this->administrator->getResponse()->getContent()
-        );
+        $result = ['24-09-2019 11:30', '25-09-2019 11:30', '26-09-2019 11:30', '27-09-2019 11:30'];
+
+        foreach ($result as $value) {
+            $this->assertContains(
+                $value,
+                $this->administrator->getResponse()->getContent()
+            );
+        }
 
         $this->assertContains(
-            $today->format('Y-m-d').' to '.$end->format('Y-m-d'),
+            $today->format($end->format('d-m-Y')),
             $this->administrator->getResponse()->getContent()
         );
-
     }
 
     public function testMonthBadEndTime()
@@ -153,13 +156,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $end->modify('+3 days');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2.5);
-        $form['periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_MONTH_SAME_DAY);
-        $form['periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2.5);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_MONTH_SAME_DAY);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
 
@@ -188,13 +191,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $end->modify('+3 month');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2.5);
-        $form['periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_MONTH_SAME_DAY);
-        $form['periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2.5);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_MONTH_SAME_DAY);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -215,14 +218,17 @@ class EntryPeriodicityControllerTest extends BaseTesting
         );
 
         $this->assertContains(
-            $today->format($end->format('Y-m-d')),
+            $today->format($end->format('d-m-Y')),
             $this->administrator->getResponse()->getContent()
         );
 
-        $this->assertContains(
-            $today->format('Y-m-d').' to '.$end->format('Y-m-d'),
-            $this->administrator->getResponse()->getContent()
-        );
+        $result = ['24-09-2019 11:30', '24-10-2019 11:30', '24-11-2019 11:30', '24-12-2019 11:30'];
+        foreach ($result as $value) {
+            $this->assertContains(
+                $value,
+                $this->administrator->getResponse()->getContent()
+            );
+        }
     }
 
     public function testMonthSameWeekDay()
@@ -244,13 +250,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $end->modify('+3 month');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2.5);
-        $form['periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY);
-        $form['periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2.5);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -271,17 +277,20 @@ class EntryPeriodicityControllerTest extends BaseTesting
         );
 
         $this->assertContains(
-            $today->format($end->format('Y-m-d')),
+            $today->format($end->format('d-m-Y')),
             $this->administrator->getResponse()->getContent()
         );
 
-        $this->assertContains(
-            $today->format('Y-m-d').' to '.$end->format('Y-m-d'),
-            $this->administrator->getResponse()->getContent()
-        );
+        $result = ['24-09-2019 11:30', '22-10-2019 11:30', '26-11-2019 11:30', '24-12-2019 11:30'];
+        foreach ($result as $value) {
+            $this->assertContains(
+                $value,
+                $this->administrator->getResponse()->getContent()
+            );
+        }
     }
 
-     public function testSameYearBadEndTime()
+    public function testSameYearBadEndTime()
     {
         $this->loadFixtures();
 
@@ -300,13 +309,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $end->modify('+10 months');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2.5);
-        $form['periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_YEAR);
-        $form['periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2.5);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_YEAR);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
 
@@ -316,7 +325,7 @@ class EntryPeriodicityControllerTest extends BaseTesting
         );
     }
 
-     public function testSameYear()
+    public function testSameYear()
     {
         $this->loadFixtures();
 
@@ -335,13 +344,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $end->modify('+3 year');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2.5);
-        $form['periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_YEAR);
-        $form['periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2.5);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_YEAR);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -362,16 +371,18 @@ class EntryPeriodicityControllerTest extends BaseTesting
         );
 
         $this->assertContains(
-            $today->format($end->format('Y-m-d')),
+            $today->format($end->format('d-m-Y')),
             $this->administrator->getResponse()->getContent()
         );
 
-        $this->assertContains(
-            $today->format('Y-m-d').' to '.$end->format('Y-m-d'),
-            $this->administrator->getResponse()->getContent()
-        );
+        $result = ['24-09-2019 11:30', '24-09-2020 11:30', '24-09-2021 11:30', '24-09-2022 11:30'];
+        foreach ($result as $value) {
+            $this->assertContains(
+                $value,
+                $this->administrator->getResponse()->getContent()
+            );
+        }
     }
-
 
     protected function loadFixtures()
     {

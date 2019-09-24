@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Factory\UserFactory;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
+use App\Security\PasswordHelper;
 use App\Security\SecurityRole;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,7 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class CreateuserCommand extends Command
 {
@@ -23,10 +23,6 @@ class CreateuserCommand extends Command
      */
     private $userManager;
     /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $userPasswordEncoder;
-    /**
      * @var UserRepository
      */
     private $userRepository;
@@ -34,19 +30,27 @@ class CreateuserCommand extends Command
      * @var UserFactory
      */
     private $userFactory;
+    /**
+     * @var string
+     */
+    private $name;
+    /**
+     * @var PasswordHelper
+     */
+    private $passwordHelper;
 
     public function __construct(
         string $name = null,
         UserManager $userManager,
         UserFactory $userFactory,
         UserRepository $userRepository,
-        UserPasswordEncoderInterface $userPasswordEncoder
+        PasswordHelper $passwordHelper
     ) {
-        $this->userManager = $userManager;
-        $this->userPasswordEncoder = $userPasswordEncoder;
-        $this->userRepository = $userRepository;
-        $this->userFactory = $userFactory;
         parent::__construct($name);
+        $this->userManager = $userManager;
+        $this->userFactory = $userFactory;
+        $this->userRepository = $userRepository;
+        $this->passwordHelper = $passwordHelper;
     }
 
     protected function configure()
@@ -111,7 +115,7 @@ class CreateuserCommand extends Command
         $user->setEmail($email);
         $user->setUsername($email);
         $user->setName($name);
-        $user->setPassword($this->userManager->encodePassword($user, $password));
+        $user->setPassword($this->passwordHelper->encodePassword($user, $password));
 
         if ($administrator) {
             $user->addRole($role);

@@ -10,6 +10,7 @@ use App\Form\Security\UserAdvanceType;
 use App\Form\Security\UserNewType;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
+use App\Security\PasswordHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -31,7 +32,7 @@ class UserController extends AbstractController
     /**
      * @var UserManager
      */
-    private $utilisateurManager;
+    private $userManager;
     /**
      * @var UserFactory
      */
@@ -40,17 +41,23 @@ class UserController extends AbstractController
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
+    /**
+     * @var PasswordHelper
+     */
+    private $passwordEncoder;
 
     public function __construct(
         UserRepository $utilisateurRepository,
         UserFactory $userFactory,
-        UserManager $utilisateurManager,
+        UserManager $userManager,
+        PasswordHelper $passwordEncoder,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->utilisateurRepository = $utilisateurRepository;
-        $this->utilisateurManager = $utilisateurManager;
+        $this->userManager = $userManager;
         $this->userFactory = $userFactory;
         $this->eventDispatcher = $eventDispatcher;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
@@ -88,7 +95,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->utilisateurManager->encodePassword($utilisateur, $utilisateur->getPassword());
+            $this->passwordEncoder->encodePassword($utilisateur, $utilisateur->getPassword());
             $this->utilisateurRepository->insert($utilisateur);
 
             $userEvent = new UserEvent($utilisateur);

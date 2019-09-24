@@ -8,19 +8,6 @@
 
 namespace App\Manager;
 
-use App\Repository\Security\UserRepository;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-
 class UserManager extends BaseManager
 {
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $userPasswordEncoder;
-
-    public function encodePassword(UserInterface $user, string $clearPassword): string
-    {
-        return $this->userPasswordEncoder->encodePassword($user, $clearPassword);
-    }
 }

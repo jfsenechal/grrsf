@@ -31,7 +31,6 @@ class CreateUserCommandTest extends BaseTesting
         $commandTester->execute(
             [
                 'command' => $command->getName(),
-
                 'email' => 'lolo@domainx.com',
                 'name' => 'Wouter',
                 'password' => 'mdp1234',

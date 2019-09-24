@@ -32,12 +32,6 @@ class EntryWithPeriodicityType extends AbstractType
         );
     }
 
-    public function getBlockPrefix()
-    {
-        return 'periodicity';
-    }
-
-
     public function getParent()
     {
         return EntryType::class;

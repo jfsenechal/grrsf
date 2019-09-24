@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\EntryType;
 use App\Events\EntryTypeEvent;
-use App\Events\UserEvent;
 use App\Factory\TypeEntryFactory;
 use App\Form\TypeEntryType;
 use App\Manager\TypeEntryManager;
@@ -75,7 +74,7 @@ class EntryTypeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entryTypeRepository->insert($entryType);
+            $this->typeEntryManager->insert($entryType);
 
             $entryTypeEvent = new EntryTypeEvent($entryType);
             $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::NEW_SUCCESS);
@@ -114,7 +113,7 @@ class EntryTypeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entryTypeRepository->flush();
+            $this->typeEntryManager->flush();
 
             $entryTypeEvent = new EntryTypeEvent($entryType);
             $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::EDIT_SUCCESS);
@@ -142,8 +141,8 @@ class EntryTypeController extends AbstractController
     public function delete(Request $request, EntryType $entryType): Response
     {
         if ($this->isCsrfTokenValid('delete'.$entryType->getId(), $request->request->get('_token'))) {
-            $this->entryTypeRepository->persist($entryType);
-            $this->entryTypeRepository->flush();
+            $this->typeEntryManager->remove($entryType);
+            $this->typeEntryManager->flush();
 
             $entryTypeEvent = new EntryTypeEvent($entryType);
             $this->eventDispatcher->dispatch($entryTypeEvent, EntryTypeEvent::DELETE_SUCCESS);

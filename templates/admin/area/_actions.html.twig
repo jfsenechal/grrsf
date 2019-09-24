@@ -1,5 +1,5 @@
 <a href="{{ path('grr_admin_area_edit', { 'id': area.id }) }}" role="button"
-   class="btn btn-primary"><i class="far fa-edit"></i> {{ 'form.btn.edit'|trans({}, 'actions') }}</a>
+   class="btn btn-primary"><i class="far fa-edit"></i> {{ 'form.btn.edit.label'|trans({}, 'actions') }}</a>
 
 <a href="{{ path('grr_authorization_area_show', { 'id': area.id }) }}" role="button"
    class="btn btn-primary"><i class="fas fa-user-shield"></i> {{ 'form.btn.perimission'|trans({}, 'actions') }}</a>
@@ -15,7 +15,7 @@
 </a>
 
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-    <i class="fas fa-trash"></i> {{ 'form.btn.delete'|trans({}, 'actions') }}
+    <i class="fas fa-trash"></i> {{ 'form.btn.delete.label'|trans({}, 'actions') }}
 </button>
 <br/>
 <br/>
