@@ -8,6 +8,7 @@
 
 namespace App\Manager;
 
+use App\Entity\Entry;
 use App\Entity\Periodicity;
 use App\Repository\EntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,15 +21,17 @@ class EntryManager extends BaseManager
     private $entryRepository;
 
     public function __construct(EntityManagerInterface $entityManager, EntryRepository $entryRepository)
-   {
-       parent::__construct($entityManager);
-       $this->entryRepository = $entryRepository;
-   }
-
-    public function removeEntriesByPeriodicity(?Periodicity $periodicity)
     {
-        foreach ($this->entryRepository->findBy(['periodicity' => $periodicity]) as $entry) {
-            $this->remove($entry);
+        parent::__construct($entityManager);
+        $this->entryRepository = $entryRepository;
+    }
+
+    public function removeEntriesByPeriodicity(Periodicity $periodicity, Entry $entryToSkip)
+    {
+        foreach ($this->entryRepository->findByPeriodicity($periodicity) as $entry) {
+            if ($entry->getId() != $entryToSkip->getId()) {
+                $this->remove($entry);
+            }
         }
     }
 }

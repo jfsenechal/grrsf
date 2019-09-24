@@ -24,7 +24,7 @@ class PeriodicityValidator extends ConstraintValidator
 
         $typePeriodicity = $value->getType();
 
-        if (null === $typePeriodicity) {
+        if (null === $typePeriodicity || 0 === $typePeriodicity) {
             return;
         }
 

@@ -13,6 +13,7 @@ use App\Form\EntryWithPeriodicityType;
 use App\Form\Search\SearchEntryType;
 use App\Periodicity\PeriodicityDaysProvider;
 use App\Repository\EntryRepository;
+use App\Router\FrontRouterHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -47,19 +48,25 @@ class EntryController extends AbstractController
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
+    /**
+     * @var FrontRouterHelper
+     */
+    private $frontRouterHelper;
 
     public function __construct(
         EntryFactory $entryFactory,
         EntryRepository $entryRepository,
         PeriodicityDaysProvider $periodicityService,
         HandlerEntry $handlerEntry,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        FrontRouterHelper $frontRouterHelper
     ) {
         $this->entryRepository = $entryRepository;
         $this->entryFactory = $entryFactory;
         $this->periodicityService = $periodicityService;
         $this->handlerEntry = $handlerEntry;
         $this->eventDispatcher = $eventDispatcher;
+        $this->frontRouterHelper = $frontRouterHelper;
     }
 
     /**
@@ -155,10 +162,18 @@ class EntryController extends AbstractController
      */
     public function show(Entry $entry): Response
     {
+        $urlList = $this->frontRouterHelper->generateMonthView($entry);
+        $periodicities = [];
+        if ($periodicity = $entry->getPeriodicity()) {
+            $periodicities = $this->entryRepository->findByPeriodicity($periodicity);
+        }
+
         return $this->render(
             '@grr_front/entry/show.html.twig',
             [
                 'entry' => $entry,
+                'periodicities' => $periodicities,
+                'url_back' => $urlList,
             ]
         );
     }
@@ -167,9 +182,13 @@ class EntryController extends AbstractController
      * @Route("/{id}/edit", name="grr_front_entry_edit", methods={"GET", "POST"})
      * @IsGranted("grr.entry.edit", subject="entry")
      */
-    public function edit(Request $request, Entry $entry, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Entry $entry): Response
     {
         $entry->setArea($entry->getRoom()->getArea());
+
+        if ($periodicity = $entry->getPeriodicity()) {
+            $periodicity->setEntryReference($entry);//use for validator
+        }
 
         $form = $this->createForm(EntryType::class, $entry);
 
@@ -191,6 +210,7 @@ class EntryController extends AbstractController
             '@grr_front/entry/edit.html.twig',
             [
                 'entry' => $entry,
+                'periodicities' => [],
                 'form' => $form->createView(),
             ]
         );

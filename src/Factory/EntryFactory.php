@@ -56,7 +56,7 @@ class EntryFactory
     {
         $periodicity = $this->periodicityFactory->createNew($entry);
         $periodicity->setEndTime($entry->getStartTime());
-        $periodicity->setType(null);
+        $periodicity->setType(0);
 
         return $periodicity;
     }

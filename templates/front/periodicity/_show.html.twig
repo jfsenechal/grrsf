@@ -20,11 +20,14 @@
             <th>{{ 'periodicity.days.label'|trans }}</th>
             <td>
                 {% for day in entry.periodicity.weekDays %}
-                    {{ day }}
+                    {{ day|grrJoursSemaine|trans }},
                 {% endfor %}
             </td>
         <tr>
             {% endif %}
     </table>
-
+    <br/>
+    {% for child in periodicities %}
+        <span class="text-muted">{{ child.startTime |date('d-m-Y H:i') }}</span>
+    {% endfor %}
 {% endif %}

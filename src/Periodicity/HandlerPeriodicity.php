@@ -13,6 +13,7 @@ namespace App\Periodicity;
 use App\Entity\Entry;
 use App\Manager\EntryManager;
 use App\Manager\PeriodicityManager;
+use App\Repository\EntryRepository;
 
 class HandlerPeriodicity
 {
@@ -32,17 +33,23 @@ class HandlerPeriodicity
      * @var GeneratorEntry
      */
     private $generatorEntry;
+    /**
+     * @var EntryRepository
+     */
+    private $entryRepository;
 
     public function __construct(
         PeriodicityManager $periodicityManager,
         PeriodicityDaysProvider $periodicityDaysProvider,
         EntryManager $entryManager,
+        EntryRepository $entryRepository,
         GeneratorEntry $generatorEntry
     ) {
         $this->periodicityManager = $periodicityManager;
         $this->periodicityDaysProvider = $periodicityDaysProvider;
         $this->entryManager = $entryManager;
         $this->generatorEntry = $generatorEntry;
+        $this->entryRepository = $entryRepository;
     }
 
     public function handleNewPeriodicity(Entry $entry)
@@ -68,29 +75,33 @@ class HandlerPeriodicity
     public function handleEditPeriodicity(Entry $oldEntry, Entry $entry)
     {
         $periodicity = $entry->getPeriodicity();
-        $oldPeriodicity = $oldEntry->getPeriodicity();
+        if (!$periodicity) {
+            return null;
+        }
 
         $type = $periodicity->getType();
 
         /**
-         * Si la périodicité est supprimée
+         * Si la périodicité mise sur 'aucune'
          */
         if ($type === 0 || $type === null) {
             $entry->setPeriodicity(null);
-            //pas de flush() periodicity type est a null, error sql
-            $this->entryManager->getEntityManager()->getUnitOfWork()->commit($entry);
-            $this->entryManager->removeEntriesByPeriodicity($periodicity);
+            $this->entryManager->removeEntriesByPeriodicity($periodicity, $entry);
             $this->periodicityManager->remove($periodicity);
             $this->periodicityManager->flush();
 
             return null;
         }
 
-        $entrySave = clone $entry;
-        $this->entryManager->removeEntriesByPeriodicity($periodicity);
+        /**
+         * ici on supprime les entries de la periodicité mais on garde l'entry de base
+         * et on reinjecte les nouvelles entries
+         */
+        $this->entryManager->removeEntriesByPeriodicity($periodicity, $entry);
         $days = $this->periodicityDaysProvider->getDaysByEntry($entry);
         foreach ($days as $day) {
-            $newEntry = $this->generatorEntry->generateEntry($entrySave, $day);
+            $newEntry = $this->generatorEntry->generateEntry($entry, $day);
+            //  $this->entryRepository->findPeriodicityEntry($entry);
             $this->entryManager->persist($newEntry);
         }
         $this->entryManager->flush();

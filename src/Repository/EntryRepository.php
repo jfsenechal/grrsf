@@ -10,6 +10,7 @@ use App\Model\Month;
 use Carbon\CarbonInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * @method Entry|null find($id, $lockMode = null, $lockVersion = null)
@@ -222,6 +223,28 @@ class EntryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
 
+    }
+
+    public function findPeriodicityEntry(Entry $entry): ?Entry
+    {
+        $periodicity = $entry->getPeriodicity();
+        Assert::notNull($periodicity);
+
+        $qb = $this->createQueryBuilder('entry');
+
+        $qb->andWhere('entry.start_time = :start')
+            ->setParameter('start', $entry->getStartTime());
+
+        $qb->andWhere('entry.end_time = :end')
+            ->setParameter('end', $entry->getEndTime());
+
+        $qb->andWhere('entry.periodicity = :periodicity')
+            ->setParameter('periodicity', $periodicity);
+
+        return $qb
+            ->orderBy('entry.start_time', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 }

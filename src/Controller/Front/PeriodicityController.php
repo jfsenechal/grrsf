@@ -71,12 +71,13 @@ class PeriodicityController extends AbstractController
             $this->handlerEntry->handleEditEntryWithPeriodicity($oldEntry, $entry);
 
             $entryEvent = new EntryEvent($entry);
+
             //$this->eventDispatcher->dispatch($entryEvent, EntryEvent::EDIT_SUCCESS);
 
-            /*   return $this->redirectToRoute(
-                   'grr_front_entry_show',
-                   ['id' => $entry->getId()]
-               );*/
+            return $this->redirectToRoute(
+                'grr_front_entry_show',
+                ['id' => $entry->getId()]
+            );
         }
 
         return $this->render(

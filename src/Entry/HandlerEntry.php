@@ -54,7 +54,8 @@ class HandlerEntry
         $periodicity = $entry->getPeriodicity();
 
         if ($periodicity) {
-            if (null === $periodicity->getType()) {
+            $type = $periodicity->getType();
+            if (null === $type || 0 === $type) {
                 $entry->setPeriodicity(null);
             }
         }
