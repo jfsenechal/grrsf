@@ -51,26 +51,4 @@ class UserRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
-    public function persist(User $Utilisateur)
-    {
-        $this->_em->persist($Utilisateur);
-    }
-
-    public function insert(User $Utilisateur)
-    {
-        $this->persist($Utilisateur);
-        $this->flush();
-    }
-
-    public function remove(User $Utilisateur)
-    {
-        $this->_em->remove($Utilisateur);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
 }

@@ -2,17 +2,13 @@
 
 namespace App\Tests\Factory;
 
-use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
-use App\Entity\Room;
 use App\Factory\AreaFactory;
 use App\Factory\EntryFactory;
 use App\Factory\PeriodicityFactory;
 use App\Factory\RoomFactory;
 use App\Tests\BaseTesting;
-use Carbon\Carbon;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class PeriodicityFactoryTest extends BaseTesting
 {
@@ -46,13 +42,13 @@ class PeriodicityFactoryTest extends BaseTesting
     /**
      * @dataProvider getData
      *
-     * @param Area $area
-     * @param Room $room
      * @param int $year
      * @param int $month
      * @param int $day
      * @param int $hour
      * @param int $minute
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function testNew(
         int $year,
@@ -68,23 +64,15 @@ class PeriodicityFactoryTest extends BaseTesting
 
         $entry = $this->entryFactory->initEntryForNew($area, $room, $year, $month, $day, $hour, $minute);
         $entry->setName('Test');
+        $entry->setCreatedBy('Test');
 
         $this->assertInstanceOf(Entry::class, $entry);
         $periodicity = $this->periodicityFactory->createNew($entry);
         $periodicity->setEndTime(new \DateTime('+3 days'));
 
         $this->assertInstanceOf(Periodicity::class, $entry->getPeriodicity());
-        $this->assertInstanceOf(Entry::class, $periodicity->getEntry());
-        $this->assertSame('Test', $periodicity->getEntry()->getName());
-
-        $entryRepository = $this->entityManager->getRepository(Entry::class);
-        $periodicityRepository = $this->entityManager->getRepository(Periodicity::class);
-
-        $entryRepository->persist($entry);
-        $entryRepository->flush();
-
-        $dataDb = $periodicityRepository->find($entry->getPeriodicity()->getId());
-        $this->assertSame('Test', $dataDb->getEntry()->getName());
+        $this->assertInstanceOf(Entry::class, $periodicity->getEntryReference());
+        $this->assertSame('Test', $periodicity->getEntryReference()->getName());
     }
 
     public function getData()

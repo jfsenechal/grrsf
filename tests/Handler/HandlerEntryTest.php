@@ -10,9 +10,14 @@
 
 namespace App\Tests\Handler;
 
-use App\Handler\HandlerEntry;
+use App\Entry\HandlerEntry;
 use App\Tests\BaseTesting;
 
+/**
+ * todo test  handler
+ * Class HandlerEntryTest
+ * @package App\Tests\Handler
+ */
 class HandlerEntryTest extends BaseTesting
 {
     public function testBidon()

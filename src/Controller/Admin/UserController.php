@@ -96,7 +96,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->passwordEncoder->encodePassword($utilisateur, $utilisateur->getPassword());
-            $this->utilisateurRepository->insert($utilisateur);
+            $this->userManager->insert($utilisateur);
 
             $userEvent = new UserEvent($utilisateur);
             $this->eventDispatcher->dispatch($userEvent, UserEvent::NEW_SUCCESS);
@@ -135,7 +135,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->utilisateurRepository->flush();
+            $this->userManager->flush();
 
             $userEvent = new UserEvent($utilisateur);
             $this->eventDispatcher->dispatch($userEvent, UserEvent::EDIT_SUCCESS);
@@ -161,8 +161,8 @@ class UserController extends AbstractController
     public function delete(Request $request, User $utilisateur): Response
     {
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getEmail(), $request->request->get('_token'))) {
-            $this->utilisateurRepository->remove($utilisateur);
-            $this->utilisateurRepository->flush();
+            $this->userManager->remove($utilisateur);
+            $this->userManager->flush();
 
             $userEvent = new UserEvent($utilisateur);
             $this->eventDispatcher->dispatch($userEvent, UserEvent::DELETE_SUCCESS);

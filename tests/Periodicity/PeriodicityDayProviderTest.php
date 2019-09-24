@@ -189,8 +189,8 @@ class PeriodicityDayProviderTest extends BaseTesting
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',
                 $this->pathFixtures.'entry_type.yaml',
-                $this->pathFixtures.'entry_with_periodicity.yaml',
                 $this->pathFixtures.'periodicity.yaml',
+                $this->pathFixtures.'entry_with_periodicity.yaml',
             ]
         );
     }

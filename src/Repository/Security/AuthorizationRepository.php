@@ -117,25 +117,4 @@ class AuthorizationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    public function persist(UserAuthorization $userAuthorization)
-    {
-        $this->_em->persist($userAuthorization);
-    }
-
-    public function insert(UserAuthorization $userAuthorization)
-    {
-        $this->persist($userAuthorization);
-        $this->flush();
-    }
-
-    public function remove(UserAuthorization $userAuthorization)
-    {
-        $this->_em->remove($userAuthorization);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
 }

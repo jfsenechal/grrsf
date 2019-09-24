@@ -29,13 +29,13 @@ class EntryPeriodicityWeeksControllerTest extends BaseTesting
         $end->modify('+5 days');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2);
-        $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
-        $form['entry[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['entry[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['entry[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
         //  var_dump($this->administrator->getResponse()->getContent());
@@ -65,13 +65,13 @@ class EntryPeriodicityWeeksControllerTest extends BaseTesting
         $end->modify('+5 days');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2);
-        $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
-        $form['entry[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['entry[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['entry[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
 
         $this->administrator->submit($form);
 
@@ -100,16 +100,16 @@ class EntryPeriodicityWeeksControllerTest extends BaseTesting
         $end->modify('+5 days');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2);
-        $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
-        $form['entry[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['entry[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['entry[periodicity][endTime][year]']->setValue($end->format('Y'));
-        $form['entry[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
-        $form['entry[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
-        $form['entry[periodicity][weekRepeat]']->setValue(1);
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
+        $form['entry_with_periodicity[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
+        $form['entry_with_periodicity[periodicity][weekRepeat]']->setValue(1);
 
         $this->administrator->submit($form);
 
@@ -138,16 +138,16 @@ class EntryPeriodicityWeeksControllerTest extends BaseTesting
         $end->modify('+5 weeks');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2);
-        $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
-        $form['entry[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['entry[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['entry[periodicity][endTime][year]']->setValue($end->format('Y'));
-        $form['entry[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
-        $form['entry[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
-        $form['entry[periodicity][weekRepeat]']->setValue(1);
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
+        $form['entry_with_periodicity[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
+        $form['entry_with_periodicity[periodicity][weekRepeat]']->setValue(1);
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -177,16 +177,16 @@ class EntryPeriodicityWeeksControllerTest extends BaseTesting
         $end->modify('+5 weeks');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
-        $form['entry[duration][time]']->setValue(2);
-        $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
-        $form['entry[periodicity][endTime][day]']->setValue($end->format('j'));
-        $form['entry[periodicity][endTime][month]']->setValue($end->format('n'));
-        $form['entry[periodicity][endTime][year]']->setValue($end->format('Y'));
-        $form['entry[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
-        $form['entry[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
-        $form['entry[periodicity][weekRepeat]']->setValue(2);
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_HOURS);
+        $form['entry_with_periodicity[duration][time]']->setValue(2);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($end->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($end->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($end->format('Y'));
+        $form['entry_with_periodicity[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
+        $form['entry_with_periodicity[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
+        $form['entry_with_periodicity[periodicity][weekRepeat]']->setValue(2);
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -215,16 +215,16 @@ class EntryPeriodicityWeeksControllerTest extends BaseTesting
         $today->modify('+5 weeks');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['entry[name]']->setValue('My reservation repeated');
-        $form['entry[duration][unit]']->setValue(DurationModel::UNIT_TIME_DAYS);
-        $form['entry[duration][time]']->setValue(3);
-        $form['entry[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
-        $form['entry[periodicity][endTime][day]']->setValue($today->format('j'));
-        $form['entry[periodicity][endTime][month]']->setValue($today->format('n'));
-        $form['entry[periodicity][endTime][year]']->setValue($today->format('Y'));
-        $form['entry[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
-        $form['entry[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
-        $form['entry[periodicity][weekRepeat]']->setValue(1);
+        $form['entry_with_periodicity[name]']->setValue('My reservation repeated');
+        $form['entry_with_periodicity[duration][unit]']->setValue(DurationModel::UNIT_TIME_DAYS);
+        $form['entry_with_periodicity[duration][time]']->setValue(3);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue($today->format('j'));
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue($today->format('n'));
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue($today->format('Y'));
+        $form['entry_with_periodicity[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
+        $form['entry_with_periodicity[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
+        $form['entry_with_periodicity[periodicity][weekRepeat]']->setValue(1);
 
         $this->administrator->submit($form);
 

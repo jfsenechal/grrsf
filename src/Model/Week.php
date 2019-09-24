@@ -49,9 +49,13 @@ class Week
      */
     public function getCalendarDays(): CarbonPeriod
     {
-        return Carbon::parse($this->getFirstDay()->toDateString())->daysUntil(
+        $period = Carbon::parse($this->getFirstDay()->toDateString())->daysUntil(
             $this->getLastDay()->toDateString()
-        )->locale(LocalHelper::getDefaultLocal());
+        );
+
+        $period->locale(LocalHelper::getDefaultLocal());
+
+        return $period;
     }
 
     public function getFirstDay(): CarbonInterface

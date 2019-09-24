@@ -72,7 +72,7 @@ class EntryPeriodicityEditControllerTest extends BaseTesting
         $crawler = $this->administrator->clickLink('Modifier la périodicité');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['periodicity[periodicity][type]']->setValue(0);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(0);
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -108,7 +108,7 @@ class EntryPeriodicityEditControllerTest extends BaseTesting
         $crawler = $this->administrator->clickLink('Modifier la périodicité');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['periodicity[periodicity][endTime][day]']->setValue(8);
+        $form['entry_with_periodicity[periodicity][endTime][day]']->setValue(8);
 
         $this->administrator->submit($form);
         $this->administrator->followRedirect();
@@ -144,9 +144,9 @@ class EntryPeriodicityEditControllerTest extends BaseTesting
         $crawler = $this->administrator->clickLink('Modifier la périodicité');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_MONTH_SAME_DAY);
-        $form['periodicity[periodicity][endTime][month]']->setValue(5);
-        $form['periodicity[periodicity][endTime][year]']->setValue(2020);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_MONTH_SAME_DAY);
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue(5);
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue(2020);
 
         $this->administrator->submit($form);
         $crawler = $this->administrator->followRedirect();
@@ -174,12 +174,12 @@ class EntryPeriodicityEditControllerTest extends BaseTesting
         $crawler = $this->administrator->clickLink('Modifier la périodicité');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
-        $form['periodicity[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
-        $form['periodicity[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
-        $form['periodicity[periodicity][weekRepeat]']->setValue(1);
-        $form['periodicity[periodicity][endTime][month]']->setValue(1);
-        $form['periodicity[periodicity][endTime][year]']->setValue(2020);
+        $form['entry_with_periodicity[periodicity][type]']->setValue(PeriodicityConstant::EVERY_WEEK);
+        $form['entry_with_periodicity[periodicity][weekDays][0]']->setValue(CarbonInterface::MONDAY);
+        $form['entry_with_periodicity[periodicity][weekDays][1]']->setValue(CarbonInterface::TUESDAY);
+        $form['entry_with_periodicity[periodicity][weekRepeat]']->setValue(1);
+        $form['entry_with_periodicity[periodicity][endTime][month]']->setValue(1);
+        $form['entry_with_periodicity[periodicity][endTime][year]']->setValue(2020);
 
         $this->administrator->submit($form);
         $crawler = $this->administrator->followRedirect();
