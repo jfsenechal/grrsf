@@ -92,9 +92,6 @@ class MigrationFactory
         $entry->setStartTime($this->migrationUtil->converToDateTime($data['start_time']));
         $entry->setEndTime($this->migrationUtil->converToDateTime($data['end_time']));
 
-        var_dump($entry->getStartTime()->format('Y-m-d'));
-        var_dump($entry->getEndTime()->format('Y-m-d'));
-
         //  $entry->set($data['entry_type']);
         //  $entry->setPeriodicity($data['repeat_id']);
         $entry->setCreatedAt($this->migrationUtil->converToDateTime($data['timestamp']));
@@ -116,11 +113,10 @@ class MigrationFactory
     public function createPeriodicity(Entry $entry, array $data): Periodicity
     {
         $periodicity = new Periodicity($entry);
-        var_dump($data['rep_opt']);
         $periodicity->setWeekRepeat($data['rep_num_weeks']);
         $periodicity->setType($data['rep_type']);
         $periodicity->setEndTime($this->migrationUtil->converToDateTime($data['end_date']));
-        if ($data['rep_type'] === PeriodicityConstant::EVERY_WEEK) {
+        if ((int)$data['rep_type'] === PeriodicityConstant::EVERY_WEEK) {
             $periodicity->setWeekDays($this->migrationUtil->transformRepOpt($data['id'], $data['rep_opt']));
         }
 

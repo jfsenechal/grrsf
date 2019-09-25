@@ -3,6 +3,8 @@
 namespace App\Command;
 
 use App\Checker\MigrationChecker;
+use App\Migration\MigrationUtil;
+use App\Repository\EntryRepository;
 use App\Repository\RoomRepository;
 use App\Repository\Security\AuthorizationRepository;
 use App\Repository\Security\UserRepository;
@@ -21,13 +23,33 @@ class CheckCommand extends Command
      * @var MigrationChecker
      */
     private $migrationChecker;
+    /**
+     * @var SymfonyStyle
+     */
+    private $io;
+    /**
+     * @var OutputInterface
+     */
+    private $output;
+    /**
+     * @var EntryRepository
+     */
+    private $entryRepository;
+    /**
+     * @var MigrationUtil
+     */
+    private $migrationUtil;
 
     public function __construct(
         string $name = null,
-        MigrationChecker $migrationChecker
+        MigrationChecker $migrationChecker,
+        EntryRepository $entryRepository,
+        MigrationUtil $migrationUtil
     ) {
         parent::__construct($name);
         $this->migrationChecker = $migrationChecker;
+        $this->entryRepository = $entryRepository;
+        $this->migrationUtil = $migrationUtil;
     }
 
     protected function configure()
@@ -41,6 +63,8 @@ class CheckCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
+        $this->io = new SymfonyStyle($input, $output);
+        $this->output = $output;
         $helper = $this->getHelper('question');
         $what = $input->getArgument('what');
 
@@ -61,6 +85,46 @@ class CheckCommand extends Command
                 $io->success("Doublons supprimés");
             }
         }
+
+        $this->io->section('Check entry: '.MigrationUtil::FOLDER_CACHE);
+        $this->io->newLine();
+
+        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'entry.json');
+        $entries = json_decode($fileHandler, true);
+
+        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'resolveroom.json');
+        $rooms = unserialize($fileHandler, false);
+
+        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'resolverepeat.json');
+        $periodicities = unserialize($fileHandler, false);
+
+        foreach ($entries as $data) {
+
+            $name = $data['name'];
+            $startTime = $this->migrationUtil->converToDateTime($data['start_time']);
+            $endTime = $this->migrationUtil->converToDateTime($data['end_time']);
+            $room = $this->migrationUtil->transformToRoom($rooms, $data['room_id']);
+            $repeatId = (int)$data['repeat_id'];
+
+            $args = ['start_time' => $startTime, 'end_time' => $endTime, 'name' => $name, 'room' => $room];
+
+            if ($repeatId > 0) {
+                $periodicity = $periodicities[$repeatId];
+                $args['periodicity'] = $periodicity;
+            }
+
+            $entry = $this->entryRepository->findOneBy(
+                $args
+            );
+
+            if (!$entry) {
+                $io->error($data['name'].' '.$startTime->format('d-m-Y'));
+            } else {
+               // $io->success($entry->getName().' ==> '.$name);
+            }
+
+        }
+
     }
 
 

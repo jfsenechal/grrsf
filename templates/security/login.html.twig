@@ -25,7 +25,7 @@
 {% block body %}
     <div class="text-center">
         <form class="form-signin" method="post" action="{{ path('app_login') }}">
-            <img class="mb-4" src="{{ asset('totem_grr.png') }}" alt="" width="72" height="72">
+            <img class="mb-4 img-fluid" title="Grr" src="{{ asset('totem_grr.png') }}" alt="logo" width="72" >
             <h1 class="h3 mb-3 font-weight-normal">{{ 'login.title'|trans() }}</h1>
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

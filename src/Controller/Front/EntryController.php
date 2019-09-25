@@ -71,7 +71,7 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/", name="grr_front_entry_index", methods={"GET", "POST"})
-     * @IsGranted("grr.entry.index")
+     *
      */
     public function index(Request $request): Response
     {
@@ -82,6 +82,7 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $args = $form->getData();
             $entries = $this->entryRepository->search($args);
         }
 

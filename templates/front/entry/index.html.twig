@@ -3,39 +3,45 @@
 {% block title %}{{ 'entry.index.title'|trans({}, 'actions') }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'entry.index.title'|trans({}, 'actions') }}</h1>
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            <h2>{{ 'entry.index.title'|trans({}, 'actions') }}</h2>
+        </div>
+        <div class="card-body">
 
-    {% include 'search/_entry.html.twig' %}
+            {% include 'search/_entry.html.twig' %}
 
-    <br/> <br/>
+            <br/> <br/>
 
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>{{ 'entry.form.name.label'|trans }}</th>
-            <th>{{ 'entry.form.startTime.label'|trans }}</th>
-            <th>{{ 'entry.form.endTime.label'|trans }}</th>
-            <th>{{ 'entry.form.room.label'|trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for entry in entries %}
-            <tr>
-                <td>
-                    <a href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">
-                        {{ entry.name }}</a>
-                </td>
-                <td>{{ entry.startTime|date('Y-m-d H:i:s') }}</td>
-                <td>{{ entry.endTime|date('Y-m-d H:i:s') }}</td>
-                <td>{{ entry.room }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">{{ 'records.notfound'| trans({}, 'actions') }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{{ 'entry.form.name.label'|trans }}</th>
+                    <th>{{ 'entry.form.startTime.label'|trans }}</th>
+                    <th>{{ 'entry.form.endTime.label'|trans }}</th>
+                    <th>{{ 'entry.form.room.label'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entry in entries %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('grr_front_entry_show', {'id': entry.id}) }}">
+                                {{ entry.name }}</a>
+                        </td>
+                        <td>{{ entry.startTime|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ entry.endTime|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ entry.room }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">{{ 'records.notfound'| trans({}, 'actions') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}
 {% block scripts %}

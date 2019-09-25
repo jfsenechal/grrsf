@@ -173,3 +173,9 @@ page:
   notauthorized: Accès non autorisé
 created:
   at: le
+btn:
+  search: Rechercher
+search:
+  form:
+    word:
+      placeholder: Mot clef

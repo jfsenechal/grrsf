@@ -28,7 +28,7 @@ class NumberToRoomTransformer implements DataTransformerInterface
      * @return string
      */
     public function transform($area)
-    {dump($area);
+    {
         if (null === $area) {
             return '';
         }
@@ -46,7 +46,7 @@ class NumberToRoomTransformer implements DataTransformerInterface
      * @throws TransformationFailedException if object (area) is not found
      */
     public function reverseTransform($areaNumber)
-    {dump($areaNumber);
+    {
         // no area number? It's optional, so that's ok
         if (!$areaNumber) {
             return;

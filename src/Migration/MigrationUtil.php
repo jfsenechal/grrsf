@@ -25,12 +25,15 @@ use App\Setting\SettingsRoom;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class MigrationUtil
 {
+    const FOLDER_CACHE = __DIR__.'/../../var/cache/';
+
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -123,11 +126,11 @@ class MigrationUtil
         $days = [];
         $tab = str_split(strtolower($datas), 1);
         foreach ($tab as $key => $data) {
-            if ($data === 1) {
+            if ((int)$data === 1) {
                 $days[] = $key;
             }
         }
-var_dump($days);
+
         return $days;
     }
 
@@ -327,22 +330,29 @@ var_dump($days);
         return $auth;
     }
 
-    public function groupByRepeat(array $entries)
+    public function writeFile($fileName, $content)
     {
-        $new = [];
-        foreach ($entries as $entry) {
-            $reatId = (int)$entry['repeat_id'];
-            if ($reatId === 0) {
-                $new[] = $entry;
-                continue;
-            }
-            if (!isset($new[$reatId])) {
-                $new[] = $entry;
-            }
-        }
-
-        return $new;
+        $fileHandler = fopen(MigrationUtil::FOLDER_CACHE.$fileName, 'w');
+        fwrite($fileHandler, $content);
+        fclose($fileHandler);
     }
 
+    public function decompress(SymfonyStyle $io, string $content, string $type): array
+    {
+        $data = json_decode($content, true);
 
+        if (!is_array($data)) {
+            $io->error($type.' La réponse doit être un json: '.$content);
+
+            return [];
+        }
+
+        if (isset($data['error'])) {
+            $io->error('Une erreur est survenue: '.$data['error']);
+
+            return [];
+        }
+
+        return $data;
+    }
 }

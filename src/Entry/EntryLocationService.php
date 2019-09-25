@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Entry;
 
 use App\Entity\Area;
 use App\Entity\Entry;

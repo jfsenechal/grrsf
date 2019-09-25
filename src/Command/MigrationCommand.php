@@ -178,8 +178,21 @@ class MigrationCommand extends Command
 
         $this->requestData->connect($url, $user, $password);
 
-        $this->requestData->downloadRepeats([]);
-        $fileHandler = file_get_contents(__DIR__.'/../../var/cache/repeat.json');
+        $this->io->section('Téléchargement des entrées et répétitions dans le dossier: '.MigrationUtil::FOLDER_CACHE);
+        $this->io->newLine();
+        $progressBar = new ProgressBar($output, 2);
+        $progressBar->start();
+        $this->requestData->download('repeat.php');
+        $progressBar->advance();
+        if ($date) {
+            $params = ['date' => $date->format('Y-m-d')];
+        }
+        $this->requestData->download('entry.php', $params);
+        $progressBar->advance();
+        $progressBar->finish();
+        $this->io->newLine();
+
+        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'repeat.json');
         $this->repeats = json_decode($fileHandler, true);
 
         $this->io->section('Importation des Areas et rooms');
@@ -198,10 +211,12 @@ class MigrationCommand extends Command
         $this->handleRoomAdmin();
         $this->io->newLine();
         $this->io->section('Importation des entrées');
-        $this->handleEntry($date);
-        $this->io->newLine();
-        $this->io->section('Génération des répétitions');
-        //  $this->handleGenerateRepeatEntries();
+        $this->handleEntry();
+
+        //je sauvegarde les resolutions pour la commande grr:check
+        $this->migrationUtil->writeFile('resolverepeat.json', serialize($this->resolveRepeats));
+        $this->migrationUtil->writeFile('resolveroom.json', serialize($this->resolveRooms));
+
         $this->io->newLine();
         $this->io->success('Importation terminée :-) .');
 
@@ -210,8 +225,8 @@ class MigrationCommand extends Command
 
     protected function handleArea()
     {
-        $this->areas = $this->decompress($this->requestData->getAreas(), 'area');
-        $this->rooms = $this->decompress($this->requestData->getRooms(), 'room');
+        $this->areas = $this->migrationUtil->decompress($this->io, $this->requestData->getAreas(), 'area');
+        $this->rooms = $this->migrationUtil->decompress($this->io, $this->requestData->getRooms(), 'room');
         $count = count($this->areas) + count($this->rooms);
         $progressBar = new ProgressBar($this->output, $count);
 
@@ -237,7 +252,7 @@ class MigrationCommand extends Command
 
     protected function handleEntryType()
     {
-        $types = $this->decompress($this->requestData->getTypesEntry(), 'entry_type');
+        $types = $this->migrationUtil->decompress($this->io, $this->requestData->getTypesEntry(), 'entry_type');
         $progressBar = new ProgressBar($this->output);
 
         foreach ($progressBar->iterate($types) as $data) {
@@ -250,7 +265,7 @@ class MigrationCommand extends Command
 
     protected function handleUser()
     {
-        $users = $this->decompress($this->requestData->getUsers(), 'user');
+        $users = $this->migrationUtil->decompress($this->io, $this->requestData->getUsers(), 'user');
 
         $progressBar = new ProgressBar($this->output);
 
@@ -270,38 +285,34 @@ class MigrationCommand extends Command
         }
     }
 
-    protected function handleEntry(?\DateTime $date)
+    protected function handleEntry()
     {
-        $params = [];
-        if ($date) {
-            $params = ['date' => $date->format('Y-m-d')];
-        }
-        $entries = $this->decompress($this->requestData->getEntries($params), 'entry');
-        // $entries = $this->migrationUtil->groupByRepeat($entries);
+        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'entry.json');
+        $entries = json_decode($fileHandler, true);
 
         $progressBar = new ProgressBar($this->output);
 
         foreach ($progressBar->iterate($entries) as $data) {
 
             if ($data['name'] != 'PMTIC G4 MG') {
-                continue;
+                //    continue;
             }
 
             $entry = $this->migrationFactory->createEntry($this->resolveTypeEntries, $data);
-
             $room = $this->migrationUtil->transformToRoom($this->resolveRooms, $data['room_id']);
+
             if ($room) {
                 $entry->setRoom($room);
                 $this->entityManager->persist($entry);
-                $id = $id = (int)$data['repeat_id'];
+                $repeatId = (int)$data['repeat_id'];
 
                 if ($data['entry_type'] >= 1) // il s'agit d'une reservation a laquelle est associee une periodicite
                 {
 
                 }
 
-                if ($id > 0) {
-                    $this->handlerPeriodicity($entry, $id);
+                if ($repeatId > 0) {
+                    $this->handlerPeriodicity($entry, $repeatId);
                 }
 
                 $this->entityManager->flush();
@@ -333,7 +344,7 @@ class MigrationCommand extends Command
 
     private function handleAreaAdmin()
     {
-        $users = $this->decompress($this->requestData->getAreaAdmin(), 'area admin');
+        $users = $this->migrationUtil->decompress($this->io, $this->requestData->getAreaAdmin(), 'area admin');
 
         $progressBar = new ProgressBar($this->output);
 
@@ -361,7 +372,7 @@ class MigrationCommand extends Command
 
     private function handleRoomAdmin()
     {
-        $users = $this->decompress($this->requestData->getRoomAdmin(), 'room admin');
+        $users = $this->migrationUtil->decompress($this->io, $this->requestData->getRoomAdmin(), 'room admin');
 
         $progressBar = new ProgressBar($this->output);
 
@@ -395,39 +406,5 @@ class MigrationCommand extends Command
         }
     }
 
-    private function handleGenerateRepeatEntries()
-    {
-        $entries = $this->migrationUtil->entryRepository->withPeriodicity();
-
-        $progressBar = new ProgressBar($this->output);
-
-        foreach ($progressBar->iterate($entries) as $entry) {
-            $days = $this->periodicityDaysProvider->getDaysByEntry($entry);
-            foreach ($days as $day) {
-                $newEntry = $this->generatorEntry->generateEntry($entry, $day);
-                $this->entityManager->persist($newEntry);
-            }
-        }
-        $this->entityManager->flush();
-    }
-
-    private function decompress(string $content, string $type): array
-    {
-        $data = json_decode($content, true);
-
-        if (!is_array($data)) {
-            $this->io->error($type.' La réponse doit être un json: '.$content);
-
-            return [];
-        }
-
-        if (isset($data['error'])) {
-            $this->io->error('Une erreur est survenue: '.$data['error']);
-
-            return [];
-        }
-
-        return $data;
-    }
 
 }

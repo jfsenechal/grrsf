@@ -33,7 +33,8 @@ class SearchEntryType extends AbstractType
                 SearchType::class,
                 [
                     'required' => false,
-                    'attr' => ['placeholder' => 'Name', 'class' => 'my-1 mr-sm-2'],
+                    'label' => false,
+                    'attr' => ['placeholder' => 'search.form.word.placeholder', 'class' => 'my-1 mr-sm-2'],
                 ]
             )
             ->add(
@@ -42,7 +43,9 @@ class SearchEntryType extends AbstractType
                 [
                     'class' => EntryType::class,
                     'required' => false,
-                    'placeholder' => 'Entry type',
+                    'label' => false,
+                    'help'=>null,
+                    'placeholder' => 'typeEntry.index.title',
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )
@@ -51,27 +54,12 @@ class SearchEntryType extends AbstractType
                 AreaSelectType::class,
                 [
                     'required' => false,
+                    'label' => false,
                     'placeholder' => 'area.form.select.placeholder',
-                ]
-            )
-            ->add(
-                'type',
-                ChoiceType::class,
-                [
-                    'required' => false,
-                    'placeholder' => 'Type périodicité',
-                    'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
             )
             ->addEventSubscriber(new AddRoomFieldSubscriber('room', false, false, false));
 
     }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            [
-            ]
-        );
-    }
 }

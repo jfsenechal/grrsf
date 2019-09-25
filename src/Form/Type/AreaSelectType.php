@@ -15,7 +15,6 @@ class AreaSelectType extends AbstractType
         $resolver->setDefaults(
             [
                 'label' => 'area.form.select.label',
-                'help' => 'area.form.select.help',
                 'class' => Area::class,
                 'query_builder' => function (AreaRepository $areaRepository) {
                     return $areaRepository->getQueryBuilder();

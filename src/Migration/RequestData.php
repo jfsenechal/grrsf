@@ -84,24 +84,35 @@ class RequestData
         return $this->request('user_room.php');
     }
 
-    public function downloadRepeats(array $params)
+    public function download(string $url, array $params = [])
     {
-        $fileHandler = fopen(__DIR__.'/../../var/cache/repeat.json', 'w');
+        $jsonfile = str_replace("php", 'json', $url);
 
-         $args = [
+        if (is_readable(MigrationUtil::FOLDER_CACHE.$jsonfile)) {
+            return;
+        }
+
+        $args = [
             'buffer' => false,
         ];
-         $response = $this->httpClient->request('GET', $this->base_url.'repeat.php', $args);
 
-        // Responses are lazy: this code is executed as soon as headers are received
+        if (count($params) > 0) {
+            $args['query'] = $params;
+        }
+
+        $response = $this->httpClient->request('GET', $this->base_url.$url, $args);
+
         if (200 !== $response->getStatusCode()) {
             throw new \Exception('...');
         }
 
+        $fileHandler = fopen(MigrationUtil::FOLDER_CACHE.$jsonfile, 'w');
         foreach ($this->httpClient->stream($response) as $chunk) {
             fwrite($fileHandler, $chunk->getContent());
         }
+        fclose($fileHandler);
     }
+
 
     /**
      * @param string $file

@@ -136,19 +136,23 @@ class EntryRepository extends ServiceEntityRepository
             $qb->andWhere('entry.name LIKE :name')
                 ->setParameter('name', '%'.$name.'%');
         }
+
         if ($area instanceof Area) {
             $rooms = $this->getRooms($area);
             $qb->andWhere('entry.room IN (:rooms)')
-                ->setParameter('room', $rooms);
+                ->setParameter('rooms', $rooms);
         }
+
         if ($room instanceof Room) {
             $qb->andWhere('entry.room = :room')
                 ->setParameter('room', $room);
         }
+
         if ($entryType) {
             $qb->andWhere('entry.entryType = :entryType')
                 ->setParameter('entryType', $entryType);
         }
+
         if ($type) {
             $qb->andWhere('entry.type = :type')
                 ->setParameter('type', $type);

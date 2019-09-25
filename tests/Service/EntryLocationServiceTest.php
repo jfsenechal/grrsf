@@ -16,7 +16,7 @@ use App\Entity\Room;
 use App\Factory\CarbonFactory;
 use App\I18n\LocalHelper;
 use App\Provider\TimeSlotsProvider;
-use App\Service\EntryLocationService;
+use App\Entry\EntryLocationService;
 use App\Tests\BaseTesting;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;

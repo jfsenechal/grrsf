@@ -77,7 +77,7 @@ entry:
   delete:
     confirm: Ëtes vous sur de supprimer name
   index:
-    title: Liste des réservations
+    title: Rechercher des réservations
   new:
     title: Nouvelle réservation
     periodicity:
