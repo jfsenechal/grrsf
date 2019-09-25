@@ -179,3 +179,6 @@ search:
   form:
     word:
       placeholder: Mot clef
+type_area:
+  edit:
+    title: Association des types pour {name}

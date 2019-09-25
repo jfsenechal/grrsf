@@ -32,6 +32,8 @@ area:
     title: Les domaines
   rooms:
     title: Ressources
+  types:
+    title: Types d'entrée
 room:
   all: Toutes les ressources
   new:

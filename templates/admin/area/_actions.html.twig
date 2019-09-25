@@ -7,6 +7,9 @@
 <a href="{{ path('grr_admin_room_new', { 'id': area.id }) }}" role="button"
    class="btn btn-primary"><i class="fa fa-plus"></i> {{ 'room.new.title'|trans({}, 'actions') }}</a>
 
+<a href="{{ path('grr_admin_type_area_edit', { 'id': area.id }) }}" role="button"
+   class="btn btn-primary"><i class="fas fa-cog"></i> {{ 'area.types.title'|trans({}, 'actions') }}</a>
+
 <a href="{{ path('grr_admin_area_edit', { 'id': area.id }) }}" role="button"
    class="btn btn-primary" target="apercu"><i class="far fa-eye"></i> {{ 'form.btn.see'|trans({}, 'actions') }}</a>
 

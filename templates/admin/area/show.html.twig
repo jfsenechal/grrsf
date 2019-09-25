@@ -17,7 +17,7 @@
                     <table class="table table-bordered">
                         <tbody>
                         <tr>
-                            <th>
+                            <th class="w-75">
                                 {{ 'area.form.access.label'|trans }}
                             </th>
                             <td>{{ area.isRestricted }}</td>
@@ -52,7 +52,7 @@
                         <tr>
                             <th>{{ 'area.form.hour_in_24h.label'|trans }}</th>
                             <td>
-                                {{ area.is24HourFormat ? 'Yes' : 'No' | trans }}
+                                {{ area.is24HourFormat ? 'Yes'|trans : 'No'| trans }}
                             </td>
                         </tr>
                         </tbody>
@@ -62,7 +62,7 @@
                     <table class="table table-bordered">
                         <tbody>
                         <tr>
-                            <th>{{ 'area.form.displayDays.label'|trans }}</th>
+                            <th class="w-75">{{ 'area.form.displayDays.label'|trans }}</th>
                             <td>
                                 {% for jour in  area.daysOfWeekToDisplay %}
                                     {{ jour | grrJoursSemaine | trans }},

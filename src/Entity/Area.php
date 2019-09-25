@@ -124,6 +124,11 @@ class Area
      */
     private $authorizations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TypeArea", mappedBy="area", orphanRemoval=true)
+     */
+    private $entryTypes;
+
     public function __construct()
     {
         $this->start_time = 8;
@@ -140,6 +145,8 @@ class Area
         $this->is_restricted = false;
         $this->rooms = new ArrayCollection();
         $this->authorizations = new ArrayCollection();
+        $this->types_entry = new ArrayCollection();
+        $this->entryTypes = new ArrayCollection();
     }
 
     public function __toString()
@@ -384,6 +391,37 @@ class Area
     public function setIsRestricted(bool $is_restricted): self
     {
         $this->is_restricted = $is_restricted;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TypeArea[]
+     */
+    public function getEntryTypes(): Collection
+    {
+        return $this->entryTypes;
+    }
+
+    public function addEntryType(TypeArea $entryType): self
+    {
+        if (!$this->entryTypes->contains($entryType)) {
+            $this->entryTypes[] = $entryType;
+            $entryType->setArea($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntryType(TypeArea $entryType): self
+    {
+        if ($this->entryTypes->contains($entryType)) {
+            $this->entryTypes->removeElement($entryType);
+            // set the owning side to null (unless already changed)
+            if ($entryType->getArea() === $this) {
+                $entryType->setArea(null);
+            }
+        }
 
         return $this;
     }
