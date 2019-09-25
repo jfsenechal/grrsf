@@ -145,11 +145,256 @@ class Area
         $this->is_restricted = false;
         $this->rooms = new ArrayCollection();
         $this->authorizations = new ArrayCollection();
+        $this->entryTypes = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getOrderDisplay(): ?int
+    {
+        return $this->order_display;
+    }
+
+    public function setOrderDisplay(int $order_display): self
+    {
+        $this->order_display = $order_display;
+
+        return $this;
+    }
+
+    public function getStartTime(): ?int
+    {
+        return $this->start_time;
+    }
+
+    public function setStartTime(int $start_time): self
+    {
+        $this->start_time = $start_time;
+
+        return $this;
+    }
+
+    public function getEndTime(): ?int
+    {
+        return $this->end_time;
+    }
+
+    public function setEndTime(int $end_time): self
+    {
+        $this->end_time = $end_time;
+
+        return $this;
+    }
+
+    public function getWeekStart(): ?int
+    {
+        return $this->week_start;
+    }
+
+    public function setWeekStart(int $week_start): self
+    {
+        $this->week_start = $week_start;
+
+        return $this;
+    }
+
+    public function getIs24HourFormat(): ?bool
+    {
+        return $this->is_24_hour_format;
+    }
+
+    public function setIs24HourFormat(bool $is_24_hour_format): self
+    {
+        $this->is_24_hour_format = $is_24_hour_format;
+
+        return $this;
+    }
+
+    public function getDaysOfWeekToDisplay(): ?array
+    {
+        return $this->days_of_week_to_display;
+    }
+
+    public function setDaysOfWeekToDisplay(array $days_of_week_to_display): self
+    {
+        $this->days_of_week_to_display = $days_of_week_to_display;
+
+        return $this;
+    }
+
+    public function getTimeInterval(): ?int
+    {
+        return $this->time_interval;
+    }
+
+    public function setTimeInterval(int $time_interval): self
+    {
+        $this->time_interval = $time_interval;
+
+        return $this;
+    }
+
+    public function getDurationMaximumEntry(): ?int
+    {
+        return $this->duration_maximum_entry;
+    }
+
+    public function setDurationMaximumEntry(int $duration_maximum_entry): self
+    {
+        $this->duration_maximum_entry = $duration_maximum_entry;
+
+        return $this;
+    }
+
+    public function getDurationDefaultEntry(): ?int
+    {
+        return $this->duration_default_entry;
+    }
+
+    public function setDurationDefaultEntry(int $duration_default_entry): self
+    {
+        $this->duration_default_entry = $duration_default_entry;
+
+        return $this;
+    }
+
+    public function getMinutesToAddToEndTime(): ?int
+    {
+        return $this->minutes_to_add_to_end_time;
+    }
+
+    public function setMinutesToAddToEndTime(int $minutes_to_add_to_end_time): self
+    {
+        $this->minutes_to_add_to_end_time = $minutes_to_add_to_end_time;
+
+        return $this;
+    }
+
+    public function getMaxBooking(): ?int
+    {
+        return $this->max_booking;
+    }
+
+    public function setMaxBooking(int $max_booking): self
+    {
+        $this->max_booking = $max_booking;
+
+        return $this;
+    }
+
+    public function getIsRestricted(): ?bool
+    {
+        return $this->is_restricted;
+    }
+
+    public function setIsRestricted(bool $is_restricted): self
+    {
+        $this->is_restricted = $is_restricted;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getRooms(): Collection
+    {
+        return $this->rooms;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->rooms->contains($room)) {
+            $this->rooms[] = $room;
+            $room->setArea($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        if ($this->rooms->contains($room)) {
+            $this->rooms->removeElement($room);
+            // set the owning side to null (unless already changed)
+            if ($room->getArea() === $this) {
+                $room->setArea(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserAuthorization[]
+     */
+    public function getAuthorizations(): Collection
+    {
+        return $this->authorizations;
+    }
+
+    public function addAuthorization(UserAuthorization $authorization): self
+    {
+        if (!$this->authorizations->contains($authorization)) {
+            $this->authorizations[] = $authorization;
+            $authorization->setArea($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthorization(UserAuthorization $authorization): self
+    {
+        if ($this->authorizations->contains($authorization)) {
+            $this->authorizations->removeElement($authorization);
+            // set the owning side to null (unless already changed)
+            if ($authorization->getArea() === $this) {
+                $authorization->setArea(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EntryType[]
+     */
+    public function getEntryTypes(): Collection
+    {
+        return $this->entryTypes;
+    }
+
+    public function addEntryType(EntryType $entryType): self
+    {
+        if (!$this->entryTypes->contains($entryType)) {
+            $this->entryTypes[] = $entryType;
+        }
+
+        return $this;
+    }
+
+    public function removeEntryType(EntryType $entryType): self
+    {
+        if ($this->entryTypes->contains($entryType)) {
+            $this->entryTypes->removeElement($entryType);
+        }
+
+        return $this;
     }
 
 }

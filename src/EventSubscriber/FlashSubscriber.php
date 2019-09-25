@@ -5,6 +5,7 @@ namespace App\EventSubscriber;
 use App\Events\AreaEvent;
 use App\Events\AuthorizationEvent;
 use App\Events\EntryEvent;
+use App\Events\EntryTypeAreaEvent;
 use App\Events\EntryTypeEvent;
 use App\Events\RoomEvent;
 use App\Events\UserEvent;
@@ -108,6 +109,11 @@ class FlashSubscriber implements EventSubscriberInterface
         $this->flashBag->add('success', 'authorization.flash.new');
     }
 
+    public function onEditEntryTypeArea()
+    {
+        $this->flashBag->add('success','entryType.area.flash');
+    }
+
     public function onUserPassword(UserEvent $userEvent)
     {
         $this->flashBag->add('success', 'user.flash.password');
@@ -139,6 +145,8 @@ class FlashSubscriber implements EventSubscriberInterface
 
             AuthorizationEvent::NEW_SUCCESS => 'onAuthorizationNew',
             AuthorizationEvent::DELETE_SUCCESS => 'onAuthorizationDelete',
+
+            EntryTypeAreaEvent::class => 'onEditEntryTypeArea'
         ];
 
     }

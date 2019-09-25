@@ -182,3 +182,7 @@ search:
 type_area:
   edit:
     title: Association des types pour {name}
+
+entryType:
+  area:
+    flash: Les modifications ont bien été apportées
