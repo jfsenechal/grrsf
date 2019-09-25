@@ -2,12 +2,13 @@
 
 namespace App\Form;
 
+use AcMarche\GrhBundle\Repository\TypeContratRepository;
 use App\Entity\Entry;
 use App\EventSubscriber\AddDurationFieldSubscriber;
 use App\EventSubscriber\AddRoomFieldSubscriber;
+use App\EventSubscriber\AddTypeEntryFieldSubscriber;
 use App\Factory\DurationFactory;
 use App\Form\Type\AreaSelectType;
-use App\Form\Type\EntryTypeSelectField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -54,14 +55,6 @@ class EntryType extends AbstractType
                 ]
             )
             ->add(
-                'type',
-                EntryTypeSelectField::class,
-                [
-                    'label' => 'entry.form.type.label',
-                    'help' => 'entry.form.type.help',
-                ]
-            )
-            ->add(
                 'description',
                 TextareaType::class,
                 [
@@ -70,8 +63,11 @@ class EntryType extends AbstractType
                     'required' => false,
                 ]
             )
+            ->addEventSubscriber(new AddTypeEntryFieldSubscriber())
             ->addEventSubscriber(new AddDurationFieldSubscriber($this->durationFactory))
             ->addEventSubscriber(new AddRoomFieldSubscriber('room', true, false, false));
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

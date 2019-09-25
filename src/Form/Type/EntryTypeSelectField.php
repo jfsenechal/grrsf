@@ -20,6 +20,8 @@ class EntryTypeSelectField extends AbstractType
         $resolver->setDefaults(
             [
                 'class' => EntryType::class,
+                'label' => 'entry.form.type.label',
+                'help' => 'entry.form.type.help',
             ]
         );
     }
