@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="grr_entry_type", uniqueConstraints={
+ * @ORM\Table(name="entry_type", uniqueConstraints={
  *     @ORM\UniqueConstraint(columns={"letter"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\EntryTypeRepository")

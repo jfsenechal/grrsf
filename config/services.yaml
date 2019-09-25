@@ -31,3 +31,7 @@ services:
       $dn: "%env(GRR_LDAP_BASE)%"
       $user: '%env(GRR_LDAP_ADMIN)%'
       $password: '%env(GRR_LDAP_PWD)%'
+
+  App\Doctrine\TablePrefix:
+    tags:
+      - { name: doctrine.event_subscriber, connection: default }

@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="grr_periodicity")
+ * @ORM\Table(name="periodicity")
  * @ORM\Entity(repositoryClass="App\Repository\PeriodicityRepository")
  *
  *

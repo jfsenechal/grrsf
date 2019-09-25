@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Entry.
  *
- * @ORM\Table(name="grr_entry")
+ * @ORM\Table(name="entry")
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
  *
  * @AppAssertEntry\BusyRoom()

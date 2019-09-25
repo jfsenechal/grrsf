@@ -3,22 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Area;
-use App\Entity\EntryType;
-use App\Entity\TypeArea;
-use App\Events\EntryTypeEvent;
-use App\Factory\TypeAreaFactory;
-use App\Factory\TypeEntryFactory;
-use App\Form\TypeAssocAreaType;
-use App\Form\TypeEntryType;
-use App\Manager\TypeEntryManager;
-use App\Repository\EntryTypeRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Form\AssocTypeForAreaType;
+use App\Manager\AreaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route("/admin/type/area")
@@ -26,21 +17,14 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class TypeAreaController extends AbstractController
 {
-
-
     /**
-     * @var TypeAreaFactory
+     * @var AreaManager
      */
-    private $typeAreaFactory;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private $areaManager;
 
-    public function __construct(TypeAreaFactory $typeAreaFactory, EntityManagerInterface $entityManager)
+    public function __construct(AreaManager $areaManager)
     {
-        $this->typeAreaFactory = $typeAreaFactory;
-        $this->entityManager = $entityManager;
+        $this->areaManager = $areaManager;
     }
 
     /**
@@ -48,28 +32,19 @@ class TypeAreaController extends AbstractController
      */
     public function edit(Request $request, Area $area): Response
     {
-        $assoc = $this->typeAreaFactory->createAreaAssoc($area);
-        $form = $this->createForm(TypeAssocAreaType::class, $assoc);
+        $form = $this->createForm(AssocTypeForAreaType::class, $area);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $data = $form->getData();
-            $types = $data->getTypes();
+            $this->areaManager->flush();
 
-            foreach ($types as $type) {
-                $typeArea = $this->typeAreaFactory->createNew($area, $type);
-                $this->entityManager->persist($typeArea);
-            }
-
-            $this->entityManager->flush();
-
-            /*   return $this->redirectToRoute(
-                   'grr_admin_area_show',
-                   [
-                       'id' => $area->getId(),
-                   ]
-               );*/
+            return $this->redirectToRoute(
+                'grr_admin_area_show',
+                [
+                    'id' => $area->getId(),
+                ]
+            );
         }
 
         return $this->render(
@@ -79,20 +54,5 @@ class TypeAreaController extends AbstractController
                 'form' => $form->createView(),
             ]
         );
-    }
-
-    /**
-     * @Route("/{id}", name="grr_admin_type_area_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, TypeArea $typeArea): Response
-    {
-        $area = $typeArea->getArea();
-
-        if ($this->isCsrfTokenValid('delete'.$typeArea->getId(), $request->request->get('_token'))) {
-            $this->entityManager->remove($typeArea);
-            $this->entityManager->flush();
-        }
-
-        return $this->redirectToRoute('grr_admin_area_show', ['id' => $area->getId()]);
     }
 }

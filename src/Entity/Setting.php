@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Setting.
  *
- * @ORM\Table(name="grr_setting")
+ * @ORM\Table(name="setting")
  * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
  */
 class Setting

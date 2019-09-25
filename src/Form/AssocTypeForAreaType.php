@@ -2,22 +2,23 @@
 
 namespace App\Form;
 
-use App\Model\TypeAssocArea;
+use App\Entity\Area;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\EntryType;
 
-class TypeAssocAreaType extends AbstractType
+class AssocTypeForAreaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(
-                'types',
+                'entryTypes',
                 EntityType::class,
                 [
-                    'class' => \App\Entity\EntryType::class,
+                    'class' => EntryType::class,
                     'multiple' => true,
                     'expanded' => true,
                     'label' => 'typeEntry.form.name.label',
@@ -29,7 +30,7 @@ class TypeAssocAreaType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => TypeAssocArea::class,
+                'data_class' => Area::class,
             ]
         );
     }
