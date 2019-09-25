@@ -60,14 +60,40 @@ class AreaControllerTest extends BaseTesting
         );
     }
 
+    public function testEditEntryTypeAssoc()
+    {
+        $this->loadFixtures();
+
+        $this->administrator->request('GET', 'admin/area/');
+        $this->administrator->clickLink('Hdv');
+        self::assertResponseIsSuccessful();
+
+        $crawler = $this->administrator->clickLink('Types d\'entrée');
+
+        $form = $crawler->selectButton('Sauvegarder')->form();
+        $form['assoc_type_for_area[entryTypes]'][0]->tick();
+        $form['assoc_type_for_area[entryTypes]'][1]->tick();
+
+        $this->administrator->submit($form);
+        $this->administrator->followRedirect();
+        self::assertResponseIsSuccessful();
+
+        $this->assertContains(
+            'Hdv',
+            $this->administrator->getResponse()->getContent()
+        );
+    }
+
     protected function loadFixtures()
     {
         $files =
             [
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'user.yaml',
+                $this->pathFixtures.'entry_type.yaml',
             ];
 
         $this->loader->load($files);
     }
+
 }

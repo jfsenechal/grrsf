@@ -12,6 +12,7 @@ namespace App\Tests;
 
 use App\Entity\Area;
 use App\Entity\Entry;
+use App\Entity\EntryType;
 use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Entity\Security\User;
@@ -124,6 +125,13 @@ class BaseTesting extends WebTestCase
         return $this->entityManager
             ->getRepository(User::class)
             ->findOneBy(['email' => $email]);
+    }
+
+    protected function getTypeEntry(string $name): EntryType
+    {
+        return $this->entityManager
+            ->getRepository(EntryType::class)
+            ->findOneBy(['name' => $name]);
     }
 
     /**
