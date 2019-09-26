@@ -8,23 +8,30 @@
 
 namespace App\EventSubscriber;
 
-use App\Form\Type\AreaHiddenType;
+use App\Entity\Security\User;
 use App\Form\Type\AreaSelectType;
+use App\Security\AuthorizationHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Security\Core\Security;
 
 class AddAreaFieldSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var bool
+     * @var Security
      */
-    private $required;
+    private $security;
+    /**
+     * @var AuthorizationHelper
+     */
+    private $authorizationHelper;
 
-    public function __construct(bool $required = false)
+    public function __construct(Security $security, AuthorizationHelper $authorizationHelper)
     {
-        $this->required = $required;
+        $this->security = $security;
+        $this->authorizationHelper = $authorizationHelper;
     }
 
     public static function getSubscribedEvents()
@@ -36,29 +43,30 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
 
     public function onPreSetData(FormEvent $event)
     {
-        $entry = $event->getData();
-        $area = $entry->getArea();
+        /**
+         * @var User $user
+         */
+        $user = $this->security->getUser();
+        if (!$user) {
+            throw new \LogicException(
+                'The EntryTypeForm cannot be used without an authenticated user!'
+            );
+        }
+
+        $options = ['required' => true];
+
+        $areas = $this->authorizationHelper->getAreasUserCanAdd($user);
+        $options['choices'] = $areas;
+
         /**
          * @var FormInterface
          */
         $form = $event->getForm();
 
-        $options = [
-            'required' => $this->required,
-        ];
-
-        if (!$this->required) {
-            $options['placeholder'] = 'area.form.select.placeholder';
-        }
-
-        if ($area) {
-            $form->add('area', AreaHiddenType::class);
-        } else {
-            $form->add(
-                'area',
-                AreaSelectType::class,
-                    $options,
-            );
-        }
+        $form->add(
+            'area',
+            AreaSelectType::class,
+            $options
+        );
     }
 }

@@ -36,7 +36,7 @@ class UserType extends AbstractType
                 TextType::class,
                 [
                     'required' => true,
-                    'label'=> 'user.form.username.label',
+                    'label' => 'user.form.username.label',
                 ]
             )
             ->add(
@@ -47,7 +47,7 @@ class UserType extends AbstractType
                 ]
             )
             ->add(
-                'area_default',
+                'area',
                 AreaSelectType::class,
                 [
                     'label' => 'user.form.area.label',
@@ -57,15 +57,11 @@ class UserType extends AbstractType
             )
             ->addEventSubscriber(
                 new AddRoomFieldSubscriber(
-                    'room_default',
-                    false,
-                    false,
                     false,
                     'user.form.room.label',
                     'room.form.select.empty.placeholder'
                 )
             );
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

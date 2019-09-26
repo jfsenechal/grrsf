@@ -12,6 +12,7 @@ namespace App\Tests\Service;
 
 use App\Entity\Entry;
 use App\Entity\Room;
+use App\Entry\EntryLocationService;
 use App\Factory\CarbonFactory;
 use App\Factory\DayFactory;
 use App\I18n\LocalHelper;
@@ -19,7 +20,6 @@ use App\Model\Month;
 use App\Model\Week;
 use App\Provider\TimeSlotsProvider;
 use App\Service\BindDataManager;
-use App\Service\EntryLocationService;
 use App\Tests\BaseTesting;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;

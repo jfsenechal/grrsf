@@ -81,7 +81,7 @@ class CheckCommand extends Command
             $questionDelete = new ConfirmationQuestion("Les supprimer ? [y,N] \n", false);
             $delete = $helper->ask($input, $output, $questionDelete);
             if ($delete) {
-                $this->migrationChecker->deleteDoublone();
+                $this->migrationChecker->deleteDoublon();
                 $io->success("Doublons supprimés");
             }
         }

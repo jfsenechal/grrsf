@@ -70,12 +70,12 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Area")
      */
-    private $area_default;
+    private $area;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Room")
      */
-    private $room_default;
+    private $room;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Security\UserAuthorization", mappedBy="user", orphanRemoval=true)
@@ -160,15 +160,6 @@ class User implements UserInterface
     }
 
     /**
-     * Alias
-     * @return Area|null
-     */
-    public function getArea(): ?Area
-    {
-        return $this->area_default;
-    }
-
-    /**
      * @see UserInterface
      */
     public function getSalt()
@@ -248,30 +239,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAreaDefault(): ?Area
-    {
-        return $this->area_default;
-    }
-
-    public function setAreaDefault(?Area $area_default): self
-    {
-        $this->area_default = $area_default;
-
-        return $this;
-    }
-
-    public function getRoomDefault(): ?Room
-    {
-        return $this->room_default;
-    }
-
-    public function setRoomDefault(?Room $room_default): self
-    {
-        $this->room_default = $room_default;
-
-        return $this;
-    }
-
     /**
      * @return Collection|UserAuthorization[]
      */
@@ -311,6 +278,30 @@ class User implements UserInterface
     public function setLanguageDefault(?string $language_default): self
     {
         $this->language_default = $language_default;
+
+        return $this;
+    }
+
+    public function getArea(): ?Area
+    {
+        return $this->area;
+    }
+
+    public function setArea(?Area $area): self
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): self
+    {
+        $this->room = $room;
 
         return $this;
     }

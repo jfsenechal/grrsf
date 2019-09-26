@@ -7,6 +7,7 @@ use App\Entity\Room;
 use App\Entity\Security\User;
 use App\Entity\Security\UserAuthorization;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -23,42 +24,79 @@ class AuthorizationRepository extends ServiceEntityRepository
     }
 
     /**
+     * Pour montrer les droits par area
      * @param Area $area
      * @return UserAuthorization[]
+     * @throws \Exception
      */
     public function findByArea(Area $area)
     {
-        $queryBuilder = $this->createQueryBuilder('authorization')
-            ->orWhere('authorization.area = :area')
-            ->setParameter('area', $area);
+        return $this->findByUserAndArea(null, $area);
+    }
 
-        $repository = $this->getEntityManager()->getRepository(Room::class);
-        $rooms = $repository->findByArea($area);
+    /**
+     * Pour montrer les droits par user
+     * @param User $user
+     * @return UserAuthorization[]
+     * @throws \Exception
+     */
+    public function findByUser(User $user)
+    {
+        return $this->findByUserAndArea($user, null);
+    }
 
-        $queryBuilder->orWhere('authorization.room IN (:rooms)')
-            ->setParameter('rooms', $rooms);
+    /**
+     * getRoomsUserCanAdd
+     * @param User $user
+     * @return UserAuthorization[]
+     * @throws \Exception
+     */
+    public function findByUserAndArea(?User $user, ?Area $area)
+    {
+        if (!$user && !$area) {
+            throw new \Exception('At least one parameter is needed');
+        }
+
+        $queryBuilder = $this->createQueryBuilder('authorization');
+
+        if ($user) {
+            $this->setCriteriaUser($queryBuilder, $user);
+        }
+
+        if ($area) {
+            $this->setCriteriaArea($queryBuilder, $area);
+        }
 
         return $queryBuilder
             ->addOrderBy('authorization.user', 'ASC')
-            ->orderBy('authorization.area', 'ASC')
             ->orderBy('authorization.room', 'ASC')
+            ->orderBy('authorization.area', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    public function findByUser(User $user)
+    protected function setCriteriaUser(QueryBuilder $queryBuilder, User $user)
     {
-        $queryBuilder = $this->createQueryBuilder('authorization')
-            ->andWhere('authorization.user = :user')
+        $queryBuilder->andWhere('authorization.user = :user')
             ->setParameter('user', $user);
-
-        return $queryBuilder
-            ->orderBy('authorization.room', 'ASC')
-            ->orderBy('authorization.area', 'ASC')
-            ->getQuery()
-            ->getResult();
     }
 
+    protected function setCriteriaArea(QueryBuilder $queryBuilder, Area $area)
+    {
+        $repository = $this->getEntityManager()->getRepository(Room::class);
+        $rooms = $repository->findByArea($area);
+        $queryBuilder->andWhere('authorization.area = :area')
+            ->setParameter('area', $area);
+
+        $queryBuilder->orWhere('authorization.room IN (:rooms)')
+            ->setParameter('rooms', $rooms);
+    }
+
+    /**
+     * Pour montrer les droits par room
+     * @param Room $room
+     * @return UserAuthorization[]
+     */
     public function findByRoom(Room $room)
     {
         $queryBuilder = $this->createQueryBuilder('authorization')
@@ -74,6 +112,7 @@ class AuthorizationRepository extends ServiceEntityRepository
     }
 
     /**
+     * Utilise dans migration checker
      * @param User $user
      * @return UserAuthorization[]
      */
@@ -81,8 +120,7 @@ class AuthorizationRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('authorization');
 
-        $queryBuilder->andWhere('authorization.user = :user')
-            ->setParameter('user', $user);
+        $this->setCriteriaUser($queryBuilder, $user);
 
         $queryBuilder->andWhere('authorization.area IS NOT NULL');
 
@@ -98,6 +136,7 @@ class AuthorizationRepository extends ServiceEntityRepository
     }
 
     /**
+     * Utilise dans migration checker
      * @param User $user
      * @param Room $room
      * @return UserAuthorization
@@ -107,8 +146,7 @@ class AuthorizationRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('authorization');
 
-        $queryBuilder->andWhere('authorization.user = :user')
-            ->setParameter('user', $user);
+        $this->setCriteriaUser($queryBuilder, $user);
 
         $queryBuilder->andWhere('authorization.room = :room')
             ->setParameter('room', $room);
@@ -117,4 +155,6 @@ class AuthorizationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+
 }

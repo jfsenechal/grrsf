@@ -204,13 +204,13 @@ class SecurityHelper
      */
     public function canAddEntry(Room $room, ?User $user = null)
     {
-        $who = $room->getRuleToAdd();
+        $rule = $room->getRuleToAdd();
 
         if ($user && $this->isGrrAdministrator($user)) {
             return true;
         }
 
-        if (!$user || $who > SettingsRoom::CAN_ADD_NO_RULE) {
+        if (!$user || $rule > SettingsRoom::CAN_ADD_NO_RULE) {
             return $this->checkAuthorizationRoomToAddEntry($room, $user);
         }
 

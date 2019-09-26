@@ -58,7 +58,7 @@ class SearchEntryType extends AbstractType
                     'placeholder' => 'area.form.select.placeholder',
                 ]
             )
-            ->addEventSubscriber(new AddRoomFieldSubscriber('room', false, false, false));
+            ->addEventSubscriber(new AddRoomFieldSubscriber());
 
     }
 

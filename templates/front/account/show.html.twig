@@ -3,27 +3,28 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>{{'user.account.title'|trans}} {{ user.name }} {{ user.firstName }}</h1>
+    <h1>{{ 'user.account.title'|trans }} {{ user.name }} {{ user.firstName }}</h1>
 
     {% include '@grr_front/account/_actions.html.twig' %}
 
     <table class="table table-bordered">
         <tbody>
-            <tr>
-                <th>{{ 'user.account.area.default.label'|trans }}</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>{{ 'user.account.room.default.label'|trans }}</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>{{ 'user.account.email.label'|trans }}</th>
-                <td>{{ user.email }}</td>
-            </tr>
-
+        <tr>
+            <th>{{ 'user.account.area.default.label'|trans }}</th>
+            <td>{{ user.area }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'user.account.room.default.label'|trans }}</th>
+            <td>{{ user.room }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'user.account.email.label'|trans }}</th>
+            <td>{{ user.email }}</td>
+        </tr>
         </tbody>
     </table>
+
+    {{ include('@grr_front/account/_authorizations.html.twig') }}
 
     {{ include('@grr_front/account/_delete_form.html.twig') }}
 {% endblock %}

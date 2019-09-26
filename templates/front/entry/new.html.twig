@@ -33,5 +33,5 @@
 {% block scripts %}
     <script src="{{ asset('js/periodicity_options_weeks.js') }}"></script>
     <script src="{{ asset('js/full_day.js') }}"></script>
-    {% include '@grr_front/_select_room_js.html.twig' %}
+    {% include '@grr_front/_select_room_js.html.twig' with {'isRestricted' : true} %}
 {% endblock %}

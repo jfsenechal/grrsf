@@ -81,7 +81,11 @@ class MigrationChecker
         return $result;
     }
 
-    public function deleteDoublone()
+    /**
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function deleteDoublon()
     {
         foreach ($this->checkAreaAndRoomAdministrator() as $data) {
             $authorization = $data['authorization'];

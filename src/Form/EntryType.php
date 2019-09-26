@@ -2,19 +2,20 @@
 
 namespace App\Form;
 
-use AcMarche\GrhBundle\Repository\TypeContratRepository;
 use App\Entity\Entry;
+use App\EventSubscriber\AddAreaFieldSubscriber;
 use App\EventSubscriber\AddDurationFieldSubscriber;
 use App\EventSubscriber\AddRoomFieldSubscriber;
 use App\EventSubscriber\AddTypeEntryFieldSubscriber;
 use App\Factory\DurationFactory;
-use App\Form\Type\AreaSelectType;
+use App\Security\AuthorizationHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class EntryType extends AbstractType
 {
@@ -22,10 +23,23 @@ class EntryType extends AbstractType
      * @var DurationFactory
      */
     private $durationFactory;
+    /**
+     * @var Security
+     */
+    private $security;
+    /**
+     * @var AuthorizationHelper
+     */
+    private $authorizationHelper;
 
-    public function __construct(DurationFactory $durationFactory)
-    {
+    public function __construct(
+        DurationFactory $durationFactory,
+        Security $security,
+        AuthorizationHelper $authorizationHelper
+    ) {
         $this->durationFactory = $durationFactory;
+        $this->security = $security;
+        $this->authorizationHelper = $authorizationHelper;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -48,13 +62,6 @@ class EntryType extends AbstractType
                 ]
             )
             ->add(
-                'area',
-                AreaSelectType::class,
-                [
-                    'required' => true,
-                ]
-            )
-            ->add(
                 'description',
                 TextareaType::class,
                 [
@@ -63,11 +70,10 @@ class EntryType extends AbstractType
                     'required' => false,
                 ]
             )
+            ->addEventSubscriber(new AddAreaFieldSubscriber($this->security, $this->authorizationHelper))
             ->addEventSubscriber(new AddTypeEntryFieldSubscriber())
             ->addEventSubscriber(new AddDurationFieldSubscriber($this->durationFactory))
-            ->addEventSubscriber(new AddRoomFieldSubscriber('room', true, false, false));
-
-
+            ->addEventSubscriber(new AddRoomFieldSubscriber( true ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

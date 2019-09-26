@@ -5,7 +5,6 @@ namespace App\Tests\Controller\Front;
 use App\Model\DurationModel;
 use App\Periodicity\PeriodicityConstant;
 use App\Tests\BaseTesting;
-use Carbon\Carbon;
 
 class EntryPeriodicityControllerTest extends BaseTesting
 {
@@ -122,7 +121,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
             $this->administrator->getResponse()->getContent()
         );
 
-        $result = ['24-09-2019 11:30', '25-09-2019 11:30', '26-09-2019 11:30', '27-09-2019 11:30'];
+        $format = 'd-m-Y';
+        $result = [
+            $today->format($format).' 11:30',
+            $today->modify('+ 1 day')->format($format).' 11:30',
+            $today->modify('+ 1 day')->format($format).' 11:30',
+            $today->modify('+ 1 day')->format($format).' 11:30',
+        ];
 
         foreach ($result as $value) {
             $this->assertContains(
@@ -222,7 +227,14 @@ class EntryPeriodicityControllerTest extends BaseTesting
             $this->administrator->getResponse()->getContent()
         );
 
-        $result = ['24-09-2019 11:30', '24-10-2019 11:30', '24-11-2019 11:30', '24-12-2019 11:30'];
+        $format = 'd-m-Y';
+        $result = [
+            $today->format($format).' 11:30',
+            $today->modify('+ 1 month')->format($format).' 11:30',
+            $today->modify('+ 1 month')->format($format).' 11:30',
+            $today->modify('+ 1 month')->format($format).' 11:30',
+        ];
+
         foreach ($result as $value) {
             $this->assertContains(
                 $value,
@@ -235,7 +247,7 @@ class EntryPeriodicityControllerTest extends BaseTesting
     {
         $this->loadFixtures();
 
-        $today = new \DateTime();
+        $today = \DateTime::createFromFormat('Y-m-d', '2019-09-24');
         $esquare = $this->getArea('Hdv');
         $room = $this->getRoom('Salle Conseil');
 
@@ -375,7 +387,13 @@ class EntryPeriodicityControllerTest extends BaseTesting
             $this->administrator->getResponse()->getContent()
         );
 
-        $result = ['24-09-2019 11:30', '24-09-2020 11:30', '24-09-2021 11:30', '24-09-2022 11:30'];
+        $format = 'd-m-Y';
+        $result = [
+            $today->format($format).' 11:30',
+            $today->modify('+ 1 year')->format($format).' 11:30',
+            $today->modify('+ 1 year')->format($format).' 11:30',
+        ];
+
         foreach ($result as $value) {
             $this->assertContains(
                 $value,

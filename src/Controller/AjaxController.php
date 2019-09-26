@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
+use App\Security\AuthorizationHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,11 +26,19 @@ class AjaxController extends AbstractController
      * @var RoomRepository
      */
     private $roomRepository;
+    /**
+     * @var AuthorizationHelper
+     */
+    private $authorizationHelper;
 
-    public function __construct(AreaRepository $areaRepository, RoomRepository $roomRepository)
-    {
+    public function __construct(
+        AreaRepository $areaRepository,
+        RoomRepository $roomRepository,
+        AuthorizationHelper $authorizationHelper
+    ) {
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
+        $this->authorizationHelper = $authorizationHelper;
     }
 
     /**
@@ -38,13 +47,26 @@ class AjaxController extends AbstractController
     public function ajaxRequestGetRooms(Request $request)
     {
         $areaId = (int)$request->get('id');
-        $required = filter_var($request->get('isRequired'), FILTER_VALIDATE_BOOLEAN);;
+        $required = filter_var($request->get('isRequired'), FILTER_VALIDATE_BOOLEAN, false);
+        $restricted = filter_var($request->get('isRestricted'), FILTER_VALIDATE_BOOLEAN, false);
 
         $area = $this->areaRepository->find($areaId);
         if (null === $area) {
             throw new InvalidParameterException('Area not found');
         }
-        $rooms = $this->roomRepository->findByArea($area);
+
+        /**
+         *
+         */
+        if (!$restricted) {
+            $rooms = $this->roomRepository->findByArea($area);
+        } else {
+            $user = $this->getUser();
+            if (!$user) {
+                throw new InvalidParameterException('You must be login');
+            }
+            $rooms = $this->authorizationHelper->getRoomsUserCanAdd($user, $area);
+        }
 
         return $this->render('ajax/_rooms_options.html.twig', ['rooms' => $rooms, 'required' => $required]);
     }

@@ -17,41 +17,23 @@ use Symfony\Component\Form\FormEvents;
 class AddRoomFieldSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var string
-     */
-    private $name_field;
-    /**
-     * @var bool
-     */
-    private $multiple;
-    /**
-     * @var bool
-     */
-    private $expanded;
-    /**
      * @var bool
      */
     private $required;
     /**
-     * @var string
+     * @var string|null
      */
     private $label;
     /**
-     * @var string
+     * @var string|null
      */
     private $placeholder;
 
     public function __construct(
-        string $name_field = 'room',
         bool $required = false,
-        bool $multiple = false,
-        bool $expanded = false,
-        string $label = null,
-        string $placeholder = null
+        ?string $label = null,
+        ?string $placeholder = null
     ) {
-        $this->name_field = $name_field;
-        $this->multiple = $multiple;
-        $this->expanded = $expanded;
         $this->required = $required;
         $this->label = $label;
         $this->placeholder = $placeholder;
@@ -78,8 +60,6 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
 
         $default = [
             'required' => $this->required,
-            'multiple' => $this->multiple,
-            'expanded' => $this->expanded,
         ];
 
         if ($area) {
@@ -90,14 +70,6 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
             $default['choices'] = [];
         }
 
-        if (false === $this->required) {
-            $default['placeholder'] = 'room.form.select.placeholder';
-        }
-
-        if (true === $this->multiple) {
-            $default['attr'] = ['class' => 'custom-control custom-checkbox my-1 mr-sm-2 room-select'];
-        }
-
         if ($this->label) {
             $default['label'] = $this->label;
         }
@@ -106,8 +78,12 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
             $default['placeholder'] = $this->placeholder;
         }
 
+        if (false === $this->required) {
+            $default['placeholder'] = 'room.form.select.placeholder';
+        }
+
         $form->add(
-            $this->name_field,
+            'room',
             RoomSelectType::class,
             $default
         );

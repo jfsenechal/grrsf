@@ -1,3 +1,6 @@
+{% if isRestricted is not defined %}
+    {% set isRestricted = 'false' %}
+{% endif %}
 <script>
     /**
      * Met ajour la liste des rooms
@@ -8,13 +11,14 @@
 
         areaSelected.on('change', function (e) {
 
-           var isRequired = !!roomsList.prop('required');
+            var isRequired = !!roomsList.prop('required');
 
             $.ajax({
                 url: '{{ path('grr_ajax_getrooms') }}',
                 data: {
                     id: areaSelected.val(),
-                    isRequired: isRequired
+                    isRequired: isRequired,
+                    isRestricted: {{ isRestricted }}
                 },
                 success: function (html) {
                     if (!html) {
