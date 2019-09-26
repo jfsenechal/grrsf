@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Doctrine\Traits\IdEntityTrait;
-use App\Entity\Security\UserAuthorization;
+use App\Entity\Security\Authorization;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -120,7 +120,7 @@ class Area
     private $rooms;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserAuthorization", mappedBy="area", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\Authorization", mappedBy="area", orphanRemoval=true)
      */
     private $authorizations;
 
@@ -341,14 +341,14 @@ class Area
     }
 
     /**
-     * @return Collection|UserAuthorization[]
+     * @return Collection|Authorization[]
      */
     public function getAuthorizations(): Collection
     {
         return $this->authorizations;
     }
 
-    public function addAuthorization(UserAuthorization $authorization): self
+    public function addAuthorization(Authorization $authorization): self
     {
         if (!$this->authorizations->contains($authorization)) {
             $this->authorizations[] = $authorization;
@@ -358,7 +358,7 @@ class Area
         return $this;
     }
 
-    public function removeAuthorization(UserAuthorization $authorization): self
+    public function removeAuthorization(Authorization $authorization): self
     {
         if ($this->authorizations->contains($authorization)) {
             $this->authorizations->removeElement($authorization);

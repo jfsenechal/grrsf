@@ -17,7 +17,7 @@ use App\Entity\EntryType;
 use App\Entity\Periodicity;
 use App\Entity\Room;
 use App\Entity\Security\User;
-use App\Entity\Security\UserAuthorization;
+use App\Entity\Security\Authorization;
 use App\Periodicity\PeriodicityConstant;
 
 class MigrationFactory
@@ -153,9 +153,9 @@ class MigrationFactory
         return $user;
     }
 
-    public function createAuthorization(array $data): UserAuthorization
+    public function createAuthorization(array $data): Authorization
     {
-        return new UserAuthorization();
+        return new Authorization();
     }
 
 }

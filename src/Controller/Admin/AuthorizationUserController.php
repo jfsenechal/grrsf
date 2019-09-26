@@ -26,7 +26,7 @@ class AuthorizationUserController extends AbstractController
     /**
      * @var AuthorizationRepository
      */
-    private $userAuthorizationRepository;
+    private $authorizationRepository;
     /**
      * @var EventDispatcherInterface
      */
@@ -39,11 +39,11 @@ class AuthorizationUserController extends AbstractController
     public function __construct(
         AuthorizationManager $authorizationManager,
         HandlerAuthorization $handlerAuthorization,
-        AuthorizationRepository $userAuthorizationRepository,
+        AuthorizationRepository $authorizationRepository,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->handlerAuthorization = $handlerAuthorization;
-        $this->userAuthorizationRepository = $userAuthorizationRepository;
+        $this->authorizationRepository = $authorizationRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->authorizationManager = $authorizationManager;
     }
@@ -86,7 +86,7 @@ class AuthorizationUserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        $authorizations = $this->userAuthorizationRepository->findByUser($user);
+        $authorizations = $this->authorizationRepository->findByUser($user);
         $urlBack = $this->generateUrl('grr_authorization_show_by_user', ['id' => $user->getId()]);
 
         return $this->render(

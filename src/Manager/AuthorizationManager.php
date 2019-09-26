@@ -8,7 +8,7 @@
 
 namespace App\Manager;
 
-use App\Entity\Security\UserAuthorization;
+use App\Entity\Security\Authorization;
 use App\Repository\Security\AuthorizationRepository;
 
 class AuthorizationManager extends BaseManager

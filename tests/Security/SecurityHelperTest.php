@@ -11,7 +11,7 @@
 namespace App\Tests\Security;
 
 use App\Entity\Security\User;
-use App\Entity\Security\UserAuthorization;
+use App\Entity\Security\Authorization;
 use App\Security\SecurityHelper;
 use App\Security\SecurityRole;
 use App\Tests\BaseTesting;
@@ -604,7 +604,7 @@ class SecurityHelperTest extends BaseTesting
 
     protected function initSecurityHelper()
     {
-        return new SecurityHelper($this->entityManager->getRepository(UserAuthorization::class));
+        return new SecurityHelper($this->entityManager->getRepository(Authorization::class));
     }
 
     protected function loadFixtures($rule = false)

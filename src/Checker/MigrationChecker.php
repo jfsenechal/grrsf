@@ -11,7 +11,7 @@
 namespace App\Checker;
 
 
-use App\Entity\Security\UserAuthorization;
+use App\Entity\Security\Authorization;
 use App\Manager\AuthorizationManager;
 use App\Repository\RoomRepository;
 use App\Repository\Security\AuthorizationRepository;

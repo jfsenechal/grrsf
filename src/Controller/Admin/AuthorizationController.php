@@ -20,7 +20,7 @@ class AuthorizationController extends AbstractController
     /**
      * @var AuthorizationRepository
      */
-    private $userAuthorizationRepository;
+    private $authorizationRepository;
     /**
      * @var EventDispatcherInterface
      */
@@ -32,10 +32,10 @@ class AuthorizationController extends AbstractController
 
     public function __construct(
         AuthorizationManager $authorizationManager,
-        AuthorizationRepository $userAuthorizationRepository,
+        AuthorizationRepository $authorizationRepository,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->userAuthorizationRepository = $userAuthorizationRepository;
+        $this->authorizationRepository = $authorizationRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->authorizationManager = $authorizationManager;
     }
@@ -49,18 +49,18 @@ class AuthorizationController extends AbstractController
         $token = $request->get('_tokenauth');
         $urlBack = $request->get('_urlback', '/');
 
-        $userAuthorization = $this->userAuthorizationRepository->find($id);
+        $authorization = $this->authorizationRepository->find($id);
 
-        if (!$userAuthorization) {
+        if (!$authorization) {
             $this->createNotFoundException();
         }
 
-        if ($this->isCsrfTokenValid('delete'.$userAuthorization->getId(), $token)) {
+        if ($this->isCsrfTokenValid('delete'.$authorization->getId(), $token)) {
 
-            $this->authorizationManager->remove($userAuthorization);
+            $this->authorizationManager->remove($authorization);
             $this->authorizationManager->flush();
 
-            $authorizationEvent = new AuthorizationEvent($userAuthorization);
+            $authorizationEvent = new AuthorizationEvent($authorization);
             $this->eventDispatcher->dispatch($authorizationEvent, AuthorizationEvent::DELETE_SUCCESS);
         } else {
             $this->addFlash('danger', 'authorization.flash.model.delete.error');
@@ -74,7 +74,7 @@ class AuthorizationController extends AbstractController
      */
     public function show(Room $room): Response
     {
-        $authorizations = $this->userAuthorizationRepository->findByRoom($room);
+        $authorizations = $this->authorizationRepository->findByRoom($room);
         $urlBack = $this->generateUrl('grr_authorization_show_by_user', ['id' => $room->getId()]);
 
         return $this->render(

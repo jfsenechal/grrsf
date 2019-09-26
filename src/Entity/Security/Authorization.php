@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="user_authorization", uniqueConstraints={
+ * @ORM\Table(name="authorization", uniqueConstraints={
  *     @ORM\UniqueConstraint(columns={"user_id", "area_id"}),
  *     @ORM\UniqueConstraint(columns={"user_id", "room_id"})
  * })
@@ -18,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields={"user", "area"}, message="Ce user est déjà lié au domaine")
  * @UniqueEntity(fields={"user", "room"}, message="Ce user est déjà lié à la room")
  */
-class UserAuthorization
+class Authorization
 {
     use IdEntityTrait;
     use TimestampableEntityTrait;

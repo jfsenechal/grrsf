@@ -48,7 +48,14 @@ class BaseTesting extends WebTestCase
      * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
     protected $administrator;
-
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
+     */
+    protected $bob;
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
+     */
+    protected $brenda;
     /**
      * {@inheritdoc}
      */
@@ -72,6 +79,20 @@ class BaseTesting extends WebTestCase
             [],
             [
                 'PHP_AUTH_USER' => 'grr@domain.be',
+                'PHP_AUTH_PW' => 'homer',
+            ]
+        );
+        $this->bob = static::createClient(
+            [],
+            [
+                'PHP_AUTH_USER' => 'bob@domain.be',
+                'PHP_AUTH_PW' => 'homer',
+            ]
+        );
+        $this->brenda = static::createClient(
+            [],
+            [
+                'PHP_AUTH_USER' => 'brenda@domain.be',
                 'PHP_AUTH_PW' => 'homer',
             ]
         );

@@ -5,7 +5,7 @@ namespace App\Security;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
-use App\Entity\Security\UserAuthorization;
+use App\Entity\Security\Authorization;
 use App\Manager\AuthorizationManager;
 use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
@@ -80,20 +80,20 @@ class HandlerAuthorization
 
         foreach ($users as $user) {
 
-            $userAuthorization = new UserAuthorization();
-            $userAuthorization->setUser($user);
+            $authorization = new Authorization();
+            $authorization->setUser($user);
 
             if ($role === 1) {
-                $userAuthorization->setIsAreaAdministrator(true);
+                $authorization->setIsAreaAdministrator(true);
             }
             if ($role === 2) {
-                $userAuthorization->setIsResourceAdministrator(true);
+                $authorization->setIsResourceAdministrator(true);
             }
 
             if (count($rooms) > 0) {
-                $this->executeForRooms($userAuthorization, $area, $rooms, $user);
+                $this->executeForRooms($authorization, $area, $rooms, $user);
             } else {
-                $this->executeForArea($userAuthorization, $area, $user);
+                $this->executeForArea($authorization, $area, $user);
             }
         }
 
@@ -103,7 +103,7 @@ class HandlerAuthorization
     }
 
     protected function executeForRooms(
-        UserAuthorization $userAuthorization,
+        Authorization $authorization,
         Area $area,
         iterable $rooms,
         $user
@@ -125,7 +125,7 @@ class HandlerAuthorization
         }
         foreach ($rooms as $room) {
 
-            $copy = clone($userAuthorization);
+            $copy = clone($authorization);
             if ($this->existRoom($user, $room)) {
                 $this->error = true;
                 $this->flashBag->add(
@@ -139,7 +139,7 @@ class HandlerAuthorization
         }
     }
 
-    protected function executeForArea(UserAuthorization $userAuthorization, Area $area, User $user)
+    protected function executeForArea(Authorization $authorization, Area $area, User $user)
     {
         if ($this->existArea($user, $area)) {
             $this->error = true;
@@ -154,8 +154,8 @@ class HandlerAuthorization
                 )
             );
         } else {
-            $userAuthorization->setArea($area);
-            $this->authorizationManager->insert($userAuthorization);
+            $authorization->setArea($area);
+            $this->authorizationManager->insert($authorization);
         }
     }
 

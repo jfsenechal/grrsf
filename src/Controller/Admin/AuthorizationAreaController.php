@@ -25,7 +25,7 @@ class AuthorizationAreaController extends AbstractController
     /**
      * @var AuthorizationRepository
      */
-    private $userAuthorizationRepository;
+    private $authorizationRepository;
     /**
      * @var EventDispatcherInterface
      */
@@ -33,11 +33,11 @@ class AuthorizationAreaController extends AbstractController
 
     public function __construct(
         HandlerAuthorization $handlerAuthorization,
-        AuthorizationRepository $userAuthorizationRepository,
+        AuthorizationRepository $authorizationRepository,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->handlerAuthorization = $handlerAuthorization;
-        $this->userAuthorizationRepository = $userAuthorizationRepository;
+        $this->authorizationRepository = $authorizationRepository;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -82,7 +82,7 @@ class AuthorizationAreaController extends AbstractController
      */
     public function show(Area $area): Response
     {
-        $authorizations = $this->userAuthorizationRepository->findByArea($area);
+        $authorizations = $this->authorizationRepository->findByArea($area);
         $urlBack = $this->generateUrl('grr_authorization_show_by_user', ['id' => $area->getId()]);
 
         return $this->render(

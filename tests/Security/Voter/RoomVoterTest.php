@@ -11,7 +11,7 @@
 namespace App\Tests\Security\Voter;
 
 use App\Entity\Security\User;
-use App\Entity\Security\UserAuthorization;
+use App\Entity\Security\Authorization;
 use App\Security\SecurityHelper;
 use App\Security\Voter\RoomVoter;
 use App\Tests\BaseTesting;
@@ -195,7 +195,7 @@ class RoomVoterTest extends BaseTesting
 
     protected function initSecurityHelper()
     {
-        return new SecurityHelper($this->entityManager->getRepository(UserAuthorization::class));
+        return new SecurityHelper($this->entityManager->getRepository(Authorization::class));
     }
 
     private function initVoter()

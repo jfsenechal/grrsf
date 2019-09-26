@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Entity\Security\UserAuthorization;
+use App\Entity\Security\Authorization;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class AuthorizationEvent extends Event
@@ -12,20 +12,20 @@ class AuthorizationEvent extends Event
     const DELETE_SUCCESS = 'grr.authorization.delete.success';
 
     /**
-     * @var UserAuthorization|null
+     * @var Authorization|null
      */
-    private $userAuthorization;
+    private $authorization;
 
-    public function __construct(?UserAuthorization $userAuthorization = null)
+    public function __construct(?Authorization $authorization = null)
     {
-        $this->userAuthorization = $userAuthorization;
+        $this->authorization = $authorization;
     }
 
     /**
-     * @return UserAuthorization
+     * @return Authorization
      */
-    public function getUserAuthorization(): UserAuthorization
+    public function getAuthorization(): Authorization
     {
-        return $this->userAuthorization;
+        return $this->authorization;
     }
 }

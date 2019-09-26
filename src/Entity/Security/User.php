@@ -78,7 +78,7 @@ class User implements UserInterface
     private $room;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserAuthorization", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\Authorization", mappedBy="user", orphanRemoval=true)
      */
     private $authorizations;
 
@@ -240,14 +240,14 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|UserAuthorization[]
+     * @return Collection|Authorization[]
      */
     public function getAuthorizations(): Collection
     {
         return $this->authorizations;
     }
 
-    public function addAuthorization(UserAuthorization $authorization): self
+    public function addAuthorization(Authorization $authorization): self
     {
         if (!$this->authorizations->contains($authorization)) {
             $this->authorizations[] = $authorization;
@@ -257,7 +257,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeAuthorization(UserAuthorization $authorization): self
+    public function removeAuthorization(Authorization $authorization): self
     {
         if ($this->authorizations->contains($authorization)) {
             $this->authorizations->removeElement($authorization);

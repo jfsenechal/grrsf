@@ -1,4 +1,4 @@
-App\Entity\Security\UserAuthorization:
+App\Entity\Security\Authorization:
   auth0:
     user: '@user_bob'
     area: '@area_Esquare'
@@ -32,5 +32,10 @@ App\Entity\Security\UserAuthorization:
   auth6:
     user: '@user_charle'
     room: '@room_box'
+    is_area_administrator: false
+    is_resource_administrator: false
+  auth7:
+    user: '@user_brenda'
+    room: '@room_conseil'
     is_area_administrator: false
     is_resource_administrator: false

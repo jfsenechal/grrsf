@@ -1,4 +1,4 @@
-App\Entity\Security\UserAuthorization:
+App\Entity\Security\Authorization:
   auth0:
     user: '@user_bob'
     area: '@area_Esquare'

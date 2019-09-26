@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Doctrine\Traits\IdEntityTrait;
-use App\Entity\Security\UserAuthorization;
+use App\Entity\Security\Authorization;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -172,7 +172,7 @@ class Room
     private $entries;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Security\UserAuthorization", mappedBy="room", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Security\Authorization", mappedBy="room", orphanRemoval=true)
      */
     private $authorizations;
 
@@ -475,14 +475,14 @@ class Room
     }
 
     /**
-     * @return Collection|UserAuthorization[]
+     * @return Collection|Authorization[]
      */
     public function getAuthorizations(): Collection
     {
         return $this->authorizations;
     }
 
-    public function addUsersManagerResource(UserAuthorization $usersManagerResource): self
+    public function addUsersManagerResource(Authorization $usersManagerResource): self
     {
         if (!$this->authorizations->contains($usersManagerResource)) {
             $this->authorizations[] = $usersManagerResource;
@@ -492,7 +492,7 @@ class Room
         return $this;
     }
 
-    public function removeUsersManagerResource(UserAuthorization $usersManagerResource): self
+    public function removeUsersManagerResource(Authorization $usersManagerResource): self
     {
         if ($this->authorizations->contains($usersManagerResource)) {
             $this->authorizations->removeElement($usersManagerResource);
@@ -505,7 +505,7 @@ class Room
         return $this;
     }
 
-    public function addAuthorization(UserAuthorization $authorization): self
+    public function addAuthorization(Authorization $authorization): self
     {
         if (!$this->authorizations->contains($authorization)) {
             $this->authorizations[] = $authorization;
@@ -515,7 +515,7 @@ class Room
         return $this;
     }
 
-    public function removeAuthorization(UserAuthorization $authorization): self
+    public function removeAuthorization(Authorization $authorization): self
     {
         if ($this->authorizations->contains($authorization)) {
             $this->authorizations->removeElement($authorization);
