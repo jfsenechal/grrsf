@@ -9,6 +9,7 @@ use App\Form\AreaType;
 use App\Manager\AreaManager;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
+use App\Security\AuthorizationHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -41,19 +42,25 @@ class AreaController extends AbstractController
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
+    /**
+     * @var AuthorizationHelper
+     */
+    private $authorizationHelper;
 
     public function __construct(
         AreaFactory $areaFactory,
         AreaRepository $areaRepository,
         AreaManager $areaManager,
         RoomRepository $roomRepository,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        AuthorizationHelper $authorizationHelper
     ) {
         $this->areaFactory = $areaFactory;
         $this->areaManager = $areaManager;
         $this->areaRepository = $areaRepository;
         $this->roomRepository = $roomRepository;
         $this->eventDispatcher = $eventDispatcher;
+        $this->authorizationHelper = $authorizationHelper;
     }
 
     /**
@@ -62,7 +69,8 @@ class AreaController extends AbstractController
      */
     public function index(): Response
     {
-        $areas = $this->areaRepository->findAll();
+        $user = $this->getUser();
+        $areas = $this->authorizationHelper->getAreasUserCanAdd($user);
 
         return $this->render(
             '@grr_admin/area/index.html.twig',

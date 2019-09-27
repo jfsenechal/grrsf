@@ -5,6 +5,7 @@ namespace App\Tests\Controller\SimpleUser;
 use App\Model\DurationModel;
 use App\Tests\BaseTesting;
 use Carbon\Carbon;
+use Symfony\Component\DomCrawler\Link;
 
 class EntryControllerTest extends BaseTesting
 {
@@ -83,7 +84,31 @@ class EntryControllerTest extends BaseTesting
         );
     }
 
-    protected function loadFixtures()
+    public function testLink()
+    {
+        $this->loadFixtures();
+
+        $today = new \DateTime();
+        $esquare = $this->getArea('Esquare');
+        $room = $this->getRoom('Box');
+
+        $url = '/front/dayview/area/'.$esquare->getId().'/year/2019/month/8/day/20/room';
+        //front/dayview/area/15/year/2019/month/8/day/20/room
+
+        $this->bob->request('GET', $url);
+
+        $crawler = $this->bob->clickLink('Réunion cst');
+        $optionApe = $crawler->filter('div.card-body > a');
+        $links = $optionApe->links();//retour à la liste et modifier
+        $this->assertCount(2, $links);
+        $this->assertContains('Modifier', $links[1]->getNode()->textContent);
+
+
+        $this->assertContains('Supprimer', $links[1]);
+    }
+
+    protected
+    function loadFixtures()
     {
         $files =
             [
@@ -92,6 +117,7 @@ class EntryControllerTest extends BaseTesting
                 $this->pathFixtures.'entry_type.yaml',
                 $this->pathFixtures.'user.yaml',
                 $this->pathFixtures.'authorization.yaml',
+                $this->pathFixtures.'entry.yaml',
             ];
 
         $this->loader->load($files);

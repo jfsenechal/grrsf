@@ -14,7 +14,7 @@ use App\Tests\BaseTesting;
 
 class AccountControllerTest extends BaseTesting
 {
-    public function testNew()
+    public function testShow()
     {
         $this->loadFixtures();
 

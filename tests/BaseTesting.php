@@ -56,6 +56,7 @@ class BaseTesting extends WebTestCase
      * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
     protected $brenda;
+
     /**
      * {@inheritdoc}
      */
@@ -164,7 +165,7 @@ class BaseTesting extends WebTestCase
 
         $purger = new ORMPurger($this->entityManager);
         //$purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
-        $purger->purge();
+    //    $purger->purge();
 
         $this->kernel2->shutdown();
         $this->kernel2 = null;
