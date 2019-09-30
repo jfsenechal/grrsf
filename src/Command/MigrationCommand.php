@@ -275,8 +275,8 @@ class MigrationCommand extends Command
             } else {
                 $user = $this->migrationFactory->createUser($data);
                 $user->setPassword($this->migrationUtil->transformPassword($user, $data['password']));
-                $user->setAreaDefault($this->migrationUtil->transformToArea($this->areas, $data['default_area']));
-                $user->setRoomDefault(
+                $user->setArea($this->migrationUtil->transformToArea($this->areas, $data['default_area']));
+                $user->setRoom(
                     $this->migrationUtil->transformToRoom($this->resolveRooms, $data['default_room'])
                 );
                 $this->entityManager->persist($user);

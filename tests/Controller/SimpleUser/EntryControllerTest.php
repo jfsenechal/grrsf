@@ -12,6 +12,7 @@ class EntryControllerTest extends BaseTesting
     public function testNew()
     {
         $this->loadFixtures();
+        $this->bob = $this->createGrrClient('bob@domain.be');
 
         $today = new \DateTime();
         $esquare = $this->getArea('Esquare');
@@ -47,6 +48,7 @@ class EntryControllerTest extends BaseTesting
     public function testNewBrenda()
     {
         $this->loadFixtures();
+        $this->brenda = $this->createGrrClient('brenda@domain.be');
 
         $today = new \DateTime();
         $esquare = $this->getArea('Hdv');
@@ -83,6 +85,7 @@ class EntryControllerTest extends BaseTesting
     public function testLink()
     {
         $this->loadFixtures();
+        $this->bob = $this->createGrrClient('bob@domain.be');
 
         $today = new \DateTime();
         $esquare = $this->getArea('Esquare');

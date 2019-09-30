@@ -38,7 +38,7 @@ class EntryRepository extends ServiceEntityRepository
         $end = clone $date;
         $end->modify('last day of this month');
 
-        $qb->andWhere('entry.start_time >= :begin AND entry.end_time <= :end')
+        $qb->andWhere('DATE(entry.start_time) >= :begin AND DATE(entry.end_time) <= :end')
             ->setParameter('begin', $date->format('Y-m-d'))
             ->setParameter('end', $end->format('Y-m-d'));
 

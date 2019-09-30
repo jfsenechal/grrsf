@@ -76,27 +76,12 @@ class BaseTesting extends WebTestCase
         $faker->addProvider(CarbonProvider::class);
         $this->loaderSimple = $loader;
 
-        $this->administrator = static::createClient(
-            [],
-            [
-                'PHP_AUTH_USER' => 'grr@domain.be',
-                'PHP_AUTH_PW' => 'homer',
-            ]
-        );
-        $this->bob = static::createClient(
-            [],
-            [
-                'PHP_AUTH_USER' => 'bob@domain.be',
-                'PHP_AUTH_PW' => 'homer',
-            ]
-        );
-        $this->brenda = static::createClient(
-            [],
-            [
-                'PHP_AUTH_USER' => 'brenda@domain.be',
-                'PHP_AUTH_PW' => 'homer',
-            ]
-        );
+        $this->administrator = $this->createGrrClient('grr@domain.be');
+        //   $this->bob = $this->createGrrClient('bob@domain.be');
+        //   $this->brenda = $this->createGrrClient('brenda@domain.be');
+
+        //  $this->administrator->insulate();
+
 
         parent::setUp();
     }
@@ -165,7 +150,7 @@ class BaseTesting extends WebTestCase
 
         $purger = new ORMPurger($this->entityManager);
         //$purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
-    //    $purger->purge();
+        $purger->purge();
 
         $this->kernel2->shutdown();
         $this->kernel2 = null;
