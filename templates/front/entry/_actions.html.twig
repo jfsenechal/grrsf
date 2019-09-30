@@ -47,9 +47,10 @@
 
     {% endif %}
     {% if is_granted('grr.entry.delete', entry) %}
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-            <i class="fas fa-trash"></i> {{ 'form.btn.delete.label'|trans({}, 'actions') }}
-        </button>
+        <a href="{{ url_back }}" class="btn btn-danger" role='button' data-toggle="modal" data-target="#deleteModal"><i
+                    class="fas fa-trash"></i>
+            {{ 'form.btn.delete.label'|trans({}, 'actions') }}
+        </a>
     {% endif %}
 {% endif %}
 

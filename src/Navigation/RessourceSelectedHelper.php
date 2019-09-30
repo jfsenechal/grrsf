@@ -74,7 +74,7 @@ class RessourceSelectedHelper
          */
         $user = $this->security->getUser();
         if (null !== $user) {
-            if ($area = $user->getAreaDefault()) {
+            if ($area = $user->getArea()) {
                 return $area;
             }
         }
@@ -115,7 +115,7 @@ class RessourceSelectedHelper
          */
         $user = $this->security->getUser();
         if (null !== $user) {
-            if ($room = $user->getRoomDefault()) {
+            if ($room = $user->getRoom()) {
                 return $room;
             }
         }

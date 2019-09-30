@@ -22,8 +22,6 @@ class EntryControllerTest extends BaseTesting
             ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/9/minute/30';
 
         $crawler = $this->bob->request('GET', $url);
-        //  var_dump($this->bob->getResponse()->getContent());
-        // self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
 
@@ -59,8 +57,6 @@ class EntryControllerTest extends BaseTesting
             ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/9/minute/30';
 
         $crawler = $this->brenda->request('GET', $url);
-        //var_dump($this->brenda->getResponse()->getContent());
-        // self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Sauvegarder')->form();
 
@@ -100,11 +96,9 @@ class EntryControllerTest extends BaseTesting
         $crawler = $this->bob->clickLink('Réunion cst');
         $optionApe = $crawler->filter('div.card-body > a');
         $links = $optionApe->links();//retour à la liste et modifier
-        $this->assertCount(2, $links);
+        $this->assertCount(3, $links);
         $this->assertContains('Modifier', $links[1]->getNode()->textContent);
-
-
-        $this->assertContains('Supprimer', $links[1]);
+        $this->assertContains('Supprimer', $links[2]->getNode()->textContent);
     }
 
     protected
