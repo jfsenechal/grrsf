@@ -8,6 +8,7 @@ use App\Manager\AuthorizationManager;
 use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
 use App\Security\HandlerAuthorization;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/authorization/user")
+ * @IsGranted("ROLE_GRR_MANAGER_USER")
  */
 class AuthorizationUserController extends AbstractController
 {
@@ -53,6 +55,7 @@ class AuthorizationUserController extends AbstractController
      * @Route("/new/user/{id}", name="grr_authorization_from_user", methods={"GET", "POST"})
      * @param Request $request
      * @param User $user
+     *
      * @return Response
      */
     public function new(Request $request, User $user): Response

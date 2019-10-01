@@ -55,6 +55,8 @@ user:
       name:
         label: Mot clef
         placeholder: Nom,email, login
+  changepassword:
+    title: Changement du mot de passe pour
 entry:
   flash:
     new: La réservation a bien été ajoutée
@@ -100,6 +102,7 @@ authorization:
     delete:
       success: Nouvelle autorisation bien supprimée
       error: L'autorisation n' a pas été supprimée
+  title: Autorisations
 
 usermanagerresource:
     title: Gestion des droits
@@ -186,3 +189,4 @@ type_area:
 entryType:
   area:
     flash: Les modifications ont bien été apportées
+You are a director of Grr: Vous êtes administrateur de Grr

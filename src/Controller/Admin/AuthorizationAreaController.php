@@ -7,6 +7,7 @@ use App\Form\Security\AuthorizationAreaType;
 use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
 use App\Security\HandlerAuthorization;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +46,7 @@ class AuthorizationAreaController extends AbstractController
      * @Route("/new/area/{id}", name="grr_authorization_from_area", methods={"GET", "POST"})
      * @param Request $request
      * @param Area|null $area
+     * @IsGranted("grr.area.edit", subject="area")
      * @return Response
      */
     public function new(Request $request, Area $area = null): Response
@@ -79,6 +81,7 @@ class AuthorizationAreaController extends AbstractController
 
     /**
      * @Route("/{id}", name="grr_authorization_area_show", methods={"GET"})
+     * @IsGranted("grr.area.edit", subject="area")
      */
     public function show(Area $area): Response
     {

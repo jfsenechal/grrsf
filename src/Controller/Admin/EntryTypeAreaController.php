@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/type/area")
- * @IsGranted("ROLE_GRR_ADMINISTRATOR")
+ *
  */
 class EntryTypeAreaController extends AbstractController
 {
@@ -36,6 +36,7 @@ class EntryTypeAreaController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="grr_admin_type_area_edit", methods={"GET", "POST"})
+     * @IsGranted("grr.area.edit", subject="area")
      */
     public function edit(Request $request, Area $area): Response
     {

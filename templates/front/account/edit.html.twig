@@ -3,10 +3,14 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
-
-    {{ include('@grr_front/account/_form.html.twig', {'button_label': 'form.btn.update'}) }}
-
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            <h3>{{ user.name }}</h3>
+        </div>
+        <div class="card-body">
+            {{ include('@grr_front/account/_form.html.twig', {'button_label': 'form.btn.update'}) }}
+        </div>
+    </div>
     <br/>
     <a href="{{ path('grr_account_show') }}"><i
                 class="fas fa-arrow-left"></i> {{ 'form.btn.cancel'|trans({}, 'actions') }}</a>

@@ -6,6 +6,7 @@ use App\Events\UserEvent;
 use App\Form\Security\UserPasswordType;
 use App\Form\Security\UserType;
 use App\Manager\UserManager;
+use App\Repository\Security\AuthorizationRepository;
 use App\Security\PasswordHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,17 +38,23 @@ class AccountController extends AbstractController
      * @var PasswordHelper
      */
     private $passwordEncoder;
+    /**
+     * @var AuthorizationRepository
+     */
+    private $authorizationRepository;
 
     public function __construct(
         UserManager $userManager,
         PasswordHelper $passwordEncoder,
         UserPasswordEncoderInterface $userPasswordEncoder,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        AuthorizationRepository $authorizationRepository
     ) {
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->userManager = $userManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->passwordEncoder = $passwordEncoder;
+        $this->authorizationRepository = $authorizationRepository;
     }
 
     /**
@@ -56,11 +63,13 @@ class AccountController extends AbstractController
     public function show(): Response
     {
         $user = $this->getUser();
+        $authorizations = $this->authorizationRepository->findByUser($user);
 
         return $this->render(
             '@grr_front/account/show.html.twig',
             [
                 'user' => $user,
+                'authorizations' => $authorizations,
             ]
         );
     }

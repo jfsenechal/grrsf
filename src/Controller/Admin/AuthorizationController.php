@@ -6,6 +6,9 @@ use App\Entity\Room;
 use App\Events\AuthorizationEvent;
 use App\Manager\AuthorizationManager;
 use App\Repository\Security\AuthorizationRepository;
+use App\Security\Voter\AreaVoter;
+use App\Security\Voter\RoomVoter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,6 +58,14 @@ class AuthorizationController extends AbstractController
             $this->createNotFoundException();
         }
 
+        if ($area = $authorization->getArea()) {
+            $this->denyAccessUnlessGranted(AreaVoter::EDIT, $area);
+        }
+
+        if ($room = $authorization->getRoom()) {
+            $this->denyAccessUnlessGranted(RoomVoter::EDIT, $room);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$authorization->getId(), $token)) {
 
             $this->authorizationManager->remove($authorization);
@@ -71,6 +82,7 @@ class AuthorizationController extends AbstractController
 
     /**
      * @Route("/room/{id}", name="grr_authorization_show_by_room", methods={"GET"})
+     * @IsGranted("grr.room.edit", subject="room")
      */
     public function show(Room $room): Response
     {
