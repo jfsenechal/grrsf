@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Security\User;
 use App\Events\UserEvent;
-use App\Factory\UserFactory;
+use App\Security\UserFactory;
 use App\Form\Search\SearchUserType;
 use App\Form\Security\UserAdvanceType;
 use App\Form\Security\UserNewType;
@@ -95,7 +95,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->passwordEncoder->encodePassword($utilisateur, $utilisateur->getPassword());
+
+            $utilisateur->setPassword($this->passwordEncoder->encodePassword($utilisateur, $utilisateur->getPassword()));
             $this->userManager->insert($utilisateur);
 
             $userEvent = new UserEvent($utilisateur);

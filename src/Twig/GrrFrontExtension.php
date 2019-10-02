@@ -4,7 +4,7 @@ namespace App\Twig;
 
 use App\Entity\Area;
 use App\Entity\Entry;
-use App\Factory\MenuGenerator;
+use App\Navigation\MenuGenerator;
 use App\Periodicity\PeriodicityConstant;
 use App\Model\Day;
 use App\Model\Month;
@@ -116,7 +116,6 @@ class GrrFrontExtension extends AbstractExtension
             ),
         ];
     }
-
 
     /**
      * @param TimeSlot $hour

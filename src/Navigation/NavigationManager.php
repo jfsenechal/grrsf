@@ -8,7 +8,6 @@
 
 namespace App\Navigation;
 
-use App\Factory\NavigationFactory;
 use App\Model\Month;
 use App\Model\Navigation;
 use App\Provider\DateProvider;

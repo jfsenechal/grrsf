@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Factory\UserFactory;
+use App\Security\UserFactory;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
 use App\Security\PasswordHelper;

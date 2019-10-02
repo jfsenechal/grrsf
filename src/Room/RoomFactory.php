@@ -6,7 +6,7 @@
  * Time: 17:42.
  */
 
-namespace App\Factory;
+namespace App\Room;
 
 use App\Entity\Area;
 use App\Entity\Room;

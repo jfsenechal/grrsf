@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Tests\Factory;
+namespace App\Tests\Entry;
 
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
-use App\Factory\AreaFactory;
-use App\Factory\EntryFactory;
-use App\Factory\PeriodicityFactory;
-use App\Factory\RoomFactory;
+use App\Entry\EntryFactory;
+use App\Area\AreaFactory;
+use App\Room\RoomFactory;
+use App\Periodicity\PeriodicityFactory;
 use App\Tests\BaseTesting;
 use Carbon\Carbon;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class EntryFactoryTest extends BaseTesting
 {
@@ -48,11 +47,11 @@ class EntryFactoryTest extends BaseTesting
      *
      * @param Area $area
      * @param Room $room
-     * @param int  $year
-     * @param int  $month
-     * @param int  $day
-     * @param int  $hour
-     * @param int  $minute
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @param int $hour
+     * @param int $minute
      */
     public function testInitEntryForNew(
         int $year,

@@ -23,8 +23,6 @@ class SettingConstants
     const AUTHENTIFICATION_OBLI = 'authentification_obli';
     const AUTOMATIC_MAIL = 'automatic_mail';
     const BEGIN_BOOKINGS = 'begin_bookings';
-    const CHEMIN_COMPLET_GRR = 'chemin_complet_grr';
-    const CONVERTLDAPUTF8TOISO = 'ConvertLdapUtf8toIso';
     const DATE_VERIFY_RESERVATION = 'date_verify_reservation';
     const DATE_VERIFY_RESERVATION2 = 'date_verify_reservation2';
     const DEFAULT_AREA = 'default_area';

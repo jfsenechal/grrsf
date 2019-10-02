@@ -6,12 +6,13 @@
  * Time: 17:30.
  */
 
-namespace App\Factory;
+namespace App\Entry;
 
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
 use App\Entity\Room;
+use App\Periodicity\PeriodicityFactory;
 use Carbon\Carbon;
 
 class EntryFactory

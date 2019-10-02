@@ -3,6 +3,7 @@
 namespace App\Entity\Security;
 
 use App\Doctrine\Traits\IdEntityTrait;
+use App\Doctrine\Traits\NameEntityTrait;
 use App\Doctrine\Traits\TimestampableEntityTrait;
 use App\Entity\Area;
 use App\Entity\Room;
@@ -23,8 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
-    use IdEntityTrait;
-    use TimestampableEntityTrait;
+    use IdEntityTrait, TimestampableEntityTrait, NameEntityTrait;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -47,11 +47,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", nullable=true)
      */
     private $password;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $name;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -199,18 +194,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }

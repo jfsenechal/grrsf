@@ -6,7 +6,7 @@
  * Time: 17:42.
  */
 
-namespace App\Factory;
+namespace App\Setting;
 
 use App\Entity\Setting;
 

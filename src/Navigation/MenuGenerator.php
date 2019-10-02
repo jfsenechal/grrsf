@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Factory;
+namespace App\Navigation;
 
 use App\Form\AreaMenuSelectType;
-use App\Navigation\RessourceSelectedHelper;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 

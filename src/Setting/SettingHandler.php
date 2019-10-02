@@ -10,9 +10,7 @@
 
 namespace App\Setting;
 
-
 use App\Entity\Setting;
-use App\Factory\SettingFactory;
 use App\Manager\SettingManager;
 use App\Repository\SettingRepository;
 

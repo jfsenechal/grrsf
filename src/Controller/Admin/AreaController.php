@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Area;
 use App\Events\AreaEvent;
-use App\Factory\AreaFactory;
+use App\Area\AreaFactory;
 use App\Form\AreaType;
 use App\Manager\AreaManager;
 use App\Repository\AreaRepository;

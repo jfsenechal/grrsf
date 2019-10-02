@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\EntryType;
 use App\Events\EntryTypeEvent;
-use App\Factory\TypeEntryFactory;
+use App\TypeEntry\TypeEntryFactory;
 use App\Form\TypeEntryType;
 use App\Manager\TypeEntryManager;
 use App\Repository\EntryTypeRepository;

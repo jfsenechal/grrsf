@@ -58,6 +58,11 @@ class PasswordController extends AbstractController
 
             $userEvent = new UserEvent($user);
             $this->eventDispatcher->dispatch($userEvent, UserEvent::CHANGE_PASSWORD_SUCCESS);
+
+            return $this->redirectToRoute(
+                'grr_admin_user_show',
+                ['id' => $user->getId()]
+            );
         }
 
         return $this->render(

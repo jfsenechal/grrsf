@@ -2,14 +2,13 @@
 
 namespace App\Tests\Factory;
 
-use App\Factory\AreaFactory;
+use App\Area\AreaFactory;
+use App\Entry\EntryFactory;
 use App\Factory\DurationFactory;
-use App\Factory\EntryFactory;
-use App\Factory\PeriodicityFactory;
-use App\Factory\RoomFactory;
 use App\Model\DurationModel;
+use App\Periodicity\PeriodicityFactory;
+use App\Room\RoomFactory;
 use App\Tests\BaseTesting;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DurationFactoryTest extends BaseTesting
 {
@@ -87,7 +86,7 @@ class DurationFactoryTest extends BaseTesting
      *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float              $result
+     * @param float $result
      */
     public function testUnitInMinutes(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -103,7 +102,7 @@ class DurationFactoryTest extends BaseTesting
      *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float              $result
+     * @param float $result
      */
     public function testUnitInHours(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -119,7 +118,7 @@ class DurationFactoryTest extends BaseTesting
      *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float              $result
+     * @param float $result
      */
     public function testUnitInDays(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -135,7 +134,7 @@ class DurationFactoryTest extends BaseTesting
      *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float              $result
+     * @param float $result
      */
     public function testUnitInWeeks(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {

@@ -4,11 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use App\Events\AreaEvent;
 use App\Events\RoomEvent;
-use App\Factory\RoomFactory;
 use App\Form\RoomType;
 use App\Manager\RoomManager;
+use App\Room\RoomFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

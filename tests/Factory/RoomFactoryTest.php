@@ -3,8 +3,8 @@
 namespace App\Tests\Factory;
 
 use App\Entity\Room;
-use App\Factory\AreaFactory;
-use App\Factory\RoomFactory;
+use App\Area\AreaFactory;
+use App\Room\RoomFactory;
 use App\Tests\BaseTesting;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

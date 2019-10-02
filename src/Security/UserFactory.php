@@ -6,7 +6,7 @@
  * Time: 17:42.
  */
 
-namespace App\Factory;
+namespace App\Security;
 
 use App\Entity\Security\User;
 

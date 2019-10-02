@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Doctrine\Traits\IdEntityTrait;
+use App\Doctrine\Traits\NameEntityTrait;
 use App\Doctrine\Traits\TimestampableEntityTrait;
 use App\Model\DurationModel;
 use App\Model\TimeSlot;
@@ -23,16 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Entry
 {
-    use IdEntityTrait;
-    use TimestampableEntityTrait;
-
-    /**
-     * @var string
-     * @Assert\NotBlank
-     * @Assert\NotNull
-     * @ORM\Column(name="name", type="string", length=80, nullable=false)
-     */
-    private $name;
+    use IdEntityTrait, NameEntityTrait, TimestampableEntityTrait;
 
     /**
      * @var \DateTimeInterface
@@ -265,18 +257,6 @@ class Entry
     public function setLocations(array $locations): void
     {
         $this->locations = $locations;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getStartTime(): ?\DateTimeInterface

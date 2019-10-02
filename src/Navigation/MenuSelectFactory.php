@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Factory;
-
-use App\Navigation\MenuSelect;
+namespace App\Navigation;
 
 class MenuSelectFactory
 {

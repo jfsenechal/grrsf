@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Tests\Factory;
+namespace App\Tests\Periodicity;
 
 use App\Entity\Entry;
 use App\Entity\Periodicity;
-use App\Factory\AreaFactory;
-use App\Factory\EntryFactory;
-use App\Factory\PeriodicityFactory;
-use App\Factory\RoomFactory;
+use App\Area\AreaFactory;
+use App\Entry\EntryFactory;
+use App\Periodicity\PeriodicityFactory;
+use App\Room\RoomFactory;
 use App\Tests\BaseTesting;
 
 class PeriodicityFactoryTest extends BaseTesting

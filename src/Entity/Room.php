@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Doctrine\Traits\IdEntityTrait;
+use App\Doctrine\Traits\NameEntityTrait;
 use App\Entity\Security\Authorization;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,14 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Room
 {
-    use IdEntityTrait;
-
-    /**
-     * @var string
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=60, nullable=false)
-     */
-    private $name;
+    use IdEntityTrait, NameEntityTrait;
 
     /**
      * @var string
@@ -201,18 +195,6 @@ class Room
     public function __toString()
     {
         return $this->name;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getDescription(): ?string

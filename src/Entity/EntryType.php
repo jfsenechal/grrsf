@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Doctrine\Traits\IdEntityTrait;
+use App\Doctrine\Traits\NameEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,14 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class EntryType
 {
-    use IdEntityTrait;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=30, nullable=false)
-     */
-    private $name;
+    use IdEntityTrait, NameEntityTrait;
 
     /**
      * @var int
@@ -69,18 +63,6 @@ class EntryType
     public function __toString()
     {
         return $this->name;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getOrderDisplay(): ?int

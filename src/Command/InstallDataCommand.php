@@ -3,11 +3,11 @@
 namespace App\Command;
 
 use App\Entity\Area;
-use App\Factory\AreaFactory;
-use App\Factory\RoomFactory;
-use App\Factory\SettingFactory;
-use App\Factory\TypeEntryFactory;
-use App\Factory\UserFactory;
+use App\Area\AreaFactory;
+use App\Room\RoomFactory;
+use App\Setting\SettingFactory;
+use App\TypeEntry\TypeEntryFactory;
+use App\Security\UserFactory;
 use App\Repository\AreaRepository;
 use App\Repository\EntryTypeRepository;
 use App\Repository\RoomRepository;
