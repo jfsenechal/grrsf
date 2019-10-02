@@ -52,6 +52,17 @@ class SettingRepository extends ServiceEntityRepository
             $data[$setting->getName()] = $value;
         }
 
+        /**
+         * Pour bug js form edit
+         */
+        if(!isset($data[SettingConstants::WEBMASTER_EMAIL]) || count($data[SettingConstants::WEBMASTER_EMAIL]) ===0){
+           $data[SettingConstants::WEBMASTER_EMAIL] = [''];
+        }
+
+        if(!isset($data[SettingConstants::TECHNICAL_SUPPORT_EMAIL]) || count($data[SettingConstants::TECHNICAL_SUPPORT_EMAIL]) ===0){
+           $data[SettingConstants::TECHNICAL_SUPPORT_EMAIL] = [''];
+        }
+
         return $data;
     }
 }

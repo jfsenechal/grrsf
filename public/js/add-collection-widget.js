@@ -4,7 +4,6 @@ jQuery(document).ready(function () {
         var list = jQuery(jQuery(this).attr('data-list-selector'));
         // Try to find the counter of the list or use the length of the list
         var counter = list.data('widget-counter') || list.children().length;
-        console.log(counter);
 
         // grab the prototype template
         var newWidget = list.attr('data-prototype');
