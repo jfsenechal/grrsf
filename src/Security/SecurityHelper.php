@@ -119,7 +119,7 @@ class SecurityHelper
      */
     public function checkAuthorizationRoomToAddEntry(Room $room, User $user = null): bool
     {
-        $who = $room->getRuleToAdd();
+        $who = $room->getRuleForAdding();
 
         /**
          * Tout le monde peut encoder une réservation meme si pas connecte
@@ -204,7 +204,7 @@ class SecurityHelper
      */
     public function canAddEntry(Room $room, ?User $user = null)
     {
-        $rule = $room->getRuleToAdd();
+        $rule = $room->getRuleForAdding();
 
         if ($user && $this->isGrrAdministrator($user)) {
             return true;

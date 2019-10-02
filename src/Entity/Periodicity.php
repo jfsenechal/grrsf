@@ -27,7 +27,7 @@ class Periodicity
     /**
      * @ORM\Column(type="date")
      */
-    private $end_time;
+    private $endTime;
 
     /**
      * Every month, every day, every...
@@ -41,7 +41,7 @@ class Periodicity
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $week_repeat;
+    private $weekRepeat;
 
     /**
      * Monday, tuesday, wednesday...
@@ -51,7 +51,7 @@ class Periodicity
      * @var int[]
      * @ORM\Column(type="array", nullable=true)
      */
-    private $week_days;
+    private $weekDays;
 
     /**
      *
@@ -63,14 +63,14 @@ class Periodicity
      * Use for validator form
      * @var Entry|null
      */
-    private $entry_reference;
+    private $entryReference;
 
     public function __construct(?Entry $entry = null)
     {
         $this->type = 0;
-        $this->week_days = [];
+        $this->weekDays = [];
         $this->entries = new ArrayCollection();
-        $this->entry_reference = $entry;
+        $this->entryReference = $entry;
     }
 
     /**
@@ -78,7 +78,7 @@ class Periodicity
      */
     public function getEntryReference(): ?Entry
     {
-        return $this->entry_reference;
+        return $this->entryReference;
     }
 
     /**
@@ -86,25 +86,17 @@ class Periodicity
      */
     public function setEntryReference(?Entry $entry_reference): void
     {
-        $this->entry_reference = $entry_reference;
-    }
-
-    /**
-     * @return array
-     */
-    public function getWeekDays(): array
-    {
-        return $this->week_days;
+        $this->entryReference = $entry_reference;
     }
 
     public function getEndTime(): ?\DateTimeInterface
     {
-        return $this->end_time;
+        return $this->endTime;
     }
 
-    public function setEndTime(\DateTimeInterface $end_time): self
+    public function setEndTime(\DateTimeInterface $endTime): self
     {
-        $this->end_time = $end_time;
+        $this->endTime = $endTime;
 
         return $this;
     }
@@ -114,7 +106,7 @@ class Periodicity
         return $this->type;
     }
 
-    public function setType(?int $type): self
+    public function setType(int $type): self
     {
         $this->type = $type;
 
@@ -123,19 +115,24 @@ class Periodicity
 
     public function getWeekRepeat(): ?int
     {
-        return $this->week_repeat;
+        return $this->weekRepeat;
     }
 
-    public function setWeekRepeat(?int $week_repeat): self
+    public function setWeekRepeat(?int $weekRepeat): self
     {
-        $this->week_repeat = $week_repeat;
+        $this->weekRepeat = $weekRepeat;
 
         return $this;
     }
 
-    public function setWeekDays(array $week_days): self
+    public function getWeekDays(): ?array
     {
-        $this->week_days = $week_days;
+        return $this->weekDays;
+    }
+
+    public function setWeekDays(?array $weekDays): self
+    {
+        $this->weekDays = $weekDays;
 
         return $this;
     }
@@ -170,4 +167,6 @@ class Periodicity
 
         return $this;
     }
+
+
 }

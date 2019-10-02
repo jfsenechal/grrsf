@@ -38,7 +38,7 @@ class EntryRepository extends ServiceEntityRepository
         $end = clone $date;
         $end->modify('last day of this month');
 
-        $qb->andWhere('DATE(entry.start_time) >= :begin AND DATE(entry.end_time) <= :end')
+        $qb->andWhere('DATE(entry.startTime) >= :begin AND DATE(entry.endTime) <= :end')
             ->setParameter('begin', $date->format('Y-m-d'))
             ->setParameter('end', $end->format('Y-m-d'));
 
@@ -52,7 +52,7 @@ class EntryRepository extends ServiceEntityRepository
         }
 
         return $qb
-            ->orderBy('entry.start_time', 'ASC')
+            ->orderBy('entry.startTime', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -67,14 +67,14 @@ class EntryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('entry');
 
-        $qb->andWhere('DATE(entry.start_time) <= :date AND DATE(entry.end_time) >= :date')
+        $qb->andWhere('DATE(entry.startTime) <= :date AND DATE(entry.endTime) >= :date')
             ->setParameter('date', $day->format('Y-m-d'));
 
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
 
         return $qb
-            ->orderBy('entry.start_time', 'ASC')
+            ->orderBy('entry.startTime', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -92,11 +92,11 @@ class EntryRepository extends ServiceEntityRepository
         $begin = $entry->getStartTime();
         $end = $entry->getEndTime();
 
-        $qb->andWhere('entry.start_time BETWEEN :begin AND :end')
+        $qb->andWhere('entry.startTime BETWEEN :begin AND :end')
             ->setParameter('begin', $begin->format('Y-m-d H:i'))
             ->setParameter('end', $end->format('Y-m-d H:i'));
 
-        $qb->orWhere('entry.end_time BETWEEN :begin1 AND :end1')
+        $qb->orWhere('entry.endTime BETWEEN :begin1 AND :end1')
             ->setParameter('begin1', $begin->format('Y-m-d H:i'))
             ->setParameter('end1', $end->format('Y-m-d H:i'));
 
@@ -112,7 +112,7 @@ class EntryRepository extends ServiceEntityRepository
         }
 
         return $qb
-            ->orderBy('entry.start_time', 'ASC')
+            ->orderBy('entry.startTime', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -159,7 +159,7 @@ class EntryRepository extends ServiceEntityRepository
         }
 
         return $qb
-            ->orderBy('entry.start_time', 'DESC')
+            ->orderBy('entry.startTime', 'DESC')
             ->setMaxResults(500)
             ->getQuery()
             ->getResult();
@@ -175,7 +175,7 @@ class EntryRepository extends ServiceEntityRepository
         $qb->andWhere('entry.periodicity IS NOT NULL');
 
         return $qb
-            ->orderBy('entry.start_time', 'ASC')
+            ->orderBy('entry.startTime', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -191,7 +191,7 @@ class EntryRepository extends ServiceEntityRepository
             ->setParameter('periodicity', $periodicity);
 
         return $qb
-            ->orderBy('entry.start_time', 'ASC')
+            ->orderBy('entry.startTime', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -221,7 +221,7 @@ class EntryRepository extends ServiceEntityRepository
 
         $qb->andWhere('entry.periodicity = :periodicity')
             ->setParameter('periodicity', $periodicity)
-            ->orderBy('entry.start_time', 'ASC');
+            ->orderBy('entry.startTime', 'ASC');
 
         return $qb->setMaxResults(1)
             ->getQuery()
@@ -236,17 +236,17 @@ class EntryRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('entry');
 
-        $qb->andWhere('entry.start_time = :start')
+        $qb->andWhere('entry.startTime = :start')
             ->setParameter('start', $entry->getStartTime());
 
-        $qb->andWhere('entry.end_time = :end')
+        $qb->andWhere('entry.endTime = :end')
             ->setParameter('end', $entry->getEndTime());
 
         $qb->andWhere('entry.periodicity = :periodicity')
             ->setParameter('periodicity', $periodicity);
 
         return $qb
-            ->orderBy('entry.start_time', 'ASC')
+            ->orderBy('entry.startTime', 'ASC')
             ->getQuery()
             ->getOneOrNullResult();
     }

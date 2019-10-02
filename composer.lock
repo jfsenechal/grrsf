@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33c371ea65a197e33cb9677cc2f452c1",
+    "content-hash": "b6536b4433db4366a30c9b674b0896c9",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -62,16 +62,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.7.0",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "fa4c4e861e809d6a1103bd620cce63ed91aedfeb"
+                "reference": "904dca4eb10715b92569fbcd79e201d5c349b6bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/fa4c4e861e809d6a1103bd620cce63ed91aedfeb",
-                "reference": "fa4c4e861e809d6a1103bd620cce63ed91aedfeb",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/904dca4eb10715b92569fbcd79e201d5c349b6bc",
+                "reference": "904dca4eb10715b92569fbcd79e201d5c349b6bc",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
             },
             "require-dev": {
                 "doctrine/cache": "1.*",
-                "phpunit/phpunit": "^7.5@dev"
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "extra": {
@@ -126,7 +126,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2019-08-08T18:11:40+00:00"
+            "time": "2019-10-01T18:55:10+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -2030,6 +2030,145 @@
                 "psr-3"
             ],
             "time": "2018-11-20T15:27:04+00:00"
+        },
+        {
+            "name": "ramsey/uuid",
+            "version": "3.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/uuid.git",
+                "reference": "d09ea80159c1929d75b3f9c60504d613aeb4a1e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/d09ea80159c1929d75b3f9c60504d613aeb4a1e3",
+                "reference": "d09ea80159c1929d75b3f9c60504d613aeb4a1e3",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/random_compat": "^1.0|^2.0|9.99.99",
+                "php": "^5.4 || ^7.0",
+                "symfony/polyfill-ctype": "^1.8"
+            },
+            "replace": {
+                "rhumsaa/uuid": "self.version"
+            },
+            "require-dev": {
+                "codeception/aspect-mock": "^1.0 | ~2.0.0",
+                "doctrine/annotations": "~1.2.0",
+                "goaop/framework": "1.0.0-alpha.2 | ^1.0 | ~2.1.0",
+                "ircmaxell/random-lib": "^1.1",
+                "jakub-onderka/php-parallel-lint": "^0.9.0",
+                "mockery/mockery": "^0.9.9",
+                "moontoast/math": "^1.1",
+                "php-mock/php-mock-phpunit": "^0.3|^1.1",
+                "phpunit/phpunit": "^4.7|^5.0|^6.5",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "suggest": {
+                "ext-ctype": "Provides support for PHP Ctype functions",
+                "ext-libsodium": "Provides the PECL libsodium extension for use with the SodiumRandomGenerator",
+                "ext-uuid": "Provides the PECL UUID extension for use with the PeclUuidTimeGenerator and PeclUuidRandomGenerator",
+                "ircmaxell/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
+                "moontoast/math": "Provides support for converting UUID to 128-bit integer (in string form).",
+                "ramsey/uuid-console": "A console application for generating UUIDs with ramsey/uuid",
+                "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ramsey\\Uuid\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marijn Huizendveld",
+                    "email": "marijn.huizendveld@gmail.com"
+                },
+                {
+                    "name": "Thibaud Fabre",
+                    "email": "thibaud@aztech.io"
+                },
+                {
+                    "name": "Ben Ramsey",
+                    "email": "ben@benramsey.com",
+                    "homepage": "https://benramsey.com"
+                }
+            ],
+            "description": "Formerly rhumsaa/uuid. A PHP 5.4+ library for generating RFC 4122 version 1, 3, 4, and 5 universally unique identifiers (UUID).",
+            "homepage": "https://github.com/ramsey/uuid",
+            "keywords": [
+                "guid",
+                "identifier",
+                "uuid"
+            ],
+            "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "ramsey/uuid-doctrine",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/uuid-doctrine.git",
+                "reference": "2a56db8e68bff487508244f5a2008075279d0255"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/uuid-doctrine/zipball/2a56db8e68bff487508244f5a2008075279d0255",
+                "reference": "2a56db8e68bff487508244f5a2008075279d0255",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "^2.5",
+                "php": "^5.4 || ^7.0",
+                "ramsey/uuid": "^3.0"
+            },
+            "require-dev": {
+                "jakub-onderka/php-parallel-lint": "^1.0",
+                "mockery/mockery": "^0.9 || ^1.1",
+                "php-coveralls/php-coveralls": "^1.1 || ^2.1",
+                "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5",
+                "squizlabs/php_codesniffer": "^3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ramsey\\Uuid\\Doctrine\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marijn Huizendveld",
+                    "email": "marijn.huizendveld@gmail.com"
+                },
+                {
+                    "name": "Ben Ramsey",
+                    "email": "ben@benramsey.com",
+                    "homepage": "http://benramsey.com"
+                }
+            ],
+            "description": "Allow the use of a ramsey/uuid UUID as Doctrine field type.",
+            "homepage": "https://github.com/ramsey/uuid-doctrine",
+            "keywords": [
+                "doctrine",
+                "guid",
+                "identifier",
+                "uuid"
+            ],
+            "time": "2018-08-11T21:01:22+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -7420,16 +7559,16 @@
         },
         {
             "name": "phpspec/phpspec",
-            "version": "5.1.1",
+            "version": "5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/phpspec.git",
-                "reference": "1bf4b5a7cf5fea43288e9283d340f7e1d5b69cae"
+                "reference": "ff4119650a76de25eb674530547f1924082d3703"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/1bf4b5a7cf5fea43288e9283d340f7e1d5b69cae",
-                "reference": "1bf4b5a7cf5fea43288e9283d340f7e1d5b69cae",
+                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/ff4119650a76de25eb674530547f1924082d3703",
+                "reference": "ff4119650a76de25eb674530547f1924082d3703",
                 "shasum": ""
             },
             "require": {
@@ -7497,7 +7636,7 @@
                 "testing",
                 "tests"
             ],
-            "time": "2019-08-05T10:24:38+00:00"
+            "time": "2019-10-02T09:45:39+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -7919,37 +8058,37 @@
         },
         {
             "name": "rector/rector",
-            "version": "v0.5.12",
+            "version": "v0.5.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "1ed88271912df95aa9e53a0c15f74b4106e9b23d"
+                "reference": "539e54bcb6dba21b0ec00cfb2c0970a5bf96da1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/1ed88271912df95aa9e53a0c15f74b4106e9b23d",
-                "reference": "1ed88271912df95aa9e53a0c15f74b4106e9b23d",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/539e54bcb6dba21b0ec00cfb2c0970a5bf96da1c",
+                "reference": "539e54bcb6dba21b0ec00cfb2c0970a5bf96da1c",
                 "shasum": ""
             },
             "require": {
                 "composer/xdebug-handler": "^1.3",
-                "doctrine/annotations": "^1.7",
+                "doctrine/annotations": "^1.6",
                 "doctrine/inflector": "^1.3",
-                "doctrine/orm": "^2.6",
                 "jean85/pretty-package-versions": "^1.2",
                 "nette/robot-loader": "^3.1",
                 "nette/utils": "^2.5|^3.0",
-                "nikic/php-parser": "^4.2.3",
+                "nikic/php-parser": "^4.2.4",
                 "php": "^7.1",
                 "phpstan/phpdoc-parser": "^0.3.5",
                 "phpstan/phpstan": "^0.11.13",
                 "phpstan/phpstan-phpunit": "^0.11.2",
+                "ramsey/uuid": "^3.8",
                 "sebastian/diff": "^3.0",
                 "symfony/console": "^3.4|^4.2",
                 "symfony/dependency-injection": "^3.4|^4.2",
                 "symfony/finder": "^3.4|^4.2",
                 "symfony/process": "^3.4|^4.2",
-                "symplify/package-builder": "^6.0.1"
+                "symplify/package-builder": "^6.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
@@ -7957,10 +8096,10 @@
                 "mockery/mockery": "^1.2",
                 "ocramius/package-versions": "^1.4",
                 "phpunit/phpunit": "^7.5|^8.0",
-                "symplify/changelog-linker": "^6.0.1",
-                "symplify/easy-coding-standard": "^6.0.1",
-                "symplify/monorepo-builder": "^6.0.1",
-                "symplify/phpstan-extensions": "^6.0.1",
+                "symplify/changelog-linker": "^6.1",
+                "symplify/easy-coding-standard": "^6.1",
+                "symplify/monorepo-builder": "^6.1",
+                "symplify/phpstan-extensions": "^6.1",
                 "thecodingmachine/phpstan-strict-rules": "^0.11",
                 "tracy/tracy": "^2.5"
             },
@@ -7976,6 +8115,7 @@
             "autoload": {
                 "psr-4": {
                     "Rector\\": "src",
+                    "Rector\\Autodiscovery\\": "packages/Autodiscovery/src",
                     "Rector\\Architecture\\": "packages/Architecture/src",
                     "Rector\\BetterPhpDocParser\\": "packages/BetterPhpDocParser/src",
                     "Rector\\CakePHP\\": "packages/CakePHP/src",
@@ -7985,8 +8125,6 @@
                     "Rector\\ConsoleDiffer\\": "packages/ConsoleDiffer/src",
                     "Rector\\DeadCode\\": "packages/DeadCode/src",
                     "Rector\\Doctrine\\": "packages/Doctrine/src",
-                    "Rector\\DoctrinePhpDocParser\\": "packages/DoctrinePhpDocParser/src",
-                    "Rector\\DomainDrivenDesign\\": "packages/DomainDrivenDesign/src",
                     "Rector\\ElasticSearchDSL\\": "packages/ElasticSearchDSL/src",
                     "Rector\\FileSystemRector\\": "packages/FileSystemRector/src",
                     "Rector\\Guzzle\\": "packages/Guzzle/src",
@@ -8001,11 +8139,21 @@
                     "Rector\\PHPUnitSymfony\\": "packages/PHPUnitSymfony/src",
                     "Rector\\PHPUnit\\": "packages/PHPUnit/src",
                     "Rector\\PSR4\\": "packages/PSR4/src",
-                    "Rector\\PhpParser\\": "packages/PhpParser/src",
                     "Rector\\PhpSpecToPHPUnit\\": "packages/PhpSpecToPHPUnit/src",
-                    "Rector\\Php\\": "packages/Php/src",
+                    "Rector\\Php52\\": "packages/Php52/src",
+                    "Rector\\Php53\\": "packages/Php53/src",
+                    "Rector\\Php54\\": "packages/Php54/src",
+                    "Rector\\Php55\\": "packages/Php55/src",
+                    "Rector\\Php56\\": "packages/Php56/src",
+                    "Rector\\Php70\\": "packages/Php70/src",
+                    "Rector\\Php71\\": "packages/Php71/src",
+                    "Rector\\Php72\\": "packages/Php72/src",
+                    "Rector\\Php73\\": "packages/Php73/src",
+                    "Rector\\Php74\\": "packages/Php74/src",
                     "Rector\\RemovingStatic\\": "packages/RemovingStatic/src",
+                    "Rector\\Renaming\\": "packages/Renaming/src",
                     "Rector\\Restoration\\": "packages/Restoration/src",
+                    "Rector\\Refactoring\\": "packages/Refactoring/src",
                     "Rector\\SOLID\\": "packages/SOLID/src",
                     "Rector\\Sensio\\": "packages/Sensio/src",
                     "Rector\\Shopware\\": "packages/Shopware/src",
@@ -8016,6 +8164,7 @@
                     "Rector\\Symfony\\": "packages/Symfony/src",
                     "Rector\\Twig\\": "packages/Twig/src",
                     "Rector\\TypeDeclaration\\": "packages/TypeDeclaration/src",
+                    "Rector\\ZendToSymfony\\": "packages/ZendToSymfony/src",
                     "Rector\\Utils\\DocumentationGenerator\\": "utils/DocumentationGenerator/src",
                     "Rector\\Utils\\RectorGenerator\\": "utils/RectorGenerator/src"
                 }
@@ -8044,7 +8193,7 @@
                 "instant refactoring",
                 "instant upgrades"
             ],
-            "time": "2019-08-29T06:16:08+00:00"
+            "time": "2019-09-27T20:24:07+00:00"
         },
         {
             "name": "sebastian/comparator",

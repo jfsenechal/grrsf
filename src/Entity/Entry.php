@@ -18,7 +18,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="entry")
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
- *
  * @AppAssertEntry\BusyRoom()
  * @AppAssertEntry\AreaTimeSlot()
  */
@@ -30,24 +29,24 @@ class Entry
      * @var \DateTimeInterface
      *
      * @Assert\DateTime
-     * @Assert\LessThan(propertyPath="end_time", message="entry.constraint.start_smaller_end")
+     * @Assert\LessThan(propertyPath="endTime", message="entry.constraint.start_smaller_end")
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $start_time;
+    private $startTime;
 
     /**
      * @var \DateTimeInterface
      * @Assert\DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $end_time;
+    private $endTime;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=100, nullable=false)
      */
-    private $created_by;
+    private $createdBy;
 
     /**
      * @var string
@@ -75,14 +74,14 @@ class Entry
      *
      * @ORM\Column(type="string", length=1, nullable=true)
      */
-    private $statut_entry;
+    private $statutEntry;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $option_reservation;
+    private $optionReservation;
 
     /**
      * @var string|null
@@ -165,12 +164,11 @@ class Entry
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->locations = new ArrayCollection();
-        $this->periodicity_days = new ArrayCollection();
         $this->private = false;
         $this->moderate = false;
         $this->jours = false;
         $this->beneficiaire = 'jf';
-        $this->option_reservation = 0;
+        $this->optionReservation = 0;
     }
 
     public function __toString()
@@ -261,36 +259,36 @@ class Entry
 
     public function getStartTime(): ?\DateTimeInterface
     {
-        return $this->start_time;
+        return $this->startTime;
     }
 
-    public function setStartTime(\DateTimeInterface $start_time): self
+    public function setStartTime(\DateTimeInterface $startTime): self
     {
-        $this->start_time = $start_time;
+        $this->startTime = $startTime;
 
         return $this;
     }
 
     public function getEndTime(): ?\DateTimeInterface
     {
-        return $this->end_time;
+        return $this->endTime;
     }
 
-    public function setEndTime(\DateTimeInterface $end_time): self
+    public function setEndTime(\DateTimeInterface $endTime): self
     {
-        $this->end_time = $end_time;
+        $this->endTime = $endTime;
 
         return $this;
     }
 
     public function getCreatedBy(): ?string
     {
-        return $this->created_by;
+        return $this->createdBy;
     }
 
-    public function setCreatedBy(string $created_by): self
+    public function setCreatedBy(string $createdBy): self
     {
-        $this->created_by = $created_by;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
@@ -333,24 +331,24 @@ class Entry
 
     public function getStatutEntry(): ?string
     {
-        return $this->statut_entry;
+        return $this->statutEntry;
     }
 
-    public function setStatutEntry(?string $statut_entry): self
+    public function setStatutEntry(?string $statutEntry): self
     {
-        $this->statut_entry = $statut_entry;
+        $this->statutEntry = $statutEntry;
 
         return $this;
     }
 
     public function getOptionReservation(): ?int
     {
-        return $this->option_reservation;
+        return $this->optionReservation;
     }
 
-    public function setOptionReservation(int $option_reservation): self
+    public function setOptionReservation(int $optionReservation): self
     {
-        $this->option_reservation = $option_reservation;
+        $this->optionReservation = $optionReservation;
 
         return $this;
     }
@@ -438,5 +436,6 @@ class Entry
 
         return $this;
     }
+
 
 }

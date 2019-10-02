@@ -124,7 +124,7 @@ class AuthorizationRepository extends ServiceEntityRepository
 
         $queryBuilder->andWhere('authorization.area IS NOT NULL');
 
-        $queryBuilder->andWhere('authorization.is_area_administrator = :bool')
+        $queryBuilder->andWhere('authorization.isAreaAdministrator = :bool')
             ->setParameter('bool', $isAreaAdministrator);
 
         return $queryBuilder

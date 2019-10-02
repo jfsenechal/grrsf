@@ -25,7 +25,7 @@ class EntryType
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $order_display;
+    private $orderDisplay;
 
     /**
      * @var string|null
@@ -56,7 +56,7 @@ class EntryType
     public function __construct()
     {
         $this->entries = new ArrayCollection();
-        $this->order_display = 0;
+        $this->orderDisplay = 0;
         $this->disponible = 2;
     }
 
@@ -67,12 +67,12 @@ class EntryType
 
     public function getOrderDisplay(): ?int
     {
-        return $this->order_display;
+        return $this->orderDisplay;
     }
 
-    public function setOrderDisplay(int $order_display): self
+    public function setOrderDisplay(int $orderDisplay): self
     {
-        $this->order_display = $order_display;
+        $this->orderDisplay = $orderDisplay;
 
         return $this;
     }
@@ -143,4 +143,5 @@ class EntryType
 
         return $this;
     }
+
 }

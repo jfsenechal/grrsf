@@ -39,7 +39,7 @@ class Room
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $maximum_booking;
+    private $maximumBooking;
 
     /**
      * @var string
@@ -102,7 +102,7 @@ class Room
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $order_display;
+    private $orderDisplay;
 
     /**
      * @var int
@@ -151,7 +151,7 @@ class Room
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $rule_to_add;
+    private $ruleForAdding;
 
     /**
      * @var Area
@@ -180,14 +180,14 @@ class Room
         $this->delaisMaxResaRoom = 0;
         $this->delaisMinResaRoom = 0;
         $this->allowActionInPast = false;
-        $this->order_display = 0;
+        $this->orderDisplay = 0;
         $this->delaisOptionReservation = 0;
         $this->dontAllowModify = '';
         $this->typeAffichageReser = 0;
         $this->quiPeutReserverPour = '';
         $this->activeRessourceEmpruntee = false;
-        $this->rule_to_add = 0;
-        $this->maximum_booking = -1;
+        $this->ruleForAdding = 0;
+        $this->maximumBooking = -1;
         $this->entries = new ArrayCollection();
         $this->authorizations = new ArrayCollection();
     }
@@ -223,12 +223,12 @@ class Room
 
     public function getMaximumBooking(): ?int
     {
-        return $this->maximum_booking;
+        return $this->maximumBooking;
     }
 
-    public function setMaximumBooking(int $maximum_booking): self
+    public function setMaximumBooking(int $maximumBooking): self
     {
-        $this->maximum_booking = $maximum_booking;
+        $this->maximumBooking = $maximumBooking;
 
         return $this;
     }
@@ -331,12 +331,12 @@ class Room
 
     public function getOrderDisplay(): ?int
     {
-        return $this->order_display;
+        return $this->orderDisplay;
     }
 
-    public function setOrderDisplay(int $order_display): self
+    public function setOrderDisplay(int $orderDisplay): self
     {
-        $this->order_display = $order_display;
+        $this->orderDisplay = $orderDisplay;
 
         return $this;
     }
@@ -413,12 +413,24 @@ class Room
         return $this;
     }
 
-    public function getArea(): Area
+    public function getRuleForAdding(): ?int
+    {
+        return $this->ruleForAdding;
+    }
+
+    public function setRuleForAdding(int $ruleForAdding): self
+    {
+        $this->ruleForAdding = $ruleForAdding;
+
+        return $this;
+    }
+
+    public function getArea(): ?Area
     {
         return $this->area;
     }
 
-    public function setArea(Area $area): self
+    public function setArea(?Area $area): self
     {
         $this->area = $area;
 
@@ -464,29 +476,6 @@ class Room
         return $this->authorizations;
     }
 
-    public function addUsersManagerResource(Authorization $usersManagerResource): self
-    {
-        if (!$this->authorizations->contains($usersManagerResource)) {
-            $this->authorizations[] = $usersManagerResource;
-            $usersManagerResource->setRoom($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUsersManagerResource(Authorization $usersManagerResource): self
-    {
-        if ($this->authorizations->contains($usersManagerResource)) {
-            $this->authorizations->removeElement($usersManagerResource);
-            // set the owning side to null (unless already changed)
-            if ($usersManagerResource->getRoom() === $this) {
-                $usersManagerResource->setRoom(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function addAuthorization(Authorization $authorization): self
     {
         if (!$this->authorizations->contains($authorization)) {
@@ -509,19 +498,5 @@ class Room
 
         return $this;
     }
-
-    public function getRuleToAdd(): ?int
-    {
-        return $this->rule_to_add;
-    }
-
-    public function setRuleToAdd(int $rule_to_add): self
-    {
-        $this->rule_to_add = $rule_to_add;
-
-        return $this;
-    }
-
-    
 
 }

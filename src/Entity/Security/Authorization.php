@@ -45,20 +45,20 @@ class Authorization
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $is_area_administrator;
+    private $isAreaAdministrator;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $is_resource_administrator;
+    private $isResourceAdministrator;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-        $this->is_area_administrator = false;
-        $this->is_resource_administrator = false;
+        $this->isAreaAdministrator = false;
+        $this->isResourceAdministrator = false;
     }
 
     public function __toString()
@@ -68,24 +68,24 @@ class Authorization
 
     public function getIsAreaAdministrator(): ?bool
     {
-        return $this->is_area_administrator;
+        return $this->isAreaAdministrator;
     }
 
-    public function setIsAreaAdministrator(bool $is_area_administrator): self
+    public function setIsAreaAdministrator(bool $isAreaAdministrator): self
     {
-        $this->is_area_administrator = $is_area_administrator;
+        $this->isAreaAdministrator = $isAreaAdministrator;
 
         return $this;
     }
 
     public function getIsResourceAdministrator(): ?bool
     {
-        return $this->is_resource_administrator;
+        return $this->isResourceAdministrator;
     }
 
-    public function setIsResourceAdministrator(bool $is_resource_administrator): self
+    public function setIsResourceAdministrator(bool $isResourceAdministrator): self
     {
-        $this->is_resource_administrator = $is_resource_administrator;
+        $this->isResourceAdministrator = $isResourceAdministrator;
 
         return $this;
     }
@@ -126,5 +126,6 @@ class Authorization
         return $this;
     }
 
+  
 
 }

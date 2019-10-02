@@ -25,41 +25,41 @@ class Area
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $order_display;
+    private $orderDisplay;
 
     /**
      * @var int
-     * @Assert\LessThan(propertyPath="end_time", message="area.constraint.start_smaller_end")
+     * @Assert\LessThan(propertyPath="endTime", message="area.constraint.start_smaller_end")
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $start_time;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="smallint", nullable=false)
-     */
-    private $end_time;
+    private $startTime;
 
     /**
      * @var int
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $week_start;
+    private $endTime;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint", nullable=false)
+     */
+    private $weekStart;
 
     /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $is_24_hour_format;
+    private $is24HourFormat;
     /**
      * @var array
      *
      * @ORM\Column(type="array", nullable=false)
      */
-    private $days_of_week_to_display;
+    private $daysOfWeekToDisplay;
 
     /**
      * Intervalle de temps.
@@ -68,7 +68,7 @@ class Area
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $time_interval;
+    private $timeInterval;
 
     /**
      * Durée maximum qu'un utilisateur peut réserver.
@@ -77,7 +77,7 @@ class Area
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $duration_maximum_entry;
+    private $durationMaximumEntry;
 
     /**
      * Durée par défaut d'une réservation.
@@ -86,27 +86,27 @@ class Area
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $duration_default_entry;
+    private $durationDefaultEntry;
 
     /**
      * @var int
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $minutes_to_add_to_end_time;
+    private $minutesToAddToEndTime;
 
     /**
      * @var int
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $max_booking;
+    private $maxBooking;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $is_restricted;
+    private $isRestricted;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="area")
@@ -125,18 +125,18 @@ class Area
 
     public function __construct()
     {
-        $this->start_time = 8;
-        $this->end_time = 19;
-        $this->is_24_hour_format = true;
-        $this->order_display = 0;
-        $this->week_start = 0;
-        $this->days_of_week_to_display = [1,2,3,4,5];
-        $this->time_interval = 30;
-        $this->duration_default_entry = 30;
-        $this->duration_maximum_entry = -1;
-        $this->minutes_to_add_to_end_time = 0;
-        $this->max_booking = -1;
-        $this->is_restricted = false;
+        $this->startTime = 8;
+        $this->endTime = 19;
+        $this->is24HourFormat = true;
+        $this->orderDisplay = 0;
+        $this->weekStart = 0;
+        $this->daysOfWeekToDisplay = [1, 2, 3, 4, 5];
+        $this->timeInterval = 30;
+        $this->durationDefaultEntry = 30;
+        $this->durationMaximumEntry = -1;
+        $this->minutesToAddToEndTime = 0;
+        $this->maxBooking = -1;
+        $this->isRestricted = false;
         $this->rooms = new ArrayCollection();
         $this->authorizations = new ArrayCollection();
         $this->entryTypes = new ArrayCollection();
@@ -149,144 +149,144 @@ class Area
 
     public function getOrderDisplay(): ?int
     {
-        return $this->order_display;
+        return $this->orderDisplay;
     }
 
-    public function setOrderDisplay(int $order_display): self
+    public function setOrderDisplay(int $orderDisplay): self
     {
-        $this->order_display = $order_display;
+        $this->orderDisplay = $orderDisplay;
 
         return $this;
     }
 
     public function getStartTime(): ?int
     {
-        return $this->start_time;
+        return $this->startTime;
     }
 
-    public function setStartTime(int $start_time): self
+    public function setStartTime(int $startTime): self
     {
-        $this->start_time = $start_time;
+        $this->startTime = $startTime;
 
         return $this;
     }
 
     public function getEndTime(): ?int
     {
-        return $this->end_time;
+        return $this->endTime;
     }
 
-    public function setEndTime(int $end_time): self
+    public function setEndTime(int $endTime): self
     {
-        $this->end_time = $end_time;
+        $this->endTime = $endTime;
 
         return $this;
     }
 
     public function getWeekStart(): ?int
     {
-        return $this->week_start;
+        return $this->weekStart;
     }
 
-    public function setWeekStart(int $week_start): self
+    public function setWeekStart(int $weekStart): self
     {
-        $this->week_start = $week_start;
+        $this->weekStart = $weekStart;
 
         return $this;
     }
 
     public function getIs24HourFormat(): ?bool
     {
-        return $this->is_24_hour_format;
+        return $this->is24HourFormat;
     }
 
-    public function setIs24HourFormat(bool $is_24_hour_format): self
+    public function setIs24HourFormat(bool $is24HourFormat): self
     {
-        $this->is_24_hour_format = $is_24_hour_format;
+        $this->is24HourFormat = $is24HourFormat;
 
         return $this;
     }
 
     public function getDaysOfWeekToDisplay(): ?array
     {
-        return $this->days_of_week_to_display;
+        return $this->daysOfWeekToDisplay;
     }
 
-    public function setDaysOfWeekToDisplay(array $days_of_week_to_display): self
+    public function setDaysOfWeekToDisplay(array $daysOfWeekToDisplay): self
     {
-        $this->days_of_week_to_display = $days_of_week_to_display;
+        $this->daysOfWeekToDisplay = $daysOfWeekToDisplay;
 
         return $this;
     }
 
     public function getTimeInterval(): ?int
     {
-        return $this->time_interval;
+        return $this->timeInterval;
     }
 
-    public function setTimeInterval(int $time_interval): self
+    public function setTimeInterval(int $timeInterval): self
     {
-        $this->time_interval = $time_interval;
+        $this->timeInterval = $timeInterval;
 
         return $this;
     }
 
     public function getDurationMaximumEntry(): ?int
     {
-        return $this->duration_maximum_entry;
+        return $this->durationMaximumEntry;
     }
 
-    public function setDurationMaximumEntry(int $duration_maximum_entry): self
+    public function setDurationMaximumEntry(int $durationMaximumEntry): self
     {
-        $this->duration_maximum_entry = $duration_maximum_entry;
+        $this->durationMaximumEntry = $durationMaximumEntry;
 
         return $this;
     }
 
     public function getDurationDefaultEntry(): ?int
     {
-        return $this->duration_default_entry;
+        return $this->durationDefaultEntry;
     }
 
-    public function setDurationDefaultEntry(int $duration_default_entry): self
+    public function setDurationDefaultEntry(int $durationDefaultEntry): self
     {
-        $this->duration_default_entry = $duration_default_entry;
+        $this->durationDefaultEntry = $durationDefaultEntry;
 
         return $this;
     }
 
     public function getMinutesToAddToEndTime(): ?int
     {
-        return $this->minutes_to_add_to_end_time;
+        return $this->minutesToAddToEndTime;
     }
 
-    public function setMinutesToAddToEndTime(int $minutes_to_add_to_end_time): self
+    public function setMinutesToAddToEndTime(int $minutesToAddToEndTime): self
     {
-        $this->minutes_to_add_to_end_time = $minutes_to_add_to_end_time;
+        $this->minutesToAddToEndTime = $minutesToAddToEndTime;
 
         return $this;
     }
 
     public function getMaxBooking(): ?int
     {
-        return $this->max_booking;
+        return $this->maxBooking;
     }
 
-    public function setMaxBooking(int $max_booking): self
+    public function setMaxBooking(int $maxBooking): self
     {
-        $this->max_booking = $max_booking;
+        $this->maxBooking = $maxBooking;
 
         return $this;
     }
 
     public function getIsRestricted(): ?bool
     {
-        return $this->is_restricted;
+        return $this->isRestricted;
     }
 
-    public function setIsRestricted(bool $is_restricted): self
+    public function setIsRestricted(bool $isRestricted): self
     {
-        $this->is_restricted = $is_restricted;
+        $this->isRestricted = $isRestricted;
 
         return $this;
     }
@@ -378,5 +378,4 @@ class Area
 
         return $this;
     }
-
 }

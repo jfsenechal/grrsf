@@ -56,11 +56,11 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $is_enabled;
+    private $isEnabled;
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $language_default;
+    private $languageDefault;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Area")
@@ -81,7 +81,7 @@ class User implements UserInterface
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-        $this->is_enabled = true;
+        $this->isEnabled = true;
         $this->authorizations = new ArrayCollection();
     }
 
@@ -90,14 +90,9 @@ class User implements UserInterface
         return mb_strtoupper($this->name).' '.$this->first_name;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
-        return (string)$this->username;
+        return $this->username;
     }
 
     public function setUsername(string $username): self
@@ -107,10 +102,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
+    public function getRoles(): ?array
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_GRR
@@ -171,12 +163,9 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getPassword(): ?string
     {
-        return (string)$this->password;
+        return $this->password;
     }
 
     public function setPassword(?string $password): self
@@ -212,12 +201,12 @@ class User implements UserInterface
 
     public function getIsEnabled(): ?bool
     {
-        return $this->is_enabled;
+        return $this->isEnabled;
     }
 
     public function setIsEnabled(bool $is_enabled): self
     {
-        $this->is_enabled = $is_enabled;
+        $this->isEnabled = $is_enabled;
 
         return $this;
     }
@@ -255,12 +244,12 @@ class User implements UserInterface
 
     public function getLanguageDefault(): ?string
     {
-        return $this->language_default;
+        return $this->languageDefault;
     }
 
-    public function setLanguageDefault(?string $language_default): self
+    public function setLanguageDefault(?string $languageDefault): self
     {
-        $this->language_default = $language_default;
+        $this->languageDefault = $languageDefault;
 
         return $this;
     }
