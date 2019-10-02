@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Setting;
 use App\Setting\SettingConstants;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -22,18 +23,26 @@ class SettingRepository extends ServiceEntityRepository
 
     /**
      * @param string $name
+     * @return string|null
      *
-     * @return Setting|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getValueByName(string $name)
+    public function getValueByName(string $name): ?string
     {
-        return $this->createQueryBuilder('setting')
-            ->andWhere('setting.name = :name')
-            ->setParameter('name', $name)
-            ->getQuery()
-            ->getOneOrNullResult();
+        try {
+            $setting = $this->createQueryBuilder('setting')
+                ->andWhere('setting.name = :name')
+                ->setParameter('name', $name)
+                ->getQuery()
+                ->getOneOrNullResult();
+            if ($setting) {
+                return $setting->getValue();
+            }
+
+        } catch (NonUniqueResultException $e) {
+
+        }
+
+        return null;
     }
 
     public function load()
@@ -55,12 +64,14 @@ class SettingRepository extends ServiceEntityRepository
         /**
          * Pour bug js form edit
          */
-        if(!isset($data[SettingConstants::WEBMASTER_EMAIL]) || count($data[SettingConstants::WEBMASTER_EMAIL]) ===0){
-           $data[SettingConstants::WEBMASTER_EMAIL] = [''];
+        if (!isset($data[SettingConstants::WEBMASTER_EMAIL]) || count($data[SettingConstants::WEBMASTER_EMAIL]) === 0) {
+            $data[SettingConstants::WEBMASTER_EMAIL] = [''];
         }
 
-        if(!isset($data[SettingConstants::TECHNICAL_SUPPORT_EMAIL]) || count($data[SettingConstants::TECHNICAL_SUPPORT_EMAIL]) ===0){
-           $data[SettingConstants::TECHNICAL_SUPPORT_EMAIL] = [''];
+        if (!isset($data[SettingConstants::TECHNICAL_SUPPORT_EMAIL]) || count(
+                $data[SettingConstants::TECHNICAL_SUPPORT_EMAIL]
+            ) === 0) {
+            $data[SettingConstants::TECHNICAL_SUPPORT_EMAIL] = [''];
         }
 
         return $data;
