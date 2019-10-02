@@ -13,6 +13,8 @@ use App\Model\TimeSlot;
 use App\Model\Week;
 use App\Navigation\NavigationManager;
 use App\Repository\EntryTypeRepository;
+use App\Repository\SettingRepository;
+use App\Setting\SettingConstants;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -42,19 +44,25 @@ class GrrFrontExtension extends AbstractExtension
      * @var EntryTypeRepository
      */
     private $entryTypeRepository;
+    /**
+     * @var SettingRepository
+     */
+    private $settingRepository;
 
     public function __construct(
         RequestStack $requestStack,
         MenuGenerator $menuGenerator,
         Environment $twigEnvironment,
         NavigationManager $navigationManager,
-        EntryTypeRepository $entryTypeRepository
+        EntryTypeRepository $entryTypeRepository,
+        SettingRepository $settingRepository
     ) {
         $this->twigEnvironment = $twigEnvironment;
         $this->navigationManager = $navigationManager;
         $this->requestStack = $requestStack;
         $this->menuGenerator = $menuGenerator;
         $this->entryTypeRepository = $entryTypeRepository;
+        $this->settingRepository = $settingRepository;
     }
 
     public function getFilters()
@@ -101,9 +109,13 @@ class GrrFrontExtension extends AbstractExtension
                 return $this->grrLegendEntryType($area);
             }, ['is_safe' => ['html']]
             ),
+            new TwigFunction(
+                'grrCompanyName', function () {
+                return $this->grrCompanyName();
+            }
+            ),
         ];
     }
-
 
 
     /**
@@ -217,12 +229,19 @@ class GrrFrontExtension extends AbstractExtension
 
     private function grrLegendEntryType(Area $area)
     {
-       $types = $this->entryTypeRepository->findAll();
+        $types = $this->entryTypeRepository->findAll();
 
         return $this->twigEnvironment->render(
             '@grr_front/_legend_entry_type.html.twig',
             ['types' => $types]
         );
 
+    }
+
+    private function grrCompanyName(): string
+    {
+        $company = $this->settingRepository->getValueByName(SettingConstants::COMPANY);
+
+        return $company ?? 'Grr';
     }
 }
