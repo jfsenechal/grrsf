@@ -18,18 +18,30 @@ class Setting
     /**
      * @var string
      *
-     * @ORM\Column(name="NAME", type="string", length=32, nullable=false, unique=true)
-     * ORM\Id
-     * ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="string", length=32, nullable=false, unique=true)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="VALUE", type="text", length=65535, nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $value;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $required;
+
+    public function __construct(string $name, $value)
+    {
+        $this->name = $name;
+        $this->value = $value;
+        $this->required = false;
+    }
 
     public function getName(): ?string
     {

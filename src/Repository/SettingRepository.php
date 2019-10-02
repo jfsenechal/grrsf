@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Setting;
+use App\Setting\SettingConstants;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -33,5 +34,24 @@ class SettingRepository extends ServiceEntityRepository
             ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function load()
+    {
+        $data = [];
+
+        foreach ($this->findAll() as $setting) {
+            $value = $setting->getValue();
+            if (in_array(
+                $setting->getName(),
+                [SettingConstants::WEBMASTER_EMAIL, SettingConstants::TECHNICAL_SUPPORT_EMAIL],
+                true
+            )) {
+                $value = unserialize($value);
+            }
+            $data[$setting->getName()] = $value;
+        }
+
+        return $data;
     }
 }

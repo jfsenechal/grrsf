@@ -178,6 +178,8 @@ created:
   at: le
 btn:
   search: Rechercher
+  add:
+    email: Ajouter un email
 search:
   form:
     word:
@@ -190,3 +192,35 @@ entryType:
   area:
     flash: Les modifications ont bien été apportées
 You are a director of Grr: Vous êtes administrateur de Grr
+
+setting:
+  titlehomepage:
+    label: Gros titre de la page de connexion
+  messagehomepage:
+    label: Message d'avertissement de la page de connexion
+  company:
+    label: Nom de l'établissement
+  webmastername:
+    label: Nom et prénom du gestionnaire du site
+  webmasteremail:
+    label: Adresse email du gestionnaire du site
+    help: Vous pouvez indiquer plusieurs adresses séparées par des points-virgules
+  technicalsupportemail:
+    label: Adresse email du support technique
+    help: Vous pouvez indiquer plusieurs adresses séparées par des points-virgules
+  messageaccueil:
+      label: Message personnalisé
+      help: Le message ci-dessous s'affiche juste en-dessous du bandeau supérieur.
+  beginbooking:
+    label: Début des réservations
+    help: Pas de réservation possible avant cette date. De plus les réservations déjà effectuées avant cette date seront effacées de la base.
+  endbooking:
+    label: Fin des réservations
+    help: Pas de réservation possible après cette date. De plus les réservations déjà effectuées après cette date seront effacées de la base.
+  defaultlanguage:
+    label: Choix de la langue par défaut
+  nbcalendar:
+    label: Affichage des calendriers
+    help: Nombre de calendriers mensuels à afficher sur chaque planning de réservation
+  flash:
+    edit: Les paramètres ont bien été modifiés

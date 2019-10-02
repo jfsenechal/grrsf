@@ -12,8 +12,13 @@ use App\Entity\Setting;
 
 class SettingFactory
 {
-    public function createNew(): Setting
+    /**
+     * @param string $name
+     * @param string|array $value
+     * @return Setting
+     */
+    public function createNew(string $name, $value): Setting
     {
-        return new Setting();
+        return new Setting($name, $value);
     }
 }

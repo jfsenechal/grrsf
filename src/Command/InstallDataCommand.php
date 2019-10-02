@@ -5,13 +5,16 @@ namespace App\Command;
 use App\Entity\Area;
 use App\Factory\AreaFactory;
 use App\Factory\RoomFactory;
+use App\Factory\SettingFactory;
 use App\Factory\TypeEntryFactory;
 use App\Factory\UserFactory;
 use App\Repository\AreaRepository;
 use App\Repository\EntryTypeRepository;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
+use App\Repository\SettingRepository;
 use App\Security\SecurityRole;
+use App\Setting\SettingConstants;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -68,6 +71,14 @@ class InstallDataCommand extends Command
      * @var SymfonyStyle
      */
     private $io;
+    /**
+     * @var SettingFactory
+     */
+    private $settingFactory;
+    /**
+     * @var SettingRepository
+     */
+    private $settingRepository;
 
     public function __construct(
         string $name = null,
@@ -75,8 +86,10 @@ class InstallDataCommand extends Command
         EntryTypeRepository $entryTypeRepository,
         RoomRepository $roomRepository,
         UserRepository $userRepository,
+        SettingRepository $settingRepository,
         TypeEntryFactory $typeEntryFactory,
         AreaRepository $areaRepository,
+        SettingFactory $settingFactory,
         AreaFactory $areaFactory,
         RoomFactory $roomFactory,
         UserFactory $userFactory,
@@ -93,6 +106,8 @@ class InstallDataCommand extends Command
         $this->userFactory = $userFactory;
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->entityManager = $entityManager;
+        $this->settingFactory = $settingFactory;
+        $this->settingRepository = $settingRepository;
     }
 
     protected function configure()
@@ -119,6 +134,7 @@ class InstallDataCommand extends Command
         $this->loadType();
         $this->loadArea();
         $this->loadUser();
+        $this->loadSetting();
 
         $this->io->success('Les données ont bien été initialisées.');
     }
@@ -143,7 +159,7 @@ class InstallDataCommand extends Command
             $type = $this->typeEntryFactory->createNew();
             $type->setLetter($index);
             $type->setName($nom);
-            $type->setColor($colors[random_int(0, count($colors)-1)]);
+            $type->setColor($colors[random_int(0, count($colors) - 1)]);
             $this->entityManager->persist($type);
         }
         $this->entityManager->flush();
@@ -226,5 +242,31 @@ class InstallDataCommand extends Command
         $this->entityManager->flush();
 
         $this->io->success("L'utilisateur $email avec le mot de passe $password a bien été créé");
+    }
+
+    private function loadSetting()
+    {
+        $settings = [
+            SettingConstants::WEBMASTER_EMAIL => ['grr@domain.be'],
+            SettingConstants::WEBMASTER_NAME => 'Grr',
+            SettingConstants::TECHNICAL_SUPPORT_EMAIL => ['grr@domain.be'],
+            SettingConstants::MESSAGE_HOME_PAGE => 'Message home page',
+            SettingConstants::TITLE_HOME_PAGE => 'Gestion et Réservation des salles',
+            SettingConstants::COMPANY => 'Grr',
+            SettingConstants::NB_CALENDAR => 1,
+            SettingConstants::DEFAULT_LANGUAGE => 'fr',
+        ];
+
+        foreach ($settings as $name => $value) {
+            if (!$setting = $this->settingRepository->findOneBy(['name' => $name])) {
+                if (is_array($value)) {
+                    $value = serialize($value);
+                }
+                $setting = $this->settingFactory->createNew($name, $value);
+                $this->entityManager->persist($setting);
+            }
+        }
+
+        $this->entityManager->flush();
     }
 }

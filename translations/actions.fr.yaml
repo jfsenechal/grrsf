@@ -104,3 +104,6 @@ link:
 periodicity:
   delete:
     confirm: Supprimer la périodicité et toutes les réservations associées
+setting:
+  edit:
+    title: Editer

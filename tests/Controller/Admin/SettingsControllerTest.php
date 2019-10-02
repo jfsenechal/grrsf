@@ -12,8 +12,8 @@ class SettingsControllerTest extends BaseTesting
         $client->request('GET', 'admin/setting/');
 
         self::assertResponseRedirects();
-        //$this->assertResponseIsSuccessful();
-        $crawler = $client->followRedirect();
+        $client->followRedirect();
+        $this->assertResponseIsSuccessful();
 
         self::assertSelectorTextContains('h1', 'Authentification');
     }
@@ -24,7 +24,22 @@ class SettingsControllerTest extends BaseTesting
 
         $this->administrator->request('GET', 'admin/setting/');
 
-        self::assertSelectorTextContains('h1', 'Paramètres de Grr');
+        self::assertSelectorTextContains('h3', 'Paramètres de Grr');
+
+        $crawler = $this->administrator->clickLink('Editer');
+
+        $form = $crawler->selectButton('Sauvegarder')->form();
+        $form['general_setting[company]']->setValue('Grr');
+        $form['general_setting[nb_calendar]']->setValue(1);
+        $form['general_setting[company]']->setValue('Grr');
+
+        $this->administrator->submit($form);
+        $this->administrator->followRedirect();
+
+        $this->assertContains(
+            'Grr',
+            $this->administrator->getResponse()->getContent()
+        );
     }
 
     protected function loadFixtures()

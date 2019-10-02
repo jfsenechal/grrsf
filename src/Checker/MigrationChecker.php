@@ -14,6 +14,7 @@ use App\Manager\AuthorizationManager;
 use App\Repository\RoomRepository;
 use App\Repository\Security\AuthorizationRepository;
 use App\Repository\Security\UserRepository;
+use App\Security\SecurityRole;
 
 class MigrationChecker
 {
@@ -65,7 +66,7 @@ class MigrationChecker
                 $rooms = $this->roomRepository->findByArea($area);
                 foreach ($rooms as $room) {
                     $admin = $this->authorizationRepository->findOneByUserAndRoom($user, $room);
-                    if ($admin) {
+                    if ($admin || $user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
                         $result[$i]['authorization'] = $authorization;
                         $result[$i]['user'] = $user;
                         $result[$i]['area'] = $area;

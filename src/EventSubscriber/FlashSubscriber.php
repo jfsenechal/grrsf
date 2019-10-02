@@ -8,6 +8,7 @@ use App\Events\EntryEvent;
 use App\Events\EntryTypeAreaEvent;
 use App\Events\EntryTypeEvent;
 use App\Events\RoomEvent;
+use App\Events\SettingSuccessEvent;
 use App\Events\UserEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -52,6 +53,11 @@ class FlashSubscriber implements EventSubscriberInterface
     public function onRoomNew(RoomEvent $roomEvent)
     {
         $this->flashBag->add('success', 'room.flash.new');
+    }
+
+    public function onSettingSuccess()
+    {
+        $this->flashBag->add('success', 'setting.flash.edit');
     }
 
     public function onUserDelete(UserEvent $userEvent)
@@ -146,7 +152,8 @@ class FlashSubscriber implements EventSubscriberInterface
             AuthorizationEvent::NEW_SUCCESS => 'onAuthorizationNew',
             AuthorizationEvent::DELETE_SUCCESS => 'onAuthorizationDelete',
 
-            EntryTypeAreaEvent::class => 'onEditEntryTypeArea'
+            EntryTypeAreaEvent::class => 'onEditEntryTypeArea',
+            SettingSuccessEvent::class => 'onSettingSuccess'
         ];
 
     }
