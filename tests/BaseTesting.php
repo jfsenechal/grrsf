@@ -77,11 +77,6 @@ class BaseTesting extends WebTestCase
         $this->loaderSimple = $loader;
 
         $this->administrator = $this->createGrrClient('grr@domain.be');
-        //   $this->bob = $this->createGrrClient('bob@domain.be');
-        //   $this->brenda = $this->createGrrClient('brenda@domain.be');
-
-        //  $this->administrator->insulate();
-
 
         parent::setUp();
     }
@@ -117,7 +112,7 @@ class BaseTesting extends WebTestCase
 
         return $this->entityManager
             ->getRepository(Periodicity::class)
-            ->findOneBy(['type' => $type, 'end_time' => $dateTime]);
+            ->findOneBy(['type' => $type, 'endTime' => $dateTime]);
     }
 
     protected function getEntry(string $name): Entry

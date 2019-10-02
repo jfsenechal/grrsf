@@ -151,7 +151,7 @@ class Room
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $ruleForAdding;
+    private $ruleToAdd;
 
     /**
      * @var Area
@@ -186,7 +186,7 @@ class Room
         $this->typeAffichageReser = 0;
         $this->quiPeutReserverPour = '';
         $this->activeRessourceEmpruntee = false;
-        $this->ruleForAdding = 0;
+        $this->ruleToAdd = 0;
         $this->maximumBooking = -1;
         $this->entries = new ArrayCollection();
         $this->authorizations = new ArrayCollection();
@@ -413,14 +413,14 @@ class Room
         return $this;
     }
 
-    public function getRuleForAdding(): ?int
+    public function getRuleToAdd(): ?int
     {
-        return $this->ruleForAdding;
+        return $this->ruleToAdd;
     }
 
-    public function setRuleForAdding(int $ruleForAdding): self
+    public function setRuleToAdd(int $ruleToAdd): self
     {
-        $this->ruleForAdding = $ruleForAdding;
+        $this->ruleToAdd = $ruleToAdd;
 
         return $this;
     }

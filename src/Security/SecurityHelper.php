@@ -30,7 +30,7 @@ class SecurityHelper
     public function isAreaAdministrator(User $user, Area $area): bool
     {
         if ($this->authorizationRepository->findOneBy(
-            ['user' => $user, 'area' => $area, 'is_area_administrator' => true]
+            ['user' => $user, 'area' => $area, 'isAreaAdministrator' => true]
         )) {
             return true;
         }
@@ -53,7 +53,7 @@ class SecurityHelper
         }
 
         if ($this->authorizationRepository->findOneBy(
-            ['user' => $user, 'area' => $area, 'is_area_administrator' => false]
+            ['user' => $user, 'area' => $area, 'isAreaAdministrator' => false]
         )) {
             return true;
         }
@@ -74,7 +74,7 @@ class SecurityHelper
         }
 
         if ($this->authorizationRepository->findOneBy(
-            ['user' => $user, 'room' => $room, 'is_resource_administrator' => true]
+            ['user' => $user, 'room' => $room, 'isResourceAdministrator' => true]
         )) {
             return true;
         }
@@ -99,7 +99,7 @@ class SecurityHelper
         }
 
         if ($this->authorizationRepository->findOneBy(
-            ['user' => $user, 'room' => $room, 'is_resource_administrator' => false]
+            ['user' => $user, 'room' => $room, 'isResourceAdministrator' => false]
         )) {
             return true;
         }
@@ -119,7 +119,7 @@ class SecurityHelper
      */
     public function checkAuthorizationRoomToAddEntry(Room $room, User $user = null): bool
     {
-        $who = $room->getRuleForAdding();
+        $who = $room->getRuleToAdd();
 
         /**
          * Tout le monde peut encoder une réservation meme si pas connecte
@@ -204,7 +204,7 @@ class SecurityHelper
      */
     public function canAddEntry(Room $room, ?User $user = null)
     {
-        $rule = $room->getRuleForAdding();
+        $rule = $room->getRuleToAdd();
 
         if ($user && $this->isGrrAdministrator($user)) {
             return true;
