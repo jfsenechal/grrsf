@@ -25,7 +25,7 @@ class Periodicity
     use IdEntityTrait;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $end_time;
 
