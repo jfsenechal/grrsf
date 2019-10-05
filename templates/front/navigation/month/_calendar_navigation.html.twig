@@ -11,3 +11,18 @@
         </td>
     </tr>
 </table>
+{#
+<div class="row">
+    <div class="col col-2 col-sm-2">
+        {{ navigation.previousButton | raw }}
+    </div>
+    <div class="col col-8 col-sm-8">
+        {% for month in navigation.months %}
+            {{ month | raw }}
+        {% endfor %}
+    </div>
+    <div class="col col-2 col-sm-2">
+        {{ navigation.nextButton | raw }}
+    </div>
+</div>
+#}
