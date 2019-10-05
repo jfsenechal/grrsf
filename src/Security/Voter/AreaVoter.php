@@ -4,8 +4,8 @@ namespace App\Security\Voter;
 
 use App\Entity\Area;
 use App\Entity\Security\User;
-use App\Security\SecurityRole;
 use App\Security\SecurityHelper;
+use App\Security\SecurityRole;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -93,7 +93,7 @@ class AreaVoter extends Voter
             return true;
         }
 
-        /**
+        /*
          * not work with test
          */
         if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {

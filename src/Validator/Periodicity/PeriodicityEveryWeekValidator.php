@@ -11,7 +11,7 @@ class PeriodicityEveryWeekValidator extends ConstraintValidator
 {
     /**
      * @param \App\Entity\Periodicity $value
-     * @param PeriodicityEveryWeek $constraint
+     * @param PeriodicityEveryWeek    $constraint
      */
     public function validate($value, Constraint $constraint)
     {
@@ -34,7 +34,7 @@ class PeriodicityEveryWeekValidator extends ConstraintValidator
         $weekRepeat = $value->getWeekRepeat();
         $entryStartTime = Carbon::instance($entry->getStartTime());
 
-        /**
+        /*
          * Si aucun jour de la semaine sélectionné
          */
         if (count($daysSelected) < 1) {
@@ -42,17 +42,17 @@ class PeriodicityEveryWeekValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        /**
+        /*
          * Si aucune répétion par semaine choisie
          */
-        if ($weekRepeat === null) {
+        if (null === $weekRepeat) {
             $this->context->buildViolation('periodicity.constraint.every_weeks.no_repeat')
                 ->addViolation();
         }
 
         /**
          * En répétition par semain, il y doit y avoir au moins $weekRepeat semaine de différence entre la fin de la périodicité
-         * et la fin de la réservation
+         * et la fin de la réservation.
          */
         if ($entryEndTime->diffInWeeks($endPeriodicity) < $weekRepeat) {
             $this->context->buildViolation('periodicity.constraint.every_weeks.endtime')
@@ -61,7 +61,7 @@ class PeriodicityEveryWeekValidator extends ConstraintValidator
             return;
         }
 
-        /**
+        /*
          * En répétion par semaine, la réservation ne peut s'étaler sur plusieurs jours
          */
         if ($entryStartTime->diffInDays($entryEndTime) > 1) {

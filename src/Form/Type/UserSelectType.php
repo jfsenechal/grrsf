@@ -2,9 +2,7 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Area;
 use App\Entity\Security\User;
-use App\Repository\AreaRepository;
 use App\Repository\Security\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

@@ -70,7 +70,6 @@ class EntryController extends AbstractController
 
     /**
      * @Route("/", name="grr_front_entry_index", methods={"GET", "POST"})
-     *
      */
     public function index(Request $request): Response
     {
@@ -99,12 +98,12 @@ class EntryController extends AbstractController
      * @Entity("area", expr="repository.find(area)")
      * @Entity("room", expr="repository.find(room)")
      *
-     * @param Request $request
-     * @param Area $area
-     * @param Room $room
-     * @param int $year
-     * @param int $month
-     * @param int $day
+     * @param Request  $request
+     * @param Area     $area
+     * @param Room     $room
+     * @param int      $year
+     * @param int      $month
+     * @param int      $day
      * @param int|null $hour
      * @param int|null $minute
      *
@@ -187,7 +186,7 @@ class EntryController extends AbstractController
         $entry->setArea($entry->getRoom()->getArea());
 
         if ($periodicity = $entry->getPeriodicity()) {
-            $periodicity->setEntryReference($entry);//use for validator
+            $periodicity->setEntryReference($entry); //use for validator
         }
 
         $form = $this->createForm(EntryType::class, $entry);

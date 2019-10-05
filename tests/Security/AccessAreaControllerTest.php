@@ -10,8 +10,9 @@ class AccessAreaControllerTest extends BaseTesting
 {
     /**
      * @dataProvider provideCases
+     *
      * @param string $url
-     * @param array $datas
+     * @param array  $datas
      */
     public function testArea(string $action, ?string $areaName = null, array $datas)
     {
@@ -31,13 +32,13 @@ class AccessAreaControllerTest extends BaseTesting
             case 'new':
                 $url = '/admin/area/new';
                 break;
-            case 'show' :
+            case 'show':
                 $url = '/admin/area/'.$area->getId();
                 break;
-            case 'edit' :
+            case 'edit':
                 $url = '/admin/area/'.$area->getId().'/edit';
                 break;
-            case 'delete' :
+            case 'delete':
                 $url = '/admin/area/'.$area->getId();
                 $method = 'DELETE';
                 break;

@@ -44,7 +44,7 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
     public function onPreSetData(FormEvent $event)
     {
         /**
-         * @var User $user
+         * @var User
          */
         $user = $this->security->getUser();
         if (!$user) {

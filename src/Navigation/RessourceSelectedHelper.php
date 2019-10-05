@@ -5,9 +5,9 @@ namespace App\Navigation;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
-use App\Setting\SettingsProvider;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
+use App\Setting\SettingsProvider;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Security;
 

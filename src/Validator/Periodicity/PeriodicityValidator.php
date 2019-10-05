@@ -9,8 +9,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 class PeriodicityValidator extends ConstraintValidator
 {
     /**
-     * @param \App\Entity\Periodicity $value
-     * @param \App\Validator\\Periodicity\Periodicity $constraint
+     * @param \App\Entity\Periodicity                $value
+     * @param \App\Validator\Periodicity\Periodicity $constraint
      */
     public function validate($value, Constraint $constraint)
     {
@@ -32,7 +32,7 @@ class PeriodicityValidator extends ConstraintValidator
         $entry = $value->getEntryReference();
         $entryEndTime = Carbon::instance($entry->getEndTime());
 
-        /**
+        /*
          * La date de fin de la periodicité doit être plus grande que la date de fin de la réservation
          */
         if ($endPeriodicity->format('Y-m-d') <= $entryEndTime->format('Y-m-d')) {

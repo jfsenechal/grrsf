@@ -107,7 +107,6 @@ class GrrAuthenticator extends AbstractFormLoginAuthenticator
                 }
             }
         } catch (\Exception $exception) {
-
         }
 
         return false;

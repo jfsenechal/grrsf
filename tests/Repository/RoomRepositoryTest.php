@@ -4,8 +4,8 @@ namespace App\Tests\Repository;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use Doctrine\ORM\QueryBuilder;
 use App\Tests\BaseTesting;
+use Doctrine\ORM\QueryBuilder;
 
 class RoomRepositoryTest extends BaseTesting
 {

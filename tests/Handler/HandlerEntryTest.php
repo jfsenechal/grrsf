@@ -15,8 +15,7 @@ use App\Tests\BaseTesting;
 
 /**
  * todo test  handler
- * Class HandlerEntryTest
- * @package App\Tests\Handler
+ * Class HandlerEntryTest.
  */
 class HandlerEntryTest extends BaseTesting
 {

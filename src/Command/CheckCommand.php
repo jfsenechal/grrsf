@@ -5,9 +5,6 @@ namespace App\Command;
 use App\Checker\MigrationChecker;
 use App\Migration\MigrationUtil;
 use App\Repository\EntryRepository;
-use App\Repository\RoomRepository;
-use App\Repository\Security\AuthorizationRepository;
-use App\Repository\Security\UserRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -72,9 +69,9 @@ class CheckCommand extends Command
         if (count($authorizations) > 0) {
             $io->warning('Ces authorizations sont en double');
             foreach ($authorizations as $authorization) {
-                $user = $authorization['user'] != null ? $authorization['user']->getEmail() : '';
-                $area = $authorization['area'] != null ? $authorization['area']->getName() : '';
-                $room = $authorization['room'] != null ? $authorization['room']->getName() : '';
+                $user = null != $authorization['user'] ? $authorization['user']->getEmail() : '';
+                $area = null != $authorization['area'] ? $authorization['area']->getName() : '';
+                $room = null != $authorization['room'] ? $authorization['room']->getName() : '';
 
                 $io->note($user.' ==> '.$area.' ==> '.$room." \n ");
             }
@@ -82,7 +79,7 @@ class CheckCommand extends Command
             $delete = $helper->ask($input, $output, $questionDelete);
             if ($delete) {
                 $this->migrationChecker->deleteDoublon();
-                $io->success("Doublons supprimés");
+                $io->success('Doublons supprimés');
             }
         }
 
@@ -99,12 +96,11 @@ class CheckCommand extends Command
         $periodicities = unserialize($fileHandler, false);
 
         foreach ($entries as $data) {
-
             $name = $data['name'];
             $startTime = $this->migrationUtil->converToDateTime($data['start_time']);
             $endTime = $this->migrationUtil->converToDateTime($data['end_time']);
             $room = $this->migrationUtil->transformToRoom($rooms, $data['room_id']);
-            $repeatId = (int)$data['repeat_id'];
+            $repeatId = (int) $data['repeat_id'];
 
             $args = ['start_time' => $startTime, 'end_time' => $endTime, 'name' => $name, 'room' => $room];
 
@@ -120,12 +116,8 @@ class CheckCommand extends Command
             if (!$entry) {
                 $io->error($data['name'].' '.$startTime->format('d-m-Y'));
             } else {
-               // $io->success($entry->getName().' ==> '.$name);
+                // $io->success($entry->getName().' ==> '.$name);
             }
-
         }
-
     }
-
-
 }

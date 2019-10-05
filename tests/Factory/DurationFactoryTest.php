@@ -86,7 +86,7 @@ class DurationFactoryTest extends BaseTesting
      *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float $result
+     * @param float              $result
      */
     public function testUnitInMinutes(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -102,7 +102,7 @@ class DurationFactoryTest extends BaseTesting
      *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float $result
+     * @param float              $result
      */
     public function testUnitInHours(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -118,7 +118,7 @@ class DurationFactoryTest extends BaseTesting
      *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float $result
+     * @param float              $result
      */
     public function testUnitInDays(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {
@@ -134,7 +134,7 @@ class DurationFactoryTest extends BaseTesting
      *
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @param float $result
+     * @param float              $result
      */
     public function testUnitInWeeks(\DateTimeInterface $start, \DateTimeInterface $end, $result)
     {

@@ -14,7 +14,7 @@ class DurationValidator extends ConstraintValidator
 {
     /**
      * @param DurationModel $value
-     * @param Constraint $constraint
+     * @param Constraint    $constraint
      *
      * @throws \Exception
      */
@@ -26,7 +26,7 @@ class DurationValidator extends ConstraintValidator
 
         $unit = $value->getUnit();
         $time = $value->getTime();
-        $whole = (int)($time);
+        $whole = (int) ($time);
         $fraction = $time - $whole;
 
         if (DurationModel::UNIT_TIME_HOURS !== $unit) {

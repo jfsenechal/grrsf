@@ -1,15 +1,14 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 6/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Migration;
-
 
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -47,7 +46,6 @@ class RequestData
 
     /**
      * @return \Symfony\Contracts\HttpClient\ResponseInterface
-     *
      */
     public function getEntries(array $params = [])
     {
@@ -86,7 +84,7 @@ class RequestData
 
     public function download(string $url, array $params = [])
     {
-        $jsonfile = str_replace("php", 'json', $url);
+        $jsonfile = str_replace('php', 'json', $url);
 
         if (is_readable(MigrationUtil::FOLDER_CACHE.$jsonfile)) {
             return;
@@ -113,9 +111,9 @@ class RequestData
         fclose($fileHandler);
     }
 
-
     /**
      * @param string $file
+     *
      * @return false|string|\Symfony\Contracts\HttpClient\ResponseInterface
      */
     private function request(string $file, array $params = [])
@@ -145,7 +143,5 @@ class RequestData
         } catch (TransportExceptionInterface $e) {
             return json_encode(['error' => $e->getMessage()]);
         }
-
     }
-
 }

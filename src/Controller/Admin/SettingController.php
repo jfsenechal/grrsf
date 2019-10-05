@@ -87,7 +87,6 @@ class SettingController extends AbstractController
         return $this->render(
             '@grr_admin/setting/edit.html.twig',
             [
-
                 'form' => $form->createView(),
             ]
         );

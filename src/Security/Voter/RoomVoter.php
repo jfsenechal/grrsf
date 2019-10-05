@@ -4,15 +4,12 @@ namespace App\Security\Voter;
 
 use App\Entity\Room;
 use App\Entity\Security\User;
-use App\Security\SecurityRole;
 use App\Security\SecurityHelper;
+use App\Security\SecurityRole;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-/**
- *
- */
 class RoomVoter extends Voter
 {
     const INDEX = 'grr.room.index';
@@ -84,7 +81,7 @@ class RoomVoter extends Voter
             return true;
         }
 
-        /**
+        /*
          * not work with test
          */
         if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {
@@ -108,7 +105,8 @@ class RoomVoter extends Voter
     }
 
     /**
-     * No rule
+     * No rule.
+     *
      * @return bool
      */
     private function canIndex(): bool

@@ -44,9 +44,11 @@ class AuthorizationAreaController extends AbstractController
 
     /**
      * @Route("/new/area/{id}", name="grr_authorization_from_area", methods={"GET", "POST"})
-     * @param Request $request
+     *
+     * @param Request   $request
      * @param Area|null $area
      * @IsGranted("grr.area.edit", subject="area")
+     *
      * @return Response
      */
     public function new(Request $request, Area $area = null): Response
@@ -62,7 +64,6 @@ class AuthorizationAreaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->handlerAuthorization->handle($form);
 
             if ($area) {
@@ -97,6 +98,4 @@ class AuthorizationAreaController extends AbstractController
             ]
         );
     }
-
-
 }

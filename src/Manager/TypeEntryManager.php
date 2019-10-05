@@ -10,5 +10,4 @@ namespace App\Manager;
 
 class TypeEntryManager extends BaseManager
 {
-
 }

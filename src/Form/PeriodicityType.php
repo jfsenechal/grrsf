@@ -36,7 +36,7 @@ class PeriodicityType extends AbstractType
                     'multiple' => false,
                     'expanded' => true,
                     'required' => false,
-                    'placeholder'=>false
+                    'placeholder' => false,
                 ]
             )
             ->add(

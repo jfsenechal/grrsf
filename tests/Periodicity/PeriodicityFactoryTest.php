@@ -2,9 +2,9 @@
 
 namespace App\Tests\Periodicity;
 
+use App\Area\AreaFactory;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
-use App\Area\AreaFactory;
 use App\Entry\EntryFactory;
 use App\Periodicity\PeriodicityFactory;
 use App\Room\RoomFactory;
@@ -47,6 +47,7 @@ class PeriodicityFactoryTest extends BaseTesting
      * @param int $day
      * @param int $hour
      * @param int $minute
+     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */

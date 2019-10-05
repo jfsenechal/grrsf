@@ -4,8 +4,8 @@ namespace App\Security;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use App\Entity\Security\User;
 use App\Entity\Security\Authorization;
+use App\Entity\Security\User;
 use App\Manager\AuthorizationManager;
 use App\Model\AuthorizationModel;
 use App\Repository\Security\AuthorizationRepository;
@@ -72,21 +72,20 @@ class HandlerAuthorization
         $rooms = $data->getRooms();
 
         /**
-         * @var int $role
+         * @var int
          */
         $role = $data->getRole();
 
         $this->error = false;
 
         foreach ($users as $user) {
-
             $authorization = new Authorization();
             $authorization->setUser($user);
 
-            if ($role === 1) {
+            if (1 === $role) {
                 $authorization->setIsAreaAdministrator(true);
             }
-            if ($role === 2) {
+            if (2 === $role) {
                 $authorization->setIsResourceAdministrator(true);
             }
 
@@ -124,8 +123,7 @@ class HandlerAuthorization
             return;
         }
         foreach ($rooms as $room) {
-
-            $copy = clone($authorization);
+            $copy = clone $authorization;
             if ($this->existRoom($user, $room)) {
                 $this->error = true;
                 $this->flashBag->add(
@@ -172,5 +170,4 @@ class HandlerAuthorization
 
         return $count > 0;
     }
-
 }

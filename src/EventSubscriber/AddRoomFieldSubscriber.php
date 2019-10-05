@@ -88,5 +88,4 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
             $default
         );
     }
-
 }

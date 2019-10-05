@@ -2,11 +2,10 @@
 
 namespace App\Tests\Factory;
 
-use App\Entity\Room;
 use App\Area\AreaFactory;
+use App\Entity\Room;
 use App\Room\RoomFactory;
 use App\Tests\BaseTesting;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RoomFactoryTest extends BaseTesting
 {

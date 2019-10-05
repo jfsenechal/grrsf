@@ -10,18 +10,20 @@ class AccessEntryControllerTest extends BaseTesting
 {
     /**
      * @dataProvider provideCases
+     *
      * @param string $action
      * @param string $entryName
-     * @param array $datas
+     * @param array  $datas
+     *
      * @throws \Exception
      */
     public function testArea(string $action, string $entryName, array $datas)
     {
         $this->loadFixtures();
         $token = null;
-            $entry = $this->getEntry($entryName);
-            $tokenManager = new CsrfTokenManager();
-            $token = $tokenManager->getToken('delete'.$entry->getId())->getValue();
+        $entry = $this->getEntry($entryName);
+        $tokenManager = new CsrfTokenManager();
+        $token = $tokenManager->getToken('delete'.$entry->getId())->getValue();
 
         $method = 'GET';
         switch ($action) {
@@ -33,13 +35,13 @@ class AccessEntryControllerTest extends BaseTesting
                         'Y'
                     ).'/month/'.$today->format('m').'/day/'.$today->format('d').'/hour/9/minute/30';
                 break;
-            case 'show' :
+            case 'show':
                 $url = '/front/entry/'.$entry->getId();
                 break;
-            case 'edit' :
+            case 'edit':
                 $url = '/front/entry/'.$entry->getId().'/edit';
                 break;
-            case 'delete' :
+            case 'delete':
                 $url = '/front/entry/'.$entry->getId();
                 $method = 'DELETE';
                 break;
@@ -186,7 +188,6 @@ class AccessEntryControllerTest extends BaseTesting
                 ],
             ],
         ];
-
     }
 
     protected function loadFixtures()

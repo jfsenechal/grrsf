@@ -1,23 +1,22 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 8/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Migration;
-
 
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\EntryType;
 use App\Entity\Periodicity;
 use App\Entity\Room;
-use App\Entity\Security\User;
 use App\Entity\Security\Authorization;
+use App\Entity\Security\User;
 use App\Periodicity\PeriodicityConstant;
 
 class MigrationFactory
@@ -116,7 +115,7 @@ class MigrationFactory
         $periodicity->setWeekRepeat($data['rep_num_weeks']);
         $periodicity->setType($data['rep_type']);
         $periodicity->setEndTime($this->migrationUtil->converToDateTime($data['end_date']));
-        if ((int)$data['rep_type'] === PeriodicityConstant::EVERY_WEEK) {
+        if (PeriodicityConstant::EVERY_WEEK === (int) $data['rep_type']) {
             $periodicity->setWeekDays($this->migrationUtil->transformRepOpt($data['id'], $data['rep_opt']));
         }
 
@@ -157,5 +156,4 @@ class MigrationFactory
     {
         return new Authorization();
     }
-
 }

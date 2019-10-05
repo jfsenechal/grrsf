@@ -10,10 +10,11 @@ class AccessRoomControllerTest extends BaseTesting
 {
     /**
      * @dataProvider provideCases
+     *
      * @param string $url
-     * @param array $datas
+     * @param array  $datas
      */
-    public function testArea(string $action, string $roomName , array $datas)
+    public function testArea(string $action, string $roomName, array $datas)
     {
         $this->loadFixtures();
         $room = $token = null;
@@ -25,17 +26,17 @@ class AccessRoomControllerTest extends BaseTesting
 
         $method = 'GET';
         switch ($action) {
-            case 'new' :
+            case 'new':
                 $area = $this->getArea('Esquare');
                 $url = '/admin/room/new/'.$area->getId();
                 break;
-            case 'show' :
+            case 'show':
                 $url = '/admin/room/'.$room->getId();
                 break;
-            case 'edit' :
+            case 'edit':
                 $url = '/admin/room/'.$room->getId().'/edit';
                 break;
-            case 'delete' :
+            case 'delete':
                 $url = '/admin/room/'.$room->getId();
                 $method = 'DELETE';
                 break;
@@ -182,7 +183,6 @@ class AccessRoomControllerTest extends BaseTesting
                 ],
             ],
         ];
-
     }
 
     protected function loadFixtures()

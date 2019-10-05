@@ -19,13 +19,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="entry")
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
- * @AppAssertEntry\BusyRoom()
- * @AppAssertEntry\AreaTimeSlot()
- * @ApiResource()
+ * @AppAssertEntry\BusyRoom
+ * @AppAssertEntry\AreaTimeSlot
+ * @ApiResource
  */
 class Entry
 {
-    use IdEntityTrait, NameEntityTrait, TimestampableEntityTrait;
+    use IdEntityTrait;
+    use NameEntityTrait;
+    use TimestampableEntityTrait;
 
     /**
      * @var \DateTimeInterface
@@ -438,6 +440,4 @@ class Entry
 
         return $this;
     }
-
-
 }

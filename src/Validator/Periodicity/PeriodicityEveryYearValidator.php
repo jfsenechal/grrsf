@@ -11,7 +11,7 @@ class PeriodicityEveryYearValidator extends ConstraintValidator
 {
     /**
      * @param \App\Entity\Periodicity $value
-     * @param PeriodicityEveryWeek $constraint
+     * @param PeriodicityEveryWeek    $constraint
      */
     public function validate($value, Constraint $constraint)
     {
@@ -23,7 +23,7 @@ class PeriodicityEveryYearValidator extends ConstraintValidator
             throw new \UnexpectedValueException($value, 'Periodicity');
         }
 
-        if ($value->getType() !== PeriodicityConstant::EVERY_YEAR) {
+        if (PeriodicityConstant::EVERY_YEAR !== $value->getType()) {
             return;
         }
 
@@ -31,7 +31,7 @@ class PeriodicityEveryYearValidator extends ConstraintValidator
         $entry = $value->getEntryReference();
         $entryEndTime = Carbon::instance($entry->getEndTime());
 
-        /**
+        /*
          * En répétition par année, il y doit y avoir au moins un an de différence entre la fin de la périodicité
          * et la fin de la réservation
          */

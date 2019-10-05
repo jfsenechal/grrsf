@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="setting")
  * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
- * @ApiResource()
+ * @ApiResource
  */
 class Setting
 {

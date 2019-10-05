@@ -35,13 +35,13 @@ class GrrAdminExtension extends AbstractExtension
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
             new TwigFilter(
                 'grrJoursSemaine', function ($value) {
-                return $this->joursSemaine($value);
-            }
+                    return $this->joursSemaine($value);
+                }
             ),
             new TwigFilter(
                 'grrDisplayColor', function (string $value) {
-                return $this->displayColor($value);
-            }, ['is_safe' => ['html']]
+                    return $this->displayColor($value);
+                }, ['is_safe' => ['html']]
             ),
         ];
     }

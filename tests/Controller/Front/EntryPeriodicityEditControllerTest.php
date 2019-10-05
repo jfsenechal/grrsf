@@ -1,15 +1,14 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 23/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Controller\Front;
-
 
 use App\Periodicity\PeriodicityConstant;
 use App\Router\FrontRouterHelper;
@@ -196,7 +195,8 @@ class EntryPeriodicityEditControllerTest extends BaseTesting
     }
 
     /**
-     * va pas
+     * va pas.
+     *
      * @return FrontRouterHelper
      */
     protected function initFrontRouterHelper()
@@ -204,7 +204,7 @@ class EntryPeriodicityEditControllerTest extends BaseTesting
         $router = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['generate', 'supports', 'exists'])
-            ->getMockForAbstractClass();;
+            ->getMockForAbstractClass();
 
         return new FrontRouterHelper($router);
     }

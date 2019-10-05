@@ -5,7 +5,6 @@ namespace App\Tests\Controller\Front;
 use App\Model\DurationModel;
 use App\Periodicity\PeriodicityConstant;
 use App\Tests\BaseTesting;
-use Carbon\Carbon;
 use Carbon\CarbonInterface;
 
 class EntryPeriodicityWeeksControllerTest extends BaseTesting
@@ -233,7 +232,6 @@ class EntryPeriodicityWeeksControllerTest extends BaseTesting
             $this->administrator->getResponse()->getContent()
         );
     }
-
 
     protected function loadFixtures()
     {

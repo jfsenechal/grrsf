@@ -6,7 +6,6 @@ use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
 use App\Entity\Room;
-use App\Model\Month;
 use Carbon\CarbonInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -27,8 +26,8 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param \DateTimeInterface $date
-     * @param Area|null $area
-     * @param Room|null $room
+     * @param Area|null          $area
+     * @param Room|null          $room
      *
      * @return Entry[] Returns an array of Entry objects
      */
@@ -59,7 +58,7 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param CarbonInterface $day
-     * @param Room $room
+     * @param Room            $room
      *
      * @return Entry[]
      */
@@ -81,7 +80,7 @@ class EntryRepository extends ServiceEntityRepository
 
     /**
      * @param Entry $entry
-     * @param Room $room
+     * @param Room  $room
      *
      * @return Entry[]
      */
@@ -197,7 +196,8 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Ajouter pour sqlLite
+     * Ajouter pour sqlLite.
+     *
      * @param Area $area
      *
      * @return Room[]|iterable
@@ -210,9 +210,12 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retourne l'entry de base de la repetition
+     * Retourne l'entry de base de la repetition.
+     *
      * @param Periodicity $periodicity
+     *
      * @return mixed
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getBaseEntryForPeriodicity(Periodicity $periodicity)
@@ -226,7 +229,6 @@ class EntryRepository extends ServiceEntityRepository
         return $qb->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-
     }
 
     public function findPeriodicityEntry(Entry $entry): ?Entry
@@ -250,5 +252,4 @@ class EntryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
 }

@@ -2,19 +2,19 @@
 
 namespace App\Command;
 
-use App\Entity\Area;
 use App\Area\AreaFactory;
-use App\Room\RoomFactory;
-use App\Setting\SettingFactory;
-use App\TypeEntry\TypeEntryFactory;
-use App\Security\UserFactory;
+use App\Entity\Area;
 use App\Repository\AreaRepository;
 use App\Repository\EntryTypeRepository;
 use App\Repository\RoomRepository;
 use App\Repository\Security\UserRepository;
 use App\Repository\SettingRepository;
+use App\Room\RoomFactory;
 use App\Security\SecurityRole;
+use App\Security\UserFactory;
 use App\Setting\SettingConstants;
+use App\Setting\SettingFactory;
+use App\TypeEntry\TypeEntryFactory;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -150,7 +150,7 @@ class InstallDataCommand extends Command
             'F' => 'Non disponible',
         ];
 
-        $colors = ["#FFCCFF", "#99CCCC", "#FF9999", "#FFFF99", "#C0E0FF", "#FFCC99", "#FF6666", "#66FFFF", "#DDFFDD"];
+        $colors = ['#FFCCFF', '#99CCCC', '#FF9999', '#FFFF99', '#C0E0FF', '#FFCC99', '#FF6666', '#66FFFF', '#DDFFDD'];
 
         foreach ($types as $index => $nom) {
             if ($this->entryTypeRepository->findOneBy(['name' => $nom])) {
@@ -227,7 +227,7 @@ class InstallDataCommand extends Command
             return;
         }
 
-        $password = 'homer';//todo remove
+        $password = 'homer'; //todo remove
         $roleGrrAdministrator = SecurityRole::ROLE_GRR_ADMINISTRATOR;
 
         $user = $this->userFactory->createNew();

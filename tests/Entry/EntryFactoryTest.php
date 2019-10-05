@@ -2,13 +2,13 @@
 
 namespace App\Tests\Entry;
 
+use App\Area\AreaFactory;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
 use App\Entry\EntryFactory;
-use App\Area\AreaFactory;
-use App\Room\RoomFactory;
 use App\Periodicity\PeriodicityFactory;
+use App\Room\RoomFactory;
 use App\Tests\BaseTesting;
 use Carbon\Carbon;
 
@@ -47,11 +47,11 @@ class EntryFactoryTest extends BaseTesting
      *
      * @param Area $area
      * @param Room $room
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @param int $hour
-     * @param int $minute
+     * @param int  $year
+     * @param int  $month
+     * @param int  $day
+     * @param int  $hour
+     * @param int  $minute
      */
     public function testInitEntryForNew(
         int $year,

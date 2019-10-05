@@ -125,7 +125,4 @@ class Authorization
 
         return $this;
     }
-
-  
-
 }

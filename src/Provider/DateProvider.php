@@ -22,7 +22,7 @@ class DateProvider
         $days = [];
         $translator = \Carbon\Translator::get(
             LocalHelper::getDefaultLocal()
-        );//LocalHelper::getDefaultLocal() return 'fr'
+        ); //LocalHelper::getDefaultLocal() return 'fr'
 
         foreach (Carbon::getDays() as $day) {
             $days[] = $translator->trans($day);

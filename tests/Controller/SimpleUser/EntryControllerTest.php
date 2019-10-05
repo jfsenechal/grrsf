@@ -2,10 +2,7 @@
 
 namespace App\Tests\Controller\SimpleUser;
 
-use App\Model\DurationModel;
 use App\Tests\BaseTesting;
-use Carbon\Carbon;
-use Symfony\Component\DomCrawler\Link;
 
 class EntryControllerTest extends BaseTesting
 {
@@ -98,14 +95,13 @@ class EntryControllerTest extends BaseTesting
 
         $crawler = $this->bob->clickLink('Réunion cst');
         $optionApe = $crawler->filter('div.card-body > a');
-        $links = $optionApe->links();//retour à la liste et modifier
+        $links = $optionApe->links(); //retour à la liste et modifier
         $this->assertCount(3, $links);
         $this->assertContains('Modifier', $links[1]->getNode()->textContent);
         $this->assertContains('Supprimer', $links[2]->getNode()->textContent);
     }
 
-    protected
-    function loadFixtures()
+    protected function loadFixtures()
     {
         $files =
             [

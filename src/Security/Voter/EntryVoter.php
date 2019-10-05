@@ -10,9 +10,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-/**
- *
- */
 class EntryVoter extends Voter
 {
     const INDEX = 'grr.entry.index';
@@ -85,7 +82,7 @@ class EntryVoter extends Voter
             return true;
         }
 
-        /**
+        /*
          * not work with test
          */
         if ($this->decisionManager->decide($token, [SecurityRole::ROLE_GRR_ADMINISTRATOR])) {

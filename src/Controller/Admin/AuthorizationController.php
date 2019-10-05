@@ -67,7 +67,6 @@ class AuthorizationController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('delete'.$authorization->getId(), $token)) {
-
             $this->authorizationManager->remove($authorization);
             $this->authorizationManager->flush();
 
@@ -98,5 +97,4 @@ class AuthorizationController extends AbstractController
             ]
         );
     }
-
 }

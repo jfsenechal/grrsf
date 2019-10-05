@@ -1,15 +1,14 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 26/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Security;
-
 
 use App\Entity\Area;
 use App\Entity\Room;
@@ -53,7 +52,9 @@ class AuthorizationHelper
 
     /**
      * @param User $user
+     *
      * @return Area[]
+     *
      * @throws \Exception
      */
     public function getAreasUserCanAdd(User $user)
@@ -81,7 +82,9 @@ class AuthorizationHelper
 
     /**
      * @param UserInterface $user
+     *
      * @return Room[]
+     *
      * @throws \Exception
      */
     public function getRoomsUserCanAdd(User $user, ?Area $area = null)

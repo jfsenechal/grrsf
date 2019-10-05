@@ -16,11 +16,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="area")
  * @ORM\Entity(repositoryClass="App\Repository\AreaRepository")
- * @ApiResource()
+ * @ApiResource
  */
 class Area
 {
-    use IdEntityTrait, NameEntityTrait;
+    use IdEntityTrait;
+    use NameEntityTrait;
 
     /**
      * @var int

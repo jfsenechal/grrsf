@@ -24,7 +24,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
-    use IdEntityTrait, TimestampableEntityTrait, NameEntityTrait;
+    use IdEntityTrait;
+    use TimestampableEntityTrait;
+    use NameEntityTrait;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -277,5 +279,4 @@ class User implements UserInterface
 
         return $this;
     }
-
 }

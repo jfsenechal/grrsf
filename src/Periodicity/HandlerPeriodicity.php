@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 18/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Periodicity;
@@ -65,11 +65,10 @@ class HandlerPeriodicity
         }
     }
 
-
     /**
      * @param Entry $oldEntry
      * @param Entry $entry
-     * @return null
+     *
      * @throws \Exception
      */
     public function handleEditPeriodicity(Entry $oldEntry, Entry $entry)
@@ -81,10 +80,10 @@ class HandlerPeriodicity
 
         $type = $periodicity->getType();
 
-        /**
+        /*
          * Si la périodicité mise sur 'aucune'
          */
-        if ($type === 0 || $type === null) {
+        if (0 === $type || null === $type) {
             $entry->setPeriodicity(null);
             $this->entryManager->removeEntriesByPeriodicity($periodicity, $entry);
             $this->periodicityManager->remove($periodicity);
@@ -93,7 +92,7 @@ class HandlerPeriodicity
             return null;
         }
 
-        /**
+        /*
          * ici on supprime les entries de la periodicité mais on garde l'entry de base
          * et on reinjecte les nouvelles entries
          */
@@ -122,7 +121,7 @@ class HandlerPeriodicity
         $oldPeriodicity = $oldEntry->getPeriodicity();
         $periodicity = $entry->getPeriodicity();
 
-        if ($oldPeriodicity === null || $periodicity === null) {
+        if (null === $oldPeriodicity || null === $periodicity) {
             return true;
         }
 
@@ -141,5 +140,4 @@ class HandlerPeriodicity
 
         return false;
     }
-
 }

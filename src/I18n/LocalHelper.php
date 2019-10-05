@@ -25,24 +25,24 @@ class LocalHelper
     public function __construct(ParameterBagInterface $parameterBag, Security $security, RequestStack $requestStack)
     {
         /**
-         * @var User $user
+         * @var User
          */
         $user = $security->getUser();
         $this->parameterBag = $parameterBag;
         $this->requestStack = $requestStack;
 
-        /**
+        /*
          * Parameter from config symfony framework.yaml
          * */
         self::$defaultLocale = $this->parameterBag->get('locale');
         /**
-         * Navigator
+         * Navigator.
          */
         $master = $this->requestStack->getMasterRequest();
         if ($master) {
             self::$defaultLocale = $master->getLocale();
         }
-        /**
+        /*
          * user preference
          */
         if ($user) {

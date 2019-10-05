@@ -11,7 +11,7 @@ class PeriodicityEveryMonthValidator extends ConstraintValidator
 {
     /**
      * @param \App\Entity\Periodicity $value
-     * @param PeriodicityEveryWeek $constraint
+     * @param PeriodicityEveryWeek    $constraint
      */
     public function validate($value, Constraint $constraint)
     {
@@ -25,7 +25,7 @@ class PeriodicityEveryMonthValidator extends ConstraintValidator
 
         $typePeriodicity = $value->getType();
 
-        if ($typePeriodicity !== PeriodicityConstant::EVERY_MONTH_SAME_DAY && $typePeriodicity !== PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY) {
+        if (PeriodicityConstant::EVERY_MONTH_SAME_DAY !== $typePeriodicity && PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY !== $typePeriodicity) {
             return;
         }
 
@@ -33,7 +33,7 @@ class PeriodicityEveryMonthValidator extends ConstraintValidator
         $entry = $value->getEntryReference();
         $entryEndTime = Carbon::instance($entry->getEndTime());
 
-        /**
+        /*
          * En répétition par mois, il y doit y avoir au moins un mois de différence entre la fin de la périodicité
          * et la fin de la réservation
          */

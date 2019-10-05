@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/type/area")
- *
  */
 class EntryTypeAreaController extends AbstractController
 {
@@ -45,7 +44,6 @@ class EntryTypeAreaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->areaManager->flush();
 
             $areaEvent = new EntryTypeAreaEvent($area);

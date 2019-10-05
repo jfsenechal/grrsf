@@ -4,8 +4,8 @@ namespace App\Repository\Security;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use App\Entity\Security\User;
 use App\Entity\Security\Authorization;
+use App\Entity\Security\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -24,9 +24,12 @@ class AuthorizationRepository extends ServiceEntityRepository
     }
 
     /**
-     * Pour montrer les droits par area
+     * Pour montrer les droits par area.
+     *
      * @param Area $area
+     *
      * @return Authorization[]
+     *
      * @throws \Exception
      */
     public function findByArea(Area $area)
@@ -35,9 +38,12 @@ class AuthorizationRepository extends ServiceEntityRepository
     }
 
     /**
-     * Pour montrer les droits par user
+     * Pour montrer les droits par user.
+     *
      * @param User $user
+     *
      * @return Authorization[]
+     *
      * @throws \Exception
      */
     public function findByUser(User $user)
@@ -46,9 +52,12 @@ class AuthorizationRepository extends ServiceEntityRepository
     }
 
     /**
-     * getRoomsUserCanAdd
+     * getRoomsUserCanAdd.
+     *
      * @param User $user
+     *
      * @return Authorization[]
+     *
      * @throws \Exception
      */
     public function findByUserAndArea(?User $user, ?Area $area)
@@ -93,8 +102,10 @@ class AuthorizationRepository extends ServiceEntityRepository
     }
 
     /**
-     * Pour montrer les droits par room
+     * Pour montrer les droits par room.
+     *
      * @param Room $room
+     *
      * @return Authorization[]
      */
     public function findByRoom(Room $room)
@@ -112,8 +123,10 @@ class AuthorizationRepository extends ServiceEntityRepository
     }
 
     /**
-     * Utilise dans migration checker
+     * Utilise dans migration checker.
+     *
      * @param User $user
+     *
      * @return Authorization[]
      */
     public function findByUserAndAreaNotNull(User $user, bool $isAreaAdministrator)
@@ -136,10 +149,13 @@ class AuthorizationRepository extends ServiceEntityRepository
     }
 
     /**
-     * Utilise dans migration checker
+     * Utilise dans migration checker.
+     *
      * @param User $user
      * @param Room $room
+     *
      * @return Authorization
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findOneByUserAndRoom(User $user, Room $room)
@@ -155,6 +171,4 @@ class AuthorizationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-
 }

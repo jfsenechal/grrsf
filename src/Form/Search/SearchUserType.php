@@ -18,7 +18,7 @@ class SearchUserType extends AbstractType
                 [
                     'required' => true,
                     'label' => 'user.form.search.name.label',
-                    'help'=>'user.form.search.name.placeholder',
+                    'help' => 'user.form.search.name.placeholder',
                     'attr' => ['placeholder' => 'user.form.search.name.placeholder', 'class' => 'm2y-1 hmr-smh-2'],
                 ]
             );

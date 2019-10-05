@@ -1,20 +1,19 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 6/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Security\Voter;
 
-use App\Entity\Security\User;
 use App\Entity\Security\Authorization;
+use App\Entity\Security\User;
 use App\Security\SecurityHelper;
 use App\Security\Voter\AreaVoter;
-use App\Security\Voter\RoomVoter;
 use App\Tests\BaseTesting;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -241,6 +240,4 @@ class AreaVoterTest extends BaseTesting
 
         $this->loader->load($files);
     }
-
-
 }

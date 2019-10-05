@@ -24,7 +24,6 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
  * @see  LdapBindAuthenticationProvider
  *
  * Class LdapAuthenticator
- * @package App\Security
  */
 class LdapAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -111,7 +110,6 @@ class LdapAuthenticator extends AbstractFormLoginAuthenticator
                 }
             }
         } catch (\Exception $exception) {
-
         }
     }
 
@@ -129,5 +127,3 @@ class LdapAuthenticator extends AbstractFormLoginAuthenticator
         return $this->urlGenerator->generate('app_login');
     }
 }
-
-

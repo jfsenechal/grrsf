@@ -9,13 +9,14 @@ use Carbon\CarbonInterface;
 class GeneratorEntry
 {
     /**
-     * @param Entry $entry
+     * @param Entry           $entry
      * @param CarbonInterface $day
+     *
      * @return Entry
      */
     public function generateEntry(Entry $entry, CarbonInterface $day)
     {
-        $newEntry = clone($entry);
+        $newEntry = clone $entry;
 
         $startTime = Carbon::instance($entry->getStartTime());
         $startTime->setYear($day->year);

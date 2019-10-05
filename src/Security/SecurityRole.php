@@ -6,11 +6,11 @@ class SecurityRole
 {
     /**
      * Role minimal pour être authentifié.
-     * Simple visiteur
+     * Simple visiteur.
      */
     const ROLE_GRR = 'ROLE_GRR';
     /**
-     * Role utilisateur actif
+     * Role utilisateur actif.
      */
     const ROLE_GRR_ACTIVE_USER = 'ROLE_GRR_ACTIVE_USER';
     /**
@@ -35,7 +35,8 @@ class SecurityRole
     }
 
     /**
-     * Utilisé pour le formulaire d'authorization
+     * Utilisé pour le formulaire d'authorization.
+     *
      * @return array
      */
     public static function getRolesForAuthorization()

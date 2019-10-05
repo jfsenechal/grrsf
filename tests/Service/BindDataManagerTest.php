@@ -61,7 +61,6 @@ class BindDataManagerTest extends BaseTesting
 
         self::assertCount(31, $monthModel->getDataDays());
         foreach ($monthModel->getDataDays() as $dataDay) {
-
             self::assertCount(ResultBind::getCountEntriesFoMonthWithOutRoom($dataDay->day), $dataDay->getEntries());
             foreach ($dataDay->getEntries() as $entry) {
                 self::assertContains($entry->getName(), ResultBind::resultNamesMonthWithOutRoom());

@@ -23,8 +23,8 @@ class SettingRepository extends ServiceEntityRepository
 
     /**
      * @param string $name
-     * @return string|null
      *
+     * @return string|null
      */
     public function getValueByName(string $name): ?string
     {
@@ -37,9 +37,7 @@ class SettingRepository extends ServiceEntityRepository
             if ($setting) {
                 return $setting->getValue();
             }
-
         } catch (NonUniqueResultException $e) {
-
         }
 
         return null;
@@ -61,16 +59,16 @@ class SettingRepository extends ServiceEntityRepository
             $data[$setting->getName()] = $value;
         }
 
-        /**
+        /*
          * Pour bug js form edit
          */
-        if (!isset($data[SettingConstants::WEBMASTER_EMAIL]) || count($data[SettingConstants::WEBMASTER_EMAIL]) === 0) {
+        if (!isset($data[SettingConstants::WEBMASTER_EMAIL]) || 0 === count($data[SettingConstants::WEBMASTER_EMAIL])) {
             $data[SettingConstants::WEBMASTER_EMAIL] = [''];
         }
 
-        if (!isset($data[SettingConstants::TECHNICAL_SUPPORT_EMAIL]) || count(
+        if (!isset($data[SettingConstants::TECHNICAL_SUPPORT_EMAIL]) || 0 === count(
                 $data[SettingConstants::TECHNICAL_SUPPORT_EMAIL]
-            ) === 0) {
+            )) {
             $data[SettingConstants::TECHNICAL_SUPPORT_EMAIL] = [''];
         }
 

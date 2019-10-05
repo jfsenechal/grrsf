@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 9/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Form\Type;
@@ -49,7 +49,7 @@ class RoleSelectType extends AbstractType
                     return $role->name;
                 },
                 'choice_value' => function ($role) {
-                    if ($role == null) {
+                    if (null == $role) {
                         return null;
                     }
 
@@ -61,7 +61,7 @@ class RoleSelectType extends AbstractType
                 'required' => false,
                 'multiple' => false,
                 'expanded' => true,
-                'attr' => ['class' => 'authorization_role']//for js
+                'attr' => ['class' => 'authorization_role'], //for js
             ]
         );
     }
@@ -71,10 +71,8 @@ class RoleSelectType extends AbstractType
         //j'essaie d'afficher la description
     }
 
-
     public function getParent()
     {
         return ChoiceType::class;
     }
-
 }

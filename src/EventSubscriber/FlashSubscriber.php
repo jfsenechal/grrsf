@@ -117,7 +117,7 @@ class FlashSubscriber implements EventSubscriberInterface
 
     public function onEditEntryTypeArea()
     {
-        $this->flashBag->add('success','entryType.area.flash');
+        $this->flashBag->add('success', 'entryType.area.flash');
     }
 
     public function onUserPassword(UserEvent $userEvent)
@@ -153,8 +153,7 @@ class FlashSubscriber implements EventSubscriberInterface
             AuthorizationEvent::DELETE_SUCCESS => 'onAuthorizationDelete',
 
             EntryTypeAreaEvent::class => 'onEditEntryTypeArea',
-            SettingSuccessEvent::class => 'onSettingSuccess'
+            SettingSuccessEvent::class => 'onSettingSuccess',
         ];
-
     }
 }

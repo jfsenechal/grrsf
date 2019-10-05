@@ -14,6 +14,5 @@ class SmsNotificationHandler implements MessageHandlerInterface
 {
     public function __invoke(SmsNotification $message)
     {
-
     }
 }

@@ -1,17 +1,17 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 6/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Tests\Security;
 
-use App\Entity\Security\User;
 use App\Entity\Security\Authorization;
+use App\Entity\Security\User;
 use App\Security\SecurityHelper;
 use App\Security\SecurityRole;
 use App\Tests\BaseTesting;
@@ -249,12 +249,12 @@ class SecurityHelperTest extends BaseTesting
         ];
     }
 
-
     /**
      * @dataProvider provideRoom
+     *
      * @param string $email
-     * @param bool $access1
-     * @param bool $access2
+     * @param bool   $access1
+     * @param bool   $access2
      */
     public function testAddEntryWithRule(string $name, array $users)
     {
@@ -267,12 +267,11 @@ class SecurityHelperTest extends BaseTesting
             $access = $data[1];
             self::assertSame($access, $securityHelper->canAddEntry($room, $user), $user->getEmail().' for '.$name);
         }
-
     }
 
     public function provideRoom()
     {
-        /**
+        /*
          * every body
          */
         yield [
@@ -309,7 +308,7 @@ class SecurityHelperTest extends BaseTesting
             ],
         ];
 
-        /**
+        /*
          * every connected
          */
         yield [
@@ -346,7 +345,7 @@ class SecurityHelperTest extends BaseTesting
             ],
         ];
 
-        /**
+        /*
          * every actif user
          */
         yield [
@@ -383,7 +382,7 @@ class SecurityHelperTest extends BaseTesting
             ],
         ];
 
-        /**
+        /*
          * every room administrator
          */
         yield [
@@ -420,7 +419,7 @@ class SecurityHelperTest extends BaseTesting
             ],
         ];
 
-        /**
+        /*
          * every room manager
          */
         yield [
@@ -457,7 +456,7 @@ class SecurityHelperTest extends BaseTesting
             ],
         ];
 
-        /**
+        /*
          * every area administator
          */
         yield [
@@ -494,7 +493,7 @@ class SecurityHelperTest extends BaseTesting
             ],
         ];
 
-        /**
+        /*
          * every area manager
          */
         yield [
@@ -531,7 +530,7 @@ class SecurityHelperTest extends BaseTesting
             ],
         ];
 
-        /**
+        /*
          * every GRR_ADMINISTRATOR
          */
         yield [
@@ -563,7 +562,6 @@ class SecurityHelperTest extends BaseTesting
                 ],
             ],
         ];
-
     }
 
     /**
@@ -626,5 +624,4 @@ class SecurityHelperTest extends BaseTesting
 
         $this->loader->load($files);
     }
-
 }

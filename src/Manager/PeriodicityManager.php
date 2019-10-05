@@ -8,10 +8,6 @@
 
 namespace App\Manager;
 
-use App\Entity\Periodicity;
-use App\Repository\PeriodicityRepository;
-
-class PeriodicityManager  extends BaseManager
+class PeriodicityManager extends BaseManager
 {
-
 }

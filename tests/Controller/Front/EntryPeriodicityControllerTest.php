@@ -172,7 +172,7 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $this->administrator->submit($form);
 
         $this->assertContains(
-            "La date de fin de la périodicité doit au moins dépasser d&#039;un mois par rapport à la de de fin de la réservation",
+            'La date de fin de la périodicité doit au moins dépasser d&#039;un mois par rapport à la de de fin de la réservation',
             $this->administrator->getResponse()->getContent()
         );
     }
@@ -332,7 +332,7 @@ class EntryPeriodicityControllerTest extends BaseTesting
         $this->administrator->submit($form);
 
         $this->assertContains(
-            "La date de fin de la périodicité doit au moins dépasser d&#039;un an par rapport à la de de fin de la réservation",
+            'La date de fin de la périodicité doit au moins dépasser d&#039;un an par rapport à la de de fin de la réservation',
             $this->administrator->getResponse()->getContent()
         );
     }

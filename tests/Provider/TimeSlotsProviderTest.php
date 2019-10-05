@@ -18,7 +18,6 @@ use App\I18n\LocalHelper;
 use App\Provider\TimeSlotsProvider;
 use App\Tests\BaseTesting;
 use Carbon\Carbon;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
@@ -117,7 +116,7 @@ class TimeSlotsProviderTest extends BaseTesting
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $requestStack = $this->createMock(RequestStack::class);
         $security = $this->createMock(Security::class);
-        $localHelper = new LocalHelper($parameterBag, $security,$requestStack);
+        $localHelper = new LocalHelper($parameterBag, $security, $requestStack);
         $carbonFactory = new CarbonFactory($localHelper);
 
         return new TimeSlotsProvider($carbonFactory);

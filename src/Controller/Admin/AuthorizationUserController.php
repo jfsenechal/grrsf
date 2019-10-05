@@ -51,10 +51,10 @@ class AuthorizationUserController extends AbstractController
     }
 
     /**
-     *
      * @Route("/new/user/{id}", name="grr_authorization_from_user", methods={"GET", "POST"})
+     *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
      *
      * @return Response
      */
@@ -68,7 +68,6 @@ class AuthorizationUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->handlerAuthorization->handle($form);
 
             return $this->redirectToRoute('grr_authorization_show_by_user', ['id' => $user->getId()]);
@@ -101,5 +100,4 @@ class AuthorizationUserController extends AbstractController
             ]
         );
     }
-
 }

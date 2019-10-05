@@ -58,8 +58,8 @@ class BindDataManager
      * Crée une instance Day et set les entrées.
      * Ajouts des ces days au model Month.
      *
-     * @param Month $monthModel
-     * @param Area $area
+     * @param Month     $monthModel
+     * @param Area      $area
      * @param Room|null $room
      */
     public function bindMonth(Month $monthModel, Area $area, Room $room = null)
@@ -114,9 +114,9 @@ class BindDataManager
      * et sa localisation.
      *
      * @param CarbonInterface $day
-     * @param Area $area
-     * @param TimeSlot[] $timeSlots
-     * @param Room|null $roomSelected
+     * @param Area            $area
+     * @param TimeSlot[]      $timeSlots
+     * @param Room|null       $roomSelected
      *
      * @return RoomModel[]
      */

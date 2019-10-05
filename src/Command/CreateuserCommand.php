@@ -2,11 +2,11 @@
 
 namespace App\Command;
 
-use App\Security\UserFactory;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
 use App\Security\PasswordHelper;
 use App\Security\SecurityRole;
+use App\Security\UserFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

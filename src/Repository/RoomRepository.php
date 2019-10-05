@@ -29,7 +29,7 @@ class RoomRepository extends ServiceEntityRepository
             ->orderBy('room.name', 'ASC');
     }
 
-     public function getQueryBuilderEmpty(): QueryBuilder
+    public function getQueryBuilderEmpty(): QueryBuilder
     {
         return $this->createQueryBuilder('room')
             ->andWhere('room.area = :id')
@@ -49,5 +49,4 @@ class RoomRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 }

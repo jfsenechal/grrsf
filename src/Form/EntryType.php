@@ -73,7 +73,7 @@ class EntryType extends AbstractType
             ->addEventSubscriber(new AddAreaFieldSubscriber($this->security, $this->authorizationHelper))
             ->addEventSubscriber(new AddTypeEntryFieldSubscriber())
             ->addEventSubscriber(new AddDurationFieldSubscriber($this->durationFactory))
-            ->addEventSubscriber(new AddRoomFieldSubscriber( true ));
+            ->addEventSubscriber(new AddRoomFieldSubscriber(true));
     }
 
     public function configureOptions(OptionsResolver $resolver)

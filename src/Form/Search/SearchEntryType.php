@@ -8,10 +8,8 @@ use App\Form\Type\AreaSelectType;
 use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchEntryType extends AbstractType
 {
@@ -44,7 +42,7 @@ class SearchEntryType extends AbstractType
                     'class' => EntryType::class,
                     'required' => false,
                     'label' => false,
-                    'help'=>null,
+                    'help' => null,
                     'placeholder' => 'typeEntry.index.title',
                     'attr' => ['class' => 'custom-select my-1 mr-sm-2'],
                 ]
@@ -59,7 +57,5 @@ class SearchEntryType extends AbstractType
                 ]
             )
             ->addEventSubscriber(new AddRoomFieldSubscriber());
-
     }
-
 }

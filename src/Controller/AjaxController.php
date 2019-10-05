@@ -46,7 +46,7 @@ class AjaxController extends AbstractController
      */
     public function ajaxRequestGetRooms(Request $request)
     {
-        $areaId = (int)$request->get('id');
+        $areaId = (int) $request->get('id');
         $required = filter_var($request->get('isRequired'), FILTER_VALIDATE_BOOLEAN, false);
         $restricted = filter_var($request->get('isRestricted'), FILTER_VALIDATE_BOOLEAN, false);
 
@@ -55,7 +55,7 @@ class AjaxController extends AbstractController
             throw new InvalidParameterException('Area not found');
         }
 
-        /**
+        /*
          *
          */
         if (!$restricted) {

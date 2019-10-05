@@ -44,5 +44,4 @@ class DurationTimeTypeField extends AbstractType
                 ]
             );
     }
-
 }

@@ -44,7 +44,8 @@ class Week
     }
 
     /**
-     * Retourne la liste des jours de la semaines
+     * Retourne la liste des jours de la semaines.
+     *
      * @return CarbonPeriod
      */
     public function getCalendarDays(): CarbonPeriod

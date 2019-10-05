@@ -18,5 +18,4 @@ class EntryTypeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, EntryType::class);
     }
-
 }

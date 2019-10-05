@@ -16,11 +16,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\EntryTypeRepository")
  * @UniqueEntity(fields={"letter"}, message="entry_type.constraint.already_use")
- * @ApiResource()
+ * @ApiResource
  */
 class EntryType
 {
-    use IdEntityTrait, NameEntityTrait;
+    use IdEntityTrait;
+    use NameEntityTrait;
 
     /**
      * @var int
@@ -145,5 +146,4 @@ class EntryType
 
         return $this;
     }
-
 }

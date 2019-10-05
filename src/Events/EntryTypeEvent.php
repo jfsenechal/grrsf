@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Entity\Entry;
 use App\Entity\EntryType;
 use Symfony\Contracts\EventDispatcher\Event;
 

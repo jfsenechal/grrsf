@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 5/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Form\Security;
@@ -21,7 +21,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-
 
 class AuthorizationUserType extends AbstractType
 {
@@ -49,7 +48,6 @@ class AuthorizationUserType extends AbstractType
         );
 
         $formModifier = function (FormInterface $form, Area $area = null) {
-
             $options = [
                 'class' => Room::class,
                 'label' => 'room.form.select.multiple.label',
@@ -71,10 +69,9 @@ class AuthorizationUserType extends AbstractType
                 EntityType::class,
                 $options
             );
-
         };
 
-        /**
+        /*
          * Sert à valider les ressources sélectionnées lors de l'envoie du form
          * Nécessaire car à l'init du form, la liste est vide.
          */
@@ -104,5 +101,4 @@ class AuthorizationUserType extends AbstractType
     {
         return AuthorizationType::class;
     }
-
 }

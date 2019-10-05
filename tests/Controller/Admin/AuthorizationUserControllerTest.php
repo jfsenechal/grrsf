@@ -87,7 +87,7 @@ class AuthorizationUserControllerTest extends BaseTesting
         );
 
         /**
-         * second
+         * second.
          */
         $url = '/admin/user/'.$user->getId();
         $this->administrator->request('GET', $url);
@@ -110,7 +110,7 @@ class AuthorizationUserControllerTest extends BaseTesting
     }
 
     /**
-     * ne va pas a cause de la validation des rooms
+     * ne va pas a cause de la validation des rooms.
      */
     public function estRooms()
     {
@@ -159,5 +159,4 @@ class AuthorizationUserControllerTest extends BaseTesting
 
         $this->loader->load($files);
     }
-
 }

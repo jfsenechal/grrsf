@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 10/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Checker;
@@ -50,8 +50,10 @@ class MigrationChecker
     /**
      * Vérifie si un utilisateur est admin d'une aréa
      * et si celui-ci est mis en tant que administrateur ou pas d'une room
-     * de cet area
+     * de cet area.
+     *
      * @return array
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function checkAreaAndRoomAdministrator()
@@ -71,7 +73,7 @@ class MigrationChecker
                         $result[$i]['user'] = $user;
                         $result[$i]['area'] = $area;
                         $result[$i]['room'] = $room;
-                        $i++;
+                        ++$i;
                     }
                 }
             }
@@ -81,7 +83,6 @@ class MigrationChecker
     }
 
     /**
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function deleteDoublon()
@@ -92,5 +93,4 @@ class MigrationChecker
         }
         $this->authorizationManager->flush();
     }
-
 }

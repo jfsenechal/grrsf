@@ -11,7 +11,7 @@ class PeriodicityEveryDayValidator extends ConstraintValidator
 {
     /**
      * @param \App\Entity\Periodicity $value
-     * @param PeriodicityEveryWeek $constraint
+     * @param PeriodicityEveryWeek    $constraint
      */
     public function validate($value, Constraint $constraint)
     {
@@ -23,7 +23,7 @@ class PeriodicityEveryDayValidator extends ConstraintValidator
             throw new \UnexpectedValueException($value, 'Periodicity');
         }
 
-        if ($value->getType() !== PeriodicityConstant::EVERY_DAY) {
+        if (PeriodicityConstant::EVERY_DAY !== $value->getType()) {
             return;
         }
 
@@ -32,7 +32,7 @@ class PeriodicityEveryDayValidator extends ConstraintValidator
         $entryStartTime = Carbon::instance($entry->getStartTime());
         $entryEndTime = Carbon::instance($entry->getEndTime());
 
-        /**
+        /*
          * En répétion tous les jours, la réservation ne peut s'étaler sur plusieurs jours
          */
         if ($entryStartTime->diffInDays($entryEndTime) > 1) {
@@ -40,7 +40,7 @@ class PeriodicityEveryDayValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        /**
+        /*
          * En répétition par jour, il y doit y avoir au moins un jour de différence entre la fin de la périodicité
          * et la fin de la réservation
          */
@@ -50,6 +50,5 @@ class PeriodicityEveryDayValidator extends ConstraintValidator
 
             return;
         }
-
     }
 }

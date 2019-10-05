@@ -95,5 +95,4 @@ class AreaControllerTest extends BaseTesting
 
         $this->loader->load($files);
     }
-
 }

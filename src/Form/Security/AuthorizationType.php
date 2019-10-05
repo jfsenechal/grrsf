@@ -48,7 +48,6 @@ class AuthorizationType extends AbstractType
         );
 
         $formModifier = function (FormInterface $form, Area $area = null) {
-
             $options = [
                 'class' => Room::class,
                 'label' => 'room.form.select.multiple.label',
@@ -70,10 +69,9 @@ class AuthorizationType extends AbstractType
                 EntityType::class,
                 $options
             );
-
         };
 
-        /**
+        /*
          * Sert à valider les ressources sélectionnées lors de l'envoie du form
          * Nécessaire car à l'init du form, la liste est vide.
          */
@@ -99,10 +97,12 @@ class AuthorizationType extends AbstractType
         );
     }
 
-    public function onPresetData(FormEvent $event) {
+    public function onPresetData(FormEvent $event)
+    {
+    }
 
-    }  public function onPostSubmit(FormEvent $event) {
-
+    public function onPostSubmit(FormEvent $event)
+    {
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,15 +1,14 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 10/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Security\Ldap;
-
 
 use Symfony\Component\Ldap\Adapter\AdapterInterface;
 use Symfony\Component\Ldap\Adapter\EntryManagerInterface;
@@ -37,14 +36,15 @@ class LdapAuth implements LdapInterface
     /**
      * Return a connection bound to the ldap.
      *
-     * @param string $dn A LDAP dn
+     * @param string $dn       A LDAP dn
      * @param string $password A password
      *
      * @throws ConnectionException if dn / password could not be bound
      */
     public function bind($dn = null, $password = null)
-    {var_dump($dn);
-    exit();
+    {
+        var_dump($dn);
+        exit();
         $this->adapter->getConnection()->bind($dn, $password);
     }
 
@@ -59,7 +59,6 @@ class LdapAuth implements LdapInterface
     public function query($dn, $query, array $options = [])
     {
         return $this->adapter->createQuery($dn, $query, $options);
-
     }
 
     /**
@@ -68,7 +67,6 @@ class LdapAuth implements LdapInterface
     public function getEntryManager()
     {
         return $this->adapter->getEntryManager();
-
     }
 
     /**
@@ -76,21 +74,20 @@ class LdapAuth implements LdapInterface
      *
      * @param string $subject
      * @param string $ignore
-     * @param int $flags
+     * @param int    $flags
      *
      * @return string
      */
     public function escape($subject, $ignore = '', $flags = 0)
     {
         return $this->adapter->escape($subject, $ignore, $flags);
-
     }
 
     /**
      * Creates a new Ldap instance.
      *
      * @param string $adapter The adapter name
-     * @param array $config The adapter's configuration
+     * @param array  $config  The adapter's configuration
      *
      * @return static
      */

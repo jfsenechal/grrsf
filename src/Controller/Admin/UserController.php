@@ -4,13 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Security\User;
 use App\Events\UserEvent;
-use App\Security\UserFactory;
 use App\Form\Search\SearchUserType;
 use App\Form\Security\UserAdvanceType;
 use App\Form\Security\UserNewType;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
 use App\Security\PasswordHelper;
+use App\Security\UserFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -61,7 +61,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/", name="grr_admin_user_index", methods={"GET","POST"})
+     * @Route("/", name="grr_admin_user_index", methods={"GET", "POST"})
      */
     public function index(Request $request): Response
     {
@@ -95,7 +95,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $utilisateur->setPassword($this->passwordEncoder->encodePassword($utilisateur, $utilisateur->getPassword()));
             $this->userManager->insert($utilisateur);
 

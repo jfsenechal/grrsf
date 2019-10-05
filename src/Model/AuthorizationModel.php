@@ -25,7 +25,7 @@ class AuthorizationModel
     protected $users;
 
     /**
-     * @var int|null $role
+     * @var int|null
      */
     private $role;
 

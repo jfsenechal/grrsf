@@ -19,7 +19,7 @@ class EntryTypeControllerTest extends BaseTesting
         $this->loadFixtures();
 
         $this->administrator->request('GET', '/admin/entry/type/');
-        $crawler = $this->administrator->clickLink("Nouveau type");
+        $crawler = $this->administrator->clickLink('Nouveau type');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['type_entry[letter]']->setValue('F');
@@ -39,7 +39,7 @@ class EntryTypeControllerTest extends BaseTesting
         $this->loadFixtures();
 
         $this->administrator->request('GET', '/admin/entry/type/');
-        $crawler = $this->administrator->clickLink("Nouveau type");
+        $crawler = $this->administrator->clickLink('Nouveau type');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
         $form['type_entry[letter]']->setValue('S');

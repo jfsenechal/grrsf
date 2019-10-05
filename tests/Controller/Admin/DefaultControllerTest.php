@@ -3,7 +3,6 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Tests\BaseTesting;
-use Symfony\Component\Panther\PantherTestCase;
 
 class DefaultControllerTest extends BaseTesting
 {

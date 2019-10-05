@@ -27,7 +27,7 @@ class AddTypeEntryFieldSubscriber implements EventSubscriberInterface
     public function onPreSetData(FormEvent $event)
     {
         /**
-         * @var Entry $entry
+         * @var Entry
          */
         $entry = $event->getData();
         $form = $event->getForm();
@@ -46,7 +46,6 @@ class AddTypeEntryFieldSubscriber implements EventSubscriberInterface
                 'type',
                 EntryTypeSelectField::class,
                 [
-
                 ]
             );
         }
@@ -60,8 +59,5 @@ class AddTypeEntryFieldSubscriber implements EventSubscriberInterface
         if (!$entry) {
             return;
         }
-
-
     }
-
 }

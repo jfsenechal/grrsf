@@ -56,17 +56,19 @@ class MigrationCommand extends Command
      */
     private $output;
     /**
-     * Fait la correspondance entre l'ancien id et le nouveau id des rooms
+     * Fait la correspondance entre l'ancien id et le nouveau id des rooms.
+     *
      * @var array
      */
     private $resolveRooms = [];
     /**
-     * Fait la correspondance entre l'ancien id et le nouveau id des types d'entrées
+     * Fait la correspondance entre l'ancien id et le nouveau id des types d'entrées.
+     *
      * @var array
      */
     private $resolveTypeEntries = [];
     /**
-     * @var array $repeats
+     * @var array
      */
     private $repeats;
     /**
@@ -107,7 +109,7 @@ class MigrationCommand extends Command
             ->addArgument('url', InputArgument::REQUIRED, "L'Url http de l'ancien Grr")
             ->addArgument('user', InputArgument::REQUIRED, "Le nom d'utilisateur d'un compte LOCALE grr administrator")
             ->addArgument('password', InputArgument::OPTIONAL, "Le mot de passe de l'utilisateur")
-            ->addOption('date', null, InputOption::VALUE_NONE, "Date à partir de laquelle les données seront ajoutées");
+            ->addOption('date', null, InputOption::VALUE_NONE, 'Date à partir de laquelle les données seront ajoutées');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -152,7 +154,7 @@ class MigrationCommand extends Command
         );
         $questionDate->setValidator(
             function ($date) {
-                if ($date == null) {
+                if (null == $date) {
                     return $date;
                 }
 
@@ -293,8 +295,7 @@ class MigrationCommand extends Command
         $progressBar = new ProgressBar($this->output);
 
         foreach ($progressBar->iterate($entries) as $data) {
-
-            if ($data['name'] != 'PMTIC G4 MG') {
+            if ('PMTIC G4 MG' != $data['name']) {
                 //    continue;
             }
 
@@ -304,11 +305,10 @@ class MigrationCommand extends Command
             if ($room) {
                 $entry->setRoom($room);
                 $this->entityManager->persist($entry);
-                $repeatId = (int)$data['repeat_id'];
+                $repeatId = (int) $data['repeat_id'];
 
-                if ($data['entry_type'] >= 1) // il s'agit d'une reservation a laquelle est associee une periodicite
-                {
-
+                if ($data['entry_type'] >= 1) { // il s'agit d'une reservation a laquelle est associee une periodicite
+                
                 }
 
                 if ($repeatId > 0) {
@@ -405,6 +405,4 @@ class MigrationCommand extends Command
             $this->entityManager->flush();
         }
     }
-
-
 }

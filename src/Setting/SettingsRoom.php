@@ -8,7 +8,7 @@ class SettingsRoom
     const DISPLAY_TYPE_FORM_RESERVATION_DATE_END = 1;
 
     /**
-     * qui peux réserver pour
+     * qui peux réserver pour.
      */
     const BOOKING_FOR_NONE = 1;
     const BOOKING_FOR_EVERY_BODY = 5;
@@ -16,7 +16,7 @@ class SettingsRoom
     const BOOKING_FOR_ADMINISTRATOR_RESTRICTED = 4;
 
     /**
-     * Qui peut ajouter une entrée
+     * Qui peut ajouter une entrée.
      */
     const  CAN_ADD_NO_RULE = 0;
     const  CAN_ADD_EVERY_BODY = 1;

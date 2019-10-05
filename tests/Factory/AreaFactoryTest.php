@@ -2,8 +2,8 @@
 
 namespace App\Tests\Factory;
 
-use App\Entity\Area;
 use App\Area\AreaFactory;
+use App\Entity\Area;
 use App\Tests\BaseTesting;
 
 class AreaFactoryTest extends BaseTesting

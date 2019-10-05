@@ -131,9 +131,8 @@ class HandlerEntry
 
         $entryReference->setArea($entryReference->getRoom()->getArea());
         $periodicity = $entryReference->getPeriodicity();
-        $periodicity->setEntryReference($entryReference);//use for validator
+        $periodicity->setEntryReference($entryReference); //use for validator
 
         return $entryReference;
     }
-
 }

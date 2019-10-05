@@ -9,18 +9,18 @@ use App\Entity\Security\Authorization;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Room.
  *
  * @ORM\Table(name="room")
  * @ORM\Entity(repositoryClass="App\Repository\RoomRepository")
- * @ApiResource()
+ * @ApiResource
  */
 class Room
 {
-    use IdEntityTrait, NameEntityTrait;
+    use IdEntityTrait;
+    use NameEntityTrait;
 
     /**
      * @var string
@@ -500,5 +500,4 @@ class Room
 
         return $this;
     }
-
 }

@@ -10,5 +10,4 @@ namespace App\Manager;
 
 class SettingManager extends BaseManager
 {
-
 }

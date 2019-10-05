@@ -13,10 +13,10 @@ namespace App\Tests\Service;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
+use App\Entry\EntryLocationService;
 use App\Factory\CarbonFactory;
 use App\I18n\LocalHelper;
 use App\Provider\TimeSlotsProvider;
-use App\Entry\EntryLocationService;
 use App\Tests\BaseTesting;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -114,7 +114,7 @@ class EntryLocationServiceTest extends BaseTesting
      *
      * @param \DateTime $dateStart
      * @param \DateTime $dateEnd
-     * @param array $countLocations
+     * @param array     $countLocations
      */
     public function testMultipleDaysSetLocations(
         \DateTime $dateStart,
@@ -188,7 +188,7 @@ class EntryLocationServiceTest extends BaseTesting
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $requestStack = $this->createMock(RequestStack::class);
         $security = $this->createMock(Security::class);
-        $localHelper = new LocalHelper($parameterBag, $security,$requestStack);
+        $localHelper = new LocalHelper($parameterBag, $security, $requestStack);
         $carbonFactory = new CarbonFactory($localHelper);
 
         return new TimeSlotsProvider($carbonFactory);

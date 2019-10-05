@@ -2,9 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Area\AreaFactory;
 use App\Entity\Area;
 use App\Events\AreaEvent;
-use App\Area\AreaFactory;
 use App\Form\AreaType;
 use App\Manager\AreaManager;
 use App\Repository\AreaRepository;
@@ -92,7 +92,6 @@ class AreaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->areaManager->insert($area);
 
             $areaEvent = new AreaEvent($area);

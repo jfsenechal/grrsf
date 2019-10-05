@@ -14,11 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\PeriodicityRepository")
  *
  *
- * @AppAssertPeriodicity\Periodicity()
- * @AppAssertPeriodicity\PeriodicityEveryDay()
- * @AppAssertPeriodicity\PeriodicityEveryMonth()
- * @AppAssertPeriodicity\PeriodicityEveryYear()
- * @AppAssertPeriodicity\PeriodicityEveryWeek()
+ * @AppAssertPeriodicity\Periodicity
+ * @AppAssertPeriodicity\PeriodicityEveryDay
+ * @AppAssertPeriodicity\PeriodicityEveryMonth
+ * @AppAssertPeriodicity\PeriodicityEveryYear
+ * @AppAssertPeriodicity\PeriodicityEveryWeek
  */
 class Periodicity
 {
@@ -54,13 +54,13 @@ class Periodicity
     private $weekDays;
 
     /**
-     *
      * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="periodicity")
      */
     private $entries;
 
     /**
-     * Use for validator form
+     * Use for validator form.
+     *
      * @var Entry|null
      */
     private $entryReference;
@@ -167,6 +167,4 @@ class Periodicity
 
         return $this;
     }
-
-
 }

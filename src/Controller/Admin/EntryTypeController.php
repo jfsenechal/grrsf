@@ -4,10 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\EntryType;
 use App\Events\EntryTypeEvent;
-use App\TypeEntry\TypeEntryFactory;
 use App\Form\TypeEntryType;
 use App\Manager\TypeEntryManager;
 use App\Repository\EntryTypeRepository;
+use App\TypeEntry\TypeEntryFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

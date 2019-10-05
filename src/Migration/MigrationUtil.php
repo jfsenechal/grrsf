@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of GrrSf application
+ * This file is part of GrrSf application.
+ *
  * @author jfsenechal <jfsenechal@gmail.com>
  * @date 8/09/19
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace App\Migration;
@@ -24,11 +24,8 @@ use App\Security\SecurityRole;
 use App\Setting\SettingsRoom;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 
 class MigrationUtil
 {
@@ -84,7 +81,7 @@ class MigrationUtil
     public function transformBoolean(string $value): bool
     {
         $value = strtolower($value);
-        if ($value == 'y' OR $value == 'a') {
+        if ('y' == $value or 'a' == $value) {
             return true;
         }
 
@@ -103,7 +100,7 @@ class MigrationUtil
         $tab = str_split(strtolower($display_days), 1);
         $days = array_map(
             function ($a) use ($pattern, $replacements) {
-                return (int)preg_replace($pattern, $replacements, $a);
+                return (int) preg_replace($pattern, $replacements, $a);
             },
             $tab
         );
@@ -119,14 +116,14 @@ class MigrationUtil
      */
     public function transformRepOpt(int $id, string $datas): array
     {
-        if (strlen($datas) !== 7) {
+        if (7 !== strlen($datas)) {
             throw new \Exception('Répétition pas 7 jours Repeat id :'.$id);
         }
 
         $days = [];
         $tab = str_split(strtolower($datas), 1);
         foreach ($tab as $key => $data) {
-            if ((int)$data === 1) {
+            if (1 === (int) $data) {
                 $days[] = $key;
             }
         }
@@ -182,12 +179,12 @@ class MigrationUtil
 
     public function transformEtat(string $etat): bool
     {
-        return $etat === 'actif';
+        return 'actif' === $etat;
     }
 
     public function transformPassword($user, $password)
     {
-        if ($password === '' || $password === null) {
+        if ('' === $password || null === $password) {
             return null;
         }
 
@@ -197,14 +194,14 @@ class MigrationUtil
     public function transformRole(string $statut)
     {
         switch ($statut) {
-            case 'administrateur' :
+            case 'administrateur':
                 $role = SecurityRole::ROLE_GRR_ADMINISTRATOR;
                 break;
             case 'utilisateur':
                 $role = SecurityRole::ROLE_GRR_ACTIVE_USER;
                 break;
             case 'visiteur':
-                $role = null;//par defaut dipose de @see SecurityRole::ROLE_GRR
+                $role = null; //par defaut dipose de @see SecurityRole::ROLE_GRR
                 break;
             default:
                 break;
@@ -215,7 +212,7 @@ class MigrationUtil
 
     public function checkUser($data): ?string
     {
-        if ($data['email'] == '') {
+        if ('' == $data['email']) {
             return 'Pas de mail pour '.$data['login'];
         }
         if ($this->userRepository->findOneBy(['email' => $data['email']])) {
@@ -237,7 +234,7 @@ class MigrationUtil
     public function convertToUf8(string $text): string
     {
         $charset = mb_detect_encoding($text, null, true);
-        if ($charset != 'UTF-8') {
+        if ('UTF-8' != $charset) {
             return mb_convert_encoding($text, 'UTF-8', $charset);
         }
 
@@ -246,34 +243,34 @@ class MigrationUtil
 
     public function tabColor(int $index)
     {
-        $tab_couleur[1] = "#FFCCFF";
-        $tab_couleur[2] = "#99CCCC";
-        $tab_couleur[3] = "#FF9999";
-        $tab_couleur[4] = "#FFFF99";
-        $tab_couleur[5] = "#C0E0FF";
-        $tab_couleur[6] = "#FFCC99";
-        $tab_couleur[7] = "#FF6666";
-        $tab_couleur[8] = "#66FFFF";
-        $tab_couleur[9] = "#DDFFDD";
-        $tab_couleur[10] = "#CCCCCC";
-        $tab_couleur[11] = "#7EFF7E";
-        $tab_couleur[12] = "#8000FF";
-        $tab_couleur[13] = "#FFFF00";
-        $tab_couleur[14] = "#FF00DE";
-        $tab_couleur[15] = "#00FF00";
-        $tab_couleur[16] = "#FF8000";
-        $tab_couleur[17] = "#DEDEDE";
-        $tab_couleur[18] = "#C000FF";
-        $tab_couleur[19] = "#FF0000";
-        $tab_couleur[20] = "#FFFFFF";
-        $tab_couleur[21] = "#A0A000";
-        $tab_couleur[22] = "#DAA520";
-        $tab_couleur[23] = "#40E0D0";
-        $tab_couleur[24] = "#FA8072";
-        $tab_couleur[25] = "#4169E1";
-        $tab_couleur[26] = "#6A5ACD";
-        $tab_couleur[27] = "#AA5050";
-        $tab_couleur[28] = "#FFBB20";
+        $tab_couleur[1] = '#FFCCFF';
+        $tab_couleur[2] = '#99CCCC';
+        $tab_couleur[3] = '#FF9999';
+        $tab_couleur[4] = '#FFFF99';
+        $tab_couleur[5] = '#C0E0FF';
+        $tab_couleur[6] = '#FFCC99';
+        $tab_couleur[7] = '#FF6666';
+        $tab_couleur[8] = '#66FFFF';
+        $tab_couleur[9] = '#DDFFDD';
+        $tab_couleur[10] = '#CCCCCC';
+        $tab_couleur[11] = '#7EFF7E';
+        $tab_couleur[12] = '#8000FF';
+        $tab_couleur[13] = '#FFFF00';
+        $tab_couleur[14] = '#FF00DE';
+        $tab_couleur[15] = '#00FF00';
+        $tab_couleur[16] = '#FF8000';
+        $tab_couleur[17] = '#DEDEDE';
+        $tab_couleur[18] = '#C000FF';
+        $tab_couleur[19] = '#FF0000';
+        $tab_couleur[20] = '#FFFFFF';
+        $tab_couleur[21] = '#A0A000';
+        $tab_couleur[22] = '#DAA520';
+        $tab_couleur[23] = '#40E0D0';
+        $tab_couleur[24] = '#FA8072';
+        $tab_couleur[25] = '#4169E1';
+        $tab_couleur[26] = '#6A5ACD';
+        $tab_couleur[27] = '#AA5050';
+        $tab_couleur[28] = '#FFBB20';
 
         if ($index) {
             return $tab_couleur[$index];

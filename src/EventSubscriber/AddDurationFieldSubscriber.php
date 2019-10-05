@@ -109,7 +109,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
 
         /**
-         * @var DurationModel $duration
+         * @var DurationModel
          */
         $duration = $form->getData()->getDuration();
 

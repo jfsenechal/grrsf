@@ -67,7 +67,6 @@ class PeriodicityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->handlerEntry->handleEditEntryWithPeriodicity($oldEntry, $entry);
 
             $entryEvent = new EntryEvent($entry);
