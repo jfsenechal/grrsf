@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Doctrine\Traits\IdEntityTrait;
 use App\Doctrine\Traits\NameEntityTrait;
 use App\Doctrine\Traits\TimestampableEntityTrait;
@@ -20,6 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
  * @AppAssertEntry\BusyRoom()
  * @AppAssertEntry\AreaTimeSlot()
+ * @ApiResource()
  */
 class Entry
 {

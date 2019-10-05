@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Doctrine\Traits\IdEntityTrait;
 use App\Doctrine\Traits\NameEntityTrait;
 use App\Entity\Security\Authorization;
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="room")
  * @ORM\Entity(repositoryClass="App\Repository\RoomRepository")
+ * @ApiResource()
  */
 class Room
 {

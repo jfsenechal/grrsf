@@ -9,6 +9,7 @@
     "ext-curl": "*",
     "ext-iconv": "*",
     "ext-json": "*",
+    "api-platform/api-pack": "^1.2",
     "beberlei/doctrineextensions": "^1.2",
     "nesbot/carbon": "^2.21",
     "ramsey/uuid": "^3.8",
@@ -104,7 +105,8 @@
   "extra": {
     "symfony": {
       "allow-contrib": true,
-      "require": "4.3.*"
+      "require": "4.3.*",
+      "id": "01DPEJARB7Y980VRXQ151KRMFN"
     }
   }
 }

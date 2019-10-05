@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Doctrine\Traits\IdEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="setting")
  * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
+ * @ApiResource()
  */
 class Setting
 {

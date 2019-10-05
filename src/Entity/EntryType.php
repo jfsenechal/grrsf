@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Doctrine\Traits\IdEntityTrait;
 use App\Doctrine\Traits\NameEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,6 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\EntryTypeRepository")
  * @UniqueEntity(fields={"letter"}, message="entry_type.constraint.already_use")
+ * @ApiResource()
  */
 class EntryType
 {
