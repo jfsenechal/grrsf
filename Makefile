@@ -9,6 +9,6 @@ stan: ##@DoctrineExtensions Lint with PHP CS Fixer (dry-run)
 	vendor/bin/phpstan analyse src --level 6
 
 stan: ##@DoctrineExtensions Lint with PHP CS Fixer (dry-run)
-	vendor/bin/rector process src --level symfony40 --dry-run
+	vendor/bin/rector process src --set symfony40 --dry-run
 
 

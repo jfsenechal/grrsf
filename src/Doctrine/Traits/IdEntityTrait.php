@@ -8,6 +8,8 @@
 
 namespace App\Doctrine\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait IdEntityTrait
 {
     /**
