@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Behat;
 
 use Behat\Behat\Context\Context;
+use Behat\Behat\Tester\Exception\PendingException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 /**
  * This context class contains the definitions of the steps used by the demo
@@ -22,10 +24,17 @@ final class DemoContext implements Context
 
     /** @var Response|null */
     private $response;
+    /**
+     * @var GuardAuthenticatorHandler
+     */
+    private $guardAuthenticatorHandler;
 
-    public function __construct(KernelInterface $kernel)
-    {
+    public function __construct(
+        KernelInterface $kernel,
+        GuardAuthenticatorHandler $guardAuthenticatorHandler
+    ) {
         $this->kernel = $kernel;
+        $this->guardAuthenticatorHandler = $guardAuthenticatorHandler;
     }
 
     /**
@@ -45,4 +54,37 @@ final class DemoContext implements Context
             throw new \RuntimeException('No response received');
         }
     }
+
+    /**
+     * @Given i am login
+     */
+    public function imLogin()
+    {
+
+    }
+
+    /**
+     * @Then I should see :arg1
+     */
+    public function iShouldSee($arg1)
+    {
+        if ($this->response === null) {
+            throw new \RuntimeException('No response received');
+        }
+
+        if ($this->response->isRedirection() !== true) {
+            throw new \RuntimeException('Response is not redirect');
+        }
+    }
+
+    /**
+     * @When /^i am login with user "([^"]*)" and password "([^"]*)"$/
+     */
+    public function iAmLoginWithUserAndPassword($arg1, $arg2)
+    {
+        if ($arg1 === null) {
+            throw new \RuntimeException('No user received');
+        }
+    }
+
 }
