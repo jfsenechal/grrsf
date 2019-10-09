@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Behat;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -50,7 +49,7 @@ final class DemoContext implements Context
      */
     public function theResponseShouldBeReceived(): void
     {
-        if ($this->response === null) {
+        if (null === $this->response) {
             throw new \RuntimeException('No response received');
         }
     }
@@ -60,7 +59,6 @@ final class DemoContext implements Context
      */
     public function imLogin()
     {
-
     }
 
     /**
@@ -68,11 +66,11 @@ final class DemoContext implements Context
      */
     public function iShouldSee($arg1)
     {
-        if ($this->response === null) {
+        if (null === $this->response) {
             throw new \RuntimeException('No response received');
         }
 
-        if ($this->response->isRedirection() !== true) {
+        if (true !== $this->response->isRedirection()) {
             throw new \RuntimeException('Response is not redirect');
         }
     }
@@ -82,9 +80,8 @@ final class DemoContext implements Context
      */
     public function iAmLoginWithUserAndPassword($arg1, $arg2)
     {
-        if ($arg1 === null) {
+        if (null === $arg1) {
             throw new \RuntimeException('No user received');
         }
     }
-
 }

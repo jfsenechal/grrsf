@@ -308,7 +308,6 @@ class MigrationCommand extends Command
                 $repeatId = (int) $data['repeat_id'];
 
                 if ($data['entry_type'] >= 1) { // il s'agit d'une reservation a laquelle est associee une periodicite
-                
                 }
 
                 if ($repeatId > 0) {
