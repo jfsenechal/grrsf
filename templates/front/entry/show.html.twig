@@ -17,14 +17,11 @@
                         <tbody>
                         <tr>
                             <th>{{ 'entry.form.startTime.label'|trans }}</th>
-                            <td>
-                                {{ entry.startTime |date('d-m-Y H:i') }}
-                                {# 2.12 { entry.startTime|format_datetime('full', 'full') }#}
-                            </td>
+                            <td>{{ entry.startTime|format_datetime('full', 'short') }}</td>
                         </tr>
                         <tr>
                             <th>{{ 'entry.form.endTime.label'|trans }}</th>
-                            <td>{{ entry.endTime |date('d-m-Y H:i') }}</td>
+                            <td>{{ entry.endTime|format_datetime('full', 'short') }}</td>
                         </tr>
                         <tr>
                             <th>{{ 'entry.form.area.label'|trans }}</th>

@@ -760,6 +760,12 @@
             "config/packages/twig_extensions.yaml"
         ]
     },
+    "twig/extra-bundle": {
+        "version": "v2.12.0"
+    },
+    "twig/intl-extra": {
+        "version": "v2.12.0"
+    },
     "twig/twig": {
         "version": "v2.6.2"
     },
