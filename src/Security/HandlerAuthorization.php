@@ -12,6 +12,7 @@ use App\Repository\Security\AuthorizationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HandlerAuthorization
@@ -137,7 +138,7 @@ class HandlerAuthorization
         }
     }
 
-    protected function executeForArea(Authorization $authorization, Area $area, User $user)
+    protected function executeForArea(Authorization $authorization, Area $area, UserInterface $user)
     {
         if ($this->existArea($user, $area)) {
             $this->error = true;
@@ -157,14 +158,14 @@ class HandlerAuthorization
         }
     }
 
-    protected function existArea(User $user, Area $area): bool
+    protected function existArea(UserInterface $user, Area $area): bool
     {
         $count = count($this->authorizationRepository->findBy(['user' => $user, 'area' => $area]));
 
         return $count > 0;
     }
 
-    protected function existRoom(User $user, Room $room): bool
+    protected function existRoom(UserInterface $user, Room $room): bool
     {
         $count = count($this->authorizationRepository->findBy(['user' => $user, 'room' => $room]));
 

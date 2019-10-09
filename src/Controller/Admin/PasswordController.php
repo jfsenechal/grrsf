@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/admin/password")
@@ -45,7 +46,7 @@ class PasswordController extends AbstractController
     /**
      * @Route("/{id}", name="grr_admin_user_password")
      */
-    public function edit(Request $request, User $user)
+    public function edit(Request $request, UserInterface $user)
     {
         $form = $this->createForm(UserPasswordType::class, $user);
         $form->handleRequest($request);

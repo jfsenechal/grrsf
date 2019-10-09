@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Entity\Security\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event
@@ -17,7 +18,7 @@ class UserEvent extends Event
      */
     private $user;
 
-    public function __construct(User $user)
+    public function __construct(UserInterface $user)
     {
         $this->user = $user;
     }

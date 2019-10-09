@@ -51,13 +51,13 @@ class AuthorizationHelper
     }
 
     /**
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return Area[]
      *
      * @throws \Exception
      */
-    public function getAreasUserCanAdd(User $user)
+    public function getAreasUserCanAdd(UserInterface $user)
     {
         if ($user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
             return $this->areaRepository->findAll();
@@ -87,7 +87,7 @@ class AuthorizationHelper
      *
      * @throws \Exception
      */
-    public function getRoomsUserCanAdd(User $user, ?Area $area = null)
+    public function getRoomsUserCanAdd(UserInterface $user, ?Area $area = null)
     {
         if ($user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
             if ($area) {

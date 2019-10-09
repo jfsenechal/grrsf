@@ -26,6 +26,7 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class MigrationUtil
 {
@@ -222,7 +223,7 @@ class MigrationUtil
         return null;
     }
 
-    public function checkAuthorizationRoom(User $user, Room $room): ?string
+    public function checkAuthorizationRoom(UserInterface $user, Room $room): ?string
     {
         if ($this->authorizationRepository->findOneBy(['user' => $user, 'room' => $room])) {
             return $user->getUsername().' à déjà un rôle pour la room: '.$room->getName();

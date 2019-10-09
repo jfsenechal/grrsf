@@ -5,10 +5,10 @@ namespace App\Repository\Security;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\Authorization;
-use App\Entity\Security\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Authorization|null find($id, $lockMode = null, $lockVersion = null)
@@ -40,13 +40,13 @@ class AuthorizationRepository extends ServiceEntityRepository
     /**
      * Pour montrer les droits par user.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return Authorization[]
      *
      * @throws \Exception
      */
-    public function findByUser(User $user)
+    public function findByUser(UserInterface $user)
     {
         return $this->findByUserAndArea($user, null);
     }
@@ -54,13 +54,13 @@ class AuthorizationRepository extends ServiceEntityRepository
     /**
      * getRoomsUserCanAdd.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return Authorization[]
      *
      * @throws \Exception
      */
-    public function findByUserAndArea(?User $user, ?Area $area)
+    public function findByUserAndArea(?UserInterface $user, ?Area $area)
     {
         if (!$user && !$area) {
             throw new \Exception('At least one parameter is needed');
@@ -84,7 +84,7 @@ class AuthorizationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    protected function setCriteriaUser(QueryBuilder $queryBuilder, User $user)
+    protected function setCriteriaUser(QueryBuilder $queryBuilder, UserInterface $user)
     {
         $queryBuilder->andWhere('authorization.user = :user')
             ->setParameter('user', $user);
@@ -125,11 +125,11 @@ class AuthorizationRepository extends ServiceEntityRepository
     /**
      * Utilise dans migration checker.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return Authorization[]
      */
-    public function findByUserAndAreaNotNull(User $user, bool $isAreaAdministrator)
+    public function findByUserAndAreaNotNull(UserInterface $user, bool $isAreaAdministrator)
     {
         $queryBuilder = $this->createQueryBuilder('authorization');
 
@@ -151,14 +151,14 @@ class AuthorizationRepository extends ServiceEntityRepository
     /**
      * Utilise dans migration checker.
      *
-     * @param User $user
+     * @param UserInterface $user
      * @param Room $room
      *
      * @return Authorization
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByUserAndRoom(User $user, Room $room)
+    public function findOneByUserAndRoom(UserInterface $user, Room $room)
     {
         $queryBuilder = $this->createQueryBuilder('authorization');
 

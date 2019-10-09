@@ -7,6 +7,7 @@ use App\Entity\Room;
 use App\Entity\Security\User;
 use App\Repository\Security\AuthorizationRepository;
 use App\Setting\SettingsRoom;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class SecurityHelper
 {
@@ -24,12 +25,12 @@ class SecurityHelper
      * Tous les droits sur l'Area et ses ressources modifier ses paramètres, la supprimer
      * Peux encoder des entry dans toutes les ressources de l'Area.
      *
-     * @param User $user
+     * @param UserInterface $user
      * @param Area $area
      *
      * @return bool
      */
-    public function isAreaAdministrator(User $user, Area $area): bool
+    public function isAreaAdministrator(UserInterface $user, Area $area): bool
     {
         if ($this->authorizationRepository->findOneBy(
             ['user' => $user, 'area' => $area, 'isAreaAdministrator' => true]
@@ -44,12 +45,12 @@ class SecurityHelper
      * Peux gérer les ressources mais pas modifier l'Area
      * Peux encoder des entry dans toutes les ressources de l'Area.
      *
-     * @param User $user
+     * @param UserInterface $user
      * @param Area $area
      *
      * @return bool
      */
-    public function isAreaManager(User $user, Area $area): bool
+    public function isAreaManager(UserInterface $user, Area $area): bool
     {
         if ($this->isAreaAdministrator($user, $area)) {
             return true;
@@ -67,12 +68,12 @@ class SecurityHelper
     /**
      * Peux gérer la room (modifier les paramètres) et pas de contraintes pour encoder les entry.
      *
-     * @param User $user
+     * @param UserInterface $user
      * @param Room $room
      *
      * @return bool
      */
-    public function isRoomAdministrator(User $user, Room $room): bool
+    public function isRoomAdministrator(UserInterface $user, Room $room): bool
     {
         if ($this->isAreaAdministrator($user, $room->getArea())) {
             return true;
@@ -90,12 +91,12 @@ class SecurityHelper
     /**
      * Peux gérer toutes les entrées sans contraintes.
      *
-     * @param User $user
+     * @param UserInterface $user
      * @param Room $room
      *
      * @return bool
      */
-    public function isRoomManager(User $user, Room $room): bool
+    public function isRoomManager(UserInterface $user, Room $room): bool
     {
         if ($this->isRoomAdministrator($user, $room)) {
             return true;
@@ -114,7 +115,7 @@ class SecurityHelper
         return false;
     }
 
-    public function isGrrAdministrator(User $user)
+    public function isGrrAdministrator(UserInterface $user)
     {
         return $user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR);
     }
@@ -125,7 +126,7 @@ class SecurityHelper
      *
      * @return bool
      */
-    public function checkAuthorizationRoomToAddEntry(Room $room, User $user = null): bool
+    public function checkAuthorizationRoomToAddEntry(Room $room, UserInterface $user = null): bool
     {
         $who = $room->getRuleToAdd();
 
@@ -209,7 +210,7 @@ class SecurityHelper
      *
      * @return bool
      */
-    public function canAddEntry(Room $room, ?User $user = null)
+    public function canAddEntry(Room $room, ?UserInterface $user = null)
     {
         $rule = $room->getRuleToAdd();
 
@@ -242,7 +243,7 @@ class SecurityHelper
         return false;
     }
 
-    public function canSeeRoom(Room $room, User $user = null): bool
+    public function canSeeRoom(Room $room, UserInterface $user = null): bool
     {
         return true;
     }
@@ -254,13 +255,13 @@ class SecurityHelper
 
     /**
      * @param Area $area
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return bool
      *
      * @todo
      */
-    public function canSeeArea(Area $area, User $user): bool
+    public function canSeeArea(Area $area, UserInterface $user): bool
     {
         return true;
     }
@@ -270,7 +271,7 @@ class SecurityHelper
      *
      * @todo
      */
-    public function canSeeAreaRestricted(Area $area, User $user): bool
+    public function canSeeAreaRestricted(Area $area, UserInterface $user): bool
     {
         return true;
     }
