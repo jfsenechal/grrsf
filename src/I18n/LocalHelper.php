@@ -21,16 +21,25 @@ class LocalHelper
      * @var RequestStack
      */
     private $requestStack;
+    /**
+     * @var Security
+     */
+    private $security;
 
     public function __construct(ParameterBagInterface $parameterBag, Security $security, RequestStack $requestStack)
+    {
+        $this->parameterBag = $parameterBag;
+        $this->security = $security;
+        $this->requestStack = $requestStack;
+        $this->setDefaultLocal();
+    }
+
+    public function setDefaultLocal(): void
     {
         /**
          * @var User
          */
-        $user = $security->getUser();
-        $this->parameterBag = $parameterBag;
-        $this->requestStack = $requestStack;
-
+        $user = $this->security->getUser();
         /*
          * Parameter from config symfony framework.yaml
          * */

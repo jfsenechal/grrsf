@@ -21,7 +21,7 @@ use Faker\Provider\Base as BaseProvider;
 class CarbonProvider extends BaseProvider
 {
     /**
-     * @return string random job title
+     * @return \DateTime
      */
     public function carbonDateTime(int $year, int $month, int $day, int $hour, int $minute)
     {
@@ -29,16 +29,13 @@ class CarbonProvider extends BaseProvider
     }
 
     /**
-     * @return string random job title
+     * @return \DateTime
      */
     public function carbonDate(int $year, int $month, int $day)
     {
         return Carbon::createFromDate($year, $month, $day)->toDateTime();
     }
 
-    /**
-     * @return string random job title
-     */
     public function carbonFromFormat(string $format, string $date)
     {
         return CarbonImmutable::createFromFormat($format, $date);

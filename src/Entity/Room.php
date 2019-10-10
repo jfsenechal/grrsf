@@ -44,14 +44,14 @@ class Room
     private $maximumBooking;
 
     /**
-     * @var string
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $statutRoom;
 
     /**
-     * @var string
+     * @var bool
      *
      * @ORM\Column(name="show_fic_room", type="boolean", nullable=false)
      */
@@ -72,7 +72,7 @@ class Room
     private $commentRoom;
 
     /**
-     * @var string
+     * @var bool
      *
      * @ORM\Column(name="show_comment", type="boolean", nullable=false)
      */
@@ -176,15 +176,15 @@ class Room
     {
         $this->area = $area;
         $this->capacity = 0;
-        $this->statutRoom = '';
-        $this->showFicRoom = '';
-        $this->showComment = '';
+        $this->statutRoom = false;
+        $this->showFicRoom = false;
+        $this->showComment = false;
         $this->delaisMaxResaRoom = 0;
         $this->delaisMinResaRoom = 0;
         $this->allowActionInPast = false;
         $this->orderDisplay = 0;
         $this->delaisOptionReservation = 0;
-        $this->dontAllowModify = '';
+        $this->dontAllowModify = false;
         $this->typeAffichageReser = 0;
         $this->quiPeutReserverPour = '';
         $this->activeRessourceEmpruntee = false;
