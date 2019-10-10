@@ -24,9 +24,15 @@
     <table class="table table-bordered table-sm">
         <thead>
         <tr>
-            <th class="text-center">{{ 'week'|trans }}</th>
+            <th class="text-center">
+                <span class="d-none d-sm-block">{{ 'week'|trans }}</span> {# hidden xs #}
+                <span class="d-sm-none">{{ 'week'|trans[:1] }}</span>{# hidden wider than lg #}
+            </th>
             {% for dayName in listDays %}
-                <th scope="col" class="text-center">{{ dayName|trans }}</th>
+                <th scope="col" class="text-center">
+                    <span class="d-none d-sm-block">{{ dayName|trans }}</span> {# hidden xs #}
+                    <span class="d-sm-none">{{ dayName|trans[:3] }}</span>{# hidden wider than lg #}
+                </th>
             {% endfor %}
         </tr>
         </thead>
