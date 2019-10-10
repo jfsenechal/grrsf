@@ -1,38 +1,50 @@
-<table class="table table-bordered table-responsive-sm table-responsive-md">
-    <thead>
-    <tr>
-        <th scope="col" class="text-center" colspan="8">
-            <a href="{{ grrGenerateRouteMonthView() }}">
-                {{ firstDay.monthName|upper }} {{ firstDay.year }}
-            </a>
-            <hr>
+<div class="row border-bottom">
+    <div class="col-3 text-left">
+        {{ previousButton | raw }}
+    </div>
+
+    <div class="col-6 text-center">
+
+        <a href="{{ grrGenerateRouteMonthView() }}" class="font-weight-bold">
+            {{ firstDay.monthName|upper }} {{ firstDay.year }}
+        </a>
+        <hr>
+        <p class="font-weight-bold">
             <a href="{{ grrGenerateRouteDayView(today.day, today) }}">
-                {{ 'Today' | trans}}
+                {{ 'Today' | trans }}
             </a>
-        </th>
-    </tr>
-    <tr>
-        <th>{{ 'week'|trans }}</th>
-        {% for dayName in listDays %}
-            <th scope="col">{{ dayName|trans }}</th>
+        </p>
+
+    </div>
+    <div class="col-3 text-right">
+        {{ nextButton | raw }}
+    </div>
+</div>
+<div class="row m2t-2">
+    <table class="table table-bordered table-responsive-sm table-responsive-md tabl2e-sm">
+        <thead>
+        <tr>
+            <th class="text-center">{{ 'week'|trans }}</th>
+            {% for dayName in listDays %}
+                <th scope="col" class="text-center">{{ dayName|trans }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tr class="">
+            {% for week in weeks %}
+
+            {% if week.startDate.week == weekSelected %}
+                {% set class = "table-info" %}
+            {% else %}
+                {% set class = "" %}
+            {% endif %}
+
+        <tr class="{{ class }}">
+            {% include '@grr_front/navigation/month/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
+            {% for day in week %}
+                {% include '@grr_front/navigation/month/_cell_day.html.twig' with { 'day': day } %}
+            {% endfor %}
+        </tr>
         {% endfor %}
-    </tr>
-    </thead>
-    <tr class="">
-
-        {% for week in weeks %}
-
-        {% if week.startDate.week == weekSelected %}
-            {% set class = "table-info" %}
-        {% else %}
-            {% set class = "" %}
-        {% endif %}
-
-    <tr class="{{ class }}">
-        {% include '@grr_front/navigation/month/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
-        {% for day in week %}
-            {% include '@grr_front/navigation/month/_cell_day.html.twig' with { 'day': day } %}
-        {% endfor %}
-    </tr>
-    {% endfor %}
-</table>
+    </table>
+</div>

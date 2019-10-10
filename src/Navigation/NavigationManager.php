@@ -39,8 +39,11 @@ class NavigationManager
      */
     private $navigationFactory;
 
-    public function __construct(NavigationFactory $navigationFactory, Environment $environment, RequestStack $requestStack)
-    {
+    public function __construct(
+        NavigationFactory $navigationFactory,
+        Environment $environment,
+        RequestStack $requestStack
+    ) {
         $this->twigEnvironment = $environment;
         $this->requestStack = $requestStack;
         $this->navigationFactory = $navigationFactory;
@@ -48,7 +51,7 @@ class NavigationManager
 
     /**
      * @param Month $month
-     * @param int   $number nombre de mois
+     * @param int $number nombre de mois
      *
      * @return Navigation
      */
@@ -98,6 +101,12 @@ class NavigationManager
     public function renderMonthByWeeks(Month $month)
     {
         $firstDay = $month->firstOfMonth();
+        /*  $year = $request->get('year') ?? 0;
+          $month = $request->get('month') ?? 0;
+
+          $monthModel = Month::init($year, $month);*/
+
+      //  $navigation = $this->createMonth($month);
 
         $weeks = $this->month->getWeeksOfMonth();
         $request = $this->requestStack->getMasterRequest();
@@ -113,6 +122,8 @@ class NavigationManager
                 'weekSelected' => $weekSelected,
                 'daySelected' => $daySelected,
                 'today' => $this->today,
+                'previousButton' => $this->previousButtonRender(),
+                'nextButton' => $this->nextButtonRender(),
             ]
         );
     }
