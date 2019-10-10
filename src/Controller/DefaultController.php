@@ -53,6 +53,19 @@ class DefaultController extends AbstractController
         );
     }
 
+     /**
+     * @Route("/vide", name="grr_vide", methods={"GET"})
+     */
+    public function vide(): Response
+    {
+
+
+        return $this->render(
+            'default/vide.html.twig'
+        );
+    }
+
+
     /**
      * @Route("/modules", name="grr_modules", methods={"GET"})
      */
