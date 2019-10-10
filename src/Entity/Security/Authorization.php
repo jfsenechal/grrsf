@@ -8,6 +8,7 @@ use App\Entity\Area;
 use App\Entity\Room;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="authorization", uniqueConstraints={
