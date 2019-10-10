@@ -12,12 +12,11 @@ namespace App\Security;
 
 use App\Entity\Area;
 use App\Entity\Room;
-use App\Entity\Security\User;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use App\Repository\Security\AuthorizationRepository;
-use Nelmio\Alice\scenario3\UserInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AuthorizationHelper
 {
