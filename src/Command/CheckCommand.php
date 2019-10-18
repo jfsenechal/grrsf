@@ -57,7 +57,7 @@ class CheckCommand extends Command
             ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $this->io = new SymfonyStyle($input, $output);
@@ -119,5 +119,7 @@ class CheckCommand extends Command
                 // $io->success($entry->getName().' ==> '.$name);
             }
         }
+
+        return 0;
     }
 }

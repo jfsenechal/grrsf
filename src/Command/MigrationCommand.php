@@ -112,7 +112,7 @@ class MigrationCommand extends Command
             ->addOption('date', null, InputOption::VALUE_NONE, 'Date à partir de laquelle les données seront ajoutées');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
         $this->output = $output;
@@ -142,7 +142,7 @@ class MigrationCommand extends Command
                         );
                     }
 
-                    return $password;
+                    return (int) $password;
                 }
             );
             $password = $helper->ask($input, $output, $question);
@@ -155,7 +155,7 @@ class MigrationCommand extends Command
         $questionDate->setValidator(
             function ($date) {
                 if (null == $date) {
-                    return $date;
+                    return (int) $date;
                 }
 
                 if (!$date = \DateTime::createFromFormat('Y-m-d', $date)) {
@@ -164,7 +164,7 @@ class MigrationCommand extends Command
                     );
                 }
 
-                return $date;
+                return (int) $date;
             }
         );
 
@@ -222,7 +222,7 @@ class MigrationCommand extends Command
         $this->io->newLine();
         $this->io->success('Importation terminée :-) .');
 
-        return null;
+        return 0;
     }
 
     protected function handleArea()

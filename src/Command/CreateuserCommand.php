@@ -62,7 +62,7 @@ class CreateuserCommand extends Command
             ->addArgument('password', InputArgument::OPTIONAL, 'Password');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
@@ -96,7 +96,7 @@ class CreateuserCommand extends Command
                         );
                     }
 
-                    return $password;
+                    return (int) $password;
                 }
             );
             $password = $helper->ask($input, $output, $question);
@@ -125,6 +125,6 @@ class CreateuserCommand extends Command
 
         $io->success("L'utilisateur a bien été créé");
 
-        return null;
+        return 0;
     }
 }

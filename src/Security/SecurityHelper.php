@@ -26,7 +26,7 @@ class SecurityHelper
      * Peux encoder des entry dans toutes les ressources de l'Area.
      *
      * @param UserInterface $user
-     * @param Area $area
+     * @param Area          $area
      *
      * @return bool
      */
@@ -46,7 +46,7 @@ class SecurityHelper
      * Peux encoder des entry dans toutes les ressources de l'Area.
      *
      * @param UserInterface $user
-     * @param Area $area
+     * @param Area          $area
      *
      * @return bool
      */
@@ -69,7 +69,7 @@ class SecurityHelper
      * Peux gérer la room (modifier les paramètres) et pas de contraintes pour encoder les entry.
      *
      * @param UserInterface $user
-     * @param Room $room
+     * @param Room          $room
      *
      * @return bool
      */
@@ -92,7 +92,7 @@ class SecurityHelper
      * Peux gérer toutes les entrées sans contraintes.
      *
      * @param UserInterface $user
-     * @param Room $room
+     * @param Room          $room
      *
      * @return bool
      */
@@ -254,7 +254,7 @@ class SecurityHelper
     }
 
     /**
-     * @param Area $area
+     * @param Area          $area
      * @param UserInterface $user
      *
      * @return bool

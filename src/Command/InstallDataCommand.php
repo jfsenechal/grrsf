@@ -116,7 +116,7 @@ class InstallDataCommand extends Command
             ->setDescription('Initialize les données dans la base de données lors de l\'installation');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
@@ -137,6 +137,8 @@ class InstallDataCommand extends Command
         $this->loadSetting();
 
         $this->io->success('Les données ont bien été initialisées.');
+
+        return 0;
     }
 
     public function loadType()

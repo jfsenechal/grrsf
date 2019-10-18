@@ -2,11 +2,9 @@
 
 namespace App\Entry;
 
-use App\Entity\Area;
 use App\Entity\Entry;
 use App\Model\TimeSlot;
 use App\Provider\TimeSlotsProvider;
-use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
 class EntryLocationService
@@ -24,7 +22,7 @@ class EntryLocationService
     /**
      * Fixe l'occupation des emplacements de l'entry pour la vue sur une journee.
      *
-     * @param Entry $entry
+     * @param Entry      $entry
      * @param TimeSlot[] $dayTimeSlots les tranches horaires de la journée
      *
      * @return TimeSlot[]
@@ -54,12 +52,11 @@ class EntryLocationService
         $startTimeSlot = $dayTimeSlot->getBegin();
         $endTimeSlot = $dayTimeSlot->getEnd();
 
-        /**
+        /*
          * Use case
          * si tranche 9h30-10h00, entry 9h30-10h00
          */
         foreach ($entryTimeSlots as $entryTimeSlot) {
-
             if ($entryTimeSlot->between($startTimeSlot, $endTimeSlot)) {
                 /*
                  * si la tranche horaire de l'entrée est égale à l'heure de fin de la tranche journalière

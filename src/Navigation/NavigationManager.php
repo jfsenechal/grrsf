@@ -51,7 +51,7 @@ class NavigationManager
 
     /**
      * @param Month $month
-     * @param int $number nombre de mois
+     * @param int   $number nombre de mois
      *
      * @return Navigation
      */
@@ -106,7 +106,7 @@ class NavigationManager
 
           $monthModel = Month::init($year, $month);*/
 
-      //  $navigation = $this->createMonth($month);
+        //  $navigation = $this->createMonth($month);
 
         $weeks = $this->month->getWeeksOfMonth();
         $request = $this->requestStack->getMasterRequest();

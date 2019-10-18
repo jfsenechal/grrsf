@@ -152,7 +152,7 @@ class AuthorizationRepository extends ServiceEntityRepository
      * Utilise dans migration checker.
      *
      * @param UserInterface $user
-     * @param Room $room
+     * @param Room          $room
      *
      * @return Authorization
      *
