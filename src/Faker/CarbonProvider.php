@@ -23,7 +23,7 @@ class CarbonProvider extends BaseProvider
     /**
      * @return \DateTime
      */
-    public function carbonDateTime(int $year, int $month, int $day, int $hour, int $minute)
+    public function carbonDateTime(int $year, int $month, int $day, int $hour, int $minute): \DateTime
     {
         return Carbon::create($year, $month, $day, $hour, $minute)->toDateTime();
     }
@@ -31,17 +31,20 @@ class CarbonProvider extends BaseProvider
     /**
      * @return \DateTime
      */
-    public function carbonDate(int $year, int $month, int $day)
+    public function carbonDate(int $year, int $month, int $day): \DateTime
     {
         return Carbon::createFromDate($year, $month, $day)->toDateTime();
     }
 
+    /**
+     * @return \Carbon\CarbonImmutable|bool
+     */
     public function carbonFromFormat(string $format, string $date)
     {
         return CarbonImmutable::createFromFormat($format, $date);
     }
 
-    public function carbonToday(int $hour, int $minute)
+    public function carbonToday(int $hour, int $minute): \Carbon\Carbon
     {
         $today = Carbon::today();
         $today->setTime($hour, $minute);

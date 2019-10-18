@@ -12,7 +12,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class SmsNotificationHandler implements MessageHandlerInterface
 {
-    public function __invoke(SmsNotification $message)
+    public function __invoke(SmsNotification $message): void
     {
     }
 }

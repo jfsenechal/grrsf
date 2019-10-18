@@ -89,10 +89,8 @@ class MigrationUtil
         return false;
     }
 
-    /***
-     * Transforme un string : yyyynnn en array
-     * @param string $display_days
-     * @return array
+    /**
+     * @return int[]
      */
     public function transformSelecteDays(string $display_days): array
     {
@@ -100,7 +98,7 @@ class MigrationUtil
         $replacements = [1, 0];
         $tab = str_split(strtolower($display_days), 1);
         $days = array_map(
-            function ($a) use ($pattern, $replacements) {
+            function ($a) use ($pattern, $replacements): int {
                 return (int) preg_replace($pattern, $replacements, $a);
             },
             $tab
@@ -114,6 +112,9 @@ class MigrationUtil
      * @param string $datas
      * @return array
      * @throws \Exception
+     */
+    /**
+     * @return int[]
      */
     public function transformRepOpt(int $id, string $datas): array
     {
@@ -132,6 +133,9 @@ class MigrationUtil
         return $days;
     }
 
+    /**
+     * @return int|float
+     */
     public function transformToMinutes(int $time)
     {
         if ($time <= 0) {
@@ -183,7 +187,7 @@ class MigrationUtil
         return 'actif' === $etat;
     }
 
-    public function transformPassword($user, $password)
+    public function transformPassword($user, $password): ?string
     {
         if ('' === $password || null === $password) {
             return null;
@@ -192,7 +196,10 @@ class MigrationUtil
         return $this->passwordEncoder->encodePassword($user, 123456);
     }
 
-    public function transformRole(string $statut)
+    /**
+     * @return string[]|null[]
+     */
+    public function transformRole(string $statut): array
     {
         switch ($statut) {
             case 'administrateur':
@@ -242,6 +249,9 @@ class MigrationUtil
         return $text;
     }
 
+    /**
+     * @return string|string[]
+     */
     public function tabColor(int $index)
     {
         $tab_couleur[1] = '#FFCCFF';
@@ -328,13 +338,16 @@ class MigrationUtil
         return $auth;
     }
 
-    public function writeFile($fileName, $content)
+    public function writeFile($fileName, $content): void
     {
         $fileHandler = fopen(MigrationUtil::FOLDER_CACHE.$fileName, 'w');
         fwrite($fileHandler, $content);
         fclose($fileHandler);
     }
 
+    /**
+     * @return mixed[]
+     */
     public function decompress(SymfonyStyle $io, string $content, string $type): array
     {
         $data = json_decode($content, true);

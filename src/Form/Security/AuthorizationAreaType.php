@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AuthorizationAreaType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -24,7 +24,7 @@ class AuthorizationAreaType extends AbstractType
             );
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return AuthorizationType::class;
     }

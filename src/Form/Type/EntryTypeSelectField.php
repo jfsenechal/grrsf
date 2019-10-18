@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EntryTypeSelectField extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
@@ -26,7 +26,7 @@ class EntryTypeSelectField extends AbstractType
         );
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }

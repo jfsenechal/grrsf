@@ -52,9 +52,9 @@ class AuthorizationModel
     }
 
     /**
-     * @return Room[]|ArrayCollection
+     * @return \App\Entity\Room[]
      */
-    public function getRooms()
+    public function getRooms(): array
     {
         return $this->rooms;
     }
@@ -102,7 +102,7 @@ class AuthorizationModel
     }
 
     /**
-     * @return User[]|array
+     * @return \App\Entity\Security\User[]
      */
     public function getUsers(): array
     {
@@ -111,6 +111,7 @@ class AuthorizationModel
 
     /**
      * @param User[]|array
+     * @param \App\Entity\Security\User[] $users
      */
     public function setUsers(array $users): void
     {

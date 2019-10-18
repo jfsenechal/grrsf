@@ -13,7 +13,7 @@ class PeriodicityEveryWeekValidator extends ConstraintValidator
      * @param \App\Entity\Periodicity $value
      * @param PeriodicityEveryWeek    $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (null === $value || '' === $value) {
             return;

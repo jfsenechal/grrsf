@@ -65,7 +65,10 @@ class GrrFrontExtension extends AbstractExtension
         $this->settingRepository = $settingRepository;
     }
 
-    public function getFilters()
+    /**
+     * @return \Twig\TwigFilter[]
+     */
+    public function getFilters(): array
     {
         return [
             new TwigFilter(
@@ -74,7 +77,7 @@ class GrrFrontExtension extends AbstractExtension
                 }, ['is_safe' => ['html']]
             ),
             new TwigFilter(
-                'grrWeekNiceName', function (Week $week) {
+                'grrWeekNiceName', function (Week $week): string {
                     return $this->grrWeekNiceName($week);
                 }, ['is_safe' => ['html']]
             ),
@@ -83,34 +86,33 @@ class GrrFrontExtension extends AbstractExtension
 
     /**
      * todo navigation function to same package.
-     *
-     * @return array|TwigFunction[]
+     * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
-                'grrMonthNavigationRender', function () {
+                'grrMonthNavigationRender', function (): string {
                     return $this->monthNavigationRender();
                 }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
-                'grrMenuNavigationRender', function () {
+                'grrMenuNavigationRender', function (): string {
                     return $this->menuNavigationRender();
                 }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
-                'grrGenerateCellDataDay', function (TimeSlot $hour, RoomModel $roomModel, Day $day) {
+                'grrGenerateCellDataDay', function (TimeSlot $hour, RoomModel $roomModel, Day $day): string {
                     return $this->grrGenerateCellDataDay($hour, $roomModel, $day);
                 }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
-                'grrLegendEntryType', function (Area $area) {
+                'grrLegendEntryType', function (Area $area): string {
                     return $this->grrLegendEntryType($area);
                 }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
-                'grrCompanyName', function () {
+                'grrCompanyName', function (): string {
                     return $this->grrCompanyName();
                 }
             ),
@@ -127,7 +129,7 @@ class GrrFrontExtension extends AbstractExtension
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function grrGenerateCellDataDay(TimeSlot $hour, RoomModel $roomModel, Day $day)
+    public function grrGenerateCellDataDay(TimeSlot $hour, RoomModel $roomModel, Day $day): string
     {
         /**
          * @var Entry[]
@@ -148,7 +150,7 @@ class GrrFrontExtension extends AbstractExtension
                         );
                     }
 
-                    return;
+                    return '';
                 }
                 ++$position;
             }
@@ -164,11 +166,11 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @return string
      *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
+     * @return \Symfony\Component\HttpFoundation\Response|string
      */
     public function monthNavigationRender()
     {
@@ -201,7 +203,7 @@ class GrrFrontExtension extends AbstractExtension
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function menuNavigationRender()
+    public function menuNavigationRender(): string
     {
         $form = $this->menuGenerator->generateMenuSelect();
 
@@ -213,12 +215,15 @@ class GrrFrontExtension extends AbstractExtension
         );
     }
 
+    /**
+     * @return int|string
+     */
     private function grrPeriodicityTypeName(int $type)
     {
         return PeriodicityConstant::getTypePeriodicite($type);
     }
 
-    private function grrWeekNiceName(Week $week)
+    private function grrWeekNiceName(Week $week): string
     {
         return $this->twigEnvironment->render(
             '@grr_front/week/_nice_name.html.twig',
@@ -226,7 +231,7 @@ class GrrFrontExtension extends AbstractExtension
         );
     }
 
-    private function grrLegendEntryType(Area $area)
+    private function grrLegendEntryType(Area $area): string
     {
         $types = $this->entryTypeRepository->findAll();
 

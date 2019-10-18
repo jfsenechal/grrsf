@@ -19,6 +19,9 @@ use Symfony\Component\Security\Http\SecurityEvents;
 
 class UserLocaleSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     */
     private $session;
 
     public function __construct(SessionInterface $session)
@@ -26,7 +29,7 @@ class UserLocaleSubscriber implements EventSubscriberInterface
         $this->session = $session;
     }
 
-    public function onInteractiveLogin(InteractiveLoginEvent $event)
+    public function onInteractiveLogin(InteractiveLoginEvent $event): void
     {
         return;
         $user = $event->getAuthenticationToken()->getUser();
@@ -36,7 +39,10 @@ class UserLocaleSubscriber implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',

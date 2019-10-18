@@ -52,11 +52,11 @@ class MigrationChecker
      * et si celui-ci est mis en tant que administrateur ou pas d'une room
      * de cet area.
      *
-     * @return array
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return \App\Entity\Area[][]|\App\Entity\Room[][]|\App\Entity\Security\Authorization[][]|\App\Entity\Security\User[][]|null[][]
      */
-    public function checkAreaAndRoomAdministrator()
+    public function checkAreaAndRoomAdministrator(): array
     {
         $result = [];
         $i = 0;
@@ -85,7 +85,7 @@ class MigrationChecker
     /**
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function deleteDoublon()
+    public function deleteDoublon(): void
     {
         foreach ($this->checkAreaAndRoomAdministrator() as $data) {
             $authorization = $data['authorization'];

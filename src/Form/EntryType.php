@@ -42,7 +42,7 @@ class EntryType extends AbstractType
         $this->authorizationHelper = $authorizationHelper;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -76,7 +76,7 @@ class EntryType extends AbstractType
             ->addEventSubscriber(new AddRoomFieldSubscriber(true));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

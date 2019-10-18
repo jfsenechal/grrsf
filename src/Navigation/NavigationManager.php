@@ -78,7 +78,7 @@ class NavigationManager
         return $navigation;
     }
 
-    public function previousButtonRender()
+    public function previousButtonRender(): string
     {
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_button_previous.html.twig',
@@ -88,7 +88,7 @@ class NavigationManager
         );
     }
 
-    public function nextButtonRender()
+    public function nextButtonRender(): string
     {
         return $this->twigEnvironment->render(
             '@grr_front/navigation/month/_button_next.html.twig',
@@ -98,7 +98,7 @@ class NavigationManager
         );
     }
 
-    public function renderMonthByWeeks(Month $month)
+    public function renderMonthByWeeks(Month $month): string
     {
         $firstDay = $month->firstOfMonth();
         /*  $year = $request->get('year') ?? 0;

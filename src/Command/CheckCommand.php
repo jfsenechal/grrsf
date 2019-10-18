@@ -15,6 +15,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CheckCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'grr:check';
     /**
      * @var MigrationChecker
@@ -49,7 +52,7 @@ class CheckCommand extends Command
         $this->migrationUtil = $migrationUtil;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Add a short description for your command')

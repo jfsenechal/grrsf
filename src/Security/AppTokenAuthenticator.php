@@ -46,7 +46,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return Response
      */
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $data = [
             // you might translate this message
@@ -65,7 +65,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return bool
      */
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         return $request->headers->has('X-AUTH-TOKEN');
     }
@@ -89,11 +89,11 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @param Request $request
      *
-     * @return mixed Any non-null value
      *
      * @throws \UnexpectedValueException If null is returned
+     * @return string[][]|string[]|null[]
      */
-    public function getCredentials(Request $request)
+    public function getCredentials(Request $request): array
     {
         return [
             'token' => $request->headers->get('X-AUTH-TOKEN'),
@@ -115,12 +115,12 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return UserInterface|null
      */
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider): ?\App\Entity\Security\User
     {
         $apiToken = $credentials['token'];
 
         if (null === $apiToken) {
-            return;
+            return null;
         }
 
         // if a User object, checkCredentials() is called
@@ -144,7 +144,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @throws AuthenticationException
      */
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, UserInterface $user): bool
     {
         // check credentials - e.g. make sure the password is valid
         // no credential check is needed in this case
@@ -167,7 +167,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return Response|null
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $data = [
             'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
@@ -191,8 +191,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      * @param Request        $request
      * @param TokenInterface $token
      * @param string         $providerKey The provider (i.e. firewall) key
-     *
-     * @return Response|null
+     * @return null
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
@@ -214,7 +213,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return bool
      */
-    public function supportsRememberMe()
+    public function supportsRememberMe(): bool
     {
         return false;
     }

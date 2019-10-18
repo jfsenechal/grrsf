@@ -38,7 +38,7 @@ class SettingsProvider
      *
      * @todo
      */
-    public function getDefaulRoom()
+    public function getDefaulRoom(): ?\App\Entity\Room
     {
         return null;
 

@@ -14,7 +14,7 @@ class GeneratorEntry
      *
      * @return Entry
      */
-    public function generateEntry(Entry $entry, CarbonInterface $day)
+    public function generateEntry(Entry $entry, CarbonInterface $day): \App\Entity\Entry
     {
         $newEntry = clone $entry;
 

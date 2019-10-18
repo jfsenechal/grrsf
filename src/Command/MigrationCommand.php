@@ -22,6 +22,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MigrationCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'grr:migration';
     /**
      * @var RequestData
@@ -102,7 +105,7 @@ class MigrationCommand extends Command
         $this->generatorEntry = $generatorEntry;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Migrations des données depuis un ancien Grr')
@@ -135,7 +138,7 @@ class MigrationCommand extends Command
             $question->setHidden(true);
             $question->setMaxAttempts(5);
             $question->setValidator(
-                function ($password) {
+                function ($password): int {
                     if (strlen($password) < 2) {
                         throw new \RuntimeException(
                             'Le mot de passe ne peut être vide'
@@ -225,7 +228,7 @@ class MigrationCommand extends Command
         return 0;
     }
 
-    protected function handleArea()
+    protected function handleArea(): void
     {
         $this->areas = $this->migrationUtil->decompress($this->io, $this->requestData->getAreas(), 'area');
         $this->rooms = $this->migrationUtil->decompress($this->io, $this->requestData->getRooms(), 'room');
@@ -240,7 +243,7 @@ class MigrationCommand extends Command
         $this->entityManager->flush();
     }
 
-    protected function handleRoom(Area $area, int $areaId)
+    protected function handleRoom(Area $area, int $areaId): void
     {
         foreach ($this->rooms as $data) {
             if ($data['area_id'] == $areaId) {
@@ -252,7 +255,7 @@ class MigrationCommand extends Command
         }
     }
 
-    protected function handleEntryType()
+    protected function handleEntryType(): void
     {
         $types = $this->migrationUtil->decompress($this->io, $this->requestData->getTypesEntry(), 'entry_type');
         $progressBar = new ProgressBar($this->output);
@@ -265,7 +268,7 @@ class MigrationCommand extends Command
         }
     }
 
-    protected function handleUser()
+    protected function handleUser(): void
     {
         $users = $this->migrationUtil->decompress($this->io, $this->requestData->getUsers(), 'user');
 
@@ -287,7 +290,7 @@ class MigrationCommand extends Command
         }
     }
 
-    protected function handleEntry()
+    protected function handleEntry(): void
     {
         $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'entry.json');
         $entries = json_decode($fileHandler, true);
@@ -326,7 +329,7 @@ class MigrationCommand extends Command
         }
     }
 
-    private function handlerPeriodicity(Entry $entry, int $id)
+    private function handlerPeriodicity(Entry $entry, int $id): void
     {
         if (isset($this->resolveRepeats[$id])) {
             $periodicity = $this->resolveRepeats[$id];
@@ -341,7 +344,7 @@ class MigrationCommand extends Command
         $this->resolveRepeats[$id] = $periodicity;
     }
 
-    private function handleAreaAdmin()
+    private function handleAreaAdmin(): void
     {
         $users = $this->migrationUtil->decompress($this->io, $this->requestData->getAreaAdmin(), 'area admin');
 
@@ -369,7 +372,7 @@ class MigrationCommand extends Command
         }
     }
 
-    private function handleRoomAdmin()
+    private function handleRoomAdmin(): void
     {
         $users = $this->migrationUtil->decompress($this->io, $this->requestData->getRoomAdmin(), 'room admin');
 

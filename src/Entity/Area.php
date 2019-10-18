@@ -113,16 +113,19 @@ class Area
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Room", mappedBy="area")
+     * @var \App\Entity\Room[]|\Doctrine\Common\Collections\Collection
      */
     private $rooms;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Security\Authorization", mappedBy="area", orphanRemoval=true)
+     * @var \App\Entity\Security\Authorization[]|\Doctrine\Common\Collections\Collection
      */
     private $authorizations;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\EntryType")
+     * @var \App\Entity\EntryType[]|\Doctrine\Common\Collections\Collection
      */
     private $entryTypes;
 
@@ -145,7 +148,7 @@ class Area
         $this->entryTypes = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }

@@ -24,6 +24,9 @@ class LdapAuth implements LdapInterface
      */
     private $adapter;
 
+    /**
+     * @var string[]
+     */
     private static $adapterMap = [
         'ext_ldap' => 'Symfony\Component\Ldap\Adapter\ExtLdap\Adapter',
     ];
@@ -41,7 +44,7 @@ class LdapAuth implements LdapInterface
      *
      * @throws ConnectionException if dn / password could not be bound
      */
-    public function bind($dn = null, $password = null)
+    public function bind($dn = null, $password = null): void
     {
         var_dump($dn);
         exit();
@@ -56,7 +59,7 @@ class LdapAuth implements LdapInterface
      *
      * @return QueryInterface
      */
-    public function query($dn, $query, array $options = [])
+    public function query($dn, $query, array $options = []): \Symfony\Component\Ldap\Adapter\QueryInterface
     {
         return $this->adapter->createQuery($dn, $query, $options);
     }
@@ -64,7 +67,7 @@ class LdapAuth implements LdapInterface
     /**
      * @return EntryManagerInterface
      */
-    public function getEntryManager()
+    public function getEntryManager(): \Symfony\Component\Ldap\Adapter\EntryManagerInterface
     {
         return $this->adapter->getEntryManager();
     }
@@ -78,7 +81,7 @@ class LdapAuth implements LdapInterface
      *
      * @return string
      */
-    public function escape($subject, $ignore = '', $flags = 0)
+    public function escape($subject, $ignore = '', $flags = 0): string
     {
         return $this->adapter->escape($subject, $ignore, $flags);
     }
@@ -91,7 +94,7 @@ class LdapAuth implements LdapInterface
      *
      * @return static
      */
-    public static function create($adapter, array $config = []): self
+    public static function create(string $adapter, array $config = []): self
     {
         if (!isset(self::$adapterMap[$adapter])) {
             throw new DriverNotFoundException(

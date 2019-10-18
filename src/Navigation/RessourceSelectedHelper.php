@@ -127,7 +127,7 @@ class RessourceSelectedHelper
         return null;
     }
 
-    public function setSelected(int $area, int $room = null)
+    public function setSelected(int $area, int $room = null): void
     {
         $this->session->set(self::AREA_DEFAULT_SESSION, $area);
         if ($room) {

@@ -39,7 +39,7 @@ class SettingHandler
         $this->settingManager = $settingManager;
     }
 
-    public function handleEdit($data)
+    public function handleEdit($data): void
     {
         foreach ($data as $name => $value) {
             $setting = $this->settingRepository->findOneBy(['name' => $name]);
@@ -54,7 +54,7 @@ class SettingHandler
         $this->settingManager->flush();
     }
 
-    protected function handleNewSetting($name, $value)
+    protected function handleNewSetting($name, $value): void
     {
         if (null === $value) {
             return;
@@ -66,7 +66,7 @@ class SettingHandler
         $this->settingManager->persist($setting);
     }
 
-    protected function handleExistSetting(Setting $setting, $value)
+    protected function handleExistSetting(Setting $setting, $value): void
     {
         if (null === $value) {
             $this->settingManager->remove($setting);

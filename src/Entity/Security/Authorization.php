@@ -27,18 +27,21 @@ class Authorization
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Security\User", inversedBy="authorizations")
      * @ORM\JoinColumn(nullable=false)
+     * @var \App\Entity\Security\User
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Area", inversedBy="authorizations")
      * @ORM\JoinColumn(nullable=true)
+     * @var \App\Entity\Area|null
      */
     private $area;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Room", inversedBy="authorizations")
      * @ORM\JoinColumn(nullable=true)
+     * @var \App\Entity\Room|null
      */
     private $room;
 
@@ -62,7 +65,7 @@ class Authorization
         $this->isResourceAdministrator = false;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return '';
     }

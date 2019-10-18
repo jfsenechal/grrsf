@@ -10,10 +10,9 @@ class DateProvider
 {
     /**
      * Names of days of the week.
-     *
-     * @return array
+     * @return mixed[]
      */
-    public static function getNamesDaysOfWeek()
+    public static function getNamesDaysOfWeek(): array
     {
         //todo dynamic first day of week
         //https://carbon.nesbot.com/docs/#api-week
@@ -35,7 +34,10 @@ class DateProvider
         return $days;
     }
 
-    public static function getHours()
+    /**
+     * @return int[]
+     */
+    public static function getHours(): array
     {
         return range(1, CarbonInterface::HOURS_PER_DAY);
     }

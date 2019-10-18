@@ -42,10 +42,9 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
      *  * ['eventName' => 'methodName']
      *  * ['eventName' => ['methodName', $priority]]
      *  * ['eventName' => [['methodName1', $priority], ['methodName2']]]
-     *
-     * @return array The event names to listen to
+     * @return string[]
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::PRE_SET_DATA => 'OnPreSetData',
@@ -60,7 +59,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
      *
      * @param FormEvent $event
      */
-    public function OnPreSetData(FormEvent $event)
+    public function OnPreSetData(FormEvent $event): void
     {
         /**
          * @var Entry
@@ -104,7 +103,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
      *
      * @throws \Exception
      */
-    public function OnSubmit(FormEvent $event)
+    public function OnSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
 

@@ -61,7 +61,7 @@ class LocalHelper
         }
     }
 
-    public static function getDefaultLocal()
+    public static function getDefaultLocal(): string
     {
         return self::$defaultLocale;
     }

@@ -17,6 +17,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CreateuserCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'grr:create-user';
     /**
      * @var UserManager
@@ -53,7 +56,7 @@ class CreateuserCommand extends Command
         $this->passwordHelper = $passwordHelper;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Création d\'un utilisateur')
@@ -89,7 +92,7 @@ class CreateuserCommand extends Command
             $question->setHidden(true);
             $question->setMaxAttempts(5);
             $question->setValidator(
-                function ($password) {
+                function ($password): int {
                     if (strlen($password) < 4) {
                         throw new \RuntimeException(
                             'Le mot de passe doit faire minimum 4 caractères'

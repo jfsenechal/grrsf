@@ -19,7 +19,7 @@ class RessourceSelectedSubscriber implements EventSubscriberInterface
         $this->ressourceSelectedHelper = $ressourceSelectedHelper;
     }
 
-    public function onControllerEvent(ControllerEvent $event)
+    public function onControllerEvent(ControllerEvent $event): void
     {
         $controller = $event->getController();
 
@@ -48,7 +48,10 @@ class RessourceSelectedSubscriber implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             ControllerEvent::class => 'onControllerEvent',

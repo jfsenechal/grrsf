@@ -19,7 +19,7 @@ class GrrExtension extends Extension implements PrependExtensionInterface
      * @throws \InvalidArgumentException When provided tag is not defined in this extension
      * @throws \Exception
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $container->registerForAutoconfiguration(GrrModuleInterface::class)
             ->addTag('grr_module');
@@ -34,7 +34,7 @@ class GrrExtension extends Extension implements PrependExtensionInterface
     /**
      * Allow an extension to prepend the extension configurations.
      */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $bundles = $container->getParameter('kernel.bundles');
 
@@ -43,7 +43,7 @@ class GrrExtension extends Extension implements PrependExtensionInterface
         }
     }
 
-    protected function loadDefaultValuesVich(ContainerBuilder $container)
+    protected function loadDefaultValuesVich(ContainerBuilder $container): void
     {
         $configs = $this->loadYml('security.yaml');
         foreach ($container->getExtensions() as $name => $extension) {
@@ -54,6 +54,9 @@ class GrrExtension extends Extension implements PrependExtensionInterface
         }
     }
 
+    /**
+     * @return mixed|mixed[]
+     */
     protected function loadYml($name)
     {
         try {

@@ -26,6 +26,7 @@ class Periodicity
 
     /**
      * @ORM\Column(type="date")
+     * @var \DateTimeInterface
      */
     private $endTime;
 
@@ -35,11 +36,13 @@ class Periodicity
      * @see PeriodicityConstant::getTypesPeriodicite
      *
      * @ORM\Column(type="integer", nullable=false)
+     * @var int
      */
     private $type;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @var int|null
      */
     private $weekRepeat;
 
@@ -55,6 +58,7 @@ class Periodicity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="periodicity")
+     * @var \App\Entity\Entry[]|\Doctrine\Common\Collections\Collection
      */
     private $entries;
 

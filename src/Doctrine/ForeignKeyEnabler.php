@@ -36,7 +36,10 @@ class ForeignKeyEnabler implements EventSubscriber
         $this->parameterBag = $parameterBag;
     }
 
-    public function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public function getSubscribedEvents(): array
     {
         $env = $this->parameterBag->get('kernel.environment');
 

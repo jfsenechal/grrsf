@@ -31,12 +31,12 @@ class RoleSelectType extends AbstractType
         $this->transformer = $transformer;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->transformer);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $roles = SecurityRole::getRolesForAuthorization();
 
@@ -66,12 +66,12 @@ class RoleSelectType extends AbstractType
         );
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         //j'essaie d'afficher la description
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

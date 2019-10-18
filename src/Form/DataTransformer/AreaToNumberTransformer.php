@@ -23,8 +23,7 @@ class AreaToNumberTransformer implements DataTransformerInterface
      * Transforms an object (area) to a string (number).
      *
      * @param Area|null $area
-     *
-     * @return string
+     * @return string|int|null
      */
     public function transform($area)
     {
@@ -44,11 +43,11 @@ class AreaToNumberTransformer implements DataTransformerInterface
      *
      * @throws TransformationFailedException if object (area) is not found
      */
-    public function reverseTransform($areaNumber)
+    public function reverseTransform($areaNumber): ?\App\Entity\Area
     {
         // no area number? It's optional, so that's ok
         if (!$areaNumber) {
-            return;
+            return null;
         }
 
         $area = $this->areaRepository->find($areaNumber);

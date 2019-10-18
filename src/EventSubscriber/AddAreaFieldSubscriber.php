@@ -34,14 +34,17 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
         $this->authorizationHelper = $authorizationHelper;
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::PRE_SET_DATA => 'onPreSetData',
         ];
     }
 
-    public function onPreSetData(FormEvent $event)
+    public function onPreSetData(FormEvent $event): void
     {
         /**
          * @var User

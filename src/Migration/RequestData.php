@@ -28,13 +28,13 @@ class RequestData
      */
     private $base_url;
 
-    private function setBaseUrl(string $url)
+    private function setBaseUrl(string $url): void
     {
         $url = rtrim($url, '/');
         $this->base_url = $url.DIRECTORY_SEPARATOR.'migration'.DIRECTORY_SEPARATOR;
     }
 
-    public function connect(string $url, string $user, string $password)
+    public function connect(string $url, string $user, string $password): void
     {
         $this->setBaseUrl($url);
         $options = [
@@ -45,44 +45,62 @@ class RequestData
     }
 
     /**
-     * @return \Symfony\Contracts\HttpClient\ResponseInterface
+     * @return bool|string
      */
     public function getEntries(array $params = [])
     {
         return $this->request('entry.php', $params);
     }
 
+    /**
+     * @return bool|string
+     */
     public function getAreas()
     {
         return $this->request('area.php');
     }
 
+    /**
+     * @return bool|string
+     */
     public function getRooms()
     {
         return $this->request('room.php');
     }
 
+    /**
+     * @return bool|string
+     */
     public function getUsers()
     {
         return $this->request('user.php');
     }
 
+    /**
+     * @return bool|string
+     */
     public function getTypesEntry()
     {
         return $this->request('type.php');
     }
 
+    /**
+     * @return bool|string
+     */
     public function getAreaAdmin()
     {
         return $this->request('user_admin_area.php');
     }
 
+    /**
+     * @return bool|string
+     */
     public function getRoomAdmin()
     {
         return $this->request('user_room.php');
     }
 
-    public function download(string $url, array $params = [])
+    public function download(string $url, array $params = []): void
     {
         $jsonfile = str_replace('php', 'json', $url);
 
@@ -113,8 +131,7 @@ class RequestData
 
     /**
      * @param string $file
-     *
-     * @return false|string|\Symfony\Contracts\HttpClient\ResponseInterface
+     * @return string|bool
      */
     private function request(string $file, array $params = [])
     {

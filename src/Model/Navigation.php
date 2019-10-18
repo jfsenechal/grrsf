@@ -78,7 +78,7 @@ class Navigation
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getMonths(): array
     {
@@ -97,7 +97,7 @@ class Navigation
         return $this;
     }
 
-    public function addMonth(string $month)
+    public function addMonth(string $month): void
     {
         $this->months[] = $month;
     }

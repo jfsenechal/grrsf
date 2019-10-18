@@ -14,7 +14,7 @@ use Carbon\CarbonInterface;
 
 class TimeService
 {
-    public static function convertMinutesToHour(int $hours, int $minutes)
+    public static function convertMinutesToHour(int $hours, int $minutes): float
     {
         $reste = $minutes - ($hours * CarbonInterface::MINUTES_PER_HOUR);
         $heureRestante = round($reste / CarbonInterface::MINUTES_PER_HOUR, 2);

@@ -13,9 +13,12 @@ class Periodicity extends Constraint
      * Any public properties become valid options for the annotation.
      * Then, use these in your validator class.
      */
+    /**
+     * @var string
+     */
     public $message = '{{ message }}';
 
-    public function getTargets()
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

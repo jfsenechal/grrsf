@@ -50,7 +50,7 @@ class HandlerAuthorization
         $this->translator = $translator;
     }
 
-    public function handle(FormInterface $form)
+    public function handle(FormInterface $form): void
     {
         /**
          * @var AuthorizationModel
@@ -107,7 +107,7 @@ class HandlerAuthorization
         Area $area,
         iterable $rooms,
         $user
-    ) {
+    ): void {
         if ($this->existArea($user, $area)) {
             $this->error = true;
             $this->flashBag->add(
@@ -138,7 +138,7 @@ class HandlerAuthorization
         }
     }
 
-    protected function executeForArea(Authorization $authorization, Area $area, UserInterface $user)
+    protected function executeForArea(Authorization $authorization, Area $area, UserInterface $user): void
     {
         if ($this->existArea($user, $area)) {
             $this->error = true;

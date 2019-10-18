@@ -25,7 +25,7 @@ class AreaManager extends BaseManager
         $this->roomManager = $roomManager;
     }
 
-    public function removeRooms(Area $area)
+    public function removeRooms(Area $area): void
     {
         foreach ($area->getRooms() as $room) {
             $this->roomManager->remove($room);

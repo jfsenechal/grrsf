@@ -26,6 +26,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class InstallDataCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'grr:install-data';
     /**
      * @var EntryTypeRepository
@@ -110,7 +113,7 @@ class InstallDataCommand extends Command
         $this->settingRepository = $settingRepository;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Initialize les données dans la base de données lors de l\'installation');
@@ -141,7 +144,7 @@ class InstallDataCommand extends Command
         return 0;
     }
 
-    public function loadType()
+    public function loadType(): void
     {
         $types = [
             'A' => 'Cours',
@@ -167,6 +170,9 @@ class InstallDataCommand extends Command
         $this->entityManager->flush();
     }
 
+    /**
+     * @return null
+     */
     public function loadArea()
     {
         $esquareName = 'Esquare';
@@ -208,7 +214,7 @@ class InstallDataCommand extends Command
         return null;
     }
 
-    public function loadRooms(Area $area, array $salles)
+    public function loadRooms(Area $area, array $salles): void
     {
         foreach ($salles as $salle) {
             if ($this->roomRepository->findOneBy(['name' => $salle])) {
@@ -220,7 +226,7 @@ class InstallDataCommand extends Command
         }
     }
 
-    public function loadUser()
+    public function loadUser(): void
     {
         $email = 'grr@domain.be';
         $password = random_int(100000, 999999);
@@ -246,7 +252,7 @@ class InstallDataCommand extends Command
         $this->io->success("L'utilisateur $email avec le mot de passe $password a bien été créé");
     }
 
-    private function loadSetting()
+    private function loadSetting(): void
     {
         $settings = [
             SettingConstants::WEBMASTER_EMAIL => ['grr@domain.be'],

@@ -32,22 +32,22 @@ abstract class BaseManager
         return $this->entityManager;
     }
 
-    public function persist(object $object)
+    public function persist(object $object): void
     {
         $this->entityManager->persist($object);
     }
 
-    public function remove(object $object)
+    public function remove(object $object): void
     {
         $this->entityManager->remove($object);
     }
 
-    public function flush()
+    public function flush(): void
     {
         $this->entityManager->flush();
     }
 
-    public function insert(object $object)
+    public function insert(object $object): void
     {
         $this->entityManager->persist($object);
         $this->flush();

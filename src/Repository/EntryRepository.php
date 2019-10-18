@@ -31,7 +31,7 @@ class EntryRepository extends ServiceEntityRepository
      *
      * @return Entry[] Returns an array of Entry objects
      */
-    public function findForMonth(\DateTimeInterface $date, Area $area, Room $room = null)
+    public function findForMonth(\DateTimeInterface $date, Area $area, Room $room = null): array
     {
         $qb = $this->createQueryBuilder('entry');
         $end = clone $date;
@@ -62,7 +62,7 @@ class EntryRepository extends ServiceEntityRepository
      *
      * @return Entry[]
      */
-    public function findForDay(CarbonInterface $day, Room $room)
+    public function findForDay(CarbonInterface $day, Room $room): array
     {
         $qb = $this->createQueryBuilder('entry');
 
@@ -84,7 +84,7 @@ class EntryRepository extends ServiceEntityRepository
      *
      * @return Entry[]
      */
-    public function isBusy(Entry $entry, Room $room)
+    public function isBusy(Entry $entry, Room $room): array
     {
         $qb = $this->createQueryBuilder('entry');
 
@@ -121,7 +121,7 @@ class EntryRepository extends ServiceEntityRepository
      *
      * @return Entry[] Returns an array of Entry objects
      */
-    public function search(array $args = [])
+    public function search(array $args = []): array
     {
         $name = $args['name'] ?? null;
         $area = $args['area'] ?? null;
@@ -167,7 +167,7 @@ class EntryRepository extends ServiceEntityRepository
     /**
      * @return Entry[]
      */
-    public function withPeriodicity()
+    public function withPeriodicity(): array
     {
         $qb = $this->createQueryBuilder('entry');
 
@@ -182,7 +182,7 @@ class EntryRepository extends ServiceEntityRepository
     /**
      * @return Entry[]
      */
-    public function findByPeriodicity(Periodicity $periodicity)
+    public function findByPeriodicity(Periodicity $periodicity): array
     {
         $qb = $this->createQueryBuilder('entry');
 
@@ -202,7 +202,7 @@ class EntryRepository extends ServiceEntityRepository
      *
      * @return Room[]|iterable
      */
-    private function getRooms(Area $area)
+    private function getRooms(Area $area): iterable
     {
         $roomRepository = $this->getEntityManager()->getRepository(Room::class);
 
@@ -214,9 +214,9 @@ class EntryRepository extends ServiceEntityRepository
      *
      * @param Periodicity $periodicity
      *
-     * @return mixed
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return mixed
      */
     public function getBaseEntryForPeriodicity(Periodicity $periodicity)
     {

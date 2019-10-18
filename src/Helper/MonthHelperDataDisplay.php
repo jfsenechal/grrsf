@@ -34,7 +34,7 @@ class MonthHelperDataDisplay
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function generateHtmlMonth(Month $month, Area $area)
+    public function generateHtmlMonth(Month $month, Area $area): string
     {
         $weeks = $month->groupDataDaysByWeeks();
 

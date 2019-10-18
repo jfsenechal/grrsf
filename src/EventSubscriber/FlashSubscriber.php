@@ -25,107 +25,110 @@ class FlashSubscriber implements EventSubscriberInterface
         $this->flashBag = $flashBag;
     }
 
-    public function onEntryTypeDelete(EntryTypeEvent $entryTypeEvent)
+    public function onEntryTypeDelete(EntryTypeEvent $entryTypeEvent): void
     {
         $this->flashBag->add('success', 'typeEntry.flash.delete');
     }
 
-    public function onEntryTypeEdit(EntryTypeEvent $entryTypeEvent)
+    public function onEntryTypeEdit(EntryTypeEvent $entryTypeEvent): void
     {
         $this->flashBag->add('success', 'typeEntry.flash.edit');
     }
 
-    public function onEntryTypeNew(EntryTypeEvent $entryTypeEvent)
+    public function onEntryTypeNew(EntryTypeEvent $entryTypeEvent): void
     {
         $this->flashBag->add('success', 'typeEntry.flash.new');
     }
 
-    public function onRoomDelete(RoomEvent $roomEvent)
+    public function onRoomDelete(RoomEvent $roomEvent): void
     {
         $this->flashBag->add('success', 'room.flash.delete');
     }
 
-    public function onRoomEdit(RoomEvent $roomEvent)
+    public function onRoomEdit(RoomEvent $roomEvent): void
     {
         $this->flashBag->add('success', 'room.flash.edit');
     }
 
-    public function onRoomNew(RoomEvent $roomEvent)
+    public function onRoomNew(RoomEvent $roomEvent): void
     {
         $this->flashBag->add('success', 'room.flash.new');
     }
 
-    public function onSettingSuccess()
+    public function onSettingSuccess(): void
     {
         $this->flashBag->add('success', 'setting.flash.edit');
     }
 
-    public function onUserDelete(UserEvent $userEvent)
+    public function onUserDelete(UserEvent $userEvent): void
     {
         $this->flashBag->add('success', 'user.flash.delete');
     }
 
-    public function onUserEdit(UserEvent $userEvent)
+    public function onUserEdit(UserEvent $userEvent): void
     {
         $this->flashBag->add('success', 'user.flash.edit');
     }
 
-    public function onUserNew(UserEvent $userEvent)
+    public function onUserNew(UserEvent $userEvent): void
     {
         $this->flashBag->add('success', 'user.flash.new');
     }
 
-    public function onEntryNew(EntryEvent $event)
+    public function onEntryNew(EntryEvent $event): void
     {
         $this->flashBag->add('success', 'entry.flash.new');
     }
 
-    public function onEntryEdit(EntryEvent $event)
+    public function onEntryEdit(EntryEvent $event): void
     {
         $this->flashBag->add('success', 'entry.flash.edit');
     }
 
-    public function onEntryDelete(EntryEvent $event)
+    public function onEntryDelete(EntryEvent $event): void
     {
         $this->flashBag->add('success', 'entry.flash.delete');
     }
 
-    public function onAreaDelete(AreaEvent $areaEvent)
+    public function onAreaDelete(AreaEvent $areaEvent): void
     {
         $this->flashBag->add('success', 'area.flash.delete');
     }
 
-    public function onAreaEdit(AreaEvent $areaEvent)
+    public function onAreaEdit(AreaEvent $areaEvent): void
     {
         $this->flashBag->add('success', 'area.flash.edit');
     }
 
-    public function onAreaNew(AreaEvent $areaEvent)
+    public function onAreaNew(AreaEvent $areaEvent): void
     {
         $this->flashBag->add('success', 'area.flash.new');
     }
 
-    public function onAuthorizationDelete(AuthorizationEvent $event)
+    public function onAuthorizationDelete(AuthorizationEvent $event): void
     {
         $this->flashBag->add('success', 'authorization.flash.delete.success');
     }
 
-    public function onAuthorizationNew(AuthorizationEvent $event)
+    public function onAuthorizationNew(AuthorizationEvent $event): void
     {
         $this->flashBag->add('success', 'authorization.flash.new');
     }
 
-    public function onEditEntryTypeArea()
+    public function onEditEntryTypeArea(): void
     {
         $this->flashBag->add('success', 'entryType.area.flash');
     }
 
-    public function onUserPassword(UserEvent $userEvent)
+    public function onUserPassword(UserEvent $userEvent): void
     {
         $this->flashBag->add('success', 'user.flash.password');
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             EntryEvent::NEW_SUCCESS => 'onEntryNew',

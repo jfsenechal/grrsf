@@ -24,7 +24,7 @@ class ValidationsEntry
      *
      * @return ConstraintViolationList[]
      */
-    public function validate(Entry $entry)
+    public function validate(Entry $entry): array
     {
         $violations = [];
         $validators = $this->getValidators();
@@ -36,7 +36,10 @@ class ValidationsEntry
         return $violations;
     }
 
-    protected function getValidators()
+    /**
+     * @return string[]
+     */
+    protected function getValidators(): array
     {
         return [BusyRoom::class];
     }

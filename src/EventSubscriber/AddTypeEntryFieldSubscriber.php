@@ -16,7 +16,10 @@ use Symfony\Component\Form\FormEvents;
 
 class AddTypeEntryFieldSubscriber implements EventSubscriberInterface
 {
-    public static function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::PRE_SET_DATA => 'onPreSetData',
@@ -24,7 +27,7 @@ class AddTypeEntryFieldSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onPreSetData(FormEvent $event)
+    public function onPreSetData(FormEvent $event): void
     {
         /**
          * @var Entry
@@ -51,7 +54,7 @@ class AddTypeEntryFieldSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onPreSubmit(FormEvent $event)
+    public function onPreSubmit(FormEvent $event): void
     {
         $entry = $event->getData();
         $form = $event->getForm();

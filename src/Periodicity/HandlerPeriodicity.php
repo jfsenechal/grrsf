@@ -52,7 +52,7 @@ class HandlerPeriodicity
         $this->entryRepository = $entryRepository;
     }
 
-    public function handleNewPeriodicity(Entry $entry)
+    public function handleNewPeriodicity(Entry $entry): void
     {
         $periodicity = $entry->getPeriodicity();
         if ($periodicity) {
@@ -70,6 +70,7 @@ class HandlerPeriodicity
      * @param Entry $entry
      *
      * @throws \Exception
+     * @return null
      */
     public function handleEditPeriodicity(Entry $oldEntry, Entry $entry)
     {

@@ -47,7 +47,7 @@ class ArrayToDoctrineArrayTransformer implements DataTransformerInterface
      *
      * @throws TransformationFailedException when the transformation fails
      */
-    public function transform($value)
+    public function transform($value): ?array
     {
         if (null === $value) {
             return null;
@@ -87,7 +87,7 @@ class ArrayToDoctrineArrayTransformer implements DataTransformerInterface
      *
      * @throws TransformationFailedException when the transformation fails
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?\Doctrine\Common\Collections\ArrayCollection
     {
         if (null === $value) {
             return null;

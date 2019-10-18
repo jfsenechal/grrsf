@@ -41,22 +41,22 @@ class Month extends Carbon
         return $monthModel;
     }
 
-    public function previousYear()
+    public function previousYear(): \Carbon\CarbonInterface
     {
         return $this->copy()->subYear();
     }
 
-    public function nextYear()
+    public function nextYear(): \Carbon\CarbonInterface
     {
         return $this->copy()->addYear();
     }
 
-    public function previousMonth()
+    public function previousMonth(): \Carbon\CarbonInterface
     {
         return $this->copy()->subMonth();
     }
 
-    public function nextMonth()
+    public function nextMonth(): \Carbon\CarbonInterface
     {
         return $this->copy()->addMonth();
     }
@@ -76,7 +76,7 @@ class Month extends Carbon
      *
      * @return CarbonPeriod[]
      */
-    public function getWeeksOfMonth()
+    public function getWeeksOfMonth(): array
     {
         $weeks = [];
         $firstDayMonth = $this->firstOfMonth();

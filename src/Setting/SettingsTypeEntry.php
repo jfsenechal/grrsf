@@ -4,7 +4,10 @@ namespace App\Setting;
 
 class SettingsTypeEntry
 {
-    public static function disponibleFor()
+    /**
+     * @return string[]
+     */
+    public static function disponibleFor(): array
     {
         return [
             2 => 'Tous',
@@ -13,7 +16,10 @@ class SettingsTypeEntry
         ];
     }
 
-    public static function lettres()
+    /**
+     * @return string[]
+     */
+    public static function lettres(): array
     {
         return [
             'A' => 'A',

@@ -46,7 +46,7 @@ class PasswordController extends AbstractController
     /**
      * @Route("/{id}", name="grr_admin_user_password")
      */
-    public function edit(Request $request, UserInterface $user)
+    public function edit(Request $request, UserInterface $user): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $form = $this->createForm(UserPasswordType::class, $user);
         $form->handleRequest($request);

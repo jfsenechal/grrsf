@@ -30,6 +30,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @var string
      */
     private $username;
 
@@ -41,6 +42,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @var mixed[]
      */
     private $roles = [];
 
@@ -52,6 +54,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @var string|null
      */
     private $first_name;
 

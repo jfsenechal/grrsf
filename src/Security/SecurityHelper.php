@@ -210,7 +210,7 @@ class SecurityHelper
      *
      * @return bool
      */
-    public function canAddEntry(Room $room, ?UserInterface $user = null)
+    public function canAddEntry(Room $room, ?UserInterface $user = null): bool
     {
         $rule = $room->getRuleToAdd();
 

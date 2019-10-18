@@ -13,5 +13,5 @@ interface FactoryInterface
     /**
      * @return object
      */
-    public function createNew();
+    public function createNew(): object;
 }

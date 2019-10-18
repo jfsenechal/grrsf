@@ -39,14 +39,17 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
         $this->placeholder = $placeholder;
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::PRE_SET_DATA => 'onPreSetData',
         ];
     }
 
-    public function onPreSetData(FormEvent $event)
+    public function onPreSetData(FormEvent $event): void
     {
         $object = $event->getData();
 
@@ -63,7 +66,7 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
         ];
 
         if ($area) {
-            $default['query_builder'] = function (RoomRepository $roomRepository) use ($area) {
+            $default['query_builder'] = function (RoomRepository $roomRepository) use ($area): \Doctrine\ORM\QueryBuilder {
                 return $roomRepository->getRoomsByAreaQueryBuilder($area);
             };
         } else {

@@ -55,7 +55,7 @@ class EntryVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         if ($subject) {
             if (!$subject instanceof Entry) {
@@ -69,7 +69,7 @@ class EntryVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function voteOnAttribute($attribute, $entry, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $entry, TokenInterface $token): bool
     {
         $user = $token->getUser();
         $this->user = $user;

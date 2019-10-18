@@ -20,7 +20,7 @@ class UserSelectType extends AbstractType
         $this->userRepository = $userRepository;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
@@ -34,7 +34,7 @@ class UserSelectType extends AbstractType
         );
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }

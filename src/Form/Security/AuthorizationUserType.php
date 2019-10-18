@@ -37,7 +37,7 @@ class AuthorizationUserType extends AbstractType
         $this->roomRepository = $roomRepository;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
             'area',
@@ -57,7 +57,7 @@ class AuthorizationUserType extends AbstractType
             ];
 
             if ($area) {
-                $options['query_builder'] = function (RoomRepository $roomRepository) use ($area) {
+                $options['query_builder'] = function (RoomRepository $roomRepository) use ($area): \Doctrine\ORM\QueryBuilder {
                     return $roomRepository->getRoomsByAreaQueryBuilder($area);
                 };
             } else {
@@ -97,7 +97,7 @@ class AuthorizationUserType extends AbstractType
         );
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return AuthorizationType::class;
     }

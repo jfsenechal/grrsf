@@ -53,6 +53,7 @@ class EntryType
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="type")
+     * @var \App\Entity\Entry[]|\Doctrine\Common\Collections\Collection
      */
     private $entries;
 
@@ -63,7 +64,7 @@ class EntryType
         $this->disponible = 2;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }

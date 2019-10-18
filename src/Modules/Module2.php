@@ -14,7 +14,7 @@ class Module2 implements GrrModuleInterface
         return '1.0';
     }
 
-    public function doSomething()
+    public function doSomething(): void
     {
         echo 'Module 1';
     }

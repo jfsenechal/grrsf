@@ -19,7 +19,7 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function getQueryBuilder()
+    public function getQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('user')
             ->orderBy('user.name', 'ASC');
@@ -38,7 +38,7 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @return User[]
      */
-    public function search(array $args)
+    public function search(array $args): array
     {
         $qb = $this->createQueryBuilder('user')
             ->orderBy('user.name', 'ASC');

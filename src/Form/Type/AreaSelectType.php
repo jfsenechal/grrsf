@@ -10,13 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AreaSelectType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
                 'label' => 'area.form.select.label',
                 'class' => Area::class,
-                'query_builder' => function (AreaRepository $areaRepository) {
+                'query_builder' => function (AreaRepository $areaRepository): \Doctrine\ORM\QueryBuilder {
                     return $areaRepository->getQueryBuilder();
                 },
                 'attr' => ['class' => 'custom-select my-1 mr-sm-2 ajax-select-room'],
@@ -25,7 +25,7 @@ class AreaSelectType extends AbstractType
         );
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }

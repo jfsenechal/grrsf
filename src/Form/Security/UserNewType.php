@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserNewType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -22,7 +22,7 @@ class UserNewType extends AbstractType
             );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
@@ -31,7 +31,7 @@ class UserNewType extends AbstractType
         );
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return  UserAdvanceType::class;
     }

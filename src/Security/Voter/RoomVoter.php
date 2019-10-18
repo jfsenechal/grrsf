@@ -47,7 +47,7 @@ class RoomVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         if ($subject) {
             if (!$subject instanceof Room) {
@@ -64,8 +64,9 @@ class RoomVoter extends Voter
 
     /**
      * {@inheritdoc}
+     * @return bool|mixed
      */
-    protected function voteOnAttribute($attribute, $room, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $room, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
@@ -114,7 +115,7 @@ class RoomVoter extends Voter
         return true;
     }
 
-    private function canAddEntry()
+    private function canAddEntry(): bool
     {
         return $this->securityHelper->canAddEntry($this->room, $this->user);
     }

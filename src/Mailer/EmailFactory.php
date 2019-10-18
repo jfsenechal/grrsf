@@ -19,12 +19,12 @@ class EmailFactory
     {
     }
 
-    public static function createNew()
+    public static function createNew(): \Symfony\Component\Mime\Email
     {
         return new Email();
     }
 
-    public static function createNewTemplated()
+    public static function createNewTemplated(): \Symfony\Bridge\Twig\Mime\TemplatedEmail
     {
         return new TemplatedEmail();
     }

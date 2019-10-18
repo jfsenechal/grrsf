@@ -23,7 +23,7 @@ class BusyRoomValidator extends ConstraintValidator
      * @param Entry    $value
      * @param BusyRoom $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$value instanceof Entry) {
             throw new \UnexpectedValueException($value, 'Entry');

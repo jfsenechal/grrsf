@@ -12,12 +12,12 @@ class ModuleSender implements GrrModuleSenderInterface
     /**
      * @param GrrModuleInterface $module
      */
-    public function addModule(GrrModuleInterface $module)
+    public function addModule(GrrModuleInterface $module): void
     {
         $this->modules[] = $module;
     }
 
-    public function postContent()
+    public function postContent(): void
     {
         foreach ($this->modules as $module) {
             $module->doSomething();

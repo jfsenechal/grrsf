@@ -20,10 +20,9 @@ class PeriodicityConstant
 
     /**
      * clef de type rep_type_0,rep_type_1,...
-     *
-     * @return array
+     * @return string[]
      */
-    public static function getTypesPeriodicite()
+    public static function getTypesPeriodicite(): array
     {
         $vocab = [];
         $vocab[self::NONE] = 'periodicity.type.none';
@@ -38,6 +37,9 @@ class PeriodicityConstant
         return $vocab;
     }
 
+    /**
+     * @return string|int
+     */
     public static function getTypePeriodicite(int $type)
     {
         if (isset(self::getTypesPeriodicite()[$type])) {

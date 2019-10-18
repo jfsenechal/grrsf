@@ -26,14 +26,14 @@ class PropertyUtil
         $this->entityManager = $entityManager;
     }
 
-    public function getProperties(string $className)
+    public function getProperties(string $className): ?array
     {
         $doctrineExtractor = new DoctrineExtractor($this->entityManager);
 
         return $doctrineExtractor->getProperties($className);
     }
 
-    public function getPropertyAccessor()
+    public function getPropertyAccessor(): \Symfony\Component\PropertyAccess\PropertyAccessor
     {
         return PropertyAccess::createPropertyAccessor();
     }

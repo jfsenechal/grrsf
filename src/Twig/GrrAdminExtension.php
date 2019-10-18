@@ -27,6 +27,9 @@ class GrrAdminExtension extends AbstractExtension
         $this->twigEnvironment = $twigEnvironment;
     }
 
+    /**
+     * @return \Twig\TwigFilter[]
+     */
     public function getFilters(): array
     {
         return [
@@ -34,12 +37,12 @@ class GrrAdminExtension extends AbstractExtension
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
             new TwigFilter(
-                'grrJoursSemaine', function ($value) {
+                'grrJoursSemaine', function ($value): string {
                     return $this->joursSemaine($value);
                 }
             ),
             new TwigFilter(
-                'grrDisplayColor', function (string $value) {
+                'grrDisplayColor', function (string $value): string {
                     return $this->displayColor($value);
                 }, ['is_safe' => ['html']]
             ),
@@ -54,14 +57,14 @@ class GrrAdminExtension extends AbstractExtension
      *
      * @return string
      */
-    public function joursSemaine($value)
+    public function joursSemaine($value): string
     {
         $jours = DateProvider::getNamesDaysOfWeek();
 
         return isset($jours[$value]) ? $jours[$value] : $value;
     }
 
-    public function displayColor(string $value)
+    public function displayColor(string $value): string
     {
         return '<span style="background-color: '.$value.';"></span>';
     }

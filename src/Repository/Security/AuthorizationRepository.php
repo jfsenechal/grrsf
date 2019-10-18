@@ -32,7 +32,7 @@ class AuthorizationRepository extends ServiceEntityRepository
      *
      * @throws \Exception
      */
-    public function findByArea(Area $area)
+    public function findByArea(Area $area): array
     {
         return $this->findByUserAndArea(null, $area);
     }
@@ -46,7 +46,7 @@ class AuthorizationRepository extends ServiceEntityRepository
      *
      * @throws \Exception
      */
-    public function findByUser(UserInterface $user)
+    public function findByUser(UserInterface $user): array
     {
         return $this->findByUserAndArea($user, null);
     }
@@ -60,7 +60,7 @@ class AuthorizationRepository extends ServiceEntityRepository
      *
      * @throws \Exception
      */
-    public function findByUserAndArea(?UserInterface $user, ?Area $area)
+    public function findByUserAndArea(?UserInterface $user, ?Area $area): array
     {
         if (!$user && !$area) {
             throw new \Exception('At least one parameter is needed');
@@ -84,13 +84,13 @@ class AuthorizationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    protected function setCriteriaUser(QueryBuilder $queryBuilder, UserInterface $user)
+    protected function setCriteriaUser(QueryBuilder $queryBuilder, UserInterface $user): void
     {
         $queryBuilder->andWhere('authorization.user = :user')
             ->setParameter('user', $user);
     }
 
-    protected function setCriteriaArea(QueryBuilder $queryBuilder, Area $area)
+    protected function setCriteriaArea(QueryBuilder $queryBuilder, Area $area): void
     {
         $repository = $this->getEntityManager()->getRepository(Room::class);
         $rooms = $repository->findByArea($area);
@@ -108,7 +108,7 @@ class AuthorizationRepository extends ServiceEntityRepository
      *
      * @return Authorization[]
      */
-    public function findByRoom(Room $room)
+    public function findByRoom(Room $room): array
     {
         $queryBuilder = $this->createQueryBuilder('authorization')
             ->andWhere('authorization.room = :room')
@@ -129,7 +129,7 @@ class AuthorizationRepository extends ServiceEntityRepository
      *
      * @return Authorization[]
      */
-    public function findByUserAndAreaNotNull(UserInterface $user, bool $isAreaAdministrator)
+    public function findByUserAndAreaNotNull(UserInterface $user, bool $isAreaAdministrator): array
     {
         $queryBuilder = $this->createQueryBuilder('authorization');
 
@@ -158,7 +158,7 @@ class AuthorizationRepository extends ServiceEntityRepository
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByUserAndRoom(UserInterface $user, Room $room)
+    public function findOneByUserAndRoom(UserInterface $user, Room $room): \App\Entity\Security\Authorization
     {
         $queryBuilder = $this->createQueryBuilder('authorization');
 

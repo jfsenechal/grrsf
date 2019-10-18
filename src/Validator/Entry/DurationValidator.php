@@ -18,7 +18,7 @@ class DurationValidator extends ConstraintValidator
      *
      * @throws \Exception
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$value instanceof DurationModel) {
             throw new \Exception('Not valid value');

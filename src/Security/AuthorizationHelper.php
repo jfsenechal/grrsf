@@ -52,11 +52,11 @@ class AuthorizationHelper
     /**
      * @param UserInterface $user
      *
-     * @return Area[]
      *
      * @throws \Exception
+     * @return \App\Entity\Area[]|\App\Entity\Area[]|null[]
      */
-    public function getAreasUserCanAdd(UserInterface $user)
+    public function getAreasUserCanAdd(UserInterface $user): array
     {
         if ($user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
             return $this->areaRepository->findAll();
@@ -82,11 +82,11 @@ class AuthorizationHelper
     /**
      * @param UserInterface $user
      *
-     * @return Room[]
      *
      * @throws \Exception
+     * @return \App\Entity\Room[]|mixed[]
      */
-    public function getRoomsUserCanAdd(UserInterface $user, ?Area $area = null)
+    public function getRoomsUserCanAdd(UserInterface $user, ?Area $area = null): iterable
     {
         if ($user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
             if ($area) {

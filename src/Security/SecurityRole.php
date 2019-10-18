@@ -22,6 +22,9 @@ class SecurityRole
      */
     const ROLE_GRR_ADMINISTRATOR = 'ROLE_GRR_ADMINISTRATOR';
 
+    /**
+     * @return mixed[]|bool
+     */
     public static function getRoles()
     {
         $roles = [
@@ -36,10 +39,9 @@ class SecurityRole
 
     /**
      * Utilisé pour le formulaire d'authorization.
-     *
-     * @return array
+     * @return \stdClass[]
      */
-    public static function getRolesForAuthorization()
+    public static function getRolesForAuthorization(): array
     {
         $areaAdministrator = new \stdClass();
         $areaAdministrator->value = 1;

@@ -156,10 +156,11 @@ class Entry
     private $cellules;
 
     /**
-     * @Assert\Type(type="App\Entity\Periodicity")
+     * @Assert\Type("App\Entity\Periodicity")
      * @Assert\Valid
      * @ORM\ManyToOne(targetEntity="App\Entity\Periodicity", inversedBy="entries", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     * @var \App\Entity\Periodicity|null
      */
     private $periodicity;
 
@@ -175,7 +176,7 @@ class Entry
         $this->optionReservation = 0;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }

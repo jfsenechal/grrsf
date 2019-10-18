@@ -26,7 +26,7 @@ class GrrMailer
         $this->mailer = $mailer;
     }
 
-    public function send(Email $email)
+    public function send(Email $email): void
     {
         try {
             $this->mailer->send($email);

@@ -27,7 +27,7 @@ class EntryLocationService
      *
      * @return TimeSlot[]
      */
-    public function getLocations(Entry $entry, array $dayTimeSlots)
+    public function getLocations(Entry $entry, array $dayTimeSlots): array
     {
         /**
          * @var TimeSlot[]

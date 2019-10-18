@@ -43,7 +43,10 @@ class SettingRepository extends ServiceEntityRepository
         return null;
     }
 
-    public function load()
+    /**
+     * @return mixed[]
+     */
+    public function load(): array
     {
         $data = [];
 

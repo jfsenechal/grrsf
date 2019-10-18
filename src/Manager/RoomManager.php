@@ -12,7 +12,7 @@ use App\Entity\Room;
 
 class RoomManager extends BaseManager
 {
-    public function removeEntries(Room $room)
+    public function removeEntries(Room $room): void
     {
         foreach ($room->getEntries() as $entry) {
             $this->entityManager->remove($entry);

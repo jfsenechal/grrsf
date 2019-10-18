@@ -12,7 +12,7 @@ class PeriodicityValidator extends ConstraintValidator
      * @param \App\Entity\Periodicity                $value
      * @param \App\Validator\Periodicity\Periodicity $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (null === $value || '' === $value) {
             return;

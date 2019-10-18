@@ -39,8 +39,7 @@ class PeriodicityDaysProvider
     /**
      * @param Periodicity        $periodicity
      * @param \DateTimeInterface $startTime
-     *
-     * @return array|CarbonPeriod
+     * @return \Carbon\CarbonPeriod|mixed[]
      */
     public function getDaysByPeriodicity(
         Periodicity $periodicity,
@@ -108,7 +107,7 @@ class PeriodicityDaysProvider
             $this->periodicity_end->toDateString()
         );
 
-        $filter = function ($date) {
+        $filter = function ($date): bool {
             return $date->day === $this->entry_start->day;
         };
 
@@ -126,7 +125,7 @@ class PeriodicityDaysProvider
             $this->periodicity_end->toDateString()
         );
 
-        $filter = function ($date) {
+        $filter = function ($date): bool {
             return $date->dayOfWeek === $this->entry_start->dayOfWeek && $date->weekOfMonth === $this->entry_start->weekOfMonth;
         };
 
@@ -159,7 +158,7 @@ class PeriodicityDaysProvider
          *
          * @return bool
          */
-        $filterDayOfWeek = function ($date) use ($days) {
+        $filterDayOfWeek = function ($date) use ($days): bool {
             return in_array($date->dayOfWeekIso, $days, true);
         };
 
@@ -179,7 +178,7 @@ class PeriodicityDaysProvider
          *
          * @return bool
          */
-        $filterWeek = function ($date) use ($repeat_week) {
+        $filterWeek = function ($date) use ($repeat_week): bool {
             return 0 === $date->weekOfYear % $repeat_week;
         };
 
@@ -199,7 +198,7 @@ class PeriodicityDaysProvider
      * @todo replace for every week
      * https://stackoverflow.com/questions/57479939/php-carbon-every-monday-and-tuesday-every-2-weeks/57506714#57506714
      */
-    protected function brouillon()
+    protected function brouillon(): void
     {
         $start = new \DateTime('now');
         $end = clone $start;

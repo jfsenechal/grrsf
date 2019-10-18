@@ -44,7 +44,7 @@ class AjaxController extends AbstractController
     /**
      * @Route("/ajax/getrooms", name="grr_ajax_getrooms")
      */
-    public function ajaxRequestGetRooms(Request $request)
+    public function ajaxRequestGetRooms(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $areaId = (int) $request->get('id');
         $required = filter_var($request->get('isRequired'), FILTER_VALIDATE_BOOLEAN, false);

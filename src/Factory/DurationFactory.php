@@ -41,7 +41,7 @@ class DurationFactory
         DurationModel $duration,
         \DateTimeInterface $startDateTime,
         \DateTimeInterface $endDateTime
-    ) {
+    ): void {
         $startTime = Carbon::instance($startDateTime);
         $endTime = Carbon::instance($endDateTime);
 
@@ -69,7 +69,7 @@ class DurationFactory
         }
     }
 
-    private function setFullDay(Entry $entry, DurationModel $duration)
+    private function setFullDay(Entry $entry, DurationModel $duration): void
     {
         $area = $entry->getRoom()->getArea();
 

@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class DurationTimeTypeField extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $choices = DurationModel::getUnitsTime();
 

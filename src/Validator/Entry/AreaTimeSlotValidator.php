@@ -12,7 +12,7 @@ class AreaTimeSlotValidator extends ConstraintValidator
      * @param Entry        $entry
      * @param AreaTimeSlot $constraint
      */
-    public function validate($entry, Constraint $constraint)
+    public function validate($entry, Constraint $constraint): void
     {
         if (!$entry instanceof Entry) {
             throw new \UnexpectedValueException($entry, 'Entry');

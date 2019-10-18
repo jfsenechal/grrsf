@@ -29,7 +29,10 @@ class SettingsRoom
     const  CAN_ADD_EVERY_GRR_ADMINISTRATOR_SITE = 8;
     const  CAN_ADD_EVERY_GRR_ADMINISTRATOR = 9;
 
-    public static function whoCanAdd()
+    /**
+     * @return string[]
+     */
+    public static function whoCanAdd(): array
     {
         return [
             self::CAN_ADD_NO_RULE => 'room.authorization.form.select.norule',
@@ -43,7 +46,10 @@ class SettingsRoom
         ];
     }
 
-    public static function typeAffichageReser()
+    /**
+     * @return string[]
+     */
+    public static function typeAffichageReser(): array
     {
         return [
             self::DISPLAY_TYPE_FORM_RESERVATION_DURATION => 'setting.room.display.type_form_reservation_duree',
@@ -51,7 +57,10 @@ class SettingsRoom
         ];
     }
 
-    public static function whoCanAddFor()
+    /**
+     * @return string[]
+     */
+    public static function whoCanAddFor(): array
     {
         return [
             self::BOOKING_FOR_NONE => 'room.addfor.none',

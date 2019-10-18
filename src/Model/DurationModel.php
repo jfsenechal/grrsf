@@ -30,10 +30,9 @@ class DurationModel
 
     /**
      * Encodage de la date de fin de l'entry.
-     *
-     * @return array
+     * @return string[]
      */
-    public static function getUnitsTime()
+    public static function getUnitsTime(): array
     {
         $units = [
             self::UNIT_TIME_MINUTES => 'unit.minutes',

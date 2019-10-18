@@ -30,7 +30,7 @@ class TimeSlotsProvider
      *
      * @return TimeSlot[]
      */
-    public function getTimeSlotsModelByAreaAndDaySelected(Area $area, CarbonInterface $daySelected)
+    public function getTimeSlotsModelByAreaAndDaySelected(Area $area, CarbonInterface $daySelected): array
     {
         $hourBegin = $area->getStartTime();
         $hourEnd = $area->getEndTime();

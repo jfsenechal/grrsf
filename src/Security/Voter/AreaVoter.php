@@ -59,7 +59,7 @@ class AreaVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         if ($subject) {
             if (!$subject instanceof Area) {
@@ -77,7 +77,7 @@ class AreaVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function voteOnAttribute($attribute, $area, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $area, TokenInterface $token): bool
     {
         $user = $token->getUser();
 

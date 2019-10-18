@@ -62,7 +62,7 @@ class BindDataManager
      * @param Area      $area
      * @param Room|null $room
      */
-    public function bindMonth(Month $monthModel, Area $area, Room $room = null)
+    public function bindMonth(Month $monthModel, Area $area, Room $room = null): void
     {
         $entries = $this->entryRepository->findForMonth($monthModel->firstOfMonth(), $area, $room);
 
@@ -83,7 +83,7 @@ class BindDataManager
      *
      * @throws \Exception
      */
-    public function bindWeek(Week $weekModel, Area $area, Room $roomSelected = null)
+    public function bindWeek(Week $weekModel, Area $area, Room $roomSelected = null): array
     {
         if ($roomSelected) {
             $rooms = [$roomSelected];
@@ -120,7 +120,7 @@ class BindDataManager
      *
      * @return RoomModel[]
      */
-    public function bindDay(CarbonInterface $day, Area $area, array $timeSlots, Room $roomSelected = null)
+    public function bindDay(CarbonInterface $day, Area $area, array $timeSlots, Room $roomSelected = null): array
     {
         $roomsModel = [];
 
@@ -153,7 +153,10 @@ class BindDataManager
         return $roomsModel;
     }
 
-    public function extractByDate(\DateTimeInterface $dateTime, array $entries)
+    /**
+     * @return mixed[]
+     */
+    public function extractByDate(\DateTimeInterface $dateTime, array $entries): array
     {
         $data = [];
         foreach ($entries as $entry) {
