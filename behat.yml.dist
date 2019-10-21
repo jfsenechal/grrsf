@@ -3,6 +3,8 @@ default:
         default:
             contexts:
                 - App\Tests\Behat\DemoContext
+                - behatch:context:browser
+                - behatch:context:debug
 
     extensions:
         FriendsOfBehat\SymfonyExtension: null

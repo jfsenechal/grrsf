@@ -8,7 +8,6 @@ use Behat\Behat\Context\Context;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 /**
  * This context class contains the definitions of the steps used by the demo
@@ -23,17 +22,10 @@ final class DemoContext implements Context
 
     /** @var Response|null */
     private $response;
-    /**
-     * @var GuardAuthenticatorHandler
-     */
-    private $guardAuthenticatorHandler;
 
-    public function __construct(
-        KernelInterface $kernel,
-        GuardAuthenticatorHandler $guardAuthenticatorHandler
-    ) {
+    public function __construct(KernelInterface $kernel)
+    {
         $this->kernel = $kernel;
-        $this->guardAuthenticatorHandler = $guardAuthenticatorHandler;
     }
 
     /**
@@ -49,9 +41,11 @@ final class DemoContext implements Context
      */
     public function theResponseShouldBeReceived(): void
     {
-        if (null === $this->response) {
+        if ($this->response === null) {
             throw new \RuntimeException('No response received');
         }
+
+//        var_dump($this->response->getContent());
     }
 
     /**
@@ -62,7 +56,7 @@ final class DemoContext implements Context
     }
 
     /**
-     * @Then I should see :arg1
+     * Then I should see :arg1
      */
     public function iShouldSee($arg1)
     {
