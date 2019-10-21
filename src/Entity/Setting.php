@@ -32,7 +32,7 @@ class Setting
     private $value;
 
     /**
-     * @var string
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
@@ -45,12 +45,12 @@ class Setting
         $this->required = false;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getValue(): ?string
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -69,7 +69,7 @@ class Setting
         return $this;
     }
 
-    public function getRequired(): ?bool
+    public function getRequired(): bool
     {
         return $this->required;
     }
