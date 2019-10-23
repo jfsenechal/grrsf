@@ -5,6 +5,8 @@ namespace App\Controller\Front;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Factory\DayFactory;
+use App\Factory\MonthFactory;
+use App\Factory\WeekFactory;
 use App\Helper\MonthHelperDataDisplay;
 use App\Model\Month;
 use App\Model\Week;
@@ -44,19 +46,31 @@ class DefaultController extends AbstractController implements FrontControllerInt
      * @var DayFactory
      */
     private $dayFactory;
+    /**
+     * @var MonthFactory
+     */
+    private $monthFactory;
+    /**
+     * @var WeekFactory
+     */
+    private $weekFactory;
 
     public function __construct(
         SettingsProvider $settingservice,
         MonthHelperDataDisplay $monthHelperDataDisplay,
         BindDataManager $calendarDataManager,
         TimeSlotsProvider $timeSlotsProvider,
-        DayFactory $dayFactory
+        DayFactory $dayFactory,
+        MonthFactory $monthFactory,
+        WeekFactory $weekFactory
     ) {
         $this->bindDataManager = $calendarDataManager;
         $this->settingsProvider = $settingservice;
         $this->monthHelperDataDisplay = $monthHelperDataDisplay;
         $this->timeSlotsProvider = $timeSlotsProvider;
         $this->dayFactory = $dayFactory;
+        $this->monthFactory = $monthFactory;
+        $this->weekFactory = $weekFactory;
     }
 
     /**
@@ -66,7 +80,8 @@ class DefaultController extends AbstractController implements FrontControllerInt
      */
     public function month(Area $area, int $year, int $month, Room $room = null): Response
     {
-        $monthModel = Month::init($year, $month);
+        $monthModel = $this->monthFactory->create($year, $month);
+
         $this->bindDataManager->bindMonth($monthModel, $area, $room);
 
         $monthData = $this->monthHelperDataDisplay->generateHtmlMonth($monthModel, $area);
@@ -89,7 +104,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
      */
     public function week(Area $area, int $year, int $month, int $week, Room $room = null): Response
     {
-        $weekModel = Week::create($year, $week);
+        $weekModel = $this->weekFactory->create($year, $week);
         $roomModels = $this->bindDataManager->bindWeek($weekModel, $area, $room);
 
         return $this->render(

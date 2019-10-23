@@ -18,14 +18,14 @@ class DateProvider
         //https://carbon.nesbot.com/docs/#api-week
         //$en->firstWeekDay); != $fr->firstWeekDay);
 
-        $days = [];
-        $translator = \Carbon\Translator::get(
-            LocalHelper::getDefaultLocal()
-        ); //LocalHelper::getDefaultLocal() return 'fr'
+        /*  $days = [];
+      /*  $translator = \Carbon\Translator::get(
+              LocalHelper::getDefaultLocal()
+          );
 
-        foreach (Carbon::getDays() as $day) {
-            $days[] = $translator->trans($day);
-        }
+          foreach (Carbon::getDays() as $day) {
+              $days[] = $translator->trans($day);
+          }*/
         $days = Carbon::getDays();
         //if lundi first, on pousse dimanche a la fin
         $days[] = $days[0];

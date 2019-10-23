@@ -22,7 +22,7 @@ class CarbonFactory
     public function getToday(): CarbonInterface
     {
         $date = Carbon::today();
-        $date->locale(LocalHelper::getDefaultLocal());
+        $date->locale($this->localHelper->getDefaultLocal());
 
         return $date;
     }
@@ -30,7 +30,7 @@ class CarbonFactory
     public function getTodayImmutable(): CarbonImmutable
     {
         $date = Carbon::today();
-        $date->locale(LocalHelper::getDefaultLocal());
+        $date->locale($this->localHelper->getDefaultLocal());
 
         return $date->toImmutable();
     }
@@ -38,7 +38,7 @@ class CarbonFactory
     public function create($year = 0, $month = 1, $day = 1, $hour = 0, $minute = 0, $second = 0): Carbon
     {
         $date = Carbon::create($year, $month, $day, $hour, $minute, $second);
-        $date->locale(LocalHelper::getDefaultLocal());
+        $date->locale($this->localHelper->getDefaultLocal());
 
         return $date;
     }
@@ -59,7 +59,7 @@ class CarbonFactory
             $minute,
             $second
         );
-        $date->locale(LocalHelper::getDefaultLocal());
+        $date->locale($this->localHelper->getDefaultLocal());
 
         return $date;
     }

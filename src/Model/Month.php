@@ -8,12 +8,12 @@
 
 namespace App\Model;
 
-use App\I18n\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Webmozart\Assert\Assert;
 
 /**
  * @todo https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
@@ -25,18 +25,32 @@ class Month extends Carbon
      * @var Day[]|ArrayCollection
      */
     protected $data_days;
+    /**
+     * @var CarbonInterface
+     */
+    private $carbon;
 
-    public function __construct($time = null, $tz = null)
+    public function setCarbon()
     {
-        parent::__construct($time, $tz);
-        $this->data_days = new ArrayCollection();
+        $this->carbon = new Carbon();
     }
 
-    public static function init(int $year, int $month, $day = 1): self
+    public function getCarbon()
     {
+        return $this->carbon;
+    }
+
+    public static function init(int $year, int $month, string $language)
+    {
+        Assert::greaterThan(1970, $year);
+        Assert::greaterThan(0, $month);
+        Assert::lessThan(13, $month);
+
         $monthModel = new self();
-        $monthModel->setDate($year, $month, $day);
-        $monthModel->locale(LocalHelper::getDefaultLocal());
+        $monthModel->setDate($year, $month, 01);
+        $monthModel->locale($language);
+        $monthModel->setCarbon();
+        $monthModel->data_days = new ArrayCollection();
 
         return $monthModel;
     }

@@ -17,6 +17,10 @@ use Webmozart\Assert\Assert;
 class Week
 {
     /**
+     * @var string
+     */
+    private static $language;
+    /**
      * @var CarbonInterface
      */
     protected $first_day;
@@ -25,14 +29,15 @@ class Week
      */
     protected $last_day;
 
-    public static function create(int $year, int $week): Week
+    public static function create(int $year, int $week, string $language): Week
     {
-        Assert::greaterThan($year, 0);
+        Assert::greaterThan($year, 1970);
         Assert::greaterThan($week, 0);
 
         $date = Carbon::create($year);
         $date->setISODate($year, $week);
-        $date->locale(LocalHelper::getDefaultLocal());
+        $date->locale($language);
+        self::$language = $language;
         //$date->isoWeek($week, Carbon::MONDAY);
 
         $weekModel = new self();
@@ -54,7 +59,7 @@ class Week
             $this->getLastDay()->toDateString()
         );
 
-        $period->locale(LocalHelper::getDefaultLocal());
+        $period->locale(self::$language);
 
         return $period;
     }

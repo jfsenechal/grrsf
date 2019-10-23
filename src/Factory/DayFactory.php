@@ -8,9 +8,15 @@ use Carbon\CarbonInterface;
 
 class DayFactory
 {
-    public function __construct(CarbonFactory $carbonFactory)
+    /**
+     * @var LocalHelper
+     */
+    private $localHelper;
+
+    public function __construct(CarbonFactory $carbonFactory, LocalHelper $localHelper)
     {
         $this->carbonFactory = $carbonFactory;
+        $this->localHelper = $localHelper;
     }
 
     public function createImmutable(int $year, int $month, int $day): Day
@@ -18,7 +24,7 @@ class DayFactory
         $date = $this->carbonFactory->createImmutable($year, $month, $day);
 
         $dayModel = new Day($date);
-        $dayModel->locale(LocalHelper::getDefaultLocal());
+        $dayModel->locale($this->localHelper->getDefaultLocal());
 
         return $dayModel;
     }
@@ -26,7 +32,7 @@ class DayFactory
     public function createFromCarbon(CarbonInterface $carbon): Day
     {
         $dayModel = new Day($carbon);
-        $dayModel->locale(LocalHelper::getDefaultLocal());
+        $dayModel->locale($this->localHelper->getDefaultLocal());
 
         return $dayModel;
     }
