@@ -41,12 +41,11 @@ class CheckCommand extends Command
     private $migrationUtil;
 
     public function __construct(
-        string $name = null,
         MigrationChecker $migrationChecker,
         EntryRepository $entryRepository,
         MigrationUtil $migrationUtil
     ) {
-        parent::__construct($name);
+        parent::__construct();
         $this->migrationChecker = $migrationChecker;
         $this->entryRepository = $entryRepository;
         $this->migrationUtil = $migrationUtil;

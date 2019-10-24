@@ -84,7 +84,6 @@ class InstallDataCommand extends Command
     private $settingRepository;
 
     public function __construct(
-        string $name = null,
         EntityManagerInterface $entityManager,
         EntryTypeRepository $entryTypeRepository,
         RoomRepository $roomRepository,
@@ -98,7 +97,7 @@ class InstallDataCommand extends Command
         UserFactory $userFactory,
         UserPasswordEncoderInterface $userPasswordEncoder
     ) {
-        parent::__construct($name);
+        parent::__construct();
         $this->entryTypeRepository = $entryTypeRepository;
         $this->typeEntryFactory = $typeEntryFactory;
         $this->areaRepository = $areaRepository;

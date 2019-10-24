@@ -10,12 +10,36 @@
 
 namespace App\Tests\Behat;
 
-
-use Behat\Behat\Context\Step;
-
+use Behat\Behat\Context\Context;
 use Behat\MinkExtension\Context\MinkContext;
+use Behat\MinkExtension\Context\RawMinkContext;
 
-class FeatureContext extends MinkContext
+class FeatureContext extends RawMinkContext
 {
+    /**
+     * @Given I am logged in as an admin
+     */
+    public function iAmLoggedInAsAnAdmin()
+    {
+        $this->visitPath('/login');
+        $this->fillField('username', 'grr@domain.be');
+        $this->fillField('password', 'homer');
+        $this->pressButton('S\'identifier');
+    }
 
+    private function fillField(string $field, string $value)
+    {
+        $this->getSession()->getPage()->fillField($field, $value);
+    }
+
+    private function pressButton($button)
+    {
+        $button = $this->fixStepArgument($button);
+        $this->getSession()->getPage()->pressButton($button);
+    }
+
+    protected function fixStepArgument($argument)
+    {
+        return str_replace('\\"', '"', $argument);
+    }
 }

@@ -88,7 +88,6 @@ class MigrationCommand extends Command
     private $resolveRepeats = [];
 
     public function __construct(
-        string $name = null,
         RequestData $requestData,
         EntityManagerInterface $entityManager,
         MigrationUtil $migrationUtil,
@@ -96,7 +95,7 @@ class MigrationCommand extends Command
         PeriodicityDaysProvider $periodicityDaysProvider,
         GeneratorEntry $generatorEntry
     ) {
-        parent::__construct($name);
+        parent::__construct();
         $this->requestData = $requestData;
         $this->entityManager = $entityManager;
         $this->migrationUtil = $migrationUtil;
@@ -145,7 +144,7 @@ class MigrationCommand extends Command
                         );
                     }
 
-                    return (int) $password;
+                    return (int)$password;
                 }
             );
             $password = $helper->ask($input, $output, $question);
@@ -158,7 +157,7 @@ class MigrationCommand extends Command
         $questionDate->setValidator(
             function ($date) {
                 if (null == $date) {
-                    return (int) $date;
+                    return (int)$date;
                 }
 
                 if (!$date = \DateTime::createFromFormat('Y-m-d', $date)) {
@@ -167,7 +166,7 @@ class MigrationCommand extends Command
                     );
                 }
 
-                return (int) $date;
+                return (int)$date;
             }
         );
 
@@ -308,7 +307,7 @@ class MigrationCommand extends Command
             if ($room) {
                 $entry->setRoom($room);
                 $this->entityManager->persist($entry);
-                $repeatId = (int) $data['repeat_id'];
+                $repeatId = (int)$data['repeat_id'];
 
                 if ($data['entry_type'] >= 1) { // il s'agit d'une reservation a laquelle est associee une periodicite
                 }

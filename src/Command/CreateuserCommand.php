@@ -34,22 +34,17 @@ class CreateuserCommand extends Command
      */
     private $userFactory;
     /**
-     * @var string
-     */
-    private $name;
-    /**
      * @var PasswordHelper
      */
     private $passwordHelper;
 
     public function __construct(
-        string $name = null,
         UserManager $userManager,
         UserFactory $userFactory,
         UserRepository $userRepository,
         PasswordHelper $passwordHelper
     ) {
-        parent::__construct($name);
+        parent::__construct();
         $this->userManager = $userManager;
         $this->userFactory = $userFactory;
         $this->userRepository = $userRepository;
@@ -99,7 +94,7 @@ class CreateuserCommand extends Command
                         );
                     }
 
-                    return (int) $password;
+                    return (int)$password;
                 }
             );
             $password = $helper->ask($input, $output, $question);

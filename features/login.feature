@@ -16,3 +16,8 @@ Feature: Authentication
     #Then print last response
     Then I should see "Grr admin"
 
+  Scenario: Bad login
+    When I set basic authentication with "something" and "wrong"
+    And I go to "/browser/auth.php"
+    Then the response status code should be 401
+    And I should see "NONE SHALL PASS"
