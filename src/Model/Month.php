@@ -42,9 +42,9 @@ class Month extends Carbon
 
     public static function init(int $year, int $month, string $language)
     {
-        Assert::greaterThan(1970, $year);
-        Assert::greaterThan(0, $month);
-        Assert::lessThan(13, $month);
+        Assert::greaterThan($year, 1970);
+        Assert::greaterThan($month, 0);
+        Assert::lessThan($month, 13);
 
         $monthModel = new self();
         $monthModel->setDate($year, $month, 01);

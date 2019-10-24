@@ -4,8 +4,8 @@ namespace App\Twig;
 
 use App\Entity\Area;
 use App\Entity\Entry;
+use App\Factory\MonthFactory;
 use App\Model\Day;
-use App\Model\Month;
 use App\Model\RoomModel;
 use App\Model\TimeSlot;
 use App\Model\Week;
@@ -48,6 +48,10 @@ class GrrFrontExtension extends AbstractExtension
      * @var SettingRepository
      */
     private $settingRepository;
+    /**
+     * @var MonthFactory
+     */
+    private $monthFactory;
 
     public function __construct(
         RequestStack $requestStack,
@@ -55,7 +59,8 @@ class GrrFrontExtension extends AbstractExtension
         Environment $twigEnvironment,
         NavigationManager $navigationManager,
         EntryTypeRepository $entryTypeRepository,
-        SettingRepository $settingRepository
+        SettingRepository $settingRepository,
+        MonthFactory $monthFactory
     ) {
         $this->twigEnvironment = $twigEnvironment;
         $this->navigationManager = $navigationManager;
@@ -63,6 +68,7 @@ class GrrFrontExtension extends AbstractExtension
         $this->menuGenerator = $menuGenerator;
         $this->entryTypeRepository = $entryTypeRepository;
         $this->settingRepository = $settingRepository;
+        $this->monthFactory = $monthFactory;
     }
 
     /**
@@ -73,13 +79,13 @@ class GrrFrontExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'grrPeriodicityTypeName', function (int $type) {
-                    return $this->grrPeriodicityTypeName($type);
-                }, ['is_safe' => ['html']]
+                return $this->grrPeriodicityTypeName($type);
+            }, ['is_safe' => ['html']]
             ),
             new TwigFilter(
                 'grrWeekNiceName', function (Week $week): string {
-                    return $this->grrWeekNiceName($week);
-                }, ['is_safe' => ['html']]
+                return $this->grrWeekNiceName($week);
+            }, ['is_safe' => ['html']]
             ),
         ];
     }
@@ -93,34 +99,34 @@ class GrrFrontExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'grrMonthNavigationRender', function (): string {
-                    return $this->monthNavigationRender();
-                }, ['is_safe' => ['html']]
+                return $this->monthNavigationRender();
+            }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrMenuNavigationRender', function (): string {
-                    return $this->menuNavigationRender();
-                }, ['is_safe' => ['html']]
+                return $this->menuNavigationRender();
+            }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrGenerateCellDataDay', function (TimeSlot $hour, RoomModel $roomModel, Day $day): string {
-                    return $this->grrGenerateCellDataDay($hour, $roomModel, $day);
-                }, ['is_safe' => ['html']]
+                return $this->grrGenerateCellDataDay($hour, $roomModel, $day);
+            }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrLegendEntryType', function (Area $area): string {
-                    return $this->grrLegendEntryType($area);
-                }, ['is_safe' => ['html']]
+                return $this->grrLegendEntryType($area);
+            }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrCompanyName', function (): string {
-                    return $this->grrCompanyName();
-                }
+                return $this->grrCompanyName();
+            }
             ),
         ];
     }
 
     /**
-     * @param TimeSlot  $hour
+     * @param TimeSlot $hour
      * @param RoomModel $roomModel
      *
      * @return string|void
@@ -167,10 +173,10 @@ class GrrFrontExtension extends AbstractExtension
 
     /**
      *
-     * @throws \Twig\Error\LoaderError
+     * @return \Symfony\Component\HttpFoundation\Response|string
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
-     * @return \Symfony\Component\HttpFoundation\Response|string
+     * @throws \Twig\Error\LoaderError
      */
     public function monthNavigationRender()
     {
@@ -183,7 +189,7 @@ class GrrFrontExtension extends AbstractExtension
         $year = $request->get('year') ?? 0;
         $month = $request->get('month') ?? 0;
 
-        $monthModel = Month::init($year, $month);
+        $monthModel = $this->monthFactory->create($year, $month);
 
         $navigation = $this->navigationManager->createMonth($monthModel);
 

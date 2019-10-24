@@ -8,6 +8,8 @@
 
 namespace App\Navigation;
 
+use App\Factory\MonthFactory;
+use App\I18n\LocalHelper;
 use App\Model\Month;
 use App\Model\Navigation;
 use App\Provider\DateProvider;
@@ -38,20 +40,26 @@ class NavigationManager
      * @var NavigationFactory
      */
     private $navigationFactory;
+    /**
+     * @var MonthFactory
+     */
+    private $monthFactory;
 
     public function __construct(
         NavigationFactory $navigationFactory,
         Environment $environment,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        MonthFactory $monthFactory
     ) {
         $this->twigEnvironment = $environment;
         $this->requestStack = $requestStack;
         $this->navigationFactory = $navigationFactory;
+        $this->monthFactory = $monthFactory;
     }
 
     /**
      * @param Month $month
-     * @param int   $number nombre de mois
+     * @param int $number nombre de mois
      *
      * @return Navigation
      */
@@ -70,7 +78,7 @@ class NavigationManager
         $current = $this->month->firstOfMonth();
 
         for ($i = 0; $i < $number; ++$i) {
-            $monthModel = Month::init($current->year, $current->month);
+            $monthModel = $this->monthFactory->create($current->year, $current->month);
             $navigation->addMonth($this->renderMonthByWeeks($monthModel));
             $current->addMonth();
         }
