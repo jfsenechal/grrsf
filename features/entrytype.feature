@@ -1,22 +1,34 @@
-Feature: Ajout d'un type d'entrée
-  Pour ajouter un type je dois etre administrateur
+Feature: Gestion des types d'entrées
+  J'ajoute un type d'entrée dont la lettre est déjà utilisée
+  J'ajoute le type d'entrée "MyType"
+  Je renomme le type d'entrée "" en ""
 
-  Scenario: Logging in
-    Given I am on homepage
-    When I follow "Administration"
-    #Then the response should be received
-    #When I follow "Administration"
-    Then I should be on "/login"
-    And I fill in "username" with "grr@domain.be"
-    And I fill in "password" with "homer"
-    And I press "S'identifier"
-    Then I should be on "/admin/"
-    #Then print last response
-    Then I should see "Grr admin"
-    When I follow "Type de réservations"
+  Scenario: Lettre "A" déjà utilisée
+    Given I am logged in as an admin
+    Given I am on "/admin/entrytype/"
+    Then I should see "Types de réservation"
+    When I follow "Nouveau type"
+    And I fill in "type_entry[name]" with "Racc"
+    And I fill in "type_entry[letter]" with "A"
+    And I press "Sauvegarder"
+    Then I should see "Cette lettre est déjà utilisée"
+
+  Scenario: J'ajoute le type d'entrée "Racc"
+    Given I am logged in as an admin
+    Given I am on "/admin/entrytype/"
+    Then I should see "Types de réservation"
     When I follow "Nouveau type"
     And I fill in "type_entry[name]" with "Racc"
     And I fill in "type_entry[letter]" with "R"
     And I press "Sauvegarder"
-    Then I should be on "admin/entry/type/"
     Then I should see "Le type de réservation a bien été ajouté"
+
+  Scenario: Je renomme Bureau en Bureaux
+    Given I am logged in as an admin
+    Given I am on "/admin/entrytype/"
+    Then I should see "Types de réservation"
+    When I follow "Bureau"
+    When I follow "Modifier"
+    And I fill in "type_entry[name]" with "Bureaux"
+    And I press "Sauvegarder"
+    Then I should see "Bureaux"

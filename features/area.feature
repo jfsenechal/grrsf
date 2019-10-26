@@ -29,8 +29,9 @@ Feature: Manage area
     Given I am logged in as an admin
     Given I am on "/admin/area/"
     Then I should see "Les domaines"
-    When I follow "Area demo"
+    When I follow "Hdv demo"
     When I follow "Types d'entrée"
-    And I ti in "assoc_type_for_area[entryTypes][]" with "Hdv demo"
+    When I check "Cours"
+    And I check "Reunion"
     And I press "Sauvegarder"
     Then I should see "Hdv demo"

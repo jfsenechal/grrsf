@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @Route("/admin/entry/type")
+ * @Route("/admin/entrytype")
  * @IsGranted("ROLE_GRR_ADMINISTRATOR")
  */
 class EntryTypeController extends AbstractController
