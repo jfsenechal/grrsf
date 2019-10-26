@@ -29,7 +29,6 @@ class SettingsControllerTest extends BaseTesting
         $crawler = $this->administrator->clickLink('Editer');
 
         $form = $crawler->selectButton('Sauvegarder')->form();
-        $form['general_setting[company]']->setValue('Grr');
         $form['general_setting[nb_calendar]']->setValue(1);
         $form['general_setting[company]']->setValue('Grr');
 

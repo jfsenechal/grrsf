@@ -27,6 +27,17 @@ class FeatureContext extends RawMinkContext
         $this->pressButton('S\'identifier');
     }
 
+    /**
+     * @Given I am logged in as user :username
+     */
+    public function iAmLoggedInAsUser(string $username)
+    {
+        $this->visitPath('/login');
+        $this->fillField('username', $username);
+        $this->fillField('password', 'homer');
+        $this->pressButton('S\'identifier');
+    }
+
     private function fillField(string $field, string $value)
     {
         $this->getSession()->getPage()->fillField($field, $value);
