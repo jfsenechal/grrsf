@@ -50,18 +50,14 @@ class GrrAdminExtension extends AbstractExtension
     }
 
     /**
-     * field:repOpt
-     * 7 chiffres.
-     *
-     * @param $value
-     *
+     * @param string $value
      * @return string
      */
-    public function joursSemaine($value): string
+    public function joursSemaine(string $value): string
     {
         $jours = DateProvider::getNamesDaysOfWeek();
 
-        return isset($jours[$value]) ? $jours[$value] : $value;
+        return $jours[$value] ?? $value;
     }
 
     public function displayColor(string $value): string

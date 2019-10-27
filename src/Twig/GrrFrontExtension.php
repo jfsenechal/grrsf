@@ -128,9 +128,8 @@ class GrrFrontExtension extends AbstractExtension
     /**
      * @param TimeSlot $hour
      * @param RoomModel $roomModel
-     *
-     * @return string|void
-     *
+     * @param Day $day
+     * @return string
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError

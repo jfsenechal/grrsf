@@ -61,9 +61,4 @@ class Day extends CarbonImmutable
             $this->addEntry($entry);
         }
     }
-
-    public function time(): string
-    {
-        return $this->dateImmutable->format('h:s');
-    }
 }

@@ -14,7 +14,7 @@ class DurationValidator extends ConstraintValidator
 {
     /**
      * @param DurationModel $value
-     * @param Constraint    $constraint
+     * @param Duration    $constraint
      *
      * @throws \Exception
      */

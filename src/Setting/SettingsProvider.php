@@ -3,6 +3,7 @@
 namespace App\Setting;
 
 use App\Entity\Area;
+use App\Entity\Room;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 
@@ -34,11 +35,10 @@ class SettingsProvider
     }
 
     /**
-     * @return mixed
-     *
-     * @todo
+     * @return Room|null
+     * @todo default room
      */
-    public function getDefaulRoom(): ?\App\Entity\Room
+    public function getDefaulRoom(): ?Room
     {
         return null;
 

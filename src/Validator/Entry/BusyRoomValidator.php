@@ -26,7 +26,7 @@ class BusyRoomValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$value instanceof Entry) {
-            throw new \UnexpectedValueException($value, 'Entry');
+            throw new \InvalidArgumentException($value, 0);
         }
 
         $room = $value->getRoom();

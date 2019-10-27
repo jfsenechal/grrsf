@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Checker;
+namespace App\Migration;
 
 use App\Manager\AuthorizationManager;
 use App\Repository\RoomRepository;

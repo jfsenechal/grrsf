@@ -131,7 +131,8 @@ class RequestData
 
     /**
      * @param string $file
-     * @return string|bool
+     * @param array $params
+     * @return false|string
      */
     private function request(string $file, array $params = [])
     {

@@ -26,7 +26,7 @@ class SecurityHelper
      * Peux encoder des entry dans toutes les ressources de l'Area.
      *
      * @param UserInterface $user
-     * @param Area          $area
+     * @param Area $area
      *
      * @return bool
      */
@@ -46,7 +46,7 @@ class SecurityHelper
      * Peux encoder des entry dans toutes les ressources de l'Area.
      *
      * @param UserInterface $user
-     * @param Area          $area
+     * @param Area $area
      *
      * @return bool
      */
@@ -69,7 +69,7 @@ class SecurityHelper
      * Peux gérer la room (modifier les paramètres) et pas de contraintes pour encoder les entry.
      *
      * @param UserInterface $user
-     * @param Room          $room
+     * @param Room $room
      *
      * @return bool
      */
@@ -92,7 +92,7 @@ class SecurityHelper
      * Peux gérer toutes les entrées sans contraintes.
      *
      * @param UserInterface $user
-     * @param Room          $room
+     * @param Room $room
      *
      * @return bool
      */
@@ -115,89 +115,85 @@ class SecurityHelper
         return false;
     }
 
-    public function isGrrAdministrator(UserInterface $user)
+    public function isGrrAdministrator(UserInterface $user): bool
     {
         return $user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR);
     }
 
     /**
-     * @param Room      $room
+     * @param Room $room
      * @param User|null $user
      *
      * @return bool
      */
     public function checkAuthorizationRoomToAddEntry(Room $room, UserInterface $user = null): bool
     {
-        $who = $room->getRuleToAdd();
+        $ruleToAdd = $room->getRuleToAdd();
 
-        /*
+        /**
          * Tout le monde peut encoder une réservation meme si pas connecte
          */
-        if (SettingsRoom::CAN_ADD_EVERY_BODY === $who) {
+        if (SettingsRoom::CAN_ADD_EVERY_BODY === $ruleToAdd) {
             return true;
         }
 
-        /*
+        /**
          * A partir d'ici il faut être connecté
          */
         if (!$user) {
             return false;
         }
 
-        /*
-         * Il faut être connecté
+        /**
+         * Le user est il full identifie
          */
-        if (SettingsRoom::CAN_ADD_EVERY_CONNECTED === $who) {
-            if (!$user) {
-                return false;
-            }
-
+        if (SettingsRoom::CAN_ADD_EVERY_CONNECTED === $ruleToAdd) {
             return $user->hasRole(SecurityRole::ROLE_GRR);
         }
 
-        /*
+        /**
          * il faut être connecté et avoir le role @see SecurityRole::ROLE_GRR_ACTIVE_USER
          */
-        if (SettingsRoom::CAN_ADD_EVERY_USER_ACTIVE === $who) {
+        if (SettingsRoom::CAN_ADD_EVERY_USER_ACTIVE === $ruleToAdd) {
             return $user->hasRole(SecurityRole::ROLE_GRR_ACTIVE_USER);
         }
 
-        /*
+        /**
          * Il faut être administrateur de la room
          */
-        if (SettingsRoom::CAN_ADD_EVERY_ROOM_ADMINISTRATOR === $who) {
+        if (SettingsRoom::CAN_ADD_EVERY_ROOM_ADMINISTRATOR === $ruleToAdd) {
             return $this->isRoomAdministrator($user, $room);
         }
 
-        /*
+        /**
          * Il faut être manager de la room
          */
-        if (SettingsRoom::CAN_ADD_EVERY_ROOM_MANAGER === $who) {
+        if (SettingsRoom::CAN_ADD_EVERY_ROOM_MANAGER === $ruleToAdd) {
             return $this->isRoomManager($user, $room);
         }
 
-        /*
+        /**
          * Il faut être administrateur de l'area
          */
-        if (SettingsRoom::CAN_ADD_EVERY_AREA_ADMINISTRATOR === $who) {
+        if (SettingsRoom::CAN_ADD_EVERY_AREA_ADMINISTRATOR === $ruleToAdd) {
             $area = $room->getArea();
 
             return $this->isAreaAdministrator($user, $area);
         }
 
-        /*
+        /**
          * Il faut être manager de l'area
          */
-        if (SettingsRoom::CAN_ADD_EVERY_AREA_MANAGER === $who) {
+        if (SettingsRoom::CAN_ADD_EVERY_AREA_MANAGER === $ruleToAdd) {
             $area = $room->getArea();
 
             return $this->isAreaManager($user, $area);
         }
 
-        /*
+        /**
          * Il faut être administrateur de Grr
          */
-        if (SettingsRoom::CAN_ADD_EVERY_GRR_ADMINISTRATOR === $who) {
+        if (SettingsRoom::CAN_ADD_EVERY_GRR_ADMINISTRATOR === $ruleToAdd) {
             return $this->isGrrAdministrator($user);
         }
 
@@ -206,7 +202,7 @@ class SecurityHelper
 
     /**
      * @param User|null $user
-     * @param Room      $room
+     * @param Room $room
      *
      * @return bool
      */
@@ -254,7 +250,7 @@ class SecurityHelper
     }
 
     /**
-     * @param Area          $area
+     * @param Area $area
      * @param UserInterface $user
      *
      * @return bool

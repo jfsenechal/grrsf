@@ -21,8 +21,7 @@ class ValidationsEntry
 
     /**
      * @param Entry $entry
-     *
-     * @return ConstraintViolationList[]
+     * @return array
      */
     public function validate(Entry $entry): array
     {
@@ -37,7 +36,7 @@ class ValidationsEntry
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     protected function getValidators(): array
     {

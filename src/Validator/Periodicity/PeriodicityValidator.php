@@ -9,17 +9,17 @@ use Symfony\Component\Validator\ConstraintValidator;
 class PeriodicityValidator extends ConstraintValidator
 {
     /**
-     * @param \App\Entity\Periodicity                $value
+     * @param \App\Entity\Periodicity|null                $value
      * @param \App\Validator\Periodicity\Periodicity $constraint
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (null === $value || '' === $value) {
+        if (null === $value) {
             return;
         }
 
         if (!$value instanceof \App\Entity\Periodicity) {
-            throw new \UnexpectedValueException($value, 'Periodicity');
+            throw new \InvalidArgumentException($value, 0);
         }
 
         $typePeriodicity = $value->getType();

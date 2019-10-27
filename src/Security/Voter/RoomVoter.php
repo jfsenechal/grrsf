@@ -64,7 +64,7 @@ class RoomVoter extends Voter
 
     /**
      * {@inheritdoc}
-     * @return bool|mixed
+     * @return bool
      */
     protected function voteOnAttribute($attribute, $room, TokenInterface $token): bool
     {

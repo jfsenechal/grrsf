@@ -15,7 +15,7 @@ class AreaTimeSlotValidator extends ConstraintValidator
     public function validate($entry, Constraint $constraint): void
     {
         if (!$entry instanceof Entry) {
-            throw new \UnexpectedValueException($entry, 'Entry');
+            throw new \InvalidArgumentException($entry, 0);
         }
 
         $area = $entry->getArea();

@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Checker\MigrationChecker;
+use App\Migration\MigrationChecker;
 use App\Migration\MigrationUtil;
 use App\Repository\EntryRepository;
 use Symfony\Component\Console\Command\Command;

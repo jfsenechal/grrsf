@@ -1,4 +1,5 @@
 <?php
+//phpstan/phpstan-doctrine
 
 require dirname(__DIR__).'/config/bootstrap.php';
 use App\Kernel;
