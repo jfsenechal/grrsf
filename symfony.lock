@@ -34,6 +34,9 @@
     "behat/mink-extension": {
         "version": "2.3.1"
     },
+    "behat/mink-selenium2-driver": {
+        "version": "v1.3.1"
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -193,6 +196,9 @@
     },
     "fzaninotto/faker": {
         "version": "v1.8.0"
+    },
+    "instaclick/php-webdriver": {
+        "version": "1.4.6"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"

@@ -17,7 +17,8 @@ class FeatureContext extends RawMinkContext
     /**
      * @beforeScenario
      */
-    public function loadFixtures() {
+    public function loadFixtures()
+    {
 
     }
 
@@ -28,6 +29,7 @@ class FeatureContext extends RawMinkContext
     public function iAmLoggedInAsAnAdmin()
     {
         $this->visitPath('/login');
+        //var_dump($this->getSession()->getPage()->getContent());
         $this->fillField('username', 'grr@domain.be');
         $this->fillField('password', 'homer');
         $this->pressButton('S\'identifier');
