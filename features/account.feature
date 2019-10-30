@@ -2,6 +2,8 @@ Feature: Account
   Je me connecte avec bob
   Je modifie mon profil en changeant mon nom en "Batman"
   Je seléctionne Esquare comme Area par defaut
+  Je change le mot de passe en "marge"
+  Je test le nouveau mot de passe
 
   Scenario: Modify account
     Given I am logged in as user "bob@domain.be"

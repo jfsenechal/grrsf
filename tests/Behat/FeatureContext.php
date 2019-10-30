@@ -11,6 +11,7 @@
 namespace App\Tests\Behat;
 
 use Behat\MinkExtension\Context\RawMinkContext;
+use Carbon\Carbon;
 
 class FeatureContext extends RawMinkContext
 {
@@ -44,6 +45,32 @@ class FeatureContext extends RawMinkContext
         $this->fillField('username', $username);
         $this->fillField('password', 'homer');
         $this->pressButton('S\'identifier');
+    }
+
+    /**
+     * Clicks link semaine
+     * Example: When I follow this week
+     * @Then /^I follow this week$/
+     *
+     */
+    public function clickLinkWeek()
+    {
+        $link = "s".Carbon::today()->week;
+        $link = $this->fixStepArgument($link);
+        $this->getSession()->getPage()->clickLink($link);
+    }
+
+    /**
+     * Clicks link day
+     * Example: When I follow this day
+     * @Then /^I follow this day$/
+     *
+     */
+    public function clickLinkDay()
+    {
+        $link = Carbon::today()->day;
+        $link = $this->fixStepArgument($link);
+        $this->getSession()->getPage()->clickLink($link);
     }
 
     private function fillField(string $field, string $value)
