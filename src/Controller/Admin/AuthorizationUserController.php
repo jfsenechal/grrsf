@@ -59,7 +59,7 @@ class AuthorizationUserController extends AbstractController
      *
      * @return Response
      */
-    public function new(Request $request, UserInterface $user): Response
+    public function new(Request $request, User $user): Response
     {
         $authorizationModel = new AuthorizationModel();
         $authorizationModel->setUsers([$user]);
@@ -87,7 +87,7 @@ class AuthorizationUserController extends AbstractController
     /**
      * @Route("/{id}", name="grr_authorization_show_by_user", methods={"GET"})
      */
-    public function show(UserInterface $user): Response
+    public function show(User $user): Response
     {
         $authorizations = $this->authorizationRepository->findByUser($user);
         $urlBack = $this->generateUrl('grr_authorization_show_by_user', ['id' => $user->getId()]);
