@@ -50,9 +50,9 @@ class FeatureContext extends RawMinkContext
      */
     public function iFillDateBeginEntry(int $day, int $month, int $year)
     {
-        $this->fillField('entry_with_periodicity[periodicity][endTime][day]', $day);
-        $this->fillField('entry_with_periodicity[periodicity][endTime][month]', $month);
-        $this->fillField('entry_with_periodicity[periodicity][endTime][year]', $year);
+        $this->fillField('entry_with_periodicity_startTime_date_day', $day);
+        $this->fillField('entry_with_periodicity_startTime_date_month', $month);
+        $this->fillField('entry_with_periodicity_startTime_date_year', $year);
     }
 
     /**
