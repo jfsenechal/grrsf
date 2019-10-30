@@ -67,9 +67,9 @@ Feature: Manage entries with periodicity
     And I fill the periodicity endTime with the date 5/12/2019
     And I press "Sauvegarder"
     Then I should see "lundi 2 septembre 2019"
-    Then I should see "mercredi 2 octobre 2019"
-    Then I should see "samedi 2 novembre 2019"
-    Then I should see "lundi 2 décembre 2019"
+    And I should see "mercredi 2 octobre 2019"
+    And I should see "samedi 2 novembre 2019"
+    And I should see "lundi 2 décembre 2019"
 
   Scenario: Add entry with periodicity every month with week day
     And I fill the entry startTime with the date 2/9/2019
@@ -80,6 +80,29 @@ Feature: Manage entries with periodicity
     And I fill the periodicity endTime with the date 5/12/2019
     And I press "Sauvegarder"
     Then I should see "lundi 2 septembre 2019"
-    Then I should see "lundi 7 octobre 2019"
-    Then I should see "lundi 4 novembre 2019"
-    Then I should see "lundi 2 décembre 2019"
+    And I should see "lundi 7 octobre 2019"
+    And I should see "lundi 4 novembre 2019"
+    And I should see "lundi 2 décembre 2019"
+
+  Scenario: Add entry with periodicity every year end time too short
+    And I fill the entry startTime with the date 2/9/2019
+    And I fill in "entry_with_periodicity[duration][time]" with "3"
+    And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
+    #1 => Chaque annee
+    And I select "4" from "entry_with_periodicity[periodicity][type]"
+    And I fill the periodicity endTime with the date 5/12/2019
+    And I press "Sauvegarder"
+    Then I should see "La date de fin de la périodicité doit au moins dépasser d'un an par rapport à la de de fin de la réservation"
+
+  Scenario: Add entry with periodicity every year
+    And I fill the entry startTime with the date 2/9/2019
+    And I fill in "entry_with_periodicity[duration][time]" with "3"
+    And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
+    #1 => Chaque annee
+    And I select "4" from "entry_with_periodicity[periodicity][type]"
+    And I fill the periodicity endTime with the date 5/10/2022
+    And I press "Sauvegarder"
+    Then I should see "lundi 2 septembre 2019"
+    And I should see "mercredi 2 septembre 2020"
+    And I should see "jeudi 2 septembre 2021"
+    And I should see "vendredi 2 septembre 2022"
