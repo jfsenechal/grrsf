@@ -36,7 +36,7 @@ class FeatureContext extends RawMinkContext
     }
 
     /**
-     * @Given I fill the periodicity endTime with :day :month :year
+     * @Given I fill the periodicity endTime with the date :day/:month/:year
      */
     public function iFillEndTimePeridocity(int $day, int $month, int $year)
     {
@@ -45,6 +45,15 @@ class FeatureContext extends RawMinkContext
         $this->fillField('entry_with_periodicity[periodicity][endTime][year]', $year);
     }
 
+    /**
+     * @Given I fill the entry startTime with the date :day/:month/:year
+     */
+    public function iFillDateBeginEntry(int $day, int $month, int $year)
+    {
+        $this->fillField('entry_with_periodicity[periodicity][endTime][day]', $day);
+        $this->fillField('entry_with_periodicity[periodicity][endTime][month]', $month);
+        $this->fillField('entry_with_periodicity[periodicity][endTime][year]', $year);
+    }
 
     /**
      * @Given I am logged in as user :username

@@ -19,9 +19,7 @@ Feature: Manage entries with periodicity
     And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
     #1 => Chaque jour
     And I select "1" from "entry_with_periodicity[periodicity][type]"
-    And I select "1" from "entry_with_periodicity[periodicity][endTime][day]"
-    And I select "9" from "entry_with_periodicity[periodicity][endTime][month]"
-    And I select "2019" from "entry_with_periodicity[periodicity][endTime][year]"
+    And I fill the periodicity endTime with the date 1/9/2019
     And I press "Sauvegarder"
     #Then print last response
     Then I should see "La date de fin de la périodicité doit être plus grande que la date de fin de la réservation"
@@ -39,9 +37,7 @@ Feature: Manage entries with periodicity
     And I select "Jour(s)" from "entry_with_periodicity_duration_unit"
     #1 => Chaque jour
     And I select "1" from "entry_with_periodicity[periodicity][type]"
-    And I select "10" from "entry_with_periodicity[periodicity][endTime][day]"
-    And I select "9" from "entry_with_periodicity[periodicity][endTime][month]"
-    And I select "2019" from "entry_with_periodicity[periodicity][endTime][year]"
+    And I fill the periodicity endTime with the date 10/9/2019
     And I press "Sauvegarder"
     #Then print last response
     Then I should see "La durée ne peut excéder une journée pour une répétition par jour"
@@ -62,9 +58,7 @@ Feature: Manage entries with periodicity
     And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
     #1 => Chaque jour
     And I select "1" from "entry_with_periodicity[periodicity][type]"
-    And I select "5" from "entry_with_periodicity[periodicity][endTime][day]"
-    And I select "9" from "entry_with_periodicity[periodicity][endTime][month]"
-    And I select "2019" from "entry_with_periodicity[periodicity][endTime][year]"
+    And I fill the periodicity endTime with the date 5/9/2019
     And I press "Sauvegarder"
     Then print last response
     Then I should see "My reservation repeated"
