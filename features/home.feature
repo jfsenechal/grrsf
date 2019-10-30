@@ -4,5 +4,10 @@
 
 Feature: Using SymfonyExtension
 
-    Scenario: Checking the application's kernel environment
-        Then the application's kernel should use "test" environment
+  @javascript
+  Scenario: Checking menu select
+    Then I am on the homepage
+    Then I should be on "/"
+    Then print current URL
+    Then print last response
+    And I select "Hdv" from "area_menu_select_area"

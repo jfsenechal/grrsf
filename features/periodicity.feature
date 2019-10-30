@@ -151,7 +151,6 @@ Feature: Manage entries with periodicity
     And I check "Mardi"
     And I select "1" from "entry_with_periodicity[periodicity][weekRepeat]"
     And I press "Sauvegarder"
-    And print last response
     Then I should see "lundi 2 septembre 2019"
     Then I should see "mardi 3 septembre 2019"
     Then I should see "lundi 9 septembre 2019"
@@ -160,3 +159,32 @@ Feature: Manage entries with periodicity
     Then I should see "mardi 17 septembre 2019"
     Then I should see "lundi 23 septembre 2019"
     Then I should see "mardi 24 septembre 2019"
+
+  Scenario: Add entry with periodicity every 2 week
+    And I fill the entry startTime with the date 2/9/2019
+    And I fill in "entry_with_periodicity[duration][time]" with "3"
+    And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
+    #1 => Chaque semaine
+    And I select "2" from "entry_with_periodicity[periodicity][type]"
+    And I fill the periodicity endTime with the date 28/9/2019
+    And I check "Lundi"
+    And I check "Mardi"
+    And I select "2" from "entry_with_periodicity[periodicity][weekRepeat]"
+    And I press "Sauvegarder"
+    Then I should see "lundi 2 septembre 2019"
+    Then I should see "mardi 3 septembre 2019"
+    Then I should see "lundi 16 septembre 2019"
+    Then I should see "mardi 17 septembre 2019"
+
+  Scenario: Add entry with periodicity every week with duration more than 24h
+    And I fill the entry startTime with the date 2/9/2019
+    And I fill in "entry_with_periodicity[duration][time]" with "3"
+    And I select "Jour(s)" from "entry_with_periodicity_duration_unit"
+    #1 => Chaque semaine
+    And I select "2" from "entry_with_periodicity[periodicity][type]"
+    And I fill the periodicity endTime with the date 28/9/2019
+    And I check "Lundi"
+    And I check "Mardi"
+    And I select "2" from "entry_with_periodicity[periodicity][weekRepeat]"
+    And I press "Sauvegarder"
+    Then I should see "La durée ne peut excéder une journée pour une répétition par semaine"
