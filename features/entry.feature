@@ -118,5 +118,3 @@ Feature: Manage entries
     And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
     And I press "Sauvegarder"
     Then I should see "L'heure de début doit être plus grande que l'heure d'ouverture de la salle"
-
-

@@ -23,7 +23,6 @@ class FeatureContext extends RawMinkContext
 
     }
 
-
     /**
      * @Given I am logged in as an admin
      */
@@ -35,6 +34,17 @@ class FeatureContext extends RawMinkContext
         $this->fillField('password', 'homer');
         $this->pressButton('S\'identifier');
     }
+
+    /**
+     * @Given I fill the periodicity endTime with :day :month :year
+     */
+    public function iFillEndTimePeridocity(int $day, int $month, int $year)
+    {
+        $this->fillField('entry_with_periodicity[periodicity][endTime][day]', $day);
+        $this->fillField('entry_with_periodicity[periodicity][endTime][month]', $month);
+        $this->fillField('entry_with_periodicity[periodicity][endTime][year]', $year);
+    }
+
 
     /**
      * @Given I am logged in as user :username
