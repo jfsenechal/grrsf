@@ -15,7 +15,7 @@ class AuthorizationModel
     protected $area;
 
     /**
-     * @var Room[]|array
+     * @var Room[]|array|ArrayCollection
      */
     protected $rooms;
 
@@ -54,7 +54,7 @@ class AuthorizationModel
     /**
      * @return \App\Entity\Room[]
      */
-    public function getRooms(): array
+    public function getRooms(): ArrayCollection
     {
         return $this->rooms;
     }

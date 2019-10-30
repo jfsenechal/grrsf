@@ -8,6 +8,7 @@ App\Entity\Security\User:
   user_{alice, bob, fred, raoul, joseph, kevin, charle, brenda}:
     email: '<current()>\@domain.be'
     username: '<current()>\@domain.be'
-    name: '<current()>'
+    name: 'Adams'
+    first_name: '<current()>'
     password: homer
 
