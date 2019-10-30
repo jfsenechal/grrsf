@@ -106,3 +106,57 @@ Feature: Manage entries with periodicity
     And I should see "mercredi 2 septembre 2020"
     And I should see "jeudi 2 septembre 2021"
     And I should see "vendredi 2 septembre 2022"
+
+  Scenario: Add entry with periodicity every week no day seleted
+    And I fill the entry startTime with the date 2/9/2019
+    And I fill in "entry_with_periodicity[duration][time]" with "3"
+    And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
+    #1 => Chaque semaine
+    And I select "2" from "entry_with_periodicity[periodicity][type]"
+    And I fill the periodicity endTime with the date 7/9/2019
+    And I press "Sauvegarder"
+    Then I should see "Aucun jours de la semaine sélectionnés"
+
+  Scenario: Add entry with periodicity every week no repeat seleted
+    And I fill the entry startTime with the date 2/9/2019
+    And I fill in "entry_with_periodicity[duration][time]" with "3"
+    And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
+    #1 => Chaque semaine
+    And I select "2" from "entry_with_periodicity[periodicity][type]"
+    And I fill the periodicity endTime with the date 7/9/2019
+    And I check "Lundi"
+    And I press "Sauvegarder"
+    Then I should see "Aucune répétition choisie"
+
+  Scenario: Add entry with periodicity every week end time too short
+    And I fill the entry startTime with the date 2/9/2019
+    And I fill in "entry_with_periodicity[duration][time]" with "3"
+    And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
+    #1 => Chaque semaine
+    And I select "2" from "entry_with_periodicity[periodicity][type]"
+    And I fill the periodicity endTime with the date 7/9/2019
+    And I check "Lundi"
+    And I select "1" from "entry_with_periodicity[periodicity][weekRepeat]"
+    And I press "Sauvegarder"
+    Then I should see "La date de fin de la périodicité doit au moins dépasser d'une semaine par rapport à la de de fin de la réservation"
+
+  Scenario: Add entry with periodicity every week
+    And I fill the entry startTime with the date 2/9/2019
+    And I fill in "entry_with_periodicity[duration][time]" with "3"
+    And I select "Heure(s)" from "entry_with_periodicity_duration_unit"
+    #1 => Chaque semaine
+    And I select "2" from "entry_with_periodicity[periodicity][type]"
+    And I fill the periodicity endTime with the date 28/9/2019
+    And I check "Lundi"
+    And I check "Mardi"
+    And I select "1" from "entry_with_periodicity[periodicity][weekRepeat]"
+    And I press "Sauvegarder"
+    And print last response
+    Then I should see "lundi 2 septembre 2019"
+    Then I should see "mardi 3 septembre 2019"
+    Then I should see "lundi 9 septembre 2019"
+    Then I should see "mardi 10 septembre 2019"
+    Then I should see "lundi 16 septembre 2019"
+    Then I should see "mardi 17 septembre 2019"
+    Then I should see "lundi 23 septembre 2019"
+    Then I should see "mardi 24 septembre 2019"
