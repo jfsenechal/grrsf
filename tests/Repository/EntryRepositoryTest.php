@@ -94,7 +94,7 @@ class EntryRepositoryTest extends BaseTesting
      */
     private function dataForBusy()
     {
-        $objets = $this->loaderSimple->loadFiles(
+        $objets = $this->loader->load(
             [
                 $this->pathFixtures.'area.yaml',
                 $this->pathFixtures.'room.yaml',

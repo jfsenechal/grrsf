@@ -1,11 +1,11 @@
-Feature: Manage area
-  J'ajoute une area avec comme nom Area demo
+Feature: Manage user
+  J'ajoute un utilisateur Doe Raoul
   Je la renomme en Hdv demon
   Je lui attribute les types de réservations : Cours, réunion
 
   Scenario: New area
     Given I am logged in as an admin
-    And I am on "/admin/area/"
+    And I am on "/admin/user/"
     #Then print last response
     Given I am on "/admin/area/"
     Then I should see "Les domaines"

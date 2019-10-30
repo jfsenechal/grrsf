@@ -74,7 +74,6 @@ class BaseTesting extends WebTestCase
         $loader = new NativeLoader();
         $faker = $loader->getFakerGenerator();
         $faker->addProvider(CarbonProvider::class);
-        $this->loaderSimple = $loader;
 
         $this->administrator = $this->createGrrClient('grr@domain.be');
 

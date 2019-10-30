@@ -49,13 +49,6 @@ final class DemoContext implements Context
     }
 
     /**
-     * @Given i am login
-     */
-    public function imLogin()
-    {
-    }
-
-    /**
      * Then I should see :arg1
      */
     public function iShouldSee($arg1)

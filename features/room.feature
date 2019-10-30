@@ -19,7 +19,7 @@ Feature: Manage room
     Given I am on "/admin/area/"
     Then I should see "Les domaines"
     When I follow "Hdv"
-    When I follow "Salle du Conseil"
+    When I follow "Salle Conseil"
     When I follow "Modifier"
     And I fill in "room[name]" with "Salle Conseil demo"
     And I press "Sauvegarder"

@@ -10,12 +10,18 @@
 
 namespace App\Tests\Behat;
 
-use Behat\Behat\Context\Context;
-use Behat\MinkExtension\Context\MinkContext;
 use Behat\MinkExtension\Context\RawMinkContext;
 
 class FeatureContext extends RawMinkContext
 {
+    /**
+     * @beforeScenario
+     */
+    public function loadFixtures() {
+
+    }
+
+
     /**
      * @Given I am logged in as an admin
      */
