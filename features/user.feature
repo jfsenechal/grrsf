@@ -1,37 +1,48 @@
 Feature: Manage user
   J'ajoute un utilisateur Doe Raoul
-  Je la renomme en Hdv demon
-  Je lui attribute les types de réservations : Cours, réunion
+  Je change le nom de fred en Simpson
+  Je me connecte avec un user créer
 
-  Scenario: New area
+  Scenario: New admin user
     Given I am logged in as an admin
     And I am on "/admin/user/"
-    #Then print last response
-    Given I am on "/admin/area/"
-    Then I should see "Les domaines"
-    When I follow "Nouveau domaine"
-    And I fill in "area[name]" with "Area demo"
+    Then I should see "Liste des 9 utilisateurs"
+    When I follow "Nouvelle utilisateur"
+    And I fill in "user_new[name]" with "Doe"
+    And I fill in "user_new[first_name]" with "Raoul"
+    And I fill in "user_new[email]" with "raoul@domain.com"
+    And I fill in "user_new[username]" with "raoul"
+    And I fill in "user_new[password]" with "12345"
+    And I check "ROLE_GRR_ADMINISTRATOR"
     And I press "Sauvegarder"
-    Then I should see "Le domaine a bien été ajouté"
-    And I save a screenshot in "index.png"
+    Then I should see "L'utilisateur a bien été ajouté"
+    Then I should see "raoul@domain.com"
 
-  Scenario: Edit area
+  Scenario: Edit fred user
     Given I am logged in as an admin
-    Given I am on "/admin/area/"
-    Then I should see "Les domaines"
-    When I follow "Hdv"
-    When I follow "Modifier"
-    And I fill in "area[name]" with "Hdv demo"
+    Given I am on "/admin/user/"
+    Then I follow "fred@domain.be"
+    Then I follow "Modifier"
+    And I fill in "user_advance[name]" with "Simpson"
     And I press "Sauvegarder"
-    Then I should see "Hdv demo"
+    Then I should see "Simpson"
 
-  Scenario: Attribution de types d'entrée
+  Scenario: Test login nouvelle utilisateur
     Given I am logged in as an admin
-    Given I am on "/admin/area/"
-    Then I should see "Les domaines"
-    When I follow "Hdv"
-    When I follow "Types d'entrée"
-    When I check "Cours"
-    And I check "Reunion"
+    And I am on "/admin/user/"
+    Then I should see "Liste des 9 utilisateurs"
+    When I follow "Nouvelle utilisateur"
+    And I fill in "user_new[name]" with "Fargue"
+    And I fill in "user_new[first_name]" with "Joseph"
+    And I fill in "user_new[email]" with "joseph@domain.com"
+    And I fill in "user_new[username]" with "joseph"
+    And I fill in "user_new[password]" with "12345"
     And I press "Sauvegarder"
-    Then I should see "Hdv"
+    Then I should see "L'utilisateur a bien été ajouté"
+    Then I should see "joseph@domain.com"
+    When I am on "/logout/"
+    Then I am on "/login"
+    And I fill in "username" with "joseph@domain.com"
+    And I fill in "password" with "12345"
+    And I press "S'identifier"
+    Then I should see "joseph@domain.com"

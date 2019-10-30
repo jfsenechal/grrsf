@@ -6,8 +6,6 @@ Feature: Manage area
   Scenario: New area
     Given I am logged in as an admin
     And I am on "/admin/area/"
-    #Then print last response
-    Given I am on "/admin/area/"
     Then I should see "Les domaines"
     When I follow "Nouveau domaine"
     And I fill in "area[name]" with "Area demo"
@@ -31,7 +29,7 @@ Feature: Manage area
     Then I should see "Les domaines"
     When I follow "Hdv"
     When I follow "Types d'entrée"
-    When I check "Cours"
+    And I check "Cours"
     And I check "Reunion"
     And I press "Sauvegarder"
     Then I should see "Hdv"
