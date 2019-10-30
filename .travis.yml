@@ -24,7 +24,9 @@ install:
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
 
-script: vendor/bin/simple-phpunit tests/
+script:
+  - vendor/bin/simple-phpunit tests/
+  - vendor/bin/behat features/
 
 # Cache composer packages so "composer install" is faster
 cache:
