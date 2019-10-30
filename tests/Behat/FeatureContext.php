@@ -12,6 +12,7 @@ namespace App\Tests\Behat;
 
 use Behat\MinkExtension\Context\RawMinkContext;
 use Carbon\Carbon;
+use Rector\Doctrine\Tests\Rector\MethodCall\ChangeGetUuidMethodCallToGetIdRector\Source\Car;
 
 class FeatureContext extends RawMinkContext
 {
@@ -46,6 +47,19 @@ class FeatureContext extends RawMinkContext
     }
 
     /**
+     * @Given I fill the periodicity endTime with later date
+     */
+    public function iFillEndTimePeridocityLater()
+    {
+        $today = Carbon::today();
+        $today->addDays(3);
+
+        $this->fillField('entry_with_periodicity[periodicity][endTime][day]', $today->day);
+        $this->fillField('entry_with_periodicity[periodicity][endTime][month]', $today->month);
+        $this->fillField('entry_with_periodicity[periodicity][endTime][year]', $today->year);
+    }
+
+    /**
      * @Given I fill the entry startTime with the date :day/:month/:year
      */
     public function iFillDateBeginEntry(int $day, int $month, int $year)
@@ -53,6 +67,19 @@ class FeatureContext extends RawMinkContext
         $this->fillField('entry_with_periodicity_startTime_date_day', $day);
         $this->fillField('entry_with_periodicity_startTime_date_month', $month);
         $this->fillField('entry_with_periodicity_startTime_date_year', $year);
+    }
+
+    /**
+     * @Given I fill the entry startTime with today :hour::minute
+     */
+    public function iFillDateBeginEntryWithToday(int $hour, int $minute)
+    {
+        $today = Carbon::today();
+        $this->fillField('entry_with_periodicity_startTime_date_day', $today->day);
+        $this->fillField('entry_with_periodicity_startTime_date_month', $today->month);
+        $this->fillField('entry_with_periodicity_startTime_date_year', $today->year);
+        $this->fillField('entry_with_periodicity_startTime_time_hour', $hour);
+        $this->fillField('entry_with_periodicity_startTime_time_minute', $minute);
     }
 
     /**
@@ -90,6 +117,19 @@ class FeatureContext extends RawMinkContext
         $link = Carbon::today()->day;
         $link = $this->fixStepArgument($link);
         $this->getSession()->getPage()->clickLink($link);
+    }
+
+    /**
+     * @Then /^I should see "([^"]*)" exactly "([^"]*)" times$/
+     * @throws \Exception
+     */
+    public function iShouldSeeTextSoManyTimes($sText, $iExpected)
+    {
+        $sContent = $this->getSession()->getPage()->getText();
+        $iFound = substr_count($sContent, $sText);
+        if ($iExpected != $iFound) {
+            throw new \Exception('Found '.$iFound.' occurences of "'.$sText.'" when expecting '.$iExpected);
+        }
     }
 
     private function fillField(string $field, string $value)
