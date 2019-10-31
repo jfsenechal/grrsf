@@ -110,7 +110,8 @@ class FeatureContext extends RawMinkContext
 
 
     /**
-     * @Given I am logged in as user :username
+     * iven I am logged in as user :username
+     * @Given /^I am logged in as user "([^"]*)"$/
      */
     public function iAmLoggedInAsUser(string $username)
     {
@@ -174,5 +175,7 @@ class FeatureContext extends RawMinkContext
     {
         return str_replace('\\"', '"', $argument);
     }
+
+
 
 }

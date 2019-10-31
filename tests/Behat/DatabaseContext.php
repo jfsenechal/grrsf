@@ -46,6 +46,7 @@ class DatabaseContext implements Context
                 $this->pathFixtures.'entry_type.yaml',
                 $this->pathFixtures.'user.yaml',
                 $this->pathFixtures.'entry_today.yaml',
+                $this->pathFixtures.'authorization.yaml',
                 //$this->pathFixtures.'periodicity.yaml',
                 //$this->pathFixtures.'entry_with_periodicity.yaml',
             ];
