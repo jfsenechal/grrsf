@@ -36,7 +36,7 @@ class DayFactoryTest extends BaseTesting
         $security = $this->createMock(Security::class);
         $localHelper = new LocalHelper($parameterBag, $security, $requestStack);
         $carbonFactory = new CarbonFactory($localHelper);
-        $this->dayFactory = new DayFactory($carbonFactory);
+        $this->dayFactory = new DayFactory($carbonFactory, $localHelper);
     }
 
     public function testCreateImmutable()
