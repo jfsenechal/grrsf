@@ -47,6 +47,18 @@ class FeatureContext extends RawMinkContext
     }
 
     /**
+     * @Given /^I fill the periodicity endTime with this month and day (\d+) and year (\d+)$/
+     */
+    public function iFillEndTimePeridocityThisMonth(int $day, int $year)
+    {
+        $today = Carbon::today();
+
+        $this->fillField('entry_with_periodicity[periodicity][endTime][day]', $day);
+        $this->fillField('entry_with_periodicity[periodicity][endTime][month]', $today->month);
+        $this->fillField('entry_with_periodicity[periodicity][endTime][year]', $year);
+    }
+
+    /**
      * @Given I fill the periodicity endTime with later date
      */
     public function iFillEndTimePeridocityLater()
@@ -81,6 +93,21 @@ class FeatureContext extends RawMinkContext
         $this->fillField('entry_with_periodicity_startTime_time_hour', $hour);
         $this->fillField('entry_with_periodicity_startTime_time_minute', $minute);
     }
+
+    /**
+     * @Given /^I fill the entry startTime with this month and day (\d+) and year (\d+) at time (\d+):(\d+)$/
+     *
+     */
+    public function iFillDateBeginEntryWithThisMonth(int $day, int $year, int $hour, int $minute)
+    {
+        $today = Carbon::today();
+        $this->fillField('entry_with_periodicity_startTime_date_day', $day);
+        $this->fillField('entry_with_periodicity_startTime_date_month', $today->month);
+        $this->fillField('entry_with_periodicity_startTime_date_year', $year);
+        $this->fillField('entry_with_periodicity_startTime_time_hour', $hour);
+        $this->fillField('entry_with_periodicity_startTime_time_minute', $minute);
+    }
+
 
     /**
      * @Given I am logged in as user :username
@@ -147,4 +174,5 @@ class FeatureContext extends RawMinkContext
     {
         return str_replace('\\"', '"', $argument);
     }
+
 }
