@@ -10,3 +10,5 @@ parameters:
   doctrine:
     objectManagerLoader: tests/object-manager.php
   inferPrivatePropertyTypeFromConstructor: true
+  includes:
+  	- vendor/phpstan/phpstan-strict-rules/rules.neon
