@@ -1,5 +1,5 @@
 App\Entity\Entry:
-  entry_1:
+  entry_today_1:
     name: 'Réunion a ce jour'
     start_time: '<carbonToday(10,0)>'
     end_time: '<carbonToday(14,10)>'
