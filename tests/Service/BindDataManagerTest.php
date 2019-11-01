@@ -33,7 +33,7 @@ class BindDataManagerTest extends BaseTesting
 
         $bindDataManager = $this->initBindDataManager();
 
-        $monthModel = Month::init(2019, 12);
+        $monthModel = Month::init(2019, 12, 'fr');
         $area = $this->getArea('Hdv');
         $room = $this->getRoom('Salle Collège');
 
@@ -54,7 +54,7 @@ class BindDataManagerTest extends BaseTesting
 
         $bindDataManager = $this->initBindDataManager();
 
-        $monthModel = Month::init(2019, 12);
+        $monthModel = Month::init(2019, 12, 'fr');
         $area = $this->getArea('Hdv');
 
         $bindDataManager->bindMonth($monthModel, $area, null);
@@ -74,7 +74,7 @@ class BindDataManagerTest extends BaseTesting
 
         $bindDataManager = $this->initBindDataManager();
 
-        $weekModel = Week::create(2018, 27);
+        $weekModel = Week::create(2018, 27, 'fr');
 
         $area = $this->getArea('Hdv');
         $room = $this->getRoom('Salle Conseil');
@@ -98,7 +98,7 @@ class BindDataManagerTest extends BaseTesting
 
         $bindDataManager = $this->initBindDataManager();
 
-        $weekModel = Week::create(2019, 49); //2 december to 8 december
+        $weekModel = Week::create(2019, 49, 'fr'); //2 december to 8 december
 
         $area = $this->getArea('Hdv');
         $roomsModel = $bindDataManager->bindWeek($weekModel, $area, null);
@@ -182,7 +182,7 @@ class BindDataManagerTest extends BaseTesting
         $localHelper = new LocalHelper($parameterBag, $security, $requestStack);
         $carbonFactory = new CarbonFactory($localHelper);
 
-        return new DayFactory($carbonFactory);
+        return new DayFactory($carbonFactory, $localHelper);
     }
 
     private function initLocationService(): EntryLocationService

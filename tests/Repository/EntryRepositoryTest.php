@@ -13,7 +13,7 @@ class EntryRepositoryTest extends BaseTesting
     {
         $this->loadFixtures();
 
-        $month = Month::init(2019, 8, 1);
+        $month = Month::init(2019, 8, 'fr');
         $area = $this->getArea('Esquare');
 
         $entries = $this->entityManager
@@ -51,9 +51,9 @@ class EntryRepositoryTest extends BaseTesting
      */
     public function testBusyDateBeginGreaterThanStartTime()
     {
-        $this->loadFixtures();
-        $entriesBusy = $this->dataForBusy();
-        $entry = $entriesBusy[0];
+        $this->loadFixtures(true);
+
+        $entry = $this->getEntry('Réunion occupée par Henallux');
 
         //pour avoir un room existant en db
         $room = $this->getRoom($entry->getRoom()->getName());
@@ -73,9 +73,9 @@ class EntryRepositoryTest extends BaseTesting
      */
     public function testBusyDateEndIsSmallerThanEndTime()
     {
-        $this->loadFixtures();
-        $entriesBusy = $this->dataForBusy();
-        $entry = $entriesBusy[1];
+        $this->loadFixtures(true);
+
+        $entry = $this->getEntry('Réunion occupée par détente');
 
         //pour avoir un room existant en db
         $room = $this->getRoom($entry->getRoom()->getName());
@@ -87,31 +87,6 @@ class EntryRepositoryTest extends BaseTesting
         foreach ($entries as $result) {
             $this->assertSame('Réunion détente', $result->getName());
         }
-    }
-
-    /**
-     * @return Entry[]
-     */
-    private function dataForBusy()
-    {
-        $objets = $this->loader->load(
-            [
-                $this->pathFixtures.'area.yaml',
-                $this->pathFixtures.'room.yaml',
-                $this->pathFixtures.'entry_type.yaml',
-                $this->pathFixtures.'entry_busy.yaml',
-            ]
-        );
-
-        $entries = [];
-
-        foreach ($objets->getObjects() as $object) {
-            if ($object instanceof Entry) {
-                $entries[] = $object;
-            }
-        }
-
-        return $entries;
     }
 
     public function dataForDay()
@@ -147,7 +122,7 @@ class EntryRepositoryTest extends BaseTesting
             ];
 
         if ($withBusy) {
-            $files = [$this->pathFixtures.'entry_busy.yaml'];
+            $files [] = $this->pathFixtures.'entry_busy.yaml';
         }
 
         $this->loader->load($files);

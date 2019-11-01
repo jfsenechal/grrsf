@@ -102,7 +102,7 @@ class EntryRepository extends ServiceEntityRepository
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
 
-        /*
+        /**
          * en cas de modif
          */
         if (null !== $entry->getId()) {

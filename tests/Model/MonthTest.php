@@ -9,7 +9,7 @@ class MonthTest extends BaseTesting
 {
     public function testCreateNew()
     {
-        $month = Month::init(2019, 10, 01);
+        $month = Month::init(2019, 10, 'fr');
 
         $this->assertInstanceOf(Month::class, $month);
         $this->assertSame('2019-10-01', $month->firstOfMonth()->format('Y-m-d'));
@@ -17,11 +17,6 @@ class MonthTest extends BaseTesting
         $this->assertSame('2020', $month->nextYear()->format('Y'));
         $this->assertSame('09', $month->previousMonth()->format('m'));
         $this->assertSame('11', $month->nextMonth()->format('m'));
-        $i = 1;
-        foreach ($month->getCalendarDays() as $day) {
-            $this->assertEquals($i, $day->day);
-            ++$i;
-        }
 
         foreach ($month->getWeeksOfMonth() as $week) {
             foreach ($week as $day) {
@@ -30,7 +25,25 @@ class MonthTest extends BaseTesting
         }
     }
 
-    protected function getDays()
+    public function testCreateNewEnglish()
+    {
+        $month = Month::init(2019, 10, 'en');
+
+        $this->assertInstanceOf(Month::class, $month);
+        $this->assertSame('2019-10-01', $month->firstOfMonth()->format('Y-m-d'));
+        $this->assertSame('2018', $month->previousYear()->format('Y'));
+        $this->assertSame('2020', $month->nextYear()->format('Y'));
+        $this->assertSame('09', $month->previousMonth()->format('m'));
+        $this->assertSame('11', $month->nextMonth()->format('m'));
+
+        foreach ($month->getWeeksOfMonth() as $week) {
+            foreach ($week as $day) {
+                $this->assertContains($day->format('Y-m-d'), $this->getDaysEnglish());
+            }
+        }
+    }
+
+    protected function getDays() : array
     {
         return [
             '2019-09-30',
@@ -69,5 +82,13 @@ class MonthTest extends BaseTesting
             '2019-11-02',
             '2019-11-03',
         ];
+    }
+
+    public function getDaysEnglish(): array
+    {
+        $days = $this->getDays();
+        $days[] = '2019-09-29';
+
+        return $days;
     }
 }

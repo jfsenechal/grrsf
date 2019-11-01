@@ -5,10 +5,11 @@ App\Entity\Entry:
     end_time: '<carbonDateTime(2019,8,21,18,20)>'
     room: '@room_relax'
     type: '@type_entry_D'
+    created_by: 'jf'
   entry_busy_2:
     name: 'Réunion occupée par détente' #11h00 => 17h40
     start_time: '<carbonDateTime(2019,10,1,10,30)>'
     end_time: '<carbonDateTime(2019,10,1,15,20)>'
     room: '@room_cafetaria'
     type: '@type_entry_D'
-
+    created_by: 'jf'

@@ -38,7 +38,6 @@ class Week
         $date->setISODate($year, $week);
         $date->locale($language);
         self::$language = $language;
-        //$date->isoWeek($week, Carbon::MONDAY);
 
         $weekModel = new self();
 

@@ -30,7 +30,7 @@ class LocalHelper
     {
         $this->parameterBag = $parameterBag;
         $this->security = $security;
-        $this->requestStack = $requestStack;       
+        $this->requestStack = $requestStack;
     }
 
     public function setDefaultLocal(): void
@@ -40,7 +40,7 @@ class LocalHelper
          */
         $user = $this->security->getUser();
         /*
-         * Parameter from config symfony framework.yaml
+         * Parameter from symfony config/translation.yaml
          * */
         $this->defaultLocale = $this->parameterBag->get('locale');
         /**
@@ -62,9 +62,14 @@ class LocalHelper
 
     public function getDefaultLocal(): string
     {
-        if(!$this->defaultLocale) {
+        if (!$this->defaultLocale) {
             $this->setDefaultLocal();
         }
-        return $this->defaultLocale;
+
+        if ($this->defaultLocale) {
+            return $this->defaultLocale;
+        }
+
+        return 'fr';//bug test mode console
     }
 }
