@@ -25,4 +25,5 @@
 
 ###> friends-of-behat/symfony-extension ###
 /behat.yml
+/behat.yaml
 ###< friends-of-behat/symfony-extension ###
