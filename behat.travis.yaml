@@ -4,7 +4,6 @@ default:
             contexts:
                 - App\Tests\Behat\FeatureContext
                 - App\Tests\Behat\DatabaseContext
-                - App\Tests\Behat\DemoContext
                 - Behat\MinkExtension\Context\MinkContext
                 - Behatch\Context\BrowserContext
                 - Behatch\Context\DebugContext

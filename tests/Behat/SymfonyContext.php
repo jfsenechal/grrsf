@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat;
 
+use App\Repository\EntryRepository;
 use Behat\Behat\Context\Context;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,18 +16,25 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @see http://behat.org/en/latest/quick_start.html
  */
-final class DemoContext implements Context
+final class SymfonyContext implements Context
 {
     /** @var KernelInterface */
     private $kernel;
 
     /** @var Response|null */
     private $response;
+    /**
+     * @var EntryRepository
+     */
+    private $entryRepository;
 
-    public function __construct(KernelInterface $kernel)
+    public function __construct(KernelInterface $kernel, EntryRepository $entryRepository)
     {
         $this->kernel = $kernel;
+        $this->entryRepository = $entryRepository;
     }
+
+
 
     /**
      * @When a demo scenario sends a request to :path
@@ -71,4 +79,6 @@ final class DemoContext implements Context
             throw new \RuntimeException('No user received');
         }
     }
+
+
 }

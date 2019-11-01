@@ -10,18 +10,26 @@
 
 namespace App\Tests\Behat;
 
+use App\Repository\AreaRepository;
+use App\Repository\EntryRepository;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Carbon\Carbon;
-use Rector\Doctrine\Tests\Rector\MethodCall\ChangeGetUuidMethodCallToGetIdRector\Source\Car;
 
 class FeatureContext extends RawMinkContext
 {
     /**
-     * @beforeScenario
+     * @var EntryRepository
      */
-    public function loadFixtures()
-    {
+    private $entryRepository;
+    /**
+     * @var AreaRepository
+     */
+    private $areaRepository;
 
+    public function __construct(EntryRepository $entryRepository, AreaRepository $areaRepository)
+    {
+        $this->entryRepository = $entryRepository;
+        $this->areaRepository = $areaRepository;
     }
 
     /**
@@ -160,6 +168,16 @@ class FeatureContext extends RawMinkContext
         }
     }
 
+    /**
+     * @Given /^I am on the page show entry "([^"]*)"$/
+     */
+    public function iAmOnThePageShowEntry(string $name)
+    {
+        $entry = $this->entryRepository->findOneBy(['name' => $name]);
+        $path = '/front/entry/'.$entry->getId();
+        $this->visitPath($path);
+    }
+
     private function fillField(string $field, string $value)
     {
         $this->getSession()->getPage()->fillField($field, $value);
@@ -176,6 +194,14 @@ class FeatureContext extends RawMinkContext
         return str_replace('\\"', '"', $argument);
     }
 
-
+    /**
+     * @Given /^I am on the page month view of month (\d+)-(\d+) and area "([^"]*)"$/
+     */
+    public function iAmOnThePageMonthView(int $month, int $year, string $areaName)
+    {
+        $area = $this->areaRepository->findOneBy(['name'=>$areaName]);
+        $path = '/front/monthview/area/'.$area->getId().'/year/'.$year.'/month/'.$month.'/room';
+        $this->visitPath($path);
+    }
 
 }
