@@ -229,6 +229,9 @@ class MigrationCommand extends Command
         $this->io->newLine();
         $this->io->section('Importation des entrées');
         $this->handleEntry();
+        $this->io->newLine();
+        $this->io->section('Importation des paramètres');
+        $this->handlSetting();
 
         //je sauvegarde les resolutions pour la commande grr:check
         $this->migrationUtil->writeFile('resolverepeat.json', serialize($this->resolveRepeats));
@@ -418,5 +421,10 @@ class MigrationCommand extends Command
             $this->entityManager->persist($authorization);
             $this->entityManager->flush();
         }
+    }
+
+    private function handlSetting()
+    {
+
     }
 }

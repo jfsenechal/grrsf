@@ -71,9 +71,9 @@ class CheckCommand extends Command
         if (count($authorizations) > 0) {
             $io->warning('Ces authorizations sont en double');
             foreach ($authorizations as $authorization) {
-                $user = null != $authorization['user'] ? $authorization['user']->getEmail() : '';
-                $area = null != $authorization['area'] ? $authorization['area']->getName() : '';
-                $room = null != $authorization['room'] ? $authorization['room']->getName() : '';
+                $user = null !== $authorization['user'] ? $authorization['user']->getEmail() : '';
+                $area = null !== $authorization['area'] ? $authorization['area']->getName() : '';
+                $room = null !== $authorization['room'] ? $authorization['room']->getName() : '';
 
                 $io->note($user.' ==> '.$area.' ==> '.$room." \n ");
             }
@@ -83,6 +83,8 @@ class CheckCommand extends Command
                 $this->migrationChecker->deleteDoublon();
                 $io->success('Doublons supprimés');
             }
+        } else {
+            $io->success('Aucune authorization en double');
         }
 
         $this->io->section('Check entry: '.MigrationUtil::FOLDER_CACHE);
@@ -92,19 +94,19 @@ class CheckCommand extends Command
         $entries = json_decode($fileHandler, true);
 
         $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'resolveroom.json');
-        $rooms = unserialize($fileHandler, false);
+        $rooms = unserialize($fileHandler, []);
 
         $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'resolverepeat.json');
-        $periodicities = unserialize($fileHandler, false);
-
+        $periodicities = unserialize($fileHandler, []);
+        $count = 0;
         foreach ($entries as $data) {
             $name = $data['name'];
             $startTime = $this->migrationUtil->converToDateTime($data['start_time']);
             $endTime = $this->migrationUtil->converToDateTime($data['end_time']);
             $room = $this->migrationUtil->transformToRoom($rooms, $data['room_id']);
-            $repeatId = (int) $data['repeat_id'];
+            $repeatId = (int)$data['repeat_id'];
 
-            $args = ['start_time' => $startTime, 'end_time' => $endTime, 'name' => $name, 'room' => $room];
+            $args = ['startTime' => $startTime, 'endTime' => $endTime, 'name' => $name, 'room' => $room];
 
             if ($repeatId > 0) {
                 $periodicity = $periodicities[$repeatId];
@@ -116,10 +118,14 @@ class CheckCommand extends Command
             );
 
             if (!$entry) {
+                $count++;
                 $io->error($data['name'].' '.$startTime->format('d-m-Y'));
             } else {
                 // $io->success($entry->getName().' ==> '.$name);
             }
+        }
+        if ($count == 0) {
+            $io->success('Toutes les entrées ont bien été importées');
         }
 
         return 0;
