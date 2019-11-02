@@ -19,6 +19,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class MigrationCommand extends Command
 {
@@ -156,8 +157,8 @@ class MigrationCommand extends Command
         );
         $questionDate->setValidator(
             function ($date) {
-                if (null == $date) {
-                    return (int)$date;
+                if (null === $date) {
+                    return $date;
                 }
 
                 if (!$date = \DateTime::createFromFormat('Y-m-d', $date)) {
@@ -166,7 +167,7 @@ class MigrationCommand extends Command
                     );
                 }
 
-                return (int)$date;
+                return $date;
             }
         );
 
@@ -186,12 +187,24 @@ class MigrationCommand extends Command
         $this->io->newLine();
         $progressBar = new ProgressBar($output, 2);
         $progressBar->start();
-        $this->requestData->download('repeat.php');
+
+        $result = json_decode($this->requestData->download('repeat.php'), true, 512, JSON_THROW_ON_ERROR);
+
+        if (isset($result['error'])) {
+            $this->io->error($result['error']);
+            return 1;
+        }
+
         $progressBar->advance();
+        $params = [];
         if ($date) {
             $params = ['date' => $date->format('Y-m-d')];
         }
-        $this->requestData->download('entry.php', $params);
+        $result = json_decode($this->requestData->download('entry.php', $params), true, 512, JSON_THROW_ON_ERROR);
+        if (isset($result['error'])) {
+            $this->io->error($result['error']);
+            return 1;
+        }
         $progressBar->advance();
         $progressBar->finish();
         $this->io->newLine();

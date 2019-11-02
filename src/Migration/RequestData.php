@@ -100,12 +100,17 @@ class RequestData
         return $this->request('user_room.php');
     }
 
-    public function download(string $url, array $params = []): void
+    /**
+     * @param string $url
+     * @param array $params
+     * @return string
+     */
+    public function download(string $url, array $params = []): string
     {
         $jsonfile = str_replace('php', 'json', $url);
 
         if (is_readable(MigrationUtil::FOLDER_CACHE.$jsonfile)) {
-            return;
+            //  return [];
         }
 
         $args = [
@@ -116,17 +121,42 @@ class RequestData
             $args['query'] = $params;
         }
 
-        $response = $this->httpClient->request('GET', $this->base_url.$url, $args);
-
-        if (200 !== $response->getStatusCode()) {
-            throw new \Exception('...');
+        try {
+            $response = $this->httpClient->request('GET', $this->base_url.$url, $args);
+        } catch (TransportExceptionInterface $e) {
+            return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
         }
 
-        $fileHandler = fopen(MigrationUtil::FOLDER_CACHE.$jsonfile, 'w');
+        try {
+            if (200 !== $response->getStatusCode()) {
+                return json_encode(
+                    ['error' => 'Code erreur request'.$response->getStatusCode()],
+                    JSON_THROW_ON_ERROR,
+                    512
+                );
+            }
+        } catch (TransportExceptionInterface $e) {
+            return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
+        }
+
+        $fileHandler = fopen(MigrationUtil::FOLDER_CACHE.$jsonfile, 'wb');
+
         foreach ($this->httpClient->stream($response) as $chunk) {
-            fwrite($fileHandler, $chunk->getContent());
+            try {
+                fwrite($fileHandler, $chunk->getContent());
+            } catch (TransportExceptionInterface $e) {
+                return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
+            }
         }
         fclose($fileHandler);
+
+        try {
+            $this->checkDownload($jsonfile);
+        } catch (\Exception $e) {
+            return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
+        }
+
+        return json_encode([]);
     }
 
     /**
@@ -150,16 +180,30 @@ class RequestData
             try {
                 return $response->getContent();
             } catch (ClientExceptionInterface $e) {
-                return json_encode(['error' => $e->getMessage()]);
+                return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
             } catch (RedirectionExceptionInterface $e) {
-                return json_encode(['error' => $e->getMessage()]);
+                return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
             } catch (ServerExceptionInterface $e) {
-                return json_encode(['error' => $e->getMessage()]);
+                return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
             } catch (TransportExceptionInterface $e) {
-                return json_encode(['error' => $e->getMessage()]);
+                return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
             }
         } catch (TransportExceptionInterface $e) {
-            return json_encode(['error' => $e->getMessage()]);
+            return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
         }
+    }
+
+    /**
+     * @param $jsonfile
+     * @throws \Exception
+     */
+    private function checkDownload($jsonfile)
+    {
+        $data = json_decode(file_get_contents(MigrationUtil::FOLDER_CACHE.$jsonfile), true, 512, JSON_THROW_ON_ERROR);
+
+        if (isset($data['error'])) {
+            throw new \Exception($data['error']);
+        }
+
     }
 }
