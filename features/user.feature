@@ -6,7 +6,7 @@ Feature: Manage user
   Scenario: New admin user
     Given I am logged in as an admin
     And I am on "/admin/user/"
-    Then I should see "Liste des 9 utilisateurs"
+    Then I should see "Liste des 11 utilisateurs"
     When I follow "Nouvelle utilisateur"
     And I fill in "user_new[name]" with "Doe"
     And I fill in "user_new[first_name]" with "Raoul"
@@ -30,7 +30,7 @@ Feature: Manage user
   Scenario: Test login nouvelle utilisateur
     Given I am logged in as an admin
     And I am on "/admin/user/"
-    Then I should see "Liste des 9 utilisateurs"
+    Then I should see "Liste des 11 utilisateurs"
     When I follow "Nouvelle utilisateur"
     And I fill in "user_new[name]" with "Fargue"
     And I fill in "user_new[first_name]" with "Joseph"

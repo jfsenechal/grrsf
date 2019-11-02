@@ -27,7 +27,7 @@ install:
 
 script:
   - vendor/bin/simple-phpunit tests/
-  - vendor/bin/behat features/
+  - vendor/bin/behat features/ -f progress
 
 # Cache composer packages so "composer install" is faster
 cache:
