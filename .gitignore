@@ -27,3 +27,7 @@
 /behat.yml
 /behat.yaml
 ###< friends-of-behat/symfony-extension ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
