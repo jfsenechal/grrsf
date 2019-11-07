@@ -180,10 +180,13 @@ class MigrationCommand extends Command
         $purger = new ORMPurger($this->entityManager);
         // $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
         $purger->purge();
+        $this->migrationUtil->clearCache();
 
         $this->requestData->connect($url, $user, $password);
 
-        $this->io->section('Téléchargement des entrées et répétitions dans le dossier: '.MigrationUtil::FOLDER_CACHE);
+        $this->io->section(
+            'Téléchargement des entries et periodicities dans le dossier: '.$this->migrationUtil->getCacheDirectory()
+        );
         $this->io->newLine();
         $progressBar = new ProgressBar($output, 2);
         $progressBar->start();
@@ -192,6 +195,7 @@ class MigrationCommand extends Command
 
         if (isset($result['error'])) {
             $this->io->error($result['error']);
+
             return 1;
         }
 
@@ -203,13 +207,14 @@ class MigrationCommand extends Command
         $result = json_decode($this->requestData->download('entry.php', $params), true, 512, JSON_THROW_ON_ERROR);
         if (isset($result['error'])) {
             $this->io->error($result['error']);
+
             return 1;
         }
         $progressBar->advance();
         $progressBar->finish();
         $this->io->newLine();
 
-        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'repeat.json');
+        $fileHandler = file_get_contents($this->migrationUtil->getCacheDirectory().'repeat.json');
         $this->repeats = json_decode($fileHandler, true);
 
         $this->io->section('Importation des Areas et rooms');
@@ -307,7 +312,7 @@ class MigrationCommand extends Command
 
     protected function handleEntry(): void
     {
-        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'entry.json');
+        $fileHandler = file_get_contents($this->migrationUtil->getCacheDirectory().'entry.json');
         $entries = json_decode($fileHandler, true);
 
         $progressBar = new ProgressBar($this->output);

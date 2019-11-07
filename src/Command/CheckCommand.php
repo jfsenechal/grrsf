@@ -87,16 +87,16 @@ class CheckCommand extends Command
             $io->success('Aucune authorization en double');
         }
 
-        $this->io->section('Check entry: '.MigrationUtil::FOLDER_CACHE);
+        $this->io->section('Check entry: '.$this->migrationUtil->getCacheDirectory());
         $this->io->newLine();
 
-        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'entry.json');
+        $fileHandler = file_get_contents($this->migrationUtil->getCacheDirectory().'entry.json');
         $entries = json_decode($fileHandler, true);
 
-        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'resolveroom.json');
+        $fileHandler = file_get_contents($this->migrationUtil->getCacheDirectory().'resolveroom.json');
         $rooms = unserialize($fileHandler, []);
 
-        $fileHandler = file_get_contents(MigrationUtil::FOLDER_CACHE.'resolverepeat.json');
+        $fileHandler = file_get_contents($this->migrationUtil->getCacheDirectory().'resolverepeat.json');
         $periodicities = unserialize($fileHandler, []);
         $count = 0;
         foreach ($entries as $data) {

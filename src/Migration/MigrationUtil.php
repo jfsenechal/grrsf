@@ -25,13 +25,13 @@ use App\Setting\SettingsRoom;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class MigrationUtil
 {
-    const FOLDER_CACHE = __DIR__.'/../../var/cache/';
-
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -60,6 +60,10 @@ class MigrationUtil
      * @var EntryRepository
      */
     public $entryRepository;
+    /**
+     * @var ParameterBagInterface
+     */
+    private $parameterBag;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -68,7 +72,8 @@ class MigrationUtil
         UserRepository $userRepository,
         EntryTypeRepository $entryTypeRepository,
         EntryRepository $entryRepository,
-        AuthorizationRepository $authorizationRepository
+        AuthorizationRepository $authorizationRepository,
+        ParameterBagInterface $parameterBag
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->areaRepository = $areaRepository;
@@ -77,6 +82,22 @@ class MigrationUtil
         $this->entryTypeRepository = $entryTypeRepository;
         $this->authorizationRepository = $authorizationRepository;
         $this->entryRepository = $entryRepository;
+        $this->parameterBag = $parameterBag;
+    }
+
+    public function getCacheDirectory()
+    {
+        return $this->parameterBag->get(
+                'kernel.cache_dir'
+            ).DIRECTORY_SEPARATOR.'download'.DIRECTORY_SEPARATOR;
+    }
+
+    public function clearCache()
+    {
+        $filesystem = new Filesystem();
+        $cacheDir = $this->getCacheDirectory();
+        $filesystem->remove($cacheDir);
+        $filesystem->mkdir($cacheDir);
     }
 
     public function transformBoolean(string $value): bool
@@ -99,7 +120,7 @@ class MigrationUtil
         $tab = str_split(strtolower($display_days), 1);
         $days = array_map(
             function ($a) use ($pattern, $replacements): int {
-                return (int) preg_replace($pattern, $replacements, $a);
+                return (int)preg_replace($pattern, $replacements, $a);
             },
             $tab
         );
@@ -125,7 +146,7 @@ class MigrationUtil
         $days = [];
         $tab = str_split(strtolower($datas), 1);
         foreach ($tab as $key => $data) {
-            if (1 === (int) $data) {
+            if (1 === (int)$data) {
                 $days[] = $key;
             }
         }
@@ -340,7 +361,7 @@ class MigrationUtil
 
     public function writeFile($fileName, $content): void
     {
-        $fileHandler = fopen(MigrationUtil::FOLDER_CACHE.$fileName, 'w');
+        $fileHandler = fopen($this->getCacheDirectory().$fileName, 'w');
         fwrite($fileHandler, $content);
         fclose($fileHandler);
     }

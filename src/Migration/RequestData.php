@@ -27,6 +27,15 @@ class RequestData
      * @var string
      */
     private $base_url;
+    /**
+     * @var MigrationUtil
+     */
+    private $migrationUtil;
+
+    public function __construct(MigrationUtil $migrationUtil)
+    {
+        $this->migrationUtil = $migrationUtil;
+    }
 
     private function setBaseUrl(string $url): void
     {
@@ -109,10 +118,6 @@ class RequestData
     {
         $jsonfile = str_replace('php', 'json', $url);
 
-        if (is_readable(MigrationUtil::FOLDER_CACHE.$jsonfile)) {
-            //  return [];
-        }
-
         $args = [
             'buffer' => false,
         ];
@@ -139,7 +144,7 @@ class RequestData
             return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
         }
 
-        $fileHandler = fopen(MigrationUtil::FOLDER_CACHE.$jsonfile, 'wb');
+        $fileHandler = fopen($this->migrationUtil->getCacheDirectory().$jsonfile, 'wb');
 
         foreach ($this->httpClient->stream($response) as $chunk) {
             try {
@@ -199,7 +204,7 @@ class RequestData
      */
     private function checkDownload($jsonfile)
     {
-        $data = json_decode(file_get_contents(MigrationUtil::FOLDER_CACHE.$jsonfile), true, 512, JSON_THROW_ON_ERROR);
+        $data = json_decode(file_get_contents($this->migrationUtil->getCacheDirectory().$jsonfile), true, 512, JSON_THROW_ON_ERROR);
 
         if (isset($data['error'])) {
             throw new \Exception($data['error']);

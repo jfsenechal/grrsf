@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class GrhLoaderCommand extends Command
+class LoaderCommand extends Command
 {
     protected static $defaultName = 'grr:loader';
     /**

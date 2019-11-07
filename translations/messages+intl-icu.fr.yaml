@@ -57,6 +57,8 @@ user:
         placeholder: Nom,email, login
   changepassword:
     title: Changement du mot de passe pour
+  manage:
+    title: 'Gestion des utilisateurs'
 entry:
   flash:
     new: La réservation a bien été ajoutée
@@ -119,6 +121,8 @@ area:
   administrator: Administrateur du domaine
   resource: Administrateur de resource
   title: Domaine
+  manage:
+    title: 'Gestion des domaines'
 
 room:
   authorization:
@@ -167,6 +171,8 @@ typeEntry:
     new: Le type de réservation a bien été ajouté
     edit: Le type de réservation a bien été modifié
     delete: Le type de réservatio a bien été supprimée
+  manage:
+    title: Gestion des types d'entrées
 login:
   form:
     username:
@@ -224,3 +230,7 @@ setting:
     help: Nombre de calendriers mensuels à afficher sur chaque planning de réservation
   flash:
     edit: Les paramètres ont bien été modifiés
+  manage:
+    title: 'Gestion des paramètres'
+grr:
+  title: 'Administration Gestion et de Réservation de Ressources'

@@ -13,7 +13,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
 
-class GrrSendEmailCommand extends Command
+class SendEmailCommand extends Command
 {
     protected static $defaultName = 'grr:send-email';
     /**
