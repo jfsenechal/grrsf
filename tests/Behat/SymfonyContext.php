@@ -34,10 +34,8 @@ final class SymfonyContext implements Context
         $this->entryRepository = $entryRepository;
     }
 
-
-
     /**
-     * @When a demo scenario sends a request to :path
+     * When a demo scenario sends a request to :path
      */
     public function aDemoScenarioSendsARequestTo(string $path): void
     {
@@ -45,7 +43,7 @@ final class SymfonyContext implements Context
     }
 
     /**
-     * @Then the response should be received
+     * Then the response should be received
      */
     public function theResponseShouldBeReceived(): void
     {
@@ -71,7 +69,7 @@ final class SymfonyContext implements Context
     }
 
     /**
-     * @When /^i am login with user "([^"]*)" and password "([^"]*)"$/
+     * When /^i am login with user "([^"]*)" and password "([^"]*)"$/
      */
     public function iAmLoginWithUserAndPassword($arg1, $arg2)
     {

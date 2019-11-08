@@ -45,6 +45,18 @@ class FeatureContext extends RawMinkContext
     }
 
     /**
+     * iven I am logged in as user :username
+     * @Given /^I am logged in as user "([^"]*)"$/
+     */
+    public function iAmLoggedInAsUser(string $username)
+    {
+        $this->visitPath('/login');
+        $this->fillField('username', $username);
+        $this->fillField('password', 'homer');
+        $this->pressButton('S\'identifier');
+    }
+
+    /**
      * @Given I fill the periodicity endTime with the date :day/:month/:year
      */
     public function iFillEndTimePeridocity(int $day, int $month, int $year)
@@ -116,19 +128,6 @@ class FeatureContext extends RawMinkContext
         $this->fillField('entry_with_periodicity_startTime_time_minute', $minute);
     }
 
-
-    /**
-     * iven I am logged in as user :username
-     * @Given /^I am logged in as user "([^"]*)"$/
-     */
-    public function iAmLoggedInAsUser(string $username)
-    {
-        $this->visitPath('/login');
-        $this->fillField('username', $username);
-        $this->fillField('password', 'homer');
-        $this->pressButton('S\'identifier');
-    }
-
     /**
      * Clicks link semaine
      * Example: When I follow this week
@@ -178,6 +177,16 @@ class FeatureContext extends RawMinkContext
         $this->visitPath($path);
     }
 
+    /**
+     * @Given /^I am on the page month view of month (\d+)-(\d+) and area "([^"]*)"$/
+     */
+    public function iAmOnThePageMonthView(int $month, int $year, string $areaName)
+    {
+        $area = $this->areaRepository->findOneBy(['name' => $areaName]);
+        $path = '/front/monthview/area/'.$area->getId().'/year/'.$year.'/month/'.$month.'/room';
+        $this->visitPath($path);
+    }
+
     private function fillField(string $field, string $value)
     {
         $this->getSession()->getPage()->fillField($field, $value);
@@ -192,16 +201,6 @@ class FeatureContext extends RawMinkContext
     protected function fixStepArgument($argument)
     {
         return str_replace('\\"', '"', $argument);
-    }
-
-    /**
-     * @Given /^I am on the page month view of month (\d+)-(\d+) and area "([^"]*)"$/
-     */
-    public function iAmOnThePageMonthView(int $month, int $year, string $areaName)
-    {
-        $area = $this->areaRepository->findOneBy(['name'=>$areaName]);
-        $path = '/front/monthview/area/'.$area->getId().'/year/'.$year.'/month/'.$month.'/room';
-        $this->visitPath($path);
     }
 
 }
