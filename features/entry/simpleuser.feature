@@ -47,3 +47,15 @@ Feature: Verification des droits pour la gestion des entrées
     And I press "Sauvegarder"
     Then I should see "My reservation"
     Then I should see "La réservation a bien été ajoutée"
+
+  Scenario: Brenda ne peux pas modifier une entrée dans Hdv/Cafétaria
+    Given I am logged in as user "brenda@domain.be"
+    Given I am on the page show entry "Réunion détente"
+    Then I should not see "Modifier"
+    And I should not see "Supprimer"
+
+  Scenario: Brenda ne peux pas modifier une entrée dans Esquare/Relax Room
+    Given I am logged in as user "brenda@domain.be"
+    Given I am on the page show entry "Réunion henalux"
+    Then I should not see "Modifier"
+    And I should not see "Supprimer"
