@@ -1,0 +1,7 @@
+# rector.yaml
+imports:
+  - { resource: 'vendor/rector/rector/config/set/code-quality/code-quality.yaml' }
+  - { resource: 'vendor/rector/rector/config/set/php/php73.yaml' }
+  - { resource: 'vendor/rector/rector/config/set/symfony/symfony-code-quality.yaml' }
+  - { resource: 'vendor/rector/rector/config/set/symfony/symfony44.yaml' }
+  - { resource: 'vendor/rector/rector/config/set/doctrine/doctrine-code-quality.yaml' }
