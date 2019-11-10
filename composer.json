@@ -38,6 +38,7 @@
     "symfony/property-access": "4.3.*",
     "symfony/security-bundle": "4.3.*",
     "symfony/serializer-pack": "*",
+    "symfony/swiftmailer-bundle": "^3.3",
     "symfony/translation": "4.3.*",
     "symfony/twig-pack": "^1.0",
     "symfony/validator": "4.3.*",
