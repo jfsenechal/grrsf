@@ -1,6 +1,6 @@
 {% extends '@grr_admin/layout_admin.html.twig' %}
 
-{% block title %}{{ 'user.index.title'|trans({}, 'actions') }}{% endblock %}
+{% block title %}{{ 'user.index.title'|trans({'length': users|length}, 'actions') }}{% endblock %}
 
 {% block body %}
 
