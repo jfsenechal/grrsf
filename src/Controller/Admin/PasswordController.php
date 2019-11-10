@@ -48,7 +48,7 @@ class PasswordController extends AbstractController
     /**
      * @Route("/{id}", name="grr_admin_user_password")
      */
-    public function edit(Request $request, UserInterface $user): Response
+    public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(UserPasswordType::class, $user);
         $form->handleRequest($request);
