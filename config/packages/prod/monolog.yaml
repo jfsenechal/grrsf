@@ -3,14 +3,20 @@ monolog:
         main:
             type: fingers_crossed
             action_level: error
-            handler: nested
+            handler: grouped
             excluded_404s:
                 # regex: exclude all 404 errors from the logs
                 - ^/
-        nested:
-            type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.log"
+        grouped:
+            type:    group
+            members: [streamed, deduplicated]
+        streamed:
+            type:  stream
+            path:  '%kernel.logs_dir%/%kernel.environment%.log'
             level: debug
+        deduplicated:
+            type:    deduplication
+            handler: swift
         console:
             type: console
             process_psr_3_messages: false
@@ -23,3 +29,11 @@ monolog:
             handler: deprecation
             max_level: info
             channels: ["php"]
+        swift:
+            type:       swift_mailer
+            from_email: 'jf@marche.be'
+            to_email:   'webmaster@marche.be'
+            subject:    'Salles2 ale Error Occurred! %%message%%'
+            level:      debug
+            formatter:  monolog.formatter.html
+            content_type: text/html
