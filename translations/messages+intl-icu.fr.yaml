@@ -234,3 +234,5 @@ setting:
     title: 'Gestion des paramètres'
 grr:
   title: 'Administration Gestion et de Réservation de Ressources'
+return:
+  homepage: Retourner à la page d'accueil
