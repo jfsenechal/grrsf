@@ -7,6 +7,8 @@ parameters:
   locale: 'fr'
   booking_url: "%env(BOOKING_URL)%"
   booking_token: "%env(BOOKING_TOKEN)%"
+  router.request_context.scheme: '%env(SITE_BASE_SCHEME)%'
+  router.request_context.host: '%env(SITE_BASE_HOST)%'
 
 services:
   # default configuration for services in *this* file
@@ -24,10 +26,10 @@ services:
   # as action arguments even if you don't extend any base controller class
 
   App\Security\Ldap\GrrLdap:
-      $host: '%env(GRR_LDAP_URL)%'
-      $dn: "%env(GRR_LDAP_BASE)%"
-      $user: '%env(GRR_LDAP_ADMIN)%'
-      $password: '%env(GRR_LDAP_PWD)%'
+    $host: '%env(GRR_LDAP_URL)%'
+    $dn: "%env(GRR_LDAP_BASE)%"
+    $user: '%env(GRR_LDAP_ADMIN)%'
+    $password: '%env(GRR_LDAP_PWD)%'
 
   App\Doctrine\TablePrefix:
     tags:
