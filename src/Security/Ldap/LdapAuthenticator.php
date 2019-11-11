@@ -2,6 +2,7 @@
 
 namespace App\Security\Ldap;
 
+use Exception;
 use App\Entity\Security\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -120,15 +121,15 @@ class LdapAuthenticator extends AbstractFormLoginAuthenticator
                     $this->grrLdap->bind($dn, $credentials['password']);
 
                     return true;
-                } catch (\Exception $exception) {
+                } catch (Exception $exception) {
                     //throw new BadCredentialsException($exception->getMessage());
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
         }
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);

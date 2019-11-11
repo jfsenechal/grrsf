@@ -12,14 +12,20 @@ namespace App\Tests\Service;
 
 class ResultBind
 {
-    public static function resultNamesMonthWithRoom()
+    /**
+     * @return string[]
+     */
+    public static function resultNamesMonthWithRoom(): array
     {
         return [
             'Tous les jours pendant 3 jours',
         ];
     }
 
-    public static function resultNamesMonthWithOutRoom()
+    /**
+     * @return string[]
+     */
+    public static function resultNamesMonthWithOutRoom(): array
     {
         return [
             'Tous les jours pendant 3 jours',
@@ -56,7 +62,7 @@ class ResultBind
         return $result[$day] ?? 0;
     }
 
-    public static function getDaysOfWeekWithRoom()
+    public static function getDaysOfWeekWithRoom(): array
     {
         return [
             '2018-07-02',
@@ -69,7 +75,7 @@ class ResultBind
         ];
     }
 
-    public static function getDaysOfWeekWitOuthhRoom()
+    public static function getDaysOfWeekWitOuthhRoom(): array
     {
         return [
             '2019-12-02',
@@ -113,14 +119,20 @@ class ResultBind
         return $result[$room][$day] ?? 0;
     }
 
-    public static function resultNamesWeekWithRoom()
+    /**
+     * @return string[]
+     */
+    public static function resultNamesWeekWithRoom(): array
     {
         return [
             'Toutes les semaines, lundi et mardi',
         ];
     }
 
-    public static function resultNamesWeekWithOutRoom()
+    /**
+     * @return string[]
+     */
+    public static function resultNamesWeekWithOutRoom(): array
     {
         return [
             'Tous les jours pendant 3 jours',

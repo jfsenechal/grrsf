@@ -10,6 +10,7 @@
 
 namespace App\Service;
 
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -33,7 +34,7 @@ class PropertyUtil
         return $doctrineExtractor->getProperties($className);
     }
 
-    public function getPropertyAccessor(): \Symfony\Component\PropertyAccess\PropertyAccessor
+    public function getPropertyAccessor(): PropertyAccessor
     {
         return PropertyAccess::createPropertyAccessor();
     }

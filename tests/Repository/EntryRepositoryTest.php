@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class EntryRepositoryTest extends BaseTesting
 {
-    public function testFindForMonth()
+    public function testFindForMonth(): void
     {
         $this->loadFixtures();
 
@@ -28,7 +28,7 @@ class EntryRepositoryTest extends BaseTesting
     /**
      * @dataProvider dataForDay
      */
-    public function testFindForDay(int $year, int $month, int $day, string $room, int $count, string $title)
+    public function testFindForDay(int $year, int $month, int $day, string $room, int $count, string $title): void
     {
         $this->loadFixtures();
 
@@ -49,7 +49,7 @@ class EntryRepositoryTest extends BaseTesting
      * La date de debut de la nouvelle entry est plus grande que
      * la date de début d'une entry existante.
      */
-    public function testBusyDateBeginGreaterThanStartTime()
+    public function testBusyDateBeginGreaterThanStartTime(): void
     {
         $this->loadFixtures(true);
 
@@ -71,7 +71,7 @@ class EntryRepositoryTest extends BaseTesting
      * La date de fin de la nouvelle entry est plus petite que
      * la date de fin d'une entry existante.
      */
-    public function testBusyDateEndIsSmallerThanEndTime()
+    public function testBusyDateEndIsSmallerThanEndTime(): void
     {
         $this->loadFixtures(true);
 
@@ -89,7 +89,7 @@ class EntryRepositoryTest extends BaseTesting
         }
     }
 
-    public function dataForDay()
+    public function dataForDay(): array
     {
         return [
             [
@@ -111,7 +111,7 @@ class EntryRepositoryTest extends BaseTesting
         ];
     }
 
-    protected function loadFixtures($withBusy = false)
+    protected function loadFixtures($withBusy = false): void
     {
         $files =
             [

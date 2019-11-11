@@ -14,7 +14,7 @@ class AccessAreaControllerTest extends BaseTesting
      * @param string $url
      * @param array  $datas
      */
-    public function testArea(string $action, ?string $areaName = null, array $datas)
+    public function testArea(string $action, ?string $areaName = null, array $datas): void
     {
         $this->loadFixtures();
         $area = $token = null;
@@ -50,17 +50,13 @@ class AccessAreaControllerTest extends BaseTesting
         foreach ($datas as $data) {
             $email = $data[1];
             $code = $data[0];
-            if (!$email) {
-                $client = static::createClient();
-            } else {
-                $client = $this->createGrrClient($email);
-            }
+            $client = !$email ? static::createClient() : $this->createGrrClient($email);
             $client->request($method, $url, ['_token' => $token]);
             self::assertResponseStatusCodeSame($code, $email.' '.$url);
         }
     }
 
-    public function provideCases()
+    public function provideCases(): iterable
     {
         yield [
             'index',
@@ -218,7 +214,7 @@ class AccessAreaControllerTest extends BaseTesting
         ];
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

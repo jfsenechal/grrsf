@@ -39,14 +39,14 @@ class DayFactoryTest extends BaseTesting
         $this->dayFactory = new DayFactory($carbonFactory, $localHelper);
     }
 
-    public function testCreateImmutable()
+    public function testCreateImmutable(): void
     {
         $day = $this->dayFactory->createImmutable(2019, 10, 1);
         $this->assertInstanceOf(Day::class, $day);
         $this->assertInstanceOf(ArrayCollection::class, $day->getEntries());
     }
 
-    public function testCreateFromCarbon()
+    public function testCreateFromCarbon(): void
     {
         $carbon = Carbon::today();
         $day = $this->dayFactory->createFromCarbon($carbon);

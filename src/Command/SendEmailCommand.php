@@ -14,6 +14,9 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class SendEmailCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'grr:send-email';
     /**
      * @var EmailFactory
@@ -30,7 +33,7 @@ class SendEmailCommand extends Command
         $this->grrMailer = $grrMailer;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Add a short description for your command')

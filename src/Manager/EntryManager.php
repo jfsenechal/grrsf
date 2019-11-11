@@ -29,7 +29,7 @@ class EntryManager extends BaseManager
     public function removeEntriesByPeriodicity(Periodicity $periodicity, Entry $entryToSkip): void
     {
         foreach ($this->entryRepository->findByPeriodicity($periodicity) as $entry) {
-            if ($entry->getId() != $entryToSkip->getId()) {
+            if ($entry->getId() !== $entryToSkip->getId()) {
                 $this->remove($entry);
             }
         }

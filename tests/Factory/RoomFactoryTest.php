@@ -25,7 +25,7 @@ class RoomFactoryTest extends BaseTesting
         $this->roomFactory = new RoomFactory();
     }
 
-    public function testCreateNew()
+    public function testCreateNew(): void
     {
         $area = $this->areaFactory->createNew();
         $area->setName('Lulu');

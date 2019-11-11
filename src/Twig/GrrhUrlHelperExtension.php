@@ -130,7 +130,7 @@ class GrrhUrlHelperExtension extends AbstractExtension
         $year = $attributes['year'] ?? 0;
         $month = $attributes['month'] ?? 0;
 
-        if ($date) {
+        if ($date !== null) {
             $year = $date->year;
             $month = $date->month;
         }

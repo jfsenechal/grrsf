@@ -2,6 +2,7 @@
 
 namespace App\Form\DataTransformer;
 
+use App\Entity\Room;
 use App\Entity\Area;
 use App\Repository\RoomRepository;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -44,10 +45,10 @@ class NumberToRoomTransformer implements DataTransformerInterface
      *
      * @throws TransformationFailedException if object (area) is not found
      */
-    public function reverseTransform($areaNumber): ?\App\Entity\Room
+    public function reverseTransform($areaNumber): ?Room
     {
         // no area number? It's optional, so that's ok
-        if (!$areaNumber) {
+        if ($areaNumber === '') {
             return null;
         }
 

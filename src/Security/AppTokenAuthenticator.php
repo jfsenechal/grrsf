@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Security\User;
 use App\Repository\Security\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,7 +47,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return Response
      */
-    public function start(Request $request, AuthenticationException $authException = null): \Symfony\Component\HttpFoundation\JsonResponse
+    public function start(Request $request, AuthenticationException $authException = null): JsonResponse
     {
         $data = [
             // you might translate this message
@@ -84,8 +85,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *      return array('api_key' => $request->headers->get('X-API-TOKEN'));
      *
      * @throws \UnexpectedValueException If null is returned
-     *
-     * @return string[][]|string[]|null[]
+     * @return string[][]|null[][]
      */
     public function getCredentials(Request $request): array
     {
@@ -108,7 +108,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return UserInterface|null
      */
-    public function getUser($credentials, UserProviderInterface $userProvider): ?\App\Entity\Security\User
+    public function getUser($credentials, UserProviderInterface $userProvider): ?User
     {
         $apiToken = $credentials['token'];
 
@@ -154,7 +154,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return Response|null
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): \Symfony\Component\HttpFoundation\JsonResponse
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): JsonResponse
     {
         $data = [
             'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),

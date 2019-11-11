@@ -2,6 +2,7 @@
 
 namespace App\Tests\Periodicity;
 
+use DateTime;
 use App\Area\AreaFactory;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
@@ -57,7 +58,7 @@ class PeriodicityFactoryTest extends BaseTesting
         int $day,
         int $hour,
         int $minute
-    ) {
+    ): void {
         $this->loadFixtures();
 
         $area = $this->getArea('Esquare');
@@ -69,14 +70,14 @@ class PeriodicityFactoryTest extends BaseTesting
 
         $this->assertInstanceOf(Entry::class, $entry);
         $periodicity = $this->periodicityFactory->createNew($entry);
-        $periodicity->setEndTime(new \DateTime('+3 days'));
+        $periodicity->setEndTime(new DateTime('+3 days'));
 
         $this->assertInstanceOf(Periodicity::class, $entry->getPeriodicity());
         $this->assertInstanceOf(Entry::class, $periodicity->getEntryReference());
         $this->assertSame('Test', $periodicity->getEntryReference()->getName());
     }
 
-    public function getData()
+    public function getData(): array
     {
         return [
             [2019, 8, 19, 10, 12],
@@ -86,7 +87,7 @@ class PeriodicityFactoryTest extends BaseTesting
         ];
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

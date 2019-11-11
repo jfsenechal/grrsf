@@ -27,13 +27,9 @@ class SecurityHelper
      */
     public function isAreaAdministrator(UserInterface $user, Area $area): bool
     {
-        if ($this->authorizationRepository->findOneBy(
+        return (bool) $this->authorizationRepository->findOneBy(
             ['user' => $user, 'area' => $area, 'isAreaAdministrator' => true]
-        )) {
-            return true;
-        }
-
-        return false;
+        );
     }
 
     /**
@@ -45,14 +41,9 @@ class SecurityHelper
         if ($this->isAreaAdministrator($user, $area)) {
             return true;
         }
-
-        if ($this->authorizationRepository->findOneBy(
+        return (bool) $this->authorizationRepository->findOneBy(
             ['user' => $user, 'area' => $area, 'isAreaAdministrator' => false]
-        )) {
-            return true;
-        }
-
-        return false;
+        );
     }
 
     /**
@@ -63,14 +54,9 @@ class SecurityHelper
         if ($this->isAreaAdministrator($user, $room->getArea())) {
             return true;
         }
-
-        if ($this->authorizationRepository->findOneBy(
+        return (bool) $this->authorizationRepository->findOneBy(
             ['user' => $user, 'room' => $room, 'isResourceAdministrator' => true]
-        )) {
-            return true;
-        }
-
-        return false;
+        );
     }
 
     /**
@@ -85,14 +71,9 @@ class SecurityHelper
         if ($this->isAreaManager($user, $room->getArea())) {
             return true;
         }
-
-        if ($this->authorizationRepository->findOneBy(
+        return (bool) $this->authorizationRepository->findOneBy(
             ['user' => $user, 'room' => $room, 'isResourceAdministrator' => false]
-        )) {
-            return true;
-        }
-
-        return false;
+        );
     }
 
     public function isGrrAdministrator(UserInterface $user): bool
@@ -117,7 +98,7 @@ class SecurityHelper
         /*
          * A partir d'ici il faut être connecté
          */
-        if (!$user) {
+        if ($user === null) {
             return false;
         }
 
@@ -206,11 +187,7 @@ class SecurityHelper
         if ($this->isRoomAdministrator($user, $room)) {
             return true;
         }
-        if ($this->isRoomManager($user, $room)) {
-            return true;
-        }
-
-        return false;
+        return $this->isRoomManager($user, $room);
     }
 
     public function canSeeRoom(Room $room, UserInterface $user = null): bool

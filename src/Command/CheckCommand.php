@@ -91,7 +91,7 @@ class CheckCommand extends Command
         $this->io->newLine();
 
         $fileHandler = file_get_contents($this->migrationUtil->getCacheDirectory().'entry.json');
-        $entries = json_decode($fileHandler, true);
+        $entries = json_decode($fileHandler, true, 512, JSON_THROW_ON_ERROR);
 
         $fileHandler = file_get_contents($this->migrationUtil->getCacheDirectory().'resolveroom.json');
         $rooms = unserialize($fileHandler, []);
@@ -117,7 +117,7 @@ class CheckCommand extends Command
                 $args
             );
 
-            if (!$entry) {
+            if ($entry === null) {
                 ++$count;
                 $io->error($data['name'].' '.$startTime->format('d-m-Y'));
             } else {

@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use RuntimeException;
+use DateTime;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Migration\MigrationFactory;
@@ -139,7 +141,7 @@ class MigrationCommand extends Command
             $question->setValidator(
                 function ($password): int {
                     if (strlen($password) < 2) {
-                        throw new \RuntimeException('Le mot de passe ne peut être vide');
+                        throw new RuntimeException('Le mot de passe ne peut être vide');
                     }
 
                     return (int) $password;
@@ -155,14 +157,14 @@ class MigrationCommand extends Command
         $questionDate->setValidator(
             function ($date) {
                 if (null === $date) {
-                    return $date;
+                    return (int) $date;
                 }
 
-                if (!$date = \DateTime::createFromFormat('Y-m-d', $date)) {
-                    throw new \RuntimeException('La date n\'a pas un format valable: ');
+                if (!$date = DateTime::createFromFormat('Y-m-d', $date)) {
+                    throw new RuntimeException('La date n\'a pas un format valable: ');
                 }
 
-                return $date;
+                return (int) (int) $date;
             }
         );
 
@@ -210,7 +212,7 @@ class MigrationCommand extends Command
         $this->io->newLine();
 
         $fileHandler = file_get_contents($this->migrationUtil->getCacheDirectory().'repeat.json');
-        $this->repeats = json_decode($fileHandler, true);
+        $this->repeats = json_decode($fileHandler, true, 512, JSON_THROW_ON_ERROR);
 
         $this->io->section('Importation des Areas et rooms');
         $this->handleArea();
@@ -308,7 +310,7 @@ class MigrationCommand extends Command
     protected function handleEntry(): void
     {
         $fileHandler = file_get_contents($this->migrationUtil->getCacheDirectory().'entry.json');
-        $entries = json_decode($fileHandler, true);
+        $entries = json_decode($fileHandler, true, 512, JSON_THROW_ON_ERROR);
 
         $progressBar = new ProgressBar($this->output);
 
@@ -320,7 +322,7 @@ class MigrationCommand extends Command
             $entry = $this->migrationFactory->createEntry($this->resolveTypeEntries, $data);
             $room = $this->migrationUtil->transformToRoom($this->resolveRooms, $data['room_id']);
 
-            if ($room) {
+            if ($room !== null) {
                 $entry->setRoom($room);
                 $this->entityManager->persist($entry);
                 $repeatId = (int) $data['repeat_id'];
@@ -368,13 +370,13 @@ class MigrationCommand extends Command
         foreach ($progressBar->iterate($users) as $data) {
             $authorization = $this->migrationFactory->createAuthorization($data);
             $user = $this->migrationUtil->transformToUser($data['login']);
-            if (!$user) {
+            if ($user === null) {
                 $this->io->error('Utilisateur non trouvé pour l\'ajouter en tant que area admin:'.$data['username']);
                 continue;
             }
             $authorization->setUser($user);
             $area = $this->migrationUtil->transformToArea($this->areas, $data['id_area']);
-            if (!$area) {
+            if ($area === null) {
                 $this->io->error('Area non trouvé pour l\'ajouter en tant que area admin: '.$data['id_area']);
                 continue;
             }
@@ -397,14 +399,14 @@ class MigrationCommand extends Command
             $authorization = $this->migrationFactory->createAuthorization($data);
             $user = $this->migrationUtil->transformToUser($data['login']);
 
-            if (!$user) {
+            if ($user === null) {
                 $this->io->note('Utilisateur non trouvé: '.$data['login']);
                 continue;
             }
             $authorization->setUser($user);
             $room = $this->migrationUtil->transformToRoom($this->resolveRooms, $data['id_room']);
 
-            if (!$room) {
+            if ($room === null) {
                 $this->io->note('Room non trouvé: '.$data['id_room']);
                 continue;
             }
@@ -423,7 +425,7 @@ class MigrationCommand extends Command
         }
     }
 
-    private function handlSetting()
+    private function handlSetting(): void
     {
     }
 }

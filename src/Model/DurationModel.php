@@ -35,14 +35,12 @@ class DurationModel
      */
     public static function getUnitsTime(): array
     {
-        $units = [
+        return [
             self::UNIT_TIME_MINUTES => 'unit.minutes',
             self::UNIT_TIME_HOURS => 'unit.hours',
             self::UNIT_TIME_DAYS => 'unit.days',
             self::UNIT_TIME_WEEKS => 'unit.weeks',
         ];
-
-        return $units;
     }
 
     public function __construct()

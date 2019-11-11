@@ -152,7 +152,7 @@ class EntryController extends AbstractController
     {
         $urlList = $this->frontRouterHelper->generateMonthView($entry);
         $repeats = [];
-        if ($periodicity = $entry->getPeriodicity()) {
+        if (($periodicity = $entry->getPeriodicity()) !== null) {
             $repeats = $this->entryRepository->findByPeriodicity($periodicity);
         }
 
@@ -174,7 +174,7 @@ class EntryController extends AbstractController
     {
         $entry->setArea($entry->getRoom()->getArea());
 
-        if ($periodicity = $entry->getPeriodicity()) {
+        if (($periodicity = $entry->getPeriodicity()) !== null) {
             $periodicity->setEntryReference($entry); //use for validator
         }
 

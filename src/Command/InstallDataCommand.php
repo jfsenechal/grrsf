@@ -157,7 +157,7 @@ class InstallDataCommand extends Command
         $colors = ['#FFCCFF', '#99CCCC', '#FF9999', '#FFFF99', '#C0E0FF', '#FFCC99', '#FF6666', '#66FFFF', '#DDFFDD'];
 
         foreach ($types as $index => $nom) {
-            if ($this->entryTypeRepository->findOneBy(['name' => $nom])) {
+            if ($this->entryTypeRepository->findOneBy(['name' => $nom]) !== null) {
                 continue;
             }
             $type = $this->typeEntryFactory->createNew();
@@ -176,7 +176,7 @@ class InstallDataCommand extends Command
     {
         $esquareName = 'Esquare';
         $esquare = $this->areaRepository->findOneBy(['name' => $esquareName]);
-        if (!$esquare) {
+        if ($esquare === null) {
             $esquare = $this->areaFactory->createNew();
             $esquare->setName($esquareName);
             $this->entityManager->persist($esquare);
@@ -184,7 +184,7 @@ class InstallDataCommand extends Command
 
         $hdvName = 'Hdv';
         $hdv = $this->areaRepository->findOneBy(['name' => $hdvName]);
-        if (!$hdv) {
+        if ($hdv === null) {
             $hdv = $this->areaFactory->createNew();
             $hdv->setName($hdvName);
             $this->entityManager->persist($hdv);
@@ -216,7 +216,7 @@ class InstallDataCommand extends Command
     public function loadRooms(Area $area, array $salles): void
     {
         foreach ($salles as $salle) {
-            if ($this->roomRepository->findOneBy(['name' => $salle])) {
+            if ($this->roomRepository->findOneBy(['name' => $salle]) !== null) {
                 continue;
             }
             $room = $this->roomFactory->createNew($area);
@@ -230,7 +230,7 @@ class InstallDataCommand extends Command
         $email = 'grr@domain.be';
         $password = random_int(100000, 999999);
 
-        if ($this->userRepository->findOneBy(['email' => $email])) {
+        if ($this->userRepository->findOneBy(['email' => $email]) !== null) {
             return;
         }
 
@@ -265,7 +265,7 @@ class InstallDataCommand extends Command
         ];
 
         foreach ($settings as $name => $value) {
-            if (!$setting = $this->settingRepository->findOneBy(['name' => $name])) {
+            if (($setting = $this->settingRepository->findOneBy(['name' => $name])) === null) {
                 if (is_array($value)) {
                     $value = serialize($value);
                 }

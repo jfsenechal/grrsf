@@ -25,7 +25,7 @@ class RoomVoterTest extends BaseTesting
     /**
      * @dataProvider provideCases
      */
-    public function testVote(string $attribute, array $datas)
+    public function testVote(string $attribute, array $datas): void
     {
         $this->loadFixtures();
         $voter = $this->initVoter();
@@ -46,7 +46,7 @@ class RoomVoterTest extends BaseTesting
         }
     }
 
-    public function provideCases()
+    public function provideCases(): iterable
     {
         yield [
             RoomVoter::INDEX,
@@ -193,19 +193,19 @@ class RoomVoterTest extends BaseTesting
         ];
     }
 
-    protected function initSecurityHelper()
+    protected function initSecurityHelper(): SecurityHelper
     {
         return new SecurityHelper($this->entityManager->getRepository(Authorization::class));
     }
 
-    private function initVoter()
+    private function initVoter(): RoomVoter
     {
         $mock = $this->createMock(AccessDecisionManager::class);
 
         return new RoomVoter($mock, $this->initSecurityHelper());
     }
 
-    private function initToken(?User $user)
+    private function initToken(?User $user): AnonymousToken
     {
         $token = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\TokenInterface')->getMock(
         );
@@ -216,7 +216,7 @@ class RoomVoterTest extends BaseTesting
             ->willReturn(true);
 
         $token = new AnonymousToken('secret', 'anonymous');
-        if ($user) {
+        if ($user !== null) {
             $token = new UsernamePasswordToken(
                 $user, 'homer', 'app_user_provider'
             );
@@ -225,7 +225,7 @@ class RoomVoterTest extends BaseTesting
         return $token;
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

@@ -10,6 +10,8 @@
 
 namespace App\Tests;
 
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use DateTime;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\EntryType;
@@ -60,7 +62,7 @@ class BaseTesting extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kernel2 = self::bootKernel();
 
@@ -80,7 +82,7 @@ class BaseTesting extends WebTestCase
         parent::setUp();
     }
 
-    protected function createGrrClient(string $email, string $password = 'homer')
+    protected function createGrrClient(string $email, string $password = 'homer'): KernelBrowser
     {
         return static::createClient(
             [],
@@ -91,44 +93,44 @@ class BaseTesting extends WebTestCase
         );
     }
 
-    protected function getArea(string $name): Area
+    protected function getArea(string $name): ?object
     {
         return $this->entityManager
             ->getRepository(Area::class)
             ->findOneBy(['name' => $name]);
     }
 
-    protected function getRoom(string $roomName): Room
+    protected function getRoom(string $roomName): ?object
     {
         return $this->entityManager
             ->getRepository(Room::class)
             ->findOneBy(['name' => $roomName]);
     }
 
-    protected function getPeriodicity(int $type, string $endTime): Periodicity
+    protected function getPeriodicity(int $type, string $endTime): ?object
     {
-        $dateTime = \DateTime::createFromFormat('Y-m-d', $endTime);
+        $dateTime = DateTime::createFromFormat('Y-m-d', $endTime);
 
         return $this->entityManager
             ->getRepository(Periodicity::class)
             ->findOneBy(['type' => $type, 'endTime' => $dateTime]);
     }
 
-    protected function getEntry(string $name): Entry
+    protected function getEntry(string $name): ?object
     {
         return $this->entityManager
             ->getRepository(Entry::class)
             ->findOneBy(['name' => $name]);
     }
 
-    protected function getUser(string $email): User
+    protected function getUser(string $email): ?object
     {
         return $this->entityManager
             ->getRepository(User::class)
             ->findOneBy(['email' => $email]);
     }
 
-    protected function getTypeEntry(string $name): EntryType
+    protected function getTypeEntry(string $name): ?object
     {
         return $this->entityManager
             ->getRepository(EntryType::class)
@@ -138,7 +140,7 @@ class BaseTesting extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

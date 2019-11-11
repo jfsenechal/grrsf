@@ -53,7 +53,7 @@ class HandlerEntry
         $this->fullDay($entry);
         $periodicity = $entry->getPeriodicity();
 
-        if ($periodicity) {
+        if ($periodicity !== null) {
             $type = $periodicity->getType();
             if (null === $type || 0 === $type) {
                 $entry->setPeriodicity(null);
@@ -82,7 +82,7 @@ class HandlerEntry
     protected function fullDay(Entry $entry): void
     {
         $duration = $entry->getDuration();
-        if ($duration) {
+        if ($duration !== null) {
             if ($duration->isFullDay()) {
                 $area = $entry->getArea();
                 $hourStart = $area->getStartTime();

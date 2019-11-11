@@ -2,6 +2,8 @@
 
 namespace App\Tests\Factory;
 
+use DateTime;
+use DateTimeInterface;
 use App\Area\AreaFactory;
 use App\Entry\EntryFactory;
 use App\Factory\DurationFactory;
@@ -39,7 +41,7 @@ class DurationFactoryTest extends BaseTesting
         $this->entryFactory = new EntryFactory($periodicityFactory);
     }
 
-    public function testCreateNew()
+    public function testCreateNew(): void
     {
         $durationModel = $this->durationFactory->createNew();
 
@@ -55,7 +57,7 @@ class DurationFactoryTest extends BaseTesting
         int $day,
         int $hour,
         int $minute
-    ) {
+    ): void {
         $area = $this->areaFactory->createNew();
         $area->setName('Area1');
         $room = $this->roomFactory->createNew($area);
@@ -71,11 +73,11 @@ class DurationFactoryTest extends BaseTesting
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
      */
-    public function testCreateByDates()
+    public function testCreateByDates(): void
     {
         $format = 'Y-m-d H:i';
-        $start = \DateTime::createFromFormat($format, '2019-10-22 10:00');
-        $end = \DateTime::createFromFormat($format, '2019-10-22 10:30');
+        $start = DateTime::createFromFormat($format, '2019-10-22 10:00');
+        $end = DateTime::createFromFormat($format, '2019-10-22 10:30');
 
         $durationModel = $this->durationFactory->createFromDates($start, $end);
         $this->assertInstanceOf(DurationModel::class, $durationModel);
@@ -88,7 +90,7 @@ class DurationFactoryTest extends BaseTesting
      * @param \DateTimeInterface $end
      * @param float              $result
      */
-    public function testUnitInMinutes(\DateTimeInterface $start, \DateTimeInterface $end, $result)
+    public function testUnitInMinutes(DateTimeInterface $start, DateTimeInterface $end, float $result): void
     {
         $durationModel = $this->durationFactory->createFromDates($start, $end);
         $this->assertInstanceOf(DurationModel::class, $durationModel);
@@ -104,7 +106,7 @@ class DurationFactoryTest extends BaseTesting
      * @param \DateTimeInterface $end
      * @param float              $result
      */
-    public function testUnitInHours(\DateTimeInterface $start, \DateTimeInterface $end, $result)
+    public function testUnitInHours(DateTimeInterface $start, DateTimeInterface $end, float $result): void
     {
         $durationModel = $this->durationFactory->createFromDates($start, $end);
         $this->assertInstanceOf(DurationModel::class, $durationModel);
@@ -120,7 +122,7 @@ class DurationFactoryTest extends BaseTesting
      * @param \DateTimeInterface $end
      * @param float              $result
      */
-    public function testUnitInDays(\DateTimeInterface $start, \DateTimeInterface $end, $result)
+    public function testUnitInDays(DateTimeInterface $start, DateTimeInterface $end, float $result): void
     {
         $durationModel = $this->durationFactory->createFromDates($start, $end);
         $this->assertInstanceOf(DurationModel::class, $durationModel);
@@ -136,7 +138,7 @@ class DurationFactoryTest extends BaseTesting
      * @param \DateTimeInterface $end
      * @param float              $result
      */
-    public function testUnitInWeeks(\DateTimeInterface $start, \DateTimeInterface $end, $result)
+    public function testUnitInWeeks(DateTimeInterface $start, DateTimeInterface $end, float $result): void
     {
         $durationModel = $this->durationFactory->createFromDates($start, $end);
         $this->assertInstanceOf(DurationModel::class, $durationModel);
@@ -145,84 +147,96 @@ class DurationFactoryTest extends BaseTesting
         $this->assertSame($result, $durationModel->getTime());
     }
 
-    public function getDataForMinutes()
+    /**
+     * @return float[][]|\DateTime[][]|bool[][]
+     */
+    public function getDataForMinutes(): array
     {
         $format = 'Y-m-d H:i';
 
         return [
             [
-                'start' => \DateTime::createFromFormat($format, '2019-10-22 10:00'),
-                'end' => \DateTime::createFromFormat($format, '2019-10-22 10:30'),
+                'start' => DateTime::createFromFormat($format, '2019-10-22 10:00'),
+                'end' => DateTime::createFromFormat($format, '2019-10-22 10:30'),
                 'result' => 30.0,
             ],
             [
-                'start' => \DateTime::createFromFormat($format, '2019-10-22 8:17'),
-                'end' => \DateTime::createFromFormat($format, '2019-10-22 8:52'),
+                'start' => DateTime::createFromFormat($format, '2019-10-22 8:17'),
+                'end' => DateTime::createFromFormat($format, '2019-10-22 8:52'),
                 'result' => 35.0,
             ],
         ];
     }
 
-    public function getDataForHours()
+    /**
+     * @return float[][]|\DateTime[][]|bool[][]
+     */
+    public function getDataForHours(): array
     {
         $format = 'Y-m-d H:i';
 
         return [
             [
-                'start' => \DateTime::createFromFormat($format, '2019-10-22 9:00'),
-                'end' => \DateTime::createFromFormat($format, '2019-10-22 12:30'),
+                'start' => DateTime::createFromFormat($format, '2019-10-22 9:00'),
+                'end' => DateTime::createFromFormat($format, '2019-10-22 12:30'),
                 'result' => 3.5,
             ],
             [
-                'start' => \DateTime::createFromFormat($format, '2017-10-01 14:00'),
-                'end' => \DateTime::createFromFormat($format, '2017-10-01 16:45'),
+                'start' => DateTime::createFromFormat($format, '2017-10-01 14:00'),
+                'end' => DateTime::createFromFormat($format, '2017-10-01 16:45'),
                 'result' => 2.75,
             ],
             [
-                'start' => \DateTime::createFromFormat($format, '2019-10-22 15:17'),
-                'end' => \DateTime::createFromFormat($format, '2019-10-22 18:52'),
+                'start' => DateTime::createFromFormat($format, '2019-10-22 15:17'),
+                'end' => DateTime::createFromFormat($format, '2019-10-22 18:52'),
                 'result' => 3.58,
             ],
         ];
     }
 
-    public function getDataForDays()
+    /**
+     * @return float[][]|\DateTime[][]|bool[][]
+     */
+    public function getDataForDays(): array
     {
         $format = 'Y-m-d H:i';
 
         return [
             [
-                'start' => \DateTime::createFromFormat($format, '2019-10-20 10:00'),
-                'end' => \DateTime::createFromFormat($format, '2019-10-25 10:30'),
+                'start' => DateTime::createFromFormat($format, '2019-10-20 10:00'),
+                'end' => DateTime::createFromFormat($format, '2019-10-25 10:30'),
                 'result' => 5.0,
             ],
             [
-                'start' => \DateTime::createFromFormat($format, '2019-10-11 8:17'),
-                'end' => \DateTime::createFromFormat($format, '2019-10-12 8:52'),
+                'start' => DateTime::createFromFormat($format, '2019-10-11 8:17'),
+                'end' => DateTime::createFromFormat($format, '2019-10-12 8:52'),
                 'result' => 1.0,
             ],
         ];
     }
 
-    public function getDataForWeeks()
+    /**
+     * @return float[][]|\DateTime[][]|bool[][]
+     */
+    public function getDataForWeeks(): array
     {
         $format = 'Y-m-d H:i';
 
         return [
             [
-                'start' => \DateTime::createFromFormat($format, '2019-07-01 10:00'),
-                'end' => \DateTime::createFromFormat($format, '2019-07-30 10:30'),
+                'start' => DateTime::createFromFormat($format, '2019-07-01 10:00'),
+                'end' => DateTime::createFromFormat($format, '2019-07-30 10:30'),
                 'result' => 4.0,
             ],
             [
-                'start' => \DateTime::createFromFormat($format, '2019-11-11 8:17'),
-                'end' => \DateTime::createFromFormat($format, '2019-12-20 8:52'),
+                'start' => DateTime::createFromFormat($format, '2019-11-11 8:17'),
+                'end' => DateTime::createFromFormat($format, '2019-12-20 8:52'),
                 'result' => 5.0,
             ],
         ];
     }
 
-    public function getDataForCreateNewFromEntry()
+    public function getDataForCreateNewFromEntry(): array
     {
         return [
             [2019, 8, 19, 10, 0],

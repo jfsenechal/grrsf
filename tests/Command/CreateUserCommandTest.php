@@ -16,7 +16,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class CreateUserCommandTest extends BaseTesting
 {
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->loadFixtures();
 
@@ -42,7 +42,7 @@ class CreateUserCommandTest extends BaseTesting
         $this->assertContains("L'utilisateur a bien été créé", $output);
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

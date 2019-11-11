@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use DateTimeInterface;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
@@ -29,7 +30,7 @@ class EntryRepository extends ServiceEntityRepository
      *
      * @return Entry[] Returns an array of Entry objects
      */
-    public function findForMonth(\DateTimeInterface $date, Area $area, Room $room = null): array
+    public function findForMonth(DateTimeInterface $date, Area $area, Room $room = null): array
     {
         $qb = $this->createQueryBuilder('entry');
         $end = clone $date;
@@ -201,7 +202,6 @@ class EntryRepository extends ServiceEntityRepository
      * Retourne l'entry de base de la repetition.
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
-     *
      * @return mixed
      */
     public function getBaseEntryForPeriodicity(Periodicity $periodicity)

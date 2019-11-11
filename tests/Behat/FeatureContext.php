@@ -10,6 +10,7 @@
 
 namespace App\Tests\Behat;
 
+use Exception;
 use App\Repository\AreaRepository;
 use App\Repository\EntryRepository;
 use Behat\MinkExtension\Context\RawMinkContext;
@@ -35,7 +36,7 @@ class FeatureContext extends RawMinkContext
     /**
      * @Given I am logged in as an admin
      */
-    public function iAmLoggedInAsAnAdmin()
+    public function iAmLoggedInAsAnAdmin(): void
     {
         $this->visitPath('/login');
         //var_dump($this->getSession()->getPage()->getContent());
@@ -48,7 +49,7 @@ class FeatureContext extends RawMinkContext
      * iven I am logged in as user :username
      * @Given /^I am logged in as user "([^"]*)"$/
      */
-    public function iAmLoggedInAsUser(string $username)
+    public function iAmLoggedInAsUser(string $username): void
     {
         $this->visitPath('/login');
         $this->fillField('username', $username);
@@ -59,7 +60,7 @@ class FeatureContext extends RawMinkContext
     /**
      * @Given I fill the periodicity endTime with the date :day/:month/:year
      */
-    public function iFillEndTimePeridocity(int $day, int $month, int $year)
+    public function iFillEndTimePeridocity(int $day, int $month, int $year): void
     {
         $this->fillField('entry_with_periodicity[periodicity][endTime][day]', $day);
         $this->fillField('entry_with_periodicity[periodicity][endTime][month]', $month);
@@ -69,7 +70,7 @@ class FeatureContext extends RawMinkContext
     /**
      * @Given /^I fill the periodicity endTime with this month and day (\d+) and year (\d+)$/
      */
-    public function iFillEndTimePeridocityThisMonth(int $day, int $year)
+    public function iFillEndTimePeridocityThisMonth(int $day, int $year): void
     {
         $today = Carbon::today();
 
@@ -81,7 +82,7 @@ class FeatureContext extends RawMinkContext
     /**
      * @Given I fill the periodicity endTime with later date
      */
-    public function iFillEndTimePeridocityLater()
+    public function iFillEndTimePeridocityLater(): void
     {
         $today = Carbon::today();
         $today->addDays(3);
@@ -94,7 +95,7 @@ class FeatureContext extends RawMinkContext
     /**
      * @Given I fill the entry startTime with the date :day/:month/:year
      */
-    public function iFillDateBeginEntry(int $day, int $month, int $year)
+    public function iFillDateBeginEntry(int $day, int $month, int $year): void
     {
         $this->fillField('entry_with_periodicity_startTime_date_day', $day);
         $this->fillField('entry_with_periodicity_startTime_date_month', $month);
@@ -104,7 +105,7 @@ class FeatureContext extends RawMinkContext
     /**
      * @Given I fill the entry startTime with today :hour::minute
      */
-    public function iFillDateBeginEntryWithToday(int $hour, int $minute)
+    public function iFillDateBeginEntryWithToday(int $hour, int $minute): void
     {
         $today = Carbon::today();
         $this->fillField('entry_with_periodicity_startTime_date_day', $today->day);
@@ -118,7 +119,7 @@ class FeatureContext extends RawMinkContext
      * @Given /^I fill the entry startTime with this month and day (\d+) and year (\d+) at time (\d+):(\d+)$/
      *
      */
-    public function iFillDateBeginEntryWithThisMonth(int $day, int $year, int $hour, int $minute)
+    public function iFillDateBeginEntryWithThisMonth(int $day, int $year, int $hour, int $minute): void
     {
         $today = Carbon::today();
         $this->fillField('entry_with_periodicity_startTime_date_day', $day);
@@ -134,7 +135,7 @@ class FeatureContext extends RawMinkContext
      * @Then /^I follow this week$/
      *
      */
-    public function clickLinkWeek()
+    public function clickLinkWeek(): void
     {
         $link = "s".Carbon::today()->week;
         $link = $this->fixStepArgument($link);
@@ -147,7 +148,7 @@ class FeatureContext extends RawMinkContext
      * @Then /^I follow this day$/
      *
      */
-    public function clickLinkDay()
+    public function clickLinkDay(): void
     {
         $link = Carbon::today()->day;
         $link = $this->fixStepArgument($link);
@@ -158,19 +159,19 @@ class FeatureContext extends RawMinkContext
      * @Then /^I should see "([^"]*)" exactly "([^"]*)" times$/
      * @throws \Exception
      */
-    public function iShouldSeeTextSoManyTimes($sText, $iExpected)
+    public function iShouldSeeTextSoManyTimes($sText, $iExpected): void
     {
         $sContent = $this->getSession()->getPage()->getText();
         $iFound = substr_count($sContent, $sText);
         if ($iExpected != $iFound) {
-            throw new \Exception('Found '.$iFound.' occurences of "'.$sText.'" when expecting '.$iExpected);
+            throw new Exception('Found '.$iFound.' occurences of "'.$sText.'" when expecting '.$iExpected);
         }
     }
 
     /**
      * @Given /^I am on the page show entry "([^"]*)"$/
      */
-    public function iAmOnThePageShowEntry(string $name)
+    public function iAmOnThePageShowEntry(string $name): void
     {
         $entry = $this->entryRepository->findOneBy(['name' => $name]);
         $path = '/front/entry/'.$entry->getId();
@@ -180,24 +181,27 @@ class FeatureContext extends RawMinkContext
     /**
      * @Given /^I am on the page month view of month (\d+)-(\d+) and area "([^"]*)"$/
      */
-    public function iAmOnThePageMonthView(int $month, int $year, string $areaName)
+    public function iAmOnThePageMonthView(int $month, int $year, string $areaName): void
     {
         $area = $this->areaRepository->findOneBy(['name' => $areaName]);
         $path = '/front/monthview/area/'.$area->getId().'/year/'.$year.'/month/'.$month.'/room';
         $this->visitPath($path);
     }
 
-    private function fillField(string $field, string $value)
+    private function fillField(string $field, string $value): void
     {
         $this->getSession()->getPage()->fillField($field, $value);
     }
 
-    private function pressButton($button)
+    private function pressButton($button): void
     {
         $button = $this->fixStepArgument($button);
         $this->getSession()->getPage()->pressButton($button);
     }
 
+    /**
+     * @return mixed[]|string
+     */
     protected function fixStepArgument($argument)
     {
         return str_replace('\\"', '"', $argument);

@@ -2,6 +2,7 @@
 
 namespace App\Repository\Security;
 
+use Doctrine\ORM\QueryBuilder;
 use App\Entity\Security\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -19,7 +20,7 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function getQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    public function getQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('user')
             ->orderBy('user.name', 'ASC');

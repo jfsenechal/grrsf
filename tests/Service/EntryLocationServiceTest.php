@@ -10,6 +10,7 @@
 
 namespace App\Tests\Service;
 
+use DateTime;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
@@ -37,10 +38,10 @@ class EntryLocationServiceTest extends BaseTesting
         int $entryHourEnd,
         int $entryMinuteEnd,
         int $countLocations
-    ) {
+    ): void {
         $this->loadFixtures();
         $duration = 30;
-        $today = new \DateTime('now');
+        $today = new DateTime('now');
         $today->setTime($entryHourBegin, $entryMinuteBegin);
 
         $daySelected = Carbon::instance($today);
@@ -82,7 +83,7 @@ class EntryLocationServiceTest extends BaseTesting
         }
     }
 
-    public function getData()
+    public function getData(): array
     {
         return [
             [
@@ -117,10 +118,10 @@ class EntryLocationServiceTest extends BaseTesting
      * @param array     $countLocations
      */
     public function testMultipleDaysSetLocations(
-        \DateTime $dateStart,
-        \DateTime $dateEnd,
+        DateTime $dateStart,
+        DateTime $dateEnd,
         array $countLocations
-    ) {
+    ): void {
         $duration = 30;
 
         $area = $this->initArea(8, 19, $duration);
@@ -165,18 +166,18 @@ class EntryLocationServiceTest extends BaseTesting
         }
     }
 
-    public function getDataMultipleDays()
+    public function getDataMultipleDays(): array
     {
         return [
             [
-                'dayStart' => \DateTime::createFromFormat('Y-m-d H:i', '2019-08-05 09:00'),
-                'dayEnd' => \DateTime::createFromFormat('Y-m-d H:i', '2019-08-08 09:00'),
+                'dayStart' => DateTime::createFromFormat('Y-m-d H:i', '2019-08-05 09:00'),
+                'dayEnd' => DateTime::createFromFormat('Y-m-d H:i', '2019-08-08 09:00'),
                 'countsLocations' => [20, 22, 22, 2],
             ],
         ];
     }
 
-    public function te2stIsEntryInTimeSlot()
+    public function te2stIsEntryInTimeSlot(): void
     {
         /*  CarbonPeriod $entryTimeSlots,
           \DateTimeInterface $startTimeSlot,
@@ -204,7 +205,7 @@ class EntryLocationServiceTest extends BaseTesting
         return $area;
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

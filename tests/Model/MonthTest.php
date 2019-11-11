@@ -7,7 +7,7 @@ use App\Tests\BaseTesting;
 
 class MonthTest extends BaseTesting
 {
-    public function testCreateNew()
+    public function testCreateNew(): void
     {
         $month = Month::init(2019, 10, 'fr');
 
@@ -25,7 +25,7 @@ class MonthTest extends BaseTesting
         }
     }
 
-    public function testCreateNewEnglish()
+    public function testCreateNewEnglish(): void
     {
         $month = Month::init(2019, 10, 'en');
 
@@ -43,6 +43,9 @@ class MonthTest extends BaseTesting
         }
     }
 
+    /**
+     * @return string[]
+     */
     protected function getDays() : array
     {
         return [
@@ -84,6 +87,9 @@ class MonthTest extends BaseTesting
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function getDaysEnglish(): array
     {
         $days = $this->getDays();

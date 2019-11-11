@@ -2,6 +2,7 @@
 
 namespace App\Validator\Entry;
 
+use Exception;
 use App\Model\DurationModel;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -21,7 +22,7 @@ class DurationValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$value instanceof DurationModel) {
-            throw new \Exception('Not valid value');
+            throw new Exception('Not valid value');
         }
 
         $unit = $value->getUnit();

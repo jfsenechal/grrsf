@@ -19,7 +19,7 @@ class AreaFactoryTest extends BaseTesting
         $this->areaFactory = new AreaFactory();
     }
 
-    public function testCreateNew()
+    public function testCreateNew(): void
     {
         $area = $this->areaFactory->createNew();
         $area->setName('Lolo');

@@ -25,7 +25,7 @@ class AreaVoterTest extends BaseTesting
     /**
      * @dataProvider provideCases
      */
-    public function testVote(string $attribute, array $datas)
+    public function testVote(string $attribute, array $datas): void
     {
         $this->loadFixtures();
         $voter = $this->initVoter();
@@ -46,7 +46,7 @@ class AreaVoterTest extends BaseTesting
         }
     }
 
-    public function provideCases()
+    public function provideCases(): iterable
     {
         yield [
             AreaVoter::INDEX,
@@ -189,12 +189,12 @@ class AreaVoterTest extends BaseTesting
         ];
     }
 
-    protected function initSecurityHelper()
+    protected function initSecurityHelper(): SecurityHelper
     {
         return new SecurityHelper($this->entityManager->getRepository(Authorization::class));
     }
 
-    private function initVoter()
+    private function initVoter(): AreaVoter
     {
         $mock = $this->createMock(AccessDecisionManager::class);
 
@@ -208,7 +208,7 @@ class AreaVoterTest extends BaseTesting
         return new AreaVoter($mock, $this->initSecurityHelper());
     }
 
-    private function initToken(?User $user)
+    private function initToken(?User $user): AnonymousToken
     {
         $token = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\TokenInterface')->getMock(
         );
@@ -219,7 +219,7 @@ class AreaVoterTest extends BaseTesting
             ->willReturn(true);
 
         $token = new AnonymousToken('secret', 'anonymous');
-        if ($user) {
+        if ($user !== null) {
             $token = new UsernamePasswordToken(
                 $user, 'homer', 'app_user_provider'
             );
@@ -228,7 +228,7 @@ class AreaVoterTest extends BaseTesting
         return $token;
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

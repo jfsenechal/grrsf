@@ -8,6 +8,7 @@
 
 namespace App\Doctrine;
 
+use DateTimeInterface;
 use Doctrine\ORM\QueryBuilder;
 
 class QueryHelper
@@ -22,7 +23,7 @@ class QueryHelper
         $this->queryBuilder = $queryBuilder;
     }
 
-    public function addConstraint(\DateTimeInterface $dateTime): void
+    public function addConstraint(DateTimeInterface $dateTime): void
     {
         $this->queryBuilder->andWhere('entry.startTime LIKE %:date%')
             ->setParameter('date', $dateTime);

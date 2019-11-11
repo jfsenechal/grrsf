@@ -2,6 +2,7 @@
 
 namespace App\Entity\Security;
 
+use DateTime;
 use App\Doctrine\Traits\IdEntityTrait;
 use App\Doctrine\Traits\TimestampableEntityTrait;
 use App\Entity\Area;
@@ -62,8 +63,8 @@ class Authorization
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
         $this->isAreaAdministrator = false;
         $this->isResourceAdministrator = false;
     }

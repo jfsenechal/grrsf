@@ -2,6 +2,7 @@
 
 namespace App\Tests\Entry;
 
+use DateTimeInterface;
 use App\Area\AreaFactory;
 use App\Entity\Area;
 use App\Entity\Entry;
@@ -36,7 +37,7 @@ class EntryFactoryTest extends BaseTesting
         $this->roomFactory = new RoomFactory();
     }
 
-    public function testCreateNew()
+    public function testCreateNew(): void
     {
         $entry = $this->entryFactory->createNew();
         $this->assertInstanceOf(Entry::class, $entry);
@@ -59,7 +60,7 @@ class EntryFactoryTest extends BaseTesting
         int $day,
         int $hour,
         int $minute
-    ) {
+    ): void {
         $area = $this->areaFactory->createNew();
         $area->setName('Area1');
         $room = $this->roomFactory->createNew($area);
@@ -73,13 +74,13 @@ class EntryFactoryTest extends BaseTesting
         $this->assertInstanceOf(Entry::class, $entry);
         $this->assertSame('Area1', $entry->getArea()->getName());
         $this->assertSame('Salle1', $entry->getRoom()->getName());
-        $this->assertInstanceOf(\DateTimeInterface::class, $entry->getStartTime());
-        $this->assertInstanceOf(\DateTimeInterface::class, $entry->getEndTime());
+        $this->assertInstanceOf(DateTimeInterface::class, $entry->getStartTime());
+        $this->assertInstanceOf(DateTimeInterface::class, $entry->getEndTime());
         $this->assertSame("$year $month $day $hour $minute", $entry->getStartTime()->format('Y n j G i'));
         $this->assertSame($endTime->format('Y n j G i'), $entry->getEndTime()->format('Y n j G i'));
     }
 
-    public function getData()
+    public function getData(): array
     {
         return [
             [2019, 8, 19, 10, 12],

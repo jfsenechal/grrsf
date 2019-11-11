@@ -103,7 +103,7 @@ class User implements UserInterface
         $this->authorizations = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return mb_strtoupper($this->name).' '.$this->first_name;
     }
@@ -150,9 +150,7 @@ class User implements UserInterface
 
     public function hasRole(string $role): bool
     {
-        if (in_array($role, $this->getRoles(), true)) {
-            return true;
-        }
+        return in_array($role, $this->getRoles(), true);
 
         return false;
     }

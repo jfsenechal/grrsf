@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use RuntimeException;
 use App\Manager\UserManager;
 use App\Repository\Security\UserRepository;
 use App\Security\PasswordHelper;
@@ -89,7 +90,7 @@ class CreateuserCommand extends Command
             $question->setValidator(
                 function ($password): int {
                     if (strlen($password) < 4) {
-                        throw new \RuntimeException('Le mot de passe doit faire minimum 4 caractères');
+                        throw new RuntimeException('Le mot de passe doit faire minimum 4 caractères');
                     }
 
                     return (int) $password;
@@ -98,7 +99,7 @@ class CreateuserCommand extends Command
             $password = $helper->ask($input, $output, $question);
         }
 
-        if ($this->userRepository->findOneBy(['email' => $email])) {
+        if ($this->userRepository->findOneBy(['email' => $email]) !== null) {
             $io->error('Un utilisateur existe déjà avec cette adresse email');
 
             return 1;

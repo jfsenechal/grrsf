@@ -8,6 +8,7 @@
 
 namespace App\Factory;
 
+use DateTimeInterface;
 use App\Entity\Entry;
 use App\Model\DurationModel;
 use App\Service\TimeService;
@@ -28,7 +29,7 @@ class DurationFactory
         return $duration;
     }
 
-    public function createFromDates(\DateTimeInterface $startTime, \DateTimeInterface $endTime): DurationModel
+    public function createFromDates(DateTimeInterface $startTime, DateTimeInterface $endTime): DurationModel
     {
         $duration = $this->createNew();
 
@@ -39,8 +40,8 @@ class DurationFactory
 
     protected function setUnitAndTime(
         DurationModel $duration,
-        \DateTimeInterface $startDateTime,
-        \DateTimeInterface $endDateTime
+        DateTimeInterface $startDateTime,
+        DateTimeInterface $endDateTime
     ): void {
         $startTime = Carbon::instance($startDateTime);
         $endTime = Carbon::instance($endDateTime);

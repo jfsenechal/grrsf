@@ -7,7 +7,7 @@ use App\Tests\BaseTesting;
 
 class EntryTypeRepositoryTest extends BaseTesting
 {
-    public function testFindByName()
+    public function testFindByName(): void
     {
         $this->loadFixtures();
         $entryType = $this->entityManager
@@ -18,7 +18,7 @@ class EntryTypeRepositoryTest extends BaseTesting
         $this->assertEquals('A', $entryType->getLetter());
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

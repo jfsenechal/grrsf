@@ -26,17 +26,18 @@ class LoaderCommand extends Command
         $this->loader = $container->get('fidry_alice_data_fixtures.loader.doctrine');
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Test load fixtures');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $basePath = __DIR__.'/../Fixtures/';
 
         $this->loader->load([$basePath.'area.yaml']);
+        return 0;
     }
 }

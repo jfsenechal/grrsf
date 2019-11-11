@@ -19,7 +19,7 @@ class PeriodicityDayProviderTest extends BaseTesting
     /**
      * Test repeat every day.
      */
-    public function testGetDaysByPeriodicityRepeatByDay()
+    public function testGetDaysByPeriodicityRepeatByDay(): void
     {
         $this->loadFixtures();
         $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_DAY, '2019-12-05');
@@ -38,7 +38,7 @@ class PeriodicityDayProviderTest extends BaseTesting
     /**
      * Test repeat every month same day.
      */
-    public function testGetDaysByPeriodicityRepeatByMonthSameDay()
+    public function testGetDaysByPeriodicityRepeatByMonthSameDay(): void
     {
         $this->loadFixtures();
         $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_MONTH_SAME_DAY, '2019-08-03');
@@ -57,7 +57,7 @@ class PeriodicityDayProviderTest extends BaseTesting
     /**
      * Test repeat every month same week day.
      */
-    public function testGetDaysByPeriodicityRepeatByMonthSameWeekday()
+    public function testGetDaysByPeriodicityRepeatByMonthSameWeekday(): void
     {
         $this->loadFixtures();
         $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_MONTH_SAME_WEEK_DAY, '2019-10-09');
@@ -76,7 +76,7 @@ class PeriodicityDayProviderTest extends BaseTesting
     /**
      * Test repeat every year.
      */
-    public function testGetDaysByPeriodicityRepeatByYear()
+    public function testGetDaysByPeriodicityRepeatByYear(): void
     {
         $this->loadFixtures();
         $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_YEAR, '2022-10-04');
@@ -95,7 +95,7 @@ class PeriodicityDayProviderTest extends BaseTesting
     /**
      * Test repeat every week.
      */
-    public function testGetDaysByPeriodicityRepeatByEveryWeek1()
+    public function testGetDaysByPeriodicityRepeatByEveryWeek1(): void
     {
         $this->loadFixtures();
         $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_WEEK, '2018-08-20');
@@ -132,7 +132,7 @@ class PeriodicityDayProviderTest extends BaseTesting
     /**
      * Test repeat every 2 week.
      */
-    public function testGetDaysByPeriodicityRepeatByEveryWeek2()
+    public function testGetDaysByPeriodicityRepeatByEveryWeek2(): void
     {
         $this->loadFixtures();
         $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_WEEK, '2017-04-15');
@@ -158,7 +158,7 @@ class PeriodicityDayProviderTest extends BaseTesting
         }
     }
 
-    public function testGetDaysByPeriodicityWithDayCommon()
+    public function testGetDaysByPeriodicityWithDayCommon(): void
     {
         $this->loadFixtures();
         $periodicity = $this->getPeriodicity(PeriodicityConstant::EVERY_DAY, '2019-12-06');
@@ -182,7 +182,7 @@ class PeriodicityDayProviderTest extends BaseTesting
         return new PeriodicityDaysProvider();
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $this->loader->load(
             [

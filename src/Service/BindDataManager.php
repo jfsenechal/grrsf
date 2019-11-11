@@ -8,6 +8,7 @@
 
 namespace App\Service;
 
+use DateTimeInterface;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Room;
@@ -79,7 +80,7 @@ class BindDataManager
      */
     public function bindWeek(Week $weekModel, Area $area, Room $roomSelected = null): array
     {
-        if ($roomSelected) {
+        if ($roomSelected !== null) {
             $rooms = [$roomSelected];
         } else {
             $rooms = $this->roomRepository->findByArea($area); //not $area->getRooms() sqlite not work
@@ -115,7 +116,7 @@ class BindDataManager
     {
         $roomsModel = [];
 
-        if ($roomSelected) {
+        if ($roomSelected !== null) {
             $rooms = [$roomSelected];
         } else {
             $rooms = $this->roomRepository->findByArea($area); //not $area->getRooms() sqlite not work
@@ -147,7 +148,7 @@ class BindDataManager
     /**
      * @return mixed[]
      */
-    public function extractByDate(\DateTimeInterface $dateTime, array $entries): array
+    public function extractByDate(DateTimeInterface $dateTime, array $entries): array
     {
         $data = [];
         foreach ($entries as $entry) {

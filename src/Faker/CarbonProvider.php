@@ -10,6 +10,7 @@
 
 namespace App\Faker;
 
+use DateTime;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Faker\Provider\Base as BaseProvider;
@@ -20,12 +21,12 @@ use Faker\Provider\Base as BaseProvider;
  */
 class CarbonProvider extends BaseProvider
 {
-    public function carbonDateTime(int $year, int $month, int $day, int $hour, int $minute): \DateTime
+    public function carbonDateTime(int $year, int $month, int $day, int $hour, int $minute): DateTime
     {
         return Carbon::create($year, $month, $day, $hour, $minute)->toDateTime();
     }
 
-    public function carbonDate(int $year, int $month, int $day): \DateTime
+    public function carbonDate(int $year, int $month, int $day): DateTime
     {
         return Carbon::createFromDate($year, $month, $day)->toDateTime();
     }
@@ -38,7 +39,7 @@ class CarbonProvider extends BaseProvider
         return CarbonImmutable::createFromFormat($format, $date);
     }
 
-    public function carbonToday(int $hour, int $minute): \Carbon\Carbon
+    public function carbonToday(int $hour, int $minute): Carbon
     {
         $today = Carbon::today();
         $today->setTime($hour, $minute);

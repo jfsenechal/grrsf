@@ -10,6 +10,7 @@
 
 namespace App\Doctrine\Traits;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 trait TimestampableEntityTrait
@@ -33,7 +34,7 @@ trait TimestampableEntityTrait
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -43,7 +44,7 @@ trait TimestampableEntityTrait
     /**
      * Returns createdAt.
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -53,7 +54,7 @@ trait TimestampableEntityTrait
      *
      * @return $this
      */
-    public function setUpdatedAt(\DateTime $updatedAt): self
+    public function setUpdatedAt(DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -63,7 +64,7 @@ trait TimestampableEntityTrait
     /**
      * Returns updatedAt.
      */
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }

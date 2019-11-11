@@ -2,6 +2,8 @@
 
 namespace App\Validator\Periodicity;
 
+use App\Entity\Periodicity;
+use InvalidArgumentException;
 use App\Periodicity\PeriodicityConstant;
 use Carbon\Carbon;
 use Symfony\Component\Validator\Constraint;
@@ -19,8 +21,8 @@ class PeriodicityEveryWeekValidator extends ConstraintValidator
             return;
         }
 
-        if (!$value instanceof \App\Entity\Periodicity) {
-            throw new \InvalidArgumentException($value, 0);
+        if (!$value instanceof Periodicity) {
+            throw new InvalidArgumentException($value, 0);
         }
 
         if (PeriodicityConstant::EVERY_WEEK !== $value->getType()) {

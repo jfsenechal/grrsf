@@ -9,6 +9,10 @@ use Carbon\CarbonInterface;
 class DayFactory
 {
     /**
+     * @var \App\Factory\CarbonFactory|mixed
+     */
+    public $carbonFactory;
+    /**
      * @var LocalHelper
      */
     private $localHelper;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat;
 
+use RuntimeException;
 use App\Repository\EntryRepository;
 use Behat\Behat\Context\Context;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +49,7 @@ final class SymfonyContext implements Context
     public function theResponseShouldBeReceived(): void
     {
         if ($this->response === null) {
-            throw new \RuntimeException('No response received');
+            throw new RuntimeException('No response received');
         }
 
 //        var_dump($this->response->getContent());
@@ -57,24 +58,24 @@ final class SymfonyContext implements Context
     /**
      * Then I should see :arg1
      */
-    public function iShouldSee($arg1)
+    public function iShouldSee($arg1): void
     {
         if (null === $this->response) {
-            throw new \RuntimeException('No response received');
+            throw new RuntimeException('No response received');
         }
 
-        if (true !== $this->response->isRedirection()) {
-            throw new \RuntimeException('Response is not redirect');
+        if (!$this->response->isRedirection()) {
+            throw new RuntimeException('Response is not redirect');
         }
     }
 
     /**
      * When /^i am login with user "([^"]*)" and password "([^"]*)"$/
      */
-    public function iAmLoginWithUserAndPassword($arg1, $arg2)
+    public function iAmLoginWithUserAndPassword($arg1, $arg2): void
     {
         if (null === $arg1) {
-            throw new \RuntimeException('No user received');
+            throw new RuntimeException('No user received');
         }
     }
 

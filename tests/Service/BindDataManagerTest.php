@@ -27,7 +27,7 @@ use Symfony\Component\Security\Core\Security;
 
 class BindDataManagerTest extends BaseTesting
 {
-    public function testBindMonthWithRoom()
+    public function testBindMonthWithRoom(): void
     {
         $this->loadFixtures();
 
@@ -48,7 +48,7 @@ class BindDataManagerTest extends BaseTesting
         }
     }
 
-    public function testBindMonthWithOutRoom()
+    public function testBindMonthWithOutRoom(): void
     {
         $this->loadFixtures();
 
@@ -68,7 +68,7 @@ class BindDataManagerTest extends BaseTesting
         }
     }
 
-    public function testBindWeekWithRoom()
+    public function testBindWeekWithRoom(): void
     {
         $this->loadFixtures();
 
@@ -92,7 +92,7 @@ class BindDataManagerTest extends BaseTesting
         }
     }
 
-    public function testBindWeekWithOutRoom()
+    public function testBindWeekWithOutRoom(): void
     {
         $this->loadFixtures();
 
@@ -119,7 +119,7 @@ class BindDataManagerTest extends BaseTesting
         }
     }
 
-    public function testBindDayWithOutRoom()
+    public function testBindDayWithOutRoom(): void
     {
         $this->loadFixtures();
 
@@ -149,7 +149,7 @@ class BindDataManagerTest extends BaseTesting
         }
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

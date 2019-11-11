@@ -10,6 +10,8 @@
 
 namespace App\Security\Ldap;
 
+use Symfony\Component\Ldap\Adapter\QueryInterface;
+use Symfony\Component\Ldap\Adapter\EntryManagerInterface;
 use Symfony\Component\Ldap\Adapter\AdapterInterface;
 use Symfony\Component\Ldap\Exception\ConnectionException;
 use Symfony\Component\Ldap\Exception\DriverNotFoundException;
@@ -55,12 +57,12 @@ class LdapAuth implements LdapInterface
      * @param string $dn
      * @param string $query
      */
-    public function query($dn, $query, array $options = []): \Symfony\Component\Ldap\Adapter\QueryInterface
+    public function query($dn, $query, array $options = []): QueryInterface
     {
         return $this->adapter->createQuery($dn, $query, $options);
     }
 
-    public function getEntryManager(): \Symfony\Component\Ldap\Adapter\EntryManagerInterface
+    public function getEntryManager(): EntryManagerInterface
     {
         return $this->adapter->getEntryManager();
     }

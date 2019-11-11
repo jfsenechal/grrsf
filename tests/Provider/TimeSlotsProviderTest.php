@@ -27,7 +27,7 @@ class TimeSlotsProviderTest extends BaseTesting
     /**
      * @dataProvider getData
      */
-    public function testGetTimeSlotsModelByAreaAndDay(int $hourBegin, int $hourEnd, int $resolution, int $minute)
+    public function testGetTimeSlotsModelByAreaAndDay(int $hourBegin, int $hourEnd, int $resolution, int $minute): void
     {
         $area = $this->initArea($hourBegin, $hourEnd, $resolution);
 
@@ -51,7 +51,7 @@ class TimeSlotsProviderTest extends BaseTesting
     /**
      * @dataProvider getData
      */
-    public function testGetTimeSlots(int $hourBegin, int $hourEnd, int $resolution, int $minute)
+    public function testGetTimeSlots(int $hourBegin, int $hourEnd, int $resolution, int $minute): void
     {
         $day = Carbon::today();
 
@@ -68,7 +68,7 @@ class TimeSlotsProviderTest extends BaseTesting
         }
     }
 
-    public function getTimeSlotsOfEntry()
+    public function getTimeSlotsOfEntry(): void
     {
         $day = Carbon::today();
         $resolution = 30;
@@ -93,7 +93,7 @@ class TimeSlotsProviderTest extends BaseTesting
         }
     }
 
-    public function getData()
+    public function getData(): array
     {
         return [
             [

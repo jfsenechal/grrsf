@@ -2,6 +2,8 @@
 
 namespace App\Periodicity;
 
+use DateTimeInterface;
+use DateTime;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
 use Carbon\Carbon;
@@ -39,7 +41,7 @@ class PeriodicityDaysProvider
      */
     public function getDaysByPeriodicity(
         Periodicity $periodicity,
-        \DateTimeInterface $startTime
+        DateTimeInterface $startTime
     ) {
         $typePeriodicity = $periodicity->getType();
 
@@ -187,7 +189,7 @@ class PeriodicityDaysProvider
      */
     protected function brouillon(): void
     {
-        $start = new \DateTime('now');
+        $start = new DateTime('now');
         $end = clone $start;
         $end->modify('+4 month');
         $days = ['Monday', 'Tuesday'];

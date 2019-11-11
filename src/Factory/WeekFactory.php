@@ -25,7 +25,7 @@ class WeekFactory
         $this->localHelper = $localHelper;
     }
 
-    public function create(int $year, int $week)
+    public function create(int $year, int $week): Week
     {
         return Week::create($year, $week, $this->localHelper->getDefaultLocal());
     }

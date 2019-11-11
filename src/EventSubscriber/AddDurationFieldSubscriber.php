@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use Exception;
 use App\Entity\Entry;
 use App\Factory\DurationFactory;
 use App\Form\Type\DurationTimeTypeField;
@@ -66,7 +67,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
         $entry = $event->getData();
         $form = $event->getForm();
         $room = $entry->getRoom();
-        $type = $room ? $room->getTypeAffichageReser() : 0;
+        $type = $room !== null ? $room->getTypeAffichageReser() : 0;
 
         if (0 === $type) {
             $duration = $this->durationFactory->createByEntry($entry);
@@ -135,7 +136,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
                     $endTime->addMinutes($time);
                     break;
                 default:
-                    throw new \Exception('Unexpected value');
+                    throw new Exception('Unexpected value');
             }
             $entry->setEndTime($endTime);
         }

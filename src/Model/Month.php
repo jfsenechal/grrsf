@@ -30,17 +30,17 @@ class Month extends Carbon
      */
     private $carbon;
 
-    public function setCarbon()
+    public function setCarbon(): void
     {
         $this->carbon = new Carbon();
     }
 
-    public function getCarbon()
+    public function getCarbon(): \Carbon\CarbonInterface
     {
         return $this->carbon;
     }
 
-    public static function init(int $year, int $month, string $language)
+    public static function init(int $year, int $month, string $language): \App\Model\Month
     {
         Assert::greaterThan($year, 1970);
         Assert::greaterThan($month, 0);

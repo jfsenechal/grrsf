@@ -2,6 +2,7 @@
 
 namespace App\Repository\Security;
 
+use Exception;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\Authorization;
@@ -59,16 +60,16 @@ class AuthorizationRepository extends ServiceEntityRepository
     public function findByUserAndArea(?UserInterface $user, ?Area $area): array
     {
         if (!$user && !$area) {
-            throw new \Exception('At least one parameter is needed');
+            throw new Exception('At least one parameter is needed');
         }
 
         $queryBuilder = $this->createQueryBuilder('authorization');
 
-        if ($user) {
+        if ($user !== null) {
             $this->setCriteriaUser($queryBuilder, $user);
         }
 
-        if ($area) {
+        if ($area !== null) {
             $this->setCriteriaArea($queryBuilder, $area);
         }
 
@@ -145,7 +146,7 @@ class AuthorizationRepository extends ServiceEntityRepository
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByUserAndRoom(UserInterface $user, Room $room): \App\Entity\Security\Authorization
+    public function findOneByUserAndRoom(UserInterface $user, Room $room): Authorization
     {
         $queryBuilder = $this->createQueryBuilder('authorization');
 

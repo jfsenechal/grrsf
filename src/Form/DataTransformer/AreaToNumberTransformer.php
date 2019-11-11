@@ -42,10 +42,10 @@ class AreaToNumberTransformer implements DataTransformerInterface
      *
      * @throws TransformationFailedException if object (area) is not found
      */
-    public function reverseTransform($areaNumber): ?\App\Entity\Area
+    public function reverseTransform($areaNumber): ?Area
     {
         // no area number? It's optional, so that's ok
-        if (!$areaNumber) {
+        if ($areaNumber === '') {
             return null;
         }
 

@@ -10,6 +10,7 @@
 
 namespace App\Form\Security;
 
+use Doctrine\ORM\QueryBuilder;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Form\Type\AreaSelectType;
@@ -24,6 +25,10 @@ use Symfony\Component\Form\FormInterface;
 
 class AuthorizationUserType extends AbstractType
 {
+    /**
+     * @var \App\Repository\Security\UserRepository
+     */
+    public $userRepository;
     /**
      * @var RoomRepository
      */
@@ -56,8 +61,8 @@ class AuthorizationUserType extends AbstractType
                 'multiple' => true,
             ];
 
-            if ($area) {
-                $options['query_builder'] = function (RoomRepository $roomRepository) use ($area): \Doctrine\ORM\QueryBuilder {
+            if ($area !== null) {
+                $options['query_builder'] = function (RoomRepository $roomRepository) use ($area): QueryBuilder {
                     return $roomRepository->getRoomsByAreaQueryBuilder($area);
                 };
             } else {

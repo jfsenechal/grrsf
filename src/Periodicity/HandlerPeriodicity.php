@@ -55,7 +55,7 @@ class HandlerPeriodicity
     public function handleNewPeriodicity(Entry $entry): void
     {
         $periodicity = $entry->getPeriodicity();
-        if ($periodicity) {
+        if ($periodicity !== null) {
             $days = $this->periodicityDaysProvider->getDaysByEntry($entry);
             foreach ($days as $day) {
                 $newEntry = $this->generatorEntry->generateEntry($entry, $day);
@@ -73,7 +73,7 @@ class HandlerPeriodicity
     public function handleEditPeriodicity(Entry $oldEntry, Entry $entry)
     {
         $periodicity = $entry->getPeriodicity();
-        if (!$periodicity) {
+        if ($periodicity === null) {
             return null;
         }
 
@@ -133,10 +133,6 @@ class HandlerPeriodicity
         if ($oldPeriodicity->getWeekRepeat() !== $periodicity->getWeekRepeat()) {
             return true;
         }
-        if ($oldPeriodicity->getWeekDays() !== $periodicity->getWeekDays()) {
-            return true;
-        }
-
-        return false;
+        return $oldPeriodicity->getWeekDays() !== $periodicity->getWeekDays();
     }
 }

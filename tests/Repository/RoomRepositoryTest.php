@@ -9,7 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 
 class RoomRepositoryTest extends BaseTesting
 {
-    public function testSearchByName()
+    public function testSearchByName(): void
     {
         $this->loader->load(
             [
@@ -25,7 +25,7 @@ class RoomRepositoryTest extends BaseTesting
         $this->assertEquals('Salle Conseil', $room->getName());
     }
 
-    public function testFindByArea()
+    public function testFindByArea(): void
     {
         $this->loader->load(
             [
@@ -44,7 +44,7 @@ class RoomRepositoryTest extends BaseTesting
         $this->assertEquals(5, count($rooms));
     }
 
-    public function getRoomsByAreaQueryBuilder()
+    public function getRoomsByAreaQueryBuilder(): void
     {
         $this->loader->load(
             [

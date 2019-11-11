@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use stdClass;
 class SecurityRole
 {
     /**
@@ -44,12 +45,12 @@ class SecurityRole
      */
     public static function getRolesForAuthorization(): array
     {
-        $areaAdministrator = new \stdClass();
+        $areaAdministrator = new stdClass();
         $areaAdministrator->value = 1;
         $areaAdministrator->name = 'authorization.role.area.administrator.label';
         $areaAdministrator->description = 'authorization.role.area.administrator.help';
 
-        $resourceAdministrator = new \stdClass();
+        $resourceAdministrator = new stdClass();
         $resourceAdministrator->value = 2;
         $resourceAdministrator->name = 'authorization.role.resource.administrator.label';
         $resourceAdministrator->description = 'authorization.role.resource.administrator.help';

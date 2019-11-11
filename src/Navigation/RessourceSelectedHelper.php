@@ -2,6 +2,7 @@
 
 namespace App\Navigation;
 
+use Exception;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\User;
@@ -62,7 +63,7 @@ class RessourceSelectedHelper
         if ($this->session->has(self::AREA_DEFAULT_SESSION)) {
             $areaId = $this->session->get(self::AREA_DEFAULT_SESSION);
 
-            if ($area = $this->areaRepository->find($areaId)) {
+            if (($area = $this->areaRepository->find($areaId)) !== null) {
                 return $area;
             }
         }
@@ -72,18 +73,18 @@ class RessourceSelectedHelper
          */
         $user = $this->security->getUser();
         if (null !== $user) {
-            if ($area = $user->getArea()) {
+            if (($area = $user->getArea()) !== null) {
                 return $area;
             }
         }
 
-        if ($area = $this->settingsProvider->getDefaultArea()) {
+        if (($area = $this->settingsProvider->getDefaultArea()) !== null) {
             return $area;
         }
 
         $area = $this->areaRepository->findOneBy([], ['id' => 'ASC']);
-        if (!$area) {
-            throw new \Exception('No area in database, populate database with this command: php bin/console grr:install-data');
+        if ($area === null) {
+            throw new Exception('No area in database, populate database with this command: php bin/console grr:install-data');
         }
 
         return $area;
@@ -109,12 +110,12 @@ class RessourceSelectedHelper
          */
         $user = $this->security->getUser();
         if (null !== $user) {
-            if ($room = $user->getRoom()) {
+            if (($room = $user->getRoom()) !== null) {
                 return $room;
             }
         }
 
-        if ($room = $this->settingsProvider->getDefaulRoom()) {
+        if (($room = $this->settingsProvider->getDefaulRoom()) !== null) {
             return $room;
         }
 

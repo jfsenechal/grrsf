@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use App\Security\AuthorizationHelper;
@@ -44,7 +45,7 @@ class AjaxController extends AbstractController
     /**
      * @Route("/ajax/getrooms", name="grr_ajax_getrooms")
      */
-    public function ajaxRequestGetRooms(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function ajaxRequestGetRooms(Request $request): Response
     {
         $areaId = (int) $request->get('id');
         $required = filter_var($request->get('isRequired'), FILTER_VALIDATE_BOOLEAN, false);

@@ -7,7 +7,7 @@ use App\Tests\BaseTesting;
 
 class WeekModelTest extends BaseTesting
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $week = Week::create(2019, 34, 'fr');
         //todo bug
@@ -22,7 +22,7 @@ class WeekModelTest extends BaseTesting
         }
     }
 
-    public function getDays()
+    public function getDays(): array
     {
         return [
             '2019-08-19',

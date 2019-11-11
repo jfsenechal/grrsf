@@ -27,7 +27,7 @@ class SecurityHelperTest extends BaseTesting
         bool $access2,
         bool $access3,
         bool $access4
-    ) {
+    ): void {
         $this->loadFixtures();
 
         $area = $this->getArea('Esquare');
@@ -46,7 +46,7 @@ class SecurityHelperTest extends BaseTesting
         self::assertSame($access4, $securityHelper->isAreaAdministrator($user, $area));
     }
 
-    public function provideAdministrator()
+    public function provideAdministrator(): iterable
     {
         yield 'administrator' => [
             'bob@domain.be',
@@ -108,7 +108,7 @@ class SecurityHelperTest extends BaseTesting
     /**
      * @dataProvider provideManager
      */
-    public function testIsManager(string $email, bool $access1, bool $access2, bool $access3, bool $access4)
+    public function testIsManager(string $email, bool $access1, bool $access2, bool $access3, bool $access4): void
     {
         $this->loadFixtures();
 
@@ -128,7 +128,7 @@ class SecurityHelperTest extends BaseTesting
         self::assertSame($access4, $securityHelper->isAreaManager($user, $area));
     }
 
-    public function provideManager()
+    public function provideManager(): iterable
     {
         yield 'administrator' => [
             'bob@domain.be',
@@ -190,7 +190,7 @@ class SecurityHelperTest extends BaseTesting
     /**
      * @dataProvider provideAddEntry
      */
-    public function testAddEntry(string $email, bool $access1, bool $access2)
+    public function testAddEntry(string $email, bool $access1, bool $access2): void
     {
         $this->loadFixtures();
 
@@ -204,7 +204,7 @@ class SecurityHelperTest extends BaseTesting
         self::assertSame($access2, $securityHelper->canAddEntry($room, $user));
     }
 
-    public function provideAddEntry()
+    public function provideAddEntry(): iterable
     {
         yield 'administrator' => [
             'bob@domain.be',
@@ -256,7 +256,7 @@ class SecurityHelperTest extends BaseTesting
      * @param bool   $access1
      * @param bool   $access2
      */
-    public function testAddEntryWithRule(string $name, array $users)
+    public function testAddEntryWithRule(string $name, array $users): void
     {
         $this->loadFixtures(true);
         $securityHelper = $this->initSecurityHelper();
@@ -269,7 +269,7 @@ class SecurityHelperTest extends BaseTesting
         }
     }
 
-    public function provideRoom()
+    public function provideRoom(): iterable
     {
         /*
          * every body
@@ -567,7 +567,7 @@ class SecurityHelperTest extends BaseTesting
     /**
      * @dataProvider provideGrrAdministrator
      */
-    public function testIsGrrAdministrator(User $user, bool $administrator)
+    public function testIsGrrAdministrator(User $user, bool $administrator): void
     {
         $this->loadFixtures();
         $securityHelper = $this->initSecurityHelper();
@@ -575,7 +575,10 @@ class SecurityHelperTest extends BaseTesting
         self::assertSame($administrator, $securityHelper->isGrrAdministrator($user));
     }
 
-    public function provideGrrAdministrator()
+    /**
+     * @return \App\Entity\Security\User[][]|bool[][]
+     */
+    public function provideGrrAdministrator(): iterable
     {
         $user = new User();
         $user->addRole(SecurityRole::ROLE_GRR_ADMINISTRATOR);
@@ -600,12 +603,12 @@ class SecurityHelperTest extends BaseTesting
         ];
     }
 
-    protected function initSecurityHelper()
+    protected function initSecurityHelper(): SecurityHelper
     {
         return new SecurityHelper($this->entityManager->getRepository(Authorization::class));
     }
 
-    protected function loadFixtures($rule = false)
+    protected function loadFixtures($rule = false): void
     {
         $files =
             [

@@ -359,7 +359,7 @@ class Room
         return $this;
     }
 
-    public function getDontAllowModify(): ?bool
+    public function getDontAllowModify(): string
     {
         return $this->dontAllowModify;
     }

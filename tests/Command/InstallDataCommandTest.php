@@ -16,7 +16,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class InstallDataCommandTest extends BaseTesting
 {
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->loadFixtures();
 
@@ -39,7 +39,7 @@ class InstallDataCommandTest extends BaseTesting
         $this->assertContains('Les données ont bien été initialisées.', $output);
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files = [];
 

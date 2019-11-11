@@ -7,7 +7,7 @@ use App\Tests\BaseTesting;
 
 class AreaRepositoryTest extends BaseTesting
 {
-    public function testSearchByName()
+    public function testSearchByName(): void
     {
         $this->loader->load(
             [
@@ -20,7 +20,7 @@ class AreaRepositoryTest extends BaseTesting
         $this->assertEquals('Esquare', $area->getName());
     }
 
-    public function testCountArea()
+    public function testCountArea(): void
     {
         $this->loader->load(
             [

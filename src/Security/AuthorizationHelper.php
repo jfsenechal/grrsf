@@ -50,7 +50,6 @@ class AuthorizationHelper
 
     /**
      * @throws \Exception
-     *
      * @return \App\Entity\Area[]|\App\Entity\Area[]|null[]
      */
     public function getAreasUserCanAdd(UserInterface $user): array
@@ -62,11 +61,11 @@ class AuthorizationHelper
         $areas = [];
         $authorizations = $this->authorizationRepository->findByUser($user);
         foreach ($authorizations as $authorization) {
-            if ($authorization->getArea()) {
+            if ($authorization->getArea() !== null) {
                 $areas[] = $authorization->getArea();
                 continue;
             }
-            if ($room = $authorization->getRoom()) {
+            if (($room = $authorization->getRoom()) !== null) {
                 $area = $room->getArea();
                 $areas[] = $area;
                 continue;
@@ -84,7 +83,7 @@ class AuthorizationHelper
     public function getRoomsUserCanAdd(UserInterface $user, ?Area $area = null): iterable
     {
         if ($user->hasRole(SecurityRole::ROLE_GRR_ADMINISTRATOR)) {
-            if ($area) {
+            if ($area !== null) {
                 return $this->roomRepository->findByArea($area);
             }
 
@@ -93,7 +92,7 @@ class AuthorizationHelper
 
         $rooms = [[]];
 
-        if ($area) {
+        if ($area !== null) {
             $authorizations = $this->authorizationRepository->findByUserAndArea($user, $area);
         } else {
             $authorizations = $this->authorizationRepository->findByUser($user);
@@ -101,11 +100,11 @@ class AuthorizationHelper
 
         foreach ($authorizations as $authorization) {
             $area = $authorization->getArea();
-            if ($area) {
+            if ($area !== null) {
                 $rooms[] = $area->getRooms()->toArray();
                 continue;
             }
-            if ($room = $authorization->getRoom()) {
+            if (($room = $authorization->getRoom()) !== null) {
                 $rooms[] = [$room];
                 continue;
             }

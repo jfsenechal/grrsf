@@ -2,6 +2,7 @@
 
 namespace App\Validator\Entry;
 
+use InvalidArgumentException;
 use App\Entity\Entry;
 use App\Repository\EntryRepository;
 use Symfony\Component\Validator\Constraint;
@@ -26,7 +27,7 @@ class BusyRoomValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$value instanceof Entry) {
-            throw new \InvalidArgumentException($value, 0);
+            throw new InvalidArgumentException($value, 0);
         }
 
         $room = $value->getRoom();

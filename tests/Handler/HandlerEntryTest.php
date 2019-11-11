@@ -19,15 +19,13 @@ use App\Tests\BaseTesting;
  */
 class HandlerEntryTest extends BaseTesting
 {
-    public function testBidon()
+    public function testBidon(): void
     {
         self::assertTrue(true);
     }
 
     protected function initHandler(): HandlerEntry
     {
-        $handler = new HandlerEntry();
-
-        return $handler;
+        return new HandlerEntry();
     }
 }

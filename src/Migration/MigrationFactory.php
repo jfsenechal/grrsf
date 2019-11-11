@@ -10,6 +10,7 @@
 
 namespace App\Migration;
 
+use DateTime;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\EntryType;
@@ -94,7 +95,7 @@ class MigrationFactory
         //  $entry->set($data['entry_type']);
         //  $entry->setPeriodicity($data['repeat_id']);
         $entry->setCreatedAt($this->migrationUtil->converToDateTime($data['timestamp']));
-        $entry->setUpdatedAt(new \DateTime());
+        $entry->setUpdatedAt(new DateTime());
         $entry->setCreatedBy($data['create_by']);
         $entry->setBeneficiaire($data['beneficiaire_ext']);
         $entry->setBeneficiaireExt($data['beneficiaire']);

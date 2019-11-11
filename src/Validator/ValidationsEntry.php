@@ -18,6 +18,9 @@ class ValidationsEntry
         $this->validator = $validator;
     }
 
+    /**
+     * @return \Symfony\Component\Validator\ConstraintViolationListInterface[]
+     */
     public function validate(Entry $entry): array
     {
         $violations = [];
@@ -30,6 +33,9 @@ class ValidationsEntry
         return $violations;
     }
 
+    /**
+     * @return string[]
+     */
     protected function getValidators(): array
     {
         return [BusyRoom::class];

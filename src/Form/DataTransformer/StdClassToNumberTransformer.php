@@ -2,6 +2,7 @@
 
 namespace App\Form\DataTransformer;
 
+use stdClass;
 use App\Security\SecurityRole;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -55,7 +56,7 @@ class StdClassToNumberTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if ($value instanceof \stdClass) {
+        if ($value instanceof stdClass) {
             return $value->value;
         }
 

@@ -37,7 +37,7 @@ class DatabaseContext implements Context
     /**
      * @BeforeScenario
      */
-    public function clearRepositories()
+    public function clearRepositories(): void
     {
         $files =
             [
@@ -55,7 +55,7 @@ class DatabaseContext implements Context
     /**
      * @AfterScenario
      */
-    public function rollbackPostgreSqlTransaction()
+    public function rollbackPostgreSqlTransaction(): void
     {
 
     }

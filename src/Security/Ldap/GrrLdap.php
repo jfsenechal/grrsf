@@ -2,6 +2,8 @@
 
 namespace App\Security\Ldap;
 
+use Exception;
+use Symfony\Component\Ldap\Adapter\EntryManagerInterface;
 use Symfony\Component\Ldap\Exception\LdapException;
 use Symfony\Component\Ldap\Ldap;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -70,12 +72,12 @@ class GrrLdap
     {
         try {
             $this->ldap->bind($user, $password);
-        } catch (\Exception $exception) {
-            throw new BadCredentialsException($exception->getMessage());
+        } catch (Exception $exception) {
+            throw new BadCredentialsException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 
-    public function getEntryManager(): \Symfony\Component\Ldap\Adapter\EntryManagerInterface
+    public function getEntryManager(): EntryManagerInterface
     {
         return $this->ldap->getEntryManager();
     }

@@ -54,7 +54,7 @@ class PeriodicityController extends AbstractController
         $entry = $this->handlerEntry->prepareToEditWithPeriodicity($entry);
 
         $periodicity = $entry->getPeriodicity();
-        $typePeriodicity = $periodicity ? $periodicity->getType() : 0;
+        $typePeriodicity = $periodicity !== null ? $periodicity->getType() : 0;
 
         if (PeriodicityConstant::EVERY_WEEK === $typePeriodicity) {
             $displayOptionsWeek = true;

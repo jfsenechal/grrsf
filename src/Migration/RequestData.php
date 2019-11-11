@@ -10,6 +10,7 @@
 
 namespace App\Migration;
 
+use Exception;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -54,57 +55,57 @@ class RequestData
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
-    public function getEntries(array $params = [])
+    public function getEntries(array $params = []): string
     {
         return $this->request('entry.php', $params);
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
-    public function getAreas()
+    public function getAreas(): string
     {
         return $this->request('area.php');
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
-    public function getRooms()
+    public function getRooms(): string
     {
         return $this->request('room.php');
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
-    public function getUsers()
+    public function getUsers(): string
     {
         return $this->request('user.php');
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
-    public function getTypesEntry()
+    public function getTypesEntry(): string
     {
         return $this->request('type.php');
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
-    public function getAreaAdmin()
+    public function getAreaAdmin(): string
     {
         return $this->request('user_admin_area.php');
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
-    public function getRoomAdmin()
+    public function getRoomAdmin(): string
     {
         return $this->request('user_room.php');
     }
@@ -152,17 +153,17 @@ class RequestData
 
         try {
             $this->checkDownload($jsonfile);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR, 512);
         }
 
-        return json_encode([]);
+        return json_encode([], JSON_THROW_ON_ERROR);
     }
 
     /**
      * @return false|string
      */
-    private function request(string $file, array $params = [])
+    private function request(string $file, array $params = []): string
     {
         // don't want to buffer the response in memory
         $args = [
@@ -196,12 +197,12 @@ class RequestData
      *
      * @throws \Exception
      */
-    private function checkDownload($jsonfile)
+    private function checkDownload($jsonfile): void
     {
         $data = json_decode(file_get_contents($this->migrationUtil->getCacheDirectory().$jsonfile), true, 512, JSON_THROW_ON_ERROR);
 
         if (isset($data['error'])) {
-            throw new \Exception($data['error']);
+            throw new Exception($data['error']);
         }
     }
 }

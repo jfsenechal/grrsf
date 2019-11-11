@@ -2,6 +2,7 @@
 
 namespace App\Validator\Entry;
 
+use InvalidArgumentException;
 use App\Entity\Entry;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -15,7 +16,7 @@ class AreaTimeSlotValidator extends ConstraintValidator
     public function validate($entry, Constraint $constraint): void
     {
         if (!$entry instanceof Entry) {
-            throw new \InvalidArgumentException($entry, 0);
+            throw new InvalidArgumentException($entry, 0);
         }
 
         $area = $entry->getArea();

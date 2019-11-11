@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\QueryBuilder;
 use App\Entity\Area;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -19,7 +20,7 @@ class AreaRepository extends ServiceEntityRepository
         parent::__construct($registry, Area::class);
     }
 
-    public function getQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    public function getQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('area')
             ->orderBy('area.name', 'ASC');

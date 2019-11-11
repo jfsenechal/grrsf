@@ -10,6 +10,8 @@
 
 namespace App\Migration;
 
+use Exception;
+use DateTime;
 use App\Entity\Area;
 use App\Entity\EntryType;
 use App\Entity\Room;
@@ -85,14 +87,14 @@ class MigrationUtil
         $this->parameterBag = $parameterBag;
     }
 
-    public function getCacheDirectory()
+    public function getCacheDirectory(): string
     {
         return $this->parameterBag->get(
                 'kernel.cache_dir'
             ).DIRECTORY_SEPARATOR.'download'.DIRECTORY_SEPARATOR;
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         $filesystem = new Filesystem();
         $cacheDir = $this->getCacheDirectory();
@@ -103,11 +105,7 @@ class MigrationUtil
     public function transformBoolean(string $value): bool
     {
         $value = strtolower($value);
-        if ('y' == $value or 'a' == $value) {
-            return true;
-        }
-
-        return false;
+        return 'y' == $value or 'a' == $value;
     }
 
     /**
@@ -118,14 +116,13 @@ class MigrationUtil
         $pattern = ['#y#', '#n#'];
         $replacements = [1, 0];
         $tab = str_split(strtolower($display_days), 1);
-        $days = array_map(
+
+        return array_map(
             function ($a) use ($pattern, $replacements): int {
                 return (int) preg_replace($pattern, $replacements, $a);
             },
             $tab
         );
-
-        return $days;
     }
 
     /***
@@ -141,7 +138,7 @@ class MigrationUtil
     public function transformRepOpt(int $id, string $datas): array
     {
         if (7 !== strlen($datas)) {
-            throw new \Exception('Répétition pas 7 jours Repeat id :'.$id);
+            throw new Exception('Répétition pas 7 jours Repeat id :'.$id);
         }
 
         $days = [];
@@ -177,7 +174,7 @@ class MigrationUtil
             if ($data['id'] == $areaId) {
                 $nameArea = $data['area_name'];
                 $area = $this->areaRepository->findOneBy(['name' => $nameArea]);
-                if ($area) {
+                if ($area !== null) {
                     return $area;
                 }
             }
@@ -245,7 +242,7 @@ class MigrationUtil
         if ('' == $data['email']) {
             return 'Pas de mail pour '.$data['login'];
         }
-        if ($this->userRepository->findOneBy(['email' => $data['email']])) {
+        if ($this->userRepository->findOneBy(['email' => $data['email']]) !== null) {
             return $data['login'].' : Il exsite déjà un utilisateur avec cette email: '.$data['email'];
         }
 
@@ -254,7 +251,7 @@ class MigrationUtil
 
     public function checkAuthorizationRoom(UserInterface $user, Room $room): ?string
     {
-        if ($this->authorizationRepository->findOneBy(['user' => $user, 'room' => $room])) {
+        if ($this->authorizationRepository->findOneBy(['user' => $user, 'room' => $room]) !== null) {
             return $user->getUsername().' à déjà un rôle pour la room: '.$room->getName();
         }
 
@@ -305,14 +302,14 @@ class MigrationUtil
         $tab_couleur[27] = '#AA5050';
         $tab_couleur[28] = '#FFBB20';
 
-        if ($index) {
+        if ($index !== 0) {
             return $tab_couleur[$index];
         }
 
         return $tab_couleur;
     }
 
-    public function converToDateTime(string $start_time): \DateTime
+    public function converToDateTime(string $start_time): DateTime
     {
         $date = Carbon::createFromTimestamp($start_time);
 
@@ -372,7 +369,7 @@ class MigrationUtil
      */
     public function decompress(SymfonyStyle $io, string $content, string $type): array
     {
-        $data = json_decode($content, true);
+        $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
         if (!is_array($data)) {
             $io->error($type.' La réponse doit être un json: '.$content);

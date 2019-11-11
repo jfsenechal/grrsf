@@ -10,6 +10,7 @@
 
 namespace App\Tests\Validator;
 
+use DateTime;
 use App\Factory\DurationFactory;
 use App\Validator\Entry\DurationValidator;
 use PHPUnit\Framework\TestCase;
@@ -17,11 +18,11 @@ use PHPUnit\Framework\TestCase;
 class TTest extends TestCase
 {
 
-    public function testValidatorUser()
+    public function testValidatorUser(): void
     {
         $factory = new DurationFactory();
-        $begin = new \DateTime();
-        $end = new \DateTime();
+        $begin = new DateTime();
+        $end = new DateTime();
         $end->modify('+3 hours');
 
         $duration = $factory->createFromDates($begin, $end);

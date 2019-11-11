@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use Exception;
 use App\Entity\Security\User;
 use App\Security\Ldap\GrrLdap;
 use Doctrine\ORM\EntityManagerInterface;
@@ -117,17 +118,17 @@ class GrrAuthenticator extends AbstractFormLoginAuthenticator
                     $this->grrLdap->bind($dn, $credentials['password']);
 
                     return true;
-                } catch (\Exception $exception) {
+                } catch (Exception $exception) {
                     //throw new BadCredentialsException($exception->getMessage());
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
         }
 
         return false;
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);

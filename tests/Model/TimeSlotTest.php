@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class TimeSlotTest extends BaseTesting
 {
-    public function testTimeSlot()
+    public function testTimeSlot(): void
     {
         $begin = Carbon::create(2019, 10, 01, 9, 10);
         $end = Carbon::create(2019, 10, 01, 17, 00);

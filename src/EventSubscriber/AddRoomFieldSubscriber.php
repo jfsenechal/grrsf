@@ -8,6 +8,7 @@
 
 namespace App\EventSubscriber;
 
+use Doctrine\ORM\QueryBuilder;
 use App\Form\Type\RoomSelectType;
 use App\Repository\RoomRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -53,11 +54,7 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
     {
         $object = $event->getData();
 
-        if (is_array($object)) { // is_array = search form
-            $area = null;
-        } else {
-            $area = $object->getArea();
-        }
+        $area = is_array($object) ? null : $object->getArea();
 
         $form = $event->getForm();
 
@@ -66,7 +63,7 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
         ];
 
         if ($area) {
-            $default['query_builder'] = function (RoomRepository $roomRepository) use ($area): \Doctrine\ORM\QueryBuilder {
+            $default['query_builder'] = function (RoomRepository $roomRepository) use ($area): QueryBuilder {
                 return $roomRepository->getRoomsByAreaQueryBuilder($area);
             };
         } else {
@@ -81,7 +78,7 @@ class AddRoomFieldSubscriber implements EventSubscriberInterface
             $default['placeholder'] = $this->placeholder;
         }
 
-        if (false === $this->required) {
+        if (!$this->required) {
             $default['placeholder'] = 'room.form.select.placeholder';
         }
 

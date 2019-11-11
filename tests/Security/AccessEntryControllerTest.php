@@ -2,6 +2,7 @@
 
 namespace App\Tests\Security;
 
+use DateTime;
 use App\Tests\BaseTesting;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
@@ -17,7 +18,7 @@ class AccessEntryControllerTest extends BaseTesting
      *
      * @throws \Exception
      */
-    public function testArea(string $action, string $entryName, array $datas)
+    public function testArea(string $action, string $entryName, array $datas): void
     {
         $this->loadFixtures();
         $token = null;
@@ -28,7 +29,7 @@ class AccessEntryControllerTest extends BaseTesting
         $method = 'GET';
         switch ($action) {
             case 'new':
-                $today = new \DateTime();
+                $today = new DateTime();
                 $esquare = $this->getArea('Esquare');
                 $room = $this->getRoom('Box');
                 $url = '/front/entry/new/area/'.$esquare->getId().'/room/'.$room->getId().'/year/'.$today->format(
@@ -53,17 +54,13 @@ class AccessEntryControllerTest extends BaseTesting
         foreach ($datas as $data) {
             $email = $data[1];
             $code = $data[0];
-            if (!$email) {
-                $client = static::createClient();
-            } else {
-                $client = $this->createGrrClient($email);
-            }
+            $client = !$email ? static::createClient() : $this->createGrrClient($email);
             $client->request($method, $url, ['_token' => $token]);
             self::assertResponseStatusCodeSame($code, $email.' '.$url);
         }
     }
 
-    public function provideCases()
+    public function provideCases(): iterable
     {
         yield [
             'new',
@@ -190,7 +187,7 @@ class AccessEntryControllerTest extends BaseTesting
         ];
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

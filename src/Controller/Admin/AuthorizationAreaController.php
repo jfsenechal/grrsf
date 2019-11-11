@@ -51,7 +51,7 @@ class AuthorizationAreaController extends AbstractController
     {
         $authorizationAreaModel = new AuthorizationModel();
 
-        if ($area) {
+        if ($area !== null) {
             $authorizationAreaModel->setArea($area);
         }
 
@@ -62,7 +62,7 @@ class AuthorizationAreaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handlerAuthorization->handle($form);
 
-            if ($area) {
+            if ($area !== null) {
                 return $this->redirectToRoute('grr_authorization_area_show', ['id' => $area->getId()]);
             }
         }

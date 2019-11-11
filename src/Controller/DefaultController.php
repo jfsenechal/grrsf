@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Exception;
 use App\Factory\CarbonFactory;
 use App\Modules\GrrModuleSenderInterface;
 use App\Navigation\RessourceSelectedHelper;
@@ -35,7 +36,7 @@ class DefaultController extends AbstractController
 
         try {
             $area = $this->ressourceSelectedHelper->getArea();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new Response($e->getMessage());
         }
 
@@ -43,7 +44,7 @@ class DefaultController extends AbstractController
 
         $params = ['area' => $area->getId(), 'year' => $today->year, 'month' => $today->month];
 
-        if ($room) {
+        if ($room !== null) {
             $params['room'] = $room->getId();
         }
 

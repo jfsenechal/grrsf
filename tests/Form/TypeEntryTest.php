@@ -16,7 +16,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class TypeEntryTest extends TypeTestCase
 {
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [
             'name' => 'test',

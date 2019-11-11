@@ -14,11 +14,11 @@ class AccessRoomControllerTest extends BaseTesting
      * @param string $url
      * @param array  $datas
      */
-    public function testArea(string $action, string $roomName, array $datas)
+    public function testArea(string $action, string $roomName, array $datas): void
     {
         $this->loadFixtures();
         $room = $token = null;
-        if ($roomName) {
+        if ($roomName !== '') {
             $room = $this->getRoom($roomName);
             $tokenManager = new CsrfTokenManager();
             $token = $tokenManager->getToken('delete'.$room->getId())->getValue();
@@ -48,17 +48,13 @@ class AccessRoomControllerTest extends BaseTesting
         foreach ($datas as $data) {
             $email = $data[1];
             $code = $data[0];
-            if (!$email) {
-                $client = static::createClient();
-            } else {
-                $client = $this->createGrrClient($email);
-            }
+            $client = !$email ? static::createClient() : $this->createGrrClient($email);
             $client->request($method, $url, ['_token' => $token]);
             self::assertResponseStatusCodeSame($code, $email.' '.$url);
         }
     }
 
-    public function provideCases()
+    public function provideCases(): iterable
     {
         yield [
             'new',
@@ -185,7 +181,7 @@ class AccessRoomControllerTest extends BaseTesting
         ];
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

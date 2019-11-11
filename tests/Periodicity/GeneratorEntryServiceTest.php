@@ -16,7 +16,7 @@ use App\Tests\BaseTesting;
 
 class GeneratorEntryServiceTest extends BaseTesting
 {
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $generator = new GeneratorEntry();
 
@@ -44,7 +44,7 @@ class GeneratorEntryServiceTest extends BaseTesting
         return new PeriodicityDaysProvider();
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $files =
             [

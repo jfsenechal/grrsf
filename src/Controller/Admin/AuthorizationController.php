@@ -54,15 +54,15 @@ class AuthorizationController extends AbstractController
 
         $authorization = $this->authorizationRepository->find($id);
 
-        if (!$authorization) {
+        if ($authorization === null) {
             $this->createNotFoundException();
         }
 
-        if ($area = $authorization->getArea()) {
+        if (($area = $authorization->getArea()) !== null) {
             $this->denyAccessUnlessGranted(AreaVoter::EDIT, $area);
         }
 
-        if ($room = $authorization->getRoom()) {
+        if (($room = $authorization->getRoom()) !== null) {
             $this->denyAccessUnlessGranted(RoomVoter::EDIT, $room);
         }
 
