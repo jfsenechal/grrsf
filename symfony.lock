@@ -373,6 +373,9 @@
     "psr/log": {
         "version": "1.1.0"
     },
+    "psr/simple-cache": {
+        "version": "1.0.1"
+    },
     "ramsey/uuid": {
         "version": "3.8.0"
     },
@@ -425,6 +428,21 @@
         },
         "files": [
             "config/packages/security_checker.yaml"
+        ]
+    },
+    "slevomat/coding-standard": {
+        "version": "5.0.4"
+    },
+    "squizlabs/php_codesniffer": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "0dc9cceda799fd3a08b96987e176a261028a3709"
+        },
+        "files": [
+            "phpcs.xml.dist"
         ]
     },
     "swiftmailer/swiftmailer": {
@@ -825,6 +843,12 @@
     },
     "symfony/yaml": {
         "version": "v4.2.3"
+    },
+    "symplify/coding-standard": {
+        "version": "v6.1.0"
+    },
+    "symplify/easy-coding-standard": {
+        "version": "v6.1.0"
     },
     "symplify/package-builder": {
         "version": "v6.0.5"

@@ -73,6 +73,7 @@
     "symfony/profiler-pack": "*",
     "symfony/test-pack": "^1.0",
     "symfony/web-server-bundle": "4.3.*",
+    "symplify/easy-coding-standard": "^6.1",
     "theofidry/alice-data-fixtures": "^1.1"
   },
   "config": {
