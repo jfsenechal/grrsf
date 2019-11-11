@@ -15,6 +15,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoaderCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'grr:loader';
     /**
      * @var PersisterLoader

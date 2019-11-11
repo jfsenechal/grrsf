@@ -60,25 +60,30 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="boolean")
+     * @var bool
      */
     private $isEnabled;
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @var string
      */
     private $languageDefault;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Area")
+     * @var Area
      */
     private $area;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Room")
+     * @var Room
      */
     private $room;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Security\Authorization", mappedBy="user", orphanRemoval=true)
+     * @var Authorization[]
      */
     private $authorizations;
 
