@@ -104,7 +104,7 @@ class CheckCommand extends Command
             $startTime = $this->migrationUtil->converToDateTime($data['start_time']);
             $endTime = $this->migrationUtil->converToDateTime($data['end_time']);
             $room = $this->migrationUtil->transformToRoom($rooms, $data['room_id']);
-            $repeatId = (int)$data['repeat_id'];
+            $repeatId = (int) $data['repeat_id'];
 
             $args = ['startTime' => $startTime, 'endTime' => $endTime, 'name' => $name, 'room' => $room];
 
@@ -118,13 +118,13 @@ class CheckCommand extends Command
             );
 
             if (!$entry) {
-                $count++;
+                ++$count;
                 $io->error($data['name'].' '.$startTime->format('d-m-Y'));
             } else {
                 // $io->success($entry->getName().' ==> '.$name);
             }
         }
-        if ($count == 0) {
+        if (0 == $count) {
             $io->success('Toutes les entrées ont bien été importées');
         }
 

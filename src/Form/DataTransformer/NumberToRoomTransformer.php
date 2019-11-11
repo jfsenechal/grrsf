@@ -23,6 +23,7 @@ class NumberToRoomTransformer implements DataTransformerInterface
      * Transforms an object (area) to a string (number).
      *
      * @param Area|null $area
+     *
      * @return string|int|null
      */
     public function transform($area)
@@ -56,12 +57,7 @@ class NumberToRoomTransformer implements DataTransformerInterface
             // causes a validation error
             // this message is not shown to the user
             // see the invalid_message option
-            throw new TransformationFailedException(
-                sprintf(
-                    'An area with number "%s" does not exist!',
-                    $areaNumber
-                )
-            );
+            throw new TransformationFailedException(sprintf('An area with number "%s" does not exist!', $areaNumber));
         }
 
         return $area;

@@ -53,6 +53,7 @@ class EntryType
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="type")
+     *
      * @var \App\Entity\Entry[]|\Doctrine\Common\Collections\Collection
      */
     private $entries;

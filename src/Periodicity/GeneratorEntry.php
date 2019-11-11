@@ -8,12 +8,6 @@ use Carbon\CarbonInterface;
 
 class GeneratorEntry
 {
-    /**
-     * @param Entry           $entry
-     * @param CarbonInterface $day
-     *
-     * @return Entry
-     */
     public function generateEntry(Entry $entry, CarbonInterface $day): \App\Entity\Entry
     {
         $newEntry = clone $entry;

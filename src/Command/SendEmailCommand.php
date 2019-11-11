@@ -10,7 +10,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
 
 class SendEmailCommand extends Command
@@ -50,7 +49,7 @@ class SendEmailCommand extends Command
             ->subject('test')
             ->htmlTemplate('email/welcome.html.twig')
         ->context([
-            'zeze'=>'lolo'
+            'zeze' => 'lolo',
         ]);
 
         try {

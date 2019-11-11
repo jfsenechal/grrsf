@@ -51,9 +51,7 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
          */
         $user = $this->security->getUser();
         if (!$user) {
-            throw new \LogicException(
-                'The EntryTypeForm cannot be used without an authenticated user!'
-            );
+            throw new \LogicException('The EntryTypeForm cannot be used without an authenticated user!');
         }
 
         $options = ['required' => true];

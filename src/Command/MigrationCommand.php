@@ -19,7 +19,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class MigrationCommand extends Command
 {
@@ -140,12 +139,10 @@ class MigrationCommand extends Command
             $question->setValidator(
                 function ($password): int {
                     if (strlen($password) < 2) {
-                        throw new \RuntimeException(
-                            'Le mot de passe ne peut être vide'
-                        );
+                        throw new \RuntimeException('Le mot de passe ne peut être vide');
                     }
 
-                    return (int)$password;
+                    return (int) $password;
                 }
             );
             $password = $helper->ask($input, $output, $question);
@@ -162,9 +159,7 @@ class MigrationCommand extends Command
                 }
 
                 if (!$date = \DateTime::createFromFormat('Y-m-d', $date)) {
-                    throw new \RuntimeException(
-                        'La date n\'a pas un format valable: '
-                    );
+                    throw new \RuntimeException('La date n\'a pas un format valable: ');
                 }
 
                 return $date;
@@ -328,7 +323,7 @@ class MigrationCommand extends Command
             if ($room) {
                 $entry->setRoom($room);
                 $this->entityManager->persist($entry);
-                $repeatId = (int)$data['repeat_id'];
+                $repeatId = (int) $data['repeat_id'];
 
                 if ($data['entry_type'] >= 1) { // il s'agit d'une reservation a laquelle est associee une periodicite
                 }
@@ -430,6 +425,5 @@ class MigrationCommand extends Command
 
     private function handlSetting()
     {
-
     }
 }

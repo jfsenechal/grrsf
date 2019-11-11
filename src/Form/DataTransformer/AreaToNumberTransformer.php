@@ -23,6 +23,7 @@ class AreaToNumberTransformer implements DataTransformerInterface
      * Transforms an object (area) to a string (number).
      *
      * @param Area|null $area
+     *
      * @return string|int|null
      */
     public function transform($area)
@@ -39,8 +40,6 @@ class AreaToNumberTransformer implements DataTransformerInterface
      *
      * @param string $areaNumber
      *
-     * @return Area|null
-     *
      * @throws TransformationFailedException if object (area) is not found
      */
     public function reverseTransform($areaNumber): ?\App\Entity\Area
@@ -56,12 +55,7 @@ class AreaToNumberTransformer implements DataTransformerInterface
             // causes a validation error
             // this message is not shown to the user
             // see the invalid_message option
-            throw new TransformationFailedException(
-                sprintf(
-                    'An area with number "%s" does not exist!',
-                    $areaNumber
-                )
-            );
+            throw new TransformationFailedException(sprintf('An area with number "%s" does not exist!', $areaNumber));
         }
 
         return $area;

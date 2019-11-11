@@ -66,10 +66,8 @@ class HandlerPeriodicity
     }
 
     /**
-     * @param Entry $oldEntry
-     * @param Entry $entry
-     *
      * @throws \Exception
+     *
      * @return null
      */
     public function handleEditPeriodicity(Entry $oldEntry, Entry $entry)

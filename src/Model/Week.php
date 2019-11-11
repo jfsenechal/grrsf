@@ -8,7 +8,6 @@
 
 namespace App\Model;
 
-use App\I18n\LocalHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
@@ -49,8 +48,6 @@ class Week
 
     /**
      * Retourne la liste des jours de la semaines.
-     *
-     * @return CarbonPeriod
      */
     public function getCalendarDays(): CarbonPeriod
     {

@@ -35,17 +35,11 @@ class AuthorizationModel
         $this->rooms = new ArrayCollection();
     }
 
-    /**
-     * @return Area|null
-     */
     public function getArea(): ?Area
     {
         return $this->area;
     }
 
-    /**
-     * @param Area|null $area
-     */
     public function setArea(?Area $area): void
     {
         $this->area = $area;
@@ -85,17 +79,11 @@ class AuthorizationModel
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getRole(): ?int
     {
         return $this->role;
     }
 
-    /**
-     * @param int|null $role
-     */
     public function setRole(?int $role): void
     {
         $this->role = $role;

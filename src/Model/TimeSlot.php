@@ -27,17 +27,11 @@ class TimeSlot
         $this->end = $end;
     }
 
-    /**
-     * @return CarbonInterface
-     */
     public function getBegin(): CarbonInterface
     {
         return $this->begin;
     }
 
-    /**
-     * @return CarbonInterface
-     */
     public function getEnd(): CarbonInterface
     {
         return $this->end;

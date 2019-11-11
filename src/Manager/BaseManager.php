@@ -24,9 +24,6 @@ abstract class BaseManager
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @return EntityManagerInterface
-     */
     public function getEntityManager(): EntityManagerInterface
     {
         return $this->entityManager;

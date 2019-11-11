@@ -98,17 +98,6 @@ class EntryController extends AbstractController
      * @Entity("area", expr="repository.find(area)")
      * @Entity("room", expr="repository.find(room)")
      *
-     * @param Request $request
-     * @param Area    $area
-     * @param Room    $room
-     * @param int     $year
-     * @param int     $month
-     * @param int     $day
-     * @param int     $hour
-     * @param int     $minute
-     *
-     * @return Response
-     *
      * @throws \Exception
      * @IsGranted("grr.addEntry", subject="room")
      */

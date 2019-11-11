@@ -42,6 +42,7 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
      *  * ['eventName' => 'methodName']
      *  * ['eventName' => ['methodName', $priority]]
      *  * ['eventName' => [['methodName1', $priority], ['methodName2']]]
+     *
      * @return string[]
      */
     public static function getSubscribedEvents(): array
@@ -56,8 +57,6 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
      * Verifie si nouveau objet
      * Remplis les champs jours, heures, minutes
      * donne le bon label au submit.
-     *
-     * @param FormEvent $event
      */
     public function OnPreSetData(FormEvent $event): void
     {
@@ -98,8 +97,6 @@ class AddDurationFieldSubscriber implements EventSubscriberInterface
 
     /**
      * Modifie la date de fin de réservation suivant les données de la Duration.
-     *
-     * @param FormEvent $event
      *
      * @throws \Exception
      */

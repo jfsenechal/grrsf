@@ -64,7 +64,6 @@ class RoomVoter extends Voter
 
     /**
      * {@inheritdoc}
-     * @return bool
      */
     protected function voteOnAttribute($attribute, $room, TokenInterface $token): bool
     {
@@ -107,8 +106,6 @@ class RoomVoter extends Voter
 
     /**
      * No rule.
-     *
-     * @return bool
      */
     private function canIndex(): bool
     {
@@ -122,8 +119,6 @@ class RoomVoter extends Voter
 
     /**
      * See in admin.
-     *
-     * @return bool
      */
     private function canView(): bool
     {

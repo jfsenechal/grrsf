@@ -11,8 +11,6 @@
 namespace App\Security\Ldap;
 
 use Symfony\Component\Ldap\Adapter\AdapterInterface;
-use Symfony\Component\Ldap\Adapter\EntryManagerInterface;
-use Symfony\Component\Ldap\Adapter\QueryInterface;
 use Symfony\Component\Ldap\Exception\ConnectionException;
 use Symfony\Component\Ldap\Exception\DriverNotFoundException;
 use Symfony\Component\Ldap\LdapInterface;
@@ -56,17 +54,12 @@ class LdapAuth implements LdapInterface
      *
      * @param string $dn
      * @param string $query
-     *
-     * @return QueryInterface
      */
     public function query($dn, $query, array $options = []): \Symfony\Component\Ldap\Adapter\QueryInterface
     {
         return $this->adapter->createQuery($dn, $query, $options);
     }
 
-    /**
-     * @return EntryManagerInterface
-     */
     public function getEntryManager(): \Symfony\Component\Ldap\Adapter\EntryManagerInterface
     {
         return $this->adapter->getEntryManager();
@@ -78,8 +71,6 @@ class LdapAuth implements LdapInterface
      * @param string $subject
      * @param string $ignore
      * @param int    $flags
-     *
-     * @return string
      */
     public function escape($subject, $ignore = '', $flags = 0): string
     {
@@ -97,13 +88,7 @@ class LdapAuth implements LdapInterface
     public static function create(string $adapter, array $config = []): self
     {
         if (!isset(self::$adapterMap[$adapter])) {
-            throw new DriverNotFoundException(
-                sprintf(
-                    'Adapter "%s" not found. You should use one of: %s',
-                    $adapter,
-                    implode(', ', self::$adapterMap)
-                )
-            );
+            throw new DriverNotFoundException(sprintf('Adapter "%s" not found. You should use one of: %s', $adapter, implode(', ', self::$adapterMap)));
         }
 
         $class = self::$adapterMap[$adapter];

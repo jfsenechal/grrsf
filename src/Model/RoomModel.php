@@ -29,9 +29,6 @@ class RoomModel
         $this->entries = new ArrayCollection();
     }
 
-    /**
-     * @return Room
-     */
     public function getRoom(): Room
     {
         return $this->room;

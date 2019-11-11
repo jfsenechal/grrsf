@@ -26,8 +26,6 @@ class AuthorizationRepository extends ServiceEntityRepository
     /**
      * Pour montrer les droits par area.
      *
-     * @param Area $area
-     *
      * @return Authorization[]
      *
      * @throws \Exception
@@ -39,8 +37,6 @@ class AuthorizationRepository extends ServiceEntityRepository
 
     /**
      * Pour montrer les droits par user.
-     *
-     * @param UserInterface $user
      *
      * @return Authorization[]
      *
@@ -104,8 +100,6 @@ class AuthorizationRepository extends ServiceEntityRepository
     /**
      * Pour montrer les droits par room.
      *
-     * @param Room $room
-     *
      * @return Authorization[]
      */
     public function findByRoom(Room $room): array
@@ -124,8 +118,6 @@ class AuthorizationRepository extends ServiceEntityRepository
 
     /**
      * Utilise dans migration checker.
-     *
-     * @param UserInterface $user
      *
      * @return Authorization[]
      */
@@ -150,11 +142,6 @@ class AuthorizationRepository extends ServiceEntityRepository
 
     /**
      * Utilise dans migration checker.
-     *
-     * @param UserInterface $user
-     * @param Room          $room
-     *
-     * @return Authorization
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */

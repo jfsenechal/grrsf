@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="periodicity")
  * @ORM\Entity(repositoryClass="App\Repository\PeriodicityRepository")
  *
- *
  * @AppAssertPeriodicity\Periodicity
  * @AppAssertPeriodicity\PeriodicityEveryDay
  * @AppAssertPeriodicity\PeriodicityEveryMonth
@@ -26,6 +25,7 @@ class Periodicity
 
     /**
      * @ORM\Column(type="date")
+     *
      * @var \DateTimeInterface
      */
     private $endTime;
@@ -36,12 +36,14 @@ class Periodicity
      * @see PeriodicityConstant::getTypesPeriodicite
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @var int
      */
     private $type;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     *
      * @var int|null
      */
     private $weekRepeat;
@@ -58,6 +60,7 @@ class Periodicity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="periodicity")
+     *
      * @var \App\Entity\Entry[]|\Doctrine\Common\Collections\Collection
      */
     private $entries;
@@ -77,17 +80,11 @@ class Periodicity
         $this->entryReference = $entry;
     }
 
-    /**
-     * @return Entry|null
-     */
     public function getEntryReference(): ?Entry
     {
         return $this->entryReference;
     }
 
-    /**
-     * @param Entry|null $entry_reference
-     */
     public function setEntryReference(?Entry $entry_reference): void
     {
         $this->entryReference = $entry_reference;

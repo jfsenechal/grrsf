@@ -52,8 +52,8 @@ class MigrationChecker
      * et si celui-ci est mis en tant que administrateur ou pas d'une room
      * de cet area.
      *
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     *
      * @return \App\Entity\Area[][]|\App\Entity\Room[][]|\App\Entity\Security\Authorization[][]|\App\Entity\Security\User[][]|null[][]
      */
     public function checkAreaAndRoomAdministrator(): array

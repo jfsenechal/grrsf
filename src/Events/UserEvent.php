@@ -23,9 +23,6 @@ class UserEvent extends Event
         $this->user = $user;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;

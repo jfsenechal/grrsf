@@ -22,7 +22,6 @@ class EntryLocationService
     /**
      * Fixe l'occupation des emplacements de l'entry pour la vue sur une journee.
      *
-     * @param Entry      $entry
      * @param TimeSlot[] $dayTimeSlots les tranches horaires de la journée
      *
      * @return TimeSlot[]

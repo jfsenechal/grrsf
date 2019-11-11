@@ -22,9 +22,6 @@ class EntryEvent extends Event
         $this->entry = $entry;
     }
 
-    /**
-     * @return Entry
-     */
     public function getEntry(): Entry
     {
         return $this->entry;

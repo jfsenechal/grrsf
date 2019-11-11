@@ -25,9 +25,7 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param \DateTimeInterface $date
-     * @param Area|null          $area
-     * @param Room|null          $room
+     * @param Area|null $area
      *
      * @return Entry[] Returns an array of Entry objects
      */
@@ -57,9 +55,6 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param CarbonInterface $day
-     * @param Room            $room
-     *
      * @return Entry[]
      */
     public function findForDay(CarbonInterface $day, Room $room): array
@@ -79,9 +74,6 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Entry $entry
-     * @param Room  $room
-     *
      * @return Entry[]
      */
     public function isBusy(Entry $entry, Room $room): array
@@ -102,7 +94,7 @@ class EntryRepository extends ServiceEntityRepository
         $qb->andWhere('entry.room = :room')
             ->setParameter('room', $room);
 
-        /**
+        /*
          * en cas de modif
          */
         if (null !== $entry->getId()) {
@@ -117,8 +109,6 @@ class EntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param array $args
-     *
      * @return Entry[] Returns an array of Entry objects
      */
     public function search(array $args = []): array
@@ -198,8 +188,6 @@ class EntryRepository extends ServiceEntityRepository
     /**
      * Ajouter pour sqlLite.
      *
-     * @param Area $area
-     *
      * @return Room[]|iterable
      */
     private function getRooms(Area $area): iterable
@@ -212,10 +200,8 @@ class EntryRepository extends ServiceEntityRepository
     /**
      * Retourne l'entry de base de la repetition.
      *
-     * @param Periodicity $periodicity
-     *
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     *
      * @return mixed
      */
     public function getBaseEntryForPeriodicity(Periodicity $periodicity)

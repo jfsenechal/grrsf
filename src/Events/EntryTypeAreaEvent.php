@@ -17,9 +17,6 @@ class EntryTypeAreaEvent extends Event
         $this->area = $area;
     }
 
-    /**
-     * @return Area
-     */
     public function getArea(): Area
     {
         return $this->area;

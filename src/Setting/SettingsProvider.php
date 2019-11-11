@@ -25,8 +25,6 @@ class SettingsProvider
     }
 
     /**
-     * @return Area|null
-     *
      * @todo
      */
     public function getDefaultArea(): ?Area
@@ -35,7 +33,6 @@ class SettingsProvider
     }
 
     /**
-     * @return Room|null
      * @todo default room
      */
     public function getDefaulRoom(): ?Room

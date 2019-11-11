@@ -49,10 +49,6 @@ class GrrAdminExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     public function joursSemaine(string $value): string
     {
         $jours = DateProvider::getNamesDaysOfWeek();

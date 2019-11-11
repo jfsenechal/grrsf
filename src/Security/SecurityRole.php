@@ -39,6 +39,7 @@ class SecurityRole
 
     /**
      * Utilisé pour le formulaire d'authorization.
+     *
      * @return \stdClass[]
      */
     public static function getRolesForAuthorization(): array

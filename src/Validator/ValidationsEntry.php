@@ -4,7 +4,6 @@ namespace App\Validator;
 
 use App\Entity\Entry;
 use App\Validator\Entry\BusyRoom;
-use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ValidationsEntry
@@ -19,10 +18,6 @@ class ValidationsEntry
         $this->validator = $validator;
     }
 
-    /**
-     * @param Entry $entry
-     * @return array
-     */
     public function validate(Entry $entry): array
     {
         $violations = [];
@@ -35,9 +30,6 @@ class ValidationsEntry
         return $violations;
     }
 
-    /**
-     * @return array
-     */
     protected function getValidators(): array
     {
         return [BusyRoom::class];

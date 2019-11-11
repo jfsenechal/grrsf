@@ -164,12 +164,14 @@ class Room
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="room", cascade={"remove"})
+     *
      * @var \App\Entity\Entry[]|\Doctrine\Common\Collections\Collection
      */
     private $entries;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Security\Authorization", mappedBy="room", orphanRemoval=true)
+     *
      * @var \App\Entity\Security\Authorization[]|\Doctrine\Common\Collections\Collection
      */
     private $authorizations;

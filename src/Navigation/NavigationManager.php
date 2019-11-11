@@ -9,7 +9,6 @@
 namespace App\Navigation;
 
 use App\Factory\MonthFactory;
-use App\I18n\LocalHelper;
 use App\Model\Month;
 use App\Model\Navigation;
 use App\Provider\DateProvider;
@@ -58,10 +57,7 @@ class NavigationManager
     }
 
     /**
-     * @param Month $month
      * @param int $number nombre de mois
-     *
-     * @return Navigation
      */
     public function createMonth(Month $month, int $number = 1): Navigation
     {

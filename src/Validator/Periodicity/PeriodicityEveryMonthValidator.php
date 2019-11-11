@@ -11,7 +11,7 @@ class PeriodicityEveryMonthValidator extends ConstraintValidator
 {
     /**
      * @param \App\Entity\Periodicity|null $value
-     * @param PeriodicityEveryWeek    $constraint
+     * @param PeriodicityEveryWeek         $constraint
      */
     public function validate($value, Constraint $constraint): void
     {
@@ -20,7 +20,7 @@ class PeriodicityEveryMonthValidator extends ConstraintValidator
         }
 
         if (!$value instanceof \App\Entity\Periodicity) {
-            throw new \InvalidArgumentException($value,0 );
+            throw new \InvalidArgumentException($value, 0);
         }
 
         $typePeriodicity = $value->getType();

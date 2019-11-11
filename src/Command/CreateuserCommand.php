@@ -89,12 +89,10 @@ class CreateuserCommand extends Command
             $question->setValidator(
                 function ($password): int {
                     if (strlen($password) < 4) {
-                        throw new \RuntimeException(
-                            'Le mot de passe doit faire minimum 4 caractères'
-                        );
+                        throw new \RuntimeException('Le mot de passe doit faire minimum 4 caractères');
                     }
 
-                    return (int)$password;
+                    return (int) $password;
                 }
             );
             $password = $helper->ask($input, $output, $question);

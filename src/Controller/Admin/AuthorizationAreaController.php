@@ -45,11 +45,7 @@ class AuthorizationAreaController extends AbstractController
     /**
      * @Route("/new/area/{id}", name="grr_authorization_from_area", methods={"GET", "POST"})
      *
-     * @param Request   $request
-     * @param Area|null $area
      * @IsGranted("grr.area.edit", subject="area")
-     *
-     * @return Response
      */
     public function new(Request $request, Area $area = null): Response
     {

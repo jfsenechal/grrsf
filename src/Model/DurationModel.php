@@ -30,6 +30,7 @@ class DurationModel
 
     /**
      * Encodage de la date de fin de l'entry.
+     *
      * @return string[]
      */
     public static function getUnitsTime(): array
@@ -51,17 +52,12 @@ class DurationModel
         $this->unit = self::UNIT_TIME_MINUTES;
     }
 
-    /**
-     * @return int
-     */
     public function getUnit(): int
     {
         return $this->unit;
     }
 
     /**
-     * @param int $unit
-     *
      * @return DurationModel
      */
     public function setUnit(int $unit): self
@@ -71,17 +67,12 @@ class DurationModel
         return $this;
     }
 
-    /**
-     * @return float
-     */
     public function getTime(): float
     {
         return $this->time;
     }
 
     /**
-     * @param float $time
-     *
      * @return DurationModel
      */
     public function setTime(float $time): self
@@ -91,17 +82,12 @@ class DurationModel
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isFullDay(): bool
     {
         return $this->full_day;
     }
 
     /**
-     * @param bool $full_day
-     *
      * @return DurationModel
      */
     public function setFullDay(bool $full_day): self

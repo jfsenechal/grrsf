@@ -25,9 +25,6 @@ class TimeSlotsProvider
     /**
      * Crée les tranches d'heures sous forme d'objet.
      *
-     * @param Area            $area
-     * @param CarbonInterface $daySelected
-     *
      * @return TimeSlot[]
      */
     public function getTimeSlotsModelByAreaAndDaySelected(Area $area, CarbonInterface $daySelected): array
@@ -58,13 +55,6 @@ class TimeSlotsProvider
 
     /**
      * Retourne les tranches d'heures d'après une heure de début, de fin et d'un interval de temps.
-     *
-     * @param CarbonInterface $daySelected
-     * @param int             $hourBegin
-     * @param int             $hourEnd
-     * @param int             $timeInterval
-     *
-     * @return CarbonPeriod
      */
     public function getTimeSlots(
         CarbonInterface $daySelected,
@@ -87,10 +77,6 @@ class TimeSlotsProvider
 
     /**
      * Obtient les tranches horaires de l'entrée basée sur la résolution de l'Area.
-     *
-     * @param Entry $entry
-     *
-     * @return CarbonPeriod
      */
     public function getTimeSlotsOfEntry(Entry $entry): CarbonPeriod
     {

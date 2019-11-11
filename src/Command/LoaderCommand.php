@@ -3,12 +3,8 @@
 namespace App\Command;
 
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
-use Fidry\AliceDataFixtures\Loader\SimpleLoader;
-use Fidry\AliceDataFixtures\LoaderInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -42,6 +38,5 @@ class LoaderCommand extends Command
         $basePath = __DIR__.'/../Fixtures/';
 
         $this->loader->load([$basePath.'area.yaml']);
-
     }
 }

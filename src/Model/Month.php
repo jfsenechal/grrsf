@@ -75,9 +75,6 @@ class Month extends Carbon
         return $this->copy()->addMonth();
     }
 
-    /**
-     * @return CarbonPeriod
-     */
     public function getCalendarDays(): CarbonPeriod
     {
         return Carbon::parse($this->firstOfMonth()->toDateString())->daysUntil(

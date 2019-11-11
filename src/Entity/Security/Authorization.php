@@ -27,6 +27,7 @@ class Authorization
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Security\User", inversedBy="authorizations")
      * @ORM\JoinColumn(nullable=false)
+     *
      * @var \App\Entity\Security\User
      */
     private $user;
@@ -34,6 +35,7 @@ class Authorization
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Area", inversedBy="authorizations")
      * @ORM\JoinColumn(nullable=true)
+     *
      * @var \App\Entity\Area|null
      */
     private $area;
@@ -41,6 +43,7 @@ class Authorization
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Room", inversedBy="authorizations")
      * @ORM\JoinColumn(nullable=true)
+     *
      * @var \App\Entity\Room|null
      */
     private $room;

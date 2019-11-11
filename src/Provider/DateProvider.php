@@ -10,6 +10,7 @@ class DateProvider
 {
     /**
      * Names of days of the week.
+     *
      * @return string[]
      */
     public static function getNamesDaysOfWeek(): array

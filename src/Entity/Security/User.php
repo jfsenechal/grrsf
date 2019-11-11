@@ -30,6 +30,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     *
      * @var string
      */
     private $username;
@@ -42,6 +43,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     *
      * @var mixed[]
      */
     private $roles = [];
@@ -54,35 +56,41 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     *
      * @var string|null
      */
     private $first_name;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
     private $isEnabled;
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @var string
      */
     private $languageDefault;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Area")
+     *
      * @var Area
      */
     private $area;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Room")
+     *
      * @var Room
      */
     private $room;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Security\Authorization", mappedBy="user", orphanRemoval=true)
+     *
      * @var Authorization[]
      */
     private $authorizations;

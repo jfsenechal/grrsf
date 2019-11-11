@@ -70,6 +70,6 @@ class LocalHelper
             return $this->defaultLocale;
         }
 
-        return 'fr';//bug test mode console
+        return 'fr'; //bug test mode console
     }
 }

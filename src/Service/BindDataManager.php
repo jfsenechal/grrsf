@@ -57,10 +57,6 @@ class BindDataManager
      * Parcours tous les jours du mois
      * Crée une instance Day et set les entrées.
      * Ajouts des ces days au model Month.
-     *
-     * @param Month     $monthModel
-     * @param Area      $area
-     * @param Room|null $room
      */
     public function bindMonth(Month $monthModel, Area $area, Room $room = null): void
     {
@@ -75,8 +71,6 @@ class BindDataManager
     }
 
     /**
-     * @param Week $weekModel
-     * @param Area $area
      * @param Room $roomSelected
      *
      * @return RoomModel[]
@@ -113,10 +107,7 @@ class BindDataManager
      * Puis pour chaque entrées en calcul le nbre de cellules qu'elle occupe
      * et sa localisation.
      *
-     * @param CarbonInterface $day
-     * @param Area            $area
-     * @param TimeSlot[]      $timeSlots
-     * @param Room|null       $roomSelected
+     * @param TimeSlot[] $timeSlots
      *
      * @return RoomModel[]
      */

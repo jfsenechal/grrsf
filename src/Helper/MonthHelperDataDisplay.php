@@ -26,10 +26,6 @@ class MonthHelperDataDisplay
     }
 
     /**
-     * @param Month $month
-     *
-     * @return string
-     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError

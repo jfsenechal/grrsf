@@ -43,6 +43,7 @@ class GrrLdap
 
     /**
      * @param $uid
+     *
      * @return mixed|null
      */
     public function getEntry($uid)
@@ -74,9 +75,6 @@ class GrrLdap
         }
     }
 
-    /**
-     * @return \Symfony\Component\Ldap\Adapter\EntryManagerInterface
-     */
     public function getEntryManager(): \Symfony\Component\Ldap\Adapter\EntryManagerInterface
     {
         return $this->ldap->getEntryManager();

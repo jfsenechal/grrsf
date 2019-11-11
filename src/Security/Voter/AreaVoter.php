@@ -135,8 +135,6 @@ class AreaVoter extends Voter
 
     /**
      * See in admin.
-     *
-     * @return bool
      */
     private function canView(): bool
     {

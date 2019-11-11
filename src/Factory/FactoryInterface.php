@@ -10,8 +10,5 @@ namespace App\Factory;
 
 interface FactoryInterface
 {
-    /**
-     * @return object
-     */
     public function createNew(): object;
 }

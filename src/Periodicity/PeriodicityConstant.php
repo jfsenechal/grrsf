@@ -20,6 +20,7 @@ class PeriodicityConstant
 
     /**
      * clef de type rep_type_0,rep_type_1,...
+     *
      * @return string[]
      */
     public static function getTypesPeriodicite(): array

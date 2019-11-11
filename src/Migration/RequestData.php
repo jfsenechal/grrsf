@@ -109,11 +109,6 @@ class RequestData
         return $this->request('user_room.php');
     }
 
-    /**
-     * @param string $url
-     * @param array $params
-     * @return string
-     */
     public function download(string $url, array $params = []): string
     {
         $jsonfile = str_replace('php', 'json', $url);
@@ -165,8 +160,6 @@ class RequestData
     }
 
     /**
-     * @param string $file
-     * @param array $params
      * @return false|string
      */
     private function request(string $file, array $params = [])
@@ -200,6 +193,7 @@ class RequestData
 
     /**
      * @param $jsonfile
+     *
      * @throws \Exception
      */
     private function checkDownload($jsonfile)
@@ -209,6 +203,5 @@ class RequestData
         if (isset($data['error'])) {
             throw new \Exception($data['error']);
         }
-
     }
 }

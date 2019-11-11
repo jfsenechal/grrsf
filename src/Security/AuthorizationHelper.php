@@ -11,7 +11,6 @@
 namespace App\Security;
 
 use App\Entity\Area;
-use App\Entity\Room;
 use App\Repository\AreaRepository;
 use App\Repository\RoomRepository;
 use App\Repository\Security\AuthorizationRepository;
@@ -50,10 +49,8 @@ class AuthorizationHelper
     }
 
     /**
-     * @param UserInterface $user
-     *
-     *
      * @throws \Exception
+     *
      * @return \App\Entity\Area[]|\App\Entity\Area[]|null[]
      */
     public function getAreasUserCanAdd(UserInterface $user): array
@@ -80,10 +77,8 @@ class AuthorizationHelper
     }
 
     /**
-     * @param UserInterface $user
-     *
-     *
      * @throws \Exception
+     *
      * @return \App\Entity\Room[]|mixed[]
      */
     public function getRoomsUserCanAdd(UserInterface $user, ?Area $area = null): iterable

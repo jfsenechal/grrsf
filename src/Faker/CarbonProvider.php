@@ -20,17 +20,11 @@ use Faker\Provider\Base as BaseProvider;
  */
 class CarbonProvider extends BaseProvider
 {
-    /**
-     * @return \DateTime
-     */
     public function carbonDateTime(int $year, int $month, int $day, int $hour, int $minute): \DateTime
     {
         return Carbon::create($year, $month, $day, $hour, $minute)->toDateTime();
     }
 
-    /**
-     * @return \DateTime
-     */
     public function carbonDate(int $year, int $month, int $day): \DateTime
     {
         return Carbon::createFromDate($year, $month, $day)->toDateTime();

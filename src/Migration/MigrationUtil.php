@@ -120,7 +120,7 @@ class MigrationUtil
         $tab = str_split(strtolower($display_days), 1);
         $days = array_map(
             function ($a) use ($pattern, $replacements): int {
-                return (int)preg_replace($pattern, $replacements, $a);
+                return (int) preg_replace($pattern, $replacements, $a);
             },
             $tab
         );
@@ -134,6 +134,7 @@ class MigrationUtil
      * @return array
      * @throws \Exception
      */
+
     /**
      * @return int[]
      */
@@ -146,7 +147,7 @@ class MigrationUtil
         $days = [];
         $tab = str_split(strtolower($datas), 1);
         foreach ($tab as $key => $data) {
-            if (1 === (int)$data) {
+            if (1 === (int) $data) {
                 $days[] = $key;
             }
         }

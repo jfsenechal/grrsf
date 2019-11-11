@@ -9,9 +9,6 @@ class ModuleSender implements GrrModuleSenderInterface
      */
     public $modules = [];
 
-    /**
-     * @param GrrModuleInterface $module
-     */
     public function addModule(GrrModuleInterface $module): void
     {
         $this->modules[] = $module;

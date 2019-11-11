@@ -13,10 +13,7 @@ use App\Entity\Setting;
 class SettingFactory
 {
     /**
-     * @param string       $name
      * @param string|array $value
-     *
-     * @return Setting
      */
     public function createNew(string $name, $value): Setting
     {

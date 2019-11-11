@@ -11,7 +11,7 @@ class PeriodicityEveryDayValidator extends ConstraintValidator
 {
     /**
      * @param \App\Entity\Periodicity|null $value
-     * @param PeriodicityEveryWeek    $constraint
+     * @param PeriodicityEveryWeek         $constraint
      */
     public function validate($value, Constraint $constraint): void
     {

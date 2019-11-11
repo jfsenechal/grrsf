@@ -23,33 +23,21 @@ class MenuSelect
      */
     private $room;
 
-    /**
-     * @return Area
-     */
     public function getArea(): Area
     {
         return $this->area;
     }
 
-    /**
-     * @param Area $area
-     */
     public function setArea(Area $area): void
     {
         $this->area = $area;
     }
 
-    /**
-     * @return Room|null
-     */
     public function getRoom(): ?Room
     {
         return $this->room;
     }
 
-    /**
-     * @param Room|null $room
-     */
     public function setRoom(Room $room = null): void
     {
         $this->room = $room;

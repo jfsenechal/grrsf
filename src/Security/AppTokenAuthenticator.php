@@ -60,10 +60,6 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      * Does the authenticator support the given Request?
      *
      * If this returns false, the authenticator will be skipped.
-     *
-     * @param Request $request
-     *
-     * @return bool
      */
     public function supports(Request $request): bool
     {
@@ -87,10 +83,8 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      *      return array('api_key' => $request->headers->get('X-API-TOKEN'));
      *
-     * @param Request $request
-     *
-     *
      * @throws \UnexpectedValueException If null is returned
+     *
      * @return string[][]|string[]|null[]
      */
     public function getCredentials(Request $request): array
@@ -108,8 +102,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      * You may throw an AuthenticationException if you wish. If you return
      * null, then a UsernameNotFoundException is thrown for you.
      *
-     * @param mixed                 $credentials
-     * @param UserProviderInterface $userProvider
+     * @param mixed $credentials
      *
      * @throws AuthenticationException
      *
@@ -137,10 +130,7 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * The *credentials* are the return value from getCredentials()
      *
-     * @param mixed         $credentials
-     * @param UserInterface $user
-     *
-     * @return bool
+     * @param mixed $credentials
      *
      * @throws AuthenticationException
      */
@@ -161,9 +151,6 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * If you return null, the request will continue, but the user will
      * not be authenticated. This is probably not what you want to do.
-     *
-     * @param Request                 $request
-     * @param AuthenticationException $exception
      *
      * @return Response|null
      */
@@ -188,9 +175,8 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      * If you return null, the current request will continue, and the user
      * will be authenticated. This makes sense, for example, with an API.
      *
-     * @param Request        $request
-     * @param TokenInterface $token
-     * @param string         $providerKey The provider (i.e. firewall) key
+     * @param string $providerKey The provider (i.e. firewall) key
+     *
      * @return null
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -210,8 +196,6 @@ class AppTokenAuthenticator extends AbstractGuardAuthenticator
      *      can be configured by the "always_remember_me" and "remember_me_parameter"
      *      parameters under the "remember_me" firewall key
      *  D) The onAuthenticationSuccess method returns a Response object
-     *
-     * @return bool
      */
     public function supportsRememberMe(): bool
     {

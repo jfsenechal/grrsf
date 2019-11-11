@@ -21,11 +21,6 @@ class SettingRepository extends ServiceEntityRepository
         parent::__construct($registry, Setting::class);
     }
 
-    /**
-     * @param string $name
-     *
-     * @return string|null
-     */
     public function getValueByName(string $name): ?string
     {
         try {

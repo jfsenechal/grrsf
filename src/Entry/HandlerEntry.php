@@ -107,9 +107,6 @@ class HandlerEntry
         $entry->setCreatedBy($username);
     }
 
-    /**
-     * @param Entry $entry
-     */
     protected function updateEntriesWithSamePeriodicity(Entry $entry): void
     {
         $propertyAccessor = $this->propertyUtil->getPropertyAccessor();

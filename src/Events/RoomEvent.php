@@ -21,9 +21,6 @@ class RoomEvent extends Event
         $this->room = $room;
     }
 
-    /**
-     * @return Room
-     */
     public function getRoom(): Room
     {
         return $this->room;

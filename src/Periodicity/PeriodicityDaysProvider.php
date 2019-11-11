@@ -21,8 +21,6 @@ class PeriodicityDaysProvider
     private $entry_start;
 
     /**
-     * @param Entry $entry
-     *
      * @return array|CarbonPeriod
      */
     public function getDaysByEntry(Entry $entry)
@@ -37,8 +35,6 @@ class PeriodicityDaysProvider
     }
 
     /**
-     * @param Periodicity        $periodicity
-     * @param \DateTimeInterface $startTime
      * @return \Carbon\CarbonPeriod|mixed[]
      */
     public function getDaysByPeriodicity(
@@ -84,9 +80,6 @@ class PeriodicityDaysProvider
         return $this->applyFilter($period);
     }
 
-    /**
-     * @return CarbonPeriod
-     */
     protected function forEveryYears(): CarbonPeriod
     {
         $period = Carbon::parse($this->entry_start->toDateString())->yearsUntil(
@@ -98,8 +91,6 @@ class PeriodicityDaysProvider
 
     /**
      * Par exemple 12-08, 12-09 12-10, 12-11...
-     *
-     * @return CarbonPeriod
      */
     protected function forEveryMonthSameDay(): CarbonPeriod
     {
@@ -116,8 +107,6 @@ class PeriodicityDaysProvider
 
     /**
      * Par exemple le premier samedi de chaque mois.
-     *
-     * @return CarbonPeriod
      */
     private function forEveryMonthSameDayOfWeek(): CarbonPeriod
     {
@@ -135,8 +124,6 @@ class PeriodicityDaysProvider
     /**
      * toutes les 1,2,3,4,5 semaines
      * lundi, mardi, mercredi...
-     *
-     * @return CarbonPeriod
      */
     protected function forEveryWeek(Periodicity $periodicity): CarbonPeriod
     {

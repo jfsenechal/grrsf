@@ -21,9 +21,6 @@ class EntryTypeEvent extends Event
         $this->entry_type = $entryType;
     }
 
-    /**
-     * @return EntryType
-     */
     public function getEntryType(): EntryType
     {
         return $this->entry_type;

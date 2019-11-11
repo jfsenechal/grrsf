@@ -79,19 +79,20 @@ class GrrFrontExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'grrPeriodicityTypeName', function (int $type) {
-                return $this->grrPeriodicityTypeName($type);
-            }, ['is_safe' => ['html']]
+                    return $this->grrPeriodicityTypeName($type);
+                }, ['is_safe' => ['html']]
             ),
             new TwigFilter(
                 'grrWeekNiceName', function (Week $week): string {
-                return $this->grrWeekNiceName($week);
-            }, ['is_safe' => ['html']]
+                    return $this->grrWeekNiceName($week);
+                }, ['is_safe' => ['html']]
             ),
         ];
     }
 
     /**
      * todo navigation function to same package.
+     *
      * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
@@ -99,37 +100,33 @@ class GrrFrontExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'grrMonthNavigationRender', function (): string {
-                return $this->monthNavigationRender();
-            }, ['is_safe' => ['html']]
+                    return $this->monthNavigationRender();
+                }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrMenuNavigationRender', function (): string {
-                return $this->menuNavigationRender();
-            }, ['is_safe' => ['html']]
+                    return $this->menuNavigationRender();
+                }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrGenerateCellDataDay', function (TimeSlot $hour, RoomModel $roomModel, Day $day): string {
-                return $this->grrGenerateCellDataDay($hour, $roomModel, $day);
-            }, ['is_safe' => ['html']]
+                    return $this->grrGenerateCellDataDay($hour, $roomModel, $day);
+                }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrLegendEntryType', function (Area $area): string {
-                return $this->grrLegendEntryType($area);
-            }, ['is_safe' => ['html']]
+                    return $this->grrLegendEntryType($area);
+                }, ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'grrCompanyName', function (): string {
-                return $this->grrCompanyName();
-            }
+                    return $this->grrCompanyName();
+                }
             ),
         ];
     }
 
     /**
-     * @param TimeSlot $hour
-     * @param RoomModel $roomModel
-     * @param Day $day
-     * @return string
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -171,8 +168,8 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     *
      * @return \Symfony\Component\HttpFoundation\Response|string
+     *
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      * @throws \Twig\Error\LoaderError
@@ -202,8 +199,6 @@ class GrrFrontExtension extends AbstractExtension
     }
 
     /**
-     * @return string
-     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError

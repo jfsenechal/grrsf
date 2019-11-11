@@ -37,17 +37,12 @@ class Navigation
         $this->today = Carbon::today();
     }
 
-    /**
-     * @return string
-     */
     public function getPreviousButton(): string
     {
         return $this->previousButton;
     }
 
     /**
-     * @param string $previousButton
-     *
      * @return Navigation
      */
     public function setPreviousButton(string $previousButton): self
@@ -57,17 +52,12 @@ class Navigation
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getNextButton(): string
     {
         return $this->nextButton;
     }
 
     /**
-     * @param string $nextButton
-     *
      * @return Navigation
      */
     public function setNextButton(string $nextButton): self
@@ -86,8 +76,6 @@ class Navigation
     }
 
     /**
-     * @param array $months
-     *
      * @return Navigation
      */
     public function setMonths(array $months): self
@@ -102,9 +90,6 @@ class Navigation
         $this->months[] = $month;
     }
 
-    /**
-     * @return CarbonInterface
-     */
     public function getToday(): CarbonInterface
     {
         return $this->today;

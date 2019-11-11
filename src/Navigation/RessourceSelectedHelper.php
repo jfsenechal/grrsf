@@ -55,8 +55,6 @@ class RessourceSelectedHelper
     }
 
     /**
-     * @return Area
-     *
      * @throws \Exception
      */
     public function getArea(): Area
@@ -85,9 +83,7 @@ class RessourceSelectedHelper
 
         $area = $this->areaRepository->findOneBy([], ['id' => 'ASC']);
         if (!$area) {
-            throw new \Exception(
-                'No area in database, populate database with this command: php bin/console grr:install-data'
-            );
+            throw new \Exception('No area in database, populate database with this command: php bin/console grr:install-data');
         }
 
         return $area;
@@ -95,8 +91,6 @@ class RessourceSelectedHelper
 
     /**
      * -1 = force all ressource.
-     *
-     * @return Room|null
      */
     public function getRoom(): ?Room
     {

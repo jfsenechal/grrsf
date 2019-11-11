@@ -160,6 +160,7 @@ class Entry
      * @Assert\Valid
      * @ORM\ManyToOne(targetEntity="App\Entity\Periodicity", inversedBy="entries", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     *
      * @var \App\Entity\Periodicity|null
      */
     private $periodicity;
@@ -181,17 +182,12 @@ class Entry
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
     public function getCellules(): int
     {
         return $this->cellules;
     }
 
     /**
-     * @param int $cellules
-     *
      * @return Entry
      */
     public function setCellules(int $cellules): self
@@ -210,17 +206,12 @@ class Entry
         return $this;
     }
 
-    /**
-     * @return DurationModel|null
-     */
     public function getDuration(): ?DurationModel
     {
         return $this->duration;
     }
 
     /**
-     * @param DurationModel|null $duration
-     *
      * @return Entry
      */
     public function setDuration(?DurationModel $duration): self
@@ -230,17 +221,11 @@ class Entry
         return $this;
     }
 
-    /**
-     * @return Area|null
-     */
     public function getArea(): ?Area
     {
         return $this->area;
     }
 
-    /**
-     * @param Area|null $area
-     */
     public function setArea(?Area $area): void
     {
         $this->area = $area;
@@ -254,9 +239,6 @@ class Entry
         return $this->locations;
     }
 
-    /**
-     * @param array $locations
-     */
     public function setLocations(array $locations): void
     {
         $this->locations = $locations;

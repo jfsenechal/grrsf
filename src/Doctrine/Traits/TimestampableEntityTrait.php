@@ -31,8 +31,6 @@ trait TimestampableEntityTrait
     /**
      * Sets createdAt.
      *
-     * @param \DateTime $createdAt
-     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $createdAt): self
@@ -44,8 +42,6 @@ trait TimestampableEntityTrait
 
     /**
      * Returns createdAt.
-     *
-     * @return \DateTime
      */
     public function getCreatedAt(): \DateTime
     {
@@ -54,8 +50,6 @@ trait TimestampableEntityTrait
 
     /**
      * Sets updatedAt.
-     *
-     * @param \DateTime $updatedAt
      *
      * @return $this
      */
@@ -68,8 +62,6 @@ trait TimestampableEntityTrait
 
     /**
      * Returns updatedAt.
-     *
-     * @return \DateTime
      */
     public function getUpdatedAt(): \DateTime
     {
