@@ -138,7 +138,7 @@ class RoomType extends AbstractType
             )
             ->add(
                 'dontAllowModify',
-                CheckboxType::class,
+                ChoiceType::class,
                 [
                     'label' => 'room.form.dontAllowModify.label',
                     'help' => 'room.form.dontAllowModify.help',

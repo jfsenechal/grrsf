@@ -114,9 +114,9 @@ class Room
     private $delaisOptionReservation;
 
     /**
-     * @var string
+     * @var bool
      *
-     * @ORM\Column(name="dont_allow_modify", type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $dontAllowModify;
 
@@ -359,7 +359,7 @@ class Room
         return $this;
     }
 
-    public function getDontAllowModify(): string
+    public function getDontAllowModify(): bool
     {
         return $this->dontAllowModify;
     }

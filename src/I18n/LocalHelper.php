@@ -50,7 +50,7 @@ class LocalHelper
         if ($master !== null) {
             $this->defaultLocale = $master->getLocale();
         }
-        /*
+        /**
          * user preference
          */
         if ($user) {
@@ -62,11 +62,11 @@ class LocalHelper
 
     public function getDefaultLocal(): string
     {
-        if ($this->defaultLocale === '') {
+        if ($this->defaultLocale === '' || $this->defaultLocale === null) {
             $this->setDefaultLocal();
         }
 
-        if ($this->defaultLocale !== '') {
+        if ($this->defaultLocale !== '' && $this->defaultLocale !== null) {
             return $this->defaultLocale;
         }
 

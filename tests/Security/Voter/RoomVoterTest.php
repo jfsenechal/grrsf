@@ -16,6 +16,7 @@ use App\Security\SecurityHelper;
 use App\Security\Voter\RoomVoter;
 use App\Tests\BaseTesting;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -205,7 +206,7 @@ class RoomVoterTest extends BaseTesting
         return new RoomVoter($mock, $this->initSecurityHelper());
     }
 
-    private function initToken(?User $user): AnonymousToken
+    private function initToken(?User $user): TokenInterface
     {
         $token = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\TokenInterface')->getMock(
         );
