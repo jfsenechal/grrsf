@@ -20,7 +20,7 @@
         {{ nextButton | raw }}
     </div>
 </div>
-<div class="row m2t-2">
+<div class="table-responsive">
     <table class="table table-bordered table-sm">
         <thead>
         <tr>
@@ -36,8 +36,8 @@
             {% endfor %}
         </tr>
         </thead>
-        <tr class="">
-            {% for week in weeks %}
+        <tbody>
+        {% for week in weeks %}
 
             {% if week.startDate.week == weekSelected %}
                 {% set class = "table-info" %}
@@ -45,12 +45,13 @@
                 {% set class = "" %}
             {% endif %}
 
-        <tr class="{{ class }}">
-            {% include '@grr_front/navigation/month/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
-            {% for day in week %}
-                {% include '@grr_front/navigation/month/_cell_day.html.twig' with { 'day': day } %}
-            {% endfor %}
-        </tr>
+            <tr class="{{ class }}">
+                {% include '@grr_front/navigation/month/_cell_week.html.twig' with {'numericWeek': week.startDate.week } %}
+                {% for day in week %}
+                    {% include '@grr_front/navigation/month/_cell_day.html.twig' with { 'day': day } %}
+                {% endfor %}
+            </tr>
         {% endfor %}
+        </tbody>
     </table>
 </div>
