@@ -1,10 +1,9 @@
-<div class="row border-bottom">
+<div class="row">
     <div class="col-3 text-left">
         {{ previousButton | raw }}
     </div>
 
     <div class="col-6 text-center">
-
         <a href="{{ grrGenerateRouteMonthView() }}" class="font-weight-bold">
             {{ firstDay.monthName|upper }} {{ firstDay.year }}
         </a>
@@ -14,7 +13,6 @@
                 {{ 'Today' | trans }}
             </a>
         </p>
-
     </div>
     <div class="col-3 text-right">
         {{ nextButton | raw }}
