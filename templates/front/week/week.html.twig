@@ -7,30 +7,30 @@
     {% include '@grr_front/navigation/_top_navigation.html.twig' %}
 
     <h3 class="text-center text-success">{{ week|grrWeekNiceName }}</h3>
-
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>{{ 'ressources'|trans }}</th>
-            {% for day in week.calendarDays %}
-                <th>{{ day.dayName|capitalize }} {{ day.day }}</th>
-            {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for roomModel in roomModels %}
-            {% set room = roomModel.room %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead>
             <tr>
-                <td>{{ room.name }}</td>
-                {% for day in roomModel.dataDays %}
-                    {% include '@grr_front/week/_cell_day_data.html.twig' %}
+                <th>{{ 'ressources'|trans }}</th>
+                {% for day in week.calendarDays %}
+                    <th>{{ day.dayName|capitalize }} {{ day.day }}</th>
                 {% endfor %}
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-{{ grrLegendEntryType(area) }}
+            </thead>
+            <tbody>
+            {% for roomModel in roomModels %}
+                {% set room = roomModel.room %}
+                <tr>
+                    <td>{{ room.name }}</td>
+                    {% for day in roomModel.dataDays %}
+                        {% include '@grr_front/week/_cell_day_data.html.twig' %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {{ grrLegendEntryType(area) }}
 {% endblock %}
 
 {% block scripts %}
