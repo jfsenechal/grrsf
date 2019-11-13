@@ -11,7 +11,7 @@
     {% for week in weeks %}
         <tr>
             {% for day in week.days %}
-                <td class="align-text-top">
+                <td class="align-top">
                     {% include '@grr_front/month/_cell_day_data.html.twig' %}
                 </td>
             {% endfor %}
