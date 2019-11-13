@@ -22,7 +22,7 @@ Feature: Account
     And I am on "/account/show/"
     Then I should see "Mon profil Adams bob"
     When I follow "Mot de passe"
-    Then I should see "Changement du mot de passe pour bob@domain.be"
+    Then I should see "Changement du mot de passe pour ADAMS bob"
     And I fill in "user_password[password][first]" with "marge"
     And I fill in "user_password[password][second]" with "marge"
     And I press "Sauvegarder"
