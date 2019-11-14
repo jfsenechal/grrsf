@@ -263,8 +263,11 @@ class MigrationUtil
     public function convertToUf8(string $text): string
     {
         $charset = mb_detect_encoding($text, null, true);
+        if ('UTF-8' == $charset) {
+            $txt = utf8_decode($text);
 
-        if ('UTF-8' !== $charset) {
+            return $text;
+
             return mb_convert_encoding($text, 'UTF-8');
         }
 
@@ -318,6 +321,19 @@ class MigrationUtil
 
         return $date->toDateTime();
     }
+
+    /**
+     * @param string $start_time 2019-11-14 15:03:18
+     * @return DateTime
+     */
+    public function converToDateTimeFromString(string $dateString): DateTime
+    {
+        $format = 'Y-m-d H:i:s';
+        $date = Carbon::createFromFormat($format, $dateString);
+
+        return $date->toDateTime();
+    }
+
 
     public function convertToTypeEntry(array $resolveTypes, string $letter): ?EntryType
     {

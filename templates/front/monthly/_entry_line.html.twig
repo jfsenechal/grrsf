@@ -5,7 +5,7 @@
     {% if entry.description %}
         <br/>
         {# sf5 | u.truncate(20, '...') #}
-        <span class="text-muted">{{ entry.description }}</span>
+        <span class="text-muted">{{ entry.description|slice(1, 2) }}</span>
     {% endif %}
     <div class="row">
         <div class="col-md-10 col-12">

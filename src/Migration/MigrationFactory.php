@@ -35,6 +35,7 @@ class MigrationFactory
     public function createArea(array $data): Area
     {
         $area = new Area();
+
         $area->setName($this->migrationUtil->convertToUf8($data['area_name']));
         $area->setIsRestricted($this->migrationUtil->transformBoolean($data['access']));
         //$area->set($data['ip_adr']);
@@ -61,7 +62,7 @@ class MigrationFactory
     public function createRoom(Area $area, array $data): Room
     {
         $room = new Room($area);
-        $room->setName($data['room_name']);
+        $room->setName($this->migrationUtil->convertToUf8($data['room_name']));
         $room->setDescription($data['description']);
         $room->setCapacity($data['capacity']);
         $room->setMaximumBooking($data['max_booking']);
@@ -88,22 +89,20 @@ class MigrationFactory
     public function createEntry(array $resolveTypeEntries, array $data): Entry
     {
         $entry = $entry = new Entry();
-        $entry->setName($data['name']);
+        $entry->setName($this->migrationUtil->convertToUf8($data['name']));
         $entry->setStartTime($this->migrationUtil->converToDateTime($data['start_time']));
         $entry->setEndTime($this->migrationUtil->converToDateTime($data['end_time']));
 
-        //  $entry->set($data['entry_type']);
-        //  $entry->setPeriodicity($data['repeat_id']);
-        $entry->setCreatedAt($this->migrationUtil->converToDateTime($data['timestamp']));
+        $entry->setCreatedAt($this->migrationUtil->converToDateTimeFromString($data['timestamp']));
         $entry->setUpdatedAt(new DateTime());
         $entry->setCreatedBy($data['create_by']);
         $entry->setBeneficiaire($data['beneficiaire_ext']);
         $entry->setBeneficiaireExt($data['beneficiaire']);
         $entry->setType($this->migrationUtil->convertToTypeEntry($resolveTypeEntries, $data['type']));
-        $entry->setDescription($data['description']);
+        $entry->setDescription($this->migrationUtil->convertToUf8($data['description']));
         $entry->setStatutEntry($data['statut_entry']);
         $entry->setOptionReservation($data['option_reservation']);
-        $entry->setOverloadDesc($data['overload_desc']);
+        $entry->setOverloadDesc($this->migrationUtil->convertToUf8($data['overload_desc']));
         $entry->setModerate($this->migrationUtil->transformBoolean($data['moderate']));
         $entry->setJours($this->migrationUtil->transformBoolean($data['jours']));
 
@@ -139,8 +138,8 @@ class MigrationFactory
     {
         $user = new User();
         $user->setUsername($data['login']);
-        $user->setName($data['nom']);
-        $user->setFirstName($data['prenom']);
+        $user->setName($this->migrationUtil->convertToUf8($data['nom']));
+        $user->setFirstName($this->migrationUtil->convertToUf8($data['prenom']));
         $user->setEmail($data['email']);
         $user->setRoles($this->migrationUtil->transformRole($data['statut']));
         $user->setIsEnabled($this->migrationUtil->transformEtat($data['etat']));

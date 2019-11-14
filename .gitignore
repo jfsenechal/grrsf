@@ -13,6 +13,8 @@
 ###> acmarche/grr ###
 /.idea
 /*.sql
+#phpunit 8
+.phpunit.result.cache
 ###< acmarche/grr ###
 ###> friendsofphp/php-cs-fixer ###
 /.php_cs
