@@ -260,8 +260,11 @@ class MigrationUtil
         return null;
     }
 
-    public function convertToUf8(string $text): string
+    public function convertToUf8(?string $text = null): ?string
     {
+        if ($text === null) {
+            return null;
+        }
         $charset = mb_detect_encoding($text, null, true);
         if ('UTF-8' == $charset) {
             $txt = utf8_decode($text);
