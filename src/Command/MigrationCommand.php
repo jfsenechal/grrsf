@@ -139,12 +139,12 @@ class MigrationCommand extends Command
             $question->setHidden(true);
             $question->setMaxAttempts(5);
             $question->setValidator(
-                function ($password): int {
+                function ($password): string {
                     if (strlen($password) < 2) {
                         throw new RuntimeException('Le mot de passe ne peut être vide');
                     }
 
-                    return (int) $password;
+                    return $password;
                 }
             );
             $password = $helper->ask($input, $output, $question);
@@ -164,7 +164,7 @@ class MigrationCommand extends Command
                     throw new RuntimeException('La date n\'a pas un format valable: ');
                 }
 
-                return (int) (int) $date;
+                return $date;
             }
         );
 
