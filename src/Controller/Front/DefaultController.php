@@ -78,7 +78,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
      * @Entity("area", expr="repository.find(area)")
      * @ParamConverter("room", options={"mapping": {"room": "id"}})
      */
-    public function month(Area $area, int $year, int $month, Room $room = null): Response
+    public function monthly(Area $area, int $year, int $month, Room $room = null): Response
     {
         $monthModel = $this->monthFactory->create($year, $month);
 
@@ -87,12 +87,12 @@ class DefaultController extends AbstractController implements FrontControllerInt
         $monthData = $this->monthHelperDataDisplay->generateHtmlMonth($monthModel, $area);
 
         return $this->render(
-            '@grr_front/month/month.html.twig',
+            '@grr_front/monthly/month.html.twig',
             [
                 'firstDay' => $monthModel->firstOfMonth(),
                 'area' => $area,
                 'room' => $room,
-                'data' => $monthData,
+                'monthData' => $monthData,
             ]
         );
     }
@@ -102,7 +102,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
      * @Entity("area", expr="repository.find(area)")
      * @ParamConverter("room", options={"mapping": {"room": "id"}})
      */
-    public function week(Area $area, int $year, int $month, int $week, Room $room = null): Response
+    public function weekly(Area $area, int $year, int $month, int $week, Room $room = null): Response
     {
         $weekModel = $this->weekFactory->create($year, $week);
         $roomModels = $this->bindDataManager->bindWeek($weekModel, $area, $room);
@@ -122,7 +122,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
      * @Entity("area", expr="repository.find(area)")
      * @ParamConverter("room", options={"mapping": {"room": "id"}})
      */
-    public function day(Area $area, int $year, int $month, int $day, Room $room = null): Response
+    public function daily(Area $area, int $year, int $month, int $day, Room $room = null): Response
     {
         $dayModel = $this->dayFactory->createImmutable($year, $month, $day);
 

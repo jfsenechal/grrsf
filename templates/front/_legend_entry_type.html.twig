@@ -1,5 +1,7 @@
-<ul class="mt-5 list-group list-group-horizontal">
-    {% for type in types %}
-        <li class="list-group-item" style="background-color: {{ type.color }}">{{ type.name }}</li>
-    {% endfor %}
-</ul>
+<div class="d-none d-sm-block"><!-- hide smartphone -->
+    <ul class="mt-5 list-group list-group-horizontal-sm">
+        {% for type in types %}
+            <li class="list-group-item" style="background-color: {{ type.color }}">{{ type.name }}</li>
+        {% endfor %}
+    </ul>
+</div>

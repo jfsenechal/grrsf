@@ -35,7 +35,7 @@ class MonthHelperDataDisplay
         $weeks = $month->groupDataDaysByWeeks();
 
         return $this->environment->render(
-            '@grr_front/month/_calendar_data.html.twig',
+            '@grr_front/monthly/_calendar_data.html.twig',
             [
                 'listDays' => DateProvider::getNamesDaysOfWeek(),
                 'firstDay' => $month->firstOfMonth(),

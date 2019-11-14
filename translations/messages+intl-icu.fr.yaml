@@ -190,6 +190,7 @@ search:
   form:
     word:
       placeholder: Mot clef
+  placeholder: 'Rechercher'
 type_area:
   edit:
     title: Association des types pour {name}
