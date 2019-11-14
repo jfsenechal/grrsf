@@ -3,12 +3,12 @@
         {{ entry.name }}
     </a>
     {% if entry.description %}
-        <br />
+        <br/>
         {# sf5 | u.truncate(20, '...') #}
         <span class="text-muted">{{ entry.description }}</span>
     {% endif %}
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-md-10 col-12">
              <span class="m2b-2 text-muted">
     {{ entry.startTime|date('H:i') }}
     - {{ entry.endtime|date('H:i') }}
@@ -18,8 +18,9 @@
                 {{ entry.room }}
             </span>
         </div>
-        <div class="col-lg-2">
-            <div style="background-color: {{ entry.type.color }}"><span class="sr-only">{{ entry.type.name }}</span>&nbsp;</div>
+        <div class="col-md-2 d-none d-sm-block">
+            <div style="background-color: {{ entry.type.color }}"><span class="sr-only">{{ entry.type.name }}</span>&nbsp;
+            </div>
         </div>
     </div>
 </div>
