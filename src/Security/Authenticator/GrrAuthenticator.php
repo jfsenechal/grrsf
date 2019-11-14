@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Security\Authenticator;
 
 use Exception;
 use App\Entity\Security\User;
@@ -123,6 +123,8 @@ class GrrAuthenticator extends AbstractFormLoginAuthenticator
                 }
             }
         } catch (Exception $exception) {
+            //var_dump($exception->getMessage());
+            //exit();
         }
 
         return false;

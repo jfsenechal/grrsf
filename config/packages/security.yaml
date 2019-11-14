@@ -22,14 +22,14 @@ security:
             #provider: app_user_provider
             guard:
                 authenticators:
-                    - App\Security\AppTokenAuthenticator
+                    - App\Security\Authenticator\AppTokenAuthenticator
 
         main:
             anonymous: ~
             guard:
                 authenticators:
-                    - App\Security\GrrAuthenticator
-                entry_point: App\Security\GrrAuthenticator
+                    - App\Security\Authenticator\GrrAuthenticator
+                entry_point: App\Security\Authenticator\GrrAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout

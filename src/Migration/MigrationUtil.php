@@ -31,6 +31,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Polyfill\Mbstring\Mbstring;
 
 class MigrationUtil
 {
@@ -105,6 +106,7 @@ class MigrationUtil
     public function transformBoolean(string $value): bool
     {
         $value = strtolower($value);
+
         return 'y' == $value or 'a' == $value;
     }
 
@@ -119,7 +121,7 @@ class MigrationUtil
 
         return array_map(
             function ($a) use ($pattern, $replacements): int {
-                return (int) preg_replace($pattern, $replacements, $a);
+                return (int)preg_replace($pattern, $replacements, $a);
             },
             $tab
         );
@@ -144,7 +146,7 @@ class MigrationUtil
         $days = [];
         $tab = str_split(strtolower($datas), 1);
         foreach ($tab as $key => $data) {
-            if (1 === (int) $data) {
+            if (1 === (int)$data) {
                 $days[] = $key;
             }
         }
@@ -261,8 +263,9 @@ class MigrationUtil
     public function convertToUf8(string $text): string
     {
         $charset = mb_detect_encoding($text, null, true);
-        if ('UTF-8' != $charset) {
-            return mb_convert_encoding($text, 'UTF-8', $charset);
+
+        if ('UTF-8' !== $charset) {
+            return mb_convert_encoding($text, 'UTF-8');
         }
 
         return $text;
