@@ -7,8 +7,7 @@
         {# sf5 | u.truncate(20, '...') #}
         <span class="text-muted">{{ entry.description|slice(1, 20) }}</span>
     {% endif %}
-    <div class="row">
-        <div class="col-md-10 col-12">
+
              <span class="m2b-2 text-muted">
     {{ entry.startTime|date('H:i') }}
     - {{ entry.endtime|date('H:i') }}
@@ -18,9 +17,8 @@
                 {{ entry.room }}
             </span>
         </div>
-        <div class="col-md-2 d-none d-sm-block" style="background-color: {{ entry.type.color }}">
+        <div class="w-25 d-none d-sm-block" style="background-color: {{ entry.type.color }}">
             <span class="sr-only">{{ entry.type.name }}</span>&nbsp;&nbsp;
         </div>
-    </div>
-</div>
+
 <hr style="margin: 0;">
