@@ -266,6 +266,11 @@ class MigrationUtil
             return null;
         }
         $charset = mb_detect_encoding($text, null, true);
+
+        //sf5
+        //b('Lorem Ipsum')->isUtf8(); // true
+        //u('спасибо')->ascii();
+
         if ('UTF-8' == $charset) {
             $txt = utf8_decode($text);
 
