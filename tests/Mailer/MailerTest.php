@@ -4,14 +4,14 @@ namespace App\Tests\Mailer;
 
 use App\Mailer\GrrMailer;
 use Knp\Snappy\Pdf;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\NamedAddress;
 use Twig\Environment;
 use Twig\Loader\LoaderInterface;
 
 
-class MailerTest extends TestCase
+class MailerTest extends KernelTestCase
 {
     public function testSomething()
     {
@@ -22,10 +22,9 @@ class MailerTest extends TestCase
 
         $pdf = $this->getMockBuilder(Pdf::class)->getMock();
         $loader = $this->getMockBuilder(LoaderInterface::class)->getMock();
-        $twig = $this->getMockBuilder(Environment::class);
-        $twig->setConstructorArgs([$loader]);
+        $twig = $this->getMockBuilder(Environment::class)->setConstructorArgs([$loader])->getMock();
 
-        $grrMailer = new GrrMailer($mailerInterface, $twig->getMock(), $pdf);
+        $grrMailer = new GrrMailer($mailerInterface, $twig, $pdf);
         $email = $grrMailer->sendTest();
 
         $this->assertSame('Your weekly report on the Space Bar!', $email->getSubject());
@@ -35,6 +34,30 @@ class MailerTest extends TestCase
         $this->assertInstanceOf(NamedAddress::class, $namedAddresses[0]);
         $this->assertSame('zeze', $namedAddresses[0]->getName());
         $this->assertSame('jf@marche.be', $namedAddresses[0]->getAddress());
+
+        /**
+         * Symfony 4.4:
+         * $this->assertEmailCount(1);
+         * $email = $this->getMailerMessage(0);
+         * $this->assertEmailHeaderSame($email, 'To', 'fabien@symfony.com');
+         */
+    }
+
+    public function testIntegrationSendAuthorWeeklyReportMessage()
+    {
+        self::bootKernel();
+        $mailerInterface = $this->getMockBuilder(MailerInterface::class)->getMock();
+        $mailerInterface
+            ->expects($this->once())
+            ->method('send');
+
+        $pdf = self::$container->get(Pdf::class);
+        $twig = self::$container->get(Environment::class);
+
+        $grrMailer = new GrrMailer($mailerInterface, $twig, $pdf);
+        $email = $grrMailer->sendTest();
+        $this->assertCount(1, $email->getAttachments());
+
 
     }
 }

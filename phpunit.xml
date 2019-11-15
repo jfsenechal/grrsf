@@ -20,11 +20,6 @@
         <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
         <!-- ###- nelmio/cors-bundle ### -->
 
-        <!-- ###+ knplabs/knp-snappy-bundle ### -->
-        <env name="WKHTMLTOPDF_PATH" value="/usr/local/bin/wkhtmltopdf"/>
-        <env name="WKHTMLTOIMAGE_PATH" value="/usr/local/bin/wkhtmltoimage"/>
-        <!-- ###- knplabs/knp-snappy-bundle ### -->
-
         <!-- ###+ symfony/swiftmailer-bundle ### -->
         <!-- For Gmail as a transport, use: "gmail://username:password@localhost" -->
         <!-- For a generic SMTP server, use: "smtp://localhost:25?encryption=&auth_mode=" -->

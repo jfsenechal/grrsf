@@ -41,7 +41,7 @@ class GrrMailer
         $this->pdf = $pdf;
     }
 
-    public function sendWelcome(string $email) : TemplatedEmail
+    public function sendWelcome(string $email): TemplatedEmail
     {
         $message = EmailFactory::createNewTemplated();
         $message
@@ -59,7 +59,7 @@ class GrrMailer
         return $message;
     }
 
-    public function sendTest() : TemplatedEmail
+    public function sendTest(): TemplatedEmail
     {
         $html = $this->twig->render(
             'pdf/test.html.twig',
