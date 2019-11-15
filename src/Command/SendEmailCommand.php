@@ -9,8 +9,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
 
 class SendEmailCommand extends Command
 {
@@ -27,7 +25,7 @@ class SendEmailCommand extends Command
      */
     private $grrMailer;
 
-    public function __construct(MailerInterface $grrMailer)
+    public function __construct(GrrMailer $grrMailer)
     {
         parent::__construct();
         $this->grrMailer = $grrMailer;
@@ -45,21 +43,8 @@ class SendEmailCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $email = $input->getArgument('email');
 
-        $message = EmailFactory::createNewTemplated();
-        $message
-            ->to($email)
-            ->from('jf@marche.be')
-            ->subject('test')
-            ->htmlTemplate('email/welcome.html.twig')
-        ->context([
-            'zeze' => 'lolo',
-        ]);
-
-        try {
-            $this->grrMailer->send($message);
-        } catch (TransportExceptionInterface $e) {
-            $io->error($e->getMessage());
-        }
+        $this->grrMailer->sendWelcome($email);
+        $this->grrMailer->sendTest();
 
         return 0;
     }
