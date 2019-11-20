@@ -2,14 +2,14 @@
 
 namespace App\Repository;
 
-use DateTimeInterface;
 use App\Entity\Area;
 use App\Entity\Entry;
 use App\Entity\Periodicity;
 use App\Entity\Room;
 use Carbon\CarbonInterface;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Webmozart\Assert\Assert;
 
 /**
@@ -20,7 +20,7 @@ use Webmozart\Assert\Assert;
  */
 class EntryRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Entry::class);
     }
@@ -201,8 +201,8 @@ class EntryRepository extends ServiceEntityRepository
     /**
      * Retourne l'entry de base de la repetition.
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
      * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getBaseEntryForPeriodicity(Periodicity $periodicity)
     {

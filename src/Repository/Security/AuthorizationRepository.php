@@ -2,13 +2,13 @@
 
 namespace App\Repository\Security;
 
-use Exception;
 use App\Entity\Area;
 use App\Entity\Room;
 use App\Entity\Security\Authorization;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class AuthorizationRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Authorization::class);
     }
