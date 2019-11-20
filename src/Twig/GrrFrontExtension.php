@@ -147,7 +147,7 @@ class GrrFrontExtension extends AbstractExtension
                 if ($location === $hour) {
                     if (0 === $position) {
                         return $this->twigEnvironment->render(
-                            '@grr_front/day/_cell_day_data.html.twig',
+                            '@grr_front/daily/_cell_day_data.html.twig',
                             ['position' => $position, 'entry' => $entry]
                         );
                     }
@@ -162,7 +162,7 @@ class GrrFrontExtension extends AbstractExtension
         $area = $room->getArea();
 
         return $this->twigEnvironment->render(
-            '@grr_front/day/_cell_day_empty.html.twig',
+            '@grr_front/daily/_cell_day_empty.html.twig',
             ['position' => 999, 'area' => $area, 'room' => $room, 'day' => $day, 'hourModel' => $hour]
         );
     }
@@ -226,7 +226,7 @@ class GrrFrontExtension extends AbstractExtension
     private function grrWeekNiceName(Week $week): string
     {
         return $this->twigEnvironment->render(
-            '@grr_front/week/_nice_name.html.twig',
+            '@grr_front/weekly/_nice_name.html.twig',
             ['week' => $week]
         );
     }

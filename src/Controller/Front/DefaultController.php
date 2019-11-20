@@ -108,7 +108,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
         $roomModels = $this->bindDataManager->bindWeek($weekModel, $area, $room);
 
         return $this->render(
-            '@grr_front/week/week.html.twig',
+            '@grr_front/weekly/week.html.twig',
             [
                 'week' => $weekModel,
                 'area' => $area, //pour lien add entry
@@ -132,7 +132,7 @@ class DefaultController extends AbstractController implements FrontControllerInt
         $roomsModel = $this->bindDataManager->bindDay($daySelected, $area, $timeSlots, $room);
 
         return $this->render(
-            '@grr_front/day/day.html.twig',
+            '@grr_front/daily/day.html.twig',
             [
                 'day' => $dayModel,
                 'roomsModel' => $roomsModel,

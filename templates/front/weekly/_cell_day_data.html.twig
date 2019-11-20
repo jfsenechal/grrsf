@@ -1,6 +1,6 @@
-<td>
+<td class="align-top" style="width: 15%;"><!-- @todo 100/nbdays -->
     {% for entry in day.entries %}
-        {% include '@grr_front/week/_entry_line.html.twig' %}
+        {% include '@grr_front/weekly/_entry_line.html.twig' %}
     {% else %}
         <a href="{{ grrGenerateRouteAddEntry(area.id,room.id, day.day) }}" class="float-right"
            title="{{ 'btn.entry.add.title'|trans }}"> <i
