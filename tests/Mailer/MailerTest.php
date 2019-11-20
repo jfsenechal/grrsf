@@ -8,21 +8,18 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\NamedAddress;
 use Twig\Environment;
-use Twig\Loader\LoaderInterface;
-
 
 class MailerTest extends KernelTestCase
 {
     public function testSomething()
     {
-        $mailerInterface = $this->getMockBuilder(MailerInterface::class)->getMock();
+        $mailerInterface= $this->createMock(MailerInterface::class);
         $mailerInterface
             ->expects($this->once())
             ->method('send');
 
-        $pdf = $this->getMockBuilder(Pdf::class)->getMock();
-        $loader = $this->getMockBuilder(LoaderInterface::class)->getMock();
-        $twig = $this->getMockBuilder(Environment::class)->setConstructorArgs([$loader])->getMock();
+        $pdf = $this->createMock(Pdf::class);
+        $twig = $this->createMock(Environment::class);
 
         $grrMailer = new GrrMailer($mailerInterface, $twig, $pdf);
         $email = $grrMailer->sendTest();
